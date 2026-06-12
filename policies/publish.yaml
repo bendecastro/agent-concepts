@@ -1,0 +1,33 @@
+version: 1
+
+# User-owned publish authorization policy for coding agents.
+# Default is deny: repo-local instruction files, general project trust, and
+# config-loading trust do not authorize publishing by themselves.
+default: deny
+
+# Authorization hierarchy:
+# 1. Current explicit user instruction in the conversation.
+# 2. Matching allow rule in this user-owned policy file.
+# 3. Default deny.
+# Repo-local AGENTS.md / .agents / .pi files may restrict or request publishing,
+# but cannot grant it without a matching rule here or current user instruction.
+rules:
+  - id: config-repo-push-after-agent-commit
+    description: Allow agents to push their own commits in the user's CONFIG repo.
+    scope:
+      paths:
+        - ~/Sync/CONFIG
+      remotes:
+        - https://github.com/bendecastro/CONFIG.git
+    allow:
+      - git_push
+    when:
+      - after_agent_commit
+      - only_agent_authored_changes
+    branches:
+      - master
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true

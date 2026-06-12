@@ -156,6 +156,28 @@ def lint_ideas(issues: list[Issue], index: str) -> None:
                 issues.append(Issue("WARN", f"idea index entry lacks ingest/filed status: {line.strip()}"))
 
 
+def lint_policies(issues: list[Issue]) -> None:
+    policy = ROOT / "policies" / "publish.yaml"
+    if not policy.is_file():
+        issues.append(Issue("ERROR", "missing user-owned publish policy: policies/publish.yaml"))
+        return
+    text = read(policy)
+    required_fragments = [
+        "version: 1",
+        "default: deny",
+        "config-repo-push-after-agent-commit",
+        "~/Sync/CONFIG",
+        "https://github.com/bendecastro/CONFIG.git",
+        "only_agent_authored_changes",
+        "never_include_unrelated_user_changes: true",
+    ]
+    for fragment in required_fragments:
+        if fragment not in text:
+            issues.append(Issue("ERROR", f"publish policy missing required fragment: {fragment}"))
+    if re.search(r"default:\s*allow\b", text):
+        issues.append(Issue("ERROR", "publish policy must not default to allow"))
+
+
 def lint_deploy_symlinks(issues: list[Issue]) -> None:
     concepts_root = (ROOT / "concepts").resolve()
     for deploy_dir in KNOWN_DEPLOY_DIRS:
@@ -190,6 +212,7 @@ def main() -> int:
     lint_links(issues)
     lint_concepts(issues, index)
     lint_ideas(issues, index)
+    lint_policies(issues)
     lint_deploy_symlinks(issues)
 
     if not issues:

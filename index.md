@@ -11,6 +11,7 @@
 - [harnesses.md](harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
 - [bootstrap.md](bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
+- [policies/publish.yaml](policies/publish.yaml) — user-owned publish authorization policy; default deny with an explicit allow rule for agent-authored CONFIG repo pushes.
 
 ## Ideas
 

@@ -70,6 +70,6 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
 ## Conventions
 
 - No hardcoded home paths anywhere — `~` or `$HOME` only; symlinks relative. This directory syncs across macOS, Debian, and Arch via Syncthing.
-- Commit changes to this directory in the CONFIG git repo with a message saying which operation ran.
+- Commit changes to this directory in the CONFIG git repo with a message saying which operation ran. Publishing follows `policies/publish.yaml`; that user-owned policy currently authorizes pushing agent-authored CONFIG commits after status/diff inspection and validation.
 - Concept names are dash-case and unique across the workspace.
 - This workspace's value comes from encoding the user's specific workflows, not generic skill-list scraping. When ingesting, ask what's idiosyncratic about how the user wants it.

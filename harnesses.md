@@ -22,6 +22,7 @@ For always-on base instructions, use `concepts/agent-kernel/body/AGENT-KERNEL.md
 - **Bootstrap beats copying.** If a harness lacks native skills, use a paste/read instruction that points at the canonical file instead of duplicating the concept.
 - **Kernel stays tiny.** Always-injected base context should come from `agent-kernel`; keep specialized workflows as on-demand skills/concepts.
 - **Record every real deploy.** When a concept is made discoverable without manual paste, update this file, the concept's `CONCEPT.md`, and `index.md`.
+- **Publishing needs publish authorization.** Harness/project trust only permits loading instructions; push/PR/release actions require current user instruction or a matching rule in `policies/publish.yaml`.
 - **Test by consuming harness.** Pressure-test discipline concepts in at least one harness before marking deployed there; record which harness ran the test.
 
 ## Bootstrap prompt patterns

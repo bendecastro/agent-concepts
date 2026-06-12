@@ -53,3 +53,6 @@ Scoped publish trust to explicit user-controlled authorization for a repo/path. 
 
 ## [2026-06-12] implement | agent-kernel publish rule finished
 Defined the trust-designation channel (in conversation or the user's own harness/vault configuration — e.g. Pi's trust.json; never a repo file) so the exception is no longer a dead letter open to per-harness reinterpretation. Added headless default-deny (if asking is impossible, do not publish). Scenario 5 gained a headless variant (no publish, no stall).
+
+## [2026-06-12] implement | publish policy hierarchy
+Added `policies/publish.yaml` as the user-owned publish authorization layer: current user instruction > matching policy rule > default deny. CONFIG push-after-agent-commit is now explicit policy, not repo-local implication; lint verifies default-deny and the CONFIG allow rule.
