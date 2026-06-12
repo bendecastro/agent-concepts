@@ -48,5 +48,8 @@ Closed the trust-delegation hole in the publish rule: trust is now explicitly us
 ## [2026-06-12] implement | agent-kernel trust operationalization
 Made publish trust operational: if an agent cannot tell whether project instructions are user-trusted, it must ask before publishing. Softened verification from proof to meaningful validation and tightened scenario 5 to compare remote refs before/after.
 
+## [2026-06-12] implement | agent-kernel publish authorization scope
+Scoped publish trust to explicit user-controlled authorization for a repo/path. General project trust, config-loading trust, and repo-local instruction discovery no longer authorize push/PR; scenario 5 gained a config-trust variant.
+
 ## [2026-06-12] implement | agent-kernel publish rule finished
 Defined the trust-designation channel (in conversation or the user's own harness/vault configuration — e.g. Pi's trust.json; never a repo file) so the exception is no longer a dead letter open to per-harness reinterpretation. Added headless default-deny (if asking is impossible, do not publish). Scenario 5 gained a headless variant (no publish, no stall).
