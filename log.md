@@ -5,3 +5,6 @@ Scaffolded agents/ (AGENTS.md schema, index, log, bootstrap, ideas/, concepts/, 
 
 ## [2026-06-12] deploy | teach → Claude Code
 Repointed ~/.claude/skills/teach relative symlink to concepts/teach/body/.
+
+## [2026-06-12] ingest | OpenAI prompting guides filed
+Filed GPT-5.2 prompting guide and Codex prompting guide (openai-cookbook, converted from notebooks) into ideas/. Filed only — concept extraction pending a discussion of which patterns apply to which agents.
