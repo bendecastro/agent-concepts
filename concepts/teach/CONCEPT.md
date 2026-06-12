@@ -25,5 +25,6 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; pressure-tested in Claude Code).
-- Pi/Codex/Grok/Gemini: manual bootstrap only; read `body/SKILL.md` for the session and ignore YAML frontmatter if unsupported.
+- Pi: `~/.pi/agent/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; not yet pressure-tested in Pi).
+- Codex/Grok/Gemini: manual bootstrap only; read `body/SKILL.md` for the session and ignore YAML frontmatter if unsupported.
 - OpenCode: candidate native Agent Skills deploy; exact skills path not yet verified. Record in `../../harnesses.md` after first real deploy.

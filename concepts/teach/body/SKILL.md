@@ -1,7 +1,6 @@
 ---
 name: teach
 description: Use when the user wants to learn a topic or skill over multiple sessions, with this directory as their dedicated learning workspace.
-disable-model-invocation: true
 argument-hint: "What would you like to learn about?"
 ---
 

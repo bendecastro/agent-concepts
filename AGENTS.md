@@ -41,6 +41,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 
 **Deploy.** Make the concept visible to an agent, currently via **relative** symlink (homes differ across machines: `/home/ben` vs `/Users/ben`):
 - Claude Code: `~/.claude/skills/<name>` → `../../Sync/CONFIG/agents/concepts/<name>/body`
+- Pi: `~/.pi/agent/skills/<name>` → relative symlink to `agents/concepts/<name>/body` from the synced CONFIG vault.
 - Other agents: see `bootstrap.md` and `harnesses.md` — most are invoked by pointing them at this directory rather than by symlink until a real deploy path is tested.
 Record deploy targets in the concept's `CONCEPT.md`, `index.md`, and `harnesses.md`.
 

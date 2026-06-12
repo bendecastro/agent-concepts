@@ -29,3 +29,6 @@ Added scripts/lint.py for mechanical workspace drift checks, a quick-start path 
 
 ## [2026-06-12] implement | harness portability pass
 Added harnesses.md compatibility matrix and rewrote bootstrap.md with concrete manual prompts for Pi/Codex/OpenCode/Grok/Gemini. Neutralized teach pressure-test wording away from Claude-only assumptions and made lint require the harness matrix.
+
+## [2026-06-12] deploy | teach → Pi
+Imported teach into Pi via `~/.pi/agent/skills/teach` relative symlink to the canonical body. Made teach visible to model invocation (removed `disable-model-invocation`) so Pi can auto-select it; `/skill:teach` can still force-load it.

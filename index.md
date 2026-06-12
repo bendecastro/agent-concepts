@@ -2,7 +2,7 @@
 
 ## Concepts
 
-- [teach](concepts/teach/CONCEPT.md) — multi-session learning tutor with SRS queue, knowledge wiki, and discipline gates (defaults with a principled exit). Status: Claude deployed+tested; other harnesses manual bootstrap only. Deployed: Claude Code (symlink, 2026-06-12). Tested: 2026-06-12 ×2 in Claude Code (incl. gate-challenge attack), all gates held.
+- [teach](concepts/teach/CONCEPT.md) — multi-session learning tutor with SRS queue, knowledge wiki, and discipline gates (defaults with a principled exit). Status: Claude deployed+tested; Pi deployed pending harness pressure test; other harnesses manual bootstrap only. Deployed: Claude Code + Pi symlinks (2026-06-12). Tested: 2026-06-12 ×2 in Claude Code (incl. gate-challenge attack), all gates held.
 - [prompting-agents](concepts/prompting-agents/CONCEPT.md) — reference library: altitude-first principles (right altitude, explain-the-why, general-over-prescriptive, context economy), eval-tested instruction blocks, technique repertoire, metaprompting. Status: implemented+tested. Not deployed (consumed in-place). Tested: 2026-06-12, accuracy check at authoring.
 
 ## Tooling

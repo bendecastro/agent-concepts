@@ -23,7 +23,9 @@ Current deploys are recorded in each concept's `CONCEPT.md` and summarized in `i
 
 ### Pi
 
-Pi currently uses explicit bootstrap prompts rather than a persistent skill deploy recorded here:
+Pi discovers global skills from `~/.pi/agent/skills/`. `teach` is deployed there as a relative symlink to the canonical body, so future sessions can auto-load it when the user asks to learn something; use `/skill:teach` to force it.
+
+For concepts not yet deployed to Pi, use the generic concept-session bootstrap:
 
 `Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if unsupported. Follow the Markdown body as your instructions for this session.`
 

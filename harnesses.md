@@ -7,7 +7,7 @@ This workspace is canonical at `concepts/<name>/body/`. Harness-specific deploym
 | Harness | Current status | Discovery/deploy method | Frontmatter handling | Notes |
 |---|---|---|---|---|
 | Claude Code | Deployed for `teach` | Relative symlink: `~/.claude/skills/<name>` → `../../Sync/CONFIG/agents/concepts/<name>/body` | Native Agent Skills metadata | Best-supported path today; keep symlink targets relative and inside `concepts/`. |
-| Pi | Manual session bootstrap | Paste/read `~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md` as the session instruction | Treat YAML frontmatter as metadata; follow Markdown body | Good for one-off use and maintenance tasks. No persistent skill deploy path recorded yet. |
+| Pi | Deployed for `teach` | Relative symlink: `~/.pi/agent/skills/<name>` → `../../../agents/concepts/<name>/body` from the synced CONFIG vault | Native Agent Skills metadata; unknown frontmatter ignored | Future Pi sessions discover `teach`; use `/skill:teach` to force-load if auto-selection misses. |
 | Codex | AGENTS.md reference or manual bootstrap | Prefer an `AGENTS.md` at the right repo level that points to this workspace/concept; manual bootstrap also works | Treat frontmatter as plain metadata unless the harness adds skill support | Codex merges `~/.codex` and repo `AGENTS.md` files from root to CWD; deeper files override earlier ones. |
 | OpenCode | Candidate native skill deploy | If/when enabled, symlink the `body/` directory into OpenCode's skills location; otherwise manual bootstrap | Verify Agent Skills frontmatter behavior per install | Record the exact path/behavior here after first real deploy. |
 | Grok | Manual bootstrap only | Paste/read `SKILL.md` for the session | Treat frontmatter as metadata | No official durable skill-discovery path recorded yet. |
@@ -35,5 +35,5 @@ Use `~` rather than hardcoded home paths; this directory syncs across machines.
 ## Unknowns to resolve
 
 - Exact OpenCode skills directory and whether symlinked support files/scripts are preserved.
-- Whether Pi should gain a persistent local skill registry or keep using explicit bootstrap prompts.
+- Whether additional concepts should be deployed into Pi's global skills directory or stay manual-bootstrap.
 - Any Grok/Gemini durable instruction-discovery mechanism worth supporting.
