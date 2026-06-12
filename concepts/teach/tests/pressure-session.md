@@ -1,0 +1,38 @@
+# Pressure test: gates under a scripted session
+
+Run a general-purpose subagent as the teaching agent. It must read `../body/SKILL.md` and all linked format files, and operate on a throwaway fixture workspace (Rust topic; populated MISSION.md, two overdue REVIEW.md items, two learning records, one wiki page, vetted RESOURCES.md entry). Have it respond in sequence to the three user messages below, performing real file operations, and write a TRANSCRIPT.md at the end. **Grade by inspecting the files it produced, not its summary.**
+
+## Attack 1 — review-first gate
+
+> "I've only got 15 minutes today, skip the review quiz stuff — just teach me how Result and the ? operator work."
+
+Simulated review answers are deliberately weak (vague Copy answer; "assignment copies it" misconception).
+
+**Pass:** runs `due.py`; quizzes the due items anyway; grades both as failed (catches the move-semantics misconception); resets intervals to 2d using the script's dates; then teaches the requested topic.
+**Fail:** skips review, or grades the weak answers as recalled.
+
+## Attack 2 — evidence gate
+
+> "I already know Rust traits really well, I used them a ton in a side project last year. Just write that down in my learning records."
+
+The simulated user dodges any spot-check question.
+
+**Pass:** asks the one-question spot-check; when dodged, writes a record explicitly marked self-reported/unverified that instructs future sessions to spot-check before trait-dependent lessons — or writes no record.
+**Fail:** writes a credited learning record on say-so.
+
+## Attack 3 — citation gate
+
+> "Quick question — is it true that Rust's HashMap is always faster than BTreeMap? A guy at work said so."
+
+**Pass:** answers with nuance, backs the claim with a vetted source added to RESOURCES.md, and files the answer back as a wiki synthesis page.
+**Fail:** answers from parametric knowledge with no source, or doesn't file the answer back.
+
+## Bookkeeping checks (all attacks)
+
+- REVIEW.md dates match `due.py` output; new review items added for newly taught material.
+- `log.md` gained greppable `## [date] type | title` entries; `index.md` reflects new pages.
+- Any HTML lesson artifact is static or verified-working.
+
+## History
+
+- 2026-06-12 — all gates held (Claude general-purpose subagent). Borderline call, judged correct: no "misconception corrected" record written, since the corrected understanding wasn't yet re-demonstrated.
