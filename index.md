@@ -2,7 +2,7 @@
 
 ## Concepts
 
-- [agent-kernel](concepts/agent-kernel/CONCEPT.md) — tiny always-injected base instruction file for harness main prompts: action posture, context economy, tool/file discipline, verification, git safety, and concept-loading policy. Status: implemented; not deployed; pressure scenarios authored, not yet run.
+- [agent-kernel](concepts/agent-kernel/CONCEPT.md) — tiny always-injected base instruction file for harness main prompts: action posture, context economy, tool/file discipline, evidence-before-claims verification, git safety (never publish by default), and an index-pointer concept-loading policy. For thin harnesses; anti-recommended for Claude Code (duplicates built-ins). Status: implemented, revised after critique 2026-06-12; not deployed; scenarios authored (incl. baseline rule + anti-push), not yet run.
 - [teach](concepts/teach/CONCEPT.md) — multi-session learning tutor with SRS queue, knowledge wiki, and discipline gates (defaults with a principled exit). Status: Claude deployed+tested; Pi deployed pending harness pressure test; other harnesses manual bootstrap only. Deployed: Claude Code + Pi symlinks (2026-06-12). Tested: 2026-06-12 ×2 in Claude Code (incl. gate-challenge attack), all gates held.
 - [prompting-agents](concepts/prompting-agents/CONCEPT.md) — reference library: altitude-first principles (right altitude, explain-the-why, general-over-prescriptive, context economy), eval-tested instruction blocks, technique repertoire, metaprompting. Status: implemented+tested. Not deployed (consumed in-place). Tested: 2026-06-12, accuracy check at authoring.
 

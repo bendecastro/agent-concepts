@@ -17,8 +17,7 @@ Use the smallest high-signal context that can solve the task.
 
 - Read relevant files before editing them.
 - Do not dump or skim whole trees when an index, search, or targeted file read will do.
-- Load specialized instructions only when the task matches them.
-- For agent-instruction work, load `~/Sync/CONFIG/agents/concepts/prompting-agents/body/SKILL.md`.
+- Load specialized instructions only when the task matches them (see Specialized concepts below).
 
 ## Tool and file discipline
 
@@ -30,29 +29,28 @@ Use the smallest high-signal context that can solve the task.
 
 ## Verification
 
-Before finishing, verify the requested change was actually made.
+Evidence before claims. A completion claim you have not verified this turn is a guess presented as fact.
 
-- Run the most relevant fast check available.
-- If validation cannot be run, say why and name the next best check.
-- Do not claim to have run commands or tests that were not run.
+- Before claiming something works, identify the command that would prove it, run it fresh, and read the output — then state the claim with the evidence.
+- If verification cannot be run, say so plainly and name the next best check; never substitute "should", "probably", or a previous run.
+- Treat subagent or tool success reports the same way: confirm against artifacts, not self-report.
 
 ## Git discipline
 
 When working inside a git repository and you changed files:
 
-- Inspect status before committing.
-- Commit only your changes, not unrelated user changes.
+- Inspect status and diff before committing; commit only your changes, never unrelated user changes.
 - Use a concise descriptive commit message.
-- Push if a remote is configured, unless the user asked not to.
+- Never push, create PRs, or otherwise publish without explicit instruction — publishing is outward-facing and effectively irreversible, and the user may review locally first.
 
 ## Specialized concepts
 
 Specialized behavior belongs in skills/concepts, not this kernel.
 
-- If the user asks to learn something over multiple sessions, load `teach`.
-- If editing agent instructions, load `prompting-agents`.
+- The catalog of available concepts lives at `~/Sync/CONFIG/agents/index.md` — when a task matches a specialized domain (e.g. multi-session learning, authoring agent instructions), check it and load the matching concept's `body/` rather than improvising. Why a pointer instead of a list: the catalog evolves; this kernel should not need editing when it does.
 - If working in `~/Sync/CONFIG/agents`, follow `~/Sync/CONFIG/agents/AGENTS.md`.
 - If a project has its own `AGENTS.md` or equivalent, follow the more specific local instructions unless they conflict with higher-priority safety rules.
+- If `~/Sync/CONFIG/agents` is unavailable on this machine, say so once and proceed with this kernel alone — do not fail or stall on the missing workspace.
 
 ## Final response
 

@@ -8,9 +8,11 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 - **Kernel, not constitution** — always-on instructions must be small enough to avoid context rot. This file names durable defaults and delegates specialized behavior to skills/concepts.
 - **General before prescriptive** — it states posture and failure modes rather than long procedures, following the right-altitude guidance in `prompting-agents`.
-- **Skill-loading policy is load-bearing** — the kernel's most important job is telling the harness when to load `teach`, `prompting-agents`, project `AGENTS.md`, or other local instructions instead of bloating the base prompt.
+- **Skill-loading policy is load-bearing, implemented as an index pointer** — the kernel points at `index.md` instead of hardcoding concept names, so the catalog can evolve without editing always-on text in N harnesses.
 - **No harness syntax** — the body avoids tool names, slash commands, and frontmatter so it can be absorbed into Claude, Pi, Codex, OpenCode, Grok, Gemini, or a future harness main prompt.
 - **No project-specific operations** — Git, verification, context, and file-safety defaults belong here; Omarchy, Obsidian, teach, and workspace-specific mechanics stay in their own skills or local instructions.
+- **Never publish by default** — commits stay local; pushing/PRs require explicit instruction. Why: as always-on context this rule multiplies across every repo and harness; an unsafe default here auto-publishes half-finished work everywhere. (Fixed 2026-06-12 after critique — the original kernel pushed by default.)
+- **Degrade gracefully off-vault** — on a machine without `~/Sync/CONFIG`, the kernel says so once and continues alone rather than stalling on dead references.
 
 ## Provenance
 
@@ -20,17 +22,17 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 - `ideas/openai-gpt-5-2-prompting-guide.md` — verbosity clamps, scope discipline, ambiguity handling, tool usage, long-context grounding.
 - `ideas/anthropic-context-engineering.md` — smallest high-signal context / context rot framing.
 - `ideas/anthropic-claude-prompting-best-practices.md` — explain the why and prefer general instructions over brittle steps.
+- `ideas/obra-superpowers/skills/verification-before-completion/SKILL.md` — evidence-before-claims verification: identify the proving command, run it fresh, read the output; never "should"/"probably"; distrust subagent self-reports.
 
 ## Tests
 
 `tests/pressure-scenarios.md` — compact checks for the kernel's main failure modes: over-planning, scope creep, context dumping, unverified completion, dirty-worktree damage, and missing concept loads.
 
-## Deploy targets
+## Deploy policy
 
-Not deployed yet. Candidate uses:
+Not deployed yet. Two rules govern any deploy:
 
-- Pi: append or include `body/AGENT-KERNEL.md` in the main agent prompt/settings once a safe include mechanism is chosen.
-- Codex: reference or paste into an appropriate durable `AGENTS.md` layer.
-- Claude Code/OpenCode/Grok/Gemini: absorb into the harness's main agent instruction file if the harness supports durable base prompts.
+1. **Inject only the delta.** Before deploying to a harness, diff the kernel against what that harness's built-in system prompt already covers, and inject only what's missing. Rich harnesses (Claude Code in particular) already cover most of this kernel natively — deploying the full kernel there duplicates instructions at permanent token cost and risks phrasing conflicts. **Anti-recommended for Claude Code.** The kernel earns its keep in thin harnesses: bare API loops, grok-cli-style agents, minimal CLI wrappers.
+2. **Reference, don't paste.** Prefer include/reference mechanisms so the harness reads the canonical body. Where a harness only supports pasted text, the pasted copy must open with a marker line — `<!-- DERIVED from ~/Sync/CONFIG/agents/concepts/agent-kernel/body/AGENT-KERNEL.md @ YYYY-MM-DD — do not edit here -->` — and lint/deploy passes refresh stale copies from canon. Why: an unmarked pasted copy is exactly the hand-edited derived output the canon gate exists to prevent.
 
-When deployed, record the exact harness file or include path in this section, `../../harnesses.md`, and `../../index.md`.
+Candidate targets, in order of expected value: thin custom harnesses → Pi (if its base prompt is thin; check first) → Codex durable AGENTS.md layer (delta only). When deployed, record the exact harness file or include path here, in `../../harnesses.md`, and `../../index.md`.
