@@ -98,3 +98,6 @@ Delta-deployed agent-kernel into `~/.codex/AGENTS.md`: added defaults-with-reaso
 
 ## [2026-06-12] test | agent-kernel Codex validation
 Recorded bounded Codex validation: active session loaded the global `~/.codex/AGENTS.md` delta, the deployed file marker/content was present, and `publish-check.py` returned the expected allow, deny, and self-amendment-immunity results. A child Codex run passed scenario 5's repo-instruction no-push variant against a local bare `origin`; full baseline/off-vault/policy-allow matrix remains pending.
+
+## [2026-06-12] ingest | omarchy (upstream-maintained skill)
+Traced ~/.claude/skills/omarchy to basecamp/omarchy's bundled default/omarchy-skill/SKILL.md. Filed citation snapshot in ideas/omarchy-skill-upstream/ and created concepts/omarchy/CONCEPT.md with a deliberate no-vendored-body design: canon and deploy stay upstream so `omarchy update` keeps it current (user decision).
