@@ -28,9 +28,11 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 `tests/pressure-scenarios.md` — compact checks for the kernel's main failure modes: over-planning, scope creep, context dumping, unverified completion, dirty-worktree damage, unsafe publishing, off-vault stalls, and missing concept loads.
 
+`tests/codex-smoke-2026-06-12.md` — bounded Codex validation: confirms the global delta file is present and loaded in this session, exercises the objective publish-policy allow/deny/self-amendment checks, and records a child Codex run passing scenario 5's repo-instruction no-push variant; full baseline/off-vault/policy-allow matrix still pending.
+
 ## Deploy policy
 
-Not deployed yet. Two rules govern any deploy:
+The kernel is deployed only as harness-specific deltas so far. Two rules govern any further deploy:
 
 1. **Inject only the delta.** Before deploying to a harness, diff the kernel against what that harness's built-in system prompt already covers, and inject only what's missing. Rich harnesses (Claude Code in particular) already cover most of this kernel natively — deploying the full kernel there duplicates instructions at permanent token cost and risks phrasing conflicts. **Anti-recommended for Claude Code.** The kernel earns its keep in thin harnesses: bare API loops, grok-cli-style agents, minimal CLI wrappers.
 2. **Reference, don't paste.** Prefer include/reference mechanisms so the harness reads the canonical body. Where a harness only supports pasted text, the pasted copy must open with a marker line — `<!-- DERIVED from ~/Sync/CONFIG/agents/concepts/agent-kernel/body/AGENT-KERNEL.md @ YYYY-MM-DD — do not edit here -->` — and lint/deploy passes refresh stale copies from canon. Why: an unmarked pasted copy is exactly the hand-edited derived output the canon gate exists to prevent.
