@@ -1,13 +1,20 @@
 # Agents Workspace
 
-This directory is the canonical, agent-agnostic home for the skills/concepts that specialise the user's coding agents (Claude Code, Pi, OpenCode, Grok, Codex, possibly Gemini). It is maintained mostly by agents. If you are an agent reading this: this file is your operating manual. Read it fully, then `index.md` and the last few `log.md` entries — open other files only as the index points you to them.
+This directory is the canonical, agent-agnostic home for the skills/concepts that specialise the user's coding agents (Claude Code, Pi, OpenCode, Grok, Codex, possibly Gemini). It is maintained mostly by agents. If you are an agent reading this: this file is your operating manual.
+
+## Quick start for agents
+
+1. Read this file, then `index.md`, then the last few `log.md` entries.
+2. Identify the requested operation: ingest, implement/update, tune, test, deploy, or lint.
+3. Open only the concept/source files the index points you to; don't dump the whole workspace.
+4. Make the smallest canonical change in `concepts/` (never `ideas/` or derived deploys), update `index.md`/`log.md`, run `python3 scripts/lint.py`, then commit.
 
 ## Spirit
 
 This workspace exists to **liberate and improve agents, not to constrain them**. Everything in it — concepts, gates, formats — was written by past agents and a human collaborator who assume that *you may be more capable than they were*. So:
 
 - Rules here are **defaults with reasons**, not commandments. Each carries its rationale so you can generalize it correctly — and recognize when it doesn't apply.
-- If you conclude a rule or concept is wrong, the legitimate move is to **say so and improve it** (propose the change, or make it and log your reasoning — the user reviews via git). Silent deviation is never legitimate: it hides the disagreement that would have improved the concept. Blind obedience is barely better: it preserves a known flaw.
+- If you conclude a rule or concept is wrong, the legitimate move is to **say so and improve it**. During the task, propose the change and keep following the current canon unless the user explicitly approves changing course; after the task, make the canonical improvement and log your reasoning. Silent deviation is never legitimate: it hides the disagreement that would have improved the concept. Blind obedience is barely better: it preserves a known flaw.
 - **Concepts must evolve.** Every operation below is also an opportunity to notice that a concept has been outgrown. Treat friction between a rule and your judgment as signal, not noise.
 - Prefer guidance at the **right altitude**: specific enough to transmit hard-won lessons, flexible enough that a capable agent applies its own reasoning — neither brittle if-else process steps nor vague platitudes (see `ideas/anthropic-context-engineering.md`).
 
@@ -37,7 +44,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 - Other agents: see `bootstrap.md` — most are invoked by pointing them at this directory rather than by symlink.
 Record deploy targets in the concept's `CONCEPT.md` and in `index.md`.
 
-**Lint.** Periodically, or on request: concepts missing tests or provenance; deployed symlinks that dangle or point outside `concepts/`; index entries that don't match reality; `ideas/` files never ingested (list them, don't delete); dead external links in CONCEPT.md provenance. Fix the mechanical issues, report the judgment calls, log the pass.
+**Lint.** Periodically, or on request: run `python3 scripts/lint.py` for mechanical drift (missing tests/provenance, broken relative links, stale index entries, unindexed ideas, dangling deploy symlinks). Fix objective issues, report judgment calls, and log the pass. External link rot in provenance is a judgment call unless the user asked for web validation.
 
 ## Gates
 

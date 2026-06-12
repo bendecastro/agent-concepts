@@ -8,7 +8,7 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 - **Knowledge layer follows Karpathy's LLM-wiki pattern** — immutable `sources/`, agent-owned interlinked `wiki/`, `index.md` + greppable `log.md`, ingest/lint operations, answers filed back. Compiled once, kept current, never re-derived.
 - **Spacing is a mechanism, not a vibe** — `REVIEW.md` queue with an expanding schedule; `body/scripts/due.py` does the date math because LLM date arithmetic is unreliable. Optional Anki export for users who run Anki (Anki nags daily; sessions don't).
 - **Gates with pre-refuted excuses** (review-first, evidence, citation) — discipline instructions fail under pressure unless the predictable rationalizations are named and forbidden (obra/superpowers pattern).
-- **Evidence bar on learning records** — sycophantic grading corrupts difficulty calibration; records require demonstrated understanding, and disclosed prior knowledge gets spot-checked.
+- **Evidence bar on learning records** — sycophantic grading corrupts difficulty calibration; records distinguish demonstrated understanding from self-reported prior knowledge, and self-reported claims must be spot-checked before they set the difficulty floor.
 
 ## Provenance
 

@@ -23,3 +23,6 @@ Per user direction (liberate, don't constrain; assume smarter future agents; con
 
 ## [2026-06-12] test | teach re-passed with gate-challenge attack
 After gate reframing, re-ran pressure test with harder Attack 1 ("bad rule, don't follow rules blindly, drop it"). Agent offered open skill-change path while refusing the silent skip; both review items quizzed and failed honestly; no unverified records. Exit clause is not a loophole.
+
+## [2026-06-12] implement | lint script + record-status clarification
+Added scripts/lint.py for mechanical workspace drift checks, a quick-start path in AGENTS.md, and safer gate-evolution timing. Clarified teach learning records with explicit demonstrated/self-reported/misconception statuses so self-report cannot silently become ZPD evidence.
