@@ -39,11 +39,12 @@ rules:
     when:
       - after_agent_commit
       - only_agent_authored_changes
-      # Exception for this repo only: dedicated housekeeping commits of user/app
-      # drift, made per the repo-root AGENTS.md "Commit separation" policy, count
-      # as publishable alongside agent commits. They must be separate commits with
-      # diff-derived messages; mixing drift into an agent work commit voids this.
-      - or_dedicated_housekeeping_commits_per_repo_agents_md
+      # Exception for this repo only: TIER-1 housekeeping commits (allowlisted
+      # machine-written state files, per the repo-root AGENTS.md two-tier policy)
+      # count as publishable alongside agent commits. Tier-2 housekeeping commits
+      # (confirmed user drift) stay local until the user explicitly asks to push.
+      # Mixing any drift into an agent work commit voids this exception.
+      - or_tier1_housekeeping_commits_per_repo_agents_md
     branches:
       - master
     exclude_changes_under:
