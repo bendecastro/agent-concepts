@@ -48,3 +48,66 @@ rules:
       require_diff_inspection: true
       require_validation_summary: true
       never_include_unrelated_user_changes: true
+
+  - id: scripts-repo-push-after-agent-commit
+    description: Allow agents to push their own commits in the user's Scripts repo.
+    scope:
+      paths:
+        - ~/Sync/Scripts
+      remotes:
+        - https://github.com/bendecastro/SCRIPTS.git
+        - git@github.com:bendecastro/SCRIPTS.git
+    allow:
+      - git_push
+    when:
+      - after_agent_commit
+      - only_agent_authored_changes
+    branches:
+      - master
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true
+
+  - id: music-repo-push-after-agent-commit
+    description: Allow agents to push their own commits in the user's Music repo.
+    scope:
+      paths:
+        - ~/Sync/Music
+      remotes:
+        - https://github.com/bendecastro/Music.git
+        - git@github.com:bendecastro/Music.git
+    allow:
+      - git_push
+    when:
+      - after_agent_commit
+      - only_agent_authored_changes
+    branches:
+      - master
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true
+
+  - id: wiki-repo-push-after-agent-commit
+    description: Allow agents to push their own commits in the user's Wiki repo.
+    scope:
+      paths:
+        - ~/Sync/Wiki
+      remotes:
+        - https://github.com/bendecastro/Wiki.git
+        - git@github.com:bendecastro/Wiki.git
+    allow:
+      - git_push
+    when:
+      - after_agent_commit
+      - only_agent_authored_changes
+    branches:
+      - master
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true
