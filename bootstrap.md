@@ -37,7 +37,7 @@ For workspace maintenance:
 
 ### Codex
 
-Prefer durable `AGENTS.md` references when working inside a repo; manual bootstrap also works.
+Codex has the `agent-kernel` delta in `~/.codex/AGENTS.md`, its documented global instruction layer. Prefer durable repo-level `AGENTS.md` references for specialized concepts when working inside a repo; manual bootstrap also works.
 
 Example task frame:
 
@@ -58,8 +58,8 @@ Use the generic concept-session bootstrap. After first real use, update `harness
 
 ## Per-agent quirks
 
-**Codex** (from OpenAI's Codex prompting guide, see `ideas/openai-codex-prompting-guide.md`):
-- AGENTS.md discovery: concatenates `~/.codex` plus every AGENTS.md from repo root down to CWD; later (deeper) files override earlier ones. So a concept can be deployed to Codex by referencing it from an AGENTS.md at the right directory level — no skills directory needed.
+**Codex** (from OpenAI's Codex prompting guide and current docs, see `ideas/openai-codex-prompting-guide.md`):
+- AGENTS.md discovery: concatenates `~/.codex/AGENTS.md` plus every AGENTS.md from repo root down to CWD; later (deeper) files override earlier ones. So a concept can be deployed to Codex by referencing it from an AGENTS.md at the right directory level — no skills directory needed.
 - The model is specifically trained to adhere to AGENTS.md content — durable rules belong there, not in the task prompt.
 - Do NOT add instructions asking pre-5.3 Codex models for upfront plans, preambles, or mid-task status updates — this causes it to stop before the task is complete. (gpt-5.3-codex and later handle promptable updates fine.)
 - Task prompts: OpenAI's recommended frame is Goal / Context / Constraints / Done-when.

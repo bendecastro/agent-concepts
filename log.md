@@ -92,3 +92,6 @@ Deployed the narrowed seo skill to Pi via `~/.pi/agent/skills/seo` relative syml
 
 ## [2026-06-12] deploy | agent-kernel delta → OpenCode
 Delta-deployed agent-kernel into `~/.config/opencode/AGENTS.md`: preserved existing OpenCode-specific guidance, replaced the unsafe auto-push rule with the publish-policy/default-deny rule, and added evidence-before-claims plus a marked Specialized Concepts catalog pointer. Updated harness/bootstrap/index/concept deploy records.
+
+## [2026-06-12] deploy | agent-kernel delta → Codex
+Delta-deployed agent-kernel into `~/.codex/AGENTS.md`: added defaults-with-reasons, evidence-before-claims, publish-policy/default-deny with Codex `trust_level` explicitly not treated as publish authorization, and the Specialized Concepts catalog pointer. Updated harness/bootstrap/index/concept deploy records; official Codex docs confirmed the global AGENTS.md layer.
