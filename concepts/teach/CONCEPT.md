@@ -24,5 +24,6 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/teach` → relative symlink to `body/` (deployed 2026-06-12).
-- Other agents: not yet; `body/SKILL.md` follows the Agent Skills spec, so OpenCode can consume it directly when wanted.
+- Claude Code: `~/.claude/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; pressure-tested in Claude Code).
+- Pi/Codex/Grok/Gemini: manual bootstrap only; read `body/SKILL.md` for the session and ignore YAML frontmatter if unsupported.
+- OpenCode: candidate native Agent Skills deploy; exact skills path not yet verified. Record in `../../harnesses.md` after first real deploy.

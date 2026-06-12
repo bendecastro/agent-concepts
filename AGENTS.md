@@ -7,7 +7,7 @@ This directory is the canonical, agent-agnostic home for the skills/concepts tha
 1. Read this file, then `index.md`, then the last few `log.md` entries.
 2. Identify the requested operation: ingest, implement/update, tune, test, deploy, or lint.
 3. Open only the concept/source files the index points you to; don't dump the whole workspace.
-4. Make the smallest canonical change in `concepts/` (never `ideas/` or derived deploys), update `index.md`/`log.md`, run `python3 scripts/lint.py`, then commit.
+4. Make the smallest canonical change in `concepts/` (never `ideas/` or derived deploys), update `index.md`/`log.md` plus `harnesses.md` for deploy/portability changes, run `python3 scripts/lint.py`, then commit.
 
 ## Spirit
 
@@ -27,7 +27,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
   - `tests/` — pressure scenarios and expected behavior (see Test operation).
 - `build/` — **derived per-agent outputs. Does not exist yet — do not create it** until two agents actually need different formats for the same concept. Today every consumer reads `body/` directly via symlink.
 - `scripts/` — deterministic helpers shared across the workspace.
-- `AGENTS.md` (this file), `index.md`, `log.md`, `bootstrap.md` — the schema, catalog, history, and per-agent entry points.
+- `AGENTS.md` (this file), `index.md`, `log.md`, `bootstrap.md`, `harnesses.md` — the schema, catalog, history, bootstrap prompts, and harness compatibility matrix.
 
 ## Operations
 
@@ -41,10 +41,10 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 
 **Deploy.** Make the concept visible to an agent, currently via **relative** symlink (homes differ across machines: `/home/ben` vs `/Users/ben`):
 - Claude Code: `~/.claude/skills/<name>` → `../../Sync/CONFIG/agents/concepts/<name>/body`
-- Other agents: see `bootstrap.md` — most are invoked by pointing them at this directory rather than by symlink.
-Record deploy targets in the concept's `CONCEPT.md` and in `index.md`.
+- Other agents: see `bootstrap.md` and `harnesses.md` — most are invoked by pointing them at this directory rather than by symlink until a real deploy path is tested.
+Record deploy targets in the concept's `CONCEPT.md`, `index.md`, and `harnesses.md`.
 
-**Lint.** Periodically, or on request: run `python3 scripts/lint.py` for mechanical drift (missing tests/provenance, broken relative links, stale index entries, unindexed ideas, dangling deploy symlinks). Fix objective issues, report judgment calls, and log the pass. External link rot in provenance is a judgment call unless the user asked for web validation.
+**Lint.** Periodically, or on request: run `python3 scripts/lint.py` for mechanical drift (missing tests/provenance, broken relative links, stale index entries, unindexed ideas, missing harness docs, dangling deploy symlinks). Fix objective issues, report judgment calls, and log the pass. External link rot in provenance is a judgment call unless the user asked for web validation.
 
 ## Gates
 

@@ -26,3 +26,6 @@ After gate reframing, re-ran pressure test with harder Attack 1 ("bad rule, don'
 
 ## [2026-06-12] implement | lint script + record-status clarification
 Added scripts/lint.py for mechanical workspace drift checks, a quick-start path in AGENTS.md, and safer gate-evolution timing. Clarified teach learning records with explicit demonstrated/self-reported/misconception statuses so self-report cannot silently become ZPD evidence.
+
+## [2026-06-12] implement | harness portability pass
+Added harnesses.md compatibility matrix and rewrote bootstrap.md with concrete manual prompts for Pi/Codex/OpenCode/Grok/Gemini. Neutralized teach pressure-test wording away from Claude-only assumptions and made lint require the harness matrix.

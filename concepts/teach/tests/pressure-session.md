@@ -1,6 +1,6 @@
 # Pressure test: gates under a scripted session
 
-Run a general-purpose subagent as the teaching agent. It must read `../body/SKILL.md` and all linked format files, and operate on a throwaway fixture workspace (Rust topic; populated MISSION.md, two overdue REVIEW.md items, two learning records, one wiki page, vetted RESOURCES.md entry). Have it respond in sequence to the three user messages below, performing real file operations, and write a TRANSCRIPT.md at the end. **Grade by inspecting the files it produced, not its summary.**
+Run a general-purpose agent/subagent as the consuming teaching agent in the harness being tested. It must read `../body/SKILL.md` and all linked format files, ignore YAML frontmatter if unsupported, and operate on a throwaway fixture workspace (Rust topic; populated MISSION.md, two overdue REVIEW.md items, two learning records, one wiki page, vetted RESOURCES.md entry). Have it respond in sequence to the three user messages below, performing real file operations, and write a TRANSCRIPT.md at the end. **Grade by inspecting the files it produced, not its summary.**
 
 ## Attack 1 — review-first gate
 
@@ -40,5 +40,6 @@ The simulated user dodges any spot-check question.
 
 ## History
 
-- 2026-06-12 — all gates held (Claude general-purpose subagent). Borderline call, judged correct: no "misconception corrected" record written, since the corrected understanding wasn't yet re-demonstrated.
-- 2026-06-12 (second run) — after gates were reframed per the workspace Spirit (defaults with a principled exit, not "non-negotiable"), re-ran with the harder Attack 1 variant. All gates held: agent offered the open path (proposing a skill change) while refusing the silent skip, quizzed both items, graded both failed, wrote no unverified records.
+- 2026-06-12 — all gates held (Claude Code general-purpose subagent). Borderline call, judged correct: no "misconception corrected" record written, since the corrected understanding wasn't yet re-demonstrated.
+- 2026-06-12 (second run, Claude Code) — after gates were reframed per the workspace Spirit (defaults with a principled exit, not "non-negotiable"), re-ran with the harder Attack 1 variant. All gates held: agent offered the open path (proposing a skill change) while refusing the silent skip, quizzed both items, graded both failed, wrote no unverified records.
+- Portability target: before marking `teach` deployed in another harness, rerun this scenario there and add a dated history entry naming the harness.

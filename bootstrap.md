@@ -1,15 +1,56 @@
 # Bootstrap lines per agent
 
-Claude Code discovers deployed concepts automatically via `~/.claude/skills/` symlinks. Every other agent gets pointed here manually — paste the relevant line:
+Use this file when a harness does not automatically discover a concept from `concepts/<name>/body/`. See [harnesses.md](harnesses.md) for the compatibility matrix and deploy status.
 
-- **Generic (any agent):**
-  `Read ~/Sync/CONFIG/agents/AGENTS.md and follow it. Then: <operation>, e.g. "ingest ideas/foo.md" or "lint the workspace".`
-- **Codex / OpenCode / Pi / Grok session using a specific concept:**
-  `Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md and follow it as your instructions for this session.`
+## Generic prompts
 
-Notes:
-- OpenCode supports the Agent Skills spec; a `body/` dir can be symlinked into its skills location when that's wanted — record the deploy in the concept's CONCEPT.md.
-- Add per-agent quirks here as they're discovered (frontmatter fields ignored, script execution limits, etc.).
+- **Workspace maintenance (any agent):**
+  `Read ~/Sync/CONFIG/agents/AGENTS.md and follow it. Then: <operation>, e.g. "ingest ideas/foo.md", "lint the workspace", or "implement the teach concept update".`
+- **Concept session (manual harness):**
+  `Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if your harness does not support Agent Skills metadata. Follow the Markdown body as your instructions for this session.`
+- **Concept test (manual harness):**
+  `Act as the consuming agent for ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md in a throwaway workspace. Run the scenario in ~/Sync/CONFIG/agents/concepts/<name>/tests/<test>. Produce artifacts, then grade by file inspection, not self-report.`
+
+## Harness-specific entry points
+
+### Claude Code
+
+Claude Code discovers deployed concepts automatically via relative symlinks:
+
+`~/.claude/skills/<name>` → `../../Sync/CONFIG/agents/concepts/<name>/body`
+
+Current deploys are recorded in each concept's `CONCEPT.md` and summarized in `index.md` / `harnesses.md`.
+
+### Pi
+
+Pi currently uses explicit bootstrap prompts rather than a persistent skill deploy recorded here:
+
+`Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if unsupported. Follow the Markdown body as your instructions for this session.`
+
+For workspace maintenance:
+
+`Read ~/Sync/CONFIG/agents/AGENTS.md and follow it. Then: <operation>.`
+
+### Codex
+
+Prefer durable `AGENTS.md` references when working inside a repo; manual bootstrap also works.
+
+Example task frame:
+
+```text
+Goal: Use the <name> concept for this session.
+Context: The canonical instructions are at ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md.
+Constraints: Read that file fully; ignore YAML frontmatter if unsupported; follow the Markdown body; do not copy or edit deployed outputs.
+Done when: The requested session/task is complete and any canonical changes are made in ~/Sync/CONFIG/agents/.
+```
+
+### OpenCode
+
+If native Agent Skills support is configured, expose `concepts/<name>/body/` through OpenCode's skills directory and record the exact path in `harnesses.md` and the concept `CONCEPT.md`. Until then, use the generic concept-session bootstrap.
+
+### Grok / Gemini / other agents
+
+Use the generic concept-session bootstrap. After first real use, update `harnesses.md` with what worked, what frontmatter was ignored, and any script/tool limitations.
 
 ## Per-agent quirks
 

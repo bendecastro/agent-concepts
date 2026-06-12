@@ -27,4 +27,4 @@ Per the workspace Spirit (AGENTS.md): this library guides rather than constrains
 
 ## Deploy targets
 
-None — consumed in-place by agents working in this workspace (the Implement operation in AGENTS.md points here). Not symlinked into any agent's skills directory.
+None — consumed in-place by agents working in this workspace (the Implement operation in AGENTS.md points here). Not symlinked into any agent's skills directory; manual harnesses can read `body/SKILL.md` via `../../bootstrap.md`.

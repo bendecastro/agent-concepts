@@ -2,11 +2,13 @@
 
 ## Concepts
 
-- [teach](concepts/teach/CONCEPT.md) — multi-session learning tutor with SRS queue, knowledge wiki, and discipline gates (defaults with a principled exit). Status: deployed+tested. Deployed: Claude Code (symlink, 2026-06-12). Tested: 2026-06-12 ×2 (incl. gate-challenge attack), all gates held.
+- [teach](concepts/teach/CONCEPT.md) — multi-session learning tutor with SRS queue, knowledge wiki, and discipline gates (defaults with a principled exit). Status: Claude deployed+tested; other harnesses manual bootstrap only. Deployed: Claude Code (symlink, 2026-06-12). Tested: 2026-06-12 ×2 in Claude Code (incl. gate-challenge attack), all gates held.
 - [prompting-agents](concepts/prompting-agents/CONCEPT.md) — reference library: altitude-first principles (right altitude, explain-the-why, general-over-prescriptive, context economy), eval-tested instruction blocks, technique repertoire, metaprompting. Status: implemented+tested. Not deployed (consumed in-place). Tested: 2026-06-12, accuracy check at authoring.
 
 ## Tooling
 
+- [harnesses.md](harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
+- [bootstrap.md](bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
 
 ## Ideas
