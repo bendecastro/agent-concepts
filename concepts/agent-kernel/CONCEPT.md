@@ -36,3 +36,7 @@ Not deployed yet. Two rules govern any deploy:
 2. **Reference, don't paste.** Prefer include/reference mechanisms so the harness reads the canonical body. Where a harness only supports pasted text, the pasted copy must open with a marker line — `<!-- DERIVED from ~/Sync/CONFIG/agents/concepts/agent-kernel/body/AGENT-KERNEL.md @ YYYY-MM-DD — do not edit here -->` — and lint/deploy passes refresh stale copies from canon. Why: an unmarked pasted copy is exactly the hand-edited derived output the canon gate exists to prevent.
 
 Candidate targets, in order of expected value: thin custom harnesses → Pi (if its base prompt is thin; check first) → Codex durable AGENTS.md layer (delta only). When deployed, record the exact harness file or include path here, in `../../harnesses.md`, and `../../index.md`.
+
+## Deploys
+
+- **Claude Code (delta only, 2026-06-12):** `~/.claude/CLAUDE.md` carries a marked, derived section with the two kernel items Claude Code's built-ins lack — the publish-policy pointer (publish.yaml grants pushes the default posture wouldn't make) and the concepts-catalog pointer (prompting-agents before authoring agent instructions, since project-scoped memory doesn't travel to other repos). Everything else in the kernel was confirmed redundant with Claude Code's system prompt and deliberately not injected. The file is Syncthing-synced, not git-tracked; refresh the marked section when these kernel sections change.
