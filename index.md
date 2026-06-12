@@ -4,6 +4,7 @@
 
 - [agent-kernel](concepts/agent-kernel/CONCEPT.md) — tiny always-injected base instruction file for harness main prompts: action posture, context economy, tool/file discipline, evidence-before-claims verification, git safety (never publish by default), and an index-pointer concept-loading policy. For thin harnesses; anti-recommended for Claude Code (duplicates built-ins). Status: implemented, revised after critique 2026-06-12; delta-deployed to Claude Code user CLAUDE.md (publish-policy + catalog pointers only, 2026-06-12); full kernel not deployed anywhere; scenarios authored (incl. baseline rule + anti-push), not yet run.
 - [teach](concepts/teach/CONCEPT.md) — multi-session learning tutor with SRS queue, knowledge wiki, and discipline gates (defaults with a principled exit). Status: Claude deployed+tested; Pi deployed pending harness pressure test; other harnesses manual bootstrap only. Deployed: Claude Code + Pi symlinks (2026-06-12). Tested: 2026-06-12 ×2 in Claude Code (incl. gate-challenge attack), all gates held.
+- [seo](concepts/seo/CONCEPT.md) — two-part SEO operator: site-wide strategist (diagnosis-first, evidence-tiered, GEO + AI-crawler policy) + vision-required image-SEO specialist with a single-owner handoff contract. From the user's image-maze prompts. Status: implemented+tested (4 attacks held, 2026-06-12); deployed: Claude Code symlink.
 - [prompting-agents](concepts/prompting-agents/CONCEPT.md) — reference library: altitude-first principles (right altitude, explain-the-why, general-over-prescriptive, context economy), eval-tested instruction blocks, technique repertoire, metaprompting. Status: implemented+tested. Not deployed (consumed in-place). Tested: 2026-06-12, accuracy check at authoring.
 
 ## Tooling
@@ -24,6 +25,7 @@
 - [anthropic-claude-code-best-practices.md](ideas/anthropic-claude-code-best-practices.md) — official Claude Code best practices (context management, plan/execute separation, constraints as guardrails). Filed 2026-06-12, not yet ingested.
 - [anthropic-context-engineering.md](ideas/anthropic-context-engineering.md) — Anthropic engineering essay on context engineering for agents ("smallest set of high-signal tokens"); widely cited successor framing to prompt engineering. Ingested → prompting-agents right-altitude section + AGENTS.md Spirit (2026-06-12).
 - [google-boonstra-prompt-engineering-v7.pdf](ideas/google-boonstra-prompt-engineering-v7.pdf) — Google/Lee Boonstra prompt engineering whitepaper v7 (45 pp): sampling params, zero/few-shot, system/role/contextual prompting, step-back, CoT, self-consistency, ToT, ReAct, APE. Ingested → prompting-agents technique repertoire (2026-06-12); sampling-params material unused so far.
+- [image-maze-seo-agents/](ideas/image-maze-seo-agents/SOURCE.md) — snapshot of the user's portable SEO + image-SEO system prompts from the image-maze work repo (authored 2026-06-11). Ingested → seo concept (2026-06-12); project adapter deliberately not filed.
 
 ## Gaps
 
