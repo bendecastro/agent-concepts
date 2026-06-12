@@ -27,6 +27,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
   - `tests/` — pressure scenarios and expected behavior (see Test operation).
 - `build/` — **derived per-agent outputs. Does not exist yet — do not create it** until two agents actually need different formats for the same concept. Today every consumer reads `body/` directly via symlink.
 - `scripts/` — deterministic helpers shared across the workspace.
+- `policies/` — **user-owned authorization policies** (e.g. `publish.yaml`). Agents follow them and may propose changes, but a policy change is never publishable under the policy itself — pushing one requires current explicit user instruction (self-amendment immunity).
 - `AGENTS.md` (this file), `index.md`, `log.md`, `bootstrap.md`, `harnesses.md` — the schema, catalog, history, bootstrap prompts, and harness compatibility matrix.
 
 ## Operations

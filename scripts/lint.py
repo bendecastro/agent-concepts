@@ -170,12 +170,21 @@ def lint_policies(issues: list[Issue]) -> None:
         "https://github.com/bendecastro/CONFIG.git",
         "only_agent_authored_changes",
         "never_include_unrelated_user_changes: true",
+        "agents/policies/",  # self-amendment immunity must stay present
     ]
     for fragment in required_fragments:
         if fragment not in text:
             issues.append(Issue("ERROR", f"publish policy missing required fragment: {fragment}"))
     if re.search(r"default:\s*allow\b", text):
         issues.append(Issue("ERROR", "publish policy must not default to allow"))
+    try:
+        import yaml  # noqa: PLC0415
+
+        yaml.safe_load(text)
+    except ImportError:
+        issues.append(Issue("WARN", "PyYAML unavailable; publish policy not parse-checked"))
+    except Exception as exc:  # malformed YAML silently becomes "no rules match"
+        issues.append(Issue("ERROR", f"publish policy is not valid YAML: {exc}"))
 
 
 def lint_deploy_symlinks(issues: list[Issue]) -> None:
