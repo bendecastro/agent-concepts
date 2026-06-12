@@ -14,3 +14,6 @@ Extracted both OpenAI guides into new reference concept prompting-agents (11 age
 
 ## [2026-06-12] ingest | obra/superpowers skills filed
 Vendored the full skills/ tree (14 skills, 400K, commit 6fd4507, MIT + LICENSE) into ideas/obra-superpowers/ with SOURCE.md provenance. Filed only — candidates for future concept extraction; systematic-debugging notably includes worked pressure-test examples.
+
+## [2026-06-12] ingest | Reputable prompting guides filed
+Filed four sources: Anthropic prompting best practices (official docs), Claude Code best practices (official docs), Anthropic context-engineering essay (extracted from HTML), Google/Boonstra prompt-engineering whitepaper v7 (PDF, 6.8MB). Filed only. Gap recorded: xAI's grok-code-fast-1 guide removed from docs.x.ai post-deprecation; no Grok Build successor found.
