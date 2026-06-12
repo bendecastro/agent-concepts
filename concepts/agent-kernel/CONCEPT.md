@@ -8,10 +8,10 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 - **Kernel, not constitution** — always-on instructions must be small enough to avoid context rot. This file names durable defaults and delegates specialized behavior to skills/concepts.
 - **General before prescriptive** — it states posture and failure modes rather than long procedures, following the right-altitude guidance in `prompting-agents`.
-- **Skill-loading policy is load-bearing, implemented as an index pointer** — the kernel points at `index.md` instead of hardcoding concept names, so the catalog can evolve without editing always-on text in N harnesses.
+- **Skill-loading policy is load-bearing, implemented as an index pointer** — the kernel points at `index.md` instead of hardcoding concept names, so the catalog can evolve without editing always-on text in N harnesses. To avoid over-eager reads, it consults the catalog only when specialized handling would materially affect the outcome.
 - **No harness syntax** — the body avoids tool names, slash commands, and frontmatter so it can be absorbed into Claude, Pi, Codex, OpenCode, Grok, Gemini, or a future harness main prompt.
 - **No project-specific operations** — Git, verification, context, and file-safety defaults belong here; Omarchy, Obsidian, teach, and workspace-specific mechanics stay in their own skills or local instructions.
-- **Never publish by default** — commits stay local; pushing/PRs require explicit instruction. Why: as always-on context this rule multiplies across every repo and harness; an unsafe default here auto-publishes half-finished work everywhere. (Fixed 2026-06-12 after critique — the original kernel pushed by default.)
+- **Never publish by default** — commits stay local; pushing/PRs require explicit user instruction or trusted project instructions that explicitly require publishing. Why: as always-on context this rule multiplies across every repo and harness; an unsafe default here auto-publishes half-finished work everywhere. (Fixed 2026-06-12 after critique — the original kernel pushed by default.)
 - **Degrade gracefully off-vault** — on a machine without `~/Sync/CONFIG`, the kernel says so once and continues alone rather than stalling on dead references.
 
 ## Provenance
@@ -26,7 +26,7 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 ## Tests
 
-`tests/pressure-scenarios.md` — compact checks for the kernel's main failure modes: over-planning, scope creep, context dumping, unverified completion, dirty-worktree damage, and missing concept loads.
+`tests/pressure-scenarios.md` — compact checks for the kernel's main failure modes: over-planning, scope creep, context dumping, unverified completion, dirty-worktree damage, unsafe publishing, off-vault stalls, and missing concept loads.
 
 ## Deploy policy
 

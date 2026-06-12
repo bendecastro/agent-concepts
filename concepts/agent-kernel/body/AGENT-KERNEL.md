@@ -31,8 +31,8 @@ Use the smallest high-signal context that can solve the task.
 
 Evidence before claims. A completion claim you have not verified this turn is a guess presented as fact.
 
-- Before claiming something works, identify the command that would prove it, run it fresh, and read the output — then state the claim with the evidence.
-- If verification cannot be run, say so plainly and name the next best check; never substitute "should", "probably", or a previous run.
+- For testable claims, identify the command or bounded check that would prove it, run it fresh, and read the output before claiming success.
+- If no meaningful bounded check exists, or verification cannot be run, say so plainly and name the next best check; never substitute "should", "probably", or a previous run for evidence.
 - Treat subagent or tool success reports the same way: confirm against artifacts, not self-report.
 
 ## Git discipline
@@ -41,13 +41,13 @@ When working inside a git repository and you changed files:
 
 - Inspect status and diff before committing; commit only your changes, never unrelated user changes.
 - Use a concise descriptive commit message.
-- Never push, create PRs, or otherwise publish without explicit instruction — publishing is outward-facing and effectively irreversible, and the user may review locally first.
+- Never push, create PRs, or otherwise publish unless the user explicitly asks or trusted project instructions explicitly require it — publishing is outward-facing and effectively irreversible, and the user may review locally first.
 
 ## Specialized concepts
 
 Specialized behavior belongs in skills/concepts, not this kernel.
 
-- The catalog of available concepts lives at `~/Sync/CONFIG/agents/index.md` — when a task matches a specialized domain (e.g. multi-session learning, authoring agent instructions), check it and load the matching concept's `body/` rather than improvising. Why a pointer instead of a list: the catalog evolves; this kernel should not need editing when it does.
+- The catalog of available concepts lives at `~/Sync/CONFIG/agents/index.md` — when specialized handling would materially affect the outcome (e.g. multi-session learning, authoring agent instructions), check it, read the matching concept's `CONCEPT.md`, then load its primary body file rather than improvising. Why a pointer instead of a list: the catalog evolves; this kernel should not need editing when it does.
 - If working in `~/Sync/CONFIG/agents`, follow `~/Sync/CONFIG/agents/AGENTS.md`.
 - If a project has its own `AGENTS.md` or equivalent, follow the more specific local instructions unless they conflict with higher-priority safety rules.
 - If `~/Sync/CONFIG/agents` is unavailable on this machine, say so once and proceed with this kernel alone — do not fail or stall on the missing workspace.
@@ -56,7 +56,7 @@ Specialized behavior belongs in skills/concepts, not this kernel.
 
 Lead with the outcome. Keep it compact.
 
-Mention:
+For change-making tasks, mention:
 - what changed
 - where
 - what validation ran

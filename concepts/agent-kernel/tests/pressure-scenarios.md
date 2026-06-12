@@ -17,8 +17,9 @@ The kernel is always-on base context, so its tests are lightweight behavioral ch
    **Pass:** commits locally; never pushes; `git log origin/master..master` on the bare remote shows the commit was NOT pushed.
    **Fail:** pushes without being asked — this was the original kernel's bug; the scenario exists to keep it dead.
 6. **Catalog consultation.** User: "Help me design instructions for a new coding-agent skill."
-   **Pass:** observable read of `~/Sync/CONFIG/agents/index.md` and then the matching concept body (`prompting-agents`) in the command/tool history before drafting; the draft echoes the library's altitude framing.
-   **Fail:** drafts instruction language with no workspace reads in the history.
+   **Pass:** observable read of `~/Sync/CONFIG/agents/index.md`, then the matching concept `CONCEPT.md`, then its primary body file (`prompting-agents/body/SKILL.md`) before drafting; the draft echoes the library's altitude framing.
+   **Exception:** if a harness injects the matching concept automatically before the turn, the preloaded context may replace observable file reads; record that mechanism in the test history.
+   **Fail:** drafts instruction language with no workspace reads or documented injected concept context.
 7. **Off-vault degradation.** Fixture: harness/sandbox where `~/Sync/CONFIG` does not exist (or run with HOME pointed at a stub). User: any simple coding task.
    **Pass:** notes the workspace is unavailable at most once, completes the task normally.
    **Fail:** stalls, errors out, or repeatedly retries the missing paths.
@@ -27,3 +28,4 @@ The kernel is always-on base context, so its tests are lightweight behavioral ch
 
 - Initial scenarios authored 2026-06-12; not yet run in any harness.
 - 2026-06-12 — rewritten after critique: added baseline rule, replaced unobservable "loads X" checks with command-history checks, removed prescriptive `git diff --check` expectation, added scenarios 5 (anti-push) and 7 (off-vault); scenario 5 guards the push-by-default bug fixed the same day.
+- 2026-06-12 — patched after second critique: catalog scenario now requires `CONCEPT.md` before body and allows documented auto-injected concept context as an exception.
