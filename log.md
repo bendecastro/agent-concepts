@@ -32,3 +32,6 @@ Added harnesses.md compatibility matrix and rewrote bootstrap.md with concrete m
 
 ## [2026-06-12] deploy | teach → Pi
 Imported teach into Pi via `~/.pi/agent/skills/teach` relative symlink to the canonical body. Made teach visible to model invocation (removed `disable-model-invocation`) so Pi can auto-select it; `/skill:teach` can still force-load it.
+
+## [2026-06-12] implement | agent-kernel concept
+Added agent-kernel as a tiny always-injected base instruction file for harness main prompts, plus lightweight pressure scenarios. Updated harness/bootstrap docs and lint so non-skill Markdown bodies are valid for always-on concepts.

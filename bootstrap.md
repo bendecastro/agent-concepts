@@ -4,6 +4,8 @@ Use this file when a harness does not automatically discover a concept from `con
 
 ## Generic prompts
 
+- **Always-on base include:**
+  `Include ~/Sync/CONFIG/agents/concepts/agent-kernel/body/AGENT-KERNEL.md in the harness's main agent instructions.`
 - **Workspace maintenance (any agent):**
   `Read ~/Sync/CONFIG/agents/AGENTS.md and follow it. Then: <operation>, e.g. "ingest ideas/foo.md", "lint the workspace", or "implement the teach concept update".`
 - **Concept session (manual harness):**

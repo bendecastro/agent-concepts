@@ -121,7 +121,7 @@ def lint_concepts(issues: list[Issue], index: str) -> None:
     for name in sorted(concept_dirs):
         cdir = ROOT / "concepts" / name
         concept = cdir / "CONCEPT.md"
-        body = cdir / "body" / "SKILL.md"
+        body_dir = cdir / "body"
         tests = cdir / "tests"
         if not concept.is_file():
             issues.append(Issue("ERROR", f"{rel(cdir)} missing CONCEPT.md"))
@@ -131,8 +131,8 @@ def lint_concepts(issues: list[Issue], index: str) -> None:
             issues.append(Issue("ERROR", f"{rel(concept)} missing ## Provenance"))
         if "## Tests" not in text:
             issues.append(Issue("WARN", f"{rel(concept)} missing ## Tests"))
-        if not body.is_file():
-            issues.append(Issue("ERROR", f"{rel(cdir)} missing body/SKILL.md"))
+        if not body_dir.is_dir() or not any(body_dir.glob("*.md")):
+            issues.append(Issue("ERROR", f"{rel(cdir)} missing markdown body file"))
         if not tests.is_dir() or not any(tests.glob("*.md")):
             issues.append(Issue("WARN", f"{rel(cdir)} has no markdown tests"))
 

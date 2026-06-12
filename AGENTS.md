@@ -23,7 +23,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 - `ideas/` — **raw sources, immutable once filed.** Gists, articles, skill files from elsewhere, the user's rough notes. You read these; you never modify them.
 - `concepts/<name>/` — **the canonical layer. The only layer that gets edited.** One directory per skill/concept:
   - `CONCEPT.md` — what it is, why it exists, design decisions, provenance (which `ideas/` files and external sources it derives from), and deploy targets.
-  - `body/` — the actual instruction content an agent consumes (e.g. a SKILL.md per the [Agent Skills spec](https://agentskills.io), supporting files, scripts).
+  - `body/` — the actual instruction content an agent consumes (usually `SKILL.md` per the [Agent Skills spec](https://agentskills.io); always-injected concepts may use a named Markdown file such as `AGENT-KERNEL.md`; plus supporting files/scripts).
   - `tests/` — pressure scenarios and expected behavior (see Test operation).
 - `build/` — **derived per-agent outputs. Does not exist yet — do not create it** until two agents actually need different formats for the same concept. Today every consumer reads `body/` directly via symlink.
 - `scripts/` — deterministic helpers shared across the workspace.
