@@ -11,3 +11,6 @@ Filed GPT-5.2 prompting guide and Codex prompting guide (openai-cookbook, conver
 
 ## [2026-06-12] ingest | OpenAI guides → prompting-agents concept
 Extracted both OpenAI guides into new reference concept prompting-agents (11 agent-agnostic instruction blocks + metaprompting technique, with accuracy test). Codex quirks (AGENTS.md merge order, no-preamble-prompting pre-5.3, Goal/Context/Constraints/Done-when) added to bootstrap.md. AGENTS.md gained a Tune (metaprompting) operation and points Implement at the block library. Excluded as harness plumbing: apply_patch grammars, phase field, compaction API, tool schemas.
+
+## [2026-06-12] ingest | obra/superpowers skills filed
+Vendored the full skills/ tree (14 skills, 400K, commit 6fd4507, MIT + LICENSE) into ideas/obra-superpowers/ with SOURCE.md provenance. Filed only — candidates for future concept extraction; systematic-debugging notably includes worked pressure-test examples.
