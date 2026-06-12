@@ -17,7 +17,9 @@ This directory is the canonical, agent-agnostic home for the skills/concepts tha
 
 **Ingest.** The user drops something into `ideas/` and asks you to ingest it. Read it, discuss the key takeaways and what concept(s) it should create or change, then write/update `CONCEPT.md` (and `body/` if implementing), update `index.md`, and log it. Ingestion is a conversation, not a batch job — the user curates, you compile.
 
-**Implement/Update.** Edit a concept's `body/`. Match the existing structure (progressive disclosure: a lean entry file linking to format/reference files loaded only when needed; scripts for anything an LLM does unreliably, like date math). Record non-obvious design decisions in `CONCEPT.md`.
+**Implement/Update.** Edit a concept's `body/`. Match the existing structure (progressive disclosure: a lean entry file linking to format/reference files loaded only when needed; scripts for anything an LLM does unreliably, like date math). When writing instruction language — gates, rituals, behavioral rules — adapt blocks from `concepts/prompting-agents/body/SKILL.md` rather than inventing phrasing. Record non-obvious design decisions in `CONCEPT.md`.
+
+**Tune (metaprompting).** When an agent underperforms while running a concept from this workspace, ask it at the end of the bad turn to critique its own instructions and propose targeted-but-generalized changes. Repeat a couple of times; adopt only suggestions that recur, simplified to their general form; then the test gate applies before redeploy.
 
 **Test.** Before deploying a new or changed concept that enforces discipline (gates, rituals, mandatory steps), pressure-test it: run a subagent as the consuming agent in a throwaway workspace, with scripted user messages that attack each gate (the predictable excuses: "I'm short on time", "just trust me", "it's common knowledge"). Verify against the artifacts the subagent produced, not its self-report. Store scenarios and expected outcomes in `concepts/<name>/tests/`. Principle (from obra's writing-skills): if you didn't watch an agent fail or hold the line, you don't know the skill teaches the right thing.
 
