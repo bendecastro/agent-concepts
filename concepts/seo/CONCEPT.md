@@ -20,7 +20,7 @@ A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-
 
 ## Tests
 
-`tests/pressure-scenarios.md` — attacks on the four gate-shaped rules: spam-tactic pressure, fabricated image metadata, checklist-dump pressure, myth/stale-stat assertion. Last conversational run 2026-06-12 (Claude Code subagent): all held. Artifact-producing workflow scenario added 2026-06-12; not yet run.
+`tests/pressure-scenarios.md` — attacks on the four gate-shaped rules: spam-tactic pressure, fabricated image metadata, checklist-dump pressure, myth/stale-stat assertion. Last conversational run 2026-06-12 (Claude Code subagent): all held. Artifact-producing workflow scenario run 2026-06-12: pass, verified via artifacts (noindex prioritized, robots AI-bot block flagged not auto-edited, no fabrication for placeholder image).
 
 ## Deploy targets
 
