@@ -50,7 +50,7 @@ Done when: The requested session/task is complete and any canonical changes are 
 
 ### OpenCode
 
-If native Agent Skills support is configured, expose `concepts/<name>/body/` through OpenCode's skills directory and record the exact path in `harnesses.md` and the concept `CONCEPT.md`. Until then, use the generic concept-session bootstrap.
+OpenCode has the `agent-kernel` delta in `~/.config/opencode/AGENTS.md`. If native Agent Skills support is configured for a specialized concept, expose `concepts/<name>/body/` through OpenCode's skills directory and record the exact path in `harnesses.md` and the concept `CONCEPT.md`. Until then, use the generic concept-session bootstrap for specialized concepts.
 
 ### Grok / Gemini / other agents
 

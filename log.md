@@ -89,3 +89,6 @@ Ran the artifact-producing audit on a fixture static site (noindex home, lazy un
 
 ## [2026-06-12] deploy | seo → Pi
 Deployed the narrowed seo skill to Pi via `~/.pi/agent/skills/seo` relative symlink to the canonical `concepts/seo/body/`; updated deploy records in CONCEPT.md, index.md, and harnesses.md.
+
+## [2026-06-12] deploy | agent-kernel delta → OpenCode
+Delta-deployed agent-kernel into `~/.config/opencode/AGENTS.md`: preserved existing OpenCode-specific guidance, replaced the unsafe auto-push rule with the publish-policy/default-deny rule, and added evidence-before-claims plus a marked Specialized Concepts catalog pointer. Updated harness/bootstrap/index/concept deploy records.
