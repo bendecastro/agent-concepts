@@ -5,7 +5,19 @@ description: Use when writing or revising instructions for a coding agent — co
 
 # Prompting Agents
 
-Reusable instruction blocks distilled from OpenAI's GPT-5.2 and Codex prompting guides (see CONCEPT.md for provenance), rewritten agent-agnostically. When authoring or tuning instructions for any agent, adapt the relevant block rather than writing one from scratch — these phrasings have been optimized against production evals. Tag origin when copying verbatim so future updates can be traced.
+Reusable instruction blocks and principles distilled from OpenAI's GPT-5.2 and Codex prompting guides, Anthropic's prompting/context-engineering guidance, and Google's prompt-engineering whitepaper (see CONCEPT.md for provenance), rewritten agent-agnostically. When authoring or tuning instructions for any agent, adapt the relevant block rather than writing one from scratch — these phrasings have been optimized against production evals. Tag origin when copying verbatim so future updates can be traced.
+
+## First: choose the altitude
+
+Before reaching for any block below, decide how much constraint the task actually warrants. Anthropic's context-engineering guidance calls this the **right altitude**: the Goldilocks zone between brittle, hardcoded if-else process steps (fragile, high-maintenance, and insulting to a capable model) and vague high-level guidance that falsely assumes shared context. Instructions should be specific enough to transmit hard-won lessons, flexible enough that the agent applies its own reasoning.
+
+Three principles that govern everything else in this library:
+
+- **Explain the why.** State the motivation behind an instruction, not just the instruction — "Claude is smart enough to generalize from the explanation," and a rule whose reason is visible can be correctly applied to situations its author never imagined. A bare imperative can only be obeyed or violated. (Anthropic prompting best practices.)
+- **Prefer general instructions over prescriptive steps.** "Think thoroughly" often beats a hand-written step-by-step plan; a strong model's reasoning frequently exceeds what its author would prescribe. Save prescriptive blocks for places where errors are costly or the failure mode is in-the-moment rationalization. (Anthropic prompting best practices.)
+- **Context economy.** Aim for the smallest set of high-signal tokens that produces the outcome — context rot is real: recall degrades as context grows. Progressive disclosure (lean entry file, details loaded just-in-time) is this principle applied to skill structure. (Anthropic context engineering.)
+
+The constraining blocks below (scope discipline, gates-style rules) are tools for *specific failure modes*, not a default posture. Reach for them when the cost of an error is high or when an agent under pressure predictably rationalizes — and even then, attach the why.
 
 ## Output shape and verbosity
 
@@ -129,6 +141,16 @@ For agents producing UI from scratch (skip when a design system exists — then 
 - Choose a clear visual direction; define tokens/CSS variables; use a few meaningful
   animations rather than generic micro-motion. Verify desktop and mobile.
 ```
+
+## Technique repertoire
+
+When designing a task prompt (rather than standing instructions), pick the lightest technique that fits — from Google's prompt-engineering whitepaper (Boonstra) and Anthropic's docs:
+
+- **Examples over rules** for format/tone/structure: a few well-crafted examples steer more reliably than descriptions — show, don't tell. With reasoning models, examples can include the reasoning pattern itself.
+- **Chain-of-thought / "think first"** for problems needing deliberation; **step-back prompting** (ask for the general principle, then the specific answer) when the task benefits from grounding in fundamentals.
+- **Self-consistency** (sample multiple reasoning paths, take the consensus) when single-shot accuracy on a hard problem matters more than cost.
+- **Self-check** as a cheap reliability win: "before finishing, verify your answer against [criteria]."
+- **ReAct** (interleaved reasoning + tool use) is what modern agent harnesses already do — don't re-prompt it explicitly inside one.
 
 ## Maintenance technique: metaprompting
 

@@ -2,6 +2,15 @@
 
 This directory is the canonical, agent-agnostic home for the skills/concepts that specialise the user's coding agents (Claude Code, Pi, OpenCode, Grok, Codex, possibly Gemini). It is maintained mostly by agents. If you are an agent reading this: this file is your operating manual. Read it fully, then `index.md` and the last few `log.md` entries — open other files only as the index points you to them.
 
+## Spirit
+
+This workspace exists to **liberate and improve agents, not to constrain them**. Everything in it — concepts, gates, formats — was written by past agents and a human collaborator who assume that *you may be more capable than they were*. So:
+
+- Rules here are **defaults with reasons**, not commandments. Each carries its rationale so you can generalize it correctly — and recognize when it doesn't apply.
+- If you conclude a rule or concept is wrong, the legitimate move is to **say so and improve it** (propose the change, or make it and log your reasoning — the user reviews via git). Silent deviation is never legitimate: it hides the disagreement that would have improved the concept. Blind obedience is barely better: it preserves a known flaw.
+- **Concepts must evolve.** Every operation below is also an opportunity to notice that a concept has been outgrown. Treat friction between a rule and your judgment as signal, not noise.
+- Prefer guidance at the **right altitude**: specific enough to transmit hard-won lessons, flexible enough that a capable agent applies its own reasoning — neither brittle if-else process steps nor vague platitudes (see `ideas/anthropic-context-engineering.md`).
+
 ## Layers
 
 - `ideas/` — **raw sources, immutable once filed.** Gists, articles, skill files from elsewhere, the user's rough notes. You read these; you never modify them.
@@ -30,12 +39,14 @@ Record deploy targets in the concept's `CONCEPT.md` and in `index.md`.
 
 **Lint.** Periodically, or on request: concepts missing tests or provenance; deployed symlinks that dangle or point outside `concepts/`; index entries that don't match reality; `ideas/` files never ingested (list them, don't delete); dead external links in CONCEPT.md provenance. Fix the mechanical issues, report the judgment calls, log the pass.
 
-## Gates (non-negotiable)
+## Gates
 
-- **Canon gate.** Never hand-edit derived outputs or anything outside this directory that a symlink points into from an agent's config. "It's a one-line fix" is not an excuse — edit the concept; otherwise the next rebuild/update silently reverts it.
-- **Provenance gate.** Every concept names its sources in `CONCEPT.md`. An uncredited design decision is a parametric guess that nobody can re-evaluate later.
-- **Test gate.** A discipline-enforcing concept does not deploy until it has held under a pressure scenario. "The change is small" is not an excuse — small changes are how loopholes open.
-- **Immutability gate.** Files in `ideas/` are never edited. Annotations and corrections belong in the concept that cites them.
+Gates are the rules that have earned a higher bar for revision, because their failure modes are *in-the-moment rationalization* — the moment a gate blocks you is precisely when your judgment about it is least trustworthy. They still follow the Spirit: each states its why, and each can be changed — deliberately, out loud, with the change logged — just not skipped quietly mid-task because it's inconvenient right now.
+
+- **Canon gate.** Don't hand-edit derived outputs or anything outside this directory that a symlink points into from an agent's config. Why: the next rebuild/update silently reverts the fix, and "it's a one-line fix" is exactly how canon and deploys drift apart.
+- **Provenance gate.** Every concept names its sources in `CONCEPT.md`. Why: an uncredited design decision is a parametric guess that no future agent can re-evaluate, supersede, or trust.
+- **Test gate.** A discipline-enforcing concept doesn't deploy until it has held under a pressure scenario. Why: discipline instructions fail in ways their authors can't see; "the change is small" is how loopholes open. (Reference concepts with no runtime gates need only an accuracy check.)
+- **Immutability gate.** Files in `ideas/` are never edited. Why: they are the evidence base — annotations and corrections belong in the concepts that cite them, where they carry provenance.
 
 ## Bookkeeping
 

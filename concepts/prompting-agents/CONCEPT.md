@@ -13,6 +13,13 @@ A reference library of proven instruction blocks for authoring agent instruction
 
 - `ideas/openai-gpt-5-2-prompting-guide.md` — verbosity clamps, scope discipline, long-context re-grounding, ambiguity/hallucination handling, user-update specs, tool-usage rules, research-agent appendix. https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide
 - `ideas/openai-codex-prompting-guide.md` — autonomy/persistence, loop-breaker, plan closure and promise discipline, final-message style, dirty-worktree etiquette, frontend anti-slop, custom-tool naming guidance, metaprompting. https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide
+- `ideas/anthropic-context-engineering.md` — right-altitude principle, context economy / context rot, just-in-time context. https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+- `ideas/anthropic-claude-prompting-best-practices.md` — explain-the-why ("smart enough to generalize from the explanation"), prefer general instructions over prescriptive steps, examples over rules, self-check. https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+- `ideas/google-boonstra-prompt-engineering-v7.pdf` — technique repertoire (few-shot, chain-of-thought, step-back, self-consistency, ReAct). https://www.kaggle.com/whitepaper-prompt-engineering
+
+## Philosophy
+
+Per the workspace Spirit (AGENTS.md): this library guides rather than constrains. The "choose the altitude" section is load-bearing — constraining blocks are tools for specific, costly failure modes, not a default posture, and every hard rule carries its why so a more capable future agent can generalize or supersede it correctly.
 
 ## Tests
 

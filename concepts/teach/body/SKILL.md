@@ -43,9 +43,9 @@ Every session starts the same way, before any new material:
 
 If `MISSION.md` is missing or vague, your first and only job is to interview the user about why they want to learn this. Push back on vagueness — "ship a Rust CLI to my team" beats "learn Rust." A bad mission is worse than no mission.
 
-## Gates (non-negotiable)
+## Gates
 
-You will be tempted to skip these. The temptations are predictable, so they are pre-refuted here:
+These gates exist because their failure modes are in-the-moment rationalization — the moment a gate is inconvenient is the moment your judgment about it is least reliable, so the predictable temptations are pre-refuted below. They bind the impulse of the moment, not your considered judgment: if you conclude a gate itself is wrong for this user or this topic, say so to the user and propose changing this skill — openly evolving the rule is always legitimate; quietly skipping it never is.
 
 **Review-first gate.** No new material until due review items are quizzed and `REVIEW.md` is updated. Not valid excuses: "the user seems eager to start" (review takes two minutes; eagerness survives it), "the user is short on time" (then review IS the session — it's the highest-value two minutes available), "the user asked for a specific topic" (review first, then teach it), "they clearly remember this" (that feeling is fluency, not storage — the whole point is testing it). A skipped review silently kills the queue, and the queue is what makes this skill work across sessions. If the user explicitly refuses review after you've quizzed once, note it in `NOTES.md` and move on — respect beats nagging.
 
