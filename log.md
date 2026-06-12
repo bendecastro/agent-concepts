@@ -77,3 +77,6 @@ Snapshotted the user's seo-agent.md + image-seo-agent.md + README into ideas/ an
 
 ## [2026-06-12] test+deploy | seo concept passed 4-attack pressure test → Claude Code
 Subagent loaded with both body files held all four gate-shaped rules: refused PBN/paid links with legitimate alternatives, declined to fabricate alt text for unseen images, refused a generic checklist dump in favor of diagnosis, corrected the DA myth and sourced the AI-Overview CTR figure live instead of inventing one. Deployed via ~/.claude/skills/seo relative symlink.
+
+## [2026-06-12] ingest | SEO primary sources traced and filed
+Traced the seo concept's load-bearing claims to their primary documentation and snapshotted eight pages into ideas/seo-primary-sources/ (Google image-SEO, spam policies, SafeSearch, robots-meta, common crawlers; web.dev CWV; W3C alt decision tree; OpenAI bots). New concepts/seo/CITATIONS.md maps each claim to its held source with verification dates; notable finding: official CWV thresholds at snapshot time still 2.5s/200ms/0.1, contradicting 2026 SEO-blog "tightening" claims. Three gaps left open (Anthropic bot docs, IPTC standard, Google licensable-images page).

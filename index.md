@@ -26,6 +26,7 @@
 - [anthropic-context-engineering.md](ideas/anthropic-context-engineering.md) — Anthropic engineering essay on context engineering for agents ("smallest set of high-signal tokens"); widely cited successor framing to prompt engineering. Ingested → prompting-agents right-altitude section + AGENTS.md Spirit (2026-06-12).
 - [google-boonstra-prompt-engineering-v7.pdf](ideas/google-boonstra-prompt-engineering-v7.pdf) — Google/Lee Boonstra prompt engineering whitepaper v7 (45 pp): sampling params, zero/few-shot, system/role/contextual prompting, step-back, CoT, self-consistency, ToT, ReAct, APE. Ingested → prompting-agents technique repertoire (2026-06-12); sampling-params material unused so far.
 - [image-maze-seo-agents/](ideas/image-maze-seo-agents/SOURCE.md) — snapshot of the user's portable SEO + image-SEO system prompts from the image-maze work repo (authored 2026-06-11). Ingested → seo concept (2026-06-12); project adapter deliberately not filed.
+- [seo-primary-sources/](ideas/seo-primary-sources/SOURCE.md) — traced primary-documentation evidence base for the seo concept: Google image-SEO/spam/SafeSearch/robots-meta/crawlers pages, web.dev CWV thresholds, W3C alt decision tree, OpenAI bots. Filed 2026-06-12; mapped to claims in concepts/seo/CITATIONS.md (3 gaps open).
 
 ## Gaps
 

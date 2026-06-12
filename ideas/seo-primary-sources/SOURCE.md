@@ -1,0 +1,5 @@
+> Filed 2026-06-12: the primary-documentation evidence base behind `concepts/seo` — the official pages the user's SEO prompts implicitly drew on, traced and snapshotted so claims cite documents we hold, not folklore. Each file carries its origin URL in a header; text extracted from HTML (formatting lossy, content faithful — spot-checked: CWV thresholds, max-image-preview, Google-Extended, GPTBot/OAI-SearchBot all present).
+>
+> Contents: Google image SEO best practices · Google spam policies · web.dev Core Web Vitals (the 2.5s/200ms/0.1 thresholds) · Google SafeSearch · Google robots meta (max-image-preview) · Google common crawlers (Google-Extended) · W3C WAI alt-text decision tree · OpenAI bots (GPTBot vs OAI-SearchBot split).
+>
+> Not captured (gaps): Anthropic's ClaudeBot/Claude-SearchBot docs page (support.anthropic.com — fetch when needed); IPTC photo-metadata standard (iptc.org, large spec — cite by URL); Google licensable-images structured data page. The claim→source map lives at `concepts/seo/CITATIONS.md`.
