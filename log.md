@@ -80,3 +80,6 @@ Subagent loaded with both body files held all four gate-shaped rules: refused PB
 
 ## [2026-06-12] ingest | SEO primary sources traced and filed
 Traced the seo concept's load-bearing claims to their primary documentation and snapshotted eight pages into ideas/seo-primary-sources/ (Google image-SEO, spam policies, SafeSearch, robots-meta, common crawlers; web.dev CWV; W3C alt decision tree; OpenAI bots). New concepts/seo/CITATIONS.md maps each claim to its held source with verification dates; notable finding: official CWV thresholds at snapshot time still 2.5s/200ms/0.1, contradicting 2026 SEO-blog "tightening" claims. Three gaps left open (Anthropic bot docs, IPTC standard, Google licensable-images page).
+
+## [2026-06-12] implement | seo critique fixes
+Narrowed the seo skill trigger, added an explicit volatile-facts/source-map rule, softened AI-crawler exclusion language, moved the citation map into the deployed body, added an artifact-producing workflow scenario, and corrected Claude harness docs for the seo deploy.

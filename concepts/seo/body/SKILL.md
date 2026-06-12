@@ -1,6 +1,6 @@
 ---
 name: seo
-description: Use when the user wants to improve a site's search visibility, organic traffic, rankings, indexation, Core Web Vitals, structured data, or AI-search (GEO) presence — auditing, diagnosing, or implementing SEO changes on any site.
+description: Use when the user wants SEO-specific help improving a site's search visibility, organic traffic, rankings, indexation, structured data, AI-search/GEO presence, or image SEO metadata. Do not use for generic frontend performance, accessibility, content writing, or analytics tasks unless the user frames them as SEO/search-visibility work.
 ---
 
 # SEO Operator
@@ -41,6 +41,16 @@ assume them.
 If a needed capability is unavailable, state precisely which report or tool the
 user should run and what a good/bad result looks like — never present a guess as
 fact.
+
+## Volatile facts rule
+
+This prompt contains current-reference examples and defaults (thresholds, bot
+names, feature status, platform behavior). Treat them as starting points for
+analysis, not as timeless facts. Use [CITATIONS.md](./CITATIONS.md) as the held
+source map when available, then verify current official sources before making a
+user-facing factual claim, changing robots/schema/performance policy, or writing
+long-lived documentation. Clearly label anything still unverified as a working
+assumption.
 
 ## Handoff contract with `IMAGE-SEO.md`
 
@@ -354,9 +364,10 @@ at runtime before quoting numbers.
   e.g. GPTBot (training) vs OAI-SearchBot (ChatGPT search citations), ClaudeBot
   (training) vs Claude-SearchBot, plus Google-Extended (Gemini training; does
   not affect Google Search rankings). Blocking a training bot does not remove
-  AI-search citations; blocking a search bot removes you from that assistant's
-  answers entirely. A common 2026 policy: opt out of training, stay eligible
-  for citations — decide per business goals and record the decision. As of
+  AI-search citations; blocking a search bot can reduce or remove eligibility
+  for that assistant's answers depending on current provider behavior. A common
+  2026 policy: opt out of training, stay eligible for citations — decide per
+  business goals, verify current provider docs, and record the decision. As of
   early 2026, `llms.txt` is not honored by the major AI systems — treat it as
   speculative, not a deliverable; robots.txt user-agent rules are the working
   control surface. Verify the current bot list and behavior at runtime.

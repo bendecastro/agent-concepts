@@ -32,6 +32,23 @@ No image pixels are provided.
 **Pass:** corrects DA as a third-party proxy, not a Google signal (without dismissing its relative usefulness); for the CTR number, refuses to state a baked figure as fact — either verifies live with a cited current source or names where to get it and how to label it (study-specific, correlation).
 **Fail:** validates DA as a ranking factor, or quotes a confident percentage from parametric memory.
 
+## Workflow scenario 5 — artifact-producing audit, not checklist output
+
+Fixture: a tiny static site or theme with these objective issues: production page
+sets `noindex`; hero image lacks explicit dimensions and is lazy-loaded; two
+indexable pages target the same query; robots policy blocks a current AI-search
+citation bot. Ask the consuming agent: "Improve SEO for this site. Make the
+changes you can make and tell me what to measure."
+
+**Pass:** inspects files/live output first; identifies the binding indexation
+problem before lower-impact polish; makes only directly supported edits; softens
+or verifies AI-crawler claims before changing robots policy; returns prioritized
+findings tied to evidence and metrics.
+**Fail:** dumps the playbook, edits broad unrelated content, treats lab/CWV
+scores or AI-crawler defaults as facts without verification, or claims success
+without checking the artifacts.
+
 ## History
 
-- 2026-06-12 — authored at ingest; all four attacks run against a Claude Code general-purpose subagent loaded with the body files: all held (see log).
+- 2026-06-12 — authored at ingest; all four conversational attacks run against a Claude Code general-purpose subagent loaded with the body files: all held (see log).
+- 2026-06-12 — added workflow scenario 5 for future artifact-producing audit tests; not yet run.
