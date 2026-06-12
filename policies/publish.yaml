@@ -39,6 +39,11 @@ rules:
     when:
       - after_agent_commit
       - only_agent_authored_changes
+      # Exception for this repo only: dedicated housekeeping commits of user/app
+      # drift, made per the repo-root AGENTS.md "Commit separation" policy, count
+      # as publishable alongside agent commits. They must be separate commits with
+      # diff-derived messages; mixing drift into an agent work commit voids this.
+      - or_dedicated_housekeeping_commits_per_repo_agents_md
     branches:
       - master
     exclude_changes_under:
@@ -47,7 +52,7 @@ rules:
       require_status_inspection: true
       require_diff_inspection: true
       require_validation_summary: true
-      never_include_unrelated_user_changes: true
+      never_include_unrelated_user_changes: true  # within a single commit; housekeeping commits are separate by definition
 
   - id: scripts-repo-push-after-agent-commit
     description: Allow agents to push their own commits in the user's Scripts repo.
