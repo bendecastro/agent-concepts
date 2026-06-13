@@ -101,3 +101,6 @@ Recorded bounded Codex validation: active session loaded the global `~/.codex/AG
 
 ## [2026-06-12] ingest | omarchy (upstream-maintained skill)
 Traced ~/.claude/skills/omarchy to basecamp/omarchy's bundled default/omarchy-skill/SKILL.md. Filed citation snapshot in ideas/omarchy-skill-upstream/ and created concepts/omarchy/CONCEPT.md with a deliberate no-vendored-body design: canon and deploy stay upstream so `omarchy update` keeps it current (user decision).
+
+## [2026-06-13] ingest | notebooklm (upstream skill from notebooklm-py)
+Installed notebooklm-py v0.7.1 (`uv tool install "notebooklm-py[browser]"`) and deployed its bundled skill via `notebooklm skill install`. Filed upstream-maintained concept (no vendored body, omarchy pattern) + ideas snapshot with citation; refresh path is rerunning `skill install` after package upgrades.
