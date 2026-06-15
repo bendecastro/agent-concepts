@@ -104,3 +104,6 @@ Traced ~/.claude/skills/omarchy to basecamp/omarchy's bundled default/omarchy-sk
 
 ## [2026-06-13] ingest | notebooklm (upstream skill from notebooklm-py)
 Installed notebooklm-py v0.7.1 (`uv tool install "notebooklm-py[browser]"`) and deployed its bundled skill via `notebooklm skill install`. Filed upstream-maintained concept (no vendored body, omarchy pattern) + ideas snapshot with citation; refresh path is rerunning `skill install` after package upgrades.
+
+## [2026-06-15] ingest | last30days upstream skill
+Snapshotted mvanhorn/last30days-skill `skills/last30days/SKILL.md` (v3.3.2, commit 1221584, MIT) into ideas/ and added a reference-only `last30days` concept. Deliberately no vendored/deployed body here: the skill's contract is coupled to the upstream Python engine/package and should be installed via upstream plugin/Agent Skills channels.
