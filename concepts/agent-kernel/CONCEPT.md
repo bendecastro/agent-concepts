@@ -18,11 +18,11 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 - `concepts/prompting-agents/body/SKILL.md` — right altitude, context economy, scope discipline, tool discipline, plan/promise discipline, dirty repo rules, final-message style.
 - `AGENTS.md` — workspace Spirit: rules as defaults with reasons; canonical changes over deployed-copy edits; small context reads; commit discipline.
-- `ideas/openai-codex-prompting-guide.md` — autonomy/persistence, working-tree etiquette, plan closure, final response style.
-- `ideas/openai-gpt-5-2-prompting-guide.md` — verbosity clamps, scope discipline, ambiguity handling, tool usage, long-context grounding.
-- `ideas/anthropic-context-engineering.md` — smallest high-signal context / context rot framing.
-- `ideas/anthropic-claude-prompting-best-practices.md` — explain the why and prefer general instructions over brittle steps.
-- `ideas/obra-superpowers/skills/verification-before-completion/SKILL.md` — evidence-before-claims verification: identify the proving command, run it fresh, read the output; never "should"/"probably"; distrust subagent self-reports.
+- `raw/openai-codex-prompting-guide.md` — autonomy/persistence, working-tree etiquette, plan closure, final response style.
+- `raw/openai-gpt-5-2-prompting-guide.md` — verbosity clamps, scope discipline, ambiguity handling, tool usage, long-context grounding.
+- `raw/anthropic-context-engineering.md` — smallest high-signal context / context rot framing.
+- `raw/anthropic-claude-prompting-best-practices.md` — explain the why and prefer general instructions over brittle steps.
+- `raw/obra-superpowers/skills/verification-before-completion/SKILL.md` — evidence-before-claims verification: identify the proving command, run it fresh, read the output; never "should"/"probably"; distrust subagent self-reports.
 
 ## Tests
 

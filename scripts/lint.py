@@ -76,15 +76,15 @@ def concept_names_from_index(index: str) -> set[str]:
     return names
 
 
-def idea_entries_from_index(index: str) -> set[str]:
+def raw_entries_from_index(index: str) -> set[str]:
     entries: set[str] = set()
-    in_ideas = False
+    in_raw = False
     for line in index.splitlines():
         if line.startswith("## "):
-            in_ideas = line.strip().lower() == "## ideas"
+            in_raw = line.strip().lower() == "## raw"
             continue
-        if in_ideas:
-            m = re.search(r"\]\(ideas/([^)]+)\)", line)
+        if in_raw:
+            m = re.search(r"\]\(raw/([^)]+)\)", line)
             if m:
                 entries.add(m.group(1).rstrip("/"))
     return entries
@@ -100,8 +100,8 @@ def lint_root(issues: list[Issue]) -> None:
 
 def lint_links(issues: list[Issue]) -> None:
     for md in ROOT.rglob("*.md"):
-        # Raw ideas are immutable source material; only lint workspace-owned docs.
-        if "ideas" in md.relative_to(ROOT).parts:
+        # Raw sources are immutable source material; only lint workspace-owned docs.
+        if "raw" in md.relative_to(ROOT).parts:
             continue
         text = read(md)
         for link in markdown_links(text):
@@ -137,23 +137,23 @@ def lint_concepts(issues: list[Issue], index: str) -> None:
             issues.append(Issue("WARN", f"{rel(cdir)} has no markdown tests"))
 
 
-def lint_ideas(issues: list[Issue], index: str) -> None:
-    indexed = idea_entries_from_index(index)
-    idea_root = ROOT / "ideas"
-    if not idea_root.exists():
+def lint_raw(issues: list[Issue], index: str) -> None:
+    indexed = raw_entries_from_index(index)
+    raw_root = ROOT / "raw"
+    if not raw_root.exists():
         return
     top_level: set[str] = set()
-    for child in idea_root.iterdir():
+    for child in raw_root.iterdir():
         if child.name.startswith("."):
             continue
         top_level.add(child.name if child.is_file() else child.name)
     indexed_top = {entry.split("/", 1)[0] for entry in indexed}
     for missing in sorted(top_level - indexed_top):
-        issues.append(Issue("WARN", f"idea not listed in index.md: ideas/{missing}"))
+        issues.append(Issue("WARN", f"raw source not listed in index.md: raw/{missing}"))
     for line in index.splitlines():
-        if line.lstrip().startswith("-") and "ideas/" in line:
+        if line.lstrip().startswith("-") and "raw/" in line:
             if not re.search(r"\b(Ingested|Filed|not yet ingested|partial|unused|Gap recorded)\b", line, re.I):
-                issues.append(Issue("WARN", f"idea index entry lacks ingest/filed status: {line.strip()}"))
+                issues.append(Issue("WARN", f"raw source index entry lacks ingest/filed status: {line.strip()}"))
 
 
 def lint_policies(issues: list[Issue]) -> None:
@@ -229,7 +229,7 @@ def main() -> int:
     lint_root(issues)
     lint_links(issues)
     lint_concepts(issues, index)
-    lint_ideas(issues, index)
+    lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)
 

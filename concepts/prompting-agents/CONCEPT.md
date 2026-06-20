@@ -13,13 +13,13 @@ A reference library of proven instruction blocks for authoring agent instruction
 
 ## Provenance
 
-- `ideas/openai-gpt-5-2-prompting-guide.md` — verbosity clamps, scope discipline, long-context re-grounding, ambiguity/hallucination handling, user-update specs, tool-usage rules, research-agent appendix. https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide
-- `ideas/openai-codex-prompting-guide.md` — autonomy/persistence, loop-breaker, plan closure and promise discipline, final-message style, dirty-worktree etiquette, frontend anti-slop, custom-tool naming guidance, metaprompting. https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide
-- `ideas/anthropic-context-engineering.md` — right-altitude principle, context economy / context rot, just-in-time context. https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
-- `ideas/anthropic-claude-prompting-best-practices.md` — explain-the-why ("smart enough to generalize from the explanation"), prefer general instructions over prescriptive steps, examples over rules, self-check. https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
-- `ideas/google-boonstra-prompt-engineering-v7.pdf` — technique repertoire (few-shot, chain-of-thought, step-back, self-consistency, ReAct). https://www.kaggle.com/whitepaper-prompt-engineering
-- `ideas/skillsskillsproductivityteach at main.md` — Matt Pocock's broader skills README/catalog: small composable skills, user-invoked vs model-invoked boundary, grilling/shared-language/documented-decision patterns, feedback-loop skills. https://github.com/mattpocock/skills/tree/main
-- `ideas/AI Engineer Workshop 2026.md` — workflow framing for AI-assisted feature delivery: grill vague requirements, write PRDs, break work into vertical tracer-bullet issues, execute with TDD human-in-the-loop or AFK, design codebases for agent effectiveness. https://www.aihero.dev/ai-engineer-workshop-2026~dwnll
+- `raw/openai-gpt-5-2-prompting-guide.md` — verbosity clamps, scope discipline, long-context re-grounding, ambiguity/hallucination handling, user-update specs, tool-usage rules, research-agent appendix. https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide
+- `raw/openai-codex-prompting-guide.md` — autonomy/persistence, loop-breaker, plan closure and promise discipline, final-message style, dirty-worktree etiquette, frontend anti-slop, custom-tool naming guidance, metaprompting. https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide
+- `raw/anthropic-context-engineering.md` — right-altitude principle, context economy / context rot, just-in-time context. https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+- `raw/anthropic-claude-prompting-best-practices.md` — explain-the-why ("smart enough to generalize from the explanation"), prefer general instructions over prescriptive steps, examples over rules, self-check. https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+- `raw/google-boonstra-prompt-engineering-v7.pdf` — technique repertoire (few-shot, chain-of-thought, step-back, self-consistency, ReAct). https://www.kaggle.com/whitepaper-prompt-engineering
+- `raw/skillsskillsproductivityteach at main.md` — Matt Pocock's broader skills README/catalog: small composable skills, user-invoked vs model-invoked boundary, grilling/shared-language/documented-decision patterns, feedback-loop skills. https://github.com/mattpocock/skills/tree/main
+- `raw/AI Engineer Workshop 2026.md` — workflow framing for AI-assisted feature delivery: grill vague requirements, write PRDs, break work into vertical tracer-bullet issues, execute with TDD human-in-the-loop or AFK, design codebases for agent effectiveness. https://www.aihero.dev/ai-engineer-workshop-2026~dwnll
 
 ## Philosophy
 

@@ -7,7 +7,7 @@ Use this file when a harness does not automatically discover a concept from `con
 - **Always-on base include:**
   `Include ~/Sync/CONFIG/agents/concepts/agent-kernel/body/AGENT-KERNEL.md in the harness's main agent instructions.`
 - **Workspace maintenance (any agent):**
-  `Read ~/Sync/CONFIG/agents/AGENTS.md and follow it. Then: <operation>, e.g. "ingest ideas/foo.md", "lint the workspace", or "implement the teach concept update".`
+  `Read ~/Sync/CONFIG/agents/AGENTS.md and follow it. Then: <operation>, e.g. "ingest raw/foo.md", "lint the workspace", or "implement the teach concept update".`
 - **Concept session (manual harness):**
   `Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if your harness does not support Agent Skills metadata. Follow the Markdown body as your instructions for this session.`
 - **Concept test (manual harness):**
@@ -58,7 +58,7 @@ Use the generic concept-session bootstrap. After first real use, update `harness
 
 ## Per-agent quirks
 
-**Codex** (from OpenAI's Codex prompting guide and current docs, see `ideas/openai-codex-prompting-guide.md`):
+**Codex** (from OpenAI's Codex prompting guide and current docs, see `raw/openai-codex-prompting-guide.md`):
 - AGENTS.md discovery: concatenates `~/.codex/AGENTS.md` plus every AGENTS.md from repo root down to CWD; later (deeper) files override earlier ones. So a concept can be deployed to Codex by referencing it from an AGENTS.md at the right directory level — no skills directory needed.
 - The model is specifically trained to adhere to AGENTS.md content — durable rules belong there, not in the task prompt.
 - Do NOT add instructions asking pre-5.3 Codex models for upfront plans, preambles, or mid-task status updates — this causes it to stop before the task is complete. (gpt-5.3-codex and later handle promptable updates fine.)
