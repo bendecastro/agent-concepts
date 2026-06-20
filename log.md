@@ -129,5 +129,8 @@ Implemented 7 concepts from Pocock's AI Engineer Workshop suite: grilling (loop)
 ## [2026-06-20] test+deploy | workshop pipeline (grill stack)
 Pressure-tested grill-me (transitively grilling + domain-modeling) via a general-purpose subagent in a throwaway repo; all gates held under artifact inspection (one-question gate, pure-glossary CONTEXT.md, ADR three-part bar, no-code-while-open). Symlink-deployed all 7 workshop concepts to ~/.claude/skills/. codebase-design accuracy-checked; to-prd/to-issues/tdd scenarios authored, full pressure runs pending.
 
-## [2026-06-20] deploy | Pi concept skill auto-deploy helper
-Added `scripts/deploy-pi-skills.py` to bulk expose every local concept skill to Pi via relative symlinks under `~/.agents/skills/` and `~/.pi/agent/skills/`. Updated Pi global instructions so missing-skill requests check local concepts before external installs.
+## [2026-06-20] deploy | Local concept skill auto-deploy helper
+Added `scripts/deploy-local-skills.py` to bulk expose every local concept skill to Pi and Claude Code via relative symlinks under `~/.agents/skills/` and `~/.pi/agent/skills/`. Updated Pi global instructions so missing-skill requests check local concepts before external installs.
+
+## [2026-06-20] deploy | Claude Code local concept auto-deploy
+Extended the local skill deploy helper to update Claude Code as well as Pi, keeping `~/.claude/skills/<name>` pointed directly at canonical concept bodies. Left `deploy-pi-skills.py` as a compatibility symlink to the generalized helper.
