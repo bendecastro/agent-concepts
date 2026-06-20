@@ -37,7 +37,7 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 | User-invoked setup | `bc-init-agent` (scaffolds the per-repo workspace) |
 | User-invoked orchestrators (loop) | `bc-plan-to-issues`, `bc-drain-issues` |
 | User-invoked single-step (standalone) | `grill-me`, `to-prd`, `to-issues` |
-| Model-invoked disciplines | `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `tdd`, `codebase-design` |
+| Model-invoked disciplines | `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `tdd`, `codebase-design`, `bc-autoresearch` |
 
 The single-step orchestrators (`grill-me`/`to-prd`/`to-issues`) still exist for using one phase at a time; the loop orchestrators inline the *disciplines* beneath them so nothing is duplicated and no orchestrator calls another orchestrator.
 
@@ -46,5 +46,6 @@ The single-step orchestrators (`grill-me`/`to-prd`/`to-issues`) still exist for 
 - **Trunk-based, not PR-per-slice** — so dependency-ordered slices see prior work, and it matches what `publish.yaml` authorizes.
 - **Park-and-continue + circuit-breaker** — one bad slice doesn't halt the run; a run of parks does.
 - **Completion gate reads the project's own validation conventions**, not a hardcoded test command.
+- **Optional bounded improvement** — after a slice is GREEN, the per-issue agent runs `bc-autoresearch` *only when* the issue targets a measurable metric; a change is kept only if correctness still holds and the metric provably improves, else reverted. No metric ⇒ skipped (never optimize blind).
 
 See `plans/bc-grill-to-ship-loop.md` for the design rationale and `concepts/<name>/CONCEPT.md` for each skill's decisions.

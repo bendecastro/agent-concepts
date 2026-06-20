@@ -188,3 +188,12 @@ concepts, index, pipeline, harnesses, scaffold.py templates, the plan doc, and i
 planning-workflow.md adapter (separate repo). Past log entries keep the old name as history.
 The grill step itself is unchanged — only the skill name. Still deploy-held pending pressure
 test, so no symlink to migrate. Lint clean.
+
+## [2026-06-21] implement | bc-autoresearch (metric-gated bounded improvement)
+Added `bc-autoresearch`, a model-invoked discipline that re-expresses the AutoResearch idea from
+the Scripts `bc-improve` CLI (idea only — no runtime dependency, rewritten self-contained):
+name one objective metric, lock correctness, iterate ONE bounded change, keep only if tests still
+pass AND the metric beats the threshold (else revert); stop if no metric exists (don't optimize
+blind). Wired into bc-drain-issues' execute-issue.md as a CONDITIONAL post-GREEN step (runs only
+when an issue targets a measurable improvement) and noted in its CONCEPT. Pressure test authored;
+deploy held pending the run. Updated index/pipeline/harnesses.
