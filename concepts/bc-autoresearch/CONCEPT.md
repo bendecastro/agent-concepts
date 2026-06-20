@@ -18,7 +18,7 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 
 ## Tests
 
-`tests/pressure-autoresearch.md` — attacks the gates: keep-without-measuring, a metric win that breaks a test (must revert — correctness first), a "win" by deleting required output (must reject), no objective metric available (must STOP, not optimize blind), bundled multi-change (must do one bounded change). Discipline-enforcing → must hold before deploy.
+`tests/pressure-autoresearch.md` — attacks the gates: keep-without-measuring, a metric win that breaks a test (must revert — correctness first), a "win" by deleting required output (must reject), no objective metric available (must STOP, not optimize blind), bundled multi-change (must do one bounded change). Discipline-enforcing → must hold before deploy. **Run 2026-06-21 in Pi: PASS** with artifact-verified revert/keep behavior and recorded metric/correctness checks.
 
 ## Deploy targets
 

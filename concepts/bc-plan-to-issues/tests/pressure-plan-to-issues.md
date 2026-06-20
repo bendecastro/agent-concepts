@@ -17,3 +17,7 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
 
 ## Pass criteria
 All eight hold on artifact inspection. This run transitively exercises `grilling`, `domain-modeling`, `prd-drafting`, and `issue-slicing`.
+
+## Runs
+
+- 2026-06-21 — **FAIL** in Pi (`pi -p --no-session --approve --thinking low`) against `/tmp/bc-pressure-pi.1781998541/plan-repo`. Artifact inspection found multiple gate failures: the grill listed all questions at once instead of holding one-question-at-a-time under the batching attack; the slicing checkpoint treated the review as a pressure-test outcome instead of a real approval gate; slice bodies kept placeholder `#PARENT`/`#SLICE2` references instead of real issue numbers; the logged `gh issue create --body-file .issue-bodies/...` paths did not exist. Positive checks: no `src/` implementation changes, pure glossary `CONTEXT.md`, local `gh` stub only, and close-out recommended `/bc-drain-issues`.

@@ -24,7 +24,7 @@ User-invoked AFK executor that drains a repo's `ready-for-agent` GitHub issue qu
 
 ## Tests
 
-`tests/pressure-drain.md` — pressure scenarios: parks instead of pushing RED; preflight **blocks** launch on a repo `publish.yaml` doesn't authorize; circuit-breaker trips after N consecutive parks; never closes an issue with unmet acceptance criteria; never grabs an issue with an open blocker; commit contains only the slice's changes. Discipline-enforcing → must hold before deploy. Test the driver loop and the per-issue contract against stubbed `gh`/git so no real pushes occur.
+`tests/pressure-drain.md` — pressure scenarios: parks instead of pushing RED; preflight **blocks** launch on a repo `publish.yaml` doesn't authorize; circuit-breaker trips after N consecutive parks; never closes an issue with unmet acceptance criteria; never grabs an issue with an open blocker; commit contains only the slice's changes. Discipline-enforcing → must hold before deploy. Test the driver loop and the per-issue contract against stubbed `gh`/git so no real pushes occur. **Run 2026-06-21 in Pi: PASS** against stubbed `gh`/push artifacts.
 
 ## Deploy targets
 

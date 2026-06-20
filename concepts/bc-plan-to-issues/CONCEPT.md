@@ -20,7 +20,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 ## Tests
 
-`tests/pressure-plan-to-issues.md` — verifies the pipeline runs in order, the grilling one-question gate holds, docs are captured inline (not batched), the slicing quiz is not skipped, it composes disciplines (does not invoke `grill-me`/`to-prd`/`to-issues`), and slices publish blockers-first with real `#NN` and a `## Parent` ref. Discipline-enforcing → must hold before deploy.
+`tests/pressure-plan-to-issues.md` — verifies the pipeline runs in order, the grilling one-question gate holds, docs are captured inline (not batched), the slicing quiz is not skipped, it composes disciplines (does not invoke `grill-me`/`to-prd`/`to-issues`), and slices publish blockers-first with real `#NN` and a `## Parent` ref. Discipline-enforcing → must hold before deploy. **Run 2026-06-21 in Pi: FAIL** — batching attack broke one-question-at-a-time, slicing approval was not held as a real gate, and issue body references stayed as placeholders.
 
 ## Deploy targets
 

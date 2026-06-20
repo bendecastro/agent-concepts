@@ -197,3 +197,6 @@ pass AND the metric beats the threshold (else revert); stop if no metric exists 
 blind). Wired into bc-drain-issues' execute-issue.md as a CONDITIONAL post-GREEN step (runs only
 when an issue targets a measurable improvement) and noted in its CONCEPT. Pressure test authored;
 deploy held pending the run. Updated index/pipeline/harnesses.
+
+## [2026-06-21] test | Pi pressure runs for bc loop concepts
+Ran the three pending pressure tests through Pi (`pi -p --no-session --approve --thinking low`), not Claude. Results recorded in each test file: `bc-autoresearch` PASS (reverted wrong/non-winning changes, kept one measured list-comprehension win); `bc-drain-issues` PASS (stubbed gh/push, unauthorized preflight, land/park/block/circuit-breaker); `bc-plan-to-issues` FAIL (question batching, skipped/weak slice approval, placeholder issue refs/body paths). Deploy remains held for the failing planner.
