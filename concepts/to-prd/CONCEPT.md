@@ -4,15 +4,15 @@ User-invoked orchestrator that turns the current conversation + codebase underst
 
 ## Design decisions
 
+- **Thin wrapper over `prd-drafting` (refactor 2026-06-20).** The PRD writing behavior — synthesize-not-interview, seam-first, the template, no-stale-specifics — was extracted into the model-invoked `prd-drafting` discipline so `bc-grill-to-issues` can reuse it without orchestrator-calls-orchestrator. `to-prd` is now: run `/prd-drafting` → publish. Behavior preserved, relocated.
 - **GitHub tracker baked in** (user's decision). Upstream defers the tracker/label vocabulary to a `setup-matt-pocock-skills` configuration step; we hard-wire GitHub via `gh` and the `ready-for-agent` label so there's no per-repo setup skill to port. Switching trackers later means editing the publish step in this body.
-- **No interview, by contract.** `to-prd` deliberately doesn't grill — that's `grill-me`'s job. Keeping them separate preserves the user/model-invoked composition boundary and keeps each skill single-purpose.
-- **Seam-first.** Step 2 makes the agent commit to test seams (prefer existing, highest, fewest — ideal one) and check them with the user *before* writing, tying PRDs to the `codebase-design` deep-module vocabulary.
-- **No file paths / code in the PRD.** They go stale fast; the one exception is a prototype-derived snippet that encodes a decision more precisely than prose.
+- **No interview, by contract.** `to-prd` deliberately doesn't grill — that's `grill-me`'s job (and `prd-drafting` points there when scope is vague). Keeping them separate preserves the user/model-invoked composition boundary.
 
 ## Provenance
 
-- `raw/pocock-skills-upstream/captured-skills.md` — verbatim `to-prd` body and template. https://github.com/mattpocock/skills/blob/main/skills/engineering/to-prd/SKILL.md
+- `raw/pocock-skills-upstream/captured-skills.md` — verbatim `to-prd` body and template (the writing half now lives in `prd-drafting`). https://github.com/mattpocock/skills/blob/main/skills/engineering/to-prd/SKILL.md
 - `raw/AI Engineer Workshop 2026.md` — workshop's `/write-a-prd` planning step.
+- `concepts/prd-drafting/` — the extracted drafting discipline this orchestrator wraps.
 
 ## Tests
 

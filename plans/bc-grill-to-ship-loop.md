@@ -1,7 +1,7 @@
 # Plan: the grill→ship loop (`bc-grill-to-issues` → `bc-drain-issues`)
 
 Date: 2026-06-20
-Status: Proposed — grilled and resolved; not yet built.
+Status: In progress — built; pressure tests for the two `bc-` orchestrators pending before their deploy.
 
 Build plan for the missing **plan→execute loop** that ties the workshop pipeline
 together: a single interactive planning command that produces a `ready-for-agent`
@@ -134,12 +134,13 @@ publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this i
 - **Refactor**: `to-prd`/`to-issues` behavior preserved after relocation.
 
 ## Build order (checkbox steps)
-- [ ] 1. Refactor → `prd-drafting` + `issue-slicing`; rewire `to-prd`/`to-issues`; re-test.
-- [ ] 2. `bc-grill-to-issues` + test.
-- [ ] 3. `bc-drain-issues` (`SKILL.md` + `execute-issue.md`) + pressure tests.
-- [ ] 4. Pipeline doc + image-maze adapter extension.
-- [ ] 5. Deploy (Claude Code symlinks after gates; Pi via `scripts/deploy-local-skills.py`)
-      + bookkeeping (`CONCEPT.md` ×N, `index.md`, `harnesses.md`, `log.md`) + lint + commit.
+- [x] 1. Refactor → `prd-drafting` + `issue-slicing`; rewire `to-prd`/`to-issues`; scenarios updated for delegation.
+- [x] 2. `bc-grill-to-issues` built (CONCEPT + body + pressure test authored).
+- [x] 3. `bc-drain-issues` (`SKILL.md` + `execute-issue.md`) built + pressure test authored.
+- [x] 4. Pipeline doc (`pipeline.md`) + image-maze `planning-workflow.md` execution-phase extension.
+- [~] 5. Bookkeeping done (`index.md`, `harnesses.md`, `log.md`); `prd-drafting`/`issue-slicing` Claude-symlinked.
+      **Remaining:** run the two `bc-` pressure tests, then symlink `bc-grill-to-issues`/`bc-drain-issues`
+      (Claude) + Pi via `scripts/deploy-local-skills.py`; lint + commit.
 
 ## Bookkeeping note
 Concept-name uniqueness: `bc-grill-to-issues`, `bc-drain-issues`, `prd-drafting`,

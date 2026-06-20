@@ -143,3 +143,14 @@ fresh-subagent-per-issue TDD, park-and-continue + circuit-breaker, publish-check
 preflight). Includes a refactor extracting `prd-drafting`/`issue-slicing` disciplines
 so the planner composes model-invoked behavior (no orchestrator-calls-orchestrator).
 Proposed, not yet built. Added a Plans section to index.md.
+
+## [2026-06-20] implement | grill→ship loop concepts + discipline refactor
+Built the plan→execute loop from plans/bc-grill-to-ship-loop.md. Refactor (c): extracted
+`prd-drafting` + `issue-slicing` model-invoked disciplines from `to-prd`/`to-issues`, slimmed
+those orchestrators to run-discipline→publish (behavior preserved, scenarios updated for
+delegation). Added `bc-grill-to-issues` (one-command interactive planner: grill→domain→PRD→
+slice, composes disciplines only) and `bc-drain-issues` (AFK executor: preflight publish-check,
+fresh-subagent-per-issue trunk-based commit/push/close, park-and-continue + circuit-breaker;
+two-file body SKILL.md + execute-issue.md). Added pipeline.md and extended image-maze
+planning-workflow.md (separate repo) with the execution phase. Deployed `prd-drafting`/
+`issue-slicing` Claude symlinks; held the two `bc-` orchestrators' deploy pending pressure tests.
