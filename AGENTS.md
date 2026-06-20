@@ -42,7 +42,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 
 **Deploy.** Make the concept visible to an agent, currently via **relative** symlink (homes differ across machines: `/home/ben` vs `/Users/ben`):
 - Claude Code: `~/.claude/skills/<name>` → `../../Sync/CONFIG/agents/concepts/<name>/body`
-- Pi: `~/.pi/agent/skills/<name>` → relative symlink to `agents/concepts/<name>/body` from the synced CONFIG vault.
+- Pi: run `scripts/deploy-pi-skills.py` from this workspace. It exposes every `concepts/*/body/SKILL.md` through `~/.agents/skills/<name>` and `~/.pi/agent/skills/<name>` using relative symlinks. Future Pi sessions discover the skills automatically; the current session may still need to read the skill file directly if its advertised skill list was loaded before deployment.
 - Other agents: see `bootstrap.md` and `harnesses.md` — most are invoked by pointing them at this directory rather than by symlink until a real deploy path is tested.
 Record deploy targets in the concept's `CONCEPT.md`, `index.md`, and `harnesses.md`.
 
