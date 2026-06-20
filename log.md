@@ -154,3 +154,14 @@ fresh-subagent-per-issue trunk-based commit/push/close, park-and-continue + circ
 two-file body SKILL.md + execute-issue.md). Added pipeline.md and extended image-maze
 planning-workflow.md (separate repo) with the execution phase. Deployed `prd-drafting`/
 `issue-slicing` Claude symlinks; held the two `bc-` orchestrators' deploy pending pressure tests.
+
+## [2026-06-20] implement | bc-init-agent scaffolder
+Added `bc-init-agent`: a user-invoked scaffolder that stands up a repo-root `AGENTS.md` +
+`.agent/<slug>/` Obsidian-vault wiki (generalized from the image-maze vault) wired for the
+grill→issues→drain loop, via a deterministic `body/scaffold.py` (23-file tree, `__SLUG__`/
+`__DATE__` substitution, clobber-guarded exit 2, root-AGENTS preserved if present). Faithful to
+image-maze's persistence model (glossary in the vault, no root CONTEXT.md); the scaffolded
+`planning-workflow.md` is the adapter that redirects bc-grill-to-issues persistence and
+documents the bc-drain-issues execution phase. Offers a publish.yaml rule (confirm-then-add,
+never auto-pushed). Script checks pass; Claude symlink deployed; updated pipeline.md/index/
+harnesses.

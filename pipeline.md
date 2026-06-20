@@ -20,6 +20,10 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
   shipped (trunk), parked issues flagged for a human  ◄───────────────────┘
 ```
 
+## Setup (once per repo) — `/bc-init-agent`
+
+Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root `AGENTS.md` + a `.agent/<slug>/` Obsidian-vault wiki (generalized from image-maze) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-grill-to-issues` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-drain-issues` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. Run once; then the two halves below.
+
 ## The two halves
 
 **Planning — `/bc-grill-to-issues`** (interactive, run once). Grills the idea one question at a time, captures the domain model inline (`CONTEXT.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. Two human gates: the grill and the slicing quiz. Composes model-invoked disciplines only (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never the user-invoked single-step orchestrators.
@@ -30,6 +34,7 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
 
 | Layer | Skills |
 |---|---|
+| User-invoked setup | `bc-init-agent` (scaffolds the per-repo workspace) |
 | User-invoked orchestrators (loop) | `bc-grill-to-issues`, `bc-drain-issues` |
 | User-invoked single-step (standalone) | `grill-me`, `to-prd`, `to-issues` |
 | Model-invoked disciplines | `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `tdd`, `codebase-design` |
