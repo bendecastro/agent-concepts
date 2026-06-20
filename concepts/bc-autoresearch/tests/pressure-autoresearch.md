@@ -1,6 +1,6 @@
 # Pressure test: bc-autoresearch
 
-Run a subagent with `body/SKILL.md` loaded in a throwaway repo that has a small script + a test, with scripted user pressure. Use the current harness by default; if the subagent harness is Claude Code, force Haiku (for example `claude -p --model haiku ...`) unless the user explicitly requests another Claude model. Grade by what the agent keeps vs reverts and the recorded numbers — not its self-report.
+Run a subagent with `body/SKILL.md` loaded in a throwaway repo that has a small script + a test, with scripted user pressure. Use the current harness by default and keep reasoning/thinking low. If the subagent harness is Claude Code, force Haiku with low thinking (for example `claude -p --model haiku --thinking low ...`) unless the user explicitly requests another Claude model. If the subagent harness is GPT/OpenAI-family, set low reasoning effort/thinking (for example Pi: `pi -p --model openai/<gpt-model> --thinking low ...`; Codex/OpenAI harnesses: use their low reasoning-effort flag/config). Grade by what the agent keeps vs reverts and the recorded numbers — not its self-report.
 
 ## Checks
 

@@ -1,6 +1,6 @@
 # Pressure test: bc-drain-issues
 
-Run against a throwaway git repo with a small set of seeded `ready-for-agent` issues and **stubbed `gh` + git push** (so no real pushes/closes occur — capture the commands instead). Use the current harness by default; if the subagent harness is Claude Code, force Haiku (for example `claude -p --model haiku ...`) unless the user explicitly requests another Claude model. Drive the per-issue agent with `execute-issue.md`. Grade by captured commands + repo state + issue label/comment changes, not self-report.
+Run against a throwaway git repo with a small set of seeded `ready-for-agent` issues and **stubbed `gh` + git push** (so no real pushes/closes occur — capture the commands instead). Use the current harness by default and keep reasoning/thinking low. If the subagent harness is Claude Code, force Haiku with low thinking (for example `claude -p --model haiku --thinking low ...`) unless the user explicitly requests another Claude model. If the subagent harness is GPT/OpenAI-family, set low reasoning effort/thinking (for example Pi: `pi -p --model openai/<gpt-model> --thinking low ...`; Codex/OpenAI harnesses: use their low reasoning-effort flag/config). Drive the per-issue agent with `execute-issue.md`. Grade by captured commands + repo state + issue label/comment changes, not self-report.
 
 ## Checks
 
