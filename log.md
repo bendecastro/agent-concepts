@@ -116,3 +116,6 @@ Ingested the workshop page into prompting-agents: added agent-ready work shaping
 
 ## [2026-06-20] implement | rename raw source directory
 Renamed the workspace source layer from `ideas/` to `raw/` and updated documentation, provenance links, bootstrap examples, and lint checks to match the clearer name.
+
+## [2026-06-20] ingest | AI Engineer Workshop project README
+Ingested the companion project README into prompting-agents: extended agent-ready work shaping with explicit project-runway documentation (prerequisites, setup, dev/test/typecheck/build, migrations/seeding) so agents can validate slices independently.

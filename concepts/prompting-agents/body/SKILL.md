@@ -52,6 +52,8 @@ For coding-agent workflows that span planning through execution, shape work so a
   struggle; do not treat the failure as only a one-off execution mistake.
 - Codebase design is part of agent enablement: clear seams, durable vocabulary, and
   testable modules make autonomous execution safer and cheaper.
+- Make the project runway explicit: prerequisites, setup, dev server, typecheck, test,
+  build, and database/reset commands should be documented where the agent will find them.
 ```
 
 ## Output shape and verbosity

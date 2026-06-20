@@ -9,7 +9,7 @@ A reference library of proven instruction blocks for authoring agent instruction
 - **Origin-tagged adaptation** — when a block is copied into a concept or agent config, note where it came from so source updates can propagate.
 - **Metaprompting included as a maintenance loop** — the technique (have the underperforming agent propose generalized fixes to its own instructions, adopt only recurring suggestions, test before deploy) composes with this workspace's implement/test operations.
 - **Skill suites should preserve user control** — prefer small composable skills with clear invocation boundaries over monolithic process frameworks; separate orchestrators from reusable disciplines so failures are easier to debug and adapt.
-- **Agent-ready work is shaped before execution** — ambiguous requirements should be grilled into durable planning context, then sliced into independently testable vertical tracer bullets with fast feedback loops.
+- **Agent-ready work is shaped before execution** — ambiguous requirements should be grilled into durable planning context, then sliced into independently testable vertical tracer bullets with fast feedback loops and documented project runways.
 
 ## Provenance
 
@@ -20,6 +20,7 @@ A reference library of proven instruction blocks for authoring agent instruction
 - `raw/google-boonstra-prompt-engineering-v7.pdf` — technique repertoire (few-shot, chain-of-thought, step-back, self-consistency, ReAct). https://www.kaggle.com/whitepaper-prompt-engineering
 - `raw/skillsskillsproductivityteach at main.md` — Matt Pocock's broader skills README/catalog: small composable skills, user-invoked vs model-invoked boundary, grilling/shared-language/documented-decision patterns, feedback-loop skills. https://github.com/mattpocock/skills/tree/main
 - `raw/AI Engineer Workshop 2026.md` — workflow framing for AI-assisted feature delivery: grill vague requirements, write PRDs, break work into vertical tracer-bullet issues, execute with TDD human-in-the-loop or AFK, design codebases for agent effectiveness. https://www.aihero.dev/ai-engineer-workshop-2026~dwnll
+- `raw/mattpocockai-engineer-workshop-2026-project.md` — companion project README showing the concrete project runway an agent needs: prerequisites, setup, dev server, test/typecheck/build commands, migration/seed commands, and stack. https://github.com/mattpocock/ai-engineer-workshop-2026-project/tree/main
 
 ## Philosophy
 
