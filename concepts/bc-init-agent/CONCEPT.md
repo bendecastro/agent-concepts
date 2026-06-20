@@ -24,5 +24,6 @@ User-invoked scaffolder that stands up a project-local agent workspace — a rep
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/bc-init-agent` → relative symlink to `body/` (carries `scaffold.py`). Deploy after the scenario check.
+- Claude Code: `~/.claude/skills/bc-init-agent` → relative symlink to `body/` (carries `scaffold.py`; deployed 2026-06-20, verified 2026-06-21).
+- Pi: `~/.agents/skills/bc-init-agent` and `~/.pi/agent/skills/bc-init-agent` → relative symlinks to `body/` (carries `scaffold.py`; deployed/verified 2026-06-21).
 - Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.

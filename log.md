@@ -209,3 +209,6 @@ Renamed the metric-gated bounded-improvement discipline to `bc-autoresearch-loop
 
 ## [2026-06-21] deploy | bc loop skills → Claude Code + Pi
 Ran `scripts/deploy-local-skills.py` and created relative symlinks for `bc-plan-to-issues`, `bc-drain-issues`, and `bc-autoresearch-loop` in `~/.claude/skills/`, `~/.agents/skills/`, and `~/.pi/agent/skills/`. This was an explicit user-requested deploy; `bc-plan-to-issues` remains marked pressure-failed and needs a fix/re-test before treating it as proven.
+
+## [2026-06-21] deploy | bc-init-agent → Pi verified
+Verified `bc-init-agent` relative symlinks exist in `~/.claude/skills/`, `~/.agents/skills/`, and `~/.pi/agent/skills/` via `scripts/deploy-local-skills.py --dry-run`; updated concept/index deploy records. Claude symlink already existed, Pi symlinks were present from the bulk deploy.
