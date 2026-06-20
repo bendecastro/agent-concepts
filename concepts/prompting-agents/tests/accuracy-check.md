@@ -4,7 +4,7 @@ This is a reference concept — no runtime gates to pressure-test. Its failure m
 
 ## Procedure
 
-For each block in `../body/SKILL.md`, locate the corresponding section in the provenance files (`ideas/openai-gpt-5-2-prompting-guide.md`, `ideas/openai-codex-prompting-guide.md`) and check:
+For each block in `../body/SKILL.md`, locate the corresponding section in the provenance files named in `../CONCEPT.md` and check:
 
 1. The behavioral claim survives the agent-agnostic rewrite (no meaning inversion, no scope inflation).
 2. Nothing harness-specific leaked in (tool names, API endpoints, model ids).
@@ -15,3 +15,4 @@ For each block in `../body/SKILL.md`, locate the corresponding section in the pr
 ## History
 
 - 2026-06-12 — initial authoring checked against both sources during extraction (same session); first independent re-check due when a new OpenAI guide version is ingested.
+- 2026-06-20 — checked new skill-composition block against Matt Pocock skills catalog clipping during ingest; claims are limited to README-level patterns, not the linked skill bodies.

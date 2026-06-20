@@ -8,6 +8,7 @@ A reference library of proven instruction blocks for authoring agent instruction
 - **Agent-agnostic rewrites, not verbatim copies** — OpenAI's blocks reference their tool names (`multi_tool_use.parallel`, `apply_patch`); blocks here are rewritten to the underlying behavior so they apply to any agent. Harness-specific plumbing (apply_patch grammars, `phase` fields, compaction API) deliberately excluded — that's API integration, not prompting.
 - **Origin-tagged adaptation** — when a block is copied into a concept or agent config, note where it came from so source updates can propagate.
 - **Metaprompting included as a maintenance loop** — the technique (have the underperforming agent propose generalized fixes to its own instructions, adopt only recurring suggestions, test before deploy) composes with this workspace's implement/test operations.
+- **Skill suites should preserve user control** — prefer small composable skills with clear invocation boundaries over monolithic process frameworks; separate orchestrators from reusable disciplines so failures are easier to debug and adapt.
 
 ## Provenance
 
@@ -16,6 +17,7 @@ A reference library of proven instruction blocks for authoring agent instruction
 - `ideas/anthropic-context-engineering.md` — right-altitude principle, context economy / context rot, just-in-time context. https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
 - `ideas/anthropic-claude-prompting-best-practices.md` — explain-the-why ("smart enough to generalize from the explanation"), prefer general instructions over prescriptive steps, examples over rules, self-check. https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
 - `ideas/google-boonstra-prompt-engineering-v7.pdf` — technique repertoire (few-shot, chain-of-thought, step-back, self-consistency, ReAct). https://www.kaggle.com/whitepaper-prompt-engineering
+- `ideas/skillsskillsproductivityteach at main.md` — Matt Pocock's broader skills README/catalog: small composable skills, user-invoked vs model-invoked boundary, grilling/shared-language/documented-decision patterns, feedback-loop skills. https://github.com/mattpocock/skills/tree/main
 
 ## Philosophy
 

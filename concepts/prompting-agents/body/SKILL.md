@@ -19,6 +19,24 @@ Three principles that govern everything else in this library:
 
 The constraining blocks below (scope discipline, gates-style rules) are tools for *specific failure modes*, not a default posture. Reach for them when the cost of an error is high or when an agent under pressure predictably rationalizes — and even then, attach the why.
 
+## Skill composition and invocation boundaries
+
+When designing a skill suite rather than a single prompt, keep workflows small and composable instead of one process owning everything:
+
+```
+- Separate user-invoked orchestrators from model-invoked disciplines. User-invoked skills
+  can coordinate a session; model-invoked skills hold reusable behavior the agent should
+  reach for automatically when the task fits.
+- A user-invoked skill may invoke model-invoked skills, but should not invoke another
+  user-invoked orchestrator; nested orchestration blurs control and makes failures harder
+  to debug.
+- Encode shared project vocabulary and hard-to-explain decisions in durable docs close to
+  the work. A shared language reduces verbosity, improves names, and helps agents navigate
+  the codebase.
+- Prefer small feedback-loop skills (TDD, diagnosis, domain modeling, design review) over
+  monolithic process frameworks. The user keeps control while the agent gains discipline.
+```
+
 ## Output shape and verbosity
 
 Models are prompt-sensitive on verbosity; clamp it concretely, not with "be concise":

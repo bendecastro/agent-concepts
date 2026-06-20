@@ -107,3 +107,6 @@ Installed notebooklm-py v0.7.1 (`uv tool install "notebooklm-py[browser]"`) and 
 
 ## [2026-06-15] ingest | last30days upstream skill
 Snapshotted mvanhorn/last30days-skill `skills/last30days/SKILL.md` (v3.3.2, commit 1221584, MIT) into ideas/ and added a reference-only `last30days` concept. Deliberately no vendored/deployed body here: the skill's contract is coupled to the upstream Python engine/package and should be installed via upstream plugin/Agent Skills channels.
+
+## [2026-06-20] ingest | Matt Pocock skills catalog
+Ingested the new skills repo README clipping into prompting-agents: added a small skill-suite composition block covering user/model-invoked boundaries, shared language, and feedback-loop skills.
