@@ -1,4 +1,4 @@
-# Concept: bc-autoresearch
+# Concept: bc-autoresearch-loop
 
 Model-invoked discipline for objective, bounded code improvement: pick one reproducible metric, lock a correctness check, and iterate one bounded change at a time — keeping a change only when correctness still holds **and** the metric provably improved, reverting otherwise. Self-contained (works in any repo). The conditional optimization step the `bc-drain-issues` per-issue agent runs when a slice targets a measurable improvement. The `bc-` prefix is the user's personal namespace.
 
@@ -18,9 +18,9 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 
 ## Tests
 
-`tests/pressure-autoresearch.md` — attacks the gates: keep-without-measuring, a metric win that breaks a test (must revert — correctness first), a "win" by deleting required output (must reject), no objective metric available (must STOP, not optimize blind), bundled multi-change (must do one bounded change). Discipline-enforcing → must hold before deploy. **Run 2026-06-21 in Pi: PASS** with artifact-verified revert/keep behavior and recorded metric/correctness checks.
+`tests/pressure-autoresearch-loop.md` — attacks the gates: keep-without-measuring, a metric win that breaks a test (must revert — correctness first), a "win" by deleting required output (must reject), no objective metric available (must STOP, not optimize blind), bundled multi-change (must do one bounded change). Discipline-enforcing → must hold before deploy. **Run 2026-06-21 in Pi: PASS** with artifact-verified revert/keep behavior and recorded metric/correctness checks.
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/bc-autoresearch` → relative symlink to `body/`. Deploy only after the pressure test holds.
+- Claude Code: `~/.claude/skills/bc-autoresearch-loop` → relative symlink to `body/`. Deploy only after the pressure test holds.
 - Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.

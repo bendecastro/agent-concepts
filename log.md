@@ -189,8 +189,8 @@ planning-workflow.md adapter (separate repo). Past log entries keep the old name
 The grill step itself is unchanged — only the skill name. Still deploy-held pending pressure
 test, so no symlink to migrate. Lint clean.
 
-## [2026-06-21] implement | bc-autoresearch (metric-gated bounded improvement)
-Added `bc-autoresearch`, a model-invoked discipline that re-expresses the AutoResearch idea from
+## [2026-06-21] implement | bc-autoresearch-loop (metric-gated bounded improvement)
+Added `bc-autoresearch-loop`, a model-invoked discipline that re-expresses the AutoResearch idea from
 the Scripts `bc-improve` CLI (idea only — no runtime dependency, rewritten self-contained):
 name one objective metric, lock correctness, iterate ONE bounded change, keep only if tests still
 pass AND the metric beats the threshold (else revert); stop if no metric exists (don't optimize
@@ -199,7 +199,10 @@ when an issue targets a measurable improvement) and noted in its CONCEPT. Pressu
 deploy held pending the run. Updated index/pipeline/harnesses.
 
 ## [2026-06-21] test | Pi pressure runs for bc loop concepts
-Ran the three pending pressure tests through Pi (`pi -p --no-session --approve --thinking low`), not Claude. Results recorded in each test file: `bc-autoresearch` PASS (reverted wrong/non-winning changes, kept one measured list-comprehension win); `bc-drain-issues` PASS (stubbed gh/push, unauthorized preflight, land/park/block/circuit-breaker); `bc-plan-to-issues` FAIL (question batching, skipped/weak slice approval, placeholder issue refs/body paths). Deploy remains held for the failing planner.
+Ran the three pending pressure tests through Pi (`pi -p --no-session --approve --thinking low`), not Claude. Results recorded in each test file: `bc-autoresearch-loop` PASS (reverted wrong/non-winning changes, kept one measured list-comprehension win); `bc-drain-issues` PASS (stubbed gh/push, unauthorized preflight, land/park/block/circuit-breaker); `bc-plan-to-issues` FAIL (question batching, skipped/weak slice approval, placeholder issue refs/body paths). Deploy remains held for the failing planner.
 
 ## [2026-06-21] implement | pressure-test harness cost rule
 Clarified pressure-test instructions after an accidental initial Claude launch: consume the current harness by default, and if Claude Code is used as the subagent harness, force Haiku with low thinking unless the user explicitly requests another Claude model; GPT/OpenAI-family harnesses must use low reasoning effort/thinking too. Added the rule to harnesses.md and the three bc loop pressure tests.
+
+## [2026-06-21] implement | rename bc-autoresearch → bc-autoresearch-loop
+Renamed the metric-gated bounded-improvement discipline to `bc-autoresearch-loop` to make the baseline→bounded-change→measure→keep/revert loop explicit. Updated concept paths, skill metadata, pressure-test filename, bc-drain-issues references, index, pipeline, and harness docs.

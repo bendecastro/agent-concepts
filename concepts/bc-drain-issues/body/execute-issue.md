@@ -22,7 +22,7 @@ If you cannot reach this gate within honest effort → **PARK**. Never push part
 ## Optional: bounded improvement — only when there's a metric
 Run this **only if** the issue targets a measurable improvement (speed, size, memory, cost) or its acceptance criteria name a metric. Otherwise **skip entirely** and land the slice as-is — do not optimize blind.
 
-If it applies, now that the slice is GREEN run `/bc-autoresearch` for a bounded, gated refinement: name one objective metric, baseline it, make ONE bounded change, and keep it **only if** the project's tests still pass **and** the metric beats the threshold — otherwise revert. Never trade behavior for the metric, and never "improve" by dropping required output. Record any kept win (metric, baseline → current, delta, win kind) in the land commit message and the issue close-comment.
+If it applies, now that the slice is GREEN run `/bc-autoresearch-loop` for a bounded, gated refinement: name one objective metric, baseline it, make ONE bounded change, and keep it **only if** the project's tests still pass **and** the metric beats the threshold — otherwise revert. Never trade behavior for the metric, and never "improve" by dropping required output. Record any kept win (metric, baseline → current, delta, win kind) in the land commit message and the issue close-comment.
 
 ## Land — only when the gate holds
 1. **Inspect:** `git status` + `git diff`. Confirm ONLY your slice's changes are present — never sweep unrelated working-tree changes into the commit.

@@ -1,5 +1,5 @@
 ---
-name: bc-autoresearch
+name: bc-autoresearch-loop
 description: Improve code against an objective metric without regressing behavior — bounded, measured iterations that are kept only when correctness still holds AND the metric provably improved. Use when a task targets a measurable improvement (speed, size, memory, cost) or asks you to optimize.
 ---
 
