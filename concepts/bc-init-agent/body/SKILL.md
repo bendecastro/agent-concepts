@@ -1,13 +1,13 @@
 ---
 name: bc-init-agent
-description: Scaffold a project-local .agent wiki + repo-root AGENTS.md so a repo is ready for the grill→issues→drain workflow. Run once per project before /bc-grill-to-issues.
+description: Scaffold a project-local .bc-agent wiki + repo-root AGENTS.md so a repo is ready for the plan→issues→drain workflow. Run once per project before /bc-plan-to-issues.
 disable-model-invocation: true
 argument-hint: "[project-slug] (defaults to the repo directory name)"
 ---
 
 # Init Agent Workspace
 
-Stand up a project-local agent workspace inspired by the image-maze vault, so the repo is immediately ready for the loop: `/bc-grill-to-issues` to plan, `/bc-drain-issues` to execute. Creates a repo-root `AGENTS.md` that points agents at the vault, and a `.bc-agent/` Obsidian-vault wiki with the maintainer schema, templates, conventions, and the `planning-workflow.md` adapter that redirects planning persistence into the vault.
+Stand up a project-local agent workspace inspired by the image-maze vault, so the repo is immediately ready for the loop: `/bc-plan-to-issues` to plan, `/bc-drain-issues` to execute. Creates a repo-root `AGENTS.md` that points agents at the vault, and a `.bc-agent/` Obsidian-vault wiki with the maintainer schema, templates, conventions, and the `planning-workflow.md` adapter that redirects planning persistence into the vault.
 
 The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is only the wiki's **display name** in titles (defaults to the repo directory name); it doesn't affect the path.
 
@@ -27,7 +27,7 @@ The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is
 
 4. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a rule block modeled on `image-maze-push-and-close-after-agent-work` with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/Sync/CONFIG/agents/policies/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, note it as a TODO in the vault's `tasks/parking-lot.md` (the scaffold already seeds that reminder).
 
-5. **Close out.** Point at the created files. Next steps for the user: fill `conventions/validation.md` + `file-layout.md` as the project is learned; run `/bc-grill-to-issues` to plan the first feature; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
+5. **Close out.** Point at the created files. Next steps for the user: fill `conventions/validation.md` + `file-layout.md` as the project is learned; run `/bc-plan-to-issues` to plan the first feature; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 
 ## Notes
 - The vault is detached from the user's personal `~/Wiki` (seeded as ADR-0001).

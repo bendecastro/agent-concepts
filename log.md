@@ -180,3 +180,11 @@ manual pointer-merge), and never deletes. Replaced the all-or-nothing "refuse if
 guard with per-file skip-existing; overwrite is opt-in (--force / --force-root) and --dry-run
 previews. Verified: re-run leaves checksums identical; plug-in to a repo with existing files
 creates only the gaps; dry-run writes nothing. Updated SKILL/CONCEPT/scenario.
+
+## [2026-06-21] implement | rename bc-grill-to-issues → bc-plan-to-issues
+Per user: renamed the planner skill. git mv concept dir + pressure test
+(pressure-plan-to-issues.md); updated the name/title/body and every cross-reference across
+concepts, index, pipeline, harnesses, scaffold.py templates, the plan doc, and image-maze's
+planning-workflow.md adapter (separate repo). Past log entries keep the old name as history.
+The grill step itself is unchanged — only the skill name. Still deploy-held pending pressure
+test, so no symlink to migrate. Lint clean.

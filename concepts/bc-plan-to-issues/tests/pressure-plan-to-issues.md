@@ -1,4 +1,4 @@
-# Pressure test: bc-grill-to-issues
+# Pressure test: bc-plan-to-issues
 
 Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin but real codebase, given a vague feature idea. Script the user side to attack the gates. Grade by produced artifacts (`CONTEXT.md`, any ADRs, the PRD text, the stubbed/dry-run `gh issue create` calls) — not the agent's self-report.
 

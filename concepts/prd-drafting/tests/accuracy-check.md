@@ -9,4 +9,4 @@ Reference/writing discipline — no runtime gate of its own. Verify the body enc
 5. **No-publish boundary.** The body explicitly does NOT publish; it returns the PRD to the caller.
 
 ## Pass criteria
-All five present on inspection. Behavior is exercised transitively by the `to-prd` scenario and the `bc-grill-to-issues` pressure test.
+All five present on inspection. Behavior is exercised transitively by the `to-prd` scenario and the `bc-plan-to-issues` pressure test.

@@ -1,13 +1,13 @@
 ---
 name: bc-drain-issues
-description: Autonomously drain a repo's ready-for-agent GitHub issue queue — pick the next unblocked issue, build it test-first in a fresh subagent, commit/push/close, and repeat until the queue is empty. Run after /bc-grill-to-issues.
+description: Autonomously drain a repo's ready-for-agent GitHub issue queue — pick the next unblocked issue, build it test-first in a fresh subagent, commit/push/close, and repeat until the queue is empty. Run after /bc-plan-to-issues.
 disable-model-invocation: true
 argument-hint: "[max-iters] (optional cap, default 20)"
 ---
 
 # Drain Issues (AFK executor)
 
-Drain the `ready-for-agent` issue queue autonomously. For each unblocked issue, dispatch a **fresh subagent** that builds just that slice test-first, validates it, commits, pushes `master`, and closes the issue — then move to the next. Designed to run unattended (AFK) after `/bc-grill-to-issues` has produced the queue.
+Drain the `ready-for-agent` issue queue autonomously. For each unblocked issue, dispatch a **fresh subagent** that builds just that slice test-first, validates it, commits, pushes `master`, and closes the issue — then move to the next. Designed to run unattended (AFK) after `/bc-plan-to-issues` has produced the queue.
 
 **Fresh-subagent-per-issue is deliberate:** it forces every issue to be self-contained — the entire handoff is the issue body + `CONTEXT.md` + the repo, nothing else — and it prevents context rot across a long queue. The per-issue contract lives in [execute-issue.md](execute-issue.md); hand it to each subagent.
 

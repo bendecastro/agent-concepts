@@ -1,4 +1,4 @@
-# Concept: bc-grill-to-issues
+# Concept: bc-plan-to-issues
 
 User-invoked planning orchestrator that runs the whole interactive planning front of the loop in one command: `grilling` → `domain-modeling` (inline) → `prd-drafting` → publish PRD parent issue → `issue-slicing` (with the approval quiz) → publish dependency-ordered `ready-for-agent` slice issues. Hands off to `bc-drain-issues` for autonomous execution. The `bc-` prefix is the user's personal namespace.
 
@@ -20,9 +20,9 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 ## Tests
 
-`tests/pressure-grill-to-issues.md` — verifies the pipeline runs in order, the grilling one-question gate holds, docs are captured inline (not batched), the slicing quiz is not skipped, it composes disciplines (does not invoke `grill-me`/`to-prd`/`to-issues`), and slices publish blockers-first with real `#NN` and a `## Parent` ref. Discipline-enforcing → must hold before deploy.
+`tests/pressure-plan-to-issues.md` — verifies the pipeline runs in order, the grilling one-question gate holds, docs are captured inline (not batched), the slicing quiz is not skipped, it composes disciplines (does not invoke `grill-me`/`to-prd`/`to-issues`), and slices publish blockers-first with real `#NN` and a `## Parent` ref. Discipline-enforcing → must hold before deploy.
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/bc-grill-to-issues` → relative symlink to `body/`. Deploy only after the pressure test holds.
+- Claude Code: `~/.claude/skills/bc-plan-to-issues` → relative symlink to `body/`. Deploy only after the pressure test holds.
 - Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.

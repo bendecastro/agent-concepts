@@ -5,7 +5,7 @@ description: Break a plan, spec, or PRD into independently-grabbable vertical tr
 
 # Slicing into issues
 
-Break a plan into independently-grabbable units using **vertical slices (tracer bullets)**. This is the reusable **slicing discipline** — it does NOT publish anywhere and does NOT touch any parent issue. The caller publishes the approved slices: `/to-issues` creates GitHub issues; `/bc-grill-to-issues` publishes them as part of the planning run.
+Break a plan into independently-grabbable units using **vertical slices (tracer bullets)**. This is the reusable **slicing discipline** — it does NOT publish anywhere and does NOT touch any parent issue. The caller publishes the approved slices: `/to-issues` creates GitHub issues; `/bc-plan-to-issues` publishes them as part of the planning run.
 
 ## Process
 

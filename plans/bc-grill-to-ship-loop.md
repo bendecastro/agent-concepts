@@ -1,4 +1,4 @@
-# Plan: the grill→ship loop (`bc-grill-to-issues` → `bc-drain-issues`)
+# Plan: the grill→ship loop (`bc-plan-to-issues` → `bc-drain-issues`)
 
 Date: 2026-06-20
 Status: In progress — built; pressure tests for the two `bc-` orchestrators pending before their deploy.
@@ -77,8 +77,8 @@ chains planning into execution.
    `CONTEXT.md` stand in for user confirmation**. The executor inlines tdd's
    red-green-refactor *mechanics* but treats acceptance criteria as the approved
    spec. Make this substitution explicit in `execute-issue.md`.
-10. **Naming** — `bc-grill-to-issues` (planner), `bc-drain-issues` (executor). The
-    `bc-` prefix is the user's personal namespace. `bc-grill-to-issues`'s close-out
+10. **Naming** — `bc-plan-to-issues` (planner), `bc-drain-issues` (executor). The
+    `bc-` prefix is the user's personal namespace. `bc-plan-to-issues`'s close-out
     **recommends running `/bc-drain-issues`** next — planning ends pointing at
     execution.
 
@@ -94,7 +94,7 @@ chains planning into execution.
   mirrors how `grilling`/`domain-modeling` already back `grill-me`.
 - Re-run/author `to-prd`/`to-issues` pressure tests to confirm behavior preserved.
 
-### B. `bc-grill-to-issues` (user-invoked planning orchestrator)
+### B. `bc-plan-to-issues` (user-invoked planning orchestrator)
 One command, the interactive front:
 `grilling` → `domain-modeling` (inline, as `grill-me` does) → `prd-drafting` →
 publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this is the
@@ -117,7 +117,7 @@ publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this i
   with comment) or **park** (comment, relabel `needs-human`, no partial/RED push).
 
 ### D. Docs
-- **Pipeline doc** in the workspace tying `bc-grill-to-issues → bc-drain-issues` (and
+- **Pipeline doc** in the workspace tying `bc-plan-to-issues → bc-drain-issues` (and
   the disciplines beneath them).
 - **Extend image-maze `planning-workflow.md`** with the execution phase (trunk-based
   push/close, `needs-human` parking) so that wiki documents the full loop, not just
@@ -128,22 +128,22 @@ publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this i
   a repo `publish.yaml` doesn't authorize; circuit-breaker trips after N consecutive
   parks; never closes an issue with unmet acceptance criteria; never grabs an issue
   with an open blocker.
-- **`bc-grill-to-issues`**: one-question grilling gate holds (transitive); quiz
+- **`bc-plan-to-issues`**: one-question grilling gate holds (transitive); quiz
   before publishing slices; composes disciplines (does not call user-invoked skills);
   publishes blockers-first with real issue numbers.
 - **Refactor**: `to-prd`/`to-issues` behavior preserved after relocation.
 
 ## Build order (checkbox steps)
 - [x] 1. Refactor → `prd-drafting` + `issue-slicing`; rewire `to-prd`/`to-issues`; scenarios updated for delegation.
-- [x] 2. `bc-grill-to-issues` built (CONCEPT + body + pressure test authored).
+- [x] 2. `bc-plan-to-issues` built (CONCEPT + body + pressure test authored).
 - [x] 3. `bc-drain-issues` (`SKILL.md` + `execute-issue.md`) built + pressure test authored.
 - [x] 4. Pipeline doc (`pipeline.md`) + image-maze `planning-workflow.md` execution-phase extension.
 - [~] 5. Bookkeeping done (`index.md`, `harnesses.md`, `log.md`); `prd-drafting`/`issue-slicing` Claude-symlinked.
-      **Remaining:** run the two `bc-` pressure tests, then symlink `bc-grill-to-issues`/`bc-drain-issues`
+      **Remaining:** run the two `bc-` pressure tests, then symlink `bc-plan-to-issues`/`bc-drain-issues`
       (Claude) + Pi via `scripts/deploy-local-skills.py`; lint + commit.
 
 ## Bookkeeping note
-Concept-name uniqueness: `bc-grill-to-issues`, `bc-drain-issues`, `prd-drafting`,
+Concept-name uniqueness: `bc-plan-to-issues`, `bc-drain-issues`, `prd-drafting`,
 `issue-slicing` — all new, dash-case, unique. When authoring the instruction bodies,
 adapt blocks from `concepts/prompting-agents/body/SKILL.md` rather than inventing
 phrasing (per AGENTS.md Implement/Update).

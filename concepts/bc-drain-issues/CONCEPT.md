@@ -1,6 +1,6 @@
 # Concept: bc-drain-issues
 
-User-invoked AFK executor that drains a repo's `ready-for-agent` GitHub issue queue: a preflight-gated launcher runs a driver loop that, per unblocked issue, dispatches a fresh subagent to build the slice test-first and land it trunk-based (commit → push `master` → close with a validation comment), parking cleanly on failure. The autonomous execution half of the loop; runs after `bc-grill-to-issues`. The `bc-` prefix is the user's personal namespace.
+User-invoked AFK executor that drains a repo's `ready-for-agent` GitHub issue queue: a preflight-gated launcher runs a driver loop that, per unblocked issue, dispatches a fresh subagent to build the slice test-first and land it trunk-based (commit → push `master` → close with a validation comment), parking cleanly on failure. The autonomous execution half of the loop; runs after `bc-plan-to-issues`. The `bc-` prefix is the user's personal namespace.
 
 ## Design decisions
 

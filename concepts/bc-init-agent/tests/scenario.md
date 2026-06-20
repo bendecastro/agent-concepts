@@ -15,7 +15,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 
 7. **Locate + confirm.** Uses the git repo root and a kebab-case slug; confirms when ambiguous or non-git.
 8. **publish.yaml offer-then-confirm.** Drafts a repo-specific allow rule and OFFERS to append it to `policies/publish.yaml`; does NOT write it without confirmation and never pushes it. On decline, leaves the parking-lot TODO.
-9. **Close-out.** Points at created files and the next steps (`/bc-grill-to-issues` → `/bc-drain-issues`); commits the scaffold staging only the new files.
+9. **Close-out.** Points at created files and the next steps (`/bc-plan-to-issues` → `/bc-drain-issues`); commits the scaffold staging only the new files.
 
 ## Pass criteria
 Script checks 1–6 pass on inspection of the generated tree; process checks 7–9 hold in the subagent transcript.

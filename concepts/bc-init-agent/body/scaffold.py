@@ -70,7 +70,7 @@ before finishing. See `.bc-agent/AGENTS.md` for the update triggers and protocol
 This project is wired for the grill→issues→drain loop. See
 `.bc-agent/conventions/planning-workflow.md`:
 
-- `/bc-grill-to-issues` — interactive planning (grill → domain capture → PRD → ready-for-agent issues).
+- `/bc-plan-to-issues` — interactive planning (grill → domain capture → PRD → ready-for-agent issues).
 - `/bc-drain-issues` — autonomous (AFK) execution of the ready-for-agent queue.
 
 ## Publishing
@@ -117,7 +117,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 ## Plans & the live layer
 
 - A multi-step effort gets a **plan page** under `project/` from `templates/plan.md`.
-- For `grill-me`/`bc-grill-to-issues` → `bc-drain-issues` work, apply
+- For `grill-me`/`bc-plan-to-issues` → `bc-drain-issues` work, apply
   `conventions/planning-workflow.md`: it maps generic `CONTEXT.md`/`docs/adr/` persistence
   into this vault's pages.
 - **`tasks/active.md` is the live cursor.** Keep it true every session.
@@ -247,7 +247,7 @@ OVERVIEW = """# Project Overview
 ## Glossary
 
 The project's shared vocabulary — canonical names for the domain concepts, no implementation
-detail. `grill-me` / `bc-grill-to-issues` (via `domain-modeling`) maintain this as the
+detail. `grill-me` / `bc-plan-to-issues` (via `domain-modeling`) maintain this as the
 project's `CONTEXT.md`-equivalent. Keep it a pure glossary.
 
 <!-- Term — one-line canonical definition. -->
@@ -286,7 +286,7 @@ adapter so planning persistence lands in `.bc-agent/` instead of generic
   parked work uses `needs-human`.
 - **Session log:** short durable notes appended to `log.md`.
 
-## Planning — `/bc-grill-to-issues`
+## Planning — `/bc-plan-to-issues`
 
 One command runs grill → domain capture → PRD → slices. When the underlying skills would
 persist to generic `CONTEXT.md` / `docs/adr/`, persist here instead:
@@ -632,7 +632,7 @@ def main() -> int:
 
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
           "authorize this repo in policies/publish.yaml if you'll run /bc-drain-issues AFK; "
-          "then /bc-grill-to-issues to plan the first feature.")
+          "then /bc-plan-to-issues to plan the first feature.")
     return 0
 
 
