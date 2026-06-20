@@ -165,3 +165,10 @@ image-maze's persistence model (glossary in the vault, no root CONTEXT.md); the 
 documents the bc-drain-issues execution phase. Offers a publish.yaml rule (confirm-then-add,
 never auto-pushed). Script checks pass; Claude symlink deployed; updated pipeline.md/index/
 harnesses.
+
+## [2026-06-20] implement | bc-init-agent: rename .agent→.bc-agent, flatten <slug> nesting
+Per user: the scaffolder now writes the vault at `.bc-agent/` directly instead of
+`.agent/<slug>/`. Dropped the per-project subfolder (not load-bearing — it only separated
+the Obsidian vault from sibling research/scratch, now vault subdirs); the slug survives as
+the wiki's display name only. Updated scaffold.py paths/guard + SKILL/CONCEPT/scenario/
+pipeline/index references. Re-verified output and script checks.

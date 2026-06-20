@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Scaffold a project-local .agent wiki + root AGENTS.md for the grill→issues→drain workflow.
+"""Scaffold a project-local .bc-agent wiki + root AGENTS.md for the grill→issues→drain workflow.
 
-Inspired by the image-maze `.agent/<project>/` Obsidian-vault wiki. Writes a
+Inspired by the image-maze `.agent/<project>/` Obsidian-vault wiki, flattened to a single
+`.bc-agent/` vault (no per-project nesting). Writes a
 generalized schema with TODO stubs (validation, file-layout, paths) that the
 project's first agents fill in. Faithful to the image-maze persistence model:
 NO root CONTEXT.md — the glossary lives in the vault (project/overview.md), ADRs
 in decisions/, plans/PRDs in project/, and conventions/planning-workflow.md is
 the adapter that redirects planning persistence into the vault.
 
-Idempotent guard: refuses to overwrite an existing .agent/<slug>/ vault unless
+Idempotent guard: refuses to overwrite an existing .bc-agent/ vault unless
 --force is given. The root AGENTS.md is only written if absent (otherwise the
 caller merges the vault pointer by hand) unless --force-root.
 
@@ -29,42 +30,42 @@ DATE = "__DATE__"
 # --- root AGENTS.md (project root, points agents at the vault) ----------------
 ROOT_AGENTS = """# Agent instructions for __SLUG__
 
-This project has a local, project-scoped agent wiki at `.agent/__SLUG__/`.
+This project has a local, project-scoped agent wiki at `.bc-agent/`.
 
 Before making non-trivial changes, read:
 
-1. `.agent/__SLUG__/index.md`
-2. `.agent/__SLUG__/AGENTS.md` — you are the wiki's maintainer; this is how to keep it live
-3. `.agent/__SLUG__/map.md`
+1. `.bc-agent/index.md`
+2. `.bc-agent/AGENTS.md` — you are the wiki's maintainer; this is how to keep it live
+3. `.bc-agent/map.md`
 4. Any linked page relevant to the task
 
 Keep the wiki live as you work: track in-flight work in
-`.agent/__SLUG__/tasks/active.md`, check off plan steps, record forks as ADRs in
-`.agent/__SLUG__/decisions/`, and append durable discoveries to `.agent/__SLUG__/log.md`
-before finishing. See `.agent/__SLUG__/AGENTS.md` for the update triggers and protocol.
+`.bc-agent/tasks/active.md`, check off plan steps, record forks as ADRs in
+`.bc-agent/decisions/`, and append durable discoveries to `.bc-agent/log.md`
+before finishing. See `.bc-agent/AGENTS.md` for the update triggers and protocol.
 
 ## Scope rules
 
-- Treat `.agent/__SLUG__/` as the source of durable agent context for THIS project only.
+- Treat `.bc-agent/` as the source of durable agent context for THIS project only.
 - Do not use or update `~/Wiki` for this project unless the human explicitly asks.
-- Put all agent-created research, plans, scratch, and generated docs under `.agent/`;
+- Put all agent-created research, plans, scratch, and generated docs under `.bc-agent/`;
   do not create `docs/`-style notes in source folders or the repo root unless asked.
 - Do not store personal, cross-project, or machine-global knowledge here.
 
 ## Update rules
 
-- Stable project facts → `.agent/__SLUG__/project/`.
-- Commands and paths → `.agent/__SLUG__/references/`.
-- Coding, validation, and workflow norms → `.agent/__SLUG__/conventions/`.
-- Temporary task context → `.agent/__SLUG__/tasks/active.md`.
-- Longer research writeups → `.agent/research/`, with durable conclusions summarized back.
-- Major irreversible / architectural choices → `.agent/__SLUG__/decisions/` (ADRs).
-- Brief durable discoveries → `.agent/__SLUG__/log.md`.
+- Stable project facts → `.bc-agent/project/`.
+- Commands and paths → `.bc-agent/references/`.
+- Coding, validation, and workflow norms → `.bc-agent/conventions/`.
+- Temporary task context → `.bc-agent/tasks/active.md`.
+- Longer research writeups → `.bc-agent/research/`, with durable conclusions summarized back.
+- Major irreversible / architectural choices → `.bc-agent/decisions/` (ADRs).
+- Brief durable discoveries → `.bc-agent/log.md`.
 
 ## Planning & execution workflow
 
 This project is wired for the grill→issues→drain loop. See
-`.agent/__SLUG__/conventions/planning-workflow.md`:
+`.bc-agent/conventions/planning-workflow.md`:
 
 - `/bc-grill-to-issues` — interactive planning (grill → domain capture → PRD → ready-for-agent issues).
 - `/bc-drain-issues` — autonomous (AFK) execution of the ready-for-agent queue.
@@ -85,7 +86,7 @@ VAULT_AGENTS = """# __SLUG__ Agent Wiki — Maintainer Instructions
 > facts, the decisions, and the live progress intact. **It is a living record, not a
 > one-time writeup.** Do project work without updating it and you've left it stale.
 
-This is the project-scoped wiki for `__SLUG__`, local to `.agent/__SLUG__/` and detached
+This is the project-scoped wiki for `__SLUG__`, local to `.bc-agent/` and detached
 from the user's personal `~/Wiki` (see [ADR-0001](decisions/adr-0001-local-project-agent-wiki.md)).
 The repo-root `AGENTS.md` holds the scope/where-things-go rules; **this file is the
 how-to-maintain schema.**
@@ -128,7 +129,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 - `decisions/` — ADRs (numbered, with `## Status`).
 - `tasks/` — `active.md`, `parking-lot.md`, `completed.md`.
 - `log.md` — append-only journal. `index.md` — catalog. `map.md` — context picker.
-- Long research → `.agent/research/`; scratch → `.agent/scratch/`.
+- Long research → `.bc-agent/research/`; scratch → `.bc-agent/scratch/`.
 
 ## Maintenance discipline
 
@@ -168,7 +169,7 @@ This wiki may contain repo-specific architecture, workflow notes, build/validati
 facts, project decisions, and recurring commands/gotchas. It must **not** contain
 personal wiki content, cross-project preferences, secrets/credentials, or long raw logs.
 
-This wiki is also a standalone Obsidian vault rooted at `.agent/__SLUG__/`.
+This wiki is also a standalone Obsidian vault rooted at `.bc-agent/`.
 """
 
 
@@ -187,7 +188,7 @@ Obsidian home note for the local project agent wiki.
 
 ## Scope reminder
 
-This vault is local to `.agent/__SLUG__/` and detached from the user's personal `~/Wiki`.
+This vault is local to `.bc-agent/` and detached from the user's personal `~/Wiki`.
 """
 
 
@@ -229,7 +230,7 @@ One to three lines each; no transcripts or long command output.
 
 ## __DATE__
 
-- Scaffolded the project agent workspace (root `AGENTS.md` + `.agent/__SLUG__/` vault) with
+- Scaffolded the project agent workspace (root `AGENTS.md` + `.bc-agent/` vault) with
   `bc-init-agent`. Ready for the grill → issues → drain workflow. Validation/file-layout
   stubs still TODO.
 """
@@ -252,7 +253,7 @@ _None captured yet._
 
 ## Agent context policy
 
-All durable agent context for this repository belongs in `.agent/__SLUG__/`. This wiki is
+All durable agent context for this repository belongs in `.bc-agent/`. This wiki is
 detached from the user's personal `~/Wiki` and scoped to this repository only.
 
 ## Open questions
@@ -268,7 +269,7 @@ PLANNING_WORKFLOW = """# Planning Workflow: grill → issues → drain
 Date: __DATE__
 
 This project is wired for the full loop. Use the `bc-` orchestrators with this repo-local
-adapter so planning persistence lands in `.agent/__SLUG__/` instead of generic
+adapter so planning persistence lands in `.bc-agent/` instead of generic
 `CONTEXT.md` / `docs/adr/` files. See `~/Sync/CONFIG/agents/pipeline.md` for the loop.
 
 ## Canonical repo-local planning surfaces
@@ -361,12 +362,12 @@ FILE_LAYOUT = """# File Layout
 Known top-level paths at scaffold time:
 
 - `AGENTS.md` — repo-root instructions pointing agents at this wiki
-- `.agent/__SLUG__/` — this project-scoped agent wiki
+- `.bc-agent/` — this project-scoped agent wiki
 
 ## Agent guidance
 
 - Confirm source/build relationships before editing generated-looking files.
-- Keep local project wiki files under `.agent/__SLUG__/`.
+- Keep local project wiki files under `.bc-agent/`.
 - Do not add project context to the user's personal `~/Wiki`.
 """
 
@@ -407,14 +408,14 @@ detached from the user's personal `~/Wiki`.
 
 ## Decision
 
-Create a project-local wiki at `.agent/__SLUG__/` and a repo-root `AGENTS.md` that instructs
+Create a project-local wiki at `.bc-agent/` and a repo-root `AGENTS.md` that instructs
 agents to use it as the project-scoped context source. The wiki must not depend on or update
 `~/Wiki` unless the user explicitly asks.
 
 ## Consequences
 
 - Project context travels with this repository.
-- Agents start from `AGENTS.md` and `.agent/__SLUG__/index.md`.
+- Agents start from `AGENTS.md` and `.bc-agent/index.md`.
 - Personal/global wiki context stays separate.
 - Durable discoveries are committed with the project.
 """
@@ -513,7 +514,7 @@ The ADRs, references, and project pages this plan rests on.
 RESEARCH_README = """# Research
 
 Long-form research writeups and investigation notes live here. Summarize durable conclusions
-back into the relevant `.agent/__SLUG__/` page and keep the long version here for the trail.
+back into the relevant `.bc-agent/` page and keep the long version here for the trail.
 """
 
 
@@ -568,10 +569,10 @@ def main() -> int:
         print(f"ERROR: slug must be lower-case kebab with no spaces: {slug!r}")
         return 1
 
-    vault = root / ".agent" / slug
+    vault = root / ".bc-agent"
     if vault.exists() and not args.force:
-        print(f"REFUSING: vault already exists at {vault} — use --force to overwrite, "
-              f"or pick a different slug. Nothing written.")
+        print(f"REFUSING: vault already exists at {vault} — use --force to overwrite (replaces it), "
+              f"or remove/rename the existing .bc-agent first. Nothing written.")
         return 2
 
     written: list[str] = []
@@ -580,7 +581,7 @@ def main() -> int:
     root_agents = root / "AGENTS.md"
     if root_agents.exists() and not args.force_root:
         print(f"NOTE: {root_agents} already exists — NOT overwritten. Merge the vault pointer "
-              f"by hand (see the scaffolded `.agent/{slug}/AGENTS.md` and index for what to point at).")
+              f"by hand (see the scaffolded `.bc-agent/AGENTS.md` and index for what to point at).")
     else:
         root_agents.write_text(render(ROOT_AGENTS, slug, args.date))
         written.append(str(root_agents))
@@ -592,11 +593,11 @@ def main() -> int:
         written.append(str(dest))
 
     # research + scratch dirs
-    research = root / ".agent" / "research"
+    research = root / ".bc-agent" / "research"
     research.mkdir(parents=True, exist_ok=True)
     (research / "README.md").write_text(render(RESEARCH_README, slug, args.date))
     written.append(str(research / "README.md"))
-    scratch = root / ".agent" / "scratch"
+    scratch = root / ".bc-agent" / "scratch"
     scratch.mkdir(parents=True, exist_ok=True)
     gitkeep = scratch / ".gitkeep"
     gitkeep.write_text("")

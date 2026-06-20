@@ -4,7 +4,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 
 ## Script checks (deterministic)
 
-1. **Tree shape.** `scaffold.py --root <tmp> --slug demo-proj` writes the repo-root `AGENTS.md`, the full `.agent/demo-proj/` vault (AGENTS/index/home/map/log, `project/overview.md`, `references/*`, `conventions/*` including `planning-workflow.md`, `decisions/adr-0001-*`, `tasks/*`, `templates/*`), and `.agent/research/README.md` + `.agent/scratch/.gitkeep`.
+1. **Tree shape.** `scaffold.py --root <tmp> --slug demo-proj` writes the repo-root `AGENTS.md`, the full `.bc-agent/` vault (AGENTS/index/home/map/log, `project/overview.md`, `references/*`, `conventions/*` including `planning-workflow.md`, `decisions/adr-0001-*`, `tasks/*`, `templates/*`), and `.bc-agent/research/README.md` + `.bc-agent/scratch/.gitkeep`. The vault is at `.bc-agent/` directly — no `<slug>` subfolder.
 2. **Substitution.** No literal `__SLUG__` / `__DATE__` remain in any written file; the slug and date appear correctly.
 3. **Clobber guard.** Re-running against the same root exits 2 and writes nothing.
 4. **Root AGENTS.md preserved.** With a pre-existing `<root>/AGENTS.md`, the script does NOT overwrite it (prints a merge note); the vault is still written.
