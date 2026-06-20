@@ -206,3 +206,6 @@ Clarified pressure-test instructions after an accidental initial Claude launch: 
 
 ## [2026-06-21] implement | rename bc-autoresearch → bc-autoresearch-loop
 Renamed the metric-gated bounded-improvement discipline to `bc-autoresearch-loop` to make the baseline→bounded-change→measure→keep/revert loop explicit. Updated concept paths, skill metadata, pressure-test filename, bc-drain-issues references, index, pipeline, and harness docs.
+
+## [2026-06-21] deploy | bc loop skills → Claude Code + Pi
+Ran `scripts/deploy-local-skills.py` and created relative symlinks for `bc-plan-to-issues`, `bc-drain-issues`, and `bc-autoresearch-loop` in `~/.claude/skills/`, `~/.agents/skills/`, and `~/.pi/agent/skills/`. This was an explicit user-requested deploy; `bc-plan-to-issues` remains marked pressure-failed and needs a fix/re-test before treating it as proven.

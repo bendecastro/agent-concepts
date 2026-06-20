@@ -22,5 +22,6 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/bc-autoresearch-loop` → relative symlink to `body/`. Deploy only after the pressure test holds.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Claude Code: `~/.claude/skills/bc-autoresearch-loop` → relative symlink to `body/` (deployed 2026-06-21).
+- Pi: `~/.agents/skills/bc-autoresearch-loop` and `~/.pi/agent/skills/bc-autoresearch-loop` → relative symlinks to `body/` (deployed 2026-06-21).
+- Other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.

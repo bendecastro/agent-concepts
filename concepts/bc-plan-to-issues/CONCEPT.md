@@ -24,5 +24,6 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/bc-plan-to-issues` → relative symlink to `body/`. Deploy only after the pressure test holds.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Claude Code: `~/.claude/skills/bc-plan-to-issues` → relative symlink to `body/` (deployed 2026-06-21 by explicit user request despite the failing Pi pressure run; use with caution until fixed/re-tested).
+- Pi: `~/.agents/skills/bc-plan-to-issues` and `~/.pi/agent/skills/bc-plan-to-issues` → relative symlinks to `body/` (deployed 2026-06-21 by explicit user request despite the failing Pi pressure run; use with caution until fixed/re-tested).
+- Other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.

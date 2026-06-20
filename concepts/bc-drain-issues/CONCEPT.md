@@ -28,5 +28,6 @@ User-invoked AFK executor that drains a repo's `ready-for-agent` GitHub issue qu
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/bc-drain-issues` → relative symlink to `body/` (carries `execute-issue.md` alongside). Deploy only after the pressure test holds.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Claude Code: `~/.claude/skills/bc-drain-issues` → relative symlink to `body/` (carries `execute-issue.md` alongside; deployed 2026-06-21).
+- Pi: `~/.agents/skills/bc-drain-issues` and `~/.pi/agent/skills/bc-drain-issues` → relative symlinks to `body/` (deployed 2026-06-21).
+- Other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
