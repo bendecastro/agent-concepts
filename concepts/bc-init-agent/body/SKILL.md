@@ -17,13 +17,13 @@ The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is
 
 1. **Locate the project.** Find the repo root (`git rev-parse --show-toplevel`). The workspace goes at the repo root. Pick the slug: the argument, else the repo directory name in kebab-case. Confirm with the user if it's ambiguous or not a git repo.
 
-2. **Guard against clobber.** The script refuses (exit 2) if `.bc-agent/` already exists — never overwrite a live vault. If it refuses, stop and offer to extend a specific missing page by hand (the vault is already there).
+2. **Safe to re-run / plug into an existing project.** The script is **additive and idempotent**: it creates only the files that are missing, leaves every existing file untouched (an existing root `AGENTS.md` is preserved verbatim and flagged for a manual pointer-merge), and **never deletes anything**. Re-running changes nothing. Pass `--dry-run` first if you want to preview what it would add to an existing project. Existing files are overwritten only when explicitly forced (`--force` for vault files, `--force-root` for the root `AGENTS.md`) — don't use those unless the user asks.
 
 3. **Scaffold.** Run the bundled script (it lives next to this file):
    ```
    python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>"
    ```
-   It writes the root `AGENTS.md` (only if absent — if one exists it tells you to merge the vault pointer by hand) and the full `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo.
+   It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo.
 
 4. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a rule block modeled on `image-maze-push-and-close-after-agent-work` with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/Sync/CONFIG/agents/policies/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, note it as a TODO in the vault's `tasks/parking-lot.md` (the scaffold already seeds that reminder).
 

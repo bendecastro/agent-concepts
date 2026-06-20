@@ -172,3 +172,11 @@ Per user: the scaffolder now writes the vault at `.bc-agent/` directly instead o
 the Obsidian vault from sibling research/scratch, now vault subdirs); the slug survives as
 the wiki's display name only. Updated scaffold.py paths/guard + SKILL/CONCEPT/scenario/
 pipeline/index references. Re-verified output and script checks.
+
+## [2026-06-20] implement | bc-init-agent: additive idempotency (never destructive)
+Per user safety request: scaffold.py is now additive + idempotent — creates only missing
+files, leaves every existing file untouched (incl. a hand-written root AGENTS.md, flagged for
+manual pointer-merge), and never deletes. Replaced the all-or-nothing "refuse if vault exists"
+guard with per-file skip-existing; overwrite is opt-in (--force / --force-root) and --dry-run
+previews. Verified: re-run leaves checksums identical; plug-in to a repo with existing files
+creates only the gaps; dry-run writes nothing. Updated SKILL/CONCEPT/scenario.

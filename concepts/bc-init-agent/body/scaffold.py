@@ -9,12 +9,15 @@ NO root CONTEXT.md — the glossary lives in the vault (project/overview.md), AD
 in decisions/, plans/PRDs in project/, and conventions/planning-workflow.md is
 the adapter that redirects planning persistence into the vault.
 
-Idempotent guard: refuses to overwrite an existing .bc-agent/ vault unless
---force is given. The root AGENTS.md is only written if absent (otherwise the
-caller merges the vault pointer by hand) unless --force-root.
+Idempotent and additive: creates only the files that are missing and leaves every
+existing file untouched, so it is safe to re-run and safe to plug into a project
+that already has files (including a hand-written root AGENTS.md). It NEVER deletes
+anything. Existing files are overwritten only when explicitly forced: --force for
+vault files, --force-root for the root AGENTS.md. --dry-run reports without writing.
 
 Usage:
-  scaffold.py --root <repo-root> --slug <project-slug> [--date YYYY-MM-DD] [--force] [--force-root]
+  scaffold.py --root <repo-root> --slug <project-name> [--date YYYY-MM-DD]
+              [--force] [--force-root] [--dry-run]
 """
 
 from __future__ import annotations
@@ -551,13 +554,29 @@ def render(text: str, slug: str, date: str) -> str:
     return text.replace(SLUG, slug).replace(DATE, date)
 
 
+def targets(root: Path, slug: str, date: str) -> list[tuple[Path, str, bool]]:
+    """Every file the scaffold owns: (destination, rendered content, is_root_AGENTS)."""
+    vault = root / ".bc-agent"
+    out: list[tuple[Path, str, bool]] = [(root / "AGENTS.md", render(ROOT_AGENTS, slug, date), True)]
+    for relpath, text in vault_files().items():
+        out.append((vault / relpath, render(text, slug, date), False))
+    out.append((vault / "research" / "README.md", render(RESEARCH_README, slug, date), False))
+    out.append((vault / "scratch" / ".gitkeep", "", False))
+    return out
+
+
 def main() -> int:
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(
+        description="Idempotent: creates only missing files; never deletes, and never "
+                    "overwrites existing files unless explicitly forced.")
     ap.add_argument("--root", required=True, help="project (repo) root")
-    ap.add_argument("--slug", required=True, help="project slug, kebab-case")
+    ap.add_argument("--slug", required=True, help="project display name, kebab-case")
     ap.add_argument("--date", default=_dt.date.today().isoformat())
-    ap.add_argument("--force", action="store_true", help="overwrite an existing vault")
-    ap.add_argument("--force-root", action="store_true", help="overwrite an existing root AGENTS.md")
+    ap.add_argument("--force", action="store_true",
+                    help="overwrite existing VAULT files (still never deletes; never touches root AGENTS.md)")
+    ap.add_argument("--force-root", action="store_true",
+                    help="also overwrite an existing root AGENTS.md")
+    ap.add_argument("--dry-run", action="store_true", help="report what would happen; write nothing")
     args = ap.parse_args()
 
     root = Path(args.root).expanduser().resolve()
@@ -569,45 +588,49 @@ def main() -> int:
         print(f"ERROR: slug must be lower-case kebab with no spaces: {slug!r}")
         return 1
 
-    vault = root / ".bc-agent"
-    if vault.exists() and not args.force:
-        print(f"REFUSING: vault already exists at {vault} — use --force to overwrite (replaces it), "
-              f"or remove/rename the existing .bc-agent first. Nothing written.")
-        return 2
+    created: list[Path] = []
+    overwritten: list[Path] = []
+    skipped: list[Path] = []  # existed, left untouched
 
-    written: list[str] = []
+    for dest, content, is_root in targets(root, slug, args.date):
+        exists = dest.exists()
+        may_overwrite = (args.force_root if is_root else args.force)
+        if exists and not may_overwrite:
+            skipped.append(dest)
+            continue
+        if not args.dry_run:
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_text(content)
+        (overwritten if exists else created).append(dest)
 
-    # root AGENTS.md — only if absent (don't clobber a hand-written one)
-    root_agents = root / "AGENTS.md"
-    if root_agents.exists() and not args.force_root:
-        print(f"NOTE: {root_agents} already exists — NOT overwritten. Merge the vault pointer "
-              f"by hand (see the scaffolded `.bc-agent/AGENTS.md` and index for what to point at).")
-    else:
-        root_agents.write_text(render(ROOT_AGENTS, slug, args.date))
-        written.append(str(root_agents))
+    verb = "Would create" if args.dry_run else "Created"
+    if created:
+        print(f"{verb} {len(created)} file(s):")
+        for p in created:
+            print(f"  + {p}")
+    if overwritten:
+        word = "Would overwrite" if args.dry_run else "Overwrote"
+        print(f"{word} {len(overwritten)} existing file(s) (forced):")
+        for p in overwritten:
+            print(f"  ~ {p}")
+    if skipped:
+        print(f"Left {len(skipped)} existing file(s) untouched:")
+        for p in skipped:
+            print(f"  = {p}")
 
-    for relpath, text in vault_files().items():
-        dest = vault / relpath
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(render(text, slug, args.date))
-        written.append(str(dest))
+    if not created and not overwritten:
+        print("\nNothing to do — the workspace is already present; nothing was created, "
+              "overwritten, or deleted.")
+        return 0
 
-    # research + scratch dirs
-    research = root / ".bc-agent" / "research"
-    research.mkdir(parents=True, exist_ok=True)
-    (research / "README.md").write_text(render(RESEARCH_README, slug, args.date))
-    written.append(str(research / "README.md"))
-    scratch = root / ".bc-agent" / "scratch"
-    scratch.mkdir(parents=True, exist_ok=True)
-    gitkeep = scratch / ".gitkeep"
-    gitkeep.write_text("")
-    written.append(str(gitkeep))
+    if skipped:
+        # Most relevant when plugging into an existing project: flag the un-pointed root AGENTS.
+        root_agents = root / "AGENTS.md"
+        if root_agents in skipped:
+            print(f"\nNOTE: existing {root_agents} was left as-is. Merge the 'read .bc-agent first' "
+                  f"pointer into it by hand (see `.bc-agent/AGENTS.md` / `index.md`).")
 
-    print(f"Scaffolded {len(written)} files under {root}:")
-    for w in written:
-        print(f"  {w}")
-    print()
-    print("Next: fill conventions/validation.md + file-layout.md as you learn the project; "
+    print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
           "authorize this repo in policies/publish.yaml if you'll run /bc-drain-issues AFK; "
           "then /bc-grill-to-issues to plan the first feature.")
     return 0
