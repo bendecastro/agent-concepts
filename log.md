@@ -134,3 +134,12 @@ Added `scripts/deploy-local-skills.py` to bulk expose every local concept skill 
 
 ## [2026-06-20] deploy | Claude Code local concept auto-deploy
 Extended the local skill deploy helper to update Claude Code as well as Pi, keeping `~/.claude/skills/<name>` pointed directly at canonical concept bodies. Left `deploy-pi-skills.py` as a compatibility symlink to the generalized helper.
+
+## [2026-06-20] plan | grill→ship loop (bc-grill-to-issues + bc-drain-issues)
+Grilled out and persisted `plans/bc-grill-to-ship-loop.md`: a one-command interactive
+planner (`bc-grill-to-issues`: grill→PRD→issues) and an AFK executor
+(`bc-drain-issues`: drain the `ready-for-agent` queue trunk-based via
+fresh-subagent-per-issue TDD, park-and-continue + circuit-breaker, publish-check
+preflight). Includes a refactor extracting `prd-drafting`/`issue-slicing` disciplines
+so the planner composes model-invoked behavior (no orchestrator-calls-orchestrator).
+Proposed, not yet built. Added a Plans section to index.md.

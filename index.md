@@ -30,6 +30,10 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators (`
 - [scripts/deploy-local-skills.py](scripts/deploy-local-skills.py) — bulk deploys every local `concepts/*/body/SKILL.md` into Pi-discoverable relative symlinks under `~/.agents/skills/` and `~/.pi/agent/skills/`, both pointing at canonical concept bodies.
 - [policies/publish.yaml](policies/publish.yaml) — user-owned publish authorization policy; default deny with explicit allow rules for agent-authored pushes in CONFIG, Scripts, Music, and Wiki.
 
+## Plans
+
+- [plans/bc-grill-to-ship-loop.md](plans/bc-grill-to-ship-loop.md) — proposed build plan for the plan→execute loop: `bc-grill-to-issues` (one-command interactive planner: grill→PRD→issues) + `bc-drain-issues` (AFK executor draining the `ready-for-agent` queue trunk-based via fresh-subagent-per-issue TDD), plus a refactor extracting `prd-drafting`/`issue-slicing` disciplines. Status: grilled + resolved 2026-06-20; not yet built.
+
 ## Raw
 
 - [karpathy-llm-wiki.md](raw/karpathy-llm-wiki.md) — Karpathy's LLM Wiki gist. Ingested → teach (2026-06-12).
