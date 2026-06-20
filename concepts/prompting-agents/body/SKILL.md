@@ -37,6 +37,23 @@ When designing a skill suite rather than a single prompt, keep workflows small a
   monolithic process frameworks. The user keeps control while the agent gains discipline.
 ```
 
+## Agent-ready work shaping
+
+For coding-agent workflows that span planning through execution, shape work so an agent can pick it up independently without losing human control:
+
+```
+- Stress-test vague requirements before implementation. Use a grilling/interview step to
+  expose missing decisions, then write the resolved scope as durable planning context.
+- Convert plans into thin vertical slices ("tracer bullets") that each exercise a useful
+  path through the system and can be implemented, tested, and committed independently.
+- Keep TDD or another fast correctness loop attached to each slice. The feedback loop is
+  what lets the agent run human-in-the-loop or unattended without drifting silently.
+- When an agent struggles, refine the prompt, issue, or project docs that produced the
+  struggle; do not treat the failure as only a one-off execution mistake.
+- Codebase design is part of agent enablement: clear seams, durable vocabulary, and
+  testable modules make autonomous execution safer and cheaper.
+```
+
 ## Output shape and verbosity
 
 Models are prompt-sensitive on verbosity; clamp it concretely, not with "be concise":

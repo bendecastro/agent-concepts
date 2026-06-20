@@ -110,3 +110,6 @@ Snapshotted mvanhorn/last30days-skill `skills/last30days/SKILL.md` (v3.3.2, comm
 
 ## [2026-06-20] ingest | Matt Pocock skills catalog
 Ingested the new skills repo README clipping into prompting-agents: added a small skill-suite composition block covering user/model-invoked boundaries, shared language, and feedback-loop skills.
+
+## [2026-06-20] ingest | AI Engineer Workshop clipping
+Ingested the workshop page into prompting-agents: added agent-ready work shaping guidance for grilling vague requirements, PRD/issue slicing, tracer bullets, TDD feedback loops, and codebase design for autonomous agents.

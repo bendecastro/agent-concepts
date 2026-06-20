@@ -16,3 +16,4 @@ For each block in `../body/SKILL.md`, locate the corresponding section in the pr
 
 - 2026-06-12 — initial authoring checked against both sources during extraction (same session); first independent re-check due when a new OpenAI guide version is ingested.
 - 2026-06-20 — checked new skill-composition block against Matt Pocock skills catalog clipping during ingest; claims are limited to README-level patterns, not the linked skill bodies.
+- 2026-06-20 — checked new agent-ready work-shaping block against AI Engineer Workshop clipping; claims are limited to the workshop page summary, not unviewed course content.
