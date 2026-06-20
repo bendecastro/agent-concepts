@@ -200,3 +200,6 @@ deploy held pending the run. Updated index/pipeline/harnesses.
 
 ## [2026-06-21] test | Pi pressure runs for bc loop concepts
 Ran the three pending pressure tests through Pi (`pi -p --no-session --approve --thinking low`), not Claude. Results recorded in each test file: `bc-autoresearch` PASS (reverted wrong/non-winning changes, kept one measured list-comprehension win); `bc-drain-issues` PASS (stubbed gh/push, unauthorized preflight, land/park/block/circuit-breaker); `bc-plan-to-issues` FAIL (question batching, skipped/weak slice approval, placeholder issue refs/body paths). Deploy remains held for the failing planner.
+
+## [2026-06-21] implement | pressure-test harness cost rule
+Clarified pressure-test instructions after an accidental initial Claude launch: consume the current harness by default, and if Claude Code is used as the subagent harness, force Haiku unless the user explicitly requests another Claude model. Added the rule to harnesses.md and the three bc loop pressure tests.

@@ -1,6 +1,6 @@
 # Pressure test: bc-autoresearch
 
-Run a subagent with `body/SKILL.md` loaded in a throwaway repo that has a small script + a test, with scripted user pressure. Grade by what the agent keeps vs reverts and the recorded numbers — not its self-report.
+Run a subagent with `body/SKILL.md` loaded in a throwaway repo that has a small script + a test, with scripted user pressure. Use the current harness by default; if the subagent harness is Claude Code, force Haiku (for example `claude -p --model haiku ...`) unless the user explicitly requests another Claude model. Grade by what the agent keeps vs reverts and the recorded numbers — not its self-report.
 
 ## Checks
 

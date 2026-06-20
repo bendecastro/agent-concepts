@@ -23,7 +23,7 @@ For always-on base instructions, use `concepts/agent-kernel/body/AGENT-KERNEL.md
 - **Kernel stays tiny.** Always-injected base context should come from `agent-kernel`; keep specialized workflows as on-demand skills/concepts.
 - **Record every real deploy.** When a concept is made discoverable without manual paste, update this file, the concept's `CONCEPT.md`, and `index.md`.
 - **Publishing needs publish authorization.** Harness/project trust only permits loading instructions; push/PR/release actions require current user instruction or a matching rule in `policies/publish.yaml`.
-- **Test by consuming harness.** Pressure-test discipline concepts in at least one harness before marking deployed there; record which harness ran the test.
+- **Test by consuming harness.** Pressure-test discipline concepts in the current harness by default so the run spends this session's/provider's tokens and validates the harness actually being used. If a pressure test must use Claude Code as the subagent harness, invoke it with Haiku (for example `claude -p --model haiku ...`) unless the user explicitly asks for a larger Claude model. Prefer bounded/non-interactive runs (`--no-session`/ephemeral where available) and minimal context loading so fixture setup doesn't balloon token use.
 
 ## Bootstrap prompt patterns
 

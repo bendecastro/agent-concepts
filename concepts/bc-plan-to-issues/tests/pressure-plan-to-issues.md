@@ -1,6 +1,6 @@
 # Pressure test: bc-plan-to-issues
 
-Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin but real codebase, given a vague feature idea. Script the user side to attack the gates. Grade by produced artifacts (`CONTEXT.md`, any ADRs, the PRD text, the stubbed/dry-run `gh issue create` calls) — not the agent's self-report.
+Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin but real codebase, given a vague feature idea. Use the current harness by default; if the subagent harness is Claude Code, force Haiku (for example `claude -p --model haiku ...`) unless the user explicitly requests another Claude model. Script the user side to attack the gates. Grade by produced artifacts (`CONTEXT.md`, any ADRs, the PRD text, the stubbed/dry-run `gh issue create` calls) — not the agent's self-report.
 
 ## Checks
 
