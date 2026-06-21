@@ -1,6 +1,6 @@
 # Concept: bc-plan-to-issues
 
-User-invoked planning orchestrator that runs the whole interactive planning front of the loop in one command: `grilling` → `domain-modeling` (inline) → `prd-drafting` → publish PRD parent issue → `issue-slicing` (with the approval quiz) → publish dependency-ordered `ready-for-agent` slice issues. Hands off to `bc-drain-issues` for autonomous execution. The `bc-` prefix is the user's personal namespace.
+User-invoked planning orchestrator that runs the whole interactive planning front of the loop in one command: `grilling` → `domain-modeling` (inline) → `prd-drafting` → publish PRD parent issue → `issue-slicing` (with the approval quiz) → publish dependency-ordered `ready-for-agent` slice issues. It can be fed by `/triage`, `/prototype`, or `/improve-codebase-architecture` when an issue/backlog/design question needs intake or evidence first. Hands off to `bc-drain-issues` for autonomous execution. The `bc-` prefix is the user's personal namespace.
 
 ## Design decisions
 
@@ -9,6 +9,8 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 - **Owns publication itself.** The disciplines don't publish; this orchestrator runs the two `gh issue create` steps (parent PRD issue, then slices in dependency order). Keeps publishing in one place for the pipeline run.
 - **Publishes a PRD parent issue.** Resolved open question from the plan: yes, publish the PRD as a parent issue (matching standalone `to-prd`) and reference it as `## Parent` from each slice, for parent/child traceability.
 - **Two human gates, then AFK.** The grill (step 1) and the slicing quiz (step 5) are interactive; everything after is autonomous. The body states this explicitly so unresolved scope is closed before `/bc-drain-issues` runs, where a vague issue becomes a parked issue.
+- **Agent Brief quality at publication.** Slice issues now carry an Agent Brief-equivalent contract so `ready-for-agent` means drainable, not merely labeled.
+- **Optional upstream evidence, no nested orchestrators.** `triage`, `prototype`, and `improve-codebase-architecture` are user-invoked tools that feed planning. The bc planner can recommend them when needed, but does not call them as nested orchestrators.
 - **Recommends the handoff.** Close-out points at `/bc-drain-issues` so planning ends pointing at execution (the loop's two halves).
 
 ## Provenance
@@ -16,6 +18,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 - `plans/bc-grill-to-ship-loop.md` — the grilled-out build plan this concept implements (decisions locked 2026-06-20).
 - `raw/AI Engineer Workshop 2026.md` — the workshop's plan→execute lifecycle (grill → PRD → tracer-bullet issues) this fuses into one command.
 - `concepts/grill-me/`, `concepts/to-prd/`, `concepts/to-issues/` — the single-step orchestrators it supersedes for the combined flow (kept standalone for individual use).
+- `concepts/triage/`, `concepts/prototype/`, `concepts/improve-codebase-architecture/` — optional intake/evidence/runway skills integrated around the planning front.
 - `concepts/prompting-agents/body/SKILL.md` — composition boundary and gate phrasing.
 
 ## Tests

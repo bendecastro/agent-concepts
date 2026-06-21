@@ -9,11 +9,11 @@ argument-hint: "What are we planning?"
 
 Take a raw idea all the way to an agent-ready GitHub issue queue **in one pass**, so you never have to remember the order of the planning skills. This is the interactive planning front of the loop; when it finishes, the autonomous executor `/bc-drain-issues` drains the queue it produced.
 
-This orchestrator composes **model-invoked disciplines only** (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never another user-invoked orchestrator. It owns the publication steps itself.
+This orchestrator composes **model-invoked disciplines only** (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never another user-invoked orchestrator. It owns the publication steps itself. User-invoked exploration tools (`prototype`, `improve-codebase-architecture`, `triage`) can feed this command, but this command does not invoke them as nested orchestrators.
 
 ## Pipeline
 
-1. **Grill.** Run `/grilling`: interview one question at a time, recommended-answer-first, down every branch of the decision tree. Answer from the codebase anything you can answer yourself rather than asking.
+1. **Grill.** Run `/grilling`: interview one question at a time, recommended-answer-first, down every branch of the decision tree. Answer from the codebase anything you can answer yourself rather than asking. If the grill exposes a question that cannot be resolved by conversation or code reading (state model feel, UI direction, architectural runway), pause and recommend the matching pre-planning tool: `/prototype` for throwaway evidence, `/improve-codebase-architecture` for deep-module runway, or `/triage` if the input is an existing issue backlog item that needs a drain-ready Agent Brief.
 
 2. **Capture inline — don't batch.** As terms and decisions crystallize *during* the grill, run `/domain-modeling`: canonical names → `CONTEXT.md` (a pure glossary, no implementation detail); a decision that is costly to reverse AND would surprise a future reader AND reflects a real trade-off → an ADR under `docs/adr/`. Capture the moment it crystallizes, not at the end.
    - **Guard:** if the current directory isn't a project where `CONTEXT.md`/ADRs belong (empty/scratch dir, unrelated files), confirm with the user before creating docs, or grill without persisting.
@@ -28,7 +28,7 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 
 5. **Slice.** Run `/issue-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), and **quiz the user on granularity and dependencies until they approve**. This quiz is the **last human gate before autonomous execution** — do not skip it.
 
-6. **Publish the slices.** In dependency order (blockers first) so real `#NN` fill each "Blocked by", each with `--label ready-for-agent` and `## Parent #<parent>`:
+6. **Publish the slices.** In dependency order (blockers first) so real `#NN` fill each "Blocked by", each with `--label ready-for-agent` and `## Parent #<parent>`. Each slice body must include an `## Agent Brief`-equivalent contract (desired behavior, key interfaces/domain concepts, acceptance criteria, out-of-scope, blockers) so `/bc-drain-issues` can run AFK without prior conversation:
    ```
    gh issue create --title "<slice title>" --label ready-for-agent --body-file <path>
    ```
@@ -38,3 +38,5 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 ## Guard rails
 - This is **planning, not building** — do not write implementation code here. Code is the executor's job, one slice at a time.
 - The grill (step 1) and the slicing quiz (step 5) are the human checkpoints. Everything after step 6 runs AFK, so resolve open branches now — a vague issue becomes a parked issue at execution time.
+- If the source is an existing GitHub issue, run `/triage` first when it lacks an Agent Brief, has conflicting labels, or may be already implemented / out of scope.
+- If planning depends on uncertain state logic, UI direction, or architecture shape, use `/prototype` or `/improve-codebase-architecture` before final PRD/slice publication; capture the verdict in the PRD rather than sending throwaway work to the drain.

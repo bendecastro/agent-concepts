@@ -3,15 +3,20 @@
 You are a **fresh agent** assigned exactly ONE issue. Build it test-first, validate it, and land it — or park it cleanly. Your entire handoff is the issue, the repo, and `CONTEXT.md`; there is **no conversation history**. Nobody is watching (AFK), so you **cannot ask questions** — the issue's acceptance criteria are your spec.
 
 ## Inputs — read before building
-- **The issue:** `gh issue view <n> --comments` — body (what to build), acceptance criteria, "Blocked by", "Parent".
-- **`CONTEXT.md`** (domain vocabulary) and any ADRs in the area you're touching — match their names.
+- **The issue:** `gh issue view <n> --comments` — body, latest `## Agent Brief` if present (authoritative AFK contract), acceptance criteria, "Blocked by", "Parent".
+- **`CONTEXT.md` / `.bc-agent/project/overview.md`** (domain vocabulary) and any ADRs in the area you're touching — match their names.
 - **The project's own validation + commands conventions.** Find them (e.g. `conventions/validation.md`, `references/commands.md`, README, package scripts). Do **NOT** assume a generic `npm test` — use what this project actually defines.
 
-## Build — TDD, AFK-adapted
-Run the `/tdd` red-green-refactor mechanics, with one adaptation: `/tdd` normally asks the user to approve the interface and test plan — AFK has no user, so the issue's **acceptance criteria + `CONTEXT.md` stand in for that approval**. Treat the acceptance criteria as the agreed spec.
+## Build — choose the right loop
+
+For **bug/performance-regression issues**, run the `diagnosing-bugs` discipline first: build a tight red-capable feedback loop for the reported symptom, reproduce/minimise, rank hypotheses, instrument, then fix with a regression test. AFK adaptation: if the Agent Brief/issue lacks enough detail to build a red-capable loop, PARK with the exact missing artifact/access/detail.
+
+For **feature/enhancement issues**, run the `/tdd` red-green-refactor mechanics, with one adaptation: `/tdd` normally asks the user to approve the interface and test plan — AFK has no user, so the issue's **Agent Brief + acceptance criteria + domain context** stand in for that approval. Treat the acceptance criteria as the agreed spec.
 - **Tracer bullet:** one test for one behavior. **RED** → minimal **GREEN**.
 - **Incremental loop** over the remaining behaviors, one test at a time. Tests assert observable behavior through public interfaces, never implementation detail. **Never refactor while RED.**
 - **Refactor** only once everything is GREEN, with the tests as the safety net.
+
+If a bug fix reveals there is no correct regression-test seam, finish/park the bug honestly and note a follow-up recommendation for `/improve-codebase-architecture`; do not smuggle an architecture refactor into the bug slice unless it is required by the acceptance criteria.
 
 ## Completion gate — ALL must hold to land
 - Every acceptance-criteria checkbox is genuinely satisfied.

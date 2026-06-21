@@ -282,9 +282,20 @@ adapter so planning persistence lands in `.bc-agent/` instead of generic
 - **ADRs:** numbered files under `decisions/` using `templates/adr.md`.
 - **Plans / PRDs:** durable planning artifacts under `project/`, linked from `index.md`.
 - **Live cursor:** `tasks/active.md` while work is in flight.
-- **Issue tracker:** GitHub issues via `gh`; ready agent work uses the `ready-for-agent` label;
-  parked work uses `needs-human`.
+- **Issue tracker:** GitHub issues via `gh`; intake uses `needs-triage` / `needs-info`;
+  ready agent work uses `ready-for-agent`; claimed work may show `in-progress-agent`;
+  parked work uses `needs-human`; durable rejections use `wontfix` plus `.out-of-scope/`.
 - **Session log:** short durable notes appended to `log.md`.
+
+## Intake and evidence — `/triage`, `/prototype`, `/improve-codebase-architecture`
+
+- Use `/triage` for existing GitHub issues/PRs before they enter the loop: verify, ask for
+  missing info, write an Agent Brief, mark `ready-for-agent`, or record durable rejections in
+  `.out-of-scope/`.
+- Use `/prototype` when a state model or UI direction needs a throwaway artifact before the
+  PRD. Capture the verdict in `project/` or an ADR; don't send prototype code to the drain.
+- Use `/improve-codebase-architecture` when a feature or bug needs a deep-module runway before
+  slicing. Its report lives in temp storage; durable decisions go into `decisions/` or a plan.
 
 ## Planning — `/bc-plan-to-issues`
 
@@ -306,11 +317,15 @@ Once planning leaves a `ready-for-agent` queue, `/bc-drain-issues` executes it a
 lands it **trunk-based**, then moves on.
 
 - **Authorization.** The executor's preflight runs `publish-check.py`. This repo must have an
-  allow rule in `policies/publish.yaml` (push + issue-close on `master`) or AFK push is
-  blocked. **TODO:** confirm this repo is authorized before the first AFK run.
+  allow rule in `policies/publish.yaml` (push + issue-close on `master`) and authorization for
+  `bc-drain-claims/issue-<n>` coordination branches, or AFK/parallel push is blocked.
+  **TODO:** confirm this repo is authorized before the first AFK run.
 - **Validation gate.** The per-issue agent reads THIS repo's `conventions/validation.md` +
   `references/commands.md` for what "validated" means — not a generic test command. Criteria
   met **and** that validation clean = eligible to land.
+- **Claim before work.** Concurrent drain runners must first create the remote
+  `bc-drain-claims/issue-<n>` branch. If the claim push fails, another runner has the issue;
+  skip it and try the next.
 - **Trunk-based, not PRs.** Each slice commits → pushes `master` → closes its issue with a
   sha + validation comment. Dependent slices then see prior work immediately.
 - **Parking.** A slice that can't complete cleanly is parked: comment on the issue, swap
@@ -323,7 +338,7 @@ lands it **trunk-based**, then moves on.
 
 - Resolved scope in a `project/` plan/PRD page or GitHub parent issue.
 - Durable trade-offs in `decisions/`.
-- Independent `ready-for-agent` issues ordered by dependency.
+- Independent `ready-for-agent` issues ordered by dependency, each with an Agent Brief / concrete acceptance criteria.
 - `tasks/active.md` clear or pointing at the in-flight plan.
 - A dated `log.md` line with issue numbers and changed pages.
 """
@@ -561,6 +576,7 @@ def targets(root: Path, slug: str, date: str) -> list[tuple[Path, str, bool]]:
     for relpath, text in vault_files().items():
         out.append((vault / relpath, render(text, slug, date), False))
     out.append((vault / "research" / "README.md", render(RESEARCH_README, slug, date), False))
+    out.append((root / ".out-of-scope" / ".gitkeep", "", False))
     out.append((vault / "scratch" / ".gitkeep", "", False))
     return out
 
@@ -632,7 +648,7 @@ def main() -> int:
 
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
           "authorize this repo in policies/publish.yaml if you'll run /bc-drain-issues AFK; "
-          "then /bc-plan-to-issues to plan the first feature.")
+          "then /triage existing issues or /bc-plan-to-issues to plan the first feature.")
     return 0
 
 

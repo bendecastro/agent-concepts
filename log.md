@@ -215,3 +215,6 @@ Verified `bc-init-agent` relative symlinks exist in `~/.claude/skills/`, `~/.age
 
 ## [2026-06-21] implement | bc-drain-issues parallel claims
 Researched Pocock's public triage/agent-brief workflow: it has ready-for-agent state and briefs, but no atomic claim/lock. Added a remote Git claim-branch step so concurrent drain runners skip already-claimed issues, and updated the pressure scenario to cover claim races.
+
+## [2026-06-21] implement | Pocock workflow extensions for bc loop
+Ingested triage/Agent Brief/out-of-scope, diagnosing-bugs, prototype, and improve-codebase-architecture from Matt Pocock's public skills into local concepts. Integrated them around the bc loop: triage before planning/drain, prototype/architecture as optional evidence/runway before PRD, diagnosing-bugs inside drain for bug issues, and bc-init now seeds `.out-of-scope/`. Deployed new skills to Claude Code + Pi symlinks; pressure scenarios authored, not yet run.

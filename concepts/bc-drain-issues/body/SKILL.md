@@ -28,7 +28,7 @@ Stop and report if any check fails. AFK means nobody is here to answer a prompt 
 ## Driver loop
 Repeat until a stop condition fires:
 
-1. **Find candidates:** list *oldest OPEN* `ready-for-agent` issues whose every "Blocked by #NN" references a **closed** issue. Skip `needs-human`, `in-progress-agent`, and anything still blocked by an open issue. (`gh issue list --label ready-for-agent --state open`, then read each candidate's "Blocked by" and check blocker state.)
+1. **Find candidates:** list *oldest OPEN* `ready-for-agent` issues whose every "Blocked by #NN" references a **closed** issue. Skip `needs-human`, `in-progress-agent`, and anything still blocked by an open issue. Prefer issues with a latest `## Agent Brief` comment/body; if a candidate is vague or lacks concrete acceptance criteria, do not guess — relabel/route it through `/triage` or PARK with `needs-human`. (`gh issue list --label ready-for-agent --state open`, then read each candidate's brief/body, "Blocked by", and blocker state.)
 2. **Atomically claim one candidate:** try candidates in order until one claim succeeds.
    - Create a unique no-worktree claim commit from the current tree, e.g. `claim_commit=$(printf 'bc-drain claim issue #%s\nrun: %s\n' "$n" "$RUN_ID" | git commit-tree "$(git rev-parse HEAD^{tree})" -p HEAD)`.
    - Push it without force to `refs/heads/bc-drain-claims/issue-$n`: `git push origin "$claim_commit:refs/heads/bc-drain-claims/issue-$n"`.
