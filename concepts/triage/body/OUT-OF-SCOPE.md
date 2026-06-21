@@ -1,6 +1,6 @@
 # Out-of-Scope Knowledge Base
 
-Store rejected enhancement concepts in `.out-of-scope/` so future triage can dedupe recurring requests and preserve why the decision was made.
+Store rejected enhancement concepts in `.bc-agent/out-of-scope/` so future triage can dedupe recurring requests and preserve why the decision was made.
 
 ## File shape
 
@@ -22,6 +22,6 @@ Durable, substantive reason. Reference project scope, technical constraints, or 
 
 ## Rules
 
-- Check `.out-of-scope/*.md` during triage before recommending new work.
+- Check `.bc-agent/out-of-scope/*.md` during triage before recommending new work.
 - Write/update it only for rejected enhancements, not bugs and not already-implemented features.
 - If the maintainer reconsiders, update or delete the file and proceed through normal triage.

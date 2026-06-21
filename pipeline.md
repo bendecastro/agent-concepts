@@ -32,7 +32,7 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 
 ## The two halves
 
-**Intake — `/triage`** (interactive, as needed). Turns existing issues/PRs into the bc state machine: verify, grill if needed, write an Agent Brief, mark `ready-for-agent`, route broad work into `/bc-plan-to-issues`, or record durable `.out-of-scope/` rejections.
+**Intake — `/triage`** (interactive, as needed). Turns existing issues/PRs into the bc state machine: verify, grill if needed, write an Agent Brief, mark `ready-for-agent`, route broad work into `/bc-plan-to-issues`, or record durable `.bc-agent/out-of-scope/` rejections.
 
 **Evidence / runway — `/prototype` and `/improve-codebase-architecture`** (interactive, optional). Use prototypes when a state/UI decision needs a throwaway artifact before the PRD. Use architecture review when a feature or bug exposes poor seams and needs a deep-module plan before slicing.
 

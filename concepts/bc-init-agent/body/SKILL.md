@@ -7,7 +7,7 @@ argument-hint: "[project-slug] (defaults to the repo directory name)"
 
 # Init Agent Workspace
 
-Stand up a project-local agent workspace inspired by the image-maze vault, so the repo is immediately ready for the loop: `/triage` for issue intake, optional `/prototype` or `/improve-codebase-architecture` for evidence/runway, `/bc-plan-to-issues` to plan, `/bc-drain-issues` to execute. Creates a repo-root `AGENTS.md` that points agents at the vault, a `.bc-agent/` Obsidian-vault wiki with the maintainer schema, templates, conventions, and the `planning-workflow.md` adapter, plus an empty `.out-of-scope/` directory for durable rejected enhancement records.
+Stand up a project-local agent workspace inspired by the image-maze vault, so the repo is immediately ready for the loop: `/triage` for issue intake, optional `/prototype` or `/improve-codebase-architecture` for evidence/runway, `/bc-plan-to-issues` to plan, `/bc-drain-issues` to execute. Creates a repo-root `AGENTS.md` that points agents at the vault, a `.bc-agent/` Obsidian-vault wiki with the maintainer schema, templates, conventions, and the `planning-workflow.md` adapter, plus an empty `.bc-agent/out-of-scope/` directory for durable rejected enhancement records.
 
 The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is only the wiki's **display name** in titles (defaults to the repo directory name); it doesn't affect the path.
 

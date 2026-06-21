@@ -284,14 +284,14 @@ adapter so planning persistence lands in `.bc-agent/` instead of generic
 - **Live cursor:** `tasks/active.md` while work is in flight.
 - **Issue tracker:** GitHub issues via `gh`; intake uses `needs-triage` / `needs-info`;
   ready agent work uses `ready-for-agent`; claimed work may show `in-progress-agent`;
-  parked work uses `needs-human`; durable rejections use `wontfix` plus `.out-of-scope/`.
+  parked work uses `needs-human`; durable rejections use `wontfix` plus `.bc-agent/out-of-scope/`.
 - **Session log:** short durable notes appended to `log.md`.
 
 ## Intake and evidence — `/triage`, `/prototype`, `/improve-codebase-architecture`
 
 - Use `/triage` for existing GitHub issues/PRs before they enter the loop: verify, ask for
   missing info, write an Agent Brief, mark `ready-for-agent`, or record durable rejections in
-  `.out-of-scope/`.
+  `.bc-agent/out-of-scope/`.
 - Use `/prototype` when a state model or UI direction needs a throwaway artifact before the
   PRD. Capture the verdict in `project/` or an ADR; don't send prototype code to the drain.
 - Use `/improve-codebase-architecture` when a feature or bug needs a deep-module runway before
@@ -576,7 +576,7 @@ def targets(root: Path, slug: str, date: str) -> list[tuple[Path, str, bool]]:
     for relpath, text in vault_files().items():
         out.append((vault / relpath, render(text, slug, date), False))
     out.append((vault / "research" / "README.md", render(RESEARCH_README, slug, date), False))
-    out.append((root / ".out-of-scope" / ".gitkeep", "", False))
+    out.append((vault / "out-of-scope" / ".gitkeep", "", False))
     out.append((vault / "scratch" / ".gitkeep", "", False))
     return out
 

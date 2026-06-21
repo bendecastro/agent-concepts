@@ -40,7 +40,7 @@ Include external PRs only if the repo says PRs are a request surface. Let the us
 ## Triage one issue or PR
 
 1. **Gather context.** Read the full issue/PR body, comments, labels, author, dates, and PR diff if applicable. Read `.bc-agent/project/overview.md` or `CONTEXT.md`, relevant ADRs, and prior triage notes.
-2. **Check redundancy and prior rejection.** Search the codebase by domain concept for an existing implementation. Read `.out-of-scope/*.md` if present; surface any similar rejected concept.
+2. **Check redundancy and prior rejection.** Search the codebase by domain concept for an existing implementation. Read `.bc-agent/out-of-scope/*.md` if present; surface any similar rejected concept.
 3. **Verify the claim.** For a bug, reproduce or fail honestly. For a PR, check whether the diff does what it claims and run the relevant validation if bounded. A confirmed claim makes a stronger agent brief.
 4. **Recommend.** Tell the maintainer: category, state, what you verified, and why. Wait for direction unless the user explicitly asked for autonomous triage.
 5. **Grill if needed.** If the issue is close but underspecified, run `grilling` + `domain-modeling` to resolve missing decisions one question at a time. If it is broad enough to need a PRD/slices, send it to `/bc-plan-to-issues` instead of pretending one issue is enough.
@@ -48,8 +48,8 @@ Include external PRs only if the repo says PRs are a request surface. Let the us
    - `ready-for-agent`: post an Agent Brief using [AGENT-BRIEF.md](AGENT-BRIEF.md); make acceptance criteria concrete enough for `/bc-drain-issues`.
    - `ready-for-human`: post the same structure, plus why it cannot be delegated.
    - `needs-info`: post triage notes with established facts and specific questions.
-   - `wontfix` already implemented: close with a pointer to the existing behavior; do **not** write `.out-of-scope/`.
-   - `wontfix` rejected enhancement: write/update `.out-of-scope/<concept>.md` using [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md), comment, and close.
+   - `wontfix` already implemented: close with a pointer to the existing behavior; do **not** write `.bc-agent/out-of-scope/`.
+   - `wontfix` rejected enhancement: write/update `.bc-agent/out-of-scope/<concept>.md` using [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md), comment, and close.
 
 ## Quick override
 

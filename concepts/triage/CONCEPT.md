@@ -1,12 +1,12 @@
 # Concept: triage
 
-User-invoked intake gate for the bc loop. It moves issues/PRs through a small state machine, verifies claims, grills when needed, writes drain-ready Agent Briefs, and records rejected enhancement concepts in `.out-of-scope/`.
+User-invoked intake gate for the bc loop. It moves issues/PRs through a small state machine, verifies claims, grills when needed, writes drain-ready Agent Briefs, and records rejected enhancement concepts in `.bc-agent/out-of-scope/`.
 
 ## Design decisions
 
 - **Intake, not execution.** `triage` produces better work for `bc-plan-to-issues` or `bc-drain-issues`; it does not build the feature itself.
 - **Agent Brief as AFK contract.** A `ready-for-agent` label alone is too weak. The latest Agent Brief comment is the spec the drain subagent can rely on.
-- **Out-of-scope is project memory.** Rejections belong in `.out-of-scope/` only when they are durable enhancement decisions, not temporary deferrals or already-built features.
+- **Out-of-scope is project memory.** Rejections belong in `.bc-agent/out-of-scope/` only when they are durable enhancement decisions, not temporary deferrals or already-built features.
 - **State labels stay canonical but mappable.** The body uses Pocock's five-state vocabulary while allowing repo-local mappings from the bc scaffold.
 
 ## Provenance
@@ -17,7 +17,7 @@ User-invoked intake gate for the bc loop. It moves issues/PRs through a small st
 
 ## Tests
 
-`tests/scenario.md` — pressure scenario for issue intake: it must not mark vague issues ready, must write an Agent Brief for drainable issues, and must use `.out-of-scope/` only for rejected enhancements. Scenario authored; full harness run pending.
+`tests/scenario.md` — pressure scenario for issue intake: it must not mark vague issues ready, must write an Agent Brief for drainable issues, and must use `.bc-agent/out-of-scope/` only for rejected enhancements. Scenario authored; full harness run pending.
 
 ## Deploy targets
 
