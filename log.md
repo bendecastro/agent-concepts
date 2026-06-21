@@ -218,3 +218,6 @@ Researched Pocock's public triage/agent-brief workflow: it has ready-for-agent s
 
 ## [2026-06-21] implement | Pocock workflow extensions for bc loop
 Ingested triage/Agent Brief/out-of-scope, diagnosing-bugs, prototype, and improve-codebase-architecture from Matt Pocock's public skills into local concepts. Integrated them around the bc loop: triage before planning/drain, prototype/architecture as optional evidence/runway before PRD, diagnosing-bugs inside drain for bug issues, and bc-init now seeds `.out-of-scope/`. Deployed new skills to Claude Code + Pi symlinks; pressure scenarios authored, not yet run.
+
+## [2026-06-21] implement | bc-drain-issues discipline wiring clarity
+Reinforced the drain executor's subagent handoff so it explicitly composes `diagnosing-bugs`, `tdd`, and conditional `bc-autoresearch-loop`; clarified the per-issue contract that bug-like work must use the debug loop and metric-bearing work runs the autoresearch loop only after GREEN.

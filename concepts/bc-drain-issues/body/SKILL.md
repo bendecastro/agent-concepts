@@ -38,7 +38,7 @@ Repeat until a stop condition fires:
    - No eligible unclaimed issue (queue drained, or only blocked/parked/claimed issues remain).
    - `max-iters` reached.
    - **Circuit-breaker:** N consecutive issues parked → stop. A run of parks means something systemic is broken (bad base state, broken env); continuing just burns tokens and makes noise.
-4. **Execute** the claimed issue in a **fresh subagent** (your harness's subagent/Task tool), loaded with `execute-issue.md` + the issue number + the repo path. The subagent returns exactly one of: **LANDED** (committed/pushed/closed) or **PARKED** (commented + relabeled `needs-human`, nothing pushed).
+4. **Execute** the claimed issue in a **fresh subagent** (your harness's subagent/Task tool), loaded with `execute-issue.md` + the issue number + the repo path. Also tell the subagent that the per-issue contract deliberately composes these model-invoked disciplines: `diagnosing-bugs` for bug/performance-regression issues, `tdd` for feature/enhancement issues, and `bc-autoresearch-loop` only for metric-bearing issues after GREEN. The subagent returns exactly one of: **LANDED** (committed/pushed/closed) or **PARKED** (commented + relabeled `needs-human`, nothing pushed).
 5. **Release the claim:** after LANDED or PARKED, delete the claim branch (`git push origin --delete bc-drain-claims/issue-<n>`) and remove `in-progress-agent`. If cleanup fails, report the stale claim branch explicitly; a later runner may reclaim only after a human confirms it is stale.
 6. **Tally:** reset the consecutive-park counter on LANDED; increment it on PARKED.
 7. Loop.
