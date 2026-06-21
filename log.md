@@ -212,3 +212,6 @@ Ran `scripts/deploy-local-skills.py` and created relative symlinks for `bc-plan-
 
 ## [2026-06-21] deploy | bc-init-agent → Pi verified
 Verified `bc-init-agent` relative symlinks exist in `~/.claude/skills/`, `~/.agents/skills/`, and `~/.pi/agent/skills/` via `scripts/deploy-local-skills.py --dry-run`; updated concept/index deploy records. Claude symlink already existed, Pi symlinks were present from the bulk deploy.
+
+## [2026-06-21] implement | bc-drain-issues parallel claims
+Researched Pocock's public triage/agent-brief workflow: it has ready-for-agent state and briefs, but no atomic claim/lock. Added a remote Git claim-branch step so concurrent drain runners skip already-claimed issues, and updated the pressure scenario to cover claim races.

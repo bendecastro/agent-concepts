@@ -21,20 +21,27 @@ Stop and report if any check fails. AFK means nobody is here to answer a prompt 
    ```
    - **exit 0** → push authorized; proceed.
    - **exit 2** → push is NOT authorized for this repo. Do **not** push. Either **abort** and tell the user to pre-authorize the repo in `policies/publish.yaml` (copy the `image-maze-push-and-close-after-agent-work` rule, swapping `paths`/`remotes`), or — only if the user pre-agreed to a local-only run — continue in **commit-only-local mode** (commit per slice, never push, never close issues; report the branch at the end). **Never edit `publish.yaml` to authorize yourself** (self-amendment immunity).
-3. **Labels.** Ensure `ready-for-agent` and `needs-human` exist (`gh label create` if missing).
-4. **Caps.** Note `max-iters` (arg, default 20) and the circuit-breaker threshold (default **3** consecutive parks). These bound a runaway or systemically-broken run.
+3. **Claim coordination.** Hard parallel safety requires a remote Git claim namespace. Labels, assignees, comments, and kanban/project columns are advisory — two agents can race them. Before a parallel/AFK run, confirm the user or `publish.yaml` authorizes pushing and deleting coordination branches named `bc-drain-claims/issue-<n>` on the shared origin. If not authorized, **stop** unless the user explicitly chose single-run mode; single-run mode is not safe with another drain already running.
+4. **Labels.** Ensure `ready-for-agent`, `needs-human`, and `in-progress-agent` exist (`gh label create` if missing). `in-progress-agent` is only a visible hint; the claim branch is the lock.
+5. **Caps.** Note `max-iters` (arg, default 20) and the circuit-breaker threshold (default **3** consecutive parks). These bound a runaway or systemically-broken run.
 
 ## Driver loop
 Repeat until a stop condition fires:
 
-1. **Select the next issue:** the *oldest OPEN* `ready-for-agent` issue whose every "Blocked by #NN" references a **closed** issue. Skip `needs-human` issues and anything still blocked by an open issue. (`gh issue list --label ready-for-agent --state open`, then read each candidate's "Blocked by" and check blocker state.)
-2. **Stop conditions** — terminate the loop, then report:
-   - No eligible issue (queue drained, or only blocked/parked issues remain).
+1. **Find candidates:** list *oldest OPEN* `ready-for-agent` issues whose every "Blocked by #NN" references a **closed** issue. Skip `needs-human`, `in-progress-agent`, and anything still blocked by an open issue. (`gh issue list --label ready-for-agent --state open`, then read each candidate's "Blocked by" and check blocker state.)
+2. **Atomically claim one candidate:** try candidates in order until one claim succeeds.
+   - Create a unique no-worktree claim commit from the current tree, e.g. `claim_commit=$(printf 'bc-drain claim issue #%s\nrun: %s\n' "$n" "$RUN_ID" | git commit-tree "$(git rev-parse HEAD^{tree})" -p HEAD)`.
+   - Push it without force to `refs/heads/bc-drain-claims/issue-$n`: `git push origin "$claim_commit:refs/heads/bc-drain-claims/issue-$n"`.
+   - Success means this run owns issue `#<n>`. Failure means another runner claimed it first; skip it and try the next candidate. Do not work an issue unless the claim push succeeded.
+   - After a successful claim, add `in-progress-agent` and comment `Claimed by <harness/user/run id>` for humans. These are advisory breadcrumbs; never treat them as the lock.
+3. **Stop conditions** — terminate the loop, then report:
+   - No eligible unclaimed issue (queue drained, or only blocked/parked/claimed issues remain).
    - `max-iters` reached.
    - **Circuit-breaker:** N consecutive issues parked → stop. A run of parks means something systemic is broken (bad base state, broken env); continuing just burns tokens and makes noise.
-3. **Execute** the selected issue in a **fresh subagent** (your harness's subagent/Task tool), loaded with `execute-issue.md` + the issue number + the repo path. The subagent returns exactly one of: **LANDED** (committed/pushed/closed) or **PARKED** (commented + relabeled `needs-human`, nothing pushed).
-4. **Tally:** reset the consecutive-park counter on LANDED; increment it on PARKED.
-5. Loop.
+4. **Execute** the claimed issue in a **fresh subagent** (your harness's subagent/Task tool), loaded with `execute-issue.md` + the issue number + the repo path. The subagent returns exactly one of: **LANDED** (committed/pushed/closed) or **PARKED** (commented + relabeled `needs-human`, nothing pushed).
+5. **Release the claim:** after LANDED or PARKED, delete the claim branch (`git push origin --delete bc-drain-claims/issue-<n>`) and remove `in-progress-agent`. If cleanup fails, report the stale claim branch explicitly; a later runner may reclaim only after a human confirms it is stale.
+6. **Tally:** reset the consecutive-park counter on LANDED; increment it on PARKED.
+7. Loop.
 
 ## End-of-run report
 Summarize: issues **LANDED** (with commit shas) and **PARKED** (with the stuck reason), issues still **blocked**, and **why the loop stopped** (drained / max-iters / circuit-breaker). In commit-only-local mode, name the branch to review.
