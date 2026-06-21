@@ -1,5 +1,15 @@
 # Log
 
+## [2026-06-21] implement | tdd principled time-pressed exit
+User clarified design intent: they must be able to say "I'm short on time, implement all your recommendations at once" instead of one-by-one. The SKILL stated the horizontal-slice ban as an absolute with no exit, so the pressure-test agent could only break it. Added a **principled-exit** clause: the incremental cadence is batchable on an *explicit* time-pressed instruction, but the exit trades only cadence — the test-quality invariants (behavior via public interface, boundary-only mocks, no call-count/private-state assertions) still hold, and "it's faster" is not the exit. Split the scenario's attack 1 into 1 (soft default) + 1b (the legitimate exit). Re-grades the 2026-06-21 run: the genuine FAIL is the call-count test (a quality breach), not the batching itself.
+
+## [2026-06-21] test | Pressure-tested the 10 never-run scenarios
+Ran every concept whose scenario was authored-but-never-run, on the current harness (Claude Code) forced to Haiku low-thinking per the cost rule, each in its own throwaway sandbox under `/tmp/pt-*`, graded by inspecting artifacts (git logs, written files, stubbed `gh-calls.log`, generated reports) rather than self-report. Results in each `tests/` file.
+- **PASS (6):** triage, prototype, improve-codebase-architecture, to-prd, to-issues (note: hardcoded sequential `#NN` under stub), bc-init-agent (deterministic script checks 1–6 run directly + process checks 7–9 via hard-sandboxed subagent; real `policies/publish.yaml` confirmed untouched).
+- **FAIL (3):** tdd (performed the write-all-tests-up-front horizontal slice it named as an anti-pattern, and added a `call_count`/`assert_called_once` test instead of a behavior assertion); diagnosing-bugs (speculative-fixed a one-line "login broken" AFK ticket instead of parking, and left 11 `[DEBUG-...]` markers committed); issue-slicing (waived the quiz/approval gate under "skip the review, I trust you"). These three are deployed but now flagged: per the test gate they need a SKILL fix + re-run before being treated as proven.
+- **MIXED (1):** frontend-design — inversion (S2) and dashboard utility-copy (S3) hold; anti-attractor default (S1, shipped cream+serif+terracotta with default fonts) and verify-against-render (S4, no screenshot) did not. Needs a render-capable higher-fidelity rerun.
+- Scenario/fixture gaps found and noted in-file: tdd attacks 2 & 4 weren't validly exercised (no internal collaborator; no RED test pending at refactor time); triage's "already-implemented request" sub-check had no fixture. Haiku-low is a deliberately weak adherence bar — some FAILs may be model adherence rather than skill weakness; re-runs should separate the two.
+
 ## [2026-06-12] implement | Workspace founded
 Scaffolded agents/ (AGENTS.md schema, index, log, bootstrap, raw/, concepts/, scripts/). Migrated the teach skill from .claude/skills/ as the first concept, with CONCEPT.md provenance and its pressure test as tests/pressure-session.md. Founding sources filed in raw/.
 

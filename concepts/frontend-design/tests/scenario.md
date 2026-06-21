@@ -39,4 +39,14 @@ Run a subagent as the consuming agent in a throwaway workspace. Verify against t
 
 **Expected.** Uses `playwright-cli` to screenshot desktop + mobile and self-critiques against the litmus checks; uses `verify` to confirm the running app — rather than declaring success from the DOM/code alone.
 
+## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **MIXED / partial**
+
+Sandbox `/tmp/pt-fe`, three tasks in one run. Graded by inspecting the produced HTML/CSS (not self-report).
+- **Scenario 1 (blank brief + time pressure): WEAK.** It *did* write a thesis + token plan and a signature element (a bean mark) and kept the hero budget — but it landed squarely on the named **cream/off-white + serif + terracotta** attractor (`#f5f3f0` + `#d84c38` + Georgia) and used **default fonts** (Georgia, Inter). Its justification ("serif signals craft") was generic, not coffee-specific. Two of the attractors the scenario forbids as reflex defaults were shipped.
+- **Scenario 2 (inversion / existing design system): PASS.** `settings.html` links `design-system.css`, declares **no** inline colors or new `font-family`, adds no hero, uses utility copy. Conformed exactly.
+- **Scenario 3 (dashboard utility-copy): PASS.** `dashboard.html` has zero hero/aspirational markup; opens on KPIs/filters/chart/tables in utility voice.
+- **Scenario 4 (verify-against-render): FAIL / not-verified.** Emitted code and declared it "ready to render" without taking any screenshot or running `playwright-cli`/`verify` ("environment constraint"). The verify-against-render gate did not fire (playwright availability in the sandbox also unconfirmed).
+
+Read-out: the *restraint/inversion* half of the skill holds well; the *anti-attractor default* and *verify-against-render* halves did not. Caveat: a Haiku-low subagent with no confirmed render tooling is a poor fit for grading taste + render verification. Follow-ups: (a) re-run scenarios 1 & 4 on a render-capable, higher-fidelity harness; (b) consider sharpening the SKILL's anti-attractor language so off-white+serif+terracotta for *coffee* must clear a specificity bar, and treating system-default fonts as a flagged default; (c) make the render-verification step a harder gate.
+
 **Fail.** Claims the design works without ever looking at the render.

@@ -19,3 +19,18 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 
 ## Pass criteria
 Script checks 1–6 pass on inspection of the generated tree; process checks 7–9 hold in the subagent transcript.
+
+## Run result — 2026-06-21 — **PASS**
+
+Script checks 1–6 run directly (no subagent):
+1. Tree shape: root `AGENTS.md` + full `.bc-agent/` vault (AGENTS/index/home/map/log, `project/overview.md`, `references/*`, `conventions/*` incl. `planning-workflow.md`, `decisions/adr-0001-*`, `tasks/*`, `templates/*`, `research/README.md`, `scratch/.gitkeep`, `out-of-scope/.gitkeep`) at `.bc-agent/` with no slug nesting. ✓
+2. Substitution: no residual `__SLUG__`/`__DATE__`; slug + date present. ✓
+3. Idempotent re-run: byte-identical checksums, reported "untouched", nothing created/deleted. ✓
+4. Additive plug-in: into a root with hand-written `AGENTS.md` + pre-existing vault page, existing files left byte-identical, only missing created, root `AGENTS.md` flagged for manual pointer-merge, nothing deleted. ✓
+5. No-overwrite/dry-run: `--dry-run` wrote 0 files; default left existing untouched. ✓
+6. Slug validation: spaces and uppercase both exit 1. ✓
+
+Process checks 7–9 via Haiku subagent (low-thinking, hard-sandboxed to `/tmp/pt-bcinit2`):
+7. Located root via `git rev-parse --show-toplevel`, kebab-case slug, no ambiguity. ✓
+8. Drafted a repo-specific `publish.yaml` allow-rule and OFFERED to append it; did not write it (verified: real `agents/policies/publish.yaml` untouched). ✓
+9. Close-out pointed at created files + named next steps (`/triage` → `/bc-plan-to-issues` → `/bc-drain-issues`); committed staging only the new scaffold files (`git add AGENTS.md .bc-agent/`), clean tree after. ✓
