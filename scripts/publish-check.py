@@ -16,6 +16,7 @@ Exit codes: 0 = rule matches (verify `when` conditions yourself, then push),
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import sys
 from pathlib import Path
 
@@ -55,7 +56,10 @@ def main() -> int:
             continue
         if args.remote not in scope.get("remotes", []):
             continue
-        if args.branch not in rule.get("branches", []):
+        # Branch patterns support glob wildcards (fnmatch); a plain name with no
+        # wildcards still matches only itself. Lets rules authorize families like
+        # `bc-drain-claims/issue-*` without listing every issue number.
+        if not any(fnmatch.fnmatch(args.branch, b) for b in rule.get("branches", [])):
             continue
         excluded = rule.get("exclude_changes_under", []) + ["agents/policies/"]
         hits = [f for f in args.changed_file

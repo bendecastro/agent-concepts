@@ -73,6 +73,7 @@ rules:
       - issue_acceptance_criteria_satisfied
     branches:
       - master
+      - bc-drain-claims/issue-*  # AFK drain coordination/claim branches (glob)
     constraints:
       require_status_inspection: true
       require_diff_inspection: true
