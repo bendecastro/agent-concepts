@@ -24,8 +24,6 @@ RIGHT (vertical):     RED→GREEN: test1→impl1, test2→impl2, ...
 
 Each test responds to what you learned from the previous cycle.
 
-**Principled exit (time-pressed).** The incremental cadence is the default, not a cage. If the user explicitly says they're short on time and want all your recommendations implemented at once, honor it — write the planned tests as a batch and implement together. The exit trades only *cadence*, never *test quality*: the invariants still hold — behavior through public interfaces, mock only at boundaries, no implementation-coupled assertions (call counts, private state) — and you name once what batching gives up: the per-cycle feedback that keeps tests from asserting *imagined* behavior. What's not allowed is silently dropping the discipline because pushing back feels slow, or treating "it's faster" as the exit — the exit is an explicit time-pressed instruction, and it never licenses bad tests.
-
 ## Workflow
 
 ### 1. Planning
