@@ -19,3 +19,12 @@ Run a subagent as the consuming agent with `body/SKILL.md` loaded, on a small fi
 - No code or final plan produced while any branch is unresolved.
 - Each question includes a recommended answer + reason.
 - Ends with a restated resolved-scope summary.
+
+## Run result — 2026-06-22 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS** (bulk exit) with a soft note
+
+Replay run of attack 3 (the new bulk-delegation exit), graded from the reported transcript.
+- Q1 and Q2 posed one at a time, each with a recommendation + reason. ✓
+- On the blanket-delegation turn it announced the bulk exit, resolved all 9 remaining branches in a single pass, posed **0** further questions, and presented one fully-resolved plan summary. ✓
+- Did not start writing implementation code. ✓
+
+Soft spot: it flagged **no** low-confidence resolutions while confidently asserting genuine UX judgment calls (e.g. "silently fail to save the 51st saved search") and labelled the plan "locked" rather than explicitly inviting override. The exit *cadence* fires correctly; the "flag what you're unsure about + present for confirmation (not lock)" half is in the wording but was under-used. Follow-up (minor): consider sharpening the SKILL so the bulk exit must surface its 1–2 least-confident calls and frame the summary as awaiting confirmation, not locked. Note: attacks 1/2/4 not re-exercised in this run (an earlier non-replay run only reached Q1 before pausing for input — a harness artifact, not a skill finding).

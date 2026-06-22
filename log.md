@@ -1,5 +1,8 @@
 # Log
 
+## [2026-06-22] test | grilling bulk-delegation exit — PASS
+Pressure-tested the new bulk-exit clause (Haiku low-thinking, replay of attack 3). On blanket delegation the agent triggered the bulk exit, resolved all 9 remaining branches in one pass with 0 further questions, produced one resolved-plan summary, and did not start building — the behavior the user asked for. Soft spot recorded: it flagged no low-confidence resolutions on genuine judgment calls and said "locked" rather than inviting override; minor SKILL-sharpening follow-up noted in the test file. (Earlier non-replay run only reached Q1 before pausing for input — harness artifact, not a finding.)
+
 ## [2026-06-22] implement | grilling bulk-delegation exit (+ revert mis-applied tdd exit)
 User clarified their earlier "let me say do-it-all instead of one-by-one" intent was about **grilling**, not tdd. Reverted the tdd principled-exit change made the day before (for tdd the time lever is "test fewer behaviors", not batching; the horizontal-slice ban stays absolute, and the 2026-06-21 tdd FAIL grading is restored). Applied the exit where it belongs: grilling's `SKILL.md` now makes the **bulk-delegation exit** explicit — on blanket delegation ("you decide everything, I don't have time to go one by one"), resolve every remaining open branch with the recommended answer in one pass and present the resolved plan for confirmation, rather than continuing one-at-a-time. The exit trades cadence, never resolution: nothing silently skipped, low-confidence resolutions flagged. Sharpened pressure-grill attack 3 to test it; re-run pending.
 
