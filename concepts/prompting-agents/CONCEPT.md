@@ -21,6 +21,8 @@ A reference library of proven instruction blocks for authoring agent instruction
 - `raw/skillsskillsproductivityteach at main.md` — Matt Pocock's broader skills README/catalog: small composable skills, user-invoked vs model-invoked boundary, grilling/shared-language/documented-decision patterns, feedback-loop skills. https://github.com/mattpocock/skills/tree/main
 - `raw/AI Engineer Workshop 2026.md` — workflow framing for AI-assisted feature delivery: grill vague requirements, write PRDs, break work into vertical tracer-bullet issues, execute with TDD human-in-the-loop or AFK, design codebases for agent effectiveness. https://www.aihero.dev/ai-engineer-workshop-2026~dwnll
 - `raw/mattpocockai-engineer-workshop-2026-project.md` — companion project README showing the concrete project runway an agent needs: prerequisites, setup, dev server, test/typecheck/build commands, migration/seed commands, and stack. https://github.com/mattpocock/ai-engineer-workshop-2026-project/tree/main
+- `raw/obra-superpowers/skills/writing-skills/` — skill authoring/testing methodology, description-field discovery warnings, rationalization-resistant discipline phrasing, and pressure-testing technique; aligns with this workspace's Test gate.
+- `raw/obra-superpowers/skills/using-superpowers/` — considered for skill-loading policy; its mandatory “invoke before any response” rule is deliberately not adopted because this workspace uses context-economical, relevance-gated concept loading.
 
 ## Philosophy
 

@@ -15,7 +15,8 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 - `raw/pocock-skills-upstream/captured-skills.md` — verbatim `tdd/SKILL.md`, `tests.md`, `mocking.md`; `refactoring.md` recovered as a summary and reconstructed. https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd
 - `raw/AI Engineer Workshop 2026.md` — workshop's TDD execution step (agent writes failing test, then code, then commits).
-- `raw/obra-superpowers/` — sibling TDD-for-skills framing already cited by the workspace.
+- `raw/obra-superpowers/skills/test-driven-development/` — strict red/green/refactor wording, “watched it fail” iron law, rationalization table, and testing anti-patterns; absorbed as reinforcement rather than a duplicate concept.
+- `raw/obra-superpowers/skills/writing-skills/` — applies the same TDD loop to process documentation; informs workspace test-gate practice.
 
 ## Tests
 

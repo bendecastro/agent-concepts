@@ -1,3 +1,6 @@
+## [2026-06-25] ingest | obra-superpowers skills
+Created local concepts for uncovered obra-superpowers workflows (brainstorming, planning/execution, subagent orchestration, parallel dispatch, code review, worktrees, branch finishing), mapped overlapping skills into existing TDD/debugging/kernel/prompting concepts, and updated the index.
+
 # Log
 
 ## [2026-06-22] test | grilling bulk-delegation exit — PASS
