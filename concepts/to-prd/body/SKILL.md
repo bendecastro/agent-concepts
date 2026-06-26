@@ -8,14 +8,14 @@ disable-model-invocation: true
 
 Draft a PRD from the current conversation and codebase, then publish it as a GitHub issue. The drafting is the `/prd-drafting` discipline; this orchestrator wraps it with publication.
 
-**Issue tracker: GitHub**, via the `gh` CLI. Ready work is published with the `ready-for-agent` label.
+**Issue tracker: GitHub**, via the `gh` CLI. A PRD parent issue is a planning/coordination artifact, not drainable work; `ready-for-agent` is reserved for implementation slices created by `/to-issues` or `/bc-plan-to-issues`.
 
 ## Process
 
 1. **Draft.** Run `/prd-drafting`: synthesize (do NOT interview), sketch and confirm the test seams, and write the PRD to the standard template. If scope is still too vague to synthesize, run `/grill-me` first rather than interviewing here.
 
-2. **Publish** the produced PRD as a GitHub issue:
+2. **Publish** the produced PRD as a GitHub parent issue:
    ```
-   gh issue create --title "<PRD: feature name>" --label ready-for-agent --body-file <path>
+   gh issue create --title "<PRD: feature name>" --body-file <path>
    ```
-   Apply `ready-for-agent` — no further triage needed. If the `ready-for-agent` label doesn't exist in the repo, create it (`gh label create ready-for-agent`) or ask the user which label to use.
+   Do **not** apply `ready-for-agent` to the PRD parent. Run `/to-issues` or `/bc-plan-to-issues` to create drainable `ready-for-agent` implementation slices.

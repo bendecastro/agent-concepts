@@ -47,6 +47,17 @@ Keep the wiki live as you work: track in-flight work in
 `.bc-agent/decisions/`, and append durable discoveries to `.bc-agent/log.md`
 before finishing. See `.bc-agent/AGENTS.md` for the update triggers and protocol.
 
+## Planning loop trigger
+
+If the human's request sounds like planning future codebase work — feature ideas,
+architecture direction, implementation strategy, slicing, or "what should we build/change" —
+pause before implementing and ask whether they want to enter `/bc-plan-to-issues`.
+If they are already asking for a concrete edit/fix, proceed normally. If the request is
+about architectural runway, offer `/improve-codebase-architecture` first.
+
+See `.bc-agent/references/agent-skills.md` for the local skill map and
+`.bc-agent/conventions/planning-workflow.md` for the loop.
+
 ## Scope rules
 
 - Treat `.bc-agent/` as the source of durable agent context for THIS project only.
@@ -62,6 +73,7 @@ before finishing. See `.bc-agent/AGENTS.md` for the update triggers and protocol
 - Coding, validation, and workflow norms → `.bc-agent/conventions/`.
 - Temporary task context → `.bc-agent/tasks/active.md`.
 - Longer research writeups → `.bc-agent/research/`, with durable conclusions summarized back.
+- PRDs that were actually drafted/published → `.bc-agent/project/` and/or GitHub parent issues; do not label exploratory research as a PRD.
 - Major irreversible / architectural choices → `.bc-agent/decisions/` (ADRs).
 - Brief durable discoveries → `.bc-agent/log.md`.
 
@@ -103,6 +115,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 | When you… | Do this |
 |---|---|
 | Start non-trivial work | Read `index.md` → this file → `map.md` → `tasks/active.md` and any in-flight plan. |
+| Hear planning intent for codebase work | Before implementing, ask whether to enter `/bc-plan-to-issues`; offer `/improve-codebase-architecture` first for architecture runway. |
 | Verify/learn a durable fact | Update the smallest relevant `project/` or `references/` page (dated); append a line to `log.md`. |
 | Find a recurring command / path / gotcha | Put it in `references/commands.md` / `paths.md` / `gotchas.md`. |
 | Learn something that contradicts a page | Fix the page; note it in `log.md`. Never leave a stale claim. |
@@ -120,13 +133,16 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 - For `grill-me`/`bc-plan-to-issues` → `bc-drain-issues` work, apply
   `conventions/planning-workflow.md`: it maps generic `CONTEXT.md`/`docs/adr/` persistence
   into this vault's pages.
+- Use `references/agent-skills.md` as the local map of required loop skills and where their
+  canonical bodies live under `~/Sync/CONFIG`.
 - **`tasks/active.md` is the live cursor.** Keep it true every session.
 - `tasks/parking-lot.md` = deferred ideas. `tasks/completed.md` = dated done-log.
 - Plan lifecycle: `Proposed → Approved → In progress → Blocked → Done / Abandoned`.
 
 ## Where things go
 
-- `project/` — durable architecture, specs, plans, and the **glossary** (`overview.md`).
+- `project/` — durable architecture, specs, plans, actual PRDs, and the **glossary** (`overview.md`).
+- `research/` — exploratory notes/reports that may feed a PRD but are not themselves PRDs.
 - `references/` — commands, paths, gotchas, external links.
 - `conventions/` — validation, git, file-layout, planning-workflow.
 - `decisions/` — ADRs (numbered, with `## Status`).
@@ -160,6 +176,7 @@ The local, project-scoped agent wiki for `__SLUG__`. Detached from the user's pe
 - [Context map](map.md)
 - [Project overview + glossary](project/overview.md)
 - [Planning workflow: grill → issues → drain](conventions/planning-workflow.md)
+- [Agent skill map](references/agent-skills.md)
 - [Validation](conventions/validation.md)
 - [Commands](references/commands.md)
 - [ADR-0001: local project agent wiki](decisions/adr-0001-local-project-agent-wiki.md)
@@ -209,9 +226,17 @@ project grows.
 ## Planning / workflow work
 
 - `conventions/planning-workflow.md`
+- `references/agent-skills.md`
 - `conventions/git-and-commit-policy.md`
 - `conventions/validation.md`
 - `log.md`
+
+## Research or PRD work
+
+- `conventions/planning-workflow.md`
+- `project/overview.md`
+- `research/README.md`
+- `templates/plan.md`
 
 ## File / layout work
 
@@ -275,12 +300,22 @@ This project is wired for the full loop. Use the `bc-` orchestrators with this r
 adapter so planning persistence lands in `.bc-agent/` instead of generic
 `CONTEXT.md` / `docs/adr/` files. See `~/Sync/CONFIG/agents/pipeline.md` for the loop.
 
+## Planning intent trigger
+
+When the human sounds like they are planning codebase work — feature ideas, refactor
+direction, architecture strategy, implementation approach, or issue slicing — ask whether
+they want to enter `/bc-plan-to-issues` before writing implementation code. If the request is
+architectural runway rather than a settled feature, offer `/improve-codebase-architecture`
+first. If they clearly ask for a concrete edit/fix, proceed normally.
+
 ## Canonical repo-local planning surfaces
 
 - **Glossary / domain facts:** the glossary section of `project/overview.md` (or a dedicated
   `project/glossary.md` if it grows). This is this project's `CONTEXT.md`-equivalent.
 - **ADRs:** numbered files under `decisions/` using `templates/adr.md`.
-- **Plans / PRDs:** durable planning artifacts under `project/`, linked from `index.md`.
+- **Plans / actual PRDs:** durable planning artifacts under `project/`, linked from `index.md`. Only call it a PRD when the PRD drafting/publishing step actually happened; exploratory notes stay under `research/` or as plans.
+- **Research / evidence:** exploratory reports, architecture-review HTML summaries, and investigation writeups under `research/` (or temp storage if intentionally throwaway), with durable conclusions summarized back to `project/` / `decisions/`.
+- **Skill map:** required loop skills and source paths in `references/agent-skills.md`.
 - **Live cursor:** `tasks/active.md` while work is in flight.
 - **Issue tracker:** GitHub issues via `gh`; intake uses `needs-triage` / `needs-info`;
   ready agent work uses `ready-for-agent`; claimed work may show `in-progress-agent`;
@@ -336,7 +371,7 @@ lands it **trunk-based**, then moves on.
 
 ## Clean handoff after planning
 
-- Resolved scope in a `project/` plan/PRD page or GitHub parent issue.
+- Resolved scope in a `project/` plan/actual-PRD page or GitHub parent issue. Parent PRD issues are coordination artifacts; implementation slices get `ready-for-agent`.
 - Durable trade-offs in `decisions/`.
 - Independent `ready-for-agent` issues ordered by dependency, each with an Agent Brief / concrete acceptance criteria.
 - `tasks/active.md` clear or pointing at the in-flight plan.
@@ -536,6 +571,35 @@ back into the relevant `.bc-agent/` page and keep the long version here for the 
 """
 
 
+AGENT_SKILLS = """# Agent Skill Map
+
+Date: __DATE__
+
+The bc loop skills are canonical in `~/Sync/CONFIG/agents/concepts/<skill>/body/SKILL.md`
+and are normally deployed into `~/.pi/agent/skills/<skill>` and `~/.agents/skills/<skill>`
+via symlink. Do not vendor/copy their bodies into this repo; use this page as the repo-local
+map so agents know what to invoke.
+
+## Planning/execution loop
+
+- `/bc-plan-to-issues` — interactive planning front: grill → domain capture → PRD → issue slices.
+- `/bc-drain-issues` — AFK executor for `ready-for-agent` issue queues.
+- `/improve-codebase-architecture` — optional architecture runway before planning/slicing.
+
+## Supporting skills used by the loop
+
+- Intake/evidence: `/triage`, `/prototype`.
+- Planning disciplines: `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `codebase-design`.
+- Execution disciplines: `tdd`, `diagnosing-bugs`, `bc-autoresearch-loop`.
+
+## Agent behavior
+
+If the user's request sounds like planning future codebase work, ask whether to enter
+`/bc-plan-to-issues` before implementing. Offer `/improve-codebase-architecture` first when
+the main uncertainty is architecture/seams.
+"""
+
+
 def vault_files() -> dict[str, str]:
     return {
         "AGENTS.md": VAULT_AGENTS,
@@ -550,6 +614,7 @@ def vault_files() -> dict[str, str]:
             "Paths", "Important paths in this repo. **TODO:** fill as discovered.\n\n_None yet._"),
         "references/gotchas.md": ref_stub(
             "Gotchas", "Surprising behaviors and traps. **TODO:** fill as discovered.\n\n_None yet._"),
+        "references/agent-skills.md": AGENT_SKILLS,
         "references/external-links.md": ref_stub(
             "External Links", "Useful external references for this project.\n\n_None yet._"),
         "conventions/planning-workflow.md": PLANNING_WORKFLOW,
@@ -647,6 +712,7 @@ def main() -> int:
                   f"pointer into it by hand (see `.bc-agent/AGENTS.md` / `index.md`).")
 
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
+          "read .bc-agent/references/agent-skills.md for the loop skill map; "
           "authorize this repo in policies/publish.yaml if you'll run /bc-drain-issues AFK; "
           "then /triage existing issues or /bc-plan-to-issues to plan the first feature.")
     return 0

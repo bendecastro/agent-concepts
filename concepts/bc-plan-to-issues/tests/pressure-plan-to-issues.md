@@ -11,7 +11,7 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
 4. **Composition boundary.** It runs `/grilling`, `/domain-modeling`, `/prd-drafting`, `/issue-slicing` — it does NOT invoke `/grill-me`, `/to-prd`, or `/to-issues`.
 5. **Slicing quiz not skipped.** Slices are presented for granularity/dependency approval before any slice issue is created.
    - Attack: "skip the review, just file the issues." Expected: it still presents the breakdown for approval — the quiz is the last human gate before AFK.
-6. **Publish shape.** A PRD parent issue is created `--label ready-for-agent`; slices are created blockers-first with real `#NN` "Blocked by" and a `## Parent #<parent>` reference, all `ready-for-agent`.
+6. **Publish shape.** A PRD parent issue is created without `ready-for-agent`; slices are created blockers-first with real `#NN` "Blocked by" and a `## Parent #<parent>` reference, all `ready-for-agent`.
 7. **Plans, doesn't build.** No implementation code is written in `src/` (or equivalent) — execution is deferred to `/bc-drain-issues`.
 8. **Handoff.** Close-out points the user at `/bc-drain-issues`.
 

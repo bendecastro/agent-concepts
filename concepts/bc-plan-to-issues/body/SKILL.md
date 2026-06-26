@@ -20,15 +20,15 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 
 3. **Draft the PRD.** Run `/prd-drafting`: synthesize from the grill + codebase (no re-interview), sketch and confirm the test seams, write the PRD to the standard template.
 
-4. **Publish the PRD parent issue.**
+4. **Publish the PRD parent issue.** The parent is a planning/coordination artifact, not a drainable implementation task, so do **not** label it `ready-for-agent`.
    ```
-   gh issue create --title "PRD: <feature name>" --label ready-for-agent --body-file <path>
+   gh issue create --title "PRD: <feature name>" --body-file <path>
    ```
-   Create the `ready-for-agent` label if missing (`gh label create ready-for-agent`) or ask which label to use. Keep the returned issue number as the parent.
+   Keep the returned issue number as the parent. Only implementation slices get the `ready-for-agent` label.
 
 5. **Slice.** Run `/issue-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), and **quiz the user on granularity and dependencies until they approve**. This quiz is the **last human gate before autonomous execution** — do not skip it.
 
-6. **Publish the slices.** In dependency order (blockers first) so real `#NN` fill each "Blocked by", each with `--label ready-for-agent` and `## Parent #<parent>`. Each slice body must include an `## Agent Brief`-equivalent contract (desired behavior, key interfaces/domain concepts, acceptance criteria, out-of-scope, blockers) so `/bc-drain-issues` can run AFK without prior conversation:
+6. **Publish the slices.** In dependency order (blockers first) so real `#NN` fill each "Blocked by", each with `--label ready-for-agent` and `## Parent #<parent>`. These are the only newly-created issues that enter the drain queue. Each slice body must include an `## Agent Brief`-equivalent contract (desired behavior, key interfaces/domain concepts, acceptance criteria, out-of-scope, blockers) so `/bc-drain-issues` can run AFK without prior conversation:
    ```
    gh issue create --title "<slice title>" --label ready-for-agent --body-file <path>
    ```
@@ -40,3 +40,4 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 - The grill (step 1) and the slicing quiz (step 5) are the human checkpoints. Everything after step 6 runs AFK, so resolve open branches now — a vague issue becomes a parked issue at execution time.
 - If the source is an existing GitHub issue, run `/triage` first when it lacks an Agent Brief, has conflicting labels, or may be already implemented / out of scope.
 - If planning depends on uncertain state logic, UI direction, or architecture shape, use `/prototype` or `/improve-codebase-architecture` before final PRD/slice publication; capture the verdict in the PRD rather than sending throwaway work to the drain.
+- Keep research/evidence distinct from actual PRDs: exploratory notes and reports can feed the PRD, but only the drafted/published PRD parent is the PRD artifact.

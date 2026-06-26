@@ -7,11 +7,11 @@ argument-hint: "[project-slug] (defaults to the repo directory name)"
 
 # Init Agent Workspace
 
-Stand up a project-local agent workspace inspired by the image-maze vault, so the repo is immediately ready for the loop: `/triage` for issue intake, optional `/prototype` or `/improve-codebase-architecture` for evidence/runway, `/bc-plan-to-issues` to plan, `/bc-drain-issues` to execute. Creates a repo-root `AGENTS.md` that points agents at the vault, a `.bc-agent/` Obsidian-vault wiki with the maintainer schema, templates, conventions, and the `planning-workflow.md` adapter, plus an empty `.bc-agent/out-of-scope/` directory for durable rejected enhancement records.
+Stand up a project-local agent workspace inspired by the image-maze vault, so the repo is immediately ready for the loop: `/triage` for issue intake, optional `/prototype` or `/improve-codebase-architecture` for evidence/runway, `/bc-plan-to-issues` to plan, `/bc-drain-issues` to execute. Creates a repo-root `AGENTS.md` that points agents at the vault, a `.bc-agent/` Obsidian-vault wiki with the maintainer schema, templates, conventions, the `planning-workflow.md` adapter, and `references/agent-skills.md` mapping the required loop skills in `~/Sync/CONFIG`, plus an empty `.bc-agent/out-of-scope/` directory for durable rejected enhancement records.
 
 The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is only the wiki's **display name** in titles (defaults to the repo directory name); it doesn't affect the path.
 
-**Faithful to the image-maze model:** no root `CONTEXT.md` — the glossary lives in the vault (`project/overview.md`), ADRs in `decisions/`, plans/PRDs in `project/`. The adapter tells `grilling`/`domain-modeling` to persist there.
+**Faithful to the image-maze model:** no root `CONTEXT.md` — the glossary lives in the vault (`project/overview.md`), ADRs in `decisions/`, plans and actual PRDs in `project/`, exploratory research in `research/`. The adapter tells `grilling`/`domain-modeling` to persist there and tells agents to ask whether to enter `/bc-plan-to-issues` when the human appears to be planning codebase work.
 
 ## Process
 
@@ -23,7 +23,7 @@ The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is
    ```
    python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>"
    ```
-   It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo.
+   It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo. The scaffold includes `references/agent-skills.md`, a repo-local map of `/bc-plan-to-issues`, `/bc-drain-issues`, `/improve-codebase-architecture`, and their supporting skills; the skill bodies remain canonical under `~/Sync/CONFIG` and are not copied into the repo.
 
 4. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a rule block modeled on `image-maze-push-and-close-after-agent-work` with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/Sync/CONFIG/agents/policies/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, note it as a TODO in the vault's `tasks/parking-lot.md` (the scaffold already seeds that reminder).
 

@@ -249,3 +249,6 @@ Added two deltas to `concepts/agent-kernel/body/AGENT-KERNEL.md` from a user req
 
 ## [2026-06-26] update | agent-kernel: offer-to-push carve-out for policy-authorized pushes
 Refined the same-day offer-to-push rule after the user said "no need to ask if it's under policy." New shape: when a publish-policy rule already authorizes the push, just push (don't ask); only ask when authorization is undetermined. Updated body, CONCEPT.md, and all three deployed deltas (Claude Code, OpenCode, Codex).
+
+## [2026-06-26] update | bc loop planning trigger + skill map
+Updated `bc-init-agent` scaffolding to seed `references/agent-skills.md`, add a planning-intent trigger that asks whether to enter `/bc-plan-to-issues`, and distinguish exploratory research from actual drafted/published PRDs. Also adjusted `to-prd` and `bc-plan-to-issues` so PRD parent issues are coordination artifacts without `ready-for-agent`; only implementation slices enter the drain queue.
