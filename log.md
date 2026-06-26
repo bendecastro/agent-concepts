@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-06-26] implement | bc-init-agent upgrade notes
+Taught `scaffold.py` to print manual upgrade notes when an existing project preserves instruction files that should point at newly added scaffold files, starting with the architecture-runway cadence. The skill now tells agents to treat those notes as follow-up pointer-merge work while keeping the scaffold itself additive/idempotent.
+
 ## [2026-06-26] implement | bc-init-agent architecture runway cadence
 Added a code/hybrid wiki nudge for `/improve-codebase-architecture` based on implemented PRD count rather than days: `conventions/architecture-runway.md` tracks last review plus completed PRDs since review, with a default advisory threshold of 3 PRD-sized changes or 1 architecture-heavy PRD. Root/vault instructions and the skill map now point agents at the tracker.
 

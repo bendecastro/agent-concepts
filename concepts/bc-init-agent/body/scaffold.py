@@ -835,6 +835,36 @@ def targets(root: Path, slug: str, date: str, archetype: str = "code") -> list[t
     return out
 
 
+def _contains(path: Path, needle: str) -> bool:
+    try:
+        return needle in path.read_text(errors="ignore")
+    except OSError:
+        return False
+
+
+def upgrade_notes(root: Path, archetype: str) -> list[str]:
+    """Manual merge hints for existing files that were intentionally left untouched."""
+    if archetype not in {"code", "hybrid"}:
+        return []
+
+    vault = root / ".bc-agent"
+    notes: list[str] = []
+    checks = [
+        (root / "AGENTS.md", "architecture-runway.md",
+         "root AGENTS.md should point coding/planning requests at `.bc-agent/conventions/architecture-runway.md` for the optional `/improve-codebase-architecture` nudge"),
+        (vault / "AGENTS.md", "architecture-runway.md",
+         "`.bc-agent/AGENTS.md` should mention the architecture-runway cadence in its planning-intent/update triggers"),
+        (vault / "references" / "agent-skills.md", "architecture-runway.md",
+         "`references/agent-skills.md` should tell agents to check the architecture-runway cadence when `/improve-codebase-architecture` is relevant"),
+        (vault / "index.md", "architecture-runway.md",
+         "`index.md` should link to `conventions/architecture-runway.md`"),
+    ]
+    for path, needle, message in checks:
+        if path.exists() and not _contains(path, needle):
+            notes.append(message)
+    return notes
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         description="Idempotent: creates only missing files; never deletes, and never "
@@ -889,6 +919,13 @@ def main() -> int:
         print(f"Left {len(skipped)} existing file(s) untouched:")
         for p in skipped:
             print(f"  = {p}")
+
+    notes = upgrade_notes(root, args.archetype)
+    if notes:
+        print("\nUpgrade notes for existing files left untouched:")
+        for note in notes:
+            print(f"  ! {note}")
+        print("These are manual merge hints for the agent running the skill; the scaffold stays additive and does not overwrite existing instructions.")
 
     if not created and not overwritten:
         print("\nNothing to do — the workspace is already present; nothing was created, "
