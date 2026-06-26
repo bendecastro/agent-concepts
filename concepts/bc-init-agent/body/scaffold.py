@@ -17,6 +17,7 @@ vault files, --force-root for the root AGENTS.md. --dry-run reports without writ
 
 Usage:
   scaffold.py --root <repo-root> --slug <project-name> [--date YYYY-MM-DD]
+              [--archetype code|ops|learning|knowledge|hybrid]
               [--force] [--force-root] [--dry-run]
 """
 
@@ -600,8 +601,97 @@ the main uncertainty is architecture/seams.
 """
 
 
-def vault_files() -> dict[str, str]:
-    return {
+ARCHETYPE_READMES = {
+    "ops": """# Operations / System Wiki
+
+Use this archetype when the workspace tracks a real system, service, host, workflow, or local infrastructure rather than one codebase feature pipeline.
+
+- `components/` — verified state of systems/tools/hosts.
+- `findings/` — recon and evidence with commands, dates, and conclusions.
+- `decisions/` — choices and supersessions.
+- `open-questions/` — assumptions that gate plans.
+- `plans/` — staged executable plans.
+""",
+    "learning": """# Learning Wiki
+
+Use this archetype when bc agents are helping the human learn a subject over time.
+
+- `learning/` — goals, syllabus, progress, and review cadence.
+- `sources/` — source material and provenance.
+- `concepts/` — distilled concepts in the learner's words.
+- `questions/` — open questions, misconceptions, and review prompts.
+- `sessions/` — dated tutoring/session notes.
+
+Use the `teach` skill for multi-session tutoring and spaced review; keep durable learning state here.
+""",
+    "knowledge": """# Knowledge Graph Wiki
+
+Use this archetype when the workspace is primarily for source ingest and compounding knowledge.
+
+- `raw/` — immutable dropped source material.
+- `wiki/sources/` — one compiled page per source.
+- `wiki/entities/` — people, tools, projects, libraries, services.
+- `wiki/concepts/` — reusable ideas and patterns.
+- `wiki/syntheses/` — cross-source summaries and maps.
+
+Raw sources stay immutable; agents maintain the compiled `wiki/` layer.
+""",
+    "hybrid": """# Hybrid Wiki
+
+Use this archetype when the repo needs both execution scaffolding and another durable knowledge mode.
+
+Start with the normal `.bc-agent` project workflow, then promote material into the relevant folders:
+
+- `components/` / `findings/` / `open-questions/` for operations-style system work.
+- `learning/` / `sources/` / `concepts/` / `sessions/` for teaching and study.
+- `raw/` / `wiki/` for knowledge-graph ingest and synthesis.
+""",
+}
+
+
+def archetype_files(archetype: str) -> dict[str, str]:
+    """Optional archetype-specific seed files layered on top of the base project wiki."""
+    common = {"archetype.md": ARCHETYPE_READMES[archetype]} if archetype in ARCHETYPE_READMES else {}
+    if archetype == "ops":
+        return common | {
+            "components/README.md": "# Components\n\nVerified state of real systems, tools, hosts, and services.\n",
+            "findings/README.md": "# Findings\n\nEvidence from recon, commands, research, or validation. Include method, date, observations, and conclusion.\n",
+            "open-questions/README.md": "# Open Questions\n\nUnverified assumptions that gate or shape plans. Resolve by linking findings/decisions.\n",
+            "plans/README.md": "# Plans\n\nExecutable operational plans with current status and checkable steps.\n",
+            "templates/component.md": "# __TITLE__\n\n## Verified state\n\nTODO — include date and method.\n\n## Interfaces / dependencies\n\nTODO.\n\n## Gotchas\n\nTODO.\n",
+            "templates/finding.md": "# __TITLE__\n\n## Method\n\nTODO — commands, sources, date.\n\n## Observations\n\nTODO.\n\n## Conclusion\n\nTODO.\n",
+            "templates/open-question.md": "# __TITLE__\n\n## Question\n\nTODO.\n\n## Why it matters\n\nTODO.\n\n## Resolution\n\nOpen.\n",
+        }
+    if archetype == "learning":
+        return common | {
+            "learning/plan.md": "# Learning Plan\n\n## Goal\n\nTODO.\n\n## Current level\n\nTODO.\n\n## Path\n\nTODO.\n\n## Review cadence\n\nUse the `teach` skill for spaced review and durable learning records.\n",
+            "sources/README.md": "# Sources\n\nLearning material with provenance and status.\n",
+            "concepts/README.md": "# Concepts\n\nDistilled explanations, examples, and connections in the learner's words.\n",
+            "questions/README.md": "# Questions\n\nOpen questions, misconceptions, quiz prompts, and review items.\n",
+            "sessions/README.md": "# Sessions\n\nDated tutoring/session notes and next review prompts.\n",
+            "references/teach-skill.md": "# Teach Skill\n\nUse `teach` for multi-session tutoring. Keep project-local learning artifacts in this vault, not in the global personal wiki unless the human asks.\n",
+            "templates/learning-session.md": "# YYYY-MM-DD — Session\n\n## Goal\n\nTODO.\n\n## What changed\n\nTODO.\n\n## Misconceptions / review items\n\nTODO.\n\n## Next\n\nTODO.\n",
+        }
+    if archetype == "knowledge":
+        return common | {
+            "raw/README.md": "# Raw Sources\n\nDropped source material. Treat as immutable once ingested; corrections belong in compiled wiki pages.\n",
+            "wiki/index.md": "# Compiled Wiki Index\n\nCatalog sources, entities, concepts, and syntheses here.\n",
+            "wiki/log.md": "# Wiki Log\n\nAppend ingest, synthesis, and maintenance events here.\n",
+            "wiki/sources/README.md": "# Sources\n\nOne compiled page per source with provenance and key claims.\n",
+            "wiki/entities/README.md": "# Entities\n\nPeople, projects, tools, organizations, services, libraries.\n",
+            "wiki/concepts/README.md": "# Concepts\n\nReusable ideas and patterns synthesized across sources.\n",
+            "wiki/syntheses/README.md": "# Syntheses\n\nCross-source overviews, maps, contradictions, and evidence gaps.\n",
+        }
+    if archetype == "hybrid":
+        files: dict[str, str] = dict(common)
+        for name in ("ops", "learning", "knowledge"):
+            files |= {path: text for path, text in archetype_files(name).items() if path != "archetype.md"}
+        return files
+    return {}
+
+
+def vault_files(archetype: str = "code") -> dict[str, str]:
+    files = {
         "AGENTS.md": VAULT_AGENTS,
         "index.md": INDEX,
         "home.md": HOME,
@@ -628,17 +718,19 @@ def vault_files() -> dict[str, str]:
         "templates/adr.md": TPL_ADR,
         "templates/plan.md": TPL_PLAN,
     }
+    files.update(archetype_files(archetype))
+    return files
 
 
 def render(text: str, slug: str, date: str) -> str:
     return text.replace(SLUG, slug).replace(DATE, date)
 
 
-def targets(root: Path, slug: str, date: str) -> list[tuple[Path, str, bool]]:
+def targets(root: Path, slug: str, date: str, archetype: str = "code") -> list[tuple[Path, str, bool]]:
     """Every file the scaffold owns: (destination, rendered content, is_root_AGENTS)."""
     vault = root / ".bc-agent"
     out: list[tuple[Path, str, bool]] = [(root / "AGENTS.md", render(ROOT_AGENTS, slug, date), True)]
-    for relpath, text in vault_files().items():
+    for relpath, text in vault_files(archetype).items():
         out.append((vault / relpath, render(text, slug, date), False))
     out.append((vault / "research" / "README.md", render(RESEARCH_README, slug, date), False))
     out.append((vault / "out-of-scope" / ".gitkeep", "", False))
@@ -653,6 +745,8 @@ def main() -> int:
     ap.add_argument("--root", required=True, help="project (repo) root")
     ap.add_argument("--slug", required=True, help="project display name, kebab-case")
     ap.add_argument("--date", default=_dt.date.today().isoformat())
+    ap.add_argument("--archetype", choices=["code", "ops", "learning", "knowledge", "hybrid"], default="code",
+                    help="optional wiki archetype layered on top of the base project scaffold")
     ap.add_argument("--force", action="store_true",
                     help="overwrite existing VAULT files (still never deletes; never touches root AGENTS.md)")
     ap.add_argument("--force-root", action="store_true",
@@ -673,7 +767,7 @@ def main() -> int:
     overwritten: list[Path] = []
     skipped: list[Path] = []  # existed, left untouched
 
-    for dest, content, is_root in targets(root, slug, args.date):
+    for dest, content, is_root in targets(root, slug, args.date, args.archetype):
         exists = dest.exists()
         may_overwrite = (args.force_root if is_root else args.force)
         if exists and not may_overwrite:

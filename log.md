@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-06-26] implement | bc-init-agent wiki archetypes
+Added archetype selection to `bc-init-agent`, based on the user's real wiki patterns: code/project execution (`image-maze`), ops/system planning (`Music/.ai/wiki`), learning/teach-backed study, knowledge graph (`~/Sync/Wiki`), and hybrid. `scaffold.py` now supports `--archetype code|ops|learning|knowledge|hybrid` overlays; tests/index/concept notes record the new pending pressure scenarios.
+
 ## [2026-06-26] implement | bc-init-agent adaptive onboarding
 Updated `bc-init-agent` from blind scaffold-first behavior to recon-first adaptive onboarding: inspect git/GitHub/project/docs/build/deploy state, grill differently for empty/active/messy projects, propose an init or migration plan before writing, and keep file moves as separately approved migration work. Updated concept notes, index status, and pending pressure scenarios.
 
