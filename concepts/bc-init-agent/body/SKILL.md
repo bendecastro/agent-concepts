@@ -9,7 +9,7 @@ argument-hint: "[project-slug] (defaults to the repo directory name)"
 
 Adaptively stand up a project-local agent workspace using the user's broader agent-maintained wiki pattern: durable Markdown/Obsidian context, explicit provenance, live task state, decisions, and executable plans. The goal is not just to create files: it is to make the repo ready for the loop `/triage` → optional `/prototype` or `/improve-codebase-architecture` → `/bc-plan-to-issues` → `/bc-drain-issues`, with project-specific context seeded honestly.
 
-The scaffold creates a repo-root `AGENTS.md` that points agents at the vault, a `.bc-agent/` Markdown wiki that is also a minimal Obsidian vault (`.bc-agent/.obsidian/`), with the maintainer schema, templates, conventions, the `planning-workflow.md` adapter, and `references/agent-skills.md` mapping the required loop skills in `~/Sync/CONFIG`, plus an empty `.bc-agent/out-of-scope/` directory for durable rejected enhancement records.
+The scaffold creates a repo-root `AGENTS.md` that points agents at the vault, a `.bc-agent/` Markdown wiki that is also a minimal Obsidian vault (`.bc-agent/.obsidian/`), with the maintainer schema, templates, conventions, the `planning-workflow.md` adapter, the `architecture-runway.md` nudge tracker, and `references/agent-skills.md` mapping the required loop skills in `~/Sync/CONFIG`, plus an empty `.bc-agent/out-of-scope/` directory for durable rejected enhancement records.
 
 The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is only the wiki's **display name** in titles (defaults to the repo directory name); it doesn't affect the path.
 
@@ -26,7 +26,7 @@ Modes:
 - **Migration assist**: for old/messy projects, propose how existing docs/files could seed `.bc-agent/`; move/copy files only after explicit approval.
 
 Archetypes:
-- **code** — default project execution wiki: PRDs/plans, architecture reviews, ADRs, validation, commands, tasks, `/bc-plan-to-issues` → `/bc-drain-issues`.
+- **code** — default project execution wiki: PRDs/plans, architecture reviews, ADRs, validation, commands, tasks, architecture-runway nudge tracking, `/bc-plan-to-issues` → `/bc-drain-issues`.
 - **ops** — operational/system wiki like the Music wiki: `components/`, `findings/`, `decisions/`, `open-questions/`, executable plans; evidence before plan.
 - **learning** — bc agents helping the human learn: `learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, plus an explicit link to the `teach` skill.
 - **knowledge** — LLM-maintained knowledge graph like `~/Sync/Wiki`: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
@@ -65,7 +65,7 @@ Archetypes:
    ```
    python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>" --archetype "<code|ops|learning|knowledge|hybrid>"
    ```
-   It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo. It also seeds minimal stable Obsidian metadata (`.obsidian/app.json`, `core-plugins.json`, `appearance.json`) but deliberately avoids noisy/user-specific state such as `workspace.json`, `graph.json`, and community plugin config. The scaffold includes `references/agent-skills.md`, a repo-local map of `/bc-plan-to-issues`, `/bc-drain-issues`, `/improve-codebase-architecture`, and their supporting skills; the skill bodies remain canonical under `~/Sync/CONFIG` and are not copied into the repo.
+   It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `architecture-runway.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo. It also seeds minimal stable Obsidian metadata (`.obsidian/app.json`, `core-plugins.json`, `appearance.json`) but deliberately avoids noisy/user-specific state such as `workspace.json`, `graph.json`, and community plugin config. The scaffold includes `references/agent-skills.md`, a repo-local map of `/bc-plan-to-issues`, `/bc-drain-issues`, `/improve-codebase-architecture`, and their supporting skills; the skill bodies remain canonical under `~/Sync/CONFIG` and are not copied into the repo.
 
 7. **Seed obvious project facts conservatively.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it.
 

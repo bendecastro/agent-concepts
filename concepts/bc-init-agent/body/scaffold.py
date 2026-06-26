@@ -55,7 +55,10 @@ If the human's request sounds like planning future codebase work — feature ide
 architecture direction, implementation strategy, slicing, or "what should we build/change" —
 pause before implementing and ask whether they want to enter `/bc-plan-to-issues`.
 If they are already asking for a concrete edit/fix, proceed normally. If the request is
-about architectural runway, offer `/improve-codebase-architecture` first.
+about architectural runway, offer `/improve-codebase-architecture` first. For code/hybrid
+wikis, also check `.bc-agent/conventions/architecture-runway.md`: if enough PRD-sized
+changes have landed since the last architecture review, give a brief optional nudge to run
+`/improve-codebase-architecture` before more planning.
 
 See `.bc-agent/references/agent-skills.md` for the local skill map and
 `.bc-agent/conventions/planning-workflow.md` for the loop.
@@ -156,7 +159,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 | When you… | Do this |
 |---|---|
 | Start non-trivial work | Read `index.md` → this file → `map.md` → `tasks/active.md` and any in-flight plan. |
-| Hear planning intent for codebase work | Before implementing, ask whether to enter `/bc-plan-to-issues`; offer `/improve-codebase-architecture` first for architecture runway. |
+| Hear planning intent for codebase work | Before implementing, ask whether to enter `/bc-plan-to-issues`; offer `/improve-codebase-architecture` first for architecture runway. For code/hybrid wikis, check `conventions/architecture-runway.md` and nudge if the PRD-count threshold has been reached. |
 | Verify/learn a durable fact | Update the smallest relevant `project/` or `references/` page (dated); append a line to `log.md`. |
 | Find a recurring command / path / gotcha | Put it in `references/commands.md` / `paths.md` / `gotchas.md`. |
 | Learn something that contradicts a page | Fix the page; note it in `log.md`. Never leave a stale claim. |
@@ -185,7 +188,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 - `project/` — durable architecture, specs, plans, actual PRDs, and the **glossary** (`overview.md`).
 - `research/` — exploratory notes/reports that may feed a PRD but are not themselves PRDs.
 - `references/` — commands, paths, gotchas, external links.
-- `conventions/` — validation, git, file-layout, planning-workflow.
+- `conventions/` — validation, git, file-layout, planning-workflow, architecture-runway cadence.
 - `decisions/` — ADRs (numbered, with `## Status`).
 - `tasks/` — `active.md`, `parking-lot.md`, `completed.md`.
 - `log.md` — append-only journal. `index.md` — catalog. `map.md` — context picker.
@@ -217,6 +220,7 @@ The local, project-scoped agent wiki for `__SLUG__`. Detached from the user's pe
 - [Context map](map.md)
 - [Project overview + glossary](project/overview.md)
 - [Planning workflow: grill → issues → drain](conventions/planning-workflow.md)
+- [Architecture runway cadence](conventions/architecture-runway.md)
 - [Agent skill map](references/agent-skills.md)
 - [Validation](conventions/validation.md)
 - [Commands](references/commands.md)
@@ -267,6 +271,7 @@ project grows.
 ## Planning / workflow work
 
 - `conventions/planning-workflow.md`
+- `conventions/architecture-runway.md`
 - `references/agent-skills.md`
 - `conventions/git-and-commit-policy.md`
 - `conventions/validation.md`
@@ -372,6 +377,9 @@ first. If they clearly ask for a concrete edit/fix, proceed normally.
   PRD. Capture the verdict in `project/` or an ADR; don't send prototype code to the drain.
 - Use `/improve-codebase-architecture` when a feature or bug needs a deep-module runway before
   slicing. Its report lives in temp storage; durable decisions go into `decisions/` or a plan.
+- For code/hybrid wikis, also follow `conventions/architecture-runway.md`: nudge the human to
+  consider `/improve-codebase-architecture` after enough PRD-sized implementation work has
+  landed since the last review.
 
 ## Planning — `/bc-plan-to-issues`
 
@@ -417,6 +425,49 @@ lands it **trunk-based**, then moves on.
 - Independent `ready-for-agent` issues ordered by dependency, each with an Agent Brief / concrete acceptance criteria.
 - `tasks/active.md` clear or pointing at the in-flight plan.
 - A dated `log.md` line with issue numbers and changed pages.
+"""
+
+
+ARCHITECTURE_RUNWAY = """# Architecture Runway Cadence
+
+Date: __DATE__
+
+For code/hybrid wikis, this page tracks when to gently nudge the human toward
+`/improve-codebase-architecture`. The goal is to refresh architecture runway after enough
+implemented PRD-sized work has accumulated — not on a calendar timer.
+
+## Nudge heuristic
+
+Give a brief, optional nudge when the current request is planning/refactor/seam-adjacent **and**
+one of these is true:
+
+- 3 completed PRDs or PRD-sized slice groups have landed since the last architecture review.
+- 1 major architecture-heavy PRD has landed since the last architecture review.
+- The current work shows structural friction: unclear module boundaries, hard-to-test code,
+  repeated bugs around the same seam, or "where should this live?" uncertainty.
+
+Do **not** block concrete fixes. The nudge is advisory:
+
+> Optional architecture runway nudge: I see multiple completed PRD-sized changes since the last architecture review. Before planning more work, do you want to run `/improve-codebase-architecture` to look for seams/testability improvements?
+
+## Current cadence state
+
+Last architecture review:
+- Date: TODO
+- Artifact: TODO (`project/arch-review/...`, `research/...`, ADR, or log entry)
+
+Completed PRDs / PRD-sized slice groups since last review:
+- [ ] TODO — add each completed PRD-sized change here when `/bc-drain-issues` lands it
+- [ ] TODO
+- [ ] TODO
+
+Default nudge threshold: 3 completed PRDs, or sooner for architecture-heavy work.
+
+## Agent update rules
+
+- When a PRD-sized implementation lands, add it to the checklist above unless it was already counted.
+- When `/improve-codebase-architecture` runs, reset this checklist and record the review artifact.
+- If `references/agent-skills.md` no longer lists `/improve-codebase-architecture`, remove the nudge and explain why here.
 """
 
 
@@ -637,7 +688,9 @@ map so agents know what to invoke.
 
 If the user's request sounds like planning future codebase work, ask whether to enter
 `/bc-plan-to-issues` before implementing. Offer `/improve-codebase-architecture` first when
-the main uncertainty is architecture/seams.
+the main uncertainty is architecture/seams. In code/hybrid wikis, check
+`conventions/architecture-runway.md` and give the optional architecture-runway nudge when the
+PRD-count threshold has been reached.
 """
 
 
@@ -748,6 +801,7 @@ def vault_files(archetype: str = "code") -> dict[str, str]:
         "references/external-links.md": ref_stub(
             "External Links", "Useful external references for this project.\n\n_None yet._"),
         "conventions/planning-workflow.md": PLANNING_WORKFLOW,
+        "conventions/architecture-runway.md": ARCHITECTURE_RUNWAY,
         "conventions/validation.md": VALIDATION,
         "conventions/file-layout.md": FILE_LAYOUT,
         "conventions/git-and-commit-policy.md": GIT_POLICY,
