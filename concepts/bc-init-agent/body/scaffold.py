@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Scaffold a project-local .bc-agent wiki + root AGENTS.md for the grill→issues→drain workflow.
 
-Inspired by the image-maze `.agent/<project>/` Obsidian-vault wiki, flattened to a single
-`.bc-agent/` vault (no per-project nesting). Writes a
-generalized schema with TODO stubs (validation, file-layout, paths) that the
-project's first agents fill in. Faithful to the image-maze persistence model:
-NO root CONTEXT.md — the glossary lives in the vault (project/overview.md), ADRs
-in decisions/, plans/PRDs in project/, and conventions/planning-workflow.md is
-the adapter that redirects planning persistence into the vault.
+Creates a generalized project-local Markdown/Obsidian wiki schema at `.bc-agent/`
+(no per-project nesting), with TODO stubs (validation, file-layout, paths) that the
+project's first agents fill in. This follows the user's broader agent-maintained
+wiki pattern: durable local context, explicit provenance, live task state, decisions,
+and executable plans. NO root CONTEXT.md — the glossary lives in the vault
+(project/overview.md), ADRs in decisions/, plans/PRDs in project/, and
+conventions/planning-workflow.md is the adapter that redirects planning persistence
+into the vault.
 
 Idempotent and additive: creates only the files that are missing and leaves every
 existing file untouched, so it is safe to re-run and safe to plug into a project

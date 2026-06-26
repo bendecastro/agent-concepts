@@ -7,13 +7,13 @@ argument-hint: "[project-slug] (defaults to the repo directory name)"
 
 # Init Agent Workspace
 
-Adaptively stand up a project-local agent workspace inspired by the image-maze vault. The goal is not just to create files: it is to make the repo ready for the loop `/triage` → optional `/prototype` or `/improve-codebase-architecture` → `/bc-plan-to-issues` → `/bc-drain-issues`, with project-specific context seeded honestly.
+Adaptively stand up a project-local agent workspace using the user's broader agent-maintained wiki pattern: durable Markdown/Obsidian context, explicit provenance, live task state, decisions, and executable plans. The goal is not just to create files: it is to make the repo ready for the loop `/triage` → optional `/prototype` or `/improve-codebase-architecture` → `/bc-plan-to-issues` → `/bc-drain-issues`, with project-specific context seeded honestly.
 
 The scaffold creates a repo-root `AGENTS.md` that points agents at the vault, a `.bc-agent/` Markdown wiki that is also a minimal Obsidian vault (`.bc-agent/.obsidian/`), with the maintainer schema, templates, conventions, the `planning-workflow.md` adapter, and `references/agent-skills.md` mapping the required loop skills in `~/Sync/CONFIG`, plus an empty `.bc-agent/out-of-scope/` directory for durable rejected enhancement records.
 
 The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is only the wiki's **display name** in titles (defaults to the repo directory name); it doesn't affect the path.
 
-**Faithful to the image-maze model:** no root `CONTEXT.md` — the glossary lives in the vault (`project/overview.md`), ADRs in `decisions/`, plans and actual PRDs in `project/`, exploratory research in `research/`. The adapter tells `grilling`/`domain-modeling` to persist there and tells agents to ask whether to enter `/bc-plan-to-issues` when the human appears to be planning codebase work.
+**Project-local wiki model:** no root `CONTEXT.md` — the glossary lives in the vault (`project/overview.md`), ADRs in `decisions/`, plans and actual PRDs in `project/`, exploratory research in `research/`. The adapter tells `grilling`/`domain-modeling` to persist there and tells agents to ask whether to enter `/bc-plan-to-issues` when the human appears to be planning codebase work.
 
 ## Operating modes and wiki archetypes
 
@@ -26,7 +26,7 @@ Modes:
 - **Migration assist**: for old/messy projects, propose how existing docs/files could seed `.bc-agent/`; move/copy files only after explicit approval.
 
 Archetypes:
-- **code** — default project execution wiki: PRDs/plans, ADRs, validation, commands, tasks, `/bc-plan-to-issues` → `/bc-drain-issues`.
+- **code** — default project execution wiki: PRDs/plans, architecture reviews, ADRs, validation, commands, tasks, `/bc-plan-to-issues` → `/bc-drain-issues`.
 - **ops** — operational/system wiki like the Music wiki: `components/`, `findings/`, `decisions/`, `open-questions/`, executable plans; evidence before plan.
 - **learning** — bc agents helping the human learn: `learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, plus an explicit link to the `teach` skill.
 - **knowledge** — LLM-maintained knowledge graph like `~/Sync/Wiki`: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
@@ -69,7 +69,7 @@ Archetypes:
 
 7. **Seed obvious project facts conservatively.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it.
 
-8. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a rule block modeled on `image-maze-push-and-close-after-agent-work` with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/Sync/CONFIG/agents/policies/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, note it as a TODO in the vault's `tasks/parking-lot.md` (the scaffold already seeds that reminder).
+8. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/Sync/CONFIG/agents/policies/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, note it as a TODO in the vault's `tasks/parking-lot.md` (the scaffold already seeds that reminder).
 
 9. **Close out.** Point at the created files and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-issues` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 

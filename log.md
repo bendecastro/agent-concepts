@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-06-26] implement | bc-init-agent generalized wording
+Reframed current `bc-init-agent` docs away from one project name and toward the broader agent-maintained wiki concepts: durable project-local context, provenance, live task state, decisions, references, executable plans, and archetypes sampled from existing user wiki patterns. Historical log/provenance entries remain specific where they record actual sources.
+
 ## [2026-06-26] implement | bc-init-agent minimal Obsidian vault
 Made the `.bc-agent/` Obsidian-vault claim concrete: `scaffold.py` now seeds minimal stable `.obsidian/app.json`, `core-plugins.json`, and `appearance.json` while avoiding noisy user-specific workspace/plugin state. Updated skill/concept/test/index wording and verified rerun idempotency preserves existing Obsidian files.
 
