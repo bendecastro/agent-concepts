@@ -94,6 +94,45 @@ This project is wired for the grill→issues→drain loop. See
 """
 
 
+# --- minimal Obsidian vault metadata ------------------------------------------
+# Deliberately tiny/stable: no workspace.json, graph.json, or plugin state.
+OBSIDIAN_APP = """{
+  "newFileLocation": "current",
+  "attachmentFolderPath": "attachments",
+  "promptDelete": false
+}
+"""
+
+OBSIDIAN_CORE_PLUGINS = """[
+  "file-explorer",
+  "global-search",
+  "switcher",
+  "graph",
+  "backlink",
+  "canvas",
+  "outgoing-link",
+  "tag-pane",
+  "page-preview",
+  "daily-notes",
+  "templates",
+  "note-composer",
+  "command-palette",
+  "slash-command",
+  "editor-status",
+  "bookmarks",
+  "markdown-importer",
+  "properties",
+  "bases"
+]
+"""
+
+OBSIDIAN_APPEARANCE = """{
+  "baseFontSize": 16,
+  "translucency": false
+}
+"""
+
+
 # --- vault AGENTS.md (maintainer schema) --------------------------------------
 VAULT_AGENTS = """# __SLUG__ Agent Wiki — Maintainer Instructions
 
@@ -717,6 +756,9 @@ def vault_files(archetype: str = "code") -> dict[str, str]:
         "tasks/completed.md": COMPLETED,
         "templates/adr.md": TPL_ADR,
         "templates/plan.md": TPL_PLAN,
+        ".obsidian/app.json": OBSIDIAN_APP,
+        ".obsidian/core-plugins.json": OBSIDIAN_CORE_PLUGINS,
+        ".obsidian/appearance.json": OBSIDIAN_APPEARANCE,
     }
     files.update(archetype_files(archetype))
     return files
