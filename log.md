@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-06-26] implement | bc-init-agent adaptive onboarding
+Updated `bc-init-agent` from blind scaffold-first behavior to recon-first adaptive onboarding: inspect git/GitHub/project/docs/build/deploy state, grill differently for empty/active/messy projects, propose an init or migration plan before writing, and keep file moves as separately approved migration work. Updated concept notes, index status, and pending pressure scenarios.
+
 ## [2026-06-22] test | grilling bulk-delegation exit — PASS
 Pressure-tested the new bulk-exit clause (Haiku low-thinking, replay of attack 3). On blanket delegation the agent triggered the bulk exit, resolved all 9 remaining branches in one pass with 0 further questions, produced one resolved-plan summary, and did not start building — the behavior the user asked for. Soft spot recorded: it flagged no low-confidence resolutions on genuine judgment calls and said "locked" rather than inviting override; minor SKILL-sharpening follow-up noted in the test file. (Earlier non-replay run only reached Q1 before pausing for input — harness artifact, not a finding.)
 
