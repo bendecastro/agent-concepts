@@ -270,3 +270,6 @@ Refined the same-day offer-to-push rule after the user said "no need to ask if i
 
 ## [2026-06-26] update | bc loop planning trigger + skill map
 Updated `bc-init-agent` scaffolding to seed `references/agent-skills.md`, add a planning-intent trigger that asks whether to enter `/bc-plan-to-issues`, and distinguish exploratory research from actual drafted/published PRDs. Also adjusted `to-prd` and `bc-plan-to-issues` so PRD parent issues are coordination artifacts without `ready-for-agent`; only implementation slices enter the drain queue.
+
+## [2026-06-29] update | bc-drain-issues medium subagent effort
+After a real Pi drain, tightened the executor so per-issue subagents explicitly run at medium reasoning/thinking effort instead of inheriting high/xhigh from the parent session. Recorded the cost-aware default in the concept design decisions.
