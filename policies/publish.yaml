@@ -133,6 +133,37 @@ rules:
       require_validation_summary: true
       never_include_unrelated_user_changes: true
 
+  - id: scripts-repo-push-and-close-after-agent-work
+    description: >
+      Allow AFK issue-drain agents to push their own commits, push/delete drain
+      claim-coordination branches, and close satisfied GitHub issues in the
+      Scripts repo. Mirrors image-maze-push-and-close-after-agent-work; complements
+      scripts-repo-push-after-agent-commit, which covers plain agent-commit pushes.
+    scope:
+      paths:
+        - ~/Sync/Scripts
+      remotes:
+        - https://github.com/bendecastro/SCRIPTS.git
+        - git@github.com:bendecastro/SCRIPTS.git
+    allow:
+      - git_push
+      - github_issue_close
+    when:
+      - after_agent_commit
+      - only_agent_authored_changes
+      - after_relevant_validation
+      - issue_acceptance_criteria_satisfied
+    branches:
+      - master
+      - bc-drain-claims/issue-*  # AFK drain coordination/claim branches (glob)
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true
+      close_only_issues_directly_completed_by_the_agent_work: true
+      leave_comment_with_commit_and_validation_summary_when_closing_issue: true
+
   - id: music-repo-push-after-agent-commit
     description: Allow agents to push their own commits in the user's Music repo.
     scope:
