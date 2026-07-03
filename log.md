@@ -279,3 +279,6 @@ Removed `disable-model-invocation: true` from `concepts/bc-plan-to-issues/body/S
 
 ## [2026-07-03] ingest | Grok Build bundled + user skills
 Snapshotted `~/.grok/bundled/skills/` (design, execute-plan, implement, pr-babysit, review, shared personas) and selected `~/.grok/skills/` (check-work, code-review, create-skill) into `raw/`. Added reference concepts for bundled/user orchestrators (upstream-maintained bodies, `UPSTREAM.md` pointers) and vendored `strict-code-review` from the user's harsh maintainability `code-review` skill — kept distinct from obra `code-review` and Grok `review`. Documented the `/design` → `/execute-plan` → `/pr-babysit` pipeline in index + harnesses Grok row.
+
+## [2026-07-03] deploy | Grok skill symlinks
+Added `scripts/deploy-grok-skills.py` and ran it with `--force`: `~/.grok/skills/{design,execute-plan,implement,pr-babysit,review,shared}` → bundled live copies; `code-review` + `strict-code-review` → CONFIG `concepts/strict-code-review/body`. `check-work` and `create-skill` were already native under `~/.grok/skills/`. Updated harnesses + index deploy status.

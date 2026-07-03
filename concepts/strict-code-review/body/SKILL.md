@@ -1,6 +1,6 @@
 ---
-name: strict-code-review
-description: Run an extremely strict maintainability review for abstraction quality, giant files, and spaghetti-condition growth. Use for a deep code quality audit or an especially harsh maintainability review. Grok may still expose this as /code-review via ~/.grok/skills/code-review/.
+name: code-review
+description: Run an extremely strict maintainability review for abstraction quality, giant files, and spaghetti-condition growth. Use for a deep code quality audit or an especially harsh maintainability review.
 disable-model-invocation: true
 ---
 
