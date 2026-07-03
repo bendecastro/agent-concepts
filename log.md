@@ -276,3 +276,6 @@ After a real Pi drain, tightened the executor so per-issue subagents explicitly 
 
 ## [2026-07-03] update | bc-plan-to-issues: model-invocable
 Removed `disable-model-invocation: true` from `concepts/bc-plan-to-issues/body/SKILL.md` at the user's request, after a Claude Code session where the user told the agent to enter the bc loop and the harness refused the Skill invocation. Human gates (grill, slicing quiz) live in the body and are unaffected by who launches the pipeline; the description now scopes model invocation to explicit user requests for the loop. CONCEPT.md records the rationale.
+
+## [2026-07-03] ingest | Grok Build bundled + user skills
+Snapshotted `~/.grok/bundled/skills/` (design, execute-plan, implement, pr-babysit, review, shared personas) and selected `~/.grok/skills/` (check-work, code-review, create-skill) into `raw/`. Added reference concepts for bundled/user orchestrators (upstream-maintained bodies, `UPSTREAM.md` pointers) and vendored `strict-code-review` from the user's harsh maintainability `code-review` skill — kept distinct from obra `code-review` and Grok `review`. Documented the `/design` → `/execute-plan` → `/pr-babysit` pipeline in index + harnesses Grok row.
