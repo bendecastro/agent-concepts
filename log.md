@@ -273,3 +273,6 @@ Updated `bc-init-agent` scaffolding to seed `references/agent-skills.md`, add a 
 
 ## [2026-06-29] update | bc-drain-issues medium subagent effort
 After a real Pi drain, tightened the executor so per-issue subagents explicitly run at medium reasoning/thinking effort instead of inheriting high/xhigh from the parent session. Recorded the cost-aware default in the concept design decisions.
+
+## [2026-07-03] update | bc-plan-to-issues: model-invocable
+Removed `disable-model-invocation: true` from `concepts/bc-plan-to-issues/body/SKILL.md` at the user's request, after a Claude Code session where the user told the agent to enter the bc loop and the harness refused the Skill invocation. Human gates (grill, slicing quiz) live in the body and are unaffected by who launches the pipeline; the description now scopes model invocation to explicit user requests for the loop. CONCEPT.md records the rationale.

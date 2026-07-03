@@ -1,7 +1,6 @@
 ---
 name: bc-plan-to-issues
-description: One-command interactive planning pipeline — grill the idea, capture the domain model, draft a PRD, and slice it into ready-for-agent GitHub issues. Run to go from a raw idea to an agent-ready issue queue without remembering the sequence.
-disable-model-invocation: true
+description: One-command interactive planning pipeline — grill the idea, capture the domain model, draft a PRD, and slice it into ready-for-agent GitHub issues. Run to go from a raw idea to an agent-ready issue queue without remembering the sequence. Model-invocable when the user asks to route work into the bc planning loop; the grill and slicing quiz remain interactive human gates either way.
 argument-hint: "What are we planning?"
 ---
 

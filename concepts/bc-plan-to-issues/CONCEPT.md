@@ -30,3 +30,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 - Claude Code: `~/.claude/skills/bc-plan-to-issues` → relative symlink to `body/` (deployed 2026-06-21 by explicit user request despite the failing Pi pressure run; use with caution until fixed/re-tested).
 - Pi: `~/.agents/skills/bc-plan-to-issues` and `~/.pi/agent/skills/bc-plan-to-issues` → relative symlinks to `body/` (deployed 2026-06-21 by explicit user request despite the failing Pi pressure run; use with caution until fixed/re-tested).
 - Other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+
+## Invocation policy change (2026-07-03)
+
+Removed `disable-model-invocation: true`. It forced the user to retype the command even after explicitly asking the agent to route work into the loop (observed in an image-maze architecture-review session). The interactivity that matters — the grill and the slicing quiz — is preserved by the skill body's human gates, not by who launches the pipeline. The description now scopes model invocation to cases where the user asks for the bc loop, so agents don't self-select it for ordinary implementation requests.
