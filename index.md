@@ -19,18 +19,19 @@
 - [last30days](concepts/last30days/CONCEPT.md) — reference skill for `/last30days`, an upstream-maintained recency/social-search research workflow (Reddit, X, YouTube, TikTok, HN, Polymarket, GitHub, web) whose SKILL.md is coupled to a Python engine/package. Status: documented + provenance filed (2026-06-15); not deployed from this workspace, install/update via upstream plugin or `npx skills add`.
 - [prompting-agents](concepts/prompting-agents/CONCEPT.md) — reference library: altitude-first principles (right altitude, explain-the-why, general-over-prescriptive, context economy), eval-tested instruction blocks, technique repertoire, skill-suite composition, agent-ready work shaping, metaprompting. Status: implemented+tested; updated from Matt Pocock skills catalog + workshop/project clippings 2026-06-20. Not deployed (consumed in-place). Tested: 2026-06-20, source accuracy check after catalog/workshop/project ingest.
 
-### Grok Build workflow (xAI bundled + user skills, ingested 2026-07-03)
+### Grok Build workflow (ingested 2026-07-03, CONFIG → Grok deploy)
 
-Composable Grok-first orchestrators. Bundled bodies stay in `~/.grok/bundled/skills/` (reference concepts with `body/UPSTREAM.md` only). Pipeline: `/design` → `/execute-plan` → `/pr-babysit` (Graphite mode). Distinct from obra `code-review` and Matt Pocock bc loop.
+Composable Grok-first orchestrators vendored in `concepts/*/body/`; `scripts/deploy-grok-skills.py` symlinks `~/.grok/skills/` → canon (CONFIG is source, Grok consumes). Pipeline: `/design` → `/execute-plan` → `/pr-babysit`. Shared personas in [grok-shared](concepts/grok-shared/CONCEPT.md).
 
-- [design-doc-loop](concepts/design-doc-loop/CONCEPT.md) — user-invoked: writer/reviewer subagent loop until design doc has 0 open issues; mandatory PR Plan + Key Decisions. From Grok bundled `design`. Status: documented + Grok-deployed 2026-07-03 (`~/.grok/skills/design` → bundled); pressure scenarios pending.
-- [execute-plan](concepts/execute-plan/CONCEPT.md) — user-invoked: parse PR Plan DAG from a design doc, parallel worktree implementers + review-fix loops, Graphite or plain-git stack assembly. From Grok bundled `execute-plan`. Status: documented + Grok-deployed 2026-07-03; pressure scenarios pending.
-- [implement-loop](concepts/implement-loop/CONCEPT.md) — user-invoked: implement→review→fix with effort-scaled parallel reviewers + workspace memory (`memory.py`). From Grok bundled `implement`. Status: documented + Grok-deployed 2026-07-03; pressure scenarios pending.
-- [pr-babysit](concepts/pr-babysit/CONCEPT.md) — user-invoked: monitor/fix PRs (CI, reviews, conflicts) in worktree subagents; Graphite/gh-stack/plain-git. From Grok bundled `pr-babysit`. Status: documented + Grok-deployed 2026-07-03; pressure scenarios pending.
-- [review-changes](concepts/review-changes/CONCEPT.md) — user-invoked: reviewer subagent for local/branch diffs or GitHub PR (PENDING review). From Grok bundled `review`. Status: documented + Grok-deployed 2026-07-03; pressure scenarios pending.
-- [strict-code-review](concepts/strict-code-review/CONCEPT.md) — user-invoked harsh maintainability audit ("code judo", 1k-line guardrails, anti-spaghetti). Vendored from `~/.grok/skills/code-review/`. Status: implemented + Grok-deployed 2026-07-03 (`code-review` + `strict-code-review` symlinks → concept body); Claude/Pi deploy pending.
-- [check-work](concepts/check-work/CONCEPT.md) — user-invoked verifier subagent loop (diffs, builds, tests). From Grok user `check-work`. Status: documented 2026-07-03; Grok auto-deployed.
-- [create-skill](concepts/create-skill/CONCEPT.md) — user-invoked Grok meta-skill to scaffold new skills (project `.grok/skills/` or user `~/.grok/skills/`). Status: documented 2026-07-03; Grok auto-deployed.
+- [grok-shared](concepts/grok-shared/CONCEPT.md) — shared persona files for workflow skills (`design-doc-writer`, `reviewer`, `implementer`, etc.); not a slash command. Status: vendored + Grok-deployed 2026-07-03 (`~/.grok/skills/shared`).
+- [design-doc-loop](concepts/design-doc-loop/CONCEPT.md) — `/design`: writer/reviewer loop until 0 open issues; PR Plan + Key Decisions. Status: vendored + Grok-deployed; pressure scenarios pending.
+- [execute-plan](concepts/execute-plan/CONCEPT.md) — `/execute-plan`: PR Plan DAG executor + stack assembly. Status: vendored + Grok-deployed; pressure scenarios pending.
+- [implement-loop](concepts/implement-loop/CONCEPT.md) — `/implement`: implement→review→fix + `memory.py`. Status: vendored + Grok-deployed; pressure scenarios pending.
+- [pr-babysit](concepts/pr-babysit/CONCEPT.md) — `/pr-babysit`: PR monitor/fix loop. Status: vendored + Grok-deployed; pressure scenarios pending.
+- [review-changes](concepts/review-changes/CONCEPT.md) — `/review`: local/branch/PR reviewer orchestrator. Status: vendored + Grok-deployed; pressure scenarios pending.
+- [strict-code-review](concepts/strict-code-review/CONCEPT.md) — `/code-review`: harsh maintainability audit. Status: vendored + Grok-deployed; Claude/Pi deploy pending.
+- [check-work](concepts/check-work/CONCEPT.md) — `/check-work`: verifier subagent loop. Status: vendored + Grok-deployed.
+- [create-skill](concepts/create-skill/CONCEPT.md) — `/create-skill`: interactive skill scaffolding. Status: vendored + Grok-deployed.
 
 ### Workshop pipeline (Matt Pocock AI Engineer Workshop, ingested 2026-06-20)
 
@@ -60,7 +61,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 - [bootstrap.md](bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
 - [scripts/deploy-local-skills.py](scripts/deploy-local-skills.py) — bulk deploys every local `concepts/*/body/SKILL.md` into Pi-discoverable relative symlinks under `~/.agents/skills/` and `~/.pi/agent/skills/`, both pointing at canonical concept bodies.
-- [scripts/deploy-grok-skills.py](scripts/deploy-grok-skills.py) — symlinks ingested Grok workflow skills into `~/.grok/skills/` (bundled skills + CONFIG `strict-code-review` canon).
+- [scripts/deploy-grok-skills.py](scripts/deploy-grok-skills.py) — symlinks `~/.grok/skills/*` → CONFIG `concepts/*/body/` (and `grok-shared/shared`); CONFIG is source, Grok is consumer.
 - [policies/publish.yaml](policies/publish.yaml) — user-owned publish authorization policy; default deny with explicit allow rules for agent-authored pushes in CONFIG, Scripts, Music, and Wiki.
 
 ## Plans

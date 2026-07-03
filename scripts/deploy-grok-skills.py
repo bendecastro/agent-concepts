@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Deploy ingested Grok workflow skills into ~/.grok/skills/.
+"""Deploy CONFIG agents concepts into ~/.grok/skills/ (Grok consumes canon from here).
 
-- Vendored CONFIG concepts (body/SKILL.md) symlink by concept name.
-- Bundled xAI skills symlink from ~/.grok/bundled/skills/ (live upstream).
-- Also links code-review -> strict-code-review canon so /code-review uses CONFIG.
+All symlinks point from Grok's skill directory into ~/Sync/CONFIG/agents/concepts/.
+Re-run after editing concept bodies. Use --force to replace non-symlink directories.
 
 Restart Grok sessions (or wait for filesystem reload) to refresh advertised skills.
 """
@@ -19,18 +18,19 @@ REPO = Path(__file__).resolve().parents[1]
 CONCEPTS = REPO / "concepts"
 HOME = Path.home()
 GROK_SKILLS = HOME / ".grok" / "skills"
-BUNDLED = HOME / ".grok" / "bundled" / "skills"
 
-# link_name under ~/.grok/skills/ -> target directory (must contain SKILL.md or support files)
+# Grok skill directory name -> CONFIG concept body (must contain SKILL.md)
 DEPLOYS: list[tuple[str, Path]] = [
+    ("design", CONCEPTS / "design-doc-loop" / "body"),
+    ("execute-plan", CONCEPTS / "execute-plan" / "body"),
+    ("implement", CONCEPTS / "implement-loop" / "body"),
+    ("pr-babysit", CONCEPTS / "pr-babysit" / "body"),
+    ("review", CONCEPTS / "review-changes" / "body"),
+    ("shared", CONCEPTS / "grok-shared" / "shared"),
     ("code-review", CONCEPTS / "strict-code-review" / "body"),
     ("strict-code-review", CONCEPTS / "strict-code-review" / "body"),
-    ("design", BUNDLED / "design"),
-    ("execute-plan", BUNDLED / "execute-plan"),
-    ("implement", BUNDLED / "implement"),
-    ("pr-babysit", BUNDLED / "pr-babysit"),
-    ("review", BUNDLED / "review"),
-    ("shared", BUNDLED / "shared"),
+    ("check-work", CONCEPTS / "check-work" / "body"),
+    ("create-skill", CONCEPTS / "create-skill" / "body"),
 ]
 
 
@@ -79,14 +79,14 @@ def main() -> int:
     parser.add_argument(
         "--force",
         action="store_true",
-        help="replace existing non-symlink directories (e.g. code-review) with symlinks",
+        help="replace existing non-symlink directories with symlinks",
     )
     args = parser.parse_args()
 
     for name, target in DEPLOYS:
         print(link_dir(GROK_SKILLS / name, target, force=args.force, dry_run=args.dry_run))
 
-    print(f"Processed {len(DEPLOYS)} Grok skill link(s).")
+    print(f"Deployed {len(DEPLOYS)} Grok skill link(s) from CONFIG concepts.")
     return 0
 
 

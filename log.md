@@ -282,3 +282,6 @@ Snapshotted `~/.grok/bundled/skills/` (design, execute-plan, implement, pr-babys
 
 ## [2026-07-03] deploy | Grok skill symlinks
 Added `scripts/deploy-grok-skills.py` and ran it with `--force`: `~/.grok/skills/{design,execute-plan,implement,pr-babysit,review,shared}` → bundled live copies; `code-review` + `strict-code-review` → CONFIG `concepts/strict-code-review/body`. `check-work` and `create-skill` were already native under `~/.grok/skills/`. Updated harnesses + index deploy status.
+
+## [2026-07-03] implement | Grok skills: CONFIG canon, deploy into Grok
+Corrected deploy direction per user: CONFIG is source, Grok consumes. Vendored all ingested Grok SKILL bodies (and `memory.py`, `validate-plan.py`, personas) from `raw/` into `concepts/*/body/`; added `grok-shared` for shared personas; removed `UPSTREAM.md` stubs. Rewrote `deploy-grok-skills.py` so every `~/.grok/skills/` link points at CONFIG concepts (not `~/.grok/bundled/`). Re-deployed with `--force` including `check-work` and `create-skill`.

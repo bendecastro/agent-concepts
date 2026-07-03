@@ -4,17 +4,15 @@ User-invoked Grok orchestrator: parse a design doc's **PR Plan** DAG, implement 
 
 ## Design decisions
 
-- **Upstream-maintained body.** Bundled at `~/.grok/bundled/skills/execute-plan/`; couples to Grok worktrees, `grok worktree rm`, and optional `gt`/`gh` stack tooling.
-- **Downstream of design-doc-loop.** Expects `## PR Plan` sections produced by `/design`; composes with `/pr-babysit` after stack submission (Graphite mode).
-- **Shared memory with implement-loop.** Uses `implement/scripts/memory.py` for past-issue briefing and post-run memory flush (`~/.grok/implement-memory/<workspace-id>.md`).
-- **Orchestrator owns git.** Subagents implement in worktrees; parent creates branches, fetches commits via `git fetch <wt> HEAD --no-tags`, and assembles the stack.
+- **Vendored body** in `body/SKILL.md` + `body/scripts/validate-plan.py`. CONFIG → Grok via `deploy-grok-skills.py`.
+- **Downstream of design-doc-loop.** Expects `## PR Plan` from `/design`; composes with `/pr-babysit` after Graphite stack submit.
+- **Shared memory with implement-loop.** Uses `implement-loop/body/scripts/memory.py` at runtime (path announced in skill); memory file under `~/.grok/implement-memory/`.
+- **Shared personas** via symlink to [[grok-shared]].
 
 ## Provenance
 
 - `raw/grok-bundled-skills/snapshot/execute-plan/SKILL.md`
 - `raw/grok-bundled-skills/snapshot/execute-plan/scripts/validate-plan.py`
-- `raw/grok-bundled-skills/snapshot/shared/personas/implementer.md`
-- `raw/grok-bundled-skills/snapshot/shared/personas/reviewer.md`
 
 ## Tests
 
@@ -22,5 +20,4 @@ Discipline-enforcing orchestrator. Pressure scenarios not yet authored.
 
 ## Deploy targets
 
-- **Grok:** `~/.grok/bundled/skills/execute-plan/` (bundled).
-- **Other harnesses:** manual bootstrap.
+- **Grok:** `~/.grok/skills/execute-plan` → concept `body/`.

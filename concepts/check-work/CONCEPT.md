@@ -1,12 +1,11 @@
 # check-work
 
-User-invoked Grok self-verification orchestrator: spawn a verifier subagent to review diffs, run builds/tests, and loop fixes until pass — supports same-turn (post-task) and standalone modes.
+User-invoked Grok self-verification orchestrator: verifier subagent reviews diffs, runs builds/tests, loops fixes until pass. Grok slash command: `/check-work` (aliases `/check`, `/verify`).
 
 ## Design decisions
 
-- **Upstream-maintained body (user-scope).** Lives at `~/.grok/skills/check-work/`; xAI-shipped, not vendored here.
-- **Complements agent-kernel verification.** Kernel says verify before claims; this skill operationalizes that with a structured subagent loop and optional focus area.
-- **Overlap with obra verification-before-completion.** Absorbed at provenance level only — no duplicate runtime concept; this is the Grok-native orchestrator with concrete steps.
+- **Vendored body** in `body/SKILL.md`. CONFIG → Grok via `deploy-grok-skills.py`.
+- **Complements agent-kernel verification** with a concrete subagent loop.
 
 ## Provenance
 
@@ -18,5 +17,4 @@ Discipline-enforcing. Pressure scenarios not yet authored.
 
 ## Deploy targets
 
-- **Grok:** `~/.grok/skills/check-work/` (user-scope; auto-discovered).
-- **Other harnesses:** manual bootstrap or adapt into harness-specific verify flows.
+- **Grok:** `~/.grok/skills/check-work` → concept `body/`.
