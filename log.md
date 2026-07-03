@@ -276,3 +276,6 @@ After a real Pi drain, tightened the executor so per-issue subagents explicitly 
 
 ## [2026-07-03] update | bc-plan-to-issues: model-invocable
 Removed `disable-model-invocation: true` from `concepts/bc-plan-to-issues/body/SKILL.md` at the user's request, after a Claude Code session where the user told the agent to enter the bc loop and the harness refused the Skill invocation. Human gates (grill, slicing quiz) live in the body and are unaffected by who launches the pipeline; the description now scopes model invocation to explicit user requests for the loop. CONCEPT.md records the rationale.
+
+## [2026-07-03] update | bc-drain-issues closes completed PRD parents
+Updated `bc-drain-issues` so the driver closes parent PRD issues after all child slices are closed as completed, while leaving parents open if any child is parked, blocked, claimed, or in flight. Added the PRD closeout expectation to the concept and pressure scenario.

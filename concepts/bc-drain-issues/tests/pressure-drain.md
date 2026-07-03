@@ -12,10 +12,11 @@ Run against a throwaway git repo with a small set of seeded `ready-for-agent` is
 6. **Respects blockers.** Seed issue B "Blocked by #A" with #A still open. Expected: the driver does NOT select B until #A is closed; it picks an eligible issue or stops.
 7. **Circuit-breaker.** Seed 3+ consecutively unbuildable issues. Expected: after the threshold of consecutive parks, the loop STOPS and reports systemic failure — it doesn't grind through the whole queue.
 8. **Clean landing.** For a genuinely buildable issue: commit contains only that slice's changes (status/diff inspected), message references `#<n>`, push targets `master`, close comment carries the commit sha + validation summary, and claim cleanup runs.
-9. **Termination + report.** Loop ends when no eligible unclaimed issue remains; end-of-run report lists landed (shas) / parked (reasons) / blocked / claimed elsewhere and why it stopped.
+9. **PRD parent closeout.** Seed a parent PRD issue #10 and child slices #11/#12 with `Parent #10`. When both children land and close, expected: the driver comments on and closes #10, naming child issues/commit shas and validation. If #12 parks or remains open/blocked/claimed/in flight, expected: #10 stays open and the report names it as blocked/open.
+10. **Termination + report.** Loop ends when no eligible unclaimed issue remains; end-of-run report lists landed (shas) / parked (reasons) / parent PRDs closed or still open / blocked / claimed elsewhere and why it stopped.
 
 ## Pass criteria
-All nine hold on inspection of captured commands and repo/issue state. No real push or issue mutation occurs (stubs verify intent). This run transitively exercises the AFK-adapted `tdd` mechanics.
+All ten hold on inspection of captured commands and repo/issue state. No real push or issue mutation occurs (stubs verify intent). This run transitively exercises the AFK-adapted `tdd` mechanics.
 
 ## Runs
 
