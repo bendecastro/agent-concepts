@@ -19,20 +19,6 @@
 - [last30days](concepts/last30days/CONCEPT.md) — reference skill for `/last30days`, an upstream-maintained recency/social-search research workflow (Reddit, X, YouTube, TikTok, HN, Polymarket, GitHub, web) whose SKILL.md is coupled to a Python engine/package. Status: documented + provenance filed (2026-06-15); not deployed from this workspace, install/update via upstream plugin or `npx skills add`.
 - [prompting-agents](concepts/prompting-agents/CONCEPT.md) — reference library: altitude-first principles (right altitude, explain-the-why, general-over-prescriptive, context economy), eval-tested instruction blocks, technique repertoire, skill-suite composition, agent-ready work shaping, metaprompting. Status: implemented+tested; updated from Matt Pocock skills catalog + workshop/project clippings 2026-06-20. Not deployed (consumed in-place). Tested: 2026-06-20, source accuracy check after catalog/workshop/project ingest.
 
-### Grok Build workflow (ingested 2026-07-03, CONFIG → Grok deploy)
-
-Composable Grok-first orchestrators vendored in `concepts/*/body/`; `scripts/deploy-grok-skills.py` symlinks `~/.grok/skills/` → canon (CONFIG is source, Grok consumes). Pipeline: `/design` → `/execute-plan` → `/pr-babysit`. Shared personas in [grok-shared](concepts/grok-shared/CONCEPT.md).
-
-- [grok-shared](concepts/grok-shared/CONCEPT.md) — shared persona files for workflow skills (`design-doc-writer`, `reviewer`, `implementer`, etc.); not a slash command. Status: vendored + Grok-deployed 2026-07-03 (`~/.grok/skills/shared`).
-- [design-doc-loop](concepts/design-doc-loop/CONCEPT.md) — `/design`: writer/reviewer loop until 0 open issues; PR Plan + Key Decisions. Status: vendored + Grok-deployed; pressure scenarios pending.
-- [execute-plan](concepts/execute-plan/CONCEPT.md) — `/execute-plan`: PR Plan DAG executor + stack assembly. Status: vendored + Grok-deployed; pressure scenarios pending.
-- [implement-loop](concepts/implement-loop/CONCEPT.md) — `/implement`: implement→review→fix + `memory.py`. Status: vendored + Grok-deployed; pressure scenarios pending.
-- [pr-babysit](concepts/pr-babysit/CONCEPT.md) — `/pr-babysit`: PR monitor/fix loop. Status: vendored + Grok-deployed; pressure scenarios pending.
-- [review-changes](concepts/review-changes/CONCEPT.md) — `/review`: local/branch/PR reviewer orchestrator. Status: vendored + Grok-deployed; pressure scenarios pending.
-- [strict-code-review](concepts/strict-code-review/CONCEPT.md) — `/code-review`: harsh maintainability audit. Status: vendored + Grok-deployed; Claude/Pi deploy pending.
-- [check-work](concepts/check-work/CONCEPT.md) — `/check-work`: verifier subagent loop. Status: vendored + Grok-deployed.
-- [create-skill](concepts/create-skill/CONCEPT.md) — `/create-skill`: interactive skill scaffolding. Status: vendored + Grok-deployed.
-
 ### Workshop pipeline (Matt Pocock AI Engineer Workshop, ingested 2026-06-20)
 
 The plan→execute lifecycle as composable skills. User-invoked orchestrators coordinate; model-invoked disciplines hold reusable behavior. The two `bc-` orchestrators wire the lifecycle into one **loop** — `bc-plan-to-issues` (interactive planning front) → `bc-drain-issues` (AFK execution); see [pipeline.md](pipeline.md). The single-step orchestrators (`grill-me`, `to-prd`, `to-issues`) remain for one-phase-at-a-time use.
@@ -61,7 +47,6 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 - [bootstrap.md](bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
 - [scripts/deploy-local-skills.py](scripts/deploy-local-skills.py) — bulk deploys every local `concepts/*/body/SKILL.md` into Pi-discoverable relative symlinks under `~/.agents/skills/` and `~/.pi/agent/skills/`, both pointing at canonical concept bodies.
-- [scripts/deploy-grok-skills.py](scripts/deploy-grok-skills.py) — symlinks `~/.grok/skills/*` → CONFIG `concepts/*/body/` (and `grok-shared/shared`); CONFIG is source, Grok is consumer.
 - [policies/publish.yaml](policies/publish.yaml) — user-owned publish authorization policy; default deny with explicit allow rules for agent-authored pushes in CONFIG, Scripts, Music, and Wiki.
 
 ## Plans
@@ -93,8 +78,6 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 - [openai-gpt-5-4-frontend-design.md](raw/openai-gpt-5-4-frontend-design.md) — OpenAI's "Designing delightful frontends with GPT-5.4" blog (full text), embedding their official Codex **Frontend Skill** verbatim: beautiful-defaults, full-bleed hero / one-composition, cardless-by-default, imagery & mood-board workflow, motion budget, hard rules, reject-these-failures, litmus checks. Ingested → frontend-design (archetype checklist layer) (2026-06-21).
 - [openai-gpt-5-frontend-cookbook.md](raw/openai-gpt-5-frontend-cookbook.md) — OpenAI's GPT-5 frontend cookbook (markdown cells, verbatim): recommended starter stack (Next.js/React, Tailwind, shadcn/Radix, Motion, font/icon picks) + steerability & native-multimodal learnings. Supporting source. Ingested → frontend-design (minor: stack/multimodal notes) (2026-06-21).
 - [google-modern-web-guidance/](raw/google-modern-web-guidance/SOURCE.md) — design/UX subset snapshot of Chrome DevRel's Modern Web Guidance agent skills (GoogleChrome/modern-web-guidance-src, commit eec2f8e): 82 user-experience guides + CSS/layout/html/a11y guides + the team's own SKILL.md files. Platform-correctness/Baseline-gated, **not** aesthetic (Google has no visual-design skill; Material Design 3 would be that). Ingested → frontend-design as a modern-platform *pointer* only, not vendored (2026-06-21).
-- [grok-bundled-skills/](raw/grok-bundled-skills/SOURCE.md) — snapshot of xAI Grok Build bundled workflow skills (`design`, `execute-plan`, `implement`, `pr-babysit`, `review`) + shared personas. Ingested → design-doc-loop, execute-plan, implement-loop, pr-babysit, review-changes reference concepts (2026-07-03).
-- [grok-user-skills/](raw/grok-user-skills/SOURCE.md) — snapshot of selected `~/.grok/skills/` entries (`check-work`, `code-review`, `create-skill`). Ingested → check-work, create-skill reference concepts + strict-code-review vendored body (2026-07-03).
 
 ## Gaps
 
