@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-07-04] implement | mesh-check Mac hostname detection
+Taught mesh-check to recognize the MacBookPro hostname form observed on the Mac while finishing issue #8, so the Mac skips its self-alias and checks only peers.
+
 ## [2026-07-04] implement | machine mesh foundation
 Added the repo-tracked shared SSH mesh fragment and portable mesh-check script for PRD #6 / slice #7, then wired omarchy's private SSH config and authorized omarchy's identity pubkey on beelink for the tracer path.
 
