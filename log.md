@@ -288,3 +288,6 @@ Changed the AFK drain default from medium to low reasoning/thinking effort for p
 
 ## [2026-07-04] update | agent-kernel: no agent commands in user shell history
 Added a Tool-and-file-discipline rule: agents must not record their shell commands into the user's personal shell history (atuin hooks etc.) or re-install such hooks. Prompted by the user finding ~4,300 agent-authored entries (claude-code, codex, pi) drowning ~1,800 of their own in atuin on the desktop; the Claude Code Pre/PostToolUse atuin hooks were removed from the synced ~/.claude/settings.json and the recorded entries purged (backups kept beside history.db).
+
+## [2026-07-04] lint | remove dangling Mac skill deploys
+Removed stale macOS deploy symlinks for find-skills, last30days, and omarchy from Pi/Claude skill dirs: no local canonical body or upstream package exists here, and omarchy is Arch/Omarchy-only.
