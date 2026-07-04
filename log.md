@@ -279,3 +279,6 @@ Removed `disable-model-invocation: true` from `concepts/bc-plan-to-issues/body/S
 
 ## [2026-07-03] update | bc-drain-issues closes completed PRD parents
 Updated `bc-drain-issues` so the driver closes parent PRD issues after all child slices are closed as completed, while leaving parents open if any child is parked, blocked, claimed, or in flight. Added the PRD closeout expectation to the concept and pressure scenario.
+
+## [2026-07-04] update | bc-drain-issues low subagent effort
+Changed the AFK drain default from medium to low reasoning/thinking effort for per-issue Pi subagents, preserving explicit effort override guidance so drains do not inherit higher parent settings.
