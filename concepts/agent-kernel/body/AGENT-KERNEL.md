@@ -27,6 +27,7 @@ Use the smallest high-signal context that can solve the task.
 - Make precise edits that preserve existing structure and unrelated user changes.
 - Never revert or overwrite changes you did not make.
 - Avoid destructive actions unless the user explicitly asked for them.
+- Keep agent-issued shell commands out of the user's personal shell history (no atuin/shell-history recording hooks; don't install or re-enable them). Why: the history is the user's own recall surface, and agent volume buries it — the user had ~4,300 agent commands drowning out ~1,800 of their own before this was removed (2026-07-04).
 
 ## Verification
 
