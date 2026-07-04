@@ -55,6 +55,38 @@ rules:
       require_validation_summary: true
       never_include_unrelated_user_changes: true  # within a single commit; housekeeping commits are separate by definition
 
+  - id: config-repo-drain-issues-after-agent-work
+    description: >
+      Allow AFK issue-drain agents to push their own commits, push/delete drain
+      claim-coordination branches, and close satisfied GitHub issues in the
+      user's CONFIG repo.
+    scope:
+      paths:
+        - ~/Sync/CONFIG
+      remotes:
+        - https://github.com/bendecastro/CONFIG.git
+        - git@github.com:bendecastro/CONFIG.git
+    allow:
+      - git_push
+      - github_issue_close
+    when:
+      - after_agent_commit
+      - only_agent_authored_changes
+      - after_relevant_validation
+      - issue_acceptance_criteria_satisfied
+    branches:
+      - master
+      - bc-drain-claims/issue-*  # AFK drain coordination/claim branches (glob)
+    exclude_changes_under:
+      - agents/policies/
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true
+      close_only_issues_directly_completed_by_the_agent_work: true
+      leave_comment_with_commit_and_validation_summary_when_closing_issue: true
+
   - id: image-maze-push-and-close-after-agent-work
     description: Allow agents to push their own commits and close satisfied GitHub issues in the image-maze repo.
     scope:

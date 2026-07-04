@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-07-04] implement | CONFIG drain publish policy
+Authorized CONFIG repo AFK issue-drain publishing semantics in publish.yaml: master pushes, bc-drain claim branches, and close-comment issue closeout after validation. User explicitly requested the policy pre-authorization and will push it manually.
+
 ## [2026-07-04] deploy | Composer + Grok via shared skills bus
 Documented that `deploy-local-skills.py` already feeds Composer (Cursor) and Grok through `~/.agents/skills/` — the same relative symlinks Pi uses. Ran deploy (created missing Claude symlinks for obra concepts). Removed `~/.grok/skills/code-review` so it no longer shadowed the canonical obra concept. Extended lint deploy-dir checks to `~/.agents/skills/`; updated harnesses.md, bootstrap.md, AGENTS.md, and index.md.
 
