@@ -87,6 +87,32 @@ rules:
       close_only_issues_directly_completed_by_the_agent_work: true
       leave_comment_with_commit_and_validation_summary_when_closing_issue: true
 
+  - id: image-maze-push-after-agent-commit
+    description: >
+      Allow agents to push their own commits in the image-maze repo. Covers
+      plain agent-authored work (docs, plans, refactors requested in
+      conversation) that is not driven by a GitHub issue; complements
+      image-maze-push-and-close-after-agent-work, whose when-conditions are
+      shaped for issue-drain work.
+    scope:
+      paths:
+        - ~/Sync/Work/Development/wp-theme-builds/localhost/image-maze
+      remotes:
+        - https://github.com/bendecastro/image-maze.git
+        - git@github.com:bendecastro/image-maze.git
+    allow:
+      - git_push
+    when:
+      - after_agent_commit
+      - only_agent_authored_changes
+    branches:
+      - master
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true
+
   - id: image-maze-push-and-close-after-agent-work
     description: Allow agents to push their own commits and close satisfied GitHub issues in the image-maze repo.
     scope:
