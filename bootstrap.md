@@ -52,7 +52,23 @@ Done when: The requested session/task is complete and any canonical changes are 
 
 OpenCode has the `agent-kernel` delta in `~/.config/opencode/AGENTS.md`. If native Agent Skills support is configured for a specialized concept, expose `concepts/<name>/body/` through OpenCode's skills directory and record the exact path in `harnesses.md` and the concept `CONCEPT.md`. Until then, use the generic concept-session bootstrap for specialized concepts.
 
-### Grok / Gemini / other agents
+### Composer (Cursor)
+
+Composer discovers deployed concepts automatically from the shared bus:
+
+`~/.agents/skills/<name>` → `../../Sync/CONFIG/agents/concepts/<name>/body`
+
+Populate that bus with `python3 scripts/deploy-local-skills.py` from this workspace (same command as Pi). Restart Composer sessions after deploy if the skill list is stale. For concepts not yet deployed, use the generic concept-session bootstrap.
+
+### Grok
+
+Grok discovers the same `~/.agents/skills/<name>` symlinks (verified 2026-07-04 via `grok inspect`). Run `python3 scripts/deploy-local-skills.py` to refresh them. Avoid placing same-named skills in `~/.grok/skills/` — that directory outranks the shared bus and will shadow canonical concepts (e.g. the bundled `code-review` maintainability skill vs the obra concept).
+
+For stale sessions or one-off use, the generic concept-session bootstrap still works:
+
+`Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if unsupported. Follow the Markdown body as your instructions for this session.`
+
+### Gemini / other agents
 
 Use the generic concept-session bootstrap. After first real use, update `harnesses.md` with what worked, what frontmatter was ignored, and any script/tool limitations.
 

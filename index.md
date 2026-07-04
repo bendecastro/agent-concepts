@@ -46,7 +46,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 - [harnesses.md](harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
 - [bootstrap.md](bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
-- [scripts/deploy-local-skills.py](scripts/deploy-local-skills.py) — bulk deploys every local `concepts/*/body/SKILL.md` into Pi-discoverable relative symlinks under `~/.agents/skills/` and `~/.pi/agent/skills/`, both pointing at canonical concept bodies.
+- [scripts/deploy-local-skills.py](scripts/deploy-local-skills.py) — bulk deploys every local `concepts/*/body/SKILL.md` into relative symlinks under `~/.agents/skills/` (shared bus for Pi, Composer, Grok, and Codex), `~/.pi/agent/skills/`, and `~/.claude/skills/`, all pointing at canonical concept bodies.
 - [policies/publish.yaml](policies/publish.yaml) — user-owned publish authorization policy; default deny with explicit allow rules for agent-authored pushes in CONFIG, Scripts, Music, and Wiki.
 
 ## Plans

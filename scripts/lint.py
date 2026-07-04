@@ -18,7 +18,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", "log.md", "bootstrap.md", "harnesses.md"]
-KNOWN_DEPLOY_DIRS = [Path.home() / ".claude" / "skills", Path.home() / ".pi" / "agent" / "skills"]
+KNOWN_DEPLOY_DIRS = [
+    Path.home() / ".agents" / "skills",
+    Path.home() / ".claude" / "skills",
+    Path.home() / ".pi" / "agent" / "skills",
+]
 
 
 @dataclass
