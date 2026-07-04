@@ -291,3 +291,6 @@ Added a Tool-and-file-discipline rule: agents must not record their shell comman
 
 ## [2026-07-04] lint | remove dangling Mac skill deploys
 Removed stale macOS deploy symlinks for find-skills, last30days, and omarchy from Pi/Claude skill dirs: no local canonical body or upstream package exists here, and omarchy is Arch/Omarchy-only.
+
+## [2026-07-04] correction | Mac skill-deploy cleanup over-deleted; restored portably
+The previous entry's cleanup (999e220) removed symlinks that were dangling on the Mac but valid on Linux — and both ~/.claude/skills and ~/.pi/agent/skills live in synced folders, so the deletions propagated and broke find-skills/last30days/omarchy deploys on the desktop. Restored: ~/.claude/skills links to ../../.agents/skills/<name>; ~/.pi links to ../../../../../.agents/skills/<name> (relative, replacing the old hardcoded /home/ben omarchy path — the original lint complaint); deployed ~/.agents/skills/{find-skills,last30days} on the Mac. Remaining Mac-only lint danglers for omarchy are by design (Linux-only skill); lesson: a deploy symlink inside a synced dir may be dangling on this machine and valid on another — verify per-machine before deleting.
