@@ -27,6 +27,14 @@ GLOBAL_SKILLS = HOME / ".agents" / "skills"
 PI_SKILLS = HOME / ".pi" / "agent" / "skills"
 CLAUDE_SKILLS = HOME / ".claude" / "skills"
 
+# Public vocabulary can evolve without breaking existing user muscle memory. Alias
+# destinations must be canonical concept names; aliases never gain their own body.
+DEPLOY_ALIASES = {
+    "implement": "bc-drain-issues",
+    "to-issues": "to-tickets",
+    "to-prd": "to-spec",
+}
+
 
 def rel_target(target: Path, link_parent: Path) -> str:
     # Symlink targets are interpreted relative to the real directory containing
@@ -67,11 +75,17 @@ def link_dir(link: Path, target: Path, *, force: bool, dry_run: bool) -> str:
 
 
 def discover() -> list[tuple[str, Path]]:
-    skills: list[tuple[str, Path]] = []
-    for skill_file in sorted(CONCEPTS.glob("*/body/SKILL.md")):
-        name = skill_file.parents[1].name
-        skills.append((name, skill_file.parent))
-    return skills
+    canonical = {
+        skill_file.parents[1].name: skill_file.parent
+        for skill_file in sorted(CONCEPTS.glob("*/body/SKILL.md"))
+    }
+    missing = sorted(set(DEPLOY_ALIASES.values()) - canonical.keys())
+    if missing:
+        raise SystemExit(f"Alias target(s) missing from concepts: {', '.join(missing)}")
+
+    skills = list(canonical.items())
+    skills.extend((alias, canonical[target]) for alias, target in DEPLOY_ALIASES.items())
+    return sorted(skills)
 
 
 def main() -> int:

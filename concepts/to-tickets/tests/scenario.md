@@ -1,4 +1,4 @@
-# Scenario: to-issues
+# Scenario: to-tickets
 
 Run a subagent with `body/SKILL.md` loaded, given a short multi-feature plan/PRD, in a throwaway git repo. Grade by the proposed breakdown and the (dry-run or stubbed) `gh` invocations. The slicing behavior itself is owned by `issue-slicing` (see its scenario); this scenario checks the orchestrator delegates to it and publishes correctly.
 
@@ -12,7 +12,7 @@ Run a subagent with `body/SKILL.md` loaded, given a short multi-feature plan/PRD
 ## Pass criteria
 All four hold on inspection of the breakdown and publish commands.
 
-## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS (with note)**
+## Historical run — 2026-06-21 (then named `to-issues`; Claude Code subagent, Haiku low-thinking per cost rule) — **PASS (with note)**
 
 Sandbox `/tmp/pt-toissues`; `gh` stubbed; team-mentions multi-feature plan.
 1. Delegated to `issue-slicing`; slices were vertical (autocomplete → token → notify → inbox). ✓

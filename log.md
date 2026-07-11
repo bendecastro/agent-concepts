@@ -308,3 +308,6 @@ Added the machine-mesh reference concept documenting the three local SSH aliases
 
 ## [2026-07-04] update | publish policy: plain agent-commit pushes in image-maze
 Added `image-maze-push-after-agent-commit` to `policies/publish.yaml` at the user's request ("fix publish policy"). Gap: a plain agent docs commit (docs/launch-plan.md) fit neither existing image-maze rule — the push-and-close rule's when-conditions are issue-drain shaped (`issue_acceptance_criteria_satisfied`), and the doc-maintenance rule is confined to `.bc-agent/`/agent instruction files. New rule mirrors `scripts-repo-push-after-agent-commit` (git_push on master, after_agent_commit + only_agent_authored_changes). Also noted for the record: `publish-check.py` takes the remote URL, not the git remote name — passing `origin` yields a false "no rule matches".
+
+## [2026-07-11] implement | sync selected Matt Pocock workflow upgrades
+Renamed standalone `to-spec`/`to-tickets` with `to-prd`/`to-issues` deploy aliases; added primary-source `research`; strengthened issue slicing for fresh contexts and wide refactors; and made AFK issue landing block on independent Spec + Standards review with one remediation/re-review limit. Existing GitHub-only queue semantics and explicit Markdown blockers remain deliberate local divergences.

@@ -1,4 +1,4 @@
-# Scenario: to-prd
+# Scenario: to-spec
 
 Run a subagent with `body/SKILL.md` loaded, after a short fictional conversation that already discussed a feature, in a throwaway git repo. Grade by the produced PRD text and the (dry-run or stubbed) `gh` invocation. The PRD-writing behavior itself is owned by `prd-drafting` (see its accuracy check); this scenario checks the orchestrator delegates to it and publishes correctly.
 
@@ -11,7 +11,7 @@ Run a subagent with `body/SKILL.md` loaded, after a short fictional conversation
 ## Pass criteria
 All three hold on inspection of the PRD and the publish command.
 
-## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS**
+## Historical run — 2026-06-21 (then named `to-prd`; Claude Code subagent, Haiku low-thinking per cost rule) — **PASS**
 
 Sandbox `/tmp/pt-toprd`; `gh` stubbed; settled CSV-export context supplied as prior conversation.
 1. Delegated to `prd-drafting` and produced a template-conformant PRD (Problem / Solution / User Stories / Implementation / Testing / Out of Scope / Further Notes). ✓
