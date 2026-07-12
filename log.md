@@ -317,3 +317,6 @@ Quoted the `machine-mesh` description so its embedded colon is parsed as a scala
 
 ## [2026-07-12] ingest+implement | bc-plan-to-issues living-specs step (OpenSpec)
 Ingested the OpenSpec README clipping and adopted its archive-merge idea: bc-plan-to-issues gains step 5, folding resolved PRD requirements into `docs/specs/<area>.md` as normative current truth tagged `(pending #<parent>)`. Runs at plan time (not post-drain) because the human gates are the point of maximum shared understanding; pressure-test check 9 added, re-run pending. Per-change folders and Stores deliberately not adopted.
+
+## [2026-07-12] implement | bc-plan-to-issues per-change folder (OpenSpec)
+Second OpenSpec adoption: `docs/changes/<slug>/` is now the single physical home for a change's planning artifacts (canonical `prd.md`, filed evidence, `tasks.md` slice manifest with real issue numbers). GitHub queue unchanged; no duplicated state — parent issue body becomes summary+pointer, tasks.md is a map not a status board. Pressure-test check 10 added, re-run pending.

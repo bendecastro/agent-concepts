@@ -17,11 +17,11 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 2. **Capture inline — don't batch.** As terms and decisions crystallize *during* the grill, run `/domain-modeling`: canonical names → `CONTEXT.md` (a pure glossary, no implementation detail); a decision that is costly to reverse AND would surprise a future reader AND reflects a real trade-off → an ADR under `docs/adr/`. Capture the moment it crystallizes, not at the end.
    - **Guard:** if the current directory isn't a project where `CONTEXT.md`/ADRs belong (empty/scratch dir, unrelated files), confirm with the user before creating docs, or grill without persisting.
 
-3. **Draft the PRD.** Run `/prd-drafting`: synthesize from the grill + codebase (no re-interview), sketch and confirm the test seams, write the PRD to the standard template.
+3. **Open the change folder and draft the PRD.** Create `docs/changes/<change-slug>/` (dash-case, named for the feature) — the single physical home for this change's planning artifacts; without it they scatter across tracker bodies, comments, and temp files. Run `/prd-drafting`: synthesize from the grill + codebase (no re-interview), sketch and confirm the test seams, write the PRD to the standard template as `docs/changes/<change-slug>/prd.md`. If pre-planning evidence exists that's worth keeping (a `/prototype` verdict, an architecture-review excerpt), file it in the folder too — these otherwise die as temp files. (Step 2's guard applies here as well: confirm before creating docs in a directory that isn't a real project.)
 
-4. **Publish the PRD parent issue.** The parent is a planning/coordination artifact, not a drainable implementation task, so do **not** label it `ready-for-agent`.
+4. **Publish the PRD parent issue.** The parent is a planning/coordination artifact, not a drainable implementation task, so do **not** label it `ready-for-agent`. Its body is a coordination pointer, not a second copy of the PRD (a duplicated PRD drifts from the canonical one): the problem/solution summary plus `Planning artifacts: docs/changes/<change-slug>/`.
    ```
-   gh issue create --title "PRD: <feature name>" --body-file <path>
+   gh issue create --title "PRD: <feature name>" --body-file <summary-with-pointer>
    ```
    Keep the returned issue number as the parent. Only implementation slices get the `ready-for-agent` label.
 
@@ -37,12 +37,13 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
    ```
    gh issue create --title "<slice title>" --label ready-for-agent --body-file <path>
    ```
+   Then write `docs/changes/<change-slug>/tasks.md`: the approved breakdown in dependency order, each entry with slice title, its real issue `#NN`, blocked-by references, and user stories covered. It's the map of the change, written once the real numbers exist — **not** a status board: completion state lives only in the tracker (duplicated state drifts; whoever wants status runs `gh issue list`).
 
-8. **Close out.** Restate the resolved scope; point at the `CONTEXT.md`/ADRs/`docs/specs/` files written, the parent issue, and the slice issue numbers. Then recommend the handoff: **"Run `/bc-drain-issues` to execute this queue autonomously."**
+8. **Close out.** Restate the resolved scope; point at the change folder (`docs/changes/<change-slug>/`), the `CONTEXT.md`/ADRs/`docs/specs/` files written, the parent issue, and the slice issue numbers. Then recommend the handoff: **"Run `/bc-drain-issues` to execute this queue autonomously."**
 
 ## Guard rails
 - This is **planning, not building** — do not write implementation code here. Code is the executor's job, one slice at a time.
 - The grill (step 1) and the slicing quiz (step 6) are the human checkpoints. Everything after step 7 runs AFK, so resolve open branches now — a vague issue becomes a parked issue at execution time.
 - If the source is an existing GitHub issue, run `/triage` first when it lacks an Agent Brief, has conflicting labels, or may be already implemented / out of scope.
 - If planning depends on uncertain state logic, UI direction, or architecture shape, use `/prototype` or `/improve-codebase-architecture` before final PRD/slice publication; capture the verdict in the PRD rather than sending throwaway work to the drain.
-- Keep research/evidence distinct from actual PRDs: exploratory notes and reports can feed the PRD, but only the drafted/published PRD parent is the PRD artifact.
+- Keep research/evidence distinct from actual PRDs: exploratory notes and reports can feed the PRD (and may be filed in the change folder as evidence), but only `docs/changes/<change-slug>/prd.md` is the PRD artifact — the parent issue just points at it.

@@ -13,6 +13,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 - **Optional upstream evidence, no nested orchestrators.** `triage`, `prototype`, and `improve-codebase-architecture` are user-invoked tools that feed planning. The bc planner can recommend them when needed, but does not call them as nested orchestrators.
 - **Recommends the handoff.** Close-out points at `/bc-drain-issues` so planning ends pointing at execution (the loop's two halves).
 - **Living specs step (2026-07-12, from OpenSpec).** After the PRD parent is published, resolved requirements are merged into `docs/specs/<area>.md` as normative current truth, tagged `(pending #<parent>)` until the queue drains. Adopted from OpenSpec's archive-merge idea: PRDs/issues go stale by design, so without this nothing durable records *what the system must do* — CONTEXT.md holds vocabulary and ADRs hold decisions, but not requirements. Runs at plan time (not post-drain like OpenSpec's archive) because the human gates are the point of maximum shared understanding and this pipeline hands off to an AFK executor; the pending tag makes plan/implementation drift detectable. Placed after parent publication so the tag can carry a real `#NN`.
+- **Per-change folder (2026-07-12, from OpenSpec).** `docs/changes/<change-slug>/` is the single physical home for a change's planning artifacts: `prd.md` (canonical PRD), `tasks.md` (dependency-ordered slice manifest with real issue `#NN`s), plus filed pre-planning evidence (prototype verdicts, architecture-review excerpts, which previously died as temp files). The GitHub queue **stays** — `bc-drain-issues`, triage, and multi-machine claim semantics depend on it — but state is never duplicated: the parent issue body is a summary + pointer (not a PRD copy), slice issues keep full Agent Briefs (AFK workers need self-contained contracts), and `tasks.md` is a map, not a status board (completion state lives only in the tracker). Adapted from OpenSpec's per-change artifact folder; their folder-as-queue model was rejected because this loop's executor drains GitHub issues.
 
 ## Provenance
 
@@ -21,7 +22,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 - `concepts/grill-me/`, `concepts/to-prd/`, `concepts/to-issues/` — the single-step orchestrators it supersedes for the combined flow (kept standalone for individual use).
 - `concepts/triage/`, `concepts/prototype/`, `concepts/improve-codebase-architecture/` — optional intake/evidence/runway skills integrated around the planning front.
 - `concepts/prompting-agents/body/SKILL.md` — composition boundary and gate phrasing.
-- `raw/fission-ai-openspec-readme.md` — OpenSpec README; source of the living-specs (archive-merge) idea adapted into step 5 (2026-07-12).
+- `raw/fission-ai-openspec-readme.md` — OpenSpec README; source of the living-specs (archive-merge) idea adapted into step 5 and the per-change folder adapted into steps 3/4/7 (2026-07-12).
 
 ## Tests
 
