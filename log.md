@@ -311,3 +311,6 @@ Added `image-maze-push-after-agent-commit` to `policies/publish.yaml` at the use
 
 ## [2026-07-11] implement | sync selected Matt Pocock workflow upgrades
 Renamed standalone `to-spec`/`to-tickets` with `to-prd`/`to-issues` deploy aliases; added primary-source `research`; strengthened issue slicing for fresh contexts and wide refactors; and made AFK issue landing block on independent Spec + Standards review with one remediation/re-review limit. Existing GitHub-only queue semantics and explicit Markdown blockers remain deliberate local divergences.
+
+## [2026-07-12] update | machine-mesh YAML frontmatter correction
+Quoted the `machine-mesh` description so its embedded colon is parsed as a scalar rather than an invalid compact mapping. Verified the frontmatter with Ruby's safe YAML loader.
