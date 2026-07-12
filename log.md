@@ -329,3 +329,6 @@ Three extractions, user-curated: standing-instruction-file hygiene block (prunin
 
 ## [2026-07-12] update | mattpocock/skills clipping to raw/ingested/
 Moved the 2026-07-11 mattpocock/skills README clipping to raw/ingested/ at user request — ingested by overlap with the earlier catalog snapshot (→ prompting-agents 2026-06-20), no new extractions. Inbox is now empty.
+
+## [2026-07-12] implement | agent-kernel posture: consult on judgment calls
+Replaced the kernel's "act directly…ask only when" posture line: bias-to-action stays for mechanical, clearly-specified work, but real judgment calls (designs, interpretations, trade-offs the user might weigh differently) must be surfaced before proceeding. User-requested — he wants to be consulted more; chose this strength among three candidates. Design decision recorded in CONCEPT.md.
