@@ -326,3 +326,6 @@ Moved all ingested raw sources into `raw/ingested/`; top-level `raw/` is now the
 
 ## [2026-07-12] ingest | anthropic-claude-code-best-practices.md
 Three extractions, user-curated: standing-instruction-file hygiene block (pruning test, include/exclude, prune-don't-emphasize) and verification-ladder + evidence-over-assertion lines → prompting-agents; "Findings are not obligations" reviewer-incentive guard → code-review (protects the bc-drain AFK slice gate from remediation spirals). Harness-specific session/UI advice deliberately not canonized. Moved source to raw/ingested/.
+
+## [2026-07-12] update | mattpocock/skills clipping to raw/ingested/
+Moved the 2026-07-11 mattpocock/skills README clipping to raw/ingested/ at user request — ingested by overlap with the earlier catalog snapshot (→ prompting-agents 2026-06-20), no new extractions. Inbox is now empty.
