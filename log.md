@@ -323,3 +323,6 @@ Second OpenSpec adoption: `docs/changes/<slug>/` is now the single physical home
 
 ## [2026-07-12] update | raw/ inbox + raw/ingested/ split
 Moved all ingested raw sources into `raw/ingested/`; top-level `raw/` is now the to-ingest inbox (currently: anthropic-claude-code-best-practices.md, the 2026-07-11 mattpocock/skills clipping). AGENTS.md now records the convention plus the relaxed bar (picking a couple of ideas counts as ingested → move the file); lint.py checks both levels and flags location/status mismatches. ~40 provenance/index links rewritten; log history left as written.
+
+## [2026-07-12] ingest | anthropic-claude-code-best-practices.md
+Three extractions, user-curated: standing-instruction-file hygiene block (pruning test, include/exclude, prune-don't-emphasize) and verification-ladder + evidence-over-assertion lines → prompting-agents; "Findings are not obligations" reviewer-incentive guard → code-review (protects the bc-drain AFK slice gate from remediation spirals). Harness-specific session/UI advice deliberately not canonized. Moved source to raw/ingested/.

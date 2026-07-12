@@ -37,6 +37,28 @@ When designing a skill suite rather than a single prompt, keep workflows small a
   monolithic process frameworks. The user keeps control while the agent gains discipline.
 ```
 
+## Standing instruction files (always-loaded context)
+
+For the file an agent reads every session — AGENTS.md, CLAUDE.md, a system prompt. These fail by growing: every line is always loaded, and a bloated file causes the agent to ignore the rules that matter because they're lost in noise. (Claude Code best practices.)
+
+```
+- Pruning test, per line: "Would removing this cause the agent to make mistakes?"
+  If not, cut it.
+- Include: commands the agent can't guess, style rules that differ from defaults,
+  testing instructions, repo etiquette (branching, PR conventions), project-specific
+  architectural decisions, environment quirks, non-obvious gotchas.
+- Exclude: anything derivable by reading the code, standard language conventions,
+  API documentation (link instead), frequently-changing facts, tutorials,
+  file-by-file codebase descriptions, self-evident advice ("write clean code").
+- Broadly-applicable content only; occasionally-relevant knowledge goes in
+  on-demand skills, not the always-loaded file.
+- Diagnostics: a rule that keeps being violated despite being in the file means the
+  file is too long (prune, don't add emphasis); questions the agent asks that the
+  file already answers mean the phrasing is ambiguous.
+- Treat the file like code: review it when behavior goes wrong, prune regularly,
+  and test edits by observing whether behavior actually shifts.
+```
+
 ## Agent-ready work shaping
 
 For coding-agent workflows that span planning through execution, shape work so an agent can pick it up independently without losing human control:
@@ -48,6 +70,13 @@ For coding-agent workflows that span planning through execution, shape work so a
   path through the system and can be implemented, tested, and committed independently.
 - Keep TDD or another fast correctness loop attached to each slice. The feedback loop is
   what lets the agent run human-in-the-loop or unattended without drifting silently.
+- Match how hard the check gates stopping to how unattended the run is. The ladder:
+  check requested in the prompt → a per-turn condition an evaluator re-checks → a
+  deterministic gate (script/hook that blocks finishing until it passes) → an
+  independent fresh-context agent that tries to refute the result. Each rung trades
+  setup for unattended reliability; supervised work can sit low, AFK work belongs high.
+- Require evidence over assertion: the test output, the command run and what it
+  returned, the screenshot — reviewing evidence beats re-running verification.
 - When an agent struggles, refine the prompt, issue, or project docs that produced the
   struggle; do not treat the failure as only a one-off execution mistake.
 - Codebase design is part of agent enablement: clear seams, durable vocabulary, and

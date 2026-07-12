@@ -39,6 +39,10 @@ Classify findings as **Critical**, **Important**, or **Minor** and include a pre
 
 Present findings under `## Spec` and `## Standards`. Do not merge or rerank them: code may meet the spec while violating standards, or vice versa. Critical and Important findings block landing; Minors are recorded but may be consciously deferred.
 
+### Findings are not obligations
+
+A reviewer prompted to find gaps will report some even when the work is sound — producing findings is what it was asked to do. Chasing every finding causes over-engineering: extra abstraction layers, defensive code for impossible states, tests for cases that can't happen. So reviewers flag only gaps that affect correctness or the stated requirements (everything else is a labelled judgment call, per the Standards rules above), and fixers treat anything below Critical/Important as optional — pushing back with evidence beats padding the code. This matters most in AFK runs, where nobody is watching a remediation spiral.
+
 ## AFK slice gate
 
 Inside `/bc-drain-issues`, both axes independently approve a worker’s uncommitted, GREEN worktree before its initial commit, push, or close. The driver owns reviewer dispatch and passes the full review packet. One remediation and re-review cycle is allowed; a second material rejection or ambiguity parks the slice. If a non-fast-forward push requires a rebase that changes the reviewed committed diff, the driver re-reviews that diff before a retrying push/close; a material post-rebase finding parks it rather than opening another remediation cycle.

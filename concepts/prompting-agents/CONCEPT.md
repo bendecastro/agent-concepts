@@ -23,6 +23,7 @@ A reference library of proven instruction blocks for authoring agent instruction
 - `raw/ingested/mattpocockai-engineer-workshop-2026-project.md` — companion project README showing the concrete project runway an agent needs: prerequisites, setup, dev server, test/typecheck/build commands, migration/seed commands, and stack. https://github.com/mattpocock/ai-engineer-workshop-2026-project/tree/main
 - `raw/ingested/obra-superpowers/skills/writing-skills/` — skill authoring/testing methodology, description-field discovery warnings, rationalization-resistant discipline phrasing, and pressure-testing technique; aligns with this workspace's Test gate.
 - `raw/ingested/obra-superpowers/skills/using-superpowers/` — considered for skill-loading policy; its mandatory “invoke before any response” rule is deliberately not adopted because this workspace uses context-economical, relevance-gated concept loading.
+- `raw/ingested/anthropic-claude-code-best-practices.md` — standing-instruction-file hygiene (pruning test, include/exclude, prune-don't-emphasize diagnostics) and the verification-ladder + evidence-over-assertion lines in work shaping; harness-specific session/UI advice deliberately excluded. https://code.claude.com/docs/en/best-practices (ingested 2026-07-12)
 
 ## Philosophy
 
