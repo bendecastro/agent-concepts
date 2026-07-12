@@ -335,3 +335,6 @@ Replaced the kernel's "act directly…ask only when" posture line: bias-to-actio
 
 ## [2026-07-12] deploy | consult-on-judgment-calls posture to harness deltas
 Refreshed all three kernel delta files with the new posture line: `~/.claude/CLAUDE.md` (new bullet, marked as overriding the harness autonomy bias), `~/.config/opencode/AGENTS.md` (replaced the old "act directly on the task" Core Behavior line), `~/.codex/AGENTS.md` (new Operating posture bullet). Marker dates bumped to 2026-07-12.
+
+## [2026-07-12] deploy | posture delta to Pi and Grok
+Pi: replaced the three old bias-to-action lines in `~/.pi/agent/AGENTS.md` (tracked) with the consult-on-judgment-calls posture. Grok: created `~/.grok/AGENTS.md` as a new marked kernel delta (posture, defaults-with-reasons, cross-vendor routing, publish policy, concepts pointer) — Grok docs confirm it as the global-rules layer; machine-local, full built-in-prompt diff pending. CONCEPT.md deploy records and harnesses.md updated.
