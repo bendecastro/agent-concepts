@@ -332,3 +332,6 @@ Moved the 2026-07-11 mattpocock/skills README clipping to raw/ingested/ at user 
 
 ## [2026-07-12] implement | agent-kernel posture: consult on judgment calls
 Replaced the kernel's "act directly…ask only when" posture line: bias-to-action stays for mechanical, clearly-specified work, but real judgment calls (designs, interpretations, trade-offs the user might weigh differently) must be surfaced before proceeding. User-requested — he wants to be consulted more; chose this strength among three candidates. Design decision recorded in CONCEPT.md.
+
+## [2026-07-12] deploy | consult-on-judgment-calls posture to harness deltas
+Refreshed all three kernel delta files with the new posture line: `~/.claude/CLAUDE.md` (new bullet, marked as overriding the harness autonomy bias), `~/.config/opencode/AGENTS.md` (replaced the old "act directly on the task" Core Behavior line), `~/.codex/AGENTS.md` (new Operating posture bullet). Marker dates bumped to 2026-07-12.
