@@ -10,7 +10,7 @@ Model-invoked coordination pattern for splitting independent investigations or r
 
 ## Provenance
 
-- `raw/obra-superpowers/skills/dispatching-parallel-agents/SKILL.md` — one-agent-per-independent-domain rule, prompt structure, integration checklist.
+- `raw/ingested/obra-superpowers/skills/dispatching-parallel-agents/SKILL.md` — one-agent-per-independent-domain rule, prompt structure, integration checklist.
 - `concepts/bc-drain-issues/` — local AFK executor uses a stricter issue-queue variant; this concept covers ad hoc parallel diagnosis/review.
 
 ## Tests

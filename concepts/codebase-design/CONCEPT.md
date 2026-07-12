@@ -10,7 +10,7 @@ Model-invoked **reference vocabulary** for designing deep modules: a lot of beha
 
 ## Provenance
 
-- `raw/pocock-skills-upstream/captured-skills.md` — verbatim `codebase-design/SKILL.md` (glossary, principles, testability, rejected framings); `DEEPENING.md`/`DESIGN-IT-TWICE.md` noted but not captured in full. https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md
+- `raw/ingested/pocock-skills-upstream/captured-skills.md` — verbatim `codebase-design/SKILL.md` (glossary, principles, testability, rejected framings); `DEEPENING.md`/`DESIGN-IT-TWICE.md` noted but not captured in full. https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md
 - Underlying sources: John Ousterhout, *A Philosophy of Software Design* (deep modules); Michael Feathers (seams).
 
 ## Tests

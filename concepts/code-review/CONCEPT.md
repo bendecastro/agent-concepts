@@ -11,9 +11,9 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Provenance
 
-- `raw/obra-superpowers/skills/requesting-code-review/SKILL.md` — review-request workflow and severity expectations.
-- `raw/obra-superpowers/skills/requesting-code-review/code-reviewer.md` — reviewer prompt template adapted into the review packet/checklist.
-- `raw/obra-superpowers/skills/receiving-code-review/SKILL.md` — feedback reception, YAGNI check, pushback rules, GitHub thread detail.
+- `raw/ingested/obra-superpowers/skills/requesting-code-review/SKILL.md` — review-request workflow and severity expectations.
+- `raw/ingested/obra-superpowers/skills/requesting-code-review/code-reviewer.md` — reviewer prompt template adapted into the review packet/checklist.
+- `raw/ingested/obra-superpowers/skills/receiving-code-review/SKILL.md` — feedback reception, YAGNI check, pushback rules, GitHub thread detail.
 - Matt Pocock upstream `skills/engineering/code-review/SKILL.md` at `391a2701dd948f94f56a39f753f8eea9a859c87` — fixed-point review packet, independent Spec/Standards axes, and separate aggregation. https://github.com/mattpocock/skills/blob/391a2701dd948f94f56a39f753f8eea9a859c87/skills/engineering/code-review/SKILL.md
 
 ## Tests

@@ -142,18 +142,29 @@ def lint_concepts(issues: list[Issue], index: str) -> None:
 
 
 def lint_raw(issues: list[Issue], index: str) -> None:
+    # raw/ top level is the to-ingest inbox; raw/ingested/ holds sources whose
+    # ideas were taken up. Both levels must be covered by index entries.
     indexed = raw_entries_from_index(index)
     raw_root = ROOT / "raw"
     if not raw_root.exists():
         return
-    top_level: set[str] = set()
-    for child in raw_root.iterdir():
-        if child.name.startswith("."):
-            continue
-        top_level.add(child.name if child.is_file() else child.name)
-    indexed_top = {entry.split("/", 1)[0] for entry in indexed}
-    for missing in sorted(top_level - indexed_top):
+
+    def children(d: Path) -> set[str]:
+        return {c.name for c in d.iterdir() if not c.name.startswith(".")}
+
+    inbox = children(raw_root) - {"ingested"}
+    ingested_dir = raw_root / "ingested"
+    ingested = children(ingested_dir) if ingested_dir.is_dir() else set()
+    indexed_inbox = {e.split("/", 1)[0] for e in indexed if not e.startswith("ingested/")}
+    indexed_ingested = {e.split("/", 2)[1] for e in indexed if e.startswith("ingested/")}
+    for missing in sorted(inbox - indexed_inbox):
         issues.append(Issue("WARN", f"raw source not listed in index.md: raw/{missing}"))
+    for missing in sorted(ingested - indexed_ingested):
+        issues.append(Issue("WARN", f"raw source not listed in index.md: raw/ingested/{missing}"))
+    for stale in sorted(indexed_ingested & inbox):
+        issues.append(Issue("WARN", f"index lists raw/ingested/{stale} but the file sits in the raw/ inbox"))
+    for stale in sorted(indexed_inbox & ingested):
+        issues.append(Issue("WARN", f"index lists raw/{stale} as inbox but the file was moved to raw/ingested/"))
     for line in index.splitlines():
         if line.lstrip().startswith("-") and "raw/" in line:
             if not re.search(r"\b(Ingested|Filed|not yet ingested|partial|unused|Gap recorded)\b", line, re.I):

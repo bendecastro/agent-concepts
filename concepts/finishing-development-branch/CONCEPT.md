@@ -10,7 +10,7 @@ User-invoked completion workflow for choosing what to do with a finished develop
 
 ## Provenance
 
-- `raw/obra-superpowers/skills/finishing-a-development-branch/SKILL.md` — structured completion options, environment detection, cleanup rules, discard confirmation.
+- `raw/ingested/obra-superpowers/skills/finishing-a-development-branch/SKILL.md` — structured completion options, environment detection, cleanup rules, discard confirmation.
 - `policies/publish.yaml` and repo `AGENTS.md` — local publish/default-deny and git-discipline constraints adapted into the body.
 
 ## Tests

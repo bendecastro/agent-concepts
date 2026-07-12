@@ -16,11 +16,11 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 - Rules here are **defaults with reasons**, not commandments. Each carries its rationale so you can generalize it correctly — and recognize when it doesn't apply.
 - If you conclude a rule or concept is wrong, the legitimate move is to **say so and improve it**. During the task, propose the change and keep following the current canon unless the user explicitly approves changing course; after the task, make the canonical improvement and log your reasoning. Silent deviation is never legitimate: it hides the disagreement that would have improved the concept. Blind obedience is barely better: it preserves a known flaw.
 - **Concepts must evolve.** Every operation below is also an opportunity to notice that a concept has been outgrown. Treat friction between a rule and your judgment as signal, not noise.
-- Prefer guidance at the **right altitude**: specific enough to transmit hard-won lessons, flexible enough that a capable agent applies its own reasoning — neither brittle if-else process steps nor vague platitudes (see `raw/anthropic-context-engineering.md`).
+- Prefer guidance at the **right altitude**: specific enough to transmit hard-won lessons, flexible enough that a capable agent applies its own reasoning — neither brittle if-else process steps nor vague platitudes (see `raw/ingested/anthropic-context-engineering.md`).
 
 ## Layers
 
-- `raw/` — **raw sources, immutable once filed.** Gists, articles, skill files from elsewhere, the user's rough notes. You read these; you never modify them.
+- `raw/` — **raw sources, immutable once filed.** Gists, articles, skill files from elsewhere, the user's rough notes. You read these; you never modify them. The top level is the **inbox** (filed, awaiting ingestion); `raw/ingested/` holds sources whose ideas have been taken up. Moving a file between them (and updating links to it) is bookkeeping, not an edit — the immutability gate is about content.
 - `concepts/<name>/` — **the canonical layer. The only layer that gets edited.** One directory per skill/concept:
   - `CONCEPT.md` — what it is, why it exists, design decisions, provenance (which `raw/` files and external sources it derives from), and deploy targets.
   - `body/` — the actual instruction content an agent consumes (usually `SKILL.md` per the [Agent Skills spec](https://agentskills.io); always-injected concepts may use a named Markdown file such as `AGENT-KERNEL.md`; plus supporting files/scripts).
@@ -32,7 +32,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 
 ## Operations
 
-**Ingest.** The user drops something into `raw/` and asks you to ingest it. Read it, discuss the key takeaways and what concept(s) it should create or change, then write/update `CONCEPT.md` (and `body/` if implementing), update `index.md`, and log it. Ingestion is a conversation, not a batch job — the user curates, you compile.
+**Ingest.** The user drops something into `raw/` (the top-level inbox) and asks you to ingest it. Read it, discuss the key takeaways and what concept(s) it should create or change, then write/update `CONCEPT.md` (and `body/` if implementing), update `index.md`, and log it. Ingestion is a conversation, not a batch job — the user curates, you compile. Ingestion doesn't require exhaustively mining the source: adopting even a couple of ideas or improvements from it counts. Once a source is ingested, move it to `raw/ingested/` and update its index entry and any links — what remains at the top level is exactly the to-ingest backlog.
 
 **Implement/Update.** Edit a concept's `body/`. Match the existing structure (progressive disclosure: a lean entry file linking to format/reference files loaded only when needed; scripts for anything an LLM does unreliably, like date math). When writing instruction language — gates, rituals, behavioral rules — adapt blocks from `concepts/prompting-agents/body/SKILL.md` rather than inventing phrasing. Record non-obvious design decisions in `CONCEPT.md`.
 

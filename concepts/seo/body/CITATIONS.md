@@ -1,6 +1,6 @@
 # Citations: claim → source map
 
-Maps the load-bearing claims in `SKILL.md` and `IMAGE-SEO.md` to the primary sources held in `../../../raw/seo-primary-sources/` (each file's header carries its origin URL). Maintained with the concept: when a body claim changes, update its row; when a row has no held source, that's a lint-worthy gap. Snapshot dates matter — these documents evolve; re-verify at runtime for time-sensitive use, per the body's own rules.
+Maps the load-bearing claims in `SKILL.md` and `IMAGE-SEO.md` to the primary sources held in `../../../raw/ingested/seo-primary-sources/` (each file's header carries its origin URL). Maintained with the concept: when a body claim changes, update its row; when a row has no held source, that's a lint-worthy gap. Snapshot dates matter — these documents evolve; re-verify at runtime for time-sensitive use, per the body's own rules.
 
 | Claim in body | Held source | Status |
 |---|---|---|

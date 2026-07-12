@@ -20,7 +20,7 @@ User-invoked AFK executor that drains a repo's `ready-for-agent` GitHub issue qu
 ## Provenance
 
 - `plans/bc-grill-to-ship-loop.md` — the grilled-out build plan this implements (decisions locked 2026-06-20).
-- `raw/AI Engineer Workshop 2026.md` — the workshop's execution half: an agent (Ralph) running human-in-the-loop then AFK with TDD, selecting issues, writing tests, implementing, committing.
+- `raw/ingested/AI Engineer Workshop 2026.md` — the workshop's execution half: an agent (Ralph) running human-in-the-loop then AFK with TDD, selecting issues, writing tests, implementing, committing.
 - Matt Pocock upstream `skills/engineering/triage/SKILL.md`, `AGENT-BRIEF.md`, and `setup-matt-pocock-skills/SKILL.md` (checked 2026-06-21) — public workflow defines triage labels/state and agent briefs, but no atomic claim/lock; this concept adds the missing parallel-safe claim layer.
 - `policies/publish.yaml` — the `image-maze-push-and-close-after-agent-work` rule whose push + close-with-comment + acceptance-criteria + validation conditions the land step is built to satisfy; `scripts/publish-check.py` for the preflight.
 - `concepts/tdd/` — the red-green-refactor discipline the per-issue agent inlines for features (AFK-adapted).

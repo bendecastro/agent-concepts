@@ -18,10 +18,10 @@ A lean spine (`body/SKILL.md`) — studio-design-lead voice, the thesis→plan�
 
 ## Provenance
 
-- `raw/anthropic-frontend-design-skill.md` — Anthropic's official `frontend-design` SKILL.md (verbatim). Source of the spine, process, anti-cliché list, copy-as-design-material, restraint/self-critique.
-- `raw/openai-gpt-5-4-frontend-design.md` — OpenAI's "Designing delightful frontends with GPT-5.4" blog embedding their official Codex `frontend-skill` verbatim. Source of the archetype checklist layer, hard rules, litmus checks, viewport budget, utility-copy guidance, mood-board workflow.
-- `raw/openai-gpt-5-frontend-cookbook.md` — OpenAI GPT-5 frontend cookbook. Minor: starter-stack + steerability/multimodal notes.
-- `raw/google-modern-web-guidance/` — Chrome DevRel Modern Web Guidance (design/UX subset, commit eec2f8e). Cited as the modern-platform pointer; not vendored into the body.
+- `raw/ingested/anthropic-frontend-design-skill.md` — Anthropic's official `frontend-design` SKILL.md (verbatim). Source of the spine, process, anti-cliché list, copy-as-design-material, restraint/self-critique.
+- `raw/ingested/openai-gpt-5-4-frontend-design.md` — OpenAI's "Designing delightful frontends with GPT-5.4" blog embedding their official Codex `frontend-skill` verbatim. Source of the archetype checklist layer, hard rules, litmus checks, viewport budget, utility-copy guidance, mood-board workflow.
+- `raw/ingested/openai-gpt-5-frontend-cookbook.md` — OpenAI GPT-5 frontend cookbook. Minor: starter-stack + steerability/multimodal notes.
+- `raw/ingested/google-modern-web-guidance/` — Chrome DevRel Modern Web Guidance (design/UX subset, commit eec2f8e). Cited as the modern-platform pointer; not vendored into the body.
 - `concepts/prompting-agents/body/SKILL.md` — altitude principles + the "Frontend anti-slop" block this concept deepens; instruction phrasings adapted from its blocks.
 
 ## Tests

@@ -11,8 +11,8 @@ User-invoked collaborative design step for turning a rough idea into an approved
 
 ## Provenance
 
-- `raw/obra-superpowers/skills/brainstorming/SKILL.md` — design gate, context exploration, alternatives, spec review, handoff.
-- `raw/obra-superpowers/skills/brainstorming/visual-companion.md` and `scripts/` — upstream visual companion, not ported.
+- `raw/ingested/obra-superpowers/skills/brainstorming/SKILL.md` — design gate, context exploration, alternatives, spec review, handoff.
+- `raw/ingested/obra-superpowers/skills/brainstorming/visual-companion.md` and `scripts/` — upstream visual companion, not ported.
 - `concepts/grilling/`, `concepts/prototype/`, `concepts/bc-plan-to-issues/` — local adjacent planning skills.
 
 ## Tests

@@ -12,8 +12,8 @@ Model-invoked discipline that drafts a PRD from the current conversation + codeb
 
 ## Provenance
 
-- `raw/pocock-skills-upstream/captured-skills.md` — verbatim `to-prd` body and template; this discipline is the writing half of that skill, split out. https://github.com/mattpocock/skills/blob/main/skills/engineering/to-prd/SKILL.md
-- `raw/AI Engineer Workshop 2026.md` — workshop's `/write-a-prd` planning step.
+- `raw/ingested/pocock-skills-upstream/captured-skills.md` — verbatim `to-prd` body and template; this discipline is the writing half of that skill, split out. https://github.com/mattpocock/skills/blob/main/skills/engineering/to-prd/SKILL.md
+- `raw/ingested/AI Engineer Workshop 2026.md` — workshop's `/write-a-prd` planning step.
 - `concepts/prompting-agents/body/SKILL.md` — composition boundary that motivates the split.
 
 ## Tests

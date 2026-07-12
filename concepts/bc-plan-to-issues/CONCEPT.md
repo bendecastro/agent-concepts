@@ -18,11 +18,11 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 ## Provenance
 
 - `plans/bc-grill-to-ship-loop.md` — the grilled-out build plan this concept implements (decisions locked 2026-06-20).
-- `raw/AI Engineer Workshop 2026.md` — the workshop's plan→execute lifecycle (grill → PRD → tracer-bullet issues) this fuses into one command.
+- `raw/ingested/AI Engineer Workshop 2026.md` — the workshop's plan→execute lifecycle (grill → PRD → tracer-bullet issues) this fuses into one command.
 - `concepts/grill-me/`, `concepts/to-prd/`, `concepts/to-issues/` — the single-step orchestrators it supersedes for the combined flow (kept standalone for individual use).
 - `concepts/triage/`, `concepts/prototype/`, `concepts/improve-codebase-architecture/` — optional intake/evidence/runway skills integrated around the planning front.
 - `concepts/prompting-agents/body/SKILL.md` — composition boundary and gate phrasing.
-- `raw/fission-ai-openspec-readme.md` — OpenSpec README; source of the living-specs (archive-merge) idea adapted into step 5 and the per-change folder adapted into steps 3/4/7 (2026-07-12).
+- `raw/ingested/fission-ai-openspec-readme.md` — OpenSpec README; source of the living-specs (archive-merge) idea adapted into step 5 and the per-change folder adapted into steps 3/4/7 (2026-07-12).
 
 ## Tests
 

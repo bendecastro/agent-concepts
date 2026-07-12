@@ -10,7 +10,7 @@ Model-invoked inline executor for a written implementation plan when the user wa
 
 ## Provenance
 
-- `raw/obra-superpowers/skills/executing-plans/SKILL.md` — load/review/execute/finish sequence and stop rules.
+- `raw/ingested/obra-superpowers/skills/executing-plans/SKILL.md` — load/review/execute/finish sequence and stop rules.
 - `concepts/writing-plans/` — sibling concept that creates the plans this executes.
 - `concepts/finishing-development-branch/` — completion workflow referenced at the end.
 

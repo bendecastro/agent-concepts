@@ -11,9 +11,9 @@ User-invoked orchestrator for a planning/design grilling session that is **alway
 
 ## Provenance
 
-- `raw/pocock-skills-upstream/captured-skills.md` — verbatim `grill-me` and `grill-with-docs` bodies; this concept is the deliberate merge of the two. https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md and https://github.com/mattpocock/skills/blob/main/skills/engineering/grill-with-docs/SKILL.md
-- `raw/AI Engineer Workshop 2026.md` — workshop names `/grill-me` as the first planning step (stress-test vague requirements).
-- `raw/skillsskillsproductivityteach at main.md` — catalog: grilling + shared-language (`CONTEXT.md`/ADRs) as the cure for misalignment and verbosity.
+- `raw/ingested/pocock-skills-upstream/captured-skills.md` — verbatim `grill-me` and `grill-with-docs` bodies; this concept is the deliberate merge of the two. https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md and https://github.com/mattpocock/skills/blob/main/skills/engineering/grill-with-docs/SKILL.md
+- `raw/ingested/AI Engineer Workshop 2026.md` — workshop names `/grill-me` as the first planning step (stress-test vague requirements).
+- `raw/ingested/skillsskillsproductivityteach at main.md` — catalog: grilling + shared-language (`CONTEXT.md`/ADRs) as the cure for misalignment and verbosity.
 
 ## Tests
 

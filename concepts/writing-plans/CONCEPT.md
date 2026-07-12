@@ -10,8 +10,8 @@ User-invoked implementation-plan authoring skill for turning an approved spec or
 
 ## Provenance
 
-- `raw/obra-superpowers/skills/writing-plans/SKILL.md` — plan structure, task granularity, no-placeholder rule, self-review checklist.
-- `raw/obra-superpowers/skills/writing-plans/plan-document-reviewer-prompt.md` — reviewer mindset referenced but not copied into body.
+- `raw/ingested/obra-superpowers/skills/writing-plans/SKILL.md` — plan structure, task granularity, no-placeholder rule, self-review checklist.
+- `raw/ingested/obra-superpowers/skills/writing-plans/plan-document-reviewer-prompt.md` — reviewer mindset referenced but not copied into body.
 - `concepts/issue-slicing/` and `concepts/prd-drafting/` — local GitHub-oriented sibling concepts.
 
 ## Tests

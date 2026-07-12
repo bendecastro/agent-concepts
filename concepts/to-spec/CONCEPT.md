@@ -10,9 +10,9 @@ User-invoked orchestrator that turns the current conversation + codebase underst
 
 ## Provenance
 
-- `raw/pocock-skills-upstream/captured-skills.md` — original `to-prd` body and template (the writing half now lives in `prd-drafting`).
+- `raw/ingested/pocock-skills-upstream/captured-skills.md` — original `to-prd` body and template (the writing half now lives in `prd-drafting`).
 - Matt Pocock upstream `skills/engineering/to-spec/SKILL.md` at `391a2701dd948f94f56a39f753f8eea9a859c87` — current public name and behavior. https://github.com/mattpocock/skills/blob/391a2701dd948f94f56a39f753f8eea9a859c87/skills/engineering/to-spec/SKILL.md
-- `raw/AI Engineer Workshop 2026.md` — workshop's `/write-a-prd` planning step.
+- `raw/ingested/AI Engineer Workshop 2026.md` — workshop's `/write-a-prd` planning step.
 - `concepts/prd-drafting/` — the extracted drafting discipline this orchestrator wraps.
 
 ## Tests

@@ -74,7 +74,7 @@ Use the generic concept-session bootstrap. After first real use, update `harness
 
 ## Per-agent quirks
 
-**Codex** (from OpenAI's Codex prompting guide and current docs, see `raw/openai-codex-prompting-guide.md`):
+**Codex** (from OpenAI's Codex prompting guide and current docs, see `raw/ingested/openai-codex-prompting-guide.md`):
 - AGENTS.md discovery: concatenates `~/.codex/AGENTS.md` plus every AGENTS.md from repo root down to CWD; later (deeper) files override earlier ones. So a concept can be deployed to Codex by referencing it from an AGENTS.md at the right directory level — no skills directory needed.
 - The model is specifically trained to adhere to AGENTS.md content — durable rules belong there, not in the task prompt.
 - Do NOT add instructions asking pre-5.3 Codex models for upfront plans, preambles, or mid-task status updates — this causes it to stop before the task is complete. (gpt-5.3-codex and later handle promptable updates fine.)
