@@ -314,3 +314,6 @@ Renamed standalone `to-spec`/`to-tickets` with `to-prd`/`to-issues` deploy alias
 
 ## [2026-07-12] update | machine-mesh YAML frontmatter correction
 Quoted the `machine-mesh` description so its embedded colon is parsed as a scalar rather than an invalid compact mapping. Verified the frontmatter with Ruby's safe YAML loader.
+
+## [2026-07-12] ingest+implement | bc-plan-to-issues living-specs step (OpenSpec)
+Ingested the OpenSpec README clipping and adopted its archive-merge idea: bc-plan-to-issues gains step 5, folding resolved PRD requirements into `docs/specs/<area>.md` as normative current truth tagged `(pending #<parent>)`. Runs at plan time (not post-drain) because the human gates are the point of maximum shared understanding; pressure-test check 9 added, re-run pending. Per-change folders and Stores deliberately not adopted.

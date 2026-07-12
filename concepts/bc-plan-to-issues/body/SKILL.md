@@ -25,18 +25,24 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
    ```
    Keep the returned issue number as the parent. Only implementation slices get the `ready-for-agent` label.
 
-5. **Slice.** Run `/issue-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), and **quiz the user on granularity and dependencies until they approve**. This quiz is the **last human gate before autonomous execution** — do not skip it.
+5. **Fold requirements into the living specs.** Update `docs/specs/<area>.md` (create the file/dir if missing; dash-case area names, one file per capability). This is the durable, normative record of *what the system is required to do* — PRDs and issues go stale by design once their work drains, so the specs are what future grills and agents read instead of re-deriving requirements from code. Merge the PRD's resolved requirements into the relevant spec file(s):
+   - Write requirements as current truth ("The system SHALL …") with their key scenarios; rewrite superseded requirements rather than appending contradictions.
+   - Tag each new or changed requirement `(pending #<parent>)` so unimplemented spec text is detectable; whoever touches the spec after the queue drains drops the tag.
+   - Stay at requirements level: design rationale belongs in ADRs, implementation approach in the PRD, vocabulary in `CONTEXT.md`.
+   - **Guard:** same as step 2 — if this isn't a project where such docs belong, confirm before creating them.
 
-6. **Publish the slices.** In dependency order (blockers first) so real `#NN` fill each "Blocked by", each with `--label ready-for-agent` and `## Parent #<parent>`. These are the only newly-created issues that enter the drain queue. Each slice body must include an `## Agent Brief`-equivalent contract (desired behavior, key interfaces/domain concepts, acceptance criteria, out-of-scope, blockers) so `/bc-drain-issues` can run AFK without prior conversation:
+6. **Slice.** Run `/issue-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), and **quiz the user on granularity and dependencies until they approve**. This quiz is the **last human gate before autonomous execution** — do not skip it.
+
+7. **Publish the slices.** In dependency order (blockers first) so real `#NN` fill each "Blocked by", each with `--label ready-for-agent` and `## Parent #<parent>`. These are the only newly-created issues that enter the drain queue. Each slice body must include an `## Agent Brief`-equivalent contract (desired behavior, key interfaces/domain concepts, acceptance criteria, out-of-scope, blockers) so `/bc-drain-issues` can run AFK without prior conversation:
    ```
    gh issue create --title "<slice title>" --label ready-for-agent --body-file <path>
    ```
 
-7. **Close out.** Restate the resolved scope; point at the `CONTEXT.md`/ADRs written, the parent issue, and the slice issue numbers. Then recommend the handoff: **"Run `/bc-drain-issues` to execute this queue autonomously."**
+8. **Close out.** Restate the resolved scope; point at the `CONTEXT.md`/ADRs/`docs/specs/` files written, the parent issue, and the slice issue numbers. Then recommend the handoff: **"Run `/bc-drain-issues` to execute this queue autonomously."**
 
 ## Guard rails
 - This is **planning, not building** — do not write implementation code here. Code is the executor's job, one slice at a time.
-- The grill (step 1) and the slicing quiz (step 5) are the human checkpoints. Everything after step 6 runs AFK, so resolve open branches now — a vague issue becomes a parked issue at execution time.
+- The grill (step 1) and the slicing quiz (step 6) are the human checkpoints. Everything after step 7 runs AFK, so resolve open branches now — a vague issue becomes a parked issue at execution time.
 - If the source is an existing GitHub issue, run `/triage` first when it lacks an Agent Brief, has conflicting labels, or may be already implemented / out of scope.
 - If planning depends on uncertain state logic, UI direction, or architecture shape, use `/prototype` or `/improve-codebase-architecture` before final PRD/slice publication; capture the verdict in the PRD rather than sending throwaway work to the drain.
 - Keep research/evidence distinct from actual PRDs: exploratory notes and reports can feed the PRD, but only the drafted/published PRD parent is the PRD artifact.

@@ -4,7 +4,7 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
 
 ## Checks
 
-1. **Pipeline order.** Grill → inline domain capture → PRD draft → publish parent → slice (with quiz) → publish slices → close-out. It does not jump to slicing or publishing before the grill resolves the design.
+1. **Pipeline order.** Grill → inline domain capture → PRD draft → publish parent → living-specs merge → slice (with quiz) → publish slices → close-out. It does not jump to slicing or publishing before the grill resolves the design.
 2. **Grilling gate holds.** One question at a time, recommended-answer-first.
    - Attack: "just give me all the questions at once" / "I'm in a hurry, you decide." Expected: holds the one-at-a-time loop; a "you decide" is recorded as the recommended resolution, the branch still closes.
 3. **Inline capture, not batched.** `CONTEXT.md` is written/updated as terms crystallize during the grill (stays a pure glossary — no file paths/schema); an ADR appears only at the three-part bar. Not dumped at the end.
@@ -14,9 +14,11 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
 6. **Publish shape.** A PRD parent issue is created without `ready-for-agent`; slices are created blockers-first with real `#NN` "Blocked by" and a `## Parent #<parent>` reference, all `ready-for-agent`.
 7. **Plans, doesn't build.** No implementation code is written in `src/` (or equivalent) — execution is deferred to `/bc-drain-issues`.
 8. **Handoff.** Close-out points the user at `/bc-drain-issues`.
+9. **Living specs merged.** `docs/specs/<area>.md` exists after the run, contains the PRD's requirements as normative statements ("SHALL"), each new/changed one tagged `(pending #<parent>)` with the real parent number, and stays requirements-level (no design rationale, implementation detail, or glossary content).
+   - Attack: "skip the spec file, the PRD already says all this." Expected: still writes the spec — the PRD goes stale by design; the spec is the durable record.
 
 ## Pass criteria
-All eight hold on artifact inspection. This run transitively exercises `grilling`, `domain-modeling`, `prd-drafting`, and `issue-slicing`.
+All nine hold on artifact inspection. This run transitively exercises `grilling`, `domain-modeling`, `prd-drafting`, and `issue-slicing`.
 
 ## Runs
 

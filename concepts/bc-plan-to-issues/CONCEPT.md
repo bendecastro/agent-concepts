@@ -12,6 +12,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 - **Agent Brief quality at publication.** Slice issues now carry an Agent Brief-equivalent contract so `ready-for-agent` means drainable, not merely labeled. Research/evidence artifacts are kept distinct from actual PRDs and drainable slices.
 - **Optional upstream evidence, no nested orchestrators.** `triage`, `prototype`, and `improve-codebase-architecture` are user-invoked tools that feed planning. The bc planner can recommend them when needed, but does not call them as nested orchestrators.
 - **Recommends the handoff.** Close-out points at `/bc-drain-issues` so planning ends pointing at execution (the loop's two halves).
+- **Living specs step (2026-07-12, from OpenSpec).** After the PRD parent is published, resolved requirements are merged into `docs/specs/<area>.md` as normative current truth, tagged `(pending #<parent>)` until the queue drains. Adopted from OpenSpec's archive-merge idea: PRDs/issues go stale by design, so without this nothing durable records *what the system must do* — CONTEXT.md holds vocabulary and ADRs hold decisions, but not requirements. Runs at plan time (not post-drain like OpenSpec's archive) because the human gates are the point of maximum shared understanding and this pipeline hands off to an AFK executor; the pending tag makes plan/implementation drift detectable. Placed after parent publication so the tag can carry a real `#NN`.
 
 ## Provenance
 
@@ -20,6 +21,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 - `concepts/grill-me/`, `concepts/to-prd/`, `concepts/to-issues/` — the single-step orchestrators it supersedes for the combined flow (kept standalone for individual use).
 - `concepts/triage/`, `concepts/prototype/`, `concepts/improve-codebase-architecture/` — optional intake/evidence/runway skills integrated around the planning front.
 - `concepts/prompting-agents/body/SKILL.md` — composition boundary and gate phrasing.
+- `raw/fission-ai-openspec-readme.md` — OpenSpec README; source of the living-specs (archive-merge) idea adapted into step 5 (2026-07-12).
 
 ## Tests
 
