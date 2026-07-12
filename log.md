@@ -338,3 +338,6 @@ Refreshed all three kernel delta files with the new posture line: `~/.claude/CLA
 
 ## [2026-07-12] deploy | posture delta to Pi and Grok
 Pi: replaced the three old bias-to-action lines in `~/.pi/agent/AGENTS.md` (tracked) with the consult-on-judgment-calls posture. Grok: created `~/.grok/AGENTS.md` as a new marked kernel delta (posture, defaults-with-reasons, cross-vendor routing, publish policy, concepts pointer) — Grok docs confirm it as the global-rules layer; machine-local, full built-in-prompt diff pending. CONCEPT.md deploy records and harnesses.md updated.
+
+## [2026-07-12] deploy | Codex/Grok AGENTS.md + sessions into Syncthing
+Moved `~/.codex/AGENTS.md`+`sessions/` and `~/.grok/AGENTS.md`+`sessions/`+`memory/` into `CONFIG/.codex` / `CONFIG/.grok` with per-machine symlinks back, so kernel deltas sync and chats continue from any machine. Sessions/memory are git-ignored (Syncthing-only). `bc-setup-config-symlinks` (Scripts repo, 4f1a845) now links these dirs entry-by-entry and excludes them from wholesale dir-linking — auth, caches, and Grok's per-OS binary stay machine-local. Pi sessions turned out to already sync (the exclusion I cited was git-only); no Pi change needed.
