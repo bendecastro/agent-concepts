@@ -23,7 +23,7 @@ Searching is always safe. Indexing (`qmd collection add`, `qmd context add`, `qm
 
 - **Interactive session, user present:** run setup/refresh commands with the user's agreement (first `qmd embed` downloads ~2GB of models and needs Node ≥ 22).
 - **AFK pipeline (e.g. `bc-drain-issues`):** only the **driver** refreshes the index, once at preflight (`qmd update && qmd embed`). Workers are search-only — parallel workers re-embedding concurrently would race each other for zero benefit, and a worker that silently rebuilds the index can mask a broken corpus instead of parking.
-- Never modify `index.sqlite` directly; everything goes through the CLI. Never commit `index.sqlite` (binary, per-machine); config (`index.yml`) may be committed only if its collection paths are portable across machines.
+- Never modify `index.sqlite` directly; everything goes through the CLI. Never commit `.qmd/` contents: `index.sqlite` is a per-machine binary, and `index.yml` stores **absolute** collection paths (verified v2.5.3), so gitignore the whole directory and treat index setup as per-machine.
 
 ## Contexts carry the authority map
 

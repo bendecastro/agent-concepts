@@ -722,10 +722,9 @@ qmd embed
 qmd status                        # verify the collection and embeddings
 ```
 
-Then make sure `.qmd/index.sqlite` is gitignored (it is a per-machine binary; each
-machine re-runs `qmd embed` locally). Commit `.qmd/index.yml` only if its collection
-paths are relative/portable — if `qmd init` wrote absolute paths, gitignore all of
-`.qmd/` and treat setup as per-machine.
+Then gitignore all of `.qmd/`: `index.sqlite` is a per-machine binary and
+`index.yml` stores absolute collection paths (verified with qmd 2.5.3), so index
+setup is per-machine — each machine re-runs the commands above.
 
 ## Using it
 

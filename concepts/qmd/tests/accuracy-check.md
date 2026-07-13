@@ -6,7 +6,7 @@ Reference concept — verify the skill's factual claims against a live qmd insta
 
 ```sh
 npm install -g @tobilu/qmd   # or bun install -g
-qmd --version                # expect ≥ 2.6.x (skill written against 2.6.3 docs)
+qmd --version                # skill written against 2.6.3 docs; npm latest was 2.5.3 on 2026-07-13
 ```
 
 ## Checks
@@ -24,4 +24,10 @@ Every command in `body/SKILL.md` runs as written (or the body is corrected), and
 
 ## Status
 
-Authored 2026-07-13; not yet run (qmd not installed on the authoring machine).
+Authored 2026-07-13. **Run 2026-07-13 on Arch (qmd 2.5.3 via `installers/packages/qmd.pkg`, Node 26.4.0, Vulkan GPU): PASS.**
+
+- Check 1: `qmd init` creates `.qmd/index.yml` + local `index.sqlite`; `qmd collection add` writes **absolute** collection paths → gitignore all of `.qmd/`, setup is per-machine (recorded in CONCEPT.md; SKILL.md and the scaffold's `references/qmd.md` updated to match).
+- Checks 2–4: `query`/`search`/`vsearch`, `--intent`, `-c`, `--json`, `--all --files --min-score`, docid/line-range `get`, `multi-get` glob all work as written; contexts added via `qmd context add qmd://wiki/<path>` surface as `Context:` lines in results (hybrid `query --intent` ranked the seeded ADR 93% with its authority label).
+- Check 5: `qmd update && qmd embed` on an unchanged corpus is a clean no-op ("0 new, 3 unchanged", "already have embeddings").
+- Check 6: models land in `~/.cache/qmd/models/`, 2.2GB total (via `qmd pull`); Node ≥ 22 confirmed required by upstream docs, ran on 26.x.
+- Deviations from the 2.6.3-based docs at 2.5.3: none encountered in the skill's command surface. Minor upstream nit: `qmd status` crashes with EPIPE when its stdout pipe closes early (e.g. `| head`).
