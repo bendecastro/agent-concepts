@@ -13,6 +13,7 @@ Reach for it whenever the question is "has this been decided/ingested/tried befo
 
 - `qmd query "<terms>"` — hybrid + reranking, best quality; the default. Add `--intent "<what you're actually after>"` when terms are ambiguous. Unscoped queries search all collections; scope with `-c <collection>` (repeatable).
 - `qmd search "<terms>"` — BM25 keyword only, fast, no LLM; use for exact identifiers. `qmd vsearch` — semantic only.
+- Latency (measured on the Arch box, ~1k docs, cold CLI): `search` ≈ 0.5s, `query --no-rerank` ≈ 20s, full `query` ≈ 55s (models reload per invocation). Pick the cheapest tier that answers: identifiers → `search`; exploring → `--no-rerank`; full `query` when ranking quality actually matters.
 - Machine output: `--json`; threshold sweeps: `--all --files --min-score 0.3`.
 - Retrieve: `qmd get "#<docid>"` (docids appear in results), `qmd get <path>:<from>:<count>` for line ranges, `qmd multi-get "<glob>"` for batches.
 - Score guide: ≥0.8 highly relevant, 0.5–0.8 moderately; below that, treat as a lead, not an answer. Read the returned `Context:` line — collections are seeded with **authority labels** ("ADRs — binding unless superseded" vs "exploratory research — not authoritative"), so a hit tells you how much to trust it before you open it.
