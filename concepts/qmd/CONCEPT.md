@@ -28,4 +28,5 @@ The bc-agent wiki pattern hands cold agents a growing markdown vault and tells t
 
 ## Deploy targets
 
-- Not deployed yet. Standard target when requested: `scripts/deploy-local-skills.py` (relative symlinks into `~/.agents/skills/`, `~/.pi/agent/skills/`, `~/.claude/skills/`).
+- Deployed 2026-07-13 via `scripts/deploy-local-skills.py`: relative symlinks at `~/.agents/skills/qmd` (shared bus: Pi, Composer, Grok, Codex), `~/.pi/agent/skills/qmd`, and `~/.claude/skills/qmd`, all resolving to `body/` (verified; Claude Code advertised the skill immediately).
+- Other harnesses: manual bootstrap per `../../harnesses.md`.

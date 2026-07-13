@@ -344,3 +344,6 @@ Moved `~/.codex/AGENTS.md`+`sessions/` and `~/.grok/AGENTS.md`+`sessions/`+`memo
 
 ## [2026-07-13] ingest | tobi/qmd → qmd concept + bc wiring
 New reference concept `qmd` (local hybrid search: CLI conventions, driver-owns-indexing rule, authority-labeled context trees). Wired into the bc loop: opt-in `bc-init-agent --qmd` scaffold flag (writes `references/qmd.md` setup page; verified additive/idempotent), drain driver preflight refresh + search-only worker retrieval, triage qmd prior-art query. Source clipping moved to raw/ingested/; accuracy check authored but not run (qmd not installed locally).
+
+## [2026-07-13] deploy | qmd skill to local harnesses
+Ran deploy-local-skills.py; qmd now symlinked at ~/.agents/skills, ~/.pi/agent/skills, and ~/.claude/skills (all verified resolving to body/). Accuracy check still pending a qmd install.
