@@ -13,7 +13,7 @@ Work only in the supplied worktree. Never edit, reset, build, or validate the ma
 ## Inputs — read before building
 
 - **The issue:** `gh issue view <n> --comments` — body, latest `## Agent Brief` (authoritative AFK contract), acceptance criteria, blockers, and parent.
-- **Domain context:** `CONTEXT.md` / `.bc-agent/project/overview.md` and relevant ADRs.
+- **Domain context:** `CONTEXT.md` / `.bc-agent/project/overview.md` and relevant ADRs. If the repo has a qmd index (`.qmd/index.yml` at the root), find the relevant vault pages with `qmd query "<the issue's domain terms>"` instead of walking directories — result contexts tell you which hits are binding (ADRs) vs exploratory. Search only; never run qmd indexing commands (the driver refreshed the index at preflight).
 - **Project validation/commands conventions:** locate them; never assume `npm test`.
 - **Base SHA:** the driver supplies the `origin/master` SHA from which this worktree was created. It is the fixed point for review.
 

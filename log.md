@@ -341,3 +341,6 @@ Pi: replaced the three old bias-to-action lines in `~/.pi/agent/AGENTS.md` (trac
 
 ## [2026-07-12] deploy | Codex/Grok AGENTS.md + sessions into Syncthing
 Moved `~/.codex/AGENTS.md`+`sessions/` and `~/.grok/AGENTS.md`+`sessions/`+`memory/` into `CONFIG/.codex` / `CONFIG/.grok` with per-machine symlinks back, so kernel deltas sync and chats continue from any machine. Sessions/memory are git-ignored (Syncthing-only). `bc-setup-config-symlinks` (Scripts repo, 4f1a845) now links these dirs entry-by-entry and excludes them from wholesale dir-linking — auth, caches, and Grok's per-OS binary stay machine-local. Pi sessions turned out to already sync (the exclusion I cited was git-only); no Pi change needed.
+
+## [2026-07-13] ingest | tobi/qmd → qmd concept + bc wiring
+New reference concept `qmd` (local hybrid search: CLI conventions, driver-owns-indexing rule, authority-labeled context trees). Wired into the bc loop: opt-in `bc-init-agent --qmd` scaffold flag (writes `references/qmd.md` setup page; verified additive/idempotent), drain driver preflight refresh + search-only worker retrieval, triage qmd prior-art query. Source clipping moved to raw/ingested/; accuracy check authored but not run (qmd not installed locally).

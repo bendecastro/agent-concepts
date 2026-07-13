@@ -694,6 +694,55 @@ PRD-count threshold has been reached.
 """
 
 
+QMD_REFERENCE = """# qmd search over this wiki (optional)
+
+Date: __DATE__
+
+This repo opted in to [qmd](https://github.com/tobi/qmd) — local hybrid search
+(BM25 + vector + reranking) over the `.bc-agent/` vault. Once indexed, agents should
+find vault pages with `qmd query` instead of walking directories; the seeded contexts
+below tell every search result how much authority its source carries.
+
+## Setup (run with the user; needs Node >= 22, first embed downloads ~2GB of models)
+
+From the repo root:
+
+```sh
+npm install -g @tobilu/qmd        # or: bun install -g @tobilu/qmd
+qmd init                          # project-local index at .qmd/
+qmd collection add .bc-agent --name wiki
+qmd context add qmd://wiki "Project agent wiki for __SLUG__: durable agent context — glossary, plans, ADRs, references, live task state"
+qmd context add qmd://wiki/project "Durable architecture, plans, actual PRDs, and the glossary (overview.md)"
+qmd context add qmd://wiki/decisions "ADRs — binding unless superseded"
+qmd context add qmd://wiki/conventions "Validation, git, planning-workflow, and layout norms for this repo"
+qmd context add qmd://wiki/references "Recurring commands, paths, gotchas, external links"
+qmd context add qmd://wiki/research "Exploratory research and investigation notes — not authoritative"
+qmd context add qmd://wiki/out-of-scope "Rejected enhancements with rationale — check before proposing similar work"
+qmd embed
+qmd status                        # verify the collection and embeddings
+```
+
+Then make sure `.qmd/index.sqlite` is gitignored (it is a per-machine binary; each
+machine re-runs `qmd embed` locally). Commit `.qmd/index.yml` only if its collection
+paths are relative/portable — if `qmd init` wrote absolute paths, gitignore all of
+`.qmd/` and treat setup as per-machine.
+
+## Using it
+
+- `qmd query "<domain terms>"` — default; add `--intent "<what you're after>"` to disambiguate.
+- `qmd search "<exact identifier>"` — fast keyword-only lookup.
+- `qmd get "#<docid>"` — retrieve a result; `--json` / `--files --min-score 0.3` for scripting.
+- Before proposing new work, query for prior art in `decisions/` and `out-of-scope/`.
+
+## Index discipline
+
+- Searching is always safe. Refreshing (`qmd update && qmd embed`) is fine interactively;
+  in AFK runs only the drain **driver** refreshes, once at preflight — workers are search-only.
+- Never edit `.qmd/index.sqlite` directly; everything goes through the CLI.
+- New vault directories deserve a `qmd context add` with their authority level, not just a topic.
+"""
+
+
 ARCHETYPE_READMES = {
     "ops": """# Operations / System Wiki
 
@@ -783,7 +832,7 @@ def archetype_files(archetype: str) -> dict[str, str]:
     return {}
 
 
-def vault_files(archetype: str = "code") -> dict[str, str]:
+def vault_files(archetype: str = "code", qmd: bool = False) -> dict[str, str]:
     files = {
         "AGENTS.md": VAULT_AGENTS,
         "index.md": INDEX,
@@ -816,6 +865,12 @@ def vault_files(archetype: str = "code") -> dict[str, str]:
         ".obsidian/appearance.json": OBSIDIAN_APPEARANCE,
     }
     files.update(archetype_files(archetype))
+    if qmd:
+        files["references/qmd.md"] = QMD_REFERENCE
+        files["index.md"] = INDEX.replace(
+            "- [Agent skill map](references/agent-skills.md)\n",
+            "- [Agent skill map](references/agent-skills.md)\n"
+            "- [qmd search setup + usage](references/qmd.md)\n")
     return files
 
 
@@ -823,11 +878,12 @@ def render(text: str, slug: str, date: str) -> str:
     return text.replace(SLUG, slug).replace(DATE, date)
 
 
-def targets(root: Path, slug: str, date: str, archetype: str = "code") -> list[tuple[Path, str, bool]]:
+def targets(root: Path, slug: str, date: str, archetype: str = "code",
+            qmd: bool = False) -> list[tuple[Path, str, bool]]:
     """Every file the scaffold owns: (destination, rendered content, is_root_AGENTS)."""
     vault = root / ".bc-agent"
     out: list[tuple[Path, str, bool]] = [(root / "AGENTS.md", render(ROOT_AGENTS, slug, date), True)]
-    for relpath, text in vault_files(archetype).items():
+    for relpath, text in vault_files(archetype, qmd).items():
         out.append((vault / relpath, render(text, slug, date), False))
     out.append((vault / "research" / "README.md", render(RESEARCH_README, slug, date), False))
     out.append((vault / "out-of-scope" / ".gitkeep", "", False))
@@ -842,13 +898,15 @@ def _contains(path: Path, needle: str) -> bool:
         return False
 
 
-def upgrade_notes(root: Path, archetype: str) -> list[str]:
+def upgrade_notes(root: Path, archetype: str, qmd: bool = False) -> list[str]:
     """Manual merge hints for existing files that were intentionally left untouched."""
-    if archetype not in {"code", "hybrid"}:
-        return []
-
     vault = root / ".bc-agent"
     notes: list[str] = []
+    if qmd and (vault / "index.md").exists() and not _contains(vault / "index.md", "references/qmd.md"):
+        notes.append("`index.md` should link to `references/qmd.md` (qmd search setup + usage)")
+    if archetype not in {"code", "hybrid"}:
+        return notes
+
     checks = [
         (root / "AGENTS.md", "architecture-runway.md",
          "root AGENTS.md should point coding/planning requests at `.bc-agent/conventions/architecture-runway.md` for the optional `/improve-codebase-architecture` nudge"),
@@ -874,6 +932,9 @@ def main() -> int:
     ap.add_argument("--date", default=_dt.date.today().isoformat())
     ap.add_argument("--archetype", choices=["code", "ops", "learning", "knowledge", "hybrid"], default="code",
                     help="optional wiki archetype layered on top of the base project scaffold")
+    ap.add_argument("--qmd", action="store_true",
+                    help="opt in to qmd local search: adds references/qmd.md with setup/usage "
+                         "commands (does not install qmd or build the index)")
     ap.add_argument("--force", action="store_true",
                     help="overwrite existing VAULT files (still never deletes; never touches root AGENTS.md)")
     ap.add_argument("--force-root", action="store_true",
@@ -894,7 +955,7 @@ def main() -> int:
     overwritten: list[Path] = []
     skipped: list[Path] = []  # existed, left untouched
 
-    for dest, content, is_root in targets(root, slug, args.date, args.archetype):
+    for dest, content, is_root in targets(root, slug, args.date, args.archetype, args.qmd):
         exists = dest.exists()
         may_overwrite = (args.force_root if is_root else args.force)
         if exists and not may_overwrite:
@@ -920,7 +981,7 @@ def main() -> int:
         for p in skipped:
             print(f"  = {p}")
 
-    notes = upgrade_notes(root, args.archetype)
+    notes = upgrade_notes(root, args.archetype, args.qmd)
     if notes:
         print("\nUpgrade notes for existing files left untouched:")
         for note in notes:
@@ -939,8 +1000,10 @@ def main() -> int:
             print(f"\nNOTE: existing {root_agents} was left as-is. Merge the 'read .bc-agent first' "
                   f"pointer into it by hand (see `.bc-agent/AGENTS.md` / `index.md`).")
 
+    qmd_hint = ("run the qmd setup in .bc-agent/references/qmd.md with the user; "
+                if args.qmd else "")
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
-          "read .bc-agent/references/agent-skills.md for the loop skill map; "
+          "read .bc-agent/references/agent-skills.md for the loop skill map; " + qmd_hint +
           "authorize this repo in policies/publish.yaml if you'll run /bc-drain-issues AFK; "
           "then /triage existing issues or /bc-plan-to-issues to plan the first feature.")
     return 0
