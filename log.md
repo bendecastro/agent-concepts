@@ -347,3 +347,6 @@ New reference concept `qmd` (local hybrid search: CLI conventions, driver-owns-i
 
 ## [2026-07-13] deploy | qmd skill to local harnesses
 Ran deploy-local-skills.py; qmd now symlinked at ~/.agents/skills, ~/.pi/agent/skills, and ~/.claude/skills (all verified resolving to body/). Accuracy check still pending a qmd install.
+
+## [2026-07-13] lint | Grok code-review collision resurfaced
+A Grok update restored the bundled ~/.grok/skills/code-review (xAI maintainability audit), re-shadowing the canonical obra code-review concept. Removed again; harnesses.md now warns that Grok upgrades resurrect bundled skills and to re-check for collisions after each update.
