@@ -18,7 +18,7 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 - **Loop skill map, no vendoring.** The scaffold creates `.bc-agent/references/agent-skills.md` naming the required loop skills (`bc-plan-to-issues`, `bc-drain-issues`, `improve-codebase-architecture`, plus their supporting disciplines) and pointing to their canonical bodies in `~/Sync/CONFIG`. This makes project agents aware of the loop without copying skill code into every repo.
 - **Planning intent trigger.** The root/vault instructions now tell agents to ask whether to enter `/bc-plan-to-issues` when the human sounds like they are planning codebase work, and to offer `/improve-codebase-architecture` first for architecture runway. Concrete edit/fix requests still proceed normally.
 - **Research vs actual PRDs.** The generated workflow distinguishes exploratory research/evidence (`research/`) from plans/PRDs that were actually drafted or published (`project/` / parent issues), so architecture reports and investigations do not get mislabeled as PRDs.
-- **Opt-in qmd search (`--qmd`), setup page not config file.** The flag adds `references/qmd.md` (setup commands, the authority-labeled context tree, usage/index-discipline conventions) and an `index.md` link, but deliberately does not generate `.qmd/index.yml` — `qmd init` owns its config format, and a scaffold-generated file with absolute paths would break the repo across machines. Opt-in because small code vaults are better served by grep and qmd costs Node ≥ 22 + ~2GB models per machine. See `concepts/qmd/`.
+- **qmd registration by default at close-out, opt-out (replaced the short-lived `--qmd` scaffold flag, 2026-07-13).** The scaffold itself is qmd-free — no flag, no generated `references/qmd.md`, nothing per-repo (project-local `.qmd/` indexes shadow the global registry and can't be committed; see `concepts/qmd/`). Instead the skill's close-out appends the new vault to the synced global canon (`~/Sync/Scripts/config/qmd-collections.yml`) and runs `bc-qmd-setup`, asking only whether the user wants the vault excluded. Default-on because the realistic failure is a vault silently never joining the index.
 - **TODO stubs, not invented facts.** `validation.md`, `file-layout.md`, `references/*`, and the glossary ship as explicit TODO stubs for the project's agents to fill — preserving epistemic honesty rather than fabricating project facts.
 
 ## Provenance
@@ -30,7 +30,7 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 - `plans/bc-grill-to-ship-loop.md` + `pipeline.md` — the loop this prepares a repo for; the scaffolded `planning-workflow.md` documents the grill→issues→drain adapter and the `bc-drain-issues` execution phase.
 - `policies/publish.yaml` — the existing allow-rule schema the publish.yaml offer follows.
 - `concepts/prompting-agents/body/SKILL.md` — composition + gate phrasing.
-- `concepts/qmd/` — the optional local-search layer behind the `--qmd` flag (added 2026-07-13).
+- `concepts/qmd/` — the global-search layer the close-out registration step feeds (added 2026-07-13; reworked to global mode same day).
 
 ## Tests
 

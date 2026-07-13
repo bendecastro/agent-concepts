@@ -353,3 +353,6 @@ A Grok update restored the bundled ~/.grok/skills/code-review (xAI maintainabili
 
 ## [2026-07-13] test | qmd accuracy check PASS
 Added installers/packages/qmd.pkg to Scripts (npm user-local, codex.pkg pattern) and installed qmd 2.5.3 on Arch. Full accuracy check passed: all skill commands work as written; contexts surface authority labels in results; update+embed is a clean no-op. Key finding: project-local .qmd/index.yml stores absolute collection paths → gitignore all of .qmd/, setup per-machine (SKILL.md, scaffold reference page, and CONCEPT.md updated).
+
+## [2026-07-13] implement | qmd rework: global mode only
+User decision after grilling: one global index, five collections (agents/wiki/music/scripts/image-maze) from synced canon Scripts/config/qmd-collections.yml, converged per-machine by bc-qmd-setup (+ daily bc-qmd-refresh.timer, qmd.pkg post_install). Removed the same-day --qmd per-repo design from bc-init-agent's scaffold; its close-out now registers new vaults by default (opt-out). Rationale: project-local .qmd/ shadows the global registry (verified) and is invisible from drain worktrees. Skill body, triage/drain detection, and all four CONCEPT.md files updated. Ran setup on Arch: 1055 docs indexed, first embed in progress.

@@ -55,8 +55,6 @@ Archetypes:
 
    For a **knowledge-graph workspace**, ask the domain boundary, source-ingest policy, raw immutability expectations, entity/concept granularity, and whether this is personal `~/Sync/Wiki`-style knowledge or project-local knowledge.
 
-   Whatever the archetype, also offer the **opt-in qmd search index** (`--qmd`): local hybrid search over the vault, worth it when the wiki will grow beyond what grep serves well (ops/knowledge archetypes especially). Mention the cost — Node ≥ 22 and a one-time ~2GB model download per machine — and default to skipping it for small code vaults.
-
    For an **old/messy project being revived**, treat init as a reconciliation step: cleanup/continuation/archive/rewrite goal; authoritative old plans/specs/ADRs; which files could seed `project/`, `research/`, `decisions/`, `components/`, `findings/`, `open-questions/`, `learning/`, `sources/`, `concepts/`, `raw/`, or `out-of-scope/`; whether file moves are allowed now or should become a migration plan; what must not be touched.
 
 4. **Propose the init plan before writing.** Name the root, slug, mode, selected archetype, files that will be created, existing files that will be preserved, any manual merge needed for `AGENTS.md`, any existing files proposed for later migration, and open decisions. If the plan includes moving/copying existing docs, separate that from the scaffold and require explicit approval.
@@ -65,17 +63,17 @@ Archetypes:
 
 6. **Scaffold.** Run the bundled script (it lives next to this file):
    ```
-   python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>" --archetype "<code|ops|learning|knowledge|hybrid>" [--qmd]
+   python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>" --archetype "<code|ops|learning|knowledge|hybrid>"
    ```
    It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `architecture-runway.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo. It also seeds minimal stable Obsidian metadata (`.obsidian/app.json`, `core-plugins.json`, `appearance.json`) but deliberately avoids noisy/user-specific state such as `workspace.json`, `graph.json`, and community plugin config. The scaffold includes `references/agent-skills.md`, a repo-local map of `/bc-plan-to-issues`, `/bc-drain-issues`, `/improve-codebase-architecture`, and their supporting skills; the skill bodies remain canonical under `~/Sync/CONFIG` and are not copied into the repo.
-
-   With `--qmd`, the scaffold adds `references/qmd.md` (setup commands + usage conventions + the seeded context tree) but does **not** install qmd or build the index. If the user opted in and `qmd` is installed, run that page's setup commands with them now — interactive indexing with the user present is fine (see the `qmd` skill); let `qmd init` write its own config and verify with `qmd status`. If qmd isn't installed, leave the page as the to-do.
 
 7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, `index.md`, or `references/agent-skills.md`).
 
 8. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/Sync/CONFIG/agents/policies/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, note it as a TODO in the vault's `tasks/parking-lot.md` (the scaffold already seeds that reminder).
 
-9. **Close out.** Point at the created files and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-issues` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
+9. **Register the vault for global search (default yes, opt-out).** New vaults are searchable by default: append an entry for `.bc-agent/` to `~/Sync/Scripts/config/qmd-collections.yml` (collection name = the slug; copy an existing entry's shape, contexts stating each directory's *authority level*), then run `bc-qmd-setup` if qmd is installed here. Ask only if the user wants this vault **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos. Append to the synced YAML even when qmd isn't installed on this machine, so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `qmd` skill).
+
+10. **Close out.** Point at the created files and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-issues` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 
 ## Notes
 - The vault is detached from the user's personal `~/Wiki` (seeded as ADR-0001).
