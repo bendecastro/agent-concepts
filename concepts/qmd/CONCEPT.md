@@ -26,7 +26,9 @@ The bc-agent wiki pattern hands cold agents a growing markdown vault and tells t
 
 ## Tests
 
-`tests/accuracy-check.md` — verify commands/flags against a live qmd install before deploy (reference concept, no pressure scenario). Not yet run: qmd was not installed on this machine at authoring time.
+`tests/accuracy-check.md` — verify commands/flags against a live qmd install before deploy (reference concept, no pressure scenario). **Run 2026-07-13 on Arch (qmd 2.5.3): PASS**; surfaced the absolute-collection-paths finding that fed the global-mode decision.
+
+`tests/grep-baseline-comparison.md` — A/B against a grep-only cold agent. **Run 2026-07-14: PASS.** Keyword-friendly questions are a tie (grep is equally fast/cheap/correct); paraphrase questions with zero keyword overlap are grep-unanswerable (0 hits) while `qmd query --no-rerank` hit ground truth first attempt. Also validated that a cold agent picks the correct latency tier from the skill text alone. Grounds the skill's "when to reach for it" line empirically.
 
 ## Deploy targets
 
