@@ -37,6 +37,13 @@ Each agent gets:
 Bad: “Fix all tests.”
 Good: “Diagnose the three failures in `tests/abort.test.ts`; determine timing bug vs assertion drift; do not change unrelated tests; return root cause, patch summary, and verification command/output.”
 
+## Homogeneous fan-out (many agents, one task shape)
+
+When the split is N instances of the same task — port every file, fix every crate’s errors, update every call site — a packet defect multiplies by N. Two steps come before scaling:
+
+1. **Serialize the shared decisions first.** Compile the pattern mappings, conventions, and edge-case policies into one compact guide that every worker receives, instead of letting each worker re-derive them divergently. Review the guide as rigorously as code — fresh reviewers, assume it has defects — because a mistake in it ships N times.
+2. **Pilot, then scale.** Run 1–3 instances through the full loop (implement, review, integrate) and fix the packet and guide from what they reveal before dispatching the fleet. Prompt defects are cheapest to catch here; at fleet scale they become a cleanup workflow of their own.
+
 ## Parent responsibilities
 
 Parallel agents do not make the combined result true. The parent must:
@@ -51,4 +58,4 @@ Parallel agents do not make the combined result true. The parent must:
 - “These might share a cause, but parallelism is faster.” Investigate together first.
 - “The agents said done.” Verify diffs and commands yourself.
 - “One agent can handle the broad problem.” Then do not split.
-- “They may edit the same files.” Use sequencing or worktrees instead.
+- “They may edit the same files.” Use sequencing or worktrees instead. Shared mutable state fails within minutes at scale, not eventually — in Bun’s Rust-rewrite fleet, parallel agents ran `git stash`/`git reset` over each other’s work almost immediately. If full isolation is genuinely impractical (e.g. worktree disk cost), the fallback is restricting every worker to atomic, file-scoped, non-destructive commands — commit one file at a time; never `stash`, `reset`, or slow repo-wide scans — not hoping the agents coordinate.

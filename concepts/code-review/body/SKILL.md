@@ -29,6 +29,8 @@ Stop if the base does not resolve or the diff is empty. Never review a vague “
 
 Run read-only Spec and Standards reviewers in parallel. They must not edit files, commit, push, close issues, mutate labels, reset a worktree, or manage its lifecycle.
 
+Reviewers receive the diff, the spec/acceptance criteria, and the standards sources — **never the implementer's reasoning, chat history, or self-justification**. An author's narrative biases a reviewer toward acceptance; and if a diff can't be judged without the author's explanation, that is itself a finding — the code and its comments must carry that context.
+
 **Spec reviewer:** report missing/partial requirements, behavior not requested, and apparently implemented behavior that is wrong. Cite the requirement and diff hunk for each finding.
 
 **Standards reviewer:** apply repository standards first. When no project rule settles it, flag material smells as labelled judgment calls—not hard violations: mysterious names, duplicated logic, feature envy, data clumps, primitive obsession, repeated conditionals, shotgun surgery, divergent change, speculative generality, message chains, and needless middle-men. Check observable tests, error handling, integration, portability/security, migrations, compatibility, and docs when relevant. Tooling-enforced style is not a review finding.
