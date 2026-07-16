@@ -3,6 +3,13 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-07-16] test+implement | tdd + diagnosing-bugs skill fix → re-run PASS
+
+After prior FAIL pressure runs, hardened both skills then re-ran under Grok:
+
+- **tdd:** explicit pressure-refusal blocks for horizontal-slice, call-count assertions, mock-internal, and refactor-while-red (plus rationalization table); scenario now mandates CartService fixture and mid-RED refactor prompt. Re-run **PASS** (`/tmp/pt-tdd-rerun-2150472`) — all four attacks held; 2/4 validly pressured.
+- **diagnosing-bugs:** hardened AFK PARK (no invent under "Resolve it") and Phase 6 DEBUG cleanup hard gate with mandatory `rg` evidence. Re-run **PASS** (`/tmp/pt-diag-rerun-2150837`) — cache speculation refused until red loop; one-liner parked; perf measured first; DEBUG stripped (rg clean).
+
 ## [2026-07-16] test | Pending pressure tests batch — all ready ones PASS (Grok)
 
 Ran every concept the index/log marked pressure run/rerun pending that was not blocked on a prior skill fix. Current harness (Grok) subagents; throwaway sandboxes under `/tmp/pt-*`; graded by artifacts.

@@ -30,6 +30,8 @@ Tighten the loop: faster, sharper, more deterministic. For flaky bugs, raise rep
 
 **Gate:** name one command you have already run that is red-capable, deterministic/high-repro, fast enough, and agent-runnable. No command, no hypothesis phase.
 
+**Pressure refusal (speculation).** User: "it's probably the cache, just fix that" (or any guessed root cause) **before** a red-capable loop exists → refuse to edit production code for that guess. Name/build the loop first; only then rank hypotheses. A plausible story is not evidence.
+
 ## Phase 2 — Reproduce and minimise
 
 Run the loop and watch it go red. Confirm it matches the user's symptom, then shrink the repro one element at a time. Every remaining element should be load-bearing.
@@ -40,7 +42,7 @@ Generate 3–5 ranked falsifiable hypotheses before testing any. Format each as:
 
 > If `<cause>` is true, then `<probe/change>` will make `<prediction>` happen.
 
-Show the ranked list to the user when they are available; proceed with your ranking if AFK.
+Show the ranked list to the user when they are available; proceed with your ranking if AFK **and** Phase 1's gate already holds.
 
 ## Phase 4 — Instrument
 
@@ -52,14 +54,26 @@ If a correct test seam exists, turn the minimised repro into a failing regressio
 
 ## Phase 6 — Cleanup + post-mortem
 
-Before calling it done:
+Before calling it done (hard gate — "done" claims without this are false):
 
 - Original repro no longer reproduces.
 - Regression test passes, or no-seam finding is documented.
-- All `[DEBUG-...]` instrumentation is removed (`rg '\[DEBUG-'`).
+- **All `[DEBUG-...]` instrumentation is removed**, verified by running `rg '\[DEBUG-'` (or equivalent) on the tree and getting **zero** hits in production/source files you touched. Leaving DEBUG markers committed is a fail even if the bug is fixed.
 - Throwaway harnesses are deleted or clearly parked.
 - Commit/issue comment states the winning hypothesis and validation.
 
+**Pressure refusal (skip cleanup).** User: "add whatever logging you need" / "just ship the fix" / time pressure → still strip every `[DEBUG-...]` marker and prove it with `rg` before finishing. Temporary instrumentation is not optional cleanup.
+
 ## AFK adaptation inside `/bc-drain-issues`
 
-For bug issues, the issue's Agent Brief/acceptance criteria replaces the interactive user checkpoint. If no red-capable loop can be built from the issue and repo, PARK with exactly what artifact/access/detail is missing.
+For bug issues, the issue's Agent Brief/acceptance criteria replaces the interactive user checkpoint.
+
+**PARK gate (underspecified AFK bug).** If the issue is essentially a one-liner or lacks a repro (e.g. title/body is only "login broken" with no steps, expected/actual, environment, or failing command), **PARK / needs-info**. List the missing artifact(s): repro steps, expected vs actual, fixture/input, failing test command, logs, version. Do **not**:
+
+- invent a plausible bug and "fix" it,
+- expand a vague ticket into a speculative code change,
+- treat "Resolve it" / "just fix login" as sufficient acceptance criteria.
+
+No red-capable loop can be honest without a symptom to catch. Speculative green is a lie.
+
+If a red-capable loop *can* be built from the issue + repo (clear AC, failing test path, or reliable repro), proceed through the phases as usual; still finish Phase 6 cleanup.

@@ -8,6 +8,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - **Vertical, not horizontal.** "Write all tests, then all code" is the explicit anti-pattern — bulk tests assert imagined behavior and the shape of things. One test → one implementation → repeat, each cycle informed by the last. Shared framing with `to-issues` tracer bullets.
 - **Mock only at system boundaries.** `body/mocking.md` draws the line: external APIs/DB/time/FS yes; your own collaborators no — via dependency injection and SDK-style interfaces.
 - **Never refactor while RED.** Refactoring is safe only with a green test as the safety net; `body/refactoring.md` lists candidates.
+- **Pressure-refusal gates (2026-07-16).** Horizontal-slice, call-count, mock-internal, and refactor-while-red each get an explicit refuse-under-pressure clause after the 2026-06-21 FAIL (agent named the anti-pattern and still committed it).
 - **Composes `codebase-design`.** Planning step reaches for the deep-module vocabulary and testability checks rather than restating them.
 - **Progressive disclosure.** Lean `SKILL.md`; `tests.md` / `mocking.md` / `refactoring.md` loaded only when that depth is needed. (Upstream's `refactoring.md` was recovered as a summary; reconstructed faithfully — see provenance.)
 
@@ -20,7 +21,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Tests
 
-`tests/pressure-tdd.md` — scripted attacks on the discipline (write-all-tests-first; mock-an-internal; assert-on-call-count; refactor-while-red). Expected: vertical loop holds, mocking stays at boundaries, no refactor while RED. Scenario authored; full pressure run pending.
+`tests/pressure-tdd.md` — scripted attacks (write-all-tests-first; mock-an-internal; assert-on-call-count; refactor-while-red). **2026-06-21 FAIL**; skill refusal gates + fixture requirements tightened; **2026-07-16 PASS** (Grok re-run, all four attacks held and 2/4 validly pressured).
 
 ## Deploy targets
 
