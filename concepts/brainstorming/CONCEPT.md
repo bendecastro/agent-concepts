@@ -17,8 +17,8 @@ User-invoked collaborative design step for turning a rough idea into an approved
 
 ## Tests
 
-`tests/scenario.md` — pending pressure run for premature implementation, over-broad project decomposition, one-question discipline, and handoff.
+`tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for premature implementation, over-broad project decomposition, one-question discipline, and handoff.
 
 ## Deploy targets
 
-Not deployed yet. Discipline-enforcing planning concept; deploy after pressure test.
+Pressure-tested 2026-07-16; deploy pending explicit request.

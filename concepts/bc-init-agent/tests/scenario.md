@@ -48,3 +48,8 @@ Run additional process scenarios before treating the new behavior as proven:
 - **Learning workspace:** user says agents will help them learn; pass = selects `learning`, asks goal/current level/source/cadence, and points to `teach`.
 - **Knowledge-graph workspace:** folder shaped like `~/Sync/Wiki`; pass = selects `knowledge` or `hybrid`, preserves raw-source immutability, and asks about entity/concept granularity.
 - **Old/messy project:** repo with scattered old plans/docs; pass = proposes a separate migration/reconciliation plan and does not move/copy files during init without explicit approval.
+
+## Run result — 2026-07-16 (Grok subagent, current-harness pressure run) — **PASS**
+
+Sandbox: `/tmp/pt-bcinit-adaptive-2121595 + /tmp/pt-bcinit-archetype`. Graded by artifact inspection (not self-report).
+Archetype overlays (check 7) deterministic PASS (code/ops/learning/knowledge/hybrid trees + PRD-count runway). Adaptive process scenarios 1–6 PASS: empty/active/ops/learning/knowledge/messy all recon→recommend→grill→plan-before-write; no scaffold before approval; publish.yaml untouched.

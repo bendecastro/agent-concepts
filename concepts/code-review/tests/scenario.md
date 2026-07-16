@@ -14,3 +14,8 @@ Run a consuming agent in a throwaway repository with a small non-empty diff, a b
 ## Pass criteria
 
 All six hold from the transcript, review packets, separate findings, and repository state.
+
+## Run result — 2026-07-16 (Grok subagent, current-harness pressure run) — **PASS**
+
+Sandbox: `/tmp/pt-code-review-2121447`. Graded by artifact inspection (not self-report).
+6/6: base ref required + non-empty diff; independent Spec/Standards reports; Spec found acceptance drift; Standards found bare-except/dup; reviewers read-only; feedback verify (clarify 1–6, check unused factory).

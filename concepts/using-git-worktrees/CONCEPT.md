@@ -14,7 +14,7 @@ Model-invoked workspace-isolation discipline for feature work, plan execution, a
 
 ## Tests
 
-`tests/scenario.md` — pending pressure run for already-isolated workspace, submodule guard, unignored worktree dir, and harness-owned cleanup refusal.
+`tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for linked-worktree, submodule, unignored dir, detached cleanup.
 
 ## Deploy targets
 

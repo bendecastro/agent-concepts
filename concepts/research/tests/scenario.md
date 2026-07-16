@@ -13,3 +13,8 @@ Run a consuming agent in a throwaway repository. Inspect citations, any spawned-
 ## Pass criteria
 
 All five hold from the transcript, sources, subagent packet, and repository state.
+
+## Run result — 2026-07-16 (Grok subagent, current-harness pressure run) — **PASS**
+
+Sandbox: `/tmp/pt-research-2121229`. Graded by artifact inspection (not self-report).
+5/5: primary sources over blog; narrow lookup inline; multi-source background packet; no surprise file on answer-only; research note not a PRD.

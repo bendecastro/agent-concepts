@@ -22,7 +22,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Tests
 
-`tests/scenario.md` — pressure scenarios for independent Spec/Standards review, fixed-point validation, blind implementation, performative agreement, unclear feedback, and reviewer overreach. Authored; harness pressure run pending.
+`tests/scenario.md` — pressure scenarios for independent Spec/Standards review, fixed-point validation, blind implementation, performative agreement, unclear feedback, and reviewer overreach. Pressure-tested 2026-07-16 **PASS** (Grok).
 
 ## Deploy targets
 

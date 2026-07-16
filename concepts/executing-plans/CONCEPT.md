@@ -16,7 +16,7 @@ Model-invoked inline executor for a written implementation plan when the user wa
 
 ## Tests
 
-`tests/scenario.md` — pending pressure run for ambiguous plan steps, failing verification, main-branch safety, and completion handoff.
+`tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for ambiguous plan steps, failing verification, main-branch safety, and completion handoff.
 
 ## Deploy targets
 

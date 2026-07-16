@@ -17,7 +17,7 @@ Model-invoked coordination pattern for splitting independent investigations or r
 
 ## Tests
 
-`tests/scenario.md` — pending pressure run for independent vs related failures, over-broad prompt rejection, and parent-side verification.
+`tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for independent vs related failures, over-broad prompt rejection, and parent-side verification.
 
 ## Deploy targets
 

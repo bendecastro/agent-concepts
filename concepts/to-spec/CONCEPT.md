@@ -17,7 +17,7 @@ User-invoked orchestrator that turns the current conversation + codebase underst
 
 ## Tests
 
-`tests/scenario.md` — process scenario verifying no-interview synthesis, seam-check-before-write, the template sections, and unlabeled `gh issue create` PRD-parent publication. Process orchestrator (lower silent-failure risk than the gate skills); scenario authored, full pressure run pending.
+`tests/scenario.md` — process scenario verifying no-interview synthesis, seam-check-before-write, the template sections, and unlabeled `gh issue create` PRD-parent publication. Process orchestrator (lower silent-failure risk than the gate skills); pressure-tested 2026-07-16 **PASS** (Grok).
 
 ## Deploy targets
 

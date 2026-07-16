@@ -17,7 +17,7 @@ User-invoked plan execution pattern where a controller dispatches fresh implemen
 
 ## Tests
 
-`tests/scenario.md` — pending pressure run for skipped review, parallel implementer temptation, broad plan-file handoff, and blocked-subagent handling.
+`tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for skipped review, parallel implementer temptation, broad plan-file handoff, and blocked-subagent handling.
 
 ## Deploy targets
 

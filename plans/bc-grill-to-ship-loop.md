@@ -139,7 +139,7 @@ publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this i
 - [x] 3. `bc-drain-issues` (`SKILL.md` + `execute-issue.md`) built + pressure test authored.
 - [x] 4. Pipeline doc (`pipeline.md`) + image-maze `planning-workflow.md` execution-phase extension.
 - [~] 5. Bookkeeping done (`index.md`, `harnesses.md`, `log.md`); `prd-drafting`/`issue-slicing` Claude-symlinked.
-      **Remaining:** run the two `bc-` pressure tests, then symlink `bc-plan-to-issues`/`bc-drain-issues`
+      **Done 2026-07-16:** both `bc-` pressure tests PASS (Grok). Remaining if any: confirm deploy/symlink `bc-plan-to-issues`/`bc-drain-issues`
       (Claude) + Pi via `scripts/deploy-local-skills.py`; lint + commit.
 
 ## Bookkeeping note

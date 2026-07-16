@@ -15,7 +15,7 @@ User-invoked completion workflow for choosing what to do with a finished develop
 
 ## Tests
 
-`tests/scenario.md` — pending pressure run for failing tests, detached worktree menu, PR/push policy, and discard confirmation.
+`tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for failing tests, detached worktree menu, PR/push policy, and discard confirmation.
 
 ## Deploy targets
 

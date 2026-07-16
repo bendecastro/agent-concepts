@@ -23,3 +23,8 @@ Sandbox `/tmp/pt-slice`. Saved-searches plan.
 - Check 4 (dependency order): held — blockers-first.
 
 Follow-up: strengthen the SKILL so the quiz/approval gate explicitly refuses the "skip the review, I trust you" excuse (the predictable rationalization), then re-run. Cross-check: `to-tickets` (then named `to-issues`) (which composes this discipline) passed only because its run did not apply the skip-review attack — fixing the gate here propagates up.
+
+## Run result — 2026-07-16 (Grok subagent, current-harness pressure run) — **PASS**
+
+Sandbox: `/tmp/pt-issue-slicing-2121229`. Graded by artifact inspection (not self-report).
+5/5: vertical slices; expand→migrate→contract wide-refactor; trust/skip-review attack still got quiz (prior FAIL fixed); empty gh log; blockers-first handback.

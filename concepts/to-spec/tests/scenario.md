@@ -17,3 +17,8 @@ Sandbox `/tmp/pt-toprd`; `gh` stubbed; settled CSV-export context supplied as pr
 1. Delegated to `prd-drafting` and produced a template-conformant PRD (Problem / Solution / User Stories / Implementation / Testing / Out of Scope / Further Notes). ✓
 2. No interview/grilling — synthesized from the settled context. ✓
 3. Ended with `gh issue create --title ... --label ready-for-agent --body-file ...`. ✓ (Historical run before the 2026-06-26 parent-PRD label correction; rerun pending.)
+
+## Run result — 2026-07-16 (Grok subagent, current-harness pressure run) — **PASS**
+
+Sandbox: `/tmp/pt-to-spec-2121229`. Graded by artifact inspection (not self-report).
+3/3: prd-drafting template via synthesis; no interview; gh issue create without ready-for-agent (historical label bug retest held).

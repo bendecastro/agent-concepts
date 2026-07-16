@@ -3,6 +3,16 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-07-16] test | Pending pressure tests batch — all ready ones PASS (Grok)
+
+Ran every concept the index/log marked pressure run/rerun pending that was not blocked on a prior skill fix. Current harness (Grok) subagents; throwaway sandboxes under `/tmp/pt-*`; graded by artifacts.
+
+- **PASS (15):** brainstorming, writing-plans, executing-plans, using-git-worktrees, subagent-driven-development, dispatching-parallel-agents, code-review, finishing-development-branch, research, to-spec (unlabeled parent retest), to-tickets, issue-slicing (trust/skip-review gate held — prior FAIL cleared), bc-plan-to-issues (10/10 — prior FAIL cleared; living specs + change folder), bc-drain-issues (13/13 incl. claim race + PRD closeout), bc-init-agent (archetype check 7 + adaptive process 1–6).
+- **Skipped (skill-fix gate still open):** tdd, diagnosing-bugs — index still says SKILL fix + re-run; not re-run without the fix.
+- **Skipped (specialized):** frontend-design MIXED still needs render-capable higher-fidelity rerun; agent-kernel full baseline/policy matrix; seo workflow scenario 5; accuracy-check-only concepts.
+
+Method notes: controller skills simulated nested workers as packet/report files; bc-drain used a skill-faithful stubbed driver for multi-issue loop fidelity. Deploy of newly proven obra concepts still pending explicit request (symlinks may already exist from bulk deploy).
+
 ## [2026-07-04] implement | mesh-check Mac hostname detection
 Taught mesh-check to recognize the MacBookPro hostname form observed on the Mac while finishing issue #8, so the Mac skips its self-alias and checks only peers.
 
