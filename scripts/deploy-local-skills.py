@@ -6,9 +6,9 @@ For each concepts/<name>/body/SKILL.md, create/update symlinks:
   ~/.pi/agent/skills/<name> -> ~/Sync/CONFIG/agents/concepts/<name>/body
   ~/.claude/skills/<name> -> ~/Sync/CONFIG/agents/concepts/<name>/body
 
-The ~/.agents/skills/ bus is also the Composer (Cursor) and Grok discovery path:
-both harnesses scan it alongside their native skill dirs. No extra symlink targets
-are required for those harnesses.
+The ~/.agents/skills/ bus is also the Composer (Cursor), Grok, and OpenCode
+discovery path: those harnesses scan it alongside their native skill dirs. No
+extra symlink targets are required for them.
 
 Non-symlink destinations are skipped unless --force is supplied.
 """

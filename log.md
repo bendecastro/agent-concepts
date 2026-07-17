@@ -379,3 +379,6 @@ Two cold subagents, same question, verified ground truth (music sticker-fork dec
 
 ## [2026-07-16] ingest | bun-in-rust-zig-port-writeup
 Filed and ingested Jarred Sumner's "Rewriting Bun in Rust" (2026-07-08; 535K lines Zig→Rust, 11 days, ~50 Claude Code dynamic workflows). Grilled decisions with user: dispatching-parallel-agents gains homogeneous-fan-out de-risk (task-class guide reviewed like code + 1–3-instance pilot before scaling) and the isolation ban's recorded why + atomic-command fallback; bc-drain-issues gains a recurring-defect tune (driver patches run-local worker packet, additive-only, canon untouched, patches quoted verbatim in run report) with separate-fixer role rejected; code-review makes reviewer context isolation explicit with assume-wrong stance rejected (conflicts with findings-are-not-obligations); AGENTS.md Tune op widened to mid-run. No prompting-agents changes (single-home rule).
+
+## [2026-07-17] deploy | local concept skills to OpenCode
+Reconciled `scripts/deploy-local-skills.py` and verified all 32 canonical concept skills resolve through OpenCode's auto-loaded `~/.agents/skills/` bus (plus three compatibility aliases). Updated the deployer and harness documentation to record native discovery; restart remains required to refresh a running session's advertised list.
