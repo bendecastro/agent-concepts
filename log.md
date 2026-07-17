@@ -382,3 +382,6 @@ Filed and ingested Jarred Sumner's "Rewriting Bun in Rust" (2026-07-08; 535K lin
 
 ## [2026-07-17] deploy | local concept skills to OpenCode
 Reconciled `scripts/deploy-local-skills.py` and verified all 32 canonical concept skills resolve through OpenCode's auto-loaded `~/.agents/skills/` bus (plus three compatibility aliases). Updated the deployer and harness documentation to record native discovery; restart remains required to refresh a running session's advertised list.
+
+## [2026-07-17] deploy | OpenCode slash commands for canonical skills
+Added a global OpenCode plugin that dynamically exposes every CONFIG-backed skill on `~/.agents/skills/` as a same-named slash command, including compatibility aliases, while preserving explicit command overrides. Updated the existing `/seo` override to load the canonical skill and verified the resolved OpenCode config contains all 32 canonical commands plus three aliases.
