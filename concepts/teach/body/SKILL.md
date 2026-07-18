@@ -36,7 +36,7 @@ Create directories lazily, only when first written to.
 Every session starts the same way, before any new material:
 
 1. Read `MISSION.md`, `NOTES.md`, `index.md`, and the last few `log.md` entries. Open wiki pages and learning records only as the index points you to them — do not skim everything.
-2. **Review first.** Run `python3 <this skill's directory>/scripts/due.py REVIEW.md` — it does the date math and prints what's due with next-interval suggestions. Quiz the user on up to 3 due items (free recall, in conversation), then update `REVIEW.md` with the dates the script suggested. If the user fails an item, that may be today's lesson.
+2. **Review first.** Run `python3 <this skill's directory>/scripts/due.py REVIEW.md` — it does the date math and prints what's due with next-interval suggestions. Quiz the user on up to 3 due items (free recall, in conversation), then update `REVIEW.md` with the dates the script suggested. **Ask only one question per message and wait for the learner's answer before asking the next**; batching questions increases working-memory load and weakens the feedback loop. If the user fails an item, that may be today's lesson.
 3. Only then proceed — to a lesson, an ingest, or a lint, whichever the session calls for.
 4. Before the session ends, append a `log.md` entry and update `index.md` if pages changed.
 
@@ -72,7 +72,7 @@ The primary unit of teaching is an **in-conversation lesson**, not a generated f
 
 1. Teaches one tightly-scoped thing tied to the mission, sized to a single tangible win, inside the user's zone of proximal development.
 2. Draws its knowledge from the wiki (ingesting a source first if the wiki doesn't cover it), presenting the minimum needed, with citations.
-3. Drives practice through **free recall**: ask the user to explain, predict, or produce — then give immediate, specific feedback. Prefer open questions over multiple choice; recognition is not recall. If you do use multiple choice, distractors must be *plausible misconceptions*, not length-matched filler.
+3. Drives practice through **free recall**: ask the user to explain, predict, or produce — then give immediate, specific feedback. Ask **one question per message**, wait for the answer, give feedback, and only then ask the next question; never present a batch of numbered questions. Prefer open questions over multiple choice; recognition is not recall. If you do use multiple choice, distractors must be *plausible misconceptions*, not length-matched filler.
 4. For physical/real-world skills (yoga, cooking, lifting), walk the user through the steps and have them self-report against concrete checkpoints.
 5. Names one primary source — the single best resource to read or watch next.
 
