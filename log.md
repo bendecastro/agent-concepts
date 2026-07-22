@@ -385,3 +385,6 @@ Reconciled `scripts/deploy-local-skills.py` and verified all 32 canonical concep
 
 ## [2026-07-17] deploy | OpenCode slash commands for canonical skills
 Added a global OpenCode plugin that dynamically exposes every CONFIG-backed skill on `~/.agents/skills/` as a same-named slash command, including compatibility aliases, while preserving explicit command overrides. Updated the existing `/seo` override to load the canonical skill and verified the resolved OpenCode config contains all 32 canonical commands plus three aliases.
+
+## [2026-07-22] ingest+deploy | Herdr agent-control skill
+Ingested the user's Herdr agent-skill clipping into a new `herdr` reference concept, vendored upstream `SKILL.md` verbatim at commit `08640bb3ddc0a9c299e855d6a459d2f82970cf86`, and moved the clipping to `raw/ingested/`. Accuracy-checked source integrity and read-only Herdr 0.7.4 commands, then deployed the canonical body to the shared, Pi, and Claude Code skill paths.

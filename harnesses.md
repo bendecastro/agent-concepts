@@ -16,6 +16,8 @@ For always-on base instructions, use `concepts/agent-kernel/body/AGENT-KERNEL.md
 | Grok | `agent-kernel` delta deployed 2026-07-12 (`~/.grok/AGENTS.md` → synced `CONFIG/.grok/AGENTS.md`; sessions + memory synced too; built-in-prompt diff pending); skills bulk-deployed via `~/.agents/skills/` (same bus as Pi/Composer) | Grok scans `.agents/skills/` at each tier alongside `.grok/skills/`; also compat-scans `~/.claude/skills/` and `~/.cursor/skills/` by default | Native Agent Skills metadata; unknown frontmatter ignored | Verified 2026-07-04 with `grok inspect` (46 skills incl. all local concepts). **Collision:** a separate `~/.grok/skills/code-review` (xAI maintainability audit) shadowed the canonical obra `code-review` concept — removed so the CONFIG symlink wins. **Grok updates resurrect it:** found restored and re-removed 2026-07-13; after any Grok upgrade, check `~/.grok/skills/` for bundled skills whose names collide with `~/.agents/skills/` concepts and remove them again. Avoid adding same-named skills under `~/.grok/skills/` when a concept already lives in `~/.agents/skills/`. Manual bootstrap still works for stale sessions. |
 | Gemini | Unknown/manual | Use generic bootstrap until tested | Treat frontmatter as metadata | Add quirks after first use. |
 
+The `herdr` reference skill was deployed 2026-07-22 to the shared bus plus Pi and Claude Code symlinks. Composer, OpenCode, and Grok consume the shared-bus copy; active sessions must restart to refresh discovery.
+
 ## Portability rules
 
 - **Canon stays harness-neutral.** Edit `concepts/<name>/body/`, not a deployed copy or generated harness variant.
