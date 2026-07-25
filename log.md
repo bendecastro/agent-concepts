@@ -388,3 +388,6 @@ Added a global OpenCode plugin that dynamically exposes every CONFIG-backed skil
 
 ## [2026-07-22] ingest+deploy | Herdr agent-control skill
 Ingested the user's Herdr agent-skill clipping into a new `herdr` reference concept, vendored upstream `SKILL.md` verbatim at commit `08640bb3ddc0a9c299e855d6a459d2f82970cf86`, and moved the clipping to `raw/ingested/`. Accuracy-checked source integrity and read-only Herdr 0.7.4 commands, then deployed the canonical body to the shared, Pi, and Claude Code skill paths.
+
+## [2026-07-25] design | bc-drain-issues v2 token efficiency
+Recorded the user-approved bounded-rework design after issue #29 consumed about 1.89M child tokens across discarded drain attempts and a normal rescue. The pending design preserves both review axes while adding contract audits for high-risk slices, lean structured reviews, fixable-vs-human states, persistent recovery bundles, driver-owned landing, and provisional 200k/300k phase-boundary token caps; live canon remains unchanged until pressure/A-B tests pass.

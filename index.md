@@ -56,6 +56,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 ## Plans
 
 - [plans/bc-grill-to-ship-loop.md](plans/bc-grill-to-ship-loop.md) — proposed build plan for the plan→execute loop: `bc-plan-to-issues` (one-command interactive planner: grill→PRD→issues) + `bc-drain-issues` (AFK executor draining the `ready-for-agent` queue trunk-based via fresh-subagent-per-issue TDD), plus a refactor extracting `prd-drafting`/`issue-slicing` disciplines. Status: grilled + resolved 2026-06-20; not yet built.
+- [plans/bc-drain-issues-v2-token-efficiency.md](plans/bc-drain-issues-v2-token-efficiency.md) — approved v2 design for token-efficient drains: high-risk contract audit, lean structured reviews, bounded same-worktree rework, fixable-vs-human state taxonomy, persistent recovery bundles, driver-owned landing, and provisional 200k/300k child-token caps. Status: approved 2026-07-25; implementation pending.
 
 ## Raw
 
