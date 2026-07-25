@@ -1,66 +1,140 @@
 ---
 name: bc-drain-issues
-description: Autonomously drain a repo's ready-for-agent GitHub issue queue — pick the next unblocked issue, build it test-first in a fresh subagent, commit/push/close, and repeat until the queue is empty. Run after /bc-plan-to-issues.
+description: Autonomously drain a repo's ready-for-agent and rework-for-agent GitHub issue queue with isolated worktrees, bounded rework, independent review, and driver-owned landing. Run after /bc-plan-to-issues.
 disable-model-invocation: true
 argument-hint: "[max-iters=20] [max-parallel=3] (optional caps; max-parallel 1 = sequential)"
 ---
 
 # Drain Issues (AFK executor)
 
-Drain the `ready-for-agent` issue queue autonomously. For each unblocked issue, dispatch a **fresh subagent** that builds just that slice test-first and validates it; then run independent Spec and Standards reviews before the worker commits, pushes `master`, and closes the issue. When the last slice for a PRD parent lands, close the parent PRD issue too. Designed to run unattended (AFK) after `/bc-plan-to-issues` has produced the queue.
+Drain eligible GitHub issues through isolated build, independent Spec and Standards review, bounded same-worktree rework, and driver-owned landing. The driver owns global state and publishing; fresh workers own code/tests/validation only. This separation prevents a worker from publishing its own unreviewed result.
 
-**Fresh-subagent-per-issue is deliberate:** it forces every issue to be self-contained — the entire handoff is the issue body + `CONTEXT.md` + the repo, nothing else — and it prevents context rot across a long queue.
+Use these detailed contracts when entering their phases:
 
-**Each subagent also gets its own git worktree.** A claim branch guards *issue ownership*; a worktree guards the *filesystem*. Without worktrees, two in-flight slices (or two concurrent drains) co-edit one checkout and contaminate each other — a successful claim that still produces an uncommittable mixed tree (e.g. two adapters both rewriting `functions.php`). So subagents build **only** in their dedicated worktree and never touch the main checkout. This is what makes parallel dispatch — and a second drain on the same repo — safe. The per-issue contract lives in [execute-issue.md](execute-issue.md); hand it to each subagent along with its worktree path.
+- Worker: [execute-issue.md](execute-issue.md)
+- Reviewers: [review-contract.md](review-contract.md)
+- Deferred-work capture/restore: [recovery-bundle.md](recovery-bundle.md)
 
-## Preflight — run once, before the loop
-Stop and report if any check fails. AFK means nobody is here to answer a prompt mid-run, so everything that needs a human decision happens here, up front.
+The workflow is harness-agnostic. On Pi, use the installed minimal fresh roles `bc-drain-auditor`, `bc-drain-worker` (for build and rework), and `bc-drain-reviewer`; they exclude unrelated inherited context/skills and generic plan/progress conventions. Set model effort explicitly per this contract. Because the minimal roles do not inherit the broad skill catalog, pass only the applicable worker discipline explicitly (`tdd`, `diagnosing-bugs`, and/or `bc-autoresearch-loop`); auditor/reviewer roles need none. Bound each read-only auditor/reviewer to four assistant turns and 12 tool calls; mutation-capable workers remain bounded by narrow packets and safe phase-boundary accounting, not arbitrary interruption. Use the configured compact tool descriptions, set top-level `artifacts:false` or an external artifact/session root (including resumed runs), and keep outputs outside issue worktrees. If a harness lacks these roles/controls, use equivalent fresh packets and authority boundaries. These are economy controls, not permission to weaken correctness gates.
 
-1. **Repo & branch.** Confirm you're in the target git repo on branch `master` (the only branch `publish.yaml` authorizes for trunk-based push). Capture the remote URL.
-2. **Push authorization.** Run:
-   ```
-   python3 ~/Sync/CONFIG/agents/scripts/publish-check.py --repo "$PWD" --remote "<remote-url>" --branch master
-   ```
-   - **exit 0** → push authorized; proceed.
-   - **exit 2** → push is NOT authorized for this repo. Do **not** push. Either **abort** and tell the user to pre-authorize the repo in `policies/publish.yaml` (copy the `image-maze-push-and-close-after-agent-work` rule, swapping `paths`/`remotes`), or — only if the user pre-agreed to a local-only run — continue in **commit-only-local mode** (commit per slice, never push, never close issues; report the branch at the end). **Never edit `publish.yaml` to authorize yourself** (self-amendment immunity).
-3. **Claim coordination.** Hard parallel safety requires a remote Git claim namespace. Labels, assignees, comments, and kanban/project columns are advisory — two agents can race them. Before a parallel/AFK run, confirm the user or `publish.yaml` authorizes pushing and deleting coordination branches named `bc-drain-claims/issue-<n>` on the shared origin. If not authorized, **stop** unless the user explicitly chose single-run mode. Two drains may run concurrently **only if both use the worktree-isolated executor below** (claim branch = issue ownership, worktree = filesystem isolation). A drain running an older shared-checkout version is *not* safe to run alongside another — if one is already active on this repo, stop and let it finish, or restart it on this version.
-4. **Labels.** Ensure `ready-for-agent`, `needs-human`, and `in-progress-agent` exist (`gh label create` if missing). `in-progress-agent` is only a visible hint; the claim branch is the lock.
-5. **PRD parent closeout readiness.** Confirm `gh issue view/list` can read issue bodies/comments and close issues. `/bc-plan-to-issues` creates a parent PRD issue plus `ready-for-agent` slice issues; this drain must close the parent PRD once every child slice is closed as completed. Parked, blocked, claimed, or in-flight children keep the PRD open.
-6. **Caps.** Note `max-iters` (arg, default 20), `max-parallel` (default **3** issues in flight at once; set `1` for strictly sequential), and the circuit-breaker threshold (default **3** consecutive parks). These bound a runaway or systemically-broken run.
-7. **Subagent effort.** Dispatch per-issue subagents at **low** reasoning/thinking effort by default. This keeps AFK drains cost-aware and prevents a high/xhigh parent setting from silently multiplying across the queue; the issue body, tests, and validation gates provide the main guardrails. Do not accidentally inherit a higher parent setting; when the harness exposes model/effort controls, set them explicitly (for Pi subagents, pass a `model` override with `:low`, or the equivalent low-effort setting for the selected model).
-8. **Worktree isolation.** Confirm `git worktree list` works, then pick a worktree root **outside** the main checkout — default `WT_ROOT="${BC_DRAIN_WT_ROOT:-${TMPDIR:-/tmp}/bc-drain-worktrees/$(basename "$PWD")}"`. Every issue is built in its own worktree under there; the main checkout is used only for claim pushes and worktree bookkeeping and must stay clean (`git status` should be empty at preflight). Caveat: containerised test/build tooling (e.g. `docker compose run`) runs from each worktree as its own compose project — fine when isolated, but if your services bind fixed host ports, set `max-parallel 1`.
+## States
 
-9. **qmd index freshness (optional).** If `qmd` is installed and a global collection covers this repo's vault (`qmd collection list` shows a path inside the repo), run `qmd update && qmd embed` once now so workers search a current index. Workers are search-only — a mid-run re-embed by a worker would race its siblings and can mask a broken corpus instead of parking. If qmd is absent or no collection covers the repo, skip; workers fall back to reading the vault directly.
+- `READY`: open and eligible (`ready-for-agent`).
+- `IN_PROGRESS`: claimed build/review/rework (`ready-for-agent` + `in-progress-agent`; the remote claim branch is authoritative).
+- `LANDED`: approved, committed, pushed, and closed.
+- `HUMAN_BLOCKED`: requires a human decision, unavailable access/resource, contract clarification, or irreparable issue-local environment repair that only a human can perform (remove ready/in-progress; add `needs-human`).
+- `REWORK_DEFERRED`: findings remain agent-fixable but a token/round circuit is exhausted (keep ready, remove in-progress, add `rework-for-agent`, and post an Agent Rework Brief).
+- `SYSTEMIC_FAILURE`: repeated tooling/base/environment failure; stop the run and explicitly classify affected issues.
 
-## Driver loop
-Keep up to `max-parallel` issues in flight at once: whenever you're under the cap and an eligible candidate exists, claim + worktree + dispatch the next one rather than waiting for the current to finish. Repeat until a stop condition fires.
+A review rejection is not by itself a human blocker. Preserve useful fixable work through recovery rather than relabeling it `needs-human` or discarding its worktree.
 
-1. **Find candidates:** list *oldest OPEN* `ready-for-agent` issues, then build an explicit dependency set for each candidate before claiming. Parse blockers from the issue body **and comments**, including:
-   - a `## Blocked by`, `## Depends on`, `## Prerequisites`, `## After`, or `## Requires` section whose bullets/lines contain issue references such as `#55`, `` `#55` ``, or full GitHub issue URLs;
-   - inline phrases like `Blocked by #55`, `depends on #55`, `requires #55`, `after #55`, or `prerequisite #55`.
+## Preflight — before the loop
 
-   A candidate is eligible only when **every parsed dependency is closed on GitHub and not claimed/in flight**. Skip `needs-human`, `in-progress-agent`, anything still blocked by an open issue, anything whose dependency has a live `bc-drain-claims/issue-<n>` branch, anything whose dependency is already in flight this run, and the candidate itself if it is already in flight this run. This matters in parallel mode: if you just claimed `#55`, then `#56` with `## Blocked by` → `#55` must wait until `#55` has landed, closed, and been rechecked. Prefer issues with a latest `## Agent Brief` comment/body; if a candidate is vague or lacks concrete acceptance criteria, do not guess — relabel/route it through `/triage` or PARK with `needs-human`. (`gh issue list --label ready-for-agent --state open`, then read each candidate's brief/body/comments, dependency sections/phrases, blocker state, and remote claim branches.)
-2. **Atomically claim one candidate:** try candidates in order until one claim succeeds.
-   - Create a unique claim commit from the *main* checkout's HEAD without touching its tree: `claim_commit=$(printf 'bc-drain claim issue #%s\nrun: %s\n' "$n" "$RUN_ID" | git commit-tree "$(git rev-parse HEAD^{tree})" -p HEAD)`. (Capture cleanly — strip any whitespace from the sha before building the refspec.)
-   - Push it without force to `refs/heads/bc-drain-claims/issue-$n`: `git push origin "${claim_commit}:refs/heads/bc-drain-claims/issue-$n"`.
-   - Success means this run owns issue `#<n>`. Failure means another runner claimed it first; skip it and try the next candidate. Do not work an issue unless the claim push succeeded.
-   - After a successful claim, add `in-progress-agent` and comment `Claimed by <run id>` for humans. These are advisory breadcrumbs; never treat them as the lock.
-3. **Create the issue's worktree:** `git fetch -q origin master`, then `git worktree add -B "bc-drain-work/issue-$n" "$WT_ROOT/issue-$n" origin/master`. This isolated checkout — **never the main repo** — is where the slice is built, so it starts from the latest landed tip and cannot collide with sibling slices. (If `add` fails on a stale worktree/branch from a crashed run, `git worktree remove --force` + `git branch -D` it first — but only after confirming no live subagent owns it.)
-4. **Build** the claimed issue in a **fresh, low-effort worker subagent**, loaded with `execute-issue.md` + issue number + **worktree path** + remote URL + the base SHA. The worker composes `diagnosing-bugs` for bug/performance issues, `tdd` for features, and `bc-autoresearch-loop` only for metric-bearing work after GREEN. It returns `READY_FOR_REVIEW`, `READY_FOR_REVIEW_RECHECK`, or terminal `PARKED`; it must not commit, push, or close before review approval. While still under `max-parallel`, return to step 1 to fill empty slots.
-5. **Review gate (driver-owned).** Keep the claim branch, `in-progress-agent`, and worktree while the slice is non-terminal. For each `READY_FOR_REVIEW*` result, collect the issue/Agent Brief/acceptance criteria, base SHA, `git diff <base-sha>`, changed files, and validation output. Dispatch **two fresh read-only subagents in parallel**:
-   - **Spec:** requirements/acceptance-criteria fidelity, missing behavior, wrong behavior, and scope creep.
-   - **Standards:** repository rules plus `code-review`'s material quality/integration/test/portability/security/docs checks.
+Stop and report if a required check fails; AFK work must not invent mid-run decisions.
 
-   Each returns `REVIEW_APPROVED` or `REVIEW_CHANGES_REQUESTED` with severity-tagged evidence. Both axes must independently approve. Critical/Important findings resume the same worker for exactly one remediation + validation pass, then trigger `READY_FOR_REVIEW_RECHECK`. A second material rejection, missing evidence, or unresolved ambiguity PARKs the issue. Reviewers are read-only: no edits, commits, pushes, issue mutations, resets, or worktree management.
-6. **Land after approval.** When both axes return `REVIEW_APPROVED`, resume the worker with that approval; it commits, pushes, and closes, returning `LANDED` or `PARKED`. If push needs a rebase that changes the reviewed diff, it revalidates and returns `READY_FOR_REVIEW_RECHECK` with the new base SHA; re-review is required and any material finding then PARKs. Do not count a review-approved diff as landed until push and close succeed.
-7. **Release on terminal return (LANDED or PARKED):** remove the worktree and its local branch (`git worktree remove --force "$WT_ROOT/issue-$n"; git branch -D "bc-drain-work/issue-$n"`), then delete the claim branch (`git push origin --delete bc-drain-claims/issue-$n`) and remove `in-progress-agent`. If any cleanup fails, report the stale worktree / branch / claim explicitly; a later runner reclaims only after a human confirms it is stale. **Never reset or clean the main checkout or another issue's worktree to "tidy up"** — that destroys other in-flight work.
-8. **PRD parent closeout:** after each LANDED release, and again at end-of-run, inspect any parent PRD issues referenced by landed/closed slices (usually `Parent #<n>` or GitHub closing/reference links from the slice set). For each open parent PRD, list its child slice issues (search references to the parent and/or parse `Parent #<n>` from slice bodies/comments). Close the PRD parent only when every child slice for that PRD is closed as completed and no child is open, parked, blocked, claimed, or in flight. Close with a comment naming the landed child issues/commit shas and validation summary. Do **not** close a PRD whose remaining children are parked or `needs-human`; report it as still blocked.
-9. **Tally:** reset the consecutive-park counter on LANDED; increment it on PARKED.
-10. **Recurring-defect tune — fix the process, not the output.** When the same failure shape appears across two or more workers or review cycles (same class of review finding, same park reason, same misreading of the worker contract), treat it as a defect in the shared instructions, not as N independent worker mistakes — hand-fixing instances leaves the defect shipping into every subsequent dispatch. Patch the **run-local worker packet** (the dispatch prompt / an addendum passed alongside `execute-issue.md`) for subsequent workers. Bounds: additive clarifications and prohibitions only; never edit `execute-issue.md` or any concept body itself (canon gate — promoting a patch into canon is a post-run Tune decision for the user); never weaken the review gate, validation requirements, or park rules — if the fix seems to require that, stop dispatching affected slices and report the pattern instead. Quote every patch verbatim in the end-of-run report together with the failure pattern that triggered it.
-11. **Stop conditions** — stop launching new work, let in-flight subagents finish and be released, then report:
-   - No eligible unclaimed issue (queue drained, or only blocked/parked/claimed issues remain).
-   - `max-iters` reached (counts issues dispatched).
-   - **Circuit-breaker:** N consecutive issues parked → stop. A run of parks means something systemic is broken (bad base state, broken env); continuing just burns tokens and makes noise.
+1. Confirm the target repo is clean, on `master`, and capture its remote and base SHA.
+2. Run `python3 ~/Sync/CONFIG/agents/scripts/publish-check.py --repo "$PWD" --remote "<remote-url>" --branch master`. Exit 0 authorizes the configured operations. Exit 2 aborts unless the user pre-agreed to commit-only-local mode. Never edit the policy to authorize this run.
+3. Confirm no-force creation/deletion of `bc-drain-claims/issue-<n>` is authorized. Without it, stop unless the user explicitly selected single-run mode. Labels/comments are advisory, not locks.
+4. Ensure `ready-for-agent`, `rework-for-agent`, `needs-human`, and `in-progress-agent` exist.
+5. Confirm issue/comment/close access and the ability to inspect PRD parent/children. A blocked, claimed, deferred, or open child keeps its parent open.
+6. Record caps: `max-iters` (default 20), `max-parallel` (default 3), 200k child-token soft cap and 300k hard cap checked only at phase boundaries, initial review plus at most three rework/re-review cycles, and two consecutive token deferrals as the launch circuit.
+7. Set worker effort explicitly: low for ordinary slices, medium for high-risk slices. Never silently inherit a higher AFK parent effort.
+8. Verify worktree support and a root outside the checkout, default `${BC_DRAIN_WT_ROOT:-${TMPDIR:-/tmp}/bc-drain-worktrees/$(basename "$PWD")}`. Never build in the main checkout. Fixed-port tooling may require `max-parallel=1`.
+9. Choose persistent recovery root `${XDG_STATE_HOME:-$HOME/.local/state}/bc-drain/recovery/<repo-key>/` and verify it can be written safely.
+10. If a global qmd collection covers the repo, run `qmd update && qmd embed` once. Workers search it but never re-index.
+11. Cache full project baseline validation once per base SHA: command, exit status, failing test IDs, concise summary, raw-log path outside the worktree, and content hash. This separates known failures from regressions without paying for a full suite every round.
 
-## End-of-run report
-Summarize: issues **LANDED** (with commit shas), **PARKED** (with the stuck reason), parent PRDs **CLOSED** (with the child issues that completed them), parent PRDs still **open/blocked**, issues still **blocked**, **packet patches** applied by the recurring-defect tune (each quoted verbatim with its triggering failure pattern, so the user can decide whether to promote it into canon or drop it), and **why the loop stopped** (drained / max-iters / circuit-breaker). Confirm the main checkout is clean and no `bc-drain-claims/*` branches or `$WT_ROOT` worktrees remain; flag any that do as needing human cleanup. In commit-only-local mode, name the branch to review.
+## Select, classify, and claim
+
+List oldest open candidates and parse dependencies from issue bodies and comments, including dependency headings and inline `blocked by` / `depends on` / `requires` / `after` / `prerequisite` references. Select only when every dependency is closed and neither claimed nor in flight. Skip `needs-human`, live claims, in-flight issues, and unresolved dependencies.
+
+Prioritize `rework-for-agent` candidates with a valid local recovery bundle. Otherwise prefer a concrete latest `## Agent Brief`; vague or decision-incomplete work becomes `HUMAN_BLOCKED`, not guessed work.
+
+Classify risk cheaply in the driver before claim: **high-risk** means compatibility replacement/retirement, migration/cutover, systemd or external-service semantics, or a broad public acceptance surface. Classification may choose effort and packet shape, but no auditor/worker is dispatched before ownership is acquired.
+
+Atomically claim by creating a claim commit from the main checkout's tree with `git commit-tree` and pushing it without force to `refs/heads/bc-drain-claims/issue-<n>`. Only the successful creator owns the issue; losers skip it without spending child tokens. Then add `in-progress-agent`, leave a run-id breadcrumb, fetch `origin/master`, and create `bc-drain-work/issue-<n>` in the external worktree root.
+
+For recovered work, follow [recovery-bundle.md](recovery-bundle.md) only after the claim succeeds. A matching base may restore directly; a changed base requires full diff inspection, validation, and full fresh review.
+
+After the claim/worktree (and any restore) succeeds, a high-risk issue gets a fresh bounded read-only contract auditor before implementation. It produces:
+
+```text
+requirement -> observable test/check
+existing public interface -> preservation test
+external semantics -> evidence required
+known baseline failure -> unchanged/regressed check
+human-only verification -> explicit deferral
+```
+
+For replacement work, inventory the complete old public interface from source, tests, and help output—not merely the issue's new-command list. Map every acceptance criterion to evidence. For executable/loader replacement, include argument/environment/cwd/symlink or installed-launcher topology/path or module-resolution and privilege-boundary behavior, not output alone. When acceptance depends on an external platform's semantics (for example systemd, a database, or an API), verify the claim against available primary documentation such as installed man pages/help or an explicitly authorized authoritative source; repository prose and string-presence tests are not sufficient evidence. Record the source/version or mark verification unavailable. This audit exists because compatibility, launcher-security, and service-semantics omissions can pass narrow new-feature tests and become expensive only after landing. An unresolved product choice becomes `HUMAN_BLOCKED`; clear engineering work continues.
+
+## Build and deterministic pre-review gate
+
+Dispatch a fresh worker with [execute-issue.md](execute-issue.md), issue/Agent Brief, acceptance matrix, worktree, remote identity, base SHA, and baseline summary. Keep validation artifacts outside the project worktree.
+
+When it returns `READY_FOR_REVIEW`, the driver—not a model reviewer—must deterministically verify:
+
+- every acceptance-matrix row has evidence;
+- status, changed-file list, and diff are in scope;
+- targeted validation passed and the baseline delta is explicit;
+- no files are staged and no unrelated files are present;
+- validation evidence and raw logs are outside the worktree.
+
+A failed gate returns fixable engineering defects for rework. Product/contract decisions, unavailable access/resources, or irreparable issue-local environment failures requiring human repair become `HUMAN_BLOCKED`; transient/repeated tooling, base, or environment failures stay out of `needs-human` and follow rework or `SYSTEMIC_FAILURE` handling. Do not spend reviewer tokens on mechanically incomplete work.
+
+## Independent lean review and bounded rework
+
+Follow [review-contract.md](review-contract.md). Dispatch fresh Spec and Standards reviewers in parallel, read-only and without the worker's reasoning or parent transcript. Both must approve. Minor findings do not block.
+
+For Critical/Important findings, retain the claim and same worktree. Launch a **fresh compact rework worker** with only the current worktree/base, acceptance matrix, unresolved findings, prior dispositions, and validation evidence. It fixes and runs targeted validation, then the deterministic gate and fresh focused re-review repeat. Do not replay an accumulating transcript.
+
+Allow the initial review plus at most three rework/re-review cycles. Continue only if material findings are resolved or the failure class materially changes. The same unresolved material finding after two attempted fixes defers immediately. This progress rule prevents superficially different patches from consuming an unbounded loop while preserving useful implementation state.
+
+After each child returns, account tokens if available:
+
+- Below 200k: normal bounded work.
+- At/above 200k soft cap: omit optional broad investigation; use only focused packets and checks.
+- At/above 300k hard cap: before launching another child, capture recovery and transition to `REWORK_DEFERRED`.
+- If accounting is unavailable, round limits are the portable fallback.
+
+Never interrupt an active mutation-capable child merely to meet a token threshold; only phase boundaries are safe because arbitrary interruption can leave partial filesystem state. Two consecutive token deferrals stop new launches and report `SYSTEMIC_FAILURE` at run level while classifying each issue `REWORK_DEFERRED` unless it independently needs a human.
+
+On deferral, use [recovery-bundle.md](recovery-bundle.md), post a portable comment:
+
+```text
+## Agent Rework Brief
+Base SHA: <sha>
+Unresolved findings: <compact list>
+Validation: <summary and durable evidence references>
+Next agent: <specific next actions>
+```
+
+Keep `ready-for-agent`, add `rework-for-agent`, remove `in-progress-agent`, mark it ineligible for the rest of this run, and release only after the bundle validates. If safe capture fails, retain evidence and follow the recovery contract's fail-safe handling—never silently delete useful work.
+
+## Driver-owned landing
+
+Only after both axes approve, the driver:
+
+1. inspects status and the exact reviewed diff;
+2. runs final relevant/full project validation once (the only full run after the cached baseline);
+3. commits only issue-authored changes using project conventions;
+4. runs publish authorization again as required;
+5. pushes `HEAD:master`;
+6. closes the issue with commit and validation evidence;
+7. releases worktree, local branch, claim, and labels; then evaluates PRD closeout.
+
+If a non-fast-forward rebase changes the reviewed diff, update the base and invalidate approval: validate and obtain fresh focused Spec and Standards approval before push. The driver owns commit/push/close so implementation and rework workers cannot bypass the independent gate.
+
+For `HUMAN_BLOCKED`, post exact decision/access/environment evidence, remove ready/in-progress, and add `needs-human`. For `SYSTEMIC_FAILURE`, stop new launches, let active children reach a safe boundary, preserve/classify each issue, and report stale resources rather than guessing or destructive cleanup.
+
+Release terminal worktrees/branches/claims only when their state is safely landed, blocked without useful local work, or validated in recovery. Never reset/clean the main checkout or another issue's worktree. Close a parent PRD only when every child is completed and none is open, blocked, deferred, claimed, or in flight.
+
+## Recurring-defect tune
+
+When the same failure shape appears across at least two workers/reviews, patch the **run-local dispatch packet** for later workers with additive clarification. Never edit canonical concept files during a drain, weaken gates, or hide a recurring failure. Quote the patch and trigger in the final report; promotion to canon is a later user decision.
+
+## Stop and report
+
+Stop when the eligible queue drains, `max-iters` is reached, two consecutive token deferrals occur, or systemic base/tool/environment failures recur. Let active children return to safe boundaries.
+
+Report LANDED commits; HUMAN_BLOCKED reasons; REWORK_DEFERRED issues and bundle/brief status; SYSTEMIC_FAILURE classifications; parent PRDs closed/open; blocked/claimed issues; recurring-defect packet patches; stop reason; per-issue and total child tokens by build/audit/review/rework phases (or `unavailable`); soft/hard crossings; review/rework rounds; repeated-finding circuit events; baseline/final full-validation counts; and any stale worktrees/claims. Confirm the main checkout is clean. In local-only mode, name the review branch and do not close issues.

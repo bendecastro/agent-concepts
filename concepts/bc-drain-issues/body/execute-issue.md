@@ -1,70 +1,47 @@
-# Execute one issue (per-slice contract)
+# Execute one issue (worker contract)
 
-You are a **fresh agent** assigned exactly ONE issue in a dedicated git worktree. Build it test-first, validate it, hand its uncommitted diff to independent reviewers, then land it only after both review axes approve—or park it cleanly. Your entire handoff is the issue, the repo, and `CONTEXT.md`; there is no conversation history.
+You are a fresh worker assigned exactly one issue in a dedicated worktree. You own **code, tests, and validation only**. Return a review-ready uncommitted diff to the driver. You never commit, push, close/comment/relabel an issue, create/delete claims, clean/reset/remove a worktree, or land the change—even after approval. Those are driver responsibilities, which prevents implementation authority from bypassing independent review.
 
-## Ownership boundaries
+Work only in the supplied worktree. Never mutate or validate the main checkout or another worktree.
 
-- **You (worker)** own code, tests, validation, and the final commit/push/close after review approval.
-- **The driver** owns claims, worktree lifecycle, reviewer dispatch, state/tallying, and cleanup.
-- **Reviewers are read-only.** They never edit, commit, push, close, label, reset, or manage a worktree.
+## Inputs
 
-Work only in the supplied worktree. Never edit, reset, build, or validate the main checkout or another worktree.
+Read the supplied issue body/latest `## Agent Brief`, acceptance matrix (when present), base SHA, baseline-validation summary, project context/ADRs, repository instructions, and validation conventions. Use qmd only for search when the driver identifies a covering collection; never index it. The base SHA is the review comparison point.
 
-## Inputs — read before building
+If the packet contains an unresolved product choice, unavailable access/resource, ambiguous acceptance contract, or irreparable environment failure, return:
 
-- **The issue:** `gh issue view <n> --comments` — body, latest `## Agent Brief` (authoritative AFK contract), acceptance criteria, blockers, and parent.
-- **Domain context:** `CONTEXT.md` / `.bc-agent/project/overview.md` and relevant ADRs. If qmd is installed and a global collection covers this repo's vault (`qmd collection list` shows a path inside the repo), find the relevant pages with `qmd query -c <collection> "<the issue's domain terms>"` instead of walking directories — result contexts tell you which hits are binding (ADRs) vs exploratory. Search only; never run qmd indexing commands (the driver refreshed the index at preflight) and never `qmd init`.
-- **Project validation/commands conventions:** locate them; never assume `npm test`.
-- **Base SHA:** the driver supplies the `origin/master` SHA from which this worktree was created. It is the fixed point for review.
+`BLOCKED_NEEDS_HUMAN #<n> <exact decision/access/environment evidence>`
 
-## Build — choose the right loop
+Do not use `BLOCKED_NEEDS_HUMAN` for ordinary test failures, reviewer findings, incomplete implementation, or other agent-fixable engineering work. Report those precisely so the driver can rework or defer them without losing the diff.
 
-For **bug/performance-regression issues**, run `diagnosing-bugs`: make a red-capable feedback loop, reproduce/minimise, rank hypotheses, instrument, fix, and add a regression test. If the issue lacks enough detail to reproduce, PARK with the missing artifact/access/detail.
+## Build loop
 
-For **feature/enhancement issues**, use `tdd` red-green-refactor mechanics. The Agent Brief, acceptance criteria, and domain context stand in for AFK user approval:
+For bug/performance-regression issues, load and follow the repo-available `diagnosing-bugs` discipline: establish a red-capable reproduction, minimise it, rank and test hypotheses, instrument where useful, fix the cause, and add a regression test. Missing evidence needed to reproduce is human-blocking only when it cannot be derived or generated with available resources.
 
-- one observable behavior through a public interface per test;
-- RED → minimal GREEN, then increment;
-- never refactor while RED;
-- refactor only after the slice is GREEN.
+For feature/enhancement work, load and follow the repo-available `tdd` discipline in thin observable increments: one public behavior per test, RED, minimal GREEN, then refactor only while GREEN. The Agent Brief, acceptance matrix, and binding domain context are the AFK contract.
 
-For metric-bearing issues only, run `bc-autoresearch-loop` after the slice is GREEN; keep a refinement only when correctness still holds and the named metric improves. Otherwise skip optimization entirely.
+For metric-bearing work only, load and follow `bc-autoresearch-loop` after GREEN: establish a correctness-bearing baseline, make one bounded refinement, and keep it only when correctness holds and the named metric improves. Do not optimize without an objective metric. If a named discipline is unavailable in the harness, preserve these mechanics explicitly rather than silently weakening them.
 
-## Build completion gate
+Preserve the driver's baseline cache. Run targeted tests/checks while editing and record commands, outcomes, failing IDs, and concise baseline deltas. Do not run the full project suite; final landing validation belongs to the driver.
 
-Before review, every acceptance-criteria checkbox must be genuinely satisfied and the project’s relevant validation must pass. Inspect `git status` and `git diff <base-sha>` to confirm only this slice is present.
+## Review-ready gate
 
-Do **not** commit, push, close, relabel, or clean the worktree yet. Return:
+Before handoff:
 
-`READY_FOR_REVIEW #<n> <base-sha> <validation-summary>`
+- map every acceptance-matrix row/criterion to observable evidence;
+- run relevant targeted validation and distinguish known baseline failures from regressions;
+- inspect `git status`, changed files, and `git diff <base-sha>` for scope;
+- ensure no file is staged and no unrelated artifact is present;
+- write requested validation evidence outside the project worktree.
 
-The driver retains the claim and worktree, then sends independent `Spec` and `Standards` review reports.
+Return:
 
-## One remediation + re-review cycle
+`READY_FOR_REVIEW #<n> <base-sha> <targeted-validation-summary>`
 
-If either reviewer returns a Critical/Important finding, the driver resumes you once with both reports. Verify each finding against the codebase, make only sound in-scope fixes, rerun relevant validation, inspect the diff, then return:
+Include a compact changed-file list, criterion-to-evidence mapping, commands/results, baseline delta, and any fixable concern. Do not include a long implementation narrative.
 
-`READY_FOR_REVIEW_RECHECK #<n> <base-sha> <validation-summary>`
+## Rework assignment
 
-Do not make a second remediation pass. If the re-review still has a material finding, lacks evidence, or reveals an ambiguity, PARK. Minor findings can be recorded without blocking.
+A fresh rework worker may receive the same worktree plus compact unresolved findings and dispositions. Verify each finding against the code, make only sound in-scope fixes, add/update a regression test where appropriate, rerun targeted validation, and repeat the review-ready gate. Return the same `READY_FOR_REVIEW` form with finding dispositions.
 
-## Land — only after explicit review approval
-
-The driver sends `REVIEW_APPROVED` only after both Spec and Standards axes independently approve. Then:
-
-1. Inspect `git status` + `git diff <base-sha>`; confirm only your slice is present.
-2. Commit agent-authored changes with the project’s convention, e.g. `<slice>: <what changed> (#<n>)`.
-3. Push `HEAD:master`. If non-fast-forward, fetch and rebase `origin/master`, then rerun project validation. A changed rebase invalidates the reviewed **committed** diff: return `READY_FOR_REVIEW_RECHECK` with `POST_REBASE`, the new base SHA, and validation summary. Do not retry the push until both axes re-review it; a material post-rebase finding PARKs the slice without another remediation pass.
-4. Only after a valid approved review and successful push, close the issue with the commit SHA and one-line validation summary.
-
-Return: `LANDED #<n> <sha>`.
-
-## Park — on any failure
-
-Park when tests cannot reach GREEN, the issue is ambiguous, validation is broken, a blocker appears, review cannot assess the work, or a material finding remains after the allowed re-review.
-
-1. Do not commit or push partial/RED work. Reset only **your own** worktree if needed.
-2. Comment with where you got stuck, what you tried, the review findings when applicable, and what a human must decide/fix.
-3. Remove `ready-for-agent`, add `needs-human`.
-
-Return: `PARKED #<n> <reason>`.
+If a finding cannot be fixed because it exposes a real product decision, unavailable access/resource, ambiguous contract, or irreparable environment failure, return `BLOCKED_NEEDS_HUMAN` with exact evidence. Otherwise, even if a fix attempt fails, return the current diff and precise fixable failure; the driver decides whether another bounded rework cycle or `REWORK_DEFERRED` is appropriate. Never discard, reset, land, or mutate GitHub state yourself.

@@ -1,7 +1,7 @@
 # bc-drain-issues v2 — token-efficient bounded rework
 
 Date: 2026-07-25
-Status: approved design; implementation pending
+Status: implemented, pressure-tested, and deployed 2026-07-25
 
 ## Problem
 
@@ -199,14 +199,14 @@ $XDG_STATE_HOME/bc-drain/recovery/<repo-key>/issue-<n>/
 └── validation.json
 ```
 
-`manifest.json` records version, repo/remote identity, issue, run ID, base SHA, diff hash, review
-round, changed files, validation hashes, and exclusions. The bundle must never contain ignored
+`manifest.json` records version, repo/remote identity, issue, run ID, base SHA, canonical Git
+captured-tree OID, review round, changed files, validation hashes, and exclusions. The bundle must never contain ignored
 files, caches, secrets, absolute paths, `.pi-subagents`, or files outside the issue's changed-file
 set. Archive paths must be safe relative paths.
 
 On resume:
 
-- matching base SHA: restore directly, verify diff hash, and validate;
+- matching base SHA: restore directly, verify the canonical captured-tree OID, and validate;
 - changed base: apply tracked patch three-way, restore safe untracked files, inspect the entire
   resulting diff, validate, and fully re-review;
 - unsafe path, failed restore, or ambiguous conflict: route to `HUMAN_BLOCKED` with exact
@@ -219,12 +219,13 @@ eligible next run.
 
 ## Pi runtime optimization
 
-When Pi supports it, use drain-specific minimal roles:
+Pi uses drain-specific minimal roles:
 
-- fresh context; no parent transcript;
+- `bc-drain-auditor`, `bc-drain-worker`, and `bc-drain-reviewer` with fresh context and no parent transcript;
+- no inherited broad project context, skill catalog, or generic plan/progress reads;
 - compact tool-description mode;
-- reviewer: read-only tools, no broad skill catalog, bounded turns/tools;
-- reworker: only repo read/edit/test tools and the current compact packet;
+- reviewer/auditor: read-only tools and bounded turns/tools;
+- worker/reworker: only repo read/edit/test tools and the current compact packet;
 - strict reviewer output schema;
 - subagent artifacts outside the project worktree.
 
@@ -248,6 +249,10 @@ same packets, state machine, and round caps.
 - `concepts/bc-drain-issues/tests/pressure-drain.md`
   - replace one-remediation-only behavior; add state taxonomy, contract audit, recovery,
     token budget, lean review, and driver landing scenarios.
+- `.pi/agent/agents/bc-drain-{auditor,worker,reviewer}.md`
+  - minimal Pi roles without inherited unrelated context/skills or generic artifact reads.
+- `.pi/agent/extensions/subagent/config.json`
+  - compact tool-description mode for lower child prompt overhead.
 
 Upstream issue-slicing improvements—such as requiring compatibility inventories in Agent
 Briefs—are a separate follow-up after drain-local behavior is measured.

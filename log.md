@@ -3,6 +3,10 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-07-25] implement | bc-drain-issues v2 bounded rework tested and deployed
+
+Deployed the approved v2 canon: high-risk contract audit with authoritative external-semantics and launcher-topology checks, cached baseline, minimal Pi roles and lean dual review, up to three fresh same-worktree rework cycles, phase-boundary token circuits, explicit human/deferred/systemic states, canonical-tree recovery bundles, and driver-owned landing. Gate A passed 17/17 with no real mutation. Same-model/medium Gate B used 277,012 child tokens versus v1b's 315,474 (12.2% fewer), passed both reviews and unchanged-baseline correctness, and stayed below the provisional 300k boundary and 500k deployment gate; cost increased in the fixture, so only the token improvement is claimed.
+
 ## [2026-07-16] test+implement | tdd + diagnosing-bugs skill fix → re-run PASS
 
 After prior FAIL pressure runs, hardened both skills then re-ran under Grok:

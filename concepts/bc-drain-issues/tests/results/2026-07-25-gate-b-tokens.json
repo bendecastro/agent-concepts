@@ -1,0 +1,41 @@
+{
+  "date": "2026-07-25",
+  "metric": "child totalTokens summed once per unique Pi child session; parent excluded",
+  "fixture_base": "fe43c3fc3e68fba08f84e635d42d0e231a44ee77",
+  "model": "openai-codex/gpt-5.6-sol",
+  "thinking": "medium",
+  "v1b": {
+    "roles": {
+      "worker": 131246,
+      "spec_review": 93128,
+      "standards_review": 91100
+    },
+    "total_tokens": 315474,
+    "total_cost_usd": 0.791866,
+    "final_validation": "7 passed, 1 known baseline failure"
+  },
+  "v2d": {
+    "roles": {
+      "contract_audit": 12583,
+      "worker": 152992,
+      "deterministic_gate_rework": 50425,
+      "spec_review": 24104,
+      "standards_review_and_lifecycle_resume": 36908
+    },
+    "phase_cumulative_tokens": {
+      "after_audit": 12583,
+      "after_worker": 165575,
+      "after_rework": 216000,
+      "after_reviews": 277012
+    },
+    "total_tokens": 277012,
+    "total_cost_usd": 0.920646,
+    "final_validation": "34 passed, 1 known baseline failure"
+  },
+  "token_delta": -38462,
+  "token_reduction_percent": 12.192,
+  "cost_delta_usd": 0.12878,
+  "gate_500k": "PASS",
+  "provisional_boundary_300k": "BELOW",
+  "correctness": "PASS"
+}
