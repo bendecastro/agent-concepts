@@ -419,3 +419,13 @@ status/staged/unrelated inspection is dropped because the driver's deterministic
 The gate verifies coverage from the matrix→file map, so a skipped touched row is rejected. Gate A is
 now 22 checks and passes 22/22. Accepted trade-off recorded: a regression on an untouched,
 unimplicated row surfaces at final full validation rather than mid-round.
+
+## [2026-07-27] test | contested Gate B fixture for bc-drain-issues v3
+Built the contested fixture v3's Gate B needs, since v2's clean fixture never exercises selective
+re-review or narrowed rework. `tests/fixtures/contested-gate-b/make-fixture.py` generates a
+disposable bc-svc compatibility/systemd sandbox (hidden reload/apply-change commands omitted from
+the Agent Brief, an argument-boundary defect in an unmapped internal helper, contradictory
+repository prose vs primary systemd docs, a known baseline failure, and a dependent child issue),
+plus PATH-first gh/push/publish stubs over a JSON issue store. Verified reproducible base SHA
+across arms, correct baseline failure, claim create-once/reject-twice, and stub resolution.
+Runner handoff prompt in AGENT-PROMPT.md; v2 arm pinned at canon 745fe01. Gate B still NOT RUN.

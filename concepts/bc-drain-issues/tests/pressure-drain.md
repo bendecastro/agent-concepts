@@ -48,7 +48,10 @@ re-reviews, so the v3 A/B must force at least two rework rounds with findings fr
 and must compare against v2 on the identical fixture/base/model/effort. Required v3 outcomes are
 every v2 outcome below, plus: the untouched axis is not re-dispatched, every landed diff carries
 a standing approval from both axes bound to its hash, and total child tokens are lower than v2's
-on that fixture. **Status: NOT RUN.**
+on that fixture. The fixture and its runner prompt are built:
+[fixtures/contested-gate-b/](fixtures/contested-gate-b/README.md) — `make-fixture.py` generates
+byte-identical sandboxes per arm (verified: independent runs produce the same base SHA), with the
+v2 arm pinned at canon commit `745fe01`. **Status: NOT RUN.**
 
 Create one throwaway high-risk fixture combining compatibility replacement, a deliberately incomplete new-interface list, old public interfaces discoverable in source/tests/help, systemd/external-service semantics, at least two genuine fixable defects that the old flow may discover only in review but v2 may prevent in audit/deterministic gates, a known baseline failure, and a non-fast-forward/recovery-cap boundary scenario. Stub all GitHub and push effects but use real model child runs for audit, build, both reviews, rework when needed, and re-review when needed.
 
