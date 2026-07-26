@@ -42,6 +42,16 @@ Include a compact changed-file list, criterion-to-evidence mapping, commands/res
 
 ## Rework assignment
 
-A fresh rework worker may receive the same worktree plus compact unresolved findings and dispositions. Verify each finding against the code, make only sound in-scope fixes, add/update a regression test where appropriate, rerun targeted validation, and repeat the review-ready gate. Return the same `READY_FOR_REVIEW` form with finding dispositions.
+A fresh rework worker receives the same worktree, the round's review packet paths, compact unresolved findings and dispositions, and a driver-computed **implicated row set**: the acceptance-matrix rows tied to those findings. Read the packet's `diff.patch`, `acceptance-matrix.json`, and `validation.json` instead of re-deriving them.
+
+Verify each finding against the code, make only sound in-scope fixes, and add or update a regression test where appropriate. Then re-evidence a **narrowed** scope rather than the whole matrix:
+
+- every implicated row;
+- every additional row whose mapped files your fix actually touched—you know what you changed, and `packet.json` carries the matrix→file map;
+- every check that was already failing or known-flaky.
+
+Evidence for rows that are neither implicated nor touched carries forward unchanged; do not re-run it. Inspect only your own delta for scope. The driver's deterministic gate independently re-checks full status, staged files, unrelated files, and coverage across carried-forward plus new evidence, so duplicating that inspection buys nothing.
+
+Return the same `READY_FOR_REVIEW` form with finding dispositions, plus the rows you re-evidenced and the rows you carried forward.
 
 If a finding cannot be fixed because it exposes a real product decision, unavailable access/resource, ambiguous contract, or irreparable environment failure, return `BLOCKED_NEEDS_HUMAN` with exact evidence. Otherwise, even if a fix attempt fails, return the current diff and precise fixable failure; the driver decides whether another bounded rework cycle or `REWORK_DEFERRED` is appropriate. Never discard, reset, land, or mutate GitHub state yourself.

@@ -410,3 +410,12 @@ on gate rejection or any Critical finding; and reproduction commands are gated o
 Gate A extended to 21 checks and passes 21/21, verified against a negative control on the pre-v3 canon.
 Gate B is NOT run and must use a contested fixture, so the change is pressure-tested but not yet
 token-validated.
+
+## [2026-07-26] implement+test | bc-drain-issues v3 narrowed rework scope
+Extended the review-economy pass to the reworker, which was still repeating the full review-ready gate
+each round. It now re-evidences only the rows implicated by the findings, rows whose mapped files its
+fix touched, and anything already failing or flaky; other evidence carries forward, and full-scope
+status/staged/unrelated inspection is dropped because the driver's deterministic gate re-checks it.
+The gate verifies coverage from the matrix→file map, so a skipped touched row is rejected. Gate A is
+now 22 checks and passes 22/22. Accepted trade-off recorded: a regression on an untouched,
+unimplicated row surfaces at final full validation rather than mid-round.

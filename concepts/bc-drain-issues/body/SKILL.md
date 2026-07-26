@@ -77,7 +77,7 @@ Dispatch a fresh worker with [execute-issue.md](execute-issue.md), issue/Agent B
 
 When it returns `READY_FOR_REVIEW`, the driver—not a model reviewer—must deterministically verify:
 
-- every acceptance-matrix row has evidence;
+- every acceptance-matrix row has evidence—on a rework round, carried-forward plus newly re-evidenced rows together, with the matrix→file map proving every row the fix touched was actually re-evidenced;
 - status, changed-file list, and diff are in scope;
 - targeted validation passed and the baseline delta is explicit;
 - no files are staged and no unrelated files are present;
@@ -93,7 +93,7 @@ Follow [review-contract.md](review-contract.md). Dispatch fresh read-only review
 
 Record each approval as a standing record bound to the packet's `diff_sha256`. After a rework round, re-dispatch the axis that raised the findings, plus any axis whose deterministic invalidation trigger fired on the rework delta; an axis holding a standing approval over untouched scope is not asked the same question twice. An unmappable delta invalidates both axes—ambiguity costs a review, never an assumption.
 
-For Critical/Important findings, retain the claim and same worktree. Launch a **fresh compact rework worker** with only the current worktree/base, acceptance matrix, unresolved findings, prior dispositions, and validation evidence. It fixes and runs targeted validation, then the deterministic gate, packet refresh, and selective focused re-review repeat. Do not replay an accumulating transcript.
+For Critical/Important findings, retain the claim and same worktree. Launch a **fresh compact rework worker** with only the current worktree/base, the round's packet paths, unresolved findings, prior dispositions, validation evidence, and the driver-computed implicated row set (the acceptance-matrix rows those findings touch). It fixes and runs targeted validation, then the deterministic gate, packet refresh, and selective focused re-review repeat. Do not replay an accumulating transcript.
 
 Allow the initial review plus at most three rework/re-review cycles. Continue only if material findings are resolved or the failure class materially changes. The same unresolved material finding after two attempted fixes defers immediately. This progress rule prevents superficially different patches from consuming an unbounded loop while preserving useful implementation state.
 

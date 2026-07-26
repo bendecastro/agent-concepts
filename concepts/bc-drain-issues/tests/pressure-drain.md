@@ -31,11 +31,13 @@ Run the driver/worker/reviewer contracts, using deterministic fixtures or harnes
 20. **Review tiers and one-way escalation.** An ordinary slice is tier 1 with a recorded reason and a single combined reviewer emitting `axis` per finding plus `axes_covered`. A high-risk slice, and any diff touching a public interface, security/privilege boundary, or installed/launcher topology, is tier 2. Assert a pre-review gate rejection escalates that issue to tier 2 permanently, a tier-1 Critical finding escalates for all later rounds, and no fixture ever lowers a tier. A tier-1 approval stands for both axes and is invalidated by either axis's trigger.
 21. **Gated reproduction budget.** Instrument reviewer commands. Assert no reproduction command precedes a named candidate Critical/Important finding, that at most two run per finding, that refuted hypotheses produce no finding and no prose, and that the full suite is never run.
 
+22. **Narrowed rework scope with carry-forward.** The rework packet carries the round's packet paths, findings/dispositions, and the driver-computed implicated row set. Assert the reworker re-evidences implicated rows, rows whose mapped files its fix touched, and previously failing/flaky checks, while other evidence carries forward unrerun. Seed a reworker that touches a mapped file but omits that row's evidence and assert the deterministic gate rejects it from the matrix→file map. Assert the reworker performs no full-scope status/staged/unrelated inspection and that the driver's gate performs it instead, and that a fix breaking an unimplicated untouched row is still caught by final full validation before commit.
+
 ### Gate A pass criteria
 
-All 21 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
+All 22 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
 
-**Current v3 result: PASS (2026-07-26) — 21/21**, via [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-26-gate-a.md](results/2026-07-26-gate-a.md). Checks 18–21 cover the review-economy controls; v3's Gate B is outstanding, so the review-economy change is not yet token-validated.
+**Current v3 result: PASS (2026-07-26) — 22/22**, via [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-26-gate-a.md](results/2026-07-26-gate-a.md). Checks 18–22 cover the review- and rework-economy controls; v3's Gate B is outstanding, so the review-economy change is not yet token-validated.
 
 **Prior v2 result: PASS (2026-07-25) — 17/17.** Durable runner: [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-25-gate-a.md](results/2026-07-25-gate-a.md). The passing run used real local Git/worktree/recovery operations, PATH-first mutation stubs, no network, a canonical tree-OID round trip, and current check-6 role/skill/artifact controls. Historical v1 runs remain provenance only.
 

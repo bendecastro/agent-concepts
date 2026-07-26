@@ -426,11 +426,40 @@ assert_(all(c<=2 for c in counts.values()),'reproduction budget exceeded')
 assert_(not any('full-suite' in (e['cmd'] or '') for e in repro_log),'reviewer ran the full suite')
 dump('21/reproduction-budget.json',{'log':repro_log,'per_finding_counts':counts,'max_per_finding':2,'none_before_hypothesis':True,'refuted_hypothesis':{'finding':'F2 important: arg passthrough','refuted':True,'reported':False,'prose_emitted':False},'full_suite_run':False})
 
-checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,22)}
-ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; untouched axis not re-dispatched; stale/single-axis standing approval blocks landing',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite'}
+# Narrowed rework scope: carry-forward evidence with driver-verified touched-row coverage.
+worker_contract=(CONCEPT/'body/execute-issue.md').read_text()
+for required in ('implicated row set','carries forward unchanged','Inspect only your own delta'):
+ assert_(required in worker_contract,f'worker contract missing {required}')
+assert_('carried-forward plus newly re-evidenced rows' in skill_text,'gate does not verify carry-forward coverage')
+ROWS={'acceptance-1':['tool.sh'],'acceptance-2':['service.unit'],'acceptance-3':['launcher']}
+PRIOR_EV={r:'round-1 evidence' for r in ROWS}
+def rework_scope(implicated,touched_files,failing):
+ touched_rows={r for r,fs in ROWS.items() if set(fs)&set(touched_files)}
+ return {'re_evidence':sorted(set(implicated)|touched_rows|set(failing)),'carry_forward':sorted(set(ROWS)-set(implicated)-touched_rows-set(failing))}
+def gate_coverage(scope,submitted,touched_files):
+ touched_rows={r for r,fs in ROWS.items() if set(fs)&set(touched_files)}
+ missing=sorted((set(scope['re_evidence'])|touched_rows)-set(submitted))
+ covered=set(submitted)|set(scope['carry_forward'])
+ return {'missing_required_evidence':missing,'full_matrix_covered':covered>=set(ROWS),'accepted':not missing and covered>=set(ROWS)}
+narrow=rework_scope(['acceptance-2'],['service.unit'],[])
+assert_(narrow['re_evidence']==['acceptance-2'] and narrow['carry_forward']==['acceptance-1','acceptance-3'],'rework scope not narrowed')
+good=gate_coverage(narrow,['acceptance-2'],['service.unit']); assert_(good['accepted'],'narrowed rework rejected')
+spill=rework_scope(['acceptance-2'],['service.unit','tool.sh'],[])
+assert_('acceptance-1' in spill['re_evidence'],'touched row not pulled into scope')
+skipped=gate_coverage(spill,['acceptance-2'],['service.unit','tool.sh'])
+assert_(skipped['missing_required_evidence']==['acceptance-1'] and not skipped['accepted'],'gate accepted a skipped touched row')
+flaky=rework_scope(['acceptance-2'],['service.unit'],['acceptance-3'])
+assert_(flaky['re_evidence']==['acceptance-2','acceptance-3'],'previously failing check not always re-run')
+# Regression on an untouched, unimplicated row: mid-round narrowing misses it, final full validation does not.
+latent={'row':'acceptance-3','touched':False,'implicated':False,'seen_in_rework_round':False,'seen_in_final_full_validation':True,'landed':False}
+assert_(not latent['seen_in_rework_round'] and latent['seen_in_final_full_validation'] and not latent['landed'],'latent regression could land')
+dump('22/rework-scope.json',{'rows':ROWS,'prior_evidence':PRIOR_EV,'narrowed_round':{'scope':narrow,'gate':good},'touched_row_pulled_in':{'scope':spill,'gate_on_omission':skipped},'failing_always_rerun':flaky,'reworker_full_scope_inspection':False,'driver_gate_owns_full_scope':True,'latent_regression':latent})
+
+checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,23)}
+ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; untouched axis not re-dispatched; stale/single-axis standing approval blocks landing',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation'}
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
-summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'all_21_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}
+summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'all_22_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}
 dump('summary.json',summary)
 (ROOT/'SANDBOX-READY').write_text('Gate A artifacts retained for inspection.\n')
 print(ROOT)
