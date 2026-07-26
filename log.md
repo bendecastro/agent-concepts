@@ -435,3 +435,10 @@ Fixed independently generated Gate B arms receiving different base SHAs because 
 wall-clock commit times. The generator now pins author/committer dates and disables commit signing for
 the fixture commit. Two generations separated by two seconds produced identical base SHA
 `8bacfc040999afe6702d7a86ff3642f6bbce80e7`; the expected 3-pass/1-known-failure baseline still held.
+
+## [2026-07-27] test | bc-drain-issues v3 contested Gate B attempt
+Ran the pinned v2 arm first with `openai-codex/gpt-5.6-sol` at explicit medium effort. It used
+205,781 child tokens through audit, build, one rework, and two dual-axis review rounds; after the
+single citation fix both axes approved. Because the fixture produced only one rework round, the
+runner stopped before landing or starting v3, as the two-round contest criterion requires. Recorded
+the attempt as INVALID, not an A/B result; v3 remains deployed but not token-validated.

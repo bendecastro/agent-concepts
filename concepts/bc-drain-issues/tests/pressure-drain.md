@@ -51,7 +51,7 @@ a standing approval from both axes bound to its hash, and total child tokens are
 on that fixture. The fixture and its runner prompt are built:
 [fixtures/contested-gate-b/](fixtures/contested-gate-b/README.md) — `make-fixture.py` generates
 byte-identical sandboxes per arm (verified: independent runs produce the same base SHA), with the
-v2 arm pinned at canon commit `745fe01`. **Status: NOT RUN.**
+v2 arm pinned at canon commit `745fe01`. **Status: ATTEMPTED 2026-07-27, INVALID — fixture did not contest the run.** The v2 arm produced one rework round, then both axes approved; the runner stopped before landing or starting v3 because the gate requires at least two rework rounds. This is not a v3 pass/fail or token comparison. Durable report: [results/2026-07-27-gate-b-contested.md](results/2026-07-27-gate-b-contested.md); machine totals: [results/2026-07-27-gate-b-contested-tokens.json](results/2026-07-27-gate-b-contested-tokens.json). v3 may stay deployed, but Gate B remains outstanding and the revision is still not token-validated.
 
 Create one throwaway high-risk fixture combining compatibility replacement, a deliberately incomplete new-interface list, old public interfaces discoverable in source/tests/help, systemd/external-service semantics, at least two genuine fixable defects that the old flow may discover only in review but v2 may prevent in audit/deterministic gates, a known baseline failure, and a non-fast-forward/recovery-cap boundary scenario. Stub all GitHub and push effects but use real model child runs for audit, build, both reviews, rework when needed, and re-review when needed.
 
