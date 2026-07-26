@@ -395,3 +395,18 @@ Ingested the user's Herdr agent-skill clipping into a new `herdr` reference conc
 
 ## [2026-07-25] design | bc-drain-issues v2 token efficiency
 Recorded the user-approved bounded-rework design after issue #29 consumed about 1.89M child tokens across discarded drain attempts and a normal rescue. The pending design preserves both review axes while adding contract audits for high-risk slices, lean structured reviews, fixable-vs-human states, persistent recovery bundles, driver-owned landing, and provisional 200k/300k phase-boundary token caps; live canon remains unchanged until pressure/A-B tests pass.
+
+## [2026-07-25] implement+test+deploy | bc-drain-issues v2 (backfilled)
+Backfilled bookkeeping omitted on the day: v2 canon (SKILL/execute-issue/review-contract/recovery-bundle),
+minimal Pi drain roles, and compact subagent tool descriptions shipped after Gate A 17/17 and Gate B
+277,012 child tokens (12.2% below v1b). The index entry had still described v1.
+
+## [2026-07-26] implement+test | bc-drain-issues v3 review economy
+Reworked the review phases for token cost: the driver now materializes one review packet per round and
+reviewers may not re-derive status/diff; approvals became standing records bound to the reviewed diff
+hash, so only the raising axis plus any axis whose deterministic delta trigger fired re-reviews, while
+landing still requires both axes on the final hash; axis count is tiered by risk with one-way escalation
+on gate rejection or any Critical finding; and reproduction commands are gated on a formed finding.
+Gate A extended to 21 checks and passes 21/21, verified against a negative control on the pre-v3 canon.
+Gate B is NOT run and must use a contested fixture, so the change is pressure-tested but not yet
+token-validated.

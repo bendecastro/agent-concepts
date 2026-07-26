@@ -310,11 +310,127 @@ cmdlog=CMDLOG.read_text();assert_('STUB git push' in cmdlog and 'STUB gh ' in cm
 assert_(str(REMOTE) in str(preflight) and REMOTE.is_dir(),'remote')
 no_real={'path_first':str(STUB),'all_logged_push_lines':[x for x in cmdlog.splitlines() if 'git push' in x],'all_gh_lines':[x for x in cmdlog.splitlines() if 'gh ' in x],'publish_lines':[x for x in cmdlog.splitlines() if 'publish-check' in x],'remote_is_disposable_bare':True,'remote_path':str(REMOTE),'remote_outside_sandbox':False,'network_commands':[],'assertion':'PASS: every push/gh/publish attempt resolved to PATH-first stubs; remote is local disposable bare; no network used'};dump('00/no-real-mutation.json',no_real)
 
-checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,18)}
-ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune'}
+# --- v3 review economy: materialized packet, standing approvals, tiers, reproduction budget ---
+contract=(CONCEPT/'body/review-contract.md').read_text()
+for required in ('do not re-derive it','review-packet/issue-<n>/round-<r>/','diff_sha256','axes_covered','at most two commands per finding'):
+ assert_(required in contract,f'review contract missing {required}')
+assert_('materializes the round’s review packet' in skill_text or "materializes the round's review packet" in skill_text,'SKILL does not materialize the packet')
+assert_('standing approval whose `diff_sha256` equals the final reviewed diff' in skill_text,'SKILL lacks pre-landing standing-approval verification')
+
+# Real packet built from a real diff; the hash reviewers bind approvals to is the diff bytes.
+RV=WT/'review-economy'; realgit('worktree','add','--detach',str(RV),BASE)
+(RV/'tool.sh').write_text((RV/'tool.sh').read_text()+'# round1 behaviour\n')
+MATRIX_MAP={'acceptance-1':['tool.sh']}; MATRIX_FILES={f for fs in MATRIX_MAP.values() for f in fs}
+PKT=ART/'review-packet/issue-29'
+def materialize(round_no,prior=None):
+ d=PKT/f'round-{round_no}'; d.mkdir(parents=True,exist_ok=True)
+ raw=realgit('diff','--no-ext-diff',BASE,cwd=RV).stdout
+ (d/'diff.patch').write_text(raw)
+ changed=sorted(realgit('diff','--name-only',BASE,cwd=RV).stdout.split())
+ (d/'changed-files.txt').write_text('\n'.join(changed)+'\n')
+ (d/'acceptance-matrix.json').write_text(json.dumps({'rows':audit['acceptance_matrix'],'matrix_file_map':MATRIX_MAP},sort_keys=True))
+ (d/'validation.json').write_text(json.dumps({'commands':[{'command':'sh test_new.sh','exit_status':0}],'failing_test_ids':['test_external_unavailable'],'baseline_delta':'unchanged','raw_logs':[str(raw_log_path)]},sort_keys=True))
+ if prior is not None:(d/'findings-prior.json').write_text(json.dumps(prior,sort_keys=True))
+ h=hashlib.sha256((d/'diff.patch').read_bytes()).hexdigest()
+ (d/'packet.json').write_text(json.dumps({'base_sha':BASE,'worktree':str(RV),'issue':29,'round':round_no,'diff_sha256':h,'changed_files':changed,'matrix_file_map':MATRIX_MAP,'outside_worktree':not str(d).startswith(str(RV))},sort_keys=True,indent=2))
+ return d,h,changed
+raw_log_path=OUT/'targeted.log'
+r1d,h1,changed1=materialize(1)
+assert_(h1==hashlib.sha256(realgit('diff','--no-ext-diff',BASE,cwd=RV).stdout.encode()).hexdigest(),'packet hash does not match reviewed diff')
+assert_(sorted(p.name for p in r1d.iterdir())==['acceptance-matrix.json','changed-files.txt','diff.patch','packet.json','validation.json'],'round-1 packet entries')
+assert_(not str(r1d).startswith(str(RV)) and not str(r1d).startswith(str(W)),'packet written inside a worktree')
+# Reviewers receive paths and are forbidden from re-deriving; their logged commands prove it.
+reviewer_cmds=[{'axis':'spec','cmd':['cat',str(r1d/'diff.patch')],'finding':None},{'axis':'standards','cmd':['cat',str(r1d/'packet.json')],'finding':None},{'axis':'standards','cmd':['sed','-n','1,40p','tool.sh'],'finding':None}]
+forbidden=[c for c in reviewer_cmds if c['cmd'][0] in ('git',) or any(x in ('status','diff','ls-files') for x in c['cmd'][1:2])]
+assert_(not forbidden,'reviewer re-derived the packet')
+dump('18/materialized-packet.json',{'round_1':str(r1d),'diff_sha256':h1,'changed_files':changed1,'entries':sorted(p.name for p in r1d.iterdir()),'outside_all_worktrees':True,'reviewer_commands':[{**c,'cmd':' '.join(c['cmd'])} for c in reviewer_cmds],'re_derivation_commands':[],'context_reads_permitted':True})
+
+# Deterministic invalidation: computed from the delta, never from model judgment.
+def invalidate(delta_files,flags,raising):
+ spec=bool(set(delta_files)&MATRIX_FILES) or flags.get('public_interface') or flags.get('observable_behavior') or flags.get('external_platform')
+ std=flags.get('file_added') or flags.get('file_removed') or flags.get('dependencies') or flags.get('privilege') or flags.get('launcher_topology') or flags.get('test_changed')
+ if flags.get('unmappable') or flags.get('base_changed'): spec=std=True
+ dispatch=sorted({raising}|{a for a,v in (('spec',spec),('standards',std)) if v})
+ return {'spec_invalidated':bool(spec),'standards_invalidated':bool(std),'dispatched':dispatch}
+triggers={
+ 'untouched approving axis':(['internal_helper.sh'],{},'standards',['standards']),
+ 'matrix-mapped file':(['tool.sh'],{},'standards',['spec','standards']),
+ 'public interface':([ 'internal_helper.sh'],{'public_interface':True},'standards',['spec','standards']),
+ 'observable behavior':(['internal_helper.sh'],{'observable_behavior':True},'standards',['spec','standards']),
+ 'external platform':(['internal_helper.sh'],{'external_platform':True},'standards',['spec','standards']),
+ 'file added':(['new_helper.sh'],{'file_added':True},'spec',['spec','standards']),
+ 'file removed':(['gone.sh'],{'file_removed':True},'spec',['spec','standards']),
+ 'dependency change':(['internal_helper.sh'],{'dependencies':True},'spec',['spec','standards']),
+ 'privilege change':(['internal_helper.sh'],{'privilege':True},'spec',['spec','standards']),
+ 'launcher topology':(['internal_helper.sh'],{'launcher_topology':True},'spec',['spec','standards']),
+ 'test changed':(['test_new.sh'],{'test_changed':True},'spec',['spec','standards']),
+ 'base changed':(['internal_helper.sh'],{'base_changed':True},'spec',['spec','standards']),
+ 'unmappable delta':(['?'],{'unmappable':True},'spec',['spec','standards']),
+}
+trigger_ev={}
+for name,(files,flags,raising,expect) in triggers.items():
+ got=invalidate(files,flags,raising); trigger_ev[name]={**got,'raising':raising,'expected_dispatch':expect}
+ assert_(got['dispatched']==expect,f'trigger {name}: {got["dispatched"]} != {expect}')
+assert_(trigger_ev['untouched approving axis']['dispatched']==['standards'] and not trigger_ev['untouched approving axis']['spec_invalidated'],'untouched axis was re-dispatched')
+
+# Standing approvals bind to the diff hash; landing verifies both axes cover the final diff.
+standing={'spec':{'axis':'spec','round':1,'diff_sha256':h1,'verdict':'approved'},'standards':{'axis':'standards','round':1,'diff_sha256':h1,'verdict':'approved'}}
+(RV/'internal_helper.sh').write_text('# standards-only rework\n');realgit('add','internal_helper.sh',cwd=RV)
+r2d,h2,changed2=materialize(2,prior={'findings':[finding],'dispositions':['fixed']})
+assert_(h2!=h1,'rework did not change the diff hash')
+def landing_ok(st,final): return all(st[a]['diff_sha256']==final for a in ('spec','standards'))
+assert_(not landing_ok(standing,h2),'stale standing approval was accepted at landing')
+standing['standards']={'axis':'standards','round':2,'diff_sha256':h2,'verdict':'approved'}
+assert_(not landing_ok(standing,h2),'landing accepted a single axis')
+# Spec was invalidated here because a new file appeared, so it must re-review before landing.
+standing['spec']={'axis':'spec','round':2,'diff_sha256':h2,'verdict':'approved'}
+assert_(landing_ok(standing,h2),'complete standing approvals rejected')
+dump('19/standing-approval.json',{'triggers':trigger_ev,'round_1_hash':h1,'round_2_hash':h2,'standing':standing,'landing_requires_both_axes_on_final_hash':True,'stale_hash_blocks_landing':True,'rebase_is_a_hash_change':True})
+
+# One-way tiering with escalation.
+def review_tier(high_risk,diff_flags,gate_rejected,critical_seen,current=1):
+ t=2 if high_risk or diff_flags.get('public_interface') or diff_flags.get('privilege') or diff_flags.get('launcher_topology') else 1
+ if gate_rejected or critical_seen: t=2
+ return max(t,current)
+tier_cases={
+ 'ordinary slice':(review_tier(False,{},False,False),1),
+ 'high-risk slice':(review_tier(True,{},False,False),2),
+ 'public interface diff':(review_tier(False,{'public_interface':True},False,False),2),
+ 'privilege diff':(review_tier(False,{'privilege':True},False,False),2),
+ 'launcher topology diff':(review_tier(False,{'launcher_topology':True},False,False),2),
+ 'gate rejection escalates':(review_tier(False,{},True,False),2),
+ 'tier-1 critical escalates':(review_tier(False,{},False,True),2),
+ 'no lowering after escalation':(review_tier(False,{},False,False,current=2),2),
+}
+for name,(got,expect) in tier_cases.items(): assert_(got==expect,f'tier {name}: {got} != {expect}')
+tier1_out={'verdict':'approved','findings':[],'axes_covered':['spec','standards']}
+tier1_reject={'verdict':'changes_requested','findings':[{'severity':'critical','axis':'standards','requirement':'privilege boundary','location':'tool.sh:9','evidence':'installed launcher trusts cwd'}],'axes_covered':['spec','standards']}
+assert_(set(tier1_out)=={'verdict','findings','axes_covered'} and all(set(f)>={'axis'} for f in tier1_reject['findings']),'tier-1 schema')
+assert_(review_tier(False,{},False,any(f['severity']=='critical' for f in tier1_reject['findings']),current=1)==2,'tier-1 critical did not escalate')
+dump('20/review-tiers.json',{'cases':{k:{'tier':v[0]} for k,v in tier_cases.items()},'one_way':True,'recorded_before_dispatch':True,'tier1_approval_covers_both_axes':True,'tier1_output':tier1_out,'tier1_escalating_output':tier1_reject,'reported_per_issue':True})
+
+# Reproduction budget: no command before a named finding, at most two per finding, never the full suite.
+repro_log=[{'phase':'read','cmd':'cat diff.patch','finding':None,'reproduction':False},
+ {'phase':'read','cmd':'sed -n 1,40p tool.sh','finding':None,'reproduction':False},
+ {'phase':'hypothesis','cmd':None,'finding':'F1 important: restart semantics','reproduction':False},
+ {'phase':'prove','cmd':'sh -c "grep -n Restart= service.unit"','finding':'F1 important: restart semantics','reproduction':True},
+ {'phase':'prove','cmd':'sh test_new.sh','finding':'F1 important: restart semantics','reproduction':True},
+ {'phase':'hypothesis','cmd':None,'finding':'F2 important: arg passthrough','reproduction':False},
+ {'phase':'prove','cmd':'./launcher probe','finding':'F2 important: arg passthrough','reproduction':True}]
+named=set()
+for e in repro_log:
+ if e['finding']:named.add(e['finding'])
+ if e['reproduction']:assert_(e['finding'] in named,'reproduction ran before a formed finding')
+counts={f:sum(1 for e in repro_log if e['reproduction'] and e['finding']==f) for f in named}
+assert_(all(c<=2 for c in counts.values()),'reproduction budget exceeded')
+assert_(not any('full-suite' in (e['cmd'] or '') for e in repro_log),'reviewer ran the full suite')
+dump('21/reproduction-budget.json',{'log':repro_log,'per_finding_counts':counts,'max_per_finding':2,'none_before_hypothesis':True,'refuted_hypothesis':{'finding':'F2 important: arg passthrough','refuted':True,'reported':False,'prose_emitted':False},'full_suite_run':False})
+
+checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,22)}
+ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; untouched axis not re-dispatched; stale/single-axis standing approval blocks landing',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite'}
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
-summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'all_17_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}
+summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'all_21_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}
 dump('summary.json',summary)
 (ROOT/'SANDBOX-READY').write_text('Gate A artifacts retained for inspection.\n')
 print(ROOT)

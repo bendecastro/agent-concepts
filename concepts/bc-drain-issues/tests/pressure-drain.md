@@ -26,13 +26,27 @@ Run the driver/worker/reviewer contracts, using deterministic fixtures or harnes
 16. **Rebase invalidation.** Stub non-fast-forward and a rebase that changes the reviewed diff. The driver validates and obtains fresh focused Spec and Standards approval before retrying push. No stale approval lands.
 17. **Termination/reporting and tune.** Report state lists, parent status, stop reason, per-phase/per-issue/total tokens or `unavailable`, caps crossed, round counts, repeated-finding events, baseline/final full-suite counts, recovery status, packet tune patches/triggers, and stale resources. A recurring defect may only additively patch later run-local packets and cannot weaken canon/gates.
 
+18. **Driver-materialized packet and no re-derivation.** Each round writes the six-entry packet outside every worktree with base SHA, worktree, issue, round, `diff_sha256`, axis scope, and acceptance-matrix→file map. `diff_sha256` matches the actual reviewed diff bytes. Reviewer packets carry those paths and forbid `git status`/`git diff`/changed-file re-derivation; assert no reviewer command log contains them. Repository context reads remain permitted.
+19. **Standing approval and selective re-review.** Approvals record axis, round, and `diff_sha256`. Seed a rework delta touching only the raising axis's scope and assert the approving axis is not re-dispatched while its standing approval is retained. Seed each invalidation trigger in turn—acceptance-matrix-mapped file, public interface/observable behavior, external-platform interaction, added/removed file, dependency/privilege/launcher-topology change, changed/deleted test, changed base SHA—and assert the corresponding axis is re-dispatched. Seed an unmappable delta and assert both axes re-review. Assert the landed diff hash equals every axis's standing `diff_sha256`, and that a hash mismatch blocks landing until a focused re-review runs.
+20. **Review tiers and one-way escalation.** An ordinary slice is tier 1 with a recorded reason and a single combined reviewer emitting `axis` per finding plus `axes_covered`. A high-risk slice, and any diff touching a public interface, security/privilege boundary, or installed/launcher topology, is tier 2. Assert a pre-review gate rejection escalates that issue to tier 2 permanently, a tier-1 Critical finding escalates for all later rounds, and no fixture ever lowers a tier. A tier-1 approval stands for both axes and is invalidated by either axis's trigger.
+21. **Gated reproduction budget.** Instrument reviewer commands. Assert no reproduction command precedes a named candidate Critical/Important finding, that at most two run per finding, that refuted hypotheses produce no finding and no prose, and that the full suite is never run.
+
 ### Gate A pass criteria
 
-All 17 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
+All 21 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
 
-**Current v2 result: PASS (2026-07-25) — 17/17.** Durable runner: [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-25-gate-a.md](results/2026-07-25-gate-a.md). The passing run used real local Git/worktree/recovery operations, PATH-first mutation stubs, no network, a canonical tree-OID round trip, and current check-6 role/skill/artifact controls. Historical v1 runs remain provenance only.
+**Current v3 result: PASS (2026-07-26) — 21/21**, via [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-26-gate-a.md](results/2026-07-26-gate-a.md). Checks 18–21 cover the review-economy controls; v3's Gate B is outstanding, so the review-economy change is not yet token-validated.
 
-## Gate B — #29-shaped same-model token A/B deployment gate
+**Prior v2 result: PASS (2026-07-25) — 17/17.** Durable runner: [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-25-gate-a.md](results/2026-07-25-gate-a.md). The passing run used real local Git/worktree/recovery operations, PATH-first mutation stubs, no network, a canonical tree-OID round trip, and current check-6 role/skill/artifact controls. Historical v1 runs remain provenance only.
+
+## Gate B — same-model token A/B deployment gate
+
+**v3 requires a contested fixture.** Selective re-review has no effect on a run that never
+re-reviews, so the v3 A/B must force at least two rework rounds with findings from a single axis,
+and must compare against v2 on the identical fixture/base/model/effort. Required v3 outcomes are
+every v2 outcome below, plus: the untouched axis is not re-dispatched, every landed diff carries
+a standing approval from both axes bound to its hash, and total child tokens are lower than v2's
+on that fixture. **Status: NOT RUN.**
 
 Create one throwaway high-risk fixture combining compatibility replacement, a deliberately incomplete new-interface list, old public interfaces discoverable in source/tests/help, systemd/external-service semantics, at least two genuine fixable defects that the old flow may discover only in review but v2 may prevent in audit/deterministic gates, a known baseline failure, and a non-fast-forward/recovery-cap boundary scenario. Stub all GitHub and push effects but use real model child runs for audit, build, both reviews, rework when needed, and re-review when needed.
 

@@ -38,11 +38,12 @@ Stop and report if a required check fails; AFK work must not invent mid-run deci
 4. Ensure `ready-for-agent`, `rework-for-agent`, `needs-human`, and `in-progress-agent` exist.
 5. Confirm issue/comment/close access and the ability to inspect PRD parent/children. A blocked, claimed, deferred, or open child keeps its parent open.
 6. Record caps: `max-iters` (default 20), `max-parallel` (default 3), 200k child-token soft cap and 300k hard cap checked only at phase boundaries, initial review plus at most three rework/re-review cycles, and two consecutive token deferrals as the launch circuit.
-7. Set worker effort explicitly: low for ordinary slices, medium for high-risk slices. Never silently inherit a higher AFK parent effort.
-8. Verify worktree support and a root outside the checkout, default `${BC_DRAIN_WT_ROOT:-${TMPDIR:-/tmp}/bc-drain-worktrees/$(basename "$PWD")}`. Never build in the main checkout. Fixed-port tooling may require `max-parallel=1`.
-9. Choose persistent recovery root `${XDG_STATE_HOME:-$HOME/.local/state}/bc-drain/recovery/<repo-key>/` and verify it can be written safely.
-10. If a global qmd collection covers the repo, run `qmd update && qmd embed` once. Workers search it but never re-index.
-11. Cache full project baseline validation once per base SHA: command, exit status, failing test IDs, concise summary, raw-log path outside the worktree, and content hash. This separates known failures from regressions without paying for a full suite every round.
+7. Choose a run artifact root outside every worktree for review packets, `review-packet/issue-<n>/round-<r>/`, and verify it is writable.
+8. Set worker effort explicitly: low for ordinary slices, medium for high-risk slices. Never silently inherit a higher AFK parent effort.
+9. Verify worktree support and a root outside the checkout, default `${BC_DRAIN_WT_ROOT:-${TMPDIR:-/tmp}/bc-drain-worktrees/$(basename "$PWD")}`. Never build in the main checkout. Fixed-port tooling may require `max-parallel=1`.
+10. Choose persistent recovery root `${XDG_STATE_HOME:-$HOME/.local/state}/bc-drain/recovery/<repo-key>/` and verify it can be written safely.
+11. If a global qmd collection covers the repo, run `qmd update && qmd embed` once. Workers search it but never re-index.
+12. Cache full project baseline validation once per base SHA: command, exit status, failing test IDs, concise summary, raw-log path outside the worktree, and content hash. This separates known failures from regressions without paying for a full suite every round.
 
 ## Select, classify, and claim
 
@@ -51,6 +52,8 @@ List oldest open candidates and parse dependencies from issue bodies and comment
 Prioritize `rework-for-agent` candidates with a valid local recovery bundle. Otherwise prefer a concrete latest `## Agent Brief`; vague or decision-incomplete work becomes `HUMAN_BLOCKED`, not guessed work.
 
 Classify risk cheaply in the driver before claim: **high-risk** means compatibility replacement/retirement, migration/cutover, systemd or external-service semantics, or a broad public acceptance surface. Classification may choose effort and packet shape, but no auditor/worker is dispatched before ownership is acquired.
+
+Record a **review tier** with its classification reason at the same time. High-risk slices are tier 2 (two independent axes). Ordinary slices start at tier 1 (one combined reviewer) and escalate permanently on a pre-review gate rejection or any Critical finding; see [review-contract.md](review-contract.md). Tier is recorded before dispatch and reported per issue so the cheap path stays auditable; it never lowers mid-issue.
 
 Atomically claim by creating a claim commit from the main checkout's tree with `git commit-tree` and pushing it without force to `refs/heads/bc-drain-claims/issue-<n>`. Only the successful creator owns the issue; losers skip it without spending child tokens. Then add `in-progress-agent`, leave a run-id breadcrumb, fetch `origin/master`, and create `bc-drain-work/issue-<n>` in the external worktree root.
 
@@ -80,13 +83,17 @@ When it returns `READY_FOR_REVIEW`, the driver—not a model reviewer—must det
 - no files are staged and no unrelated files are present;
 - validation evidence and raw logs are outside the worktree.
 
+A passed gate materializes the round's review packet once, outside every worktree: `packet.json` (base SHA, worktree, issue ref, round, `diff_sha256`, axis scope, acceptance-matrix→file map), `diff.patch`, `changed-files.txt`, `acceptance-matrix.json`, `validation.json`, and on re-review `findings-prior.json`. Reviewers consume these paths instead of re-deriving status and diff, and `diff_sha256` is the identity that standing approvals bind to. A gate rejection escalates the issue to tier 2 permanently.
+
 A failed gate returns fixable engineering defects for rework. Product/contract decisions, unavailable access/resources, or irreparable issue-local environment failures requiring human repair become `HUMAN_BLOCKED`; transient/repeated tooling, base, or environment failures stay out of `needs-human` and follow rework or `SYSTEMIC_FAILURE` handling. Do not spend reviewer tokens on mechanically incomplete work.
 
 ## Independent lean review and bounded rework
 
-Follow [review-contract.md](review-contract.md). Dispatch fresh Spec and Standards reviewers in parallel, read-only and without the worker's reasoning or parent transcript. Both must approve. Minor findings do not block.
+Follow [review-contract.md](review-contract.md). Dispatch fresh read-only reviewers on the round's packet, without the worker's reasoning or parent transcript: two independent axes in parallel at tier 2, one combined reviewer at tier 1. Both axes must stand approved. Minor findings do not block.
 
-For Critical/Important findings, retain the claim and same worktree. Launch a **fresh compact rework worker** with only the current worktree/base, acceptance matrix, unresolved findings, prior dispositions, and validation evidence. It fixes and runs targeted validation, then the deterministic gate and fresh focused re-review repeat. Do not replay an accumulating transcript.
+Record each approval as a standing record bound to the packet's `diff_sha256`. After a rework round, re-dispatch the axis that raised the findings, plus any axis whose deterministic invalidation trigger fired on the rework delta; an axis holding a standing approval over untouched scope is not asked the same question twice. An unmappable delta invalidates both axes—ambiguity costs a review, never an assumption.
+
+For Critical/Important findings, retain the claim and same worktree. Launch a **fresh compact rework worker** with only the current worktree/base, acceptance matrix, unresolved findings, prior dispositions, and validation evidence. It fixes and runs targeted validation, then the deterministic gate, packet refresh, and selective focused re-review repeat. Do not replay an accumulating transcript.
 
 Allow the initial review plus at most three rework/re-review cycles. Continue only if material findings are resolved or the failure class materially changes. The same unresolved material finding after two attempted fixes defers immediately. This progress rule prevents superficially different patches from consuming an unbounded loop while preserving useful implementation state.
 
@@ -113,7 +120,7 @@ Keep `ready-for-agent`, add `rework-for-agent`, remove `in-progress-agent`, mark
 
 ## Driver-owned landing
 
-Only after both axes approve, the driver:
+Only after verifying that **every axis holds a standing approval whose `diff_sha256` equals the final reviewed diff**, the driver:
 
 1. inspects status and the exact reviewed diff;
 2. runs final relevant/full project validation once (the only full run after the cached baseline);
@@ -123,7 +130,7 @@ Only after both axes approve, the driver:
 6. closes the issue with commit and validation evidence;
 7. releases worktree, local branch, claim, and labels; then evaluates PRD closeout.
 
-If a non-fast-forward rebase changes the reviewed diff, update the base and invalidate approval: validate and obtain fresh focused Spec and Standards approval before push. The driver owns commit/push/close so implementation and rework workers cannot bypass the independent gate.
+A rebase that changes the reviewed diff changes its hash, so no standing approval covers it: update the base, validate, and obtain fresh focused approval on both axes before push. The driver owns commit/push/close so implementation and rework workers cannot bypass the independent gate.
 
 For `HUMAN_BLOCKED`, post exact decision/access/environment evidence, remove ready/in-progress, and add `needs-human`. For `SYSTEMIC_FAILURE`, stop new launches, let active children reach a safe boundary, preserve/classify each issue, and report stale resources rather than guessing or destructive cleanup.
 
@@ -137,4 +144,4 @@ When the same failure shape appears across at least two workers/reviews, patch t
 
 Stop when the eligible queue drains, `max-iters` is reached, two consecutive token deferrals occur, or systemic base/tool/environment failures recur. Let active children return to safe boundaries.
 
-Report LANDED commits; HUMAN_BLOCKED reasons; REWORK_DEFERRED issues and bundle/brief status; SYSTEMIC_FAILURE classifications; parent PRDs closed/open; blocked/claimed issues; recurring-defect packet patches; stop reason; per-issue and total child tokens by build/audit/review/rework phases (or `unavailable`); soft/hard crossings; review/rework rounds; repeated-finding circuit events; baseline/final full-validation counts; and any stale worktrees/claims. Confirm the main checkout is clean. In local-only mode, name the review branch and do not close issues.
+Report LANDED commits; HUMAN_BLOCKED reasons; REWORK_DEFERRED issues and bundle/brief status; SYSTEMIC_FAILURE classifications; parent PRDs closed/open; blocked/claimed issues; recurring-defect packet patches; stop reason; per-issue and total child tokens by build/audit/review/rework phases (or `unavailable`); soft/hard crossings; review/rework rounds; repeated-finding circuit events; baseline/final full-validation counts; per-issue review tier with its reason and any escalation trigger; axes dispatched per round and re-reviews skipped by standing approval; and any stale worktrees/claims. Confirm the main checkout is clean. In local-only mode, name the review branch and do not close issues.
