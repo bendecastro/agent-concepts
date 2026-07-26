@@ -429,3 +429,9 @@ repository prose vs primary systemd docs, a known baseline failure, and a depend
 plus PATH-first gh/push/publish stubs over a JSON issue store. Verified reproducible base SHA
 across arms, correct baseline failure, claim create-once/reject-twice, and stub resolution.
 Runner handoff prompt in AGENT-PROMPT.md; v2 arm pinned at canon 745fe01. Gate B still NOT RUN.
+
+## [2026-07-27] test | deterministic contested Gate B fixture commits
+Fixed independently generated Gate B arms receiving different base SHAs because Git embedded their
+wall-clock commit times. The generator now pins author/committer dates and disables commit signing for
+the fixture commit. Two generations separated by two seconds produced identical base SHA
+`8bacfc040999afe6702d7a86ff3642f6bbce80e7`; the expected 3-pass/1-known-failure baseline still held.

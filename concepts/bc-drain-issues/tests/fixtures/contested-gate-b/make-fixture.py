@@ -22,6 +22,11 @@ REPO, REMOTE, STUB, DOCS, STATE = (ROOT/'repo', ROOT/'remote.git', ROOT/'stubs',
 for p in (REPO, STUB, DOCS, STATE):
     p.mkdir(parents=True, exist_ok=True)
 GIT = shutil.which('git') or sys.exit('git is required')
+FIXTURE_GIT_ENV = {
+    **os.environ,
+    'GIT_AUTHOR_DATE': '2000-01-01T00:00:00+0000',
+    'GIT_COMMITTER_DATE': '2000-01-01T00:00:00+0000',
+}
 
 
 def git(*a, cwd=REPO, **kw):
@@ -149,7 +154,10 @@ git('init', '-b', 'master', str(REPO), cwd=ROOT)
 git('config', 'user.email', 'fixture@example.invalid')
 git('config', 'user.name', 'Gate B Fixture')
 git('add', '.')
-git('commit', '-m', 'bc-svc fixture base')
+# Pin commit metadata so separately generated arms have the same base SHA even
+# when their repositories are created at different wall-clock times.
+git('-c', 'commit.gpgSign=false', 'commit', '-m', 'bc-svc fixture base',
+    env=FIXTURE_GIT_ENV)
 BASE = git('rev-parse', 'HEAD')
 git('init', '--bare', str(REMOTE), cwd=ROOT)
 git('--git-dir', str(REMOTE), 'fetch', str(REPO), f'{BASE}:refs/heads/master', cwd=ROOT)
