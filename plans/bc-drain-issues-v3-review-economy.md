@@ -1,7 +1,7 @@
 # bc-drain-issues v3 — review-phase economy
 
 Date: 2026-07-26
-Status: proposed; Gate A extended, Gate B model A/B outstanding
+Status: implemented; Gate A 22/22, deterministic Gate B harness ready, real model A/B outstanding
 
 ## Problem
 
@@ -66,9 +66,11 @@ After each rework round the driver computes the new reviewed diff and evaluates,
 
 The raising axis always re-reviews. The approving axis re-reviews only on a trigger. Before
 landing, the driver verifies each axis holds a standing approval whose `diff_sha256` equals the
-final reviewed diff; any mismatch forces a focused re-review of that axis. So "both axes
-approved the landed diff" remains literally true — the change is that an untouched axis is not
-asked the same question twice.
+final reviewed diff; any mismatch forces a focused re-review of that axis. In the deterministic
+Gate B trace, Spec legitimately skips both intermediate Standards-only rounds but its S0 approval
+is stale after each golden transition, so v3 must run one focused Spec hash-sync on S2 before
+landing. Thus "both axes approved the landed diff" remains literally true — the change is that
+an untouched axis is not asked the same question at every intermediate state.
 
 The "cannot be mapped deterministically" row is the fail-safe: ambiguity costs a review, never
 an assumption.
@@ -145,7 +147,9 @@ stay parallel.
 On a clean issue the win is small: lever B's removed derivation plus lever C's single reviewer,
 roughly 24k–37k saved out of 277k. On a contested three-round issue the win is structural —
 selective re-review removes most of up to six re-review dispatches. v3 should therefore be
-measured on a **contested** fixture; a clean fixture cannot see its main effect.
+measured on a **deterministic contested trace**; a clean or probabilistically single-rework
+fixture cannot see its main effect. The original natural contested fixture remains ecological
+pressure for autonomous discovery, not the deployment gate.
 
 ## Canonical implementation changes
 
@@ -171,6 +175,10 @@ Gate A (deterministic) must show:
   finding) force tier 2;
 - reproduction commands never precede a formed finding.
 
-Gate B (model A/B) must use a **contested** high-risk fixture that forces at least two rework
-rounds, and must show fewer child tokens than v2 with no correctness regression and both axes
-standing approved at landing. v3 is not validated until this runs.
+Gate B (model A/B) uses `tests/fixtures/contested-gate-b-trace/`: a deterministic S0 → S1 → S2
+high-risk trace with exactly two Standards-only reworks, locked v2/v3 dispatch, real Pi lifecycle
+token evidence, independently checked reviewer/reworker outcomes, and a mandatory focused final
+Spec hash-sync. It must show fewer child tokens than v2 with no correctness regression and both
+axes standing approved on the exact S2 hash. The 2026-07-27 natural contested attempt remains
+invalid ecological evidence after only one rework. v3 is not token-validated until the real
+trace A/B runs.

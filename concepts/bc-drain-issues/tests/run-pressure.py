@@ -320,6 +320,10 @@ assert_('standing approval whose `diff_sha256` equals the final reviewed diff' i
 # Real packet built from a real diff; the hash reviewers bind approvals to is the diff bytes.
 RV=WT/'review-economy'; realgit('worktree','add','--detach',str(RV),BASE)
 (RV/'tool.sh').write_text((RV/'tool.sh').read_text()+'# round1 behaviour\n')
+# Present before initial review but deliberately outside the acceptance map, so
+# later edits can exercise Standards-only re-review without an add/remove trigger.
+(RV/'internal_helper.sh').write_text('# initial internal helper\n')
+realgit('add','internal_helper.sh',cwd=RV)
 MATRIX_MAP={'acceptance-1':['tool.sh']}; MATRIX_FILES={f for fs in MATRIX_MAP.values() for f in fs}
 PKT=ART/'review-packet/issue-29'
 def materialize(round_no,prior=None):
@@ -373,19 +377,32 @@ for name,(files,flags,raising,expect) in triggers.items():
  assert_(got['dispatched']==expect,f'trigger {name}: {got["dispatched"]} != {expect}')
 assert_(trigger_ev['untouched approving axis']['dispatched']==['standards'] and not trigger_ev['untouched approving axis']['spec_invalidated'],'untouched axis was re-dispatched')
 
-# Standing approvals bind to the diff hash; landing verifies both axes cover the final diff.
+# Standing approvals bind to exact diff hashes. Two edits to the already-present,
+# acceptance-unmapped helper raise Standards findings without invalidating Spec.
+# v3 skips Spec at the intermediate rounds, but the stale hash still cannot land;
+# a final focused Spec hash-sync review is therefore mandatory.
+def landing_ok(st,final): return all(st[a]['verdict']=='approved' and st[a]['diff_sha256']==final for a in ('spec','standards'))
 standing={'spec':{'axis':'spec','round':1,'diff_sha256':h1,'verdict':'approved'},'standards':{'axis':'standards','round':1,'diff_sha256':h1,'verdict':'approved'}}
-(RV/'internal_helper.sh').write_text('# standards-only rework\n');realgit('add','internal_helper.sh',cwd=RV)
-r2d,h2,changed2=materialize(2,prior={'findings':[finding],'dispositions':['fixed']})
-assert_(h2!=h1,'rework did not change the diff hash')
-def landing_ok(st,final): return all(st[a]['diff_sha256']==final for a in ('spec','standards'))
-assert_(not landing_ok(standing,h2),'stale standing approval was accepted at landing')
+(RV/'internal_helper.sh').write_text('# standards-only rework one\n')
+r2_dispatch=invalidate(['internal_helper.sh'],{},'standards')['dispatched']
+assert_(r2_dispatch==['standards'],'v3 re-dispatched untouched Spec in round 2')
+r2d,h2,changed2=materialize(2,prior={'findings':[finding],'dispositions':['fixed F1']})
+assert_(h2!=h1,'first Standards-only rework did not change the diff hash')
 standing['standards']={'axis':'standards','round':2,'diff_sha256':h2,'verdict':'approved'}
-assert_(not landing_ok(standing,h2),'landing accepted a single axis')
-# Spec was invalidated here because a new file appeared, so it must re-review before landing.
-standing['spec']={'axis':'spec','round':2,'diff_sha256':h2,'verdict':'approved'}
-assert_(landing_ok(standing,h2),'complete standing approvals rejected')
-dump('19/standing-approval.json',{'triggers':trigger_ev,'round_1_hash':h1,'round_2_hash':h2,'standing':standing,'landing_requires_both_axes_on_final_hash':True,'stale_hash_blocks_landing':True,'rebase_is_a_hash_change':True})
+assert_(not landing_ok(standing,h2),'stale round-1 Spec approval was accepted for round 2')
+
+(RV/'internal_helper.sh').write_text('# standards-only rework two\n')
+r3_dispatch=invalidate(['internal_helper.sh'],{},'standards')['dispatched']
+assert_(r3_dispatch==['standards'],'v3 re-dispatched untouched Spec in round 3')
+r3d,h3,changed3=materialize(3,prior={'findings':[finding],'dispositions':['fixed F2']})
+assert_(h3 not in (h1,h2),'second Standards-only rework did not produce a new diff hash')
+standing['standards']={'axis':'standards','round':3,'diff_sha256':h3,'verdict':'approved'}
+assert_(not landing_ok(standing,h3),'stale round-1 Spec approval was accepted for final landing')
+standing['spec']={'axis':'spec','round':3,'diff_sha256':h3,'verdict':'approved','review_kind':'final_hash_sync'}
+assert_(landing_ok(standing,h3),'exact-hash dual approval rejected after final Spec sync')
+v2_dispatch=[{'round':1,'axes':['spec','standards']},{'round':2,'axes':['spec','standards']},{'round':3,'axes':['spec','standards']}]
+v3_dispatch=[{'round':1,'axes':['spec','standards']},{'round':2,'axes':r2_dispatch},{'round':3,'axes':r3_dispatch},{'round':'final-sync','axes':['spec']}]
+dump('19/standing-approval.json',{'triggers':trigger_ev,'round_hashes':{'1':h1,'2':h2,'3':h3},'intermediate_spec_skipped':True,'dispatch':{'v2':v2_dispatch,'v3':v3_dispatch},'standing':standing,'landing_requires_both_axes_on_final_hash':True,'stale_hash_blocks_intermediate_and_final_landing':True,'final_spec_hash_sync_required':True,'rebase_is_a_hash_change':True})
 
 # One-way tiering with escalation.
 def review_tier(high_risk,diff_flags,gate_rejected,critical_seen,current=1):
@@ -456,7 +473,7 @@ assert_(not latent['seen_in_rework_round'] and latent['seen_in_final_full_valida
 dump('22/rework-scope.json',{'rows':ROWS,'prior_evidence':PRIOR_EV,'narrowed_round':{'scope':narrow,'gate':good},'touched_row_pulled_in':{'scope':spill,'gate_on_omission':skipped},'failing_always_rerun':flaky,'reworker_full_scope_inspection':False,'driver_gate_owns_full_scope':True,'latent_regression':latent})
 
 checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,23)}
-ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; untouched axis not re-dispatched; stale/single-axis standing approval blocks landing',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation'}
+ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation'}
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
 summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'all_22_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}

@@ -1,11 +1,16 @@
-# Contested Gate B fixture
+# Contested ecological-pressure fixture
 
-Gate B is the model-token A/B that decides whether a drain revision actually costs less.
-v2's Gate B used a *clean* fixture: one worker, one rework, no re-review. v3's main levers —
-selective re-review and narrowed rework — never engage on such a run, so v3 needs a fixture that
-is **contested**: one that plausibly produces material review findings across more than one round.
+This is the **natural/ecological pressure test**, not the deployment Gate B. It asks autonomous
+agents to discover a plausibly contested issue without coaching. Because discovery is
+probabilistic, it cannot guarantee the two rework rounds needed to measure v3's selective
+re-review lever. The deterministic deployment gate lives in `../contested-gate-b-trace/`.
 
-`make-fixture.py` builds that fixture. Run it once per arm so both arms start byte-identical.
+v2's earlier Gate B used a *clean* fixture: one worker, one rework, no re-review. This fixture
+preserves a harder natural workload and remains useful evidence about audit/build/review behavior,
+but it may produce an invalid comparison when the contested topology does not emerge.
+
+`make-fixture.py` builds the ecological fixture. Run it once per arm so both arms start
+byte-identical.
 
 ```sh
 python3 make-fixture.py            # prints the sandbox root
@@ -53,12 +58,14 @@ Both arms run the identical fixture, model, and effort; only the canon differs.
 Verify the arms differ before spending tokens: the v2 `review-contract.md` contains no
 `do not re-derive it`; the v3 one does.
 
-## Pass criteria
+## Ecological observation criteria
 
-Inherit every v2 Gate B outcome in `../../pressure-drain.md`, plus:
+This fixture cannot by itself approve deployment. A natural A/B is comparable only when it
+inherits every v2 Gate B outcome in `../../pressure-drain.md` and:
 
-- the run is genuinely contested — at least two rework rounds occurred, otherwise the fixture
-  failed to do its job and the comparison says nothing about v3's main levers;
+- the run is genuinely contested — at least two rework rounds occurred; otherwise record the
+  attempt as invalid ecological evidence, do not run/compare the second arm merely to manufacture
+  a number, and use the deterministic trace for deployment Gate B;
 - an axis holding a standing approval was not re-dispatched when its trigger did not fire;
 - every landed diff carries a standing approval from **both** axes bound to its exact hash;
 - total v3 child tokens are lower than v2's on this fixture;
@@ -66,8 +73,9 @@ Inherit every v2 Gate B outcome in `../../pressure-drain.md`, plus:
 - restart-policy claims cite `primary-docs/`, not `docs/README.md`;
 - `tests/test_known_flaky.sh` still fails at landing and nothing else regressed.
 
-Record the result in `../../results/` following the shape of `2026-07-25-gate-b.md`, and update
-`../../pressure-drain.md` plus `../../../CONCEPT.md` with the measured numbers.
+Record every result—including invalid topology—in `../../results/` following the shape of
+`2026-07-25-gate-b.md`. Update `../../pressure-drain.md` and `../../../CONCEPT.md` with its status,
+but never present this probabilistic fixture as the deterministic deployment gate.
 
 If v3 is **not** cheaper, that is a real result and must be recorded as such — the levers were
 reasoned from one clean measurement, and a contested run is exactly the evidence that could

@@ -1,15 +1,19 @@
-# Gate B runner prompt
+# Natural ecological-pressure runner prompt
 
-Hand the block below to the agent that will run the gate. It assumes that agent has a shell, can
-run `bc-drain-issues`, and can report per-child token usage. Replace nothing except the two
-bracketed values in step 0 if your harness differs.
+This prompt preserves the autonomous contested A/B as ecological evidence. It is **not** the
+deterministic deployment Gate B; use `../contested-gate-b-trace/AGENT-PROMPT.md` for that gate.
+
+Hand the block below to the agent that will run this natural pressure test. It assumes that agent
+has a shell, can run `bc-drain-issues`, and can report per-child token usage. Replace nothing
+except the two bracketed values in step 0 if your harness differs.
 
 ---
 
-You are running **Gate B** for `bc-drain-issues`: a controlled A/B measuring whether the v3
-review-economy revision costs fewer child tokens than v2 on a contested issue, without losing
-correctness. This is a measurement, not a feature task. Your job is to produce trustworthy
-numbers, including numbers that make v3 look bad.
+You are running the **natural ecological-pressure A/B** for `bc-drain-issues`: an autonomous
+measurement of whether the v3 review-economy revision costs fewer child tokens on a naturally
+contested issue without losing correctness. This run cannot authorize deployment because its
+rework topology is probabilistic. This is a measurement, not a feature task. Produce trustworthy
+results, including invalid topology or numbers that make v3 look bad.
 
 ## 0. Setup
 
@@ -65,10 +69,11 @@ Never edit `agents/policies/`. Never push anything anywhere real.
 
 ## 5. Judge honestly
 
-Report **PASS** only if every criterion in the fixture README holds, including:
+Report a **valid ecological comparison** only if every criterion in the fixture README holds,
+including:
 
-- at least two rework rounds actually occurred (otherwise the fixture failed to contest the run,
-  and the comparison tells you nothing about v3's main levers — say so and stop);
+- at least two rework rounds actually occurred (otherwise record the run as invalid ecological
+  evidence, say so, stop, and do not treat it as deployment Gate B);
 - both axes hold a standing approval bound to the exact landed diff hash;
 - an axis whose trigger did not fire was not re-dispatched;
 - `reload` and `apply-change` still work;
@@ -91,4 +96,5 @@ section recording limitations. Add machine totals as a sibling `.json`. Then upd
 measured numbers, append an `AGENTS.md`-style entry to `agents/log.md`, and commit. Push only if
 `agents/scripts/publish-check.py` authorizes it.
 
-State clearly in the result whether v3 should stay deployed.
+State clearly that deployment remains governed by the deterministic trace Gate B, regardless of
+this ecological result.

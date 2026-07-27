@@ -27,7 +27,7 @@ Run the driver/worker/reviewer contracts, using deterministic fixtures or harnes
 17. **Termination/reporting and tune.** Report state lists, parent status, stop reason, per-phase/per-issue/total tokens or `unavailable`, caps crossed, round counts, repeated-finding events, baseline/final full-suite counts, recovery status, packet tune patches/triggers, and stale resources. A recurring defect may only additively patch later run-local packets and cannot weaken canon/gates.
 
 18. **Driver-materialized packet and no re-derivation.** Each round writes the six-entry packet outside every worktree with base SHA, worktree, issue, round, `diff_sha256`, axis scope, and acceptance-matrix→file map. `diff_sha256` matches the actual reviewed diff bytes. Reviewer packets carry those paths and forbid `git status`/`git diff`/changed-file re-derivation; assert no reviewer command log contains them. Repository context reads remain permitted.
-19. **Standing approval and selective re-review.** Approvals record axis, round, and `diff_sha256`. Seed a rework delta touching only the raising axis's scope and assert the approving axis is not re-dispatched while its standing approval is retained. Seed each invalidation trigger in turn—acceptance-matrix-mapped file, public interface/observable behavior, external-platform interaction, added/removed file, dependency/privilege/launcher-topology change, changed/deleted test, changed base SHA—and assert the corresponding axis is re-dispatched. Seed an unmappable delta and assert both axes re-review. Assert the landed diff hash equals every axis's standing `diff_sha256`, and that a hash mismatch blocks landing until a focused re-review runs.
+19. **Standing approval and selective re-review.** Approvals record axis, round, and `diff_sha256`. Include one existing acceptance-unmapped helper in the initial review, then apply two successive Standards-only edits to it. Assert v3 dispatches only Standards at both intermediate rounds, while v2's locked comparison dispatches both axes. After each edit, assert the stale Spec hash blocks landing even when Standards approves the current hash; after the second edit, require one focused final Spec hash-sync and assert landing succeeds only when both axes approve that exact final hash. Preserve every invalidation trigger case—acceptance-matrix-mapped file, public interface/observable behavior, external-platform interaction, added/removed file, dependency/privilege/launcher-topology change, changed/deleted test, changed base SHA—and assert the corresponding axis re-dispatches. Seed an unmappable delta and assert both axes re-review.
 20. **Review tiers and one-way escalation.** An ordinary slice is tier 1 with a recorded reason and a single combined reviewer emitting `axis` per finding plus `axes_covered`. A high-risk slice, and any diff touching a public interface, security/privilege boundary, or installed/launcher topology, is tier 2. Assert a pre-review gate rejection escalates that issue to tier 2 permanently, a tier-1 Critical finding escalates for all later rounds, and no fixture ever lowers a tier. A tier-1 approval stands for both axes and is invalidated by either axis's trigger.
 21. **Gated reproduction budget.** Instrument reviewer commands. Assert no reproduction command precedes a named candidate Critical/Important finding, that at most two run per finding, that refuted hypotheses produce no finding and no prose, and that the full suite is never run.
 
@@ -37,25 +37,40 @@ Run the driver/worker/reviewer contracts, using deterministic fixtures or harnes
 
 All 22 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
 
-**Current v3 result: PASS (2026-07-26) — 22/22**, via [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-26-gate-a.md](results/2026-07-26-gate-a.md). Checks 18–22 cover the review- and rework-economy controls; v3's Gate B is outstanding, so the review-economy change is not yet token-validated.
+**Current v3 result: PASS (2026-07-27) — 22/22**, via [run-pressure.py](run-pressure.py); original recorded result: [results/2026-07-26-gate-a.md](results/2026-07-26-gate-a.md). Check 19 was re-run with two existing-helper Standards-only reworks, skipped intermediate Spec dispatches, stale-hash landing rejection, and final focused Spec hash synchronization. Checks 18–22 cover the review- and rework-economy controls; v3's real Gate B remains outstanding, so the review-economy change is not yet token-validated.
 
 **Prior v2 result: PASS (2026-07-25) — 17/17.** Durable runner: [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-25-gate-a.md](results/2026-07-25-gate-a.md). The passing run used real local Git/worktree/recovery operations, PATH-first mutation stubs, no network, a canonical tree-OID round trip, and current check-6 role/skill/artifact controls. Historical v1 runs remain provenance only.
 
 ## Gate B — same-model token A/B deployment gate
 
-**v3 requires a contested fixture.** Selective re-review has no effect on a run that never
-re-reviews, so the v3 A/B must force at least two rework rounds with findings from a single axis,
-and must compare against v2 on the identical fixture/base/model/effort. Required v3 outcomes are
-every v2 outcome below, plus: the untouched axis is not re-dispatched, every landed diff carries
-a standing approval from both axes bound to its hash, and total child tokens are lower than v2's
-on that fixture. The fixture and its runner prompt are built:
-[fixtures/contested-gate-b/](fixtures/contested-gate-b/README.md) — `make-fixture.py` generates
-byte-identical sandboxes per arm (verified: independent runs produce the same base SHA), with the
-v2 arm pinned at canon commit `745fe01`. **Status: ATTEMPTED 2026-07-27, INVALID — fixture did not contest the run.** The v2 arm produced one rework round, then both axes approved; the runner stopped before landing or starting v3 because the gate requires at least two rework rounds. This is not a v3 pass/fail or token comparison. Durable report: [results/2026-07-27-gate-b-contested.md](results/2026-07-27-gate-b-contested.md); machine totals: [results/2026-07-27-gate-b-contested-tokens.json](results/2026-07-27-gate-b-contested-tokens.json). v3 may stay deployed, but Gate B remains outstanding and the revision is still not token-validated.
+**v3 uses the deterministic contested trace.** Selective re-review has no effect on a run that
+never re-reviews, so deployment Gate B fixes the topology at S0 → S1 → S2 with exactly two
+Standards-only reworks. The locked v2 arm dispatches Spec+Standards at all three review rounds;
+the locked v3 arm dispatches both at R1, Standards at R2/R3, and one focused Spec hash-sync on
+S2. Both arms use the same canonical fixture identity, model family, explicit medium effort,
+validation commands, and real Pi child lifecycle/token evidence. Model outcomes remain real:
+review JSON and reworker patches are independently checked against the locked state behavior,
+and a mismatch fails fidelity rather than changing the trace.
 
-Create one throwaway high-risk fixture combining compatibility replacement, a deliberately incomplete new-interface list, old public interfaces discoverable in source/tests/help, systemd/external-service semantics, at least two genuine fixable defects that the old flow may discover only in review but v2 may prevent in audit/deterministic gates, a known baseline failure, and a non-fast-forward/recovery-cap boundary scenario. Stub all GitHub and push effects but use real model child runs for audit, build, both reviews, rework when needed, and re-review when needed.
+The deployment fixture, verifier, and handoff are
+[fixtures/contested-gate-b-trace/](fixtures/contested-gate-b-trace/README.md). Its self-test proves
+deterministic SHA-1 identity under hostile Git configuration, exact dispatch/child slots,
+sequential F1/F2 behavior, known-failure preservation, fail-closed command receipts, rejection of
+result-selected contracts/envelope usage/fidelity assertions, stale-hash landing rejection, and
+final exact-hash dual approval. **Status: HARNESS READY; real v2/v3 A/B not yet run.**
 
-Run the prior canon and v2 against identical fixture/base, model family, explicit effort profile, tool environment, and validation commands. Capture per-child role/round tokens and totals, outcomes/findings, full-suite invocation count, mutations attempted, whether useful diffs were discarded, state classification, interface inventory, review approvals, and recovery hash. Do not count parent tokens in the child-token metric; report them separately if available.
+The original [contested fixture](fixtures/contested-gate-b/README.md) remains separate ecological
+pressure: autonomous audit/build/review discovery without coaching. Its 2026-07-27 v2 attempt
+produced only one rework, so the runner correctly stopped before landing or starting v3. That
+invalid result remains unchanged as provenance: [report](results/2026-07-27-gate-b-contested.md)
+and [machine totals](results/2026-07-27-gate-b-contested-tokens.json). It cannot substitute for
+the deterministic deployment gate.
+
+Run pinned v2 canon `745fe01` and candidate v3 against independently generated but identity-equal
+trace roots with `openai-codex/gpt-5.6-sol` at explicit medium effort. Capture one unique real Pi
+lifecycle artifact and one verified outcome artifact per expected slot. Do not count parent
+tokens; the verifier derives child totals from provider lifecycle artifacts and rejects supplied
+token totals.
 
 Required v2 outcomes:
 
@@ -70,7 +85,7 @@ Required v2 outcomes:
 
 Correctness gates are mandatory even if v2 is cheaper. The ≤300k comparable-high-risk target is a stretch goal evaluated only after three measured real drains, not this initial deployment gate and not a promise encoded as PASS.
 
-**Current Gate B result: PASS (2026-07-25).** Identical base `fe43c3fc3e68fba08f84e635d42d0e231a44ee77`, `openai-codex/gpt-5.6-sol`, medium effort: historical v1b used 315,474 child tokens; candidate v2d used 277,012 (38,462 / 12.2% fewer), below both 500k and the provisional 300k boundary. Both axes approved. Base full suite was 6 passed / one known Sushi failure; candidate final was 34 passed / the same sole failure. No real push/GitHub/network action occurred. Durable report: [results/2026-07-25-gate-b.md](results/2026-07-25-gate-b.md); machine totals: [results/2026-07-25-gate-b-tokens.json](results/2026-07-25-gate-b-tokens.json). Cost increased from $0.791866 to $0.920646, so this is a child-token win, not a cost win.
+**Current deployed-v2 Gate B result: PASS (2026-07-25); v3 Gate B remains outstanding.** Identical base `fe43c3fc3e68fba08f84e635d42d0e231a44ee77`, `openai-codex/gpt-5.6-sol`, medium effort: historical v1b used 315,474 child tokens; candidate v2d used 277,012 (38,462 / 12.2% fewer), below both 500k and the provisional 300k boundary. Both axes approved. Base full suite was 6 passed / one known Sushi failure; candidate final was 34 passed / the same sole failure. No real push/GitHub/network action occurred. Durable report: [results/2026-07-25-gate-b.md](results/2026-07-25-gate-b.md); machine totals: [results/2026-07-25-gate-b-tokens.json](results/2026-07-25-gate-b-tokens.json). Cost increased from $0.791866 to $0.920646, so this is a child-token win, not a cost win.
 
 ## Historical context (not v2 evidence)
 
