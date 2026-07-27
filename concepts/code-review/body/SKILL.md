@@ -45,6 +45,14 @@ Present findings under `## Spec` and `## Standards`. Do not merge or rerank them
 
 A reviewer prompted to find gaps will report some even when the work is sound — producing findings is what it was asked to do. Chasing every finding causes over-engineering: extra abstraction layers, defensive code for impossible states, tests for cases that can't happen. So reviewers flag only gaps that affect correctness or the stated requirements (everything else is a labelled judgment call, per the Standards rules above), and fixers treat anything below Critical/Important as optional — pushing back with evidence beats padding the code. This matters most in AFK runs, where nobody is watching a remediation spiral.
 
+### Verify a guard can actually fire
+
+A rejection clause, validation check, or guard proves nothing until you know its inputs can differ at runtime. Trace each side of the comparison to where the real caller obtains the value. If every production path resolves both sides to the same thing, the check is **inert**: only a test double can supply a differing pair, so it reads as protection, passes review by inspection, and stays permanently green.
+
+Name this class explicitly because it defeats the signals reviewers rely on — nothing fails, coverage looks complete, and the code looks careful. Treat "the only inputs reaching this branch come from an injected seam the real caller cannot produce" as a material finding, and say which remedy applies: wire the check to a genuinely independent fact, delete it, or label it a precondition rather than a protection. Watch for two near-misses in fixes: deleting one inert clause while a sibling stays tautological, and substituting a cosmetically independent expression whose runtime value is identical.
+
+This does not license adding defensive code for impossible states — see *Findings are not obligations* above. The defect is a guard **described** as protection that cannot deliver it, and the usual fix is accurate labelling or deletion, not more code.
+
 ## AFK slice gate
 
 Inside `/bc-drain-issues`, both axes independently approve a worker’s uncommitted, GREEN worktree before its initial commit, push, or close. The driver owns reviewer dispatch and passes the full review packet. One remediation and re-review cycle is allowed; a second material rejection or ambiguity parks the slice. If a non-fast-forward push requires a rebase that changes the reviewed committed diff, the driver re-reviews that diff before a retrying push/close; a material post-rebase finding parks it rather than opening another remediation cycle.

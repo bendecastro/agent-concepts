@@ -66,8 +66,11 @@ requirement -> observable test/check
 existing public interface -> preservation test
 external semantics -> evidence required
 known baseline failure -> unchanged/regressed check
+guard/rejection clause -> can-its-inputs-differ-in-production evidence
 human-only verification -> explicit deferral
 ```
+
+The guard row exists because an inert guard is the one defect a green suite actively hides: if both sides of a check resolve to the same value on every production path, only an injected test double can supply a differing pair, so the check passes by inspection and by coverage while protecting nothing. Trace each side to where the real caller obtains it. When the issue is *about* a guard, this row is mandatory for every guard the diff touches, keeps, or relocates — a fix that removes one inert clause while leaving its neighbour tautological has not resolved the class.
 
 For replacement work, inventory the complete old public interface from source, tests, and help output—not merely the issue's new-command list. Map every acceptance criterion to evidence. For executable/loader replacement, include argument/environment/cwd/symlink or installed-launcher topology/path or module-resolution and privilege-boundary behavior, not output alone. When acceptance depends on an external platform's semantics (for example systemd, a database, or an API), verify the claim against available primary documentation such as installed man pages/help or an explicitly authorized authoritative source; repository prose and string-presence tests are not sufficient evidence. Record the source/version or mark verification unavailable. This audit exists because compatibility, launcher-security, and service-semantics omissions can pass narrow new-feature tests and become expensive only after landing. An unresolved product choice becomes `HUMAN_BLOCKED`; clear engineering work continues.
 

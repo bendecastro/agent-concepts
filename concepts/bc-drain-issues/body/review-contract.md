@@ -38,6 +38,8 @@ Tier 1 escalates permanently to tier 2 when the deterministic pre-review gate re
 
 A tier-1 reviewer applies both scopes in one pass and must not silently drop either.
 
+**Unfireable guards are in scope for whichever axis is reviewing.** A rejection clause, validation check, or guard earns credit only once you know its inputs can differ at runtime. When the diff adds, keeps, relocates, or claims to fix one, trace each side of the comparison to where the real caller obtains it; if every production path resolves both sides to the same value, the guard is inert and protects nothing. Report it as material. This defect is worth naming because it defeats the usual signals: the suite is green, coverage looks complete, and the guard reads as protection, so only someone tracing origins can see it — and a diff that deletes one inert clause while leaving a sibling tautological, or that swaps in a cosmetically different expression with an identical runtime value, has not fixed the class. Fixing it usually means wiring the check to a genuinely independent fact, deleting it, or labelling it a precondition rather than a protection — not adding code.
+
 ## Reproduction budget
 
 Run reproduction commands only **after** forming a specific candidate Critical or Important finding, and only to prove or refute that named finding—at most two commands per finding. Exploratory command runs before a hypothesis exists are the main way review cost escapes its bound. Never run the full project suite; the driver owns cached baseline and final full validation. Drop refuted hypotheses silently rather than reporting them.
