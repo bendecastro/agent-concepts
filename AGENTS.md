@@ -16,7 +16,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 - Rules here are **defaults with reasons**, not commandments. Each carries its rationale so you can generalize it correctly — and recognize when it doesn't apply.
 - If you conclude a rule or concept is wrong, the legitimate move is to **say so and improve it**. During the task, propose the change and keep following the current canon unless the user explicitly approves changing course; after the task, make the canonical improvement and log your reasoning. Silent deviation is never legitimate: it hides the disagreement that would have improved the concept. Blind obedience is barely better: it preserves a known flaw.
 - **Concepts must evolve.** Every operation below is also an opportunity to notice that a concept has been outgrown. Treat friction between a rule and your judgment as signal, not noise.
-- Prefer guidance at the **right altitude**: specific enough to transmit hard-won lessons, flexible enough that a capable agent applies its own reasoning — neither brittle if-else process steps nor vague platitudes (see `raw/ingested/anthropic-context-engineering.md`).
+- Prefer guidance at the **right altitude**: specific enough to transmit hard-won lessons, flexible enough that a capable agent applies its own reasoning — neither brittle if-else process steps nor vague platitudes (see [Anthropic on context engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)).
 
 ## Layers
 
@@ -71,6 +71,6 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
 ## Conventions
 
 - No hardcoded home paths anywhere — `~` or `$HOME` only; symlinks relative. This directory syncs across macOS, Debian, and Arch via Syncthing.
-- Commit changes to this directory in the CONFIG git repo with a message saying which operation ran. Publishing follows `policies/publish.yaml`; that user-owned policy currently authorizes pushing agent-authored CONFIG commits after status/diff inspection and validation.
+- Commit changes to this directory in the CONFIG git repo with a message saying which operation ran. Publishing follows `~/.config/agent-concepts/publish.yaml`; that user-owned policy currently authorizes pushing agent-authored CONFIG commits after status/diff inspection and validation.
 - Concept names are dash-case and unique across the workspace.
 - This workspace's value comes from encoding the user's specific workflows, not generic skill-list scraping. When ingesting, ask what's idiosyncratic about how the user wants it.

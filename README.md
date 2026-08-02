@@ -55,7 +55,7 @@ outstanding and is marked as such rather than quietly assumed.
 
 ### Authorisation is a policy, not a vibe
 
-`policies/publish.yaml` decides when an agent may push or close an issue without asking. It is
+`~/.config/agent-concepts/publish.yaml` decides when an agent may push or close an issue without asking. It is
 default-deny, and it carries **self-amendment immunity**: changes under `policies/` are never
 publishable under the policy itself, including by rules added later.
 

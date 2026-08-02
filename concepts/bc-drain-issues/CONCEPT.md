@@ -38,7 +38,7 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - `plans/bc-drain-issues-v2-token-efficiency.md` — approved bounded-rework design and #29 evidence (2026-07-25).
 - `plans/bc-grill-to-ship-loop.md` — original build plan (2026-06-20).
 - Matt Pocock `triage`, `AGENT-BRIEF`, `implement`, and `code-review` skills — label/brief workflow and independent review intent; no atomic claim mechanism, hence claim branches.
-- `policies/publish.yaml` and `scripts/publish-check.py` — objective push/close authorization.
+- `~/.config/agent-concepts/publish.yaml` and `scripts/publish-check.py` — objective push/close authorization.
 - `concepts/tdd/`, `concepts/diagnosing-bugs/`, and `concepts/bc-autoresearch-loop/` — worker feedback disciplines.
 - `concepts/prompting-agents/body/SKILL.md` — progressive disclosure, right-altitude instructions, context economy, and evidence gates.
 - [bun-in-rust-zig-port-writeup.md](https://bun.com/blog/bun-in-rust) — fix-the-process recurring-defect idea and original separate-fixer comparison.

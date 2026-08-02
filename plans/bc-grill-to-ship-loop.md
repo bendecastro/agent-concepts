@@ -40,7 +40,7 @@ chains planning into execution.
      work visible to the next slice; with nobody to merge, stacked PRs leave slice
      N+1 branched off a base that never saw slice N. Trunk-based propagates
      dependencies for free, and it's exactly what `publish.yaml` already authorizes.
-6. **Publish authorization** — `policies/publish.yaml` already authorizes image-maze
+6. **Publish authorization** — `~/.config/agent-concepts/publish.yaml` already authorizes image-maze
    via rule `image-maze-push-and-close-after-agent-work` (`git_push` +
    `github_issue_close` on `master`, gated on agent-authored + relevant validation +
    acceptance criteria satisfied; requires a commit/validation comment on close).

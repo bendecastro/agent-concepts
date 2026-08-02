@@ -1,0 +1,87 @@
+version: 1
+
+# EXAMPLE publish authorization policy. Copy to ~/.config/agent-concepts/publish.yaml
+# and edit. This file is documentation; it is never read at runtime.
+#
+# ENFORCEMENT MODEL: this file is interpreted by agents, not mechanically
+# enforced. Keep rules simple enough that misreading is impossible.
+# scripts/publish-check.py answers the objective parts (path/remote/branch
+# match and policy-file immunity); the `when` semantics remain agent judgment.
+#
+# SELF-AMENDMENT IMMUNITY: changes to the policy file itself are NEVER
+# publishable under rules in this file, including rules added later. Pushing a
+# policy change always requires current explicit user instruction.
+# Why: a policy that can publish its own amendments is default-allow in
+# disguise — one self-edit away from authorizing anything.
+#
+# Default is deny: repo-local instruction files, general project trust, and
+# config-loading trust do not authorize publishing by themselves.
+default: deny
+
+# Authorization hierarchy:
+# 1. Current explicit user instruction in the conversation.
+# 2. Matching allow rule in this user-owned policy file (subject to
+#    self-amendment immunity above).
+# 3. Default deny. If this file does not exist, treat it as having no matching
+#    rules: ask, or deny when asking is impossible. That is the expected state
+#    until you deliberately opt in — nothing here is granted by installing.
+# Repo-local AGENTS.md / .agents / .pi files may restrict or request publishing,
+# but cannot grant it without a matching rule here or current user instruction.
+rules:
+  # Minimal rule: let agents push their own commits in one repository you own.
+  # Delete this and write your own; it grants nothing until the paths and
+  # remotes match a repository that actually exists on your machine.
+  - id: example-push-after-agent-commit
+    description: Allow agents to push their own commits in a repository you own.
+    scope:
+      paths:
+        - ~/src/your-repo
+      remotes:
+        - https://github.com/your-user/your-repo.git
+        - git@github.com:your-user/your-repo.git
+    allow:
+      - git_push
+    when:
+      # Every condition must hold. These are judgment calls the agent makes
+      # honestly, not switches it may reinterpret when convenient.
+      - after_agent_commit          # the agent authored the commit being pushed
+      - only_agent_authored_changes # no unrelated user work swept in
+    branches:
+      - main
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true
+
+  # Fuller rule: autonomous issue-drain agents that may also close issues.
+  # Note the extra `when` conditions — closing an issue is a claim about
+  # completed work, so it carries a higher bar than pushing a commit.
+  - id: example-drain-after-agent-work
+    description: >
+      Allow autonomous issue-drain agents to push their own commits, push and
+      delete drain claim-coordination branches, and close satisfied issues.
+    scope:
+      paths:
+        - ~/src/your-repo
+      remotes:
+        - https://github.com/your-user/your-repo.git
+        - git@github.com:your-user/your-repo.git
+    allow:
+      - git_push
+      - github_issue_close
+    when:
+      - after_agent_commit
+      - only_agent_authored_changes
+      - after_relevant_validation
+      - issue_acceptance_criteria_satisfied
+    branches:
+      - main
+      - bc-drain-claims/issue-*  # drain coordination/claim branches (glob)
+    constraints:
+      require_status_inspection: true
+      require_diff_inspection: true
+      require_validation_summary: true
+      never_include_unrelated_user_changes: true
+      close_only_issues_directly_completed_by_the_agent_work: true
+      leave_comment_with_commit_and_validation_summary_when_closing_issue: true

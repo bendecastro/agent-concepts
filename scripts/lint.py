@@ -113,6 +113,35 @@ def lint_links(issues: list[Issue]) -> None:
                 issues.append(Issue("ERROR", f"broken markdown link in {rel(md)}: {link}"))
 
 
+# Repo-relative references are routinely written as inline code rather than
+# markdown links (provenance bullets, test steps). Those were invisible to
+# lint_links, which only understands [text](target) — 74 of them silently broke
+# during the 2026-08 extraction. Only prefixes that unambiguously mean
+# "repo-relative path" are checked, so external paths like `~/.claude/skills`
+# and bare filenames are left alone.
+INLINE_PATH_PREFIXES = ("concepts/", "scripts/", "policies/", "plans/", "raw/")
+INLINE_CODE = re.compile(r"`([^`\n]+)`")
+
+
+def lint_inline_paths(issues: list[Issue]) -> None:
+    for md in ROOT.rglob("*.md"):
+        parts = md.relative_to(ROOT).parts
+        if "raw" in parts:
+            continue
+        # log.md is a historical journal; its paths were true when written.
+        if md.name == "log.md":
+            continue
+        for match in INLINE_CODE.findall(read(md)):
+            ref = match.strip().split()[0] if match.strip() else ""
+            ref = ref.rstrip(".,;:)")
+            if not ref.startswith(INLINE_PATH_PREFIXES):
+                continue
+            if "*" in ref or "<" in ref:  # globs and placeholders are not literal paths
+                continue
+            if not (ROOT / ref.split("#")[0]).exists():
+                issues.append(Issue("ERROR", f"broken inline path in {rel(md)}: {ref}"))
+
+
 def lint_concepts(issues: list[Issue], index: str) -> None:
     concept_dirs = {p.name for p in (ROOT / "concepts").iterdir() if p.is_dir()} if (ROOT / "concepts").exists() else set()
     indexed = concept_names_from_index(index)
@@ -142,9 +171,10 @@ def lint_concepts(issues: list[Issue], index: str) -> None:
 
 
 def lint_raw(issues: list[Issue], index: str) -> None:
-    # raw/ top level is the to-ingest inbox; raw/ingested/ holds sources whose
-    # ideas were taken up. Both levels must be covered by index entries.
-    indexed = raw_entries_from_index(index)
+    # Upstream material is cited, not redistributed, so raw/ingested/ holds only
+    # SOURCE.md notes. The registry of what was ingested is CITATIONS.md — not
+    # index.md, which now links to upstream URLs and therefore contains no
+    # raw/ paths to match against.
     raw_root = ROOT / "raw"
     if not raw_root.exists():
         return
@@ -152,55 +182,58 @@ def lint_raw(issues: list[Issue], index: str) -> None:
     def children(d: Path) -> set[str]:
         return {c.name for c in d.iterdir() if not c.name.startswith(".")}
 
-    inbox = children(raw_root) - {"ingested"}
+    citations = raw_root / "ingested" / "CITATIONS.md"
+    if not citations.is_file():
+        issues.append(Issue("ERROR", "missing source registry: raw/ingested/CITATIONS.md"))
+        return
+    cited = read(citations)
+
     ingested_dir = raw_root / "ingested"
-    ingested = children(ingested_dir) if ingested_dir.is_dir() else set()
-    indexed_inbox = {e.split("/", 1)[0] for e in indexed if not e.startswith("ingested/")}
-    indexed_ingested = {e.split("/", 2)[1] for e in indexed if e.startswith("ingested/")}
+    ingested = children(ingested_dir) - {"CITATIONS.md"} if ingested_dir.is_dir() else set()
+    for name in sorted(ingested):
+        if name not in cited:
+            issues.append(Issue("WARN", f"ingested source missing from CITATIONS.md: {name}"))
+
+    # Every cited directory should still carry the SOURCE.md describing what was taken.
+    for name in sorted(ingested):
+        d = ingested_dir / name
+        if d.is_dir() and not (d / "SOURCE.md").is_file():
+            issues.append(Issue("WARN", f"raw/ingested/{name} has no SOURCE.md"))
+
+    # raw/ top level remains the to-ingest inbox; those still belong in index.md.
+    inbox = children(raw_root) - {"ingested"}
+    indexed_inbox = {e.split("/", 1)[0] for e in raw_entries_from_index(index)}
     for missing in sorted(inbox - indexed_inbox):
-        issues.append(Issue("WARN", f"raw source not listed in index.md: raw/{missing}"))
-    for missing in sorted(ingested - indexed_ingested):
-        issues.append(Issue("WARN", f"raw source not listed in index.md: raw/ingested/{missing}"))
-    for stale in sorted(indexed_ingested & inbox):
-        issues.append(Issue("WARN", f"index lists raw/ingested/{stale} but the file sits in the raw/ inbox"))
-    for stale in sorted(indexed_inbox & ingested):
-        issues.append(Issue("WARN", f"index lists raw/{stale} as inbox but the file was moved to raw/ingested/"))
-    for line in index.splitlines():
-        if line.lstrip().startswith("-") and "raw/" in line:
-            if not re.search(r"\b(Ingested|Filed|not yet ingested|partial|unused|Gap recorded)\b", line, re.I):
-                issues.append(Issue("WARN", f"raw source index entry lacks ingest/filed status: {line.strip()}"))
+        issues.append(Issue("WARN", f"raw inbox source not listed in index.md: raw/{missing}"))
 
 
 def lint_policies(issues: list[Issue]) -> None:
-    policy = ROOT / "policies" / "publish.yaml"
+    # The real policy is user-owned and lives outside the repo
+    # (~/.config/agent-concepts/publish.yaml), so it is deliberately not linted here:
+    # it is the user's data, and its contents are none of this repo's business.
+    # What must not regress is the *shape* of the example, because that is what a
+    # new user copies. Naming specific repositories here is what previously made
+    # the linter reject anyone else's policy.
+    policy = ROOT / "policies" / "publish.example.yaml"
     if not policy.is_file():
-        issues.append(Issue("ERROR", "missing user-owned publish policy: policies/publish.yaml"))
+        issues.append(Issue("ERROR", "missing policy template: policies/publish.example.yaml"))
         return
     text = read(policy)
     required_fragments = [
         "version: 1",
         "default: deny",
-        "config-repo-push-after-agent-commit",
-        "~/Sync/CONFIG",
-        "https://github.com/bendecastro/CONFIG.git",
-        "scripts-repo-push-after-agent-commit",
-        "~/Sync/Scripts",
-        "https://github.com/bendecastro/SCRIPTS.git",
-        "music-repo-push-after-agent-commit",
-        "~/Sync/Music",
-        "https://github.com/bendecastro/Music.git",
-        "wiki-repo-push-after-agent-commit",
-        "~/Sync/Wiki",
-        "https://github.com/bendecastro/Wiki.git",
         "only_agent_authored_changes",
         "never_include_unrelated_user_changes: true",
-        "agents/policies/",  # self-amendment immunity must stay present
+        "SELF-AMENDMENT IMMUNITY",  # the safety property must stay documented
     ]
     for fragment in required_fragments:
         if fragment not in text:
-            issues.append(Issue("ERROR", f"publish policy missing required fragment: {fragment}"))
+            issues.append(Issue("ERROR", f"policy template missing required fragment: {fragment}"))
     if re.search(r"default:\s*allow\b", text):
-        issues.append(Issue("ERROR", "publish policy must not default to allow"))
+        issues.append(Issue("ERROR", "policy template must not default to allow"))
+    if (ROOT / "policies" / "publish.yaml").exists():
+        issues.append(Issue("ERROR", "policies/publish.yaml is present in the repo; a real "
+                                     "policy belongs in ~/.config/agent-concepts/"))
     try:
         import yaml  # noqa: PLC0415
 
@@ -243,6 +276,7 @@ def main() -> int:
 
     lint_root(issues)
     lint_links(issues)
+    lint_inline_paths(issues)
     lint_concepts(issues, index)
     lint_raw(issues, index)
     lint_policies(issues)

@@ -17,7 +17,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 8. **Locate + recon before grilling.** Uses the git repo root and a kebab-case slug; confirms when ambiguous or non-git. Before asking substantive questions, inspects git state/remotes, `gh` readiness when applicable, existing agent/docs/plans files, project/build/deploy markers, and risk signals.
 9. **Adaptive archetype choice + grill.** Summarizes the detected state and recommends a mode + archetype (`code`, `ops`, `learning`, `knowledge`, or `hybrid`). Empty folders get project-intent/dev-shape questions; active projects get integration/validation/deploy-policy questions; operational workspaces get component/finding/open-question questions; learning workspaces get goal/current-level/source/cadence/`teach` questions; knowledge workspaces get raw/source/entity/concept questions; old or messy projects get reconciliation/migration questions. It does not blindly scaffold a non-empty folder.
 10. **Proposed init plan before writing.** Names the root, slug, archetype, files to create, files to preserve, manual root-`AGENTS.md` merge needs, conservative seed edits, architecture-runway cadence setup for code/hybrid wikis, expected upgrade-note/manual-merge follow-ups, and any separate migration plan. Existing file moves/copies require explicit approval.
-11. **publish.yaml offer-then-confirm.** Drafts a repo-specific allow rule and OFFERS to append it to `policies/publish.yaml`; does NOT write it without confirmation and never pushes it. On decline, leaves the parking-lot TODO.
+11. **publish.yaml offer-then-confirm.** Drafts a repo-specific allow rule and OFFERS to append it to `~/.config/agent-concepts/publish.yaml`; does NOT write it without confirmation and never pushes it. On decline, leaves the parking-lot TODO.
 12. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, and the next steps (`/bc-plan-to-issues` → `/bc-drain-issues`); commits the scaffold staging only the new files.
 
 ## Pass criteria
@@ -35,7 +35,7 @@ Script checks 1–6 run directly (no subagent):
 
 Process checks 7–9 via Haiku subagent (low-thinking, hard-sandboxed to `/tmp/pt-bcinit2`):
 7. Located root via `git rev-parse --show-toplevel`, kebab-case slug, no ambiguity. ✓
-8. Drafted a repo-specific `publish.yaml` allow-rule and OFFERED to append it; did not write it (verified: real `agents/policies/publish.yaml` untouched). ✓
+8. Drafted a repo-specific `publish.yaml` allow-rule and OFFERED to append it; did not write it (verified: real `~/.config/agent-concepts/publish.yaml` untouched). ✓
 9. Close-out pointed at created files + named next steps (`/triage` → `/bc-plan-to-issues` → `/bc-drain-issues`); committed staging only the new scaffold files (`git add AGENTS.md .bc-agent/`), clean tree after. ✓
 
 ## New checks to run after adaptive-onboarding update

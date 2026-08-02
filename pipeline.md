@@ -53,7 +53,7 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 The single-step orchestrators (`grill-me`/`to-spec`/`to-tickets`) still exist for using one phase at a time; the loop orchestrators inline the *disciplines* beneath them so nothing is duplicated and no orchestrator calls another orchestrator.
 
 ## Safety posture (execution)
-- **Push is authorization-gated.** `bc-drain-issues` preflight runs `scripts/publish-check.py`; a repo with no allow rule in `policies/publish.yaml` **blocks** the AFK push (abort, or opt-in commit-only-local). The loop never edits the policy to authorize itself.
+- **Push is authorization-gated.** `bc-drain-issues` preflight runs `scripts/publish-check.py`; a repo with no allow rule in `~/.config/agent-concepts/publish.yaml` **blocks** the AFK push (abort, or opt-in commit-only-local). The loop never edits the policy to authorize itself.
 - **Trunk-based, not PR-per-slice** — so dependency-ordered slices see prior work, and it matches what `publish.yaml` authorizes.
 - **Parallel-safe claiming** — each drain runner creates a remote `bc-drain-claims/issue-<n>` branch before working an issue; concurrent runners skip issues they fail to claim.
 - **Park-and-continue + circuit-breaker** — one bad slice doesn't halt the run; a run of parks does.

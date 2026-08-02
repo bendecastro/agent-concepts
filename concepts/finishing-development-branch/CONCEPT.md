@@ -11,7 +11,7 @@ User-invoked completion workflow for choosing what to do with a finished develop
 ## Provenance
 
 - [obra/superpowers `skills/finishing-a-development-branch/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/finishing-a-development-branch/SKILL.md) — structured completion options, environment detection, cleanup rules, discard confirmation.
-- `policies/publish.yaml` and repo `AGENTS.md` — local publish/default-deny and git-discipline constraints adapted into the body.
+- `~/.config/agent-concepts/publish.yaml` and repo `AGENTS.md` — local publish/default-deny and git-discipline constraints adapted into the body.
 
 ## Tests
 

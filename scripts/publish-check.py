@@ -4,10 +4,15 @@
 Usage:
   publish-check.py --repo PATH --remote URL --branch NAME [--changed-file F]...
 
-Checks path/remote/branch against policies/publish.yaml allow rules and
-enforces self-amendment immunity (changes under agents/policies/ are never
-publishable by rule). The subjective `when` conditions (agent-authored-only,
-after-agent-commit) remain the agent's judgment — this script cannot see them.
+Checks path/remote/branch against the user-owned policy at
+~/.config/agent-concepts/publish.yaml and enforces self-amendment immunity (a
+commit touching the policy file is never publishable by rule). The subjective
+`when` conditions (agent-authored-only, after-agent-commit) remain the agent's
+judgment — this script cannot see them.
+
+The policy is deliberately read from outside the repository, and there is no
+in-repo fallback: a private authorization file living inside a public checkout
+is one `git add -f` away from being published. See policies/publish.example.yaml.
 
 Exit codes: 0 = rule matches (verify `when` conditions yourself, then push),
 2 = no rule matches (ask the user; if asking is impossible, do not publish).
@@ -17,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import fnmatch
+import os
 import sys
 from pathlib import Path
 
@@ -26,11 +32,26 @@ except ImportError:
     print("ASK: PyYAML unavailable, cannot evaluate policy — treat as no matching rule")
     sys.exit(2)
 
-POLICY = Path(__file__).resolve().parents[1] / "policies" / "publish.yaml"
+CONFIG_HOME = Path(os.environ.get("XDG_CONFIG_HOME", "~/.config")).expanduser()
+POLICY = CONFIG_HOME / "agent-concepts" / "publish.yaml"
 
 
 def norm(p: str) -> Path:
     return Path(p).expanduser().resolve()
+
+
+def policy_path_within(repo: Path) -> str | None:
+    """Repo-relative path of the policy file, if it lives inside this repo.
+
+    Self-amendment immunity has to follow the actual file rather than a fixed
+    string: the policy usually sits outside any repository, but a user may sync
+    their config directory through one (via a symlink), in which case pushing
+    that repo could carry a policy change.
+    """
+    try:
+        return str(POLICY.resolve().relative_to(repo))
+    except (ValueError, OSError):
+        return None
 
 
 def main() -> int:
@@ -43,7 +64,7 @@ def main() -> int:
     args = ap.parse_args()
 
     if not POLICY.is_file():
-        print("ASK: no policy file (off-vault?) — no rule can match; ask the user or do not publish")
+        print(f"ASK: no policy at {POLICY} — no rule can match; ask the user or do not publish")
         return 2
 
     policy = yaml.safe_load(POLICY.read_text())
@@ -61,7 +82,10 @@ def main() -> int:
         # `bc-drain-claims/issue-*` without listing every issue number.
         if not any(fnmatch.fnmatch(args.branch, b) for b in rule.get("branches", [])):
             continue
-        excluded = rule.get("exclude_changes_under", []) + ["agents/policies/"]
+        excluded = list(rule.get("exclude_changes_under", []))
+        own_path = policy_path_within(repo)
+        if own_path:
+            excluded.append(own_path)
         hits = [f for f in args.changed_file
                 if any(f.startswith(e.rstrip("/") + "/") or f == e.rstrip("/") for e in excluded)]
         if hits:
