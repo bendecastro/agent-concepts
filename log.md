@@ -451,3 +451,29 @@ Replaced probabilistic topology as the deployment benchmark with a locked S0→S
 
 ## [2026-07-30] implement | machine-mesh remote-command PATH
 Non-interactive SSH sources neither .zprofile nor .zshrc, so an agent had reported node/npm/gh missing on the Mac when all were installed. Documented the check and the `~/.zshenv` fix in body/SKILL.md, recorded the decision and an accuracy-check run. beelink was unreachable during verification.
+
+## [2026-08-02] implement | portability — the workspace is installable by anyone
+
+Made the workspace usable by someone who is not its author, then proved it with a test rather
+than an assertion. See [plans/portability.md](plans/portability.md).
+
+- **Two path mechanisms, chosen by context.** `$AGENT_CONCEPTS` for anything a shell executes
+  (commands inside deployed bodies); `<agent-concepts>` for anything a human pastes into a chat
+  window, where an environment variable would not expand. Getting this wrong in either direction
+  produces a path that silently does nothing.
+- **The worst offenders were the deployed bodies**, not the docs. `bc-drain-issues` ran
+  `publish-check.py` from a hardcoded path, and `bc-init-agent`'s scaffold wrote that same path
+  into every project it initialised — the assumption propagated outward into other repos.
+- **The publish policy moved out** to `~/.config/agent-concepts/publish.yaml`. Self-amendment
+  immunity had been implemented as the literal string `agents/policies/`, which would have gone
+  silently inert; it now resolves the policy's real path and still fires when the config directory
+  is reached through a symlink into a synced repo. Verified both ways.
+- **`lint.py` had been enforcing the author's config** — it asserted the policy named four
+  specific repositories, so it rejected anyone else's. The check had mistaken the data for the
+  invariant it was protecting.
+- **Lint blind spot found and fixed:** it validated `[text](target)` links but not backticked
+  inline paths, which is how 74 provenance references broke silently. On its first run the new
+  check found 17 more, including a concept renamed months earlier.
+- **Lesson worth keeping:** the portability test exports `HEAD`, not the working tree — so it
+  tests what a stranger receives. It failed the first time precisely because the fixes were
+  uncommitted, which is the correct answer to "is this portable right now?"

@@ -1,7 +1,7 @@
 # Portability — make the workspace installable by anyone
 
 Date: 2026-08-02
-Status: resolved by grilling; implementation in progress
+Status: implemented and passing `scripts/portability-check.py` (2026-08-02)
 
 ## Problem
 
@@ -98,4 +98,14 @@ someone has watched it hold under conditions that could falsify it, and portabil
 established by reading the diff — the author's machine will satisfy assumptions a stranger's will
 not. The smoke test is what converts "portable" from a claim into a result.
 
-Until it passes, this plan is unproven.
+**Result 2026-08-02: passing.** All seven steps are implemented and
+`scripts/portability-check.py` reports PORTABLE.
+
+The check is not inert — it failed twice on real defects before passing. Its first run
+caught 49 author-path references (it exports `HEAD`, so it was correctly reporting that
+the fixes were still uncommitted); the second caught three more, two of which turned out
+to be legitimate provenance attribution rather than defects, which narrowed the pattern.
+
+Three guards have only ever been observed passing: the symlink-target check, the
+relative-link check, and the policy-denial check. They are unproven in the sense that
+matters here — nobody has watched them fire.
