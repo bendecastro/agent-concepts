@@ -41,7 +41,7 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - `policies/publish.yaml` and `scripts/publish-check.py` — objective push/close authorization.
 - `concepts/tdd/`, `concepts/diagnosing-bugs/`, and `concepts/bc-autoresearch-loop/` — worker feedback disciplines.
 - `concepts/prompting-agents/body/SKILL.md` — progressive disclosure, right-altitude instructions, context economy, and evidence gates.
-- `raw/ingested/bun-in-rust-zig-port-writeup.md` — fix-the-process recurring-defect idea and original separate-fixer comparison.
+- [bun-in-rust-zig-port-writeup.md](https://bun.com/blog/bun-in-rust) — fix-the-process recurring-defect idea and original separate-fixer comparison.
 - Field observation, `bendecastro/image-maze` issue #203, landed `f4a1e02` (2026-07-27) — a real drain (pre-v3 contract as loaded in that session) where the build worker reproduced the inert-guard defect it was assigned to fix. Source of the audit `guard/rejection clause` row and the `review-contract.md` unfireable-guard rule; also the observation that a bounded pre-implementation audit found two errors in the issue's own decision record. (field evidence, no `raw/` file)
 - `concepts/code-review/` — shares the "Verify a guard can actually fire" review class in its general form; the drain's copy exists because AFK reviewers read only the driver's packet.
 

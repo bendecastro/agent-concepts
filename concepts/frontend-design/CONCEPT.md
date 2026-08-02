@@ -18,10 +18,10 @@ A lean spine (`body/SKILL.md`) — studio-design-lead voice, the thesis→plan�
 
 ## Provenance
 
-- `raw/ingested/anthropic-frontend-design-skill.md` — Anthropic's official `frontend-design` SKILL.md (verbatim). Source of the spine, process, anti-cliché list, copy-as-design-material, restraint/self-critique.
-- `raw/ingested/openai-gpt-5-4-frontend-design.md` — OpenAI's "Designing delightful frontends with GPT-5.4" blog embedding their official Codex `frontend-skill` verbatim. Source of the archetype checklist layer, hard rules, litmus checks, viewport budget, utility-copy guidance, mood-board workflow.
-- `raw/ingested/openai-gpt-5-frontend-cookbook.md` — OpenAI GPT-5 frontend cookbook. Minor: starter-stack + steerability/multimodal notes.
-- `raw/ingested/google-modern-web-guidance/` — Chrome DevRel Modern Web Guidance (design/UX subset, commit eec2f8e). Cited as the modern-platform pointer; not vendored into the body.
+- [anthropic-frontend-design-skill.md](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md) — Anthropic's official `frontend-design` SKILL.md (verbatim). Source of the spine, process, anti-cliché list, copy-as-design-material, restraint/self-critique.
+- [openai-gpt-5-4-frontend-design.md](https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4) — OpenAI's "Designing delightful frontends with GPT-5.4" blog embedding their official Codex `frontend-skill` verbatim. Source of the archetype checklist layer, hard rules, litmus checks, viewport budget, utility-copy guidance, mood-board workflow.
+- [openai-gpt-5-frontend-cookbook.md](https://developers.openai.com/cookbook/examples/gpt-5/gpt-5_frontend) — OpenAI GPT-5 frontend cookbook. Minor: starter-stack + steerability/multimodal notes.
+- [GoogleChrome/modern-web-guidance-src](https://github.com/GoogleChrome/modern-web-guidance-src) — Chrome DevRel Modern Web Guidance (design/UX subset, commit eec2f8e). Cited as the modern-platform pointer; not vendored into the body.
 - `concepts/prompting-agents/body/SKILL.md` — altitude principles + the "Frontend anti-slop" block this concept deepens; instruction phrasings adapted from its blocks.
 
 ## Tests

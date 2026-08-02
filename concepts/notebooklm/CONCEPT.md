@@ -13,7 +13,7 @@ Like [[omarchy]], this concept has **no `body/` directory, on purpose**. The ski
 
 ## Provenance
 
-- `raw/ingested/notebooklm-skill-upstream/` — immutable snapshot of the upstream SKILL.md (v0.7.1) with citation. Reference only; never deploy from it.
+- [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) — immutable snapshot of the upstream SKILL.md (v0.7.1) with citation. Reference only; never deploy from it.
 - Upstream: https://github.com/teng-lin/notebooklm-py (MIT). Uses undocumented Google APIs — may break without notice; not affiliated with Google.
 
 ## Tests

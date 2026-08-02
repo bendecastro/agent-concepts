@@ -1,6 +1,6 @@
 # Accuracy check: codebase-design
 
-Reference vocabulary — no runtime gate, so an accuracy check suffices (per AGENTS.md). Verify `body/SKILL.md` against the verbatim capture in `raw/ingested/pocock-skills-upstream/captured-skills.md`:
+Reference vocabulary — no runtime gate, so an accuracy check suffices (per AGENTS.md). Verify `body/SKILL.md` against the verbatim capture in [mattpocock/skills](https://github.com/mattpocock/skills) `skills/engineering/codebase-design/SKILL.md`:
 
 - [ ] Glossary defines all eight terms faithfully: Module, Interface, Implementation, Depth, Seam, Adapter, Leverage, Locality.
 - [ ] Each term keeps its "Avoid" guidance (unit/component/service; API/signature; boundary).

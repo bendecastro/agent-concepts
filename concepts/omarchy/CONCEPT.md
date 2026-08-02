@@ -14,7 +14,7 @@ Consequences:
 
 ## Provenance
 
-- `raw/ingested/omarchy-skill-upstream/` — immutable snapshot of the upstream SKILL.md with full citation (repo, path, commits, MIT license). Reference only; never deploy from it.
+- [basecamp/omarchy](https://github.com/basecamp/omarchy) — immutable snapshot of the upstream SKILL.md with full citation (repo, path, commits, MIT license). Reference only; never deploy from it.
 - Upstream: https://github.com/basecamp/omarchy (`default/omarchy-skill/SKILL.md`).
 
 ## Tests

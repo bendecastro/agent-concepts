@@ -21,11 +21,11 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 - `concepts/prompting-agents/body/SKILL.md` — right altitude, context economy, scope discipline, tool discipline, plan/promise discipline, dirty repo rules, final-message style.
 - `AGENTS.md` — workspace Spirit: rules as defaults with reasons; canonical changes over deployed-copy edits; small context reads; commit discipline.
-- `raw/ingested/openai-codex-prompting-guide.md` — autonomy/persistence, working-tree etiquette, plan closure, final response style.
-- `raw/ingested/openai-gpt-5-2-prompting-guide.md` — verbosity clamps, scope discipline, ambiguity handling, tool usage, long-context grounding.
-- `raw/ingested/anthropic-context-engineering.md` — smallest high-signal context / context rot framing.
-- `raw/ingested/anthropic-claude-prompting-best-practices.md` — explain the why and prefer general instructions over brittle steps.
-- `raw/ingested/obra-superpowers/skills/verification-before-completion/SKILL.md` — evidence-before-claims verification: identify the proving command, run it fresh, read the output; never "should"/"probably"; distrust subagent self-reports.
+- [openai-codex-prompting-guide.md](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide) — autonomy/persistence, working-tree etiquette, plan closure, final response style.
+- [openai-gpt-5-2-prompting-guide.md](https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide) — verbosity clamps, scope discipline, ambiguity handling, tool usage, long-context grounding.
+- [anthropic-context-engineering.md](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — smallest high-signal context / context rot framing.
+- [anthropic-claude-prompting-best-practices.md](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) — explain the why and prefer general instructions over brittle steps.
+- [obra/superpowers `skills/verification-before-completion/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/verification-before-completion/SKILL.md) — evidence-before-claims verification: identify the proving command, run it fresh, read the output; never "should"/"probably"; distrust subagent self-reports.
 
 ## Tests
 

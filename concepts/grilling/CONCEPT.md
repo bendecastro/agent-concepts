@@ -11,8 +11,8 @@ The reusable, model-invokable interview loop behind `/grill-me`: relentless, one
 
 ## Provenance
 
-- `raw/ingested/pocock-skills-upstream/captured-skills.md` — verbatim `skills/productivity/grilling/SKILL.md`. https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md
-- `raw/ingested/skillsskillsproductivityteach at main.md` — catalog framing (grilling as the fix for the #1 misalignment failure mode; user/model-invoked split).
+- [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — verbatim `skills/productivity/grilling/SKILL.md`. https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md
+- [skillsskillsproductivityteach at main.md](https://github.com/mattpocock/skills/tree/main) — catalog framing (grilling as the fix for the #1 misalignment failure mode; user/model-invoked split).
 - `concepts/prompting-agents/body/SKILL.md` — composition + gate phrasing reused here.
 
 ## Tests

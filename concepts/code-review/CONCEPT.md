@@ -14,13 +14,13 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Provenance
 
-- `raw/ingested/obra-superpowers/skills/requesting-code-review/SKILL.md` — review-request workflow and severity expectations.
-- `raw/ingested/obra-superpowers/skills/requesting-code-review/code-reviewer.md` — reviewer prompt template adapted into the review packet/checklist.
-- `raw/ingested/obra-superpowers/skills/receiving-code-review/SKILL.md` — feedback reception, YAGNI check, pushback rules, GitHub thread detail.
+- [obra/superpowers `skills/requesting-code-review/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/requesting-code-review/SKILL.md) — review-request workflow and severity expectations.
+- [obra/superpowers `skills/requesting-code-review/code-reviewer.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/requesting-code-review/code-reviewer.md) — reviewer prompt template adapted into the review packet/checklist.
+- [obra/superpowers `skills/receiving-code-review/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/receiving-code-review/SKILL.md) — feedback reception, YAGNI check, pushback rules, GitHub thread detail.
 - Matt Pocock upstream `skills/engineering/code-review/SKILL.md` at `391a2701dd948f94f56a39f753f8eea9a859c87` — fixed-point review packet, independent Spec/Standards axes, and separate aggregation. https://github.com/mattpocock/skills/blob/391a2701dd948f94f56a39f753f8eea9a859c87/skills/engineering/code-review/SKILL.md
-- `raw/ingested/anthropic-claude-code-best-practices.md` — "Findings are not obligations": reviewer-incentive caution (a gap-hunting reviewer reports gaps even in sound work; chasing all findings over-engineers), bounding reviewers to correctness/stated requirements. Protects the AFK slice gate from remediation spirals. (ingested 2026-07-12)
+- [anthropic-claude-code-best-practices.md](https://code.claude.com/docs/en/best-practices) — "Findings are not obligations": reviewer-incentive caution (a gap-hunting reviewer reports gaps even in sound work; chasing all findings over-engineers), bounding reviewers to correctness/stated requirements. Protects the AFK slice gate from remediation spirals. (ingested 2026-07-12)
 - Field observation, `bendecastro/image-maze` issue #203, landed `f4a1e02` (2026-07-27) — a `/bc-drain-issues` run whose Spec reviewer proved that the clause surviving the original inert-guard fix was *itself* a production tautology, and that the first implementation had disguised it by swapping an identical-valued expression. Source of the "Verify a guard can actually fire" block. (field evidence, no `raw/` file)
-- `raw/ingested/bun-in-rust-zig-port-writeup.md` — Bun's Zig→Rust rewrite (Jarred Sumner, 2026-07-08): split-context adversarial review at fleet scale; adopted the reviewer context-isolation rule, rejected the assume-wrong stance (see design decisions). (ingested 2026-07-16)
+- [bun-in-rust-zig-port-writeup.md](https://bun.com/blog/bun-in-rust) — Bun's Zig→Rust rewrite (Jarred Sumner, 2026-07-08): split-context adversarial review at fleet scale; adopted the reviewer context-isolation rule, rejected the assume-wrong stance (see design decisions). (ingested 2026-07-16)
 
 ## Tests
 

@@ -11,8 +11,8 @@ Model-invoked discipline for actively building and sharpening a project's domain
 
 ## Provenance
 
-- `raw/ingested/pocock-skills-upstream/captured-skills.md` — `domain-modeling` section (**summary only**, not verbatim) + the verbatim `grill-with-docs` body that composes it. https://github.com/mattpocock/skills/blob/main/skills/engineering/domain-modeling/SKILL.md
-- `raw/ingested/skillsskillsproductivityteach at main.md` — catalog #2 "shared language" failure mode and the `CONTEXT.md` before/after example (materialization cascade).
+- [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — `domain-modeling` section (**summary only**, not verbatim) + the verbatim `grill-with-docs` body that composes it. https://github.com/mattpocock/skills/blob/main/skills/engineering/domain-modeling/SKILL.md
+- [skillsskillsproductivityteach at main.md](https://github.com/mattpocock/skills/tree/main) — catalog #2 "shared language" failure mode and the `CONTEXT.md` before/after example (materialization cascade).
 
 ## Tests
 

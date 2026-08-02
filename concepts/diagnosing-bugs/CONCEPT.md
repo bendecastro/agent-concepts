@@ -12,8 +12,8 @@ Model-invoked debugging discipline for hard bugs and performance regressions: bu
 
 ## Provenance
 
-- `raw/ingested/pocock-engineering-extensions/` — upstream Matt Pocock `diagnosing-bugs/SKILL.md` captured 2026-06-21.
-- `raw/ingested/obra-superpowers/skills/systematic-debugging/` — root-cause-first iron law, four-phase debugging loop, tracing/defense-in-depth/condition-waiting support files, and pressure-test examples; absorbed as reinforcement rather than a duplicate concept.
+- [mattpocock/skills](https://github.com/mattpocock/skills) — upstream Matt Pocock `diagnosing-bugs/SKILL.md` captured 2026-06-21.
+- [obra/superpowers `skills/systematic-debugging/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/systematic-debugging/) — root-cause-first iron law, four-phase debugging loop, tracing/defense-in-depth/condition-waiting support files, and pressure-test examples; absorbed as reinforcement rather than a duplicate concept.
 - `concepts/tdd/` — related red-green mechanics once the regression seam exists.
 - `concepts/improve-codebase-architecture/` — follow-up when a bug exposes a bad seam.
 

@@ -11,7 +11,7 @@ User-invoked architecture review for the bc loop. It scans for deep-module oppor
 
 ## Provenance
 
-- `raw/ingested/pocock-engineering-extensions/` — upstream Matt Pocock `improve-codebase-architecture/SKILL.md` captured 2026-06-21.
+- [mattpocock/skills](https://github.com/mattpocock/skills) — upstream Matt Pocock `improve-codebase-architecture/SKILL.md` captured 2026-06-21.
 - `concepts/codebase-design/` — vocabulary and design principles.
 - `concepts/grilling/` and `concepts/domain-modeling/` — used after the user chooses a candidate.
 

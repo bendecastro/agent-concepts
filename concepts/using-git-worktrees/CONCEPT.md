@@ -10,7 +10,7 @@ Model-invoked workspace-isolation discipline for feature work, plan execution, a
 
 ## Provenance
 
-- `raw/ingested/obra-superpowers/skills/using-git-worktrees/SKILL.md` — detection commands, native/fallback priority, ignore checks, baseline verification, cleanup ownership warnings.
+- [obra/superpowers `skills/using-git-worktrees/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/using-git-worktrees/SKILL.md) — detection commands, native/fallback priority, ignore checks, baseline verification, cleanup ownership warnings.
 
 ## Tests
 

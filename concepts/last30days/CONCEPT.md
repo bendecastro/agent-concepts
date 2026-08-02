@@ -13,7 +13,7 @@ This concept has **no local runtime skill body**, on purpose. The upstream skill
 
 ## Provenance
 
-- `raw/ingested/last30days-skill-upstream/` — immutable snapshot of upstream `SKILL.md` v3.3.2 at commit `122158415ae421da83e739f2668032f6bc78d39c`, with source metadata. Reference only; never deploy from it.
+- [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) — immutable snapshot of upstream `SKILL.md` v3.3.2 at commit `122158415ae421da83e739f2668032f6bc78d39c`, with source metadata. Reference only; never deploy from it.
 - Upstream: https://github.com/mvanhorn/last30days-skill (MIT).
 
 ## Tests

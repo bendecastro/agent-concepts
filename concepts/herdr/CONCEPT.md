@@ -11,7 +11,7 @@ Upstream-maintained reference skill for controlling a Herdr terminal-multiplexer
 
 ## Provenance
 
-- `../../raw/ingested/Agent skill file.md` — Herdr agent-skill documentation clipping supplied by the user.
+- [Herdr agent-skill docs](https://herdr.dev/docs/agent-skill/) — Herdr agent-skill documentation clipping supplied by the user.
 - ogulcancelik/herdr `SKILL.md` at commit [`08640bb3ddc0a9c299e855d6a459d2f82970cf86`](https://github.com/ogulcancelik/herdr/blob/08640bb3ddc0a9c299e855d6a459d2f82970cf86/SKILL.md), retrieved 2026-07-22. Vendored body SHA-256: `0786182f02ebf92708e09d82d79e4614d1a9c30bfc337643cc2af1d0fb9db29f`.
 
 ## Tests

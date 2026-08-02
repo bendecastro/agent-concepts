@@ -14,10 +14,10 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Provenance
 
-- `raw/ingested/pocock-skills-upstream/captured-skills.md` — verbatim `tdd/SKILL.md`, `tests.md`, `mocking.md`; `refactoring.md` recovered as a summary and reconstructed. https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd
-- `raw/ingested/AI Engineer Workshop 2026.md` — workshop's TDD execution step (agent writes failing test, then code, then commits).
-- `raw/ingested/obra-superpowers/skills/test-driven-development/` — strict red/green/refactor wording, “watched it fail” iron law, rationalization table, and testing anti-patterns; absorbed as reinforcement rather than a duplicate concept.
-- `raw/ingested/obra-superpowers/skills/writing-skills/` — applies the same TDD loop to process documentation; informs workspace test-gate practice.
+- [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — verbatim `tdd/SKILL.md`, `tests.md`, `mocking.md`; `refactoring.md` recovered as a summary and reconstructed. https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd
+- [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) — workshop's TDD execution step (agent writes failing test, then code, then commits).
+- [obra/superpowers `skills/test-driven-development/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/test-driven-development/) — strict red/green/refactor wording, “watched it fail” iron law, rationalization table, and testing anti-patterns; absorbed as reinforcement rather than a duplicate concept.
+- [obra/superpowers `skills/writing-skills/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/writing-skills/) — applies the same TDD loop to process documentation; informs workspace test-gate practice.
 
 ## Tests
 

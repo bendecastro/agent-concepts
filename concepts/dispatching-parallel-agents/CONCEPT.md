@@ -11,9 +11,9 @@ Model-invoked coordination pattern for splitting independent investigations or r
 
 ## Provenance
 
-- `raw/ingested/obra-superpowers/skills/dispatching-parallel-agents/SKILL.md` — one-agent-per-independent-domain rule, prompt structure, integration checklist.
+- [obra/superpowers `skills/dispatching-parallel-agents/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/dispatching-parallel-agents/SKILL.md) — one-agent-per-independent-domain rule, prompt structure, integration checklist.
 - `concepts/bc-drain-issues/` — local AFK executor uses a stricter issue-queue variant; this concept covers ad hoc parallel diagnosis/review.
-- `raw/ingested/bun-in-rust-zig-port-writeup.md` — Bun's Zig→Rust rewrite (Jarred Sumner, 2026-07-08): pilot-then-scale trial run (3 of 1,448 files), task-class guides (`PORTING.md`/`LIFETIMES.tsv`, adversarially reviewed before use), and the shared-git-state fleet collision + atomic-command fallback. (ingested 2026-07-16)
+- [bun-in-rust-zig-port-writeup.md](https://bun.com/blog/bun-in-rust) — Bun's Zig→Rust rewrite (Jarred Sumner, 2026-07-08): pilot-then-scale trial run (3 of 1,448 files), task-class guides (`PORTING.md`/`LIFETIMES.tsv`, adversarially reviewed before use), and the shared-git-state fleet collision + atomic-command fallback. (ingested 2026-07-16)
 
 ## Tests
 

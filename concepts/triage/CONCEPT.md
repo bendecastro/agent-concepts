@@ -12,7 +12,7 @@ User-invoked intake gate for the bc loop. It moves issues/PRs through a small st
 
 ## Provenance
 
-- `raw/ingested/pocock-engineering-extensions/` — upstream Matt Pocock `triage`, `AGENT-BRIEF.md`, and `OUT-OF-SCOPE.md` captured 2026-06-21.
+- [mattpocock/skills](https://github.com/mattpocock/skills) — upstream Matt Pocock `triage`, `AGENT-BRIEF.md`, and `OUT-OF-SCOPE.md` captured 2026-06-21.
 - `concepts/bc-drain-issues/` — Agent Brief requirements are tightened so drainable issues are self-contained.
 - `concepts/grilling/` and `concepts/domain-modeling/` — used when triage needs to resolve missing decisions.
 

@@ -12,8 +12,8 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 
 ## Provenance
 
-- `raw/ingested/pocock-teach-skill-original.md` — Matt Pocock's original teach skill (structure, mission/ZPD/records framing). https://github.com/mattpocock/skills/tree/main/skills/productivity/teach
-- `raw/ingested/karpathy-llm-wiki.md` — Karpathy's LLM Wiki gist (three layers, index/log, ingest/lint, file-answers-back). https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+- Matt Pocock's original `teach` skill — source URL unrecorded — Matt Pocock's original teach skill (structure, mission/ZPD/records framing). https://github.com/mattpocock/skills/tree/main/skills/productivity/teach
+- [karpathy-llm-wiki.md](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — Karpathy's LLM Wiki gist (three layers, index/log, ingest/lint, file-answers-back). https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
 - obra's writing-skills (TDD for skills, rationalization-proofing): https://github.com/obra/superpowers/blob/main/skills/writing-skills/SKILL.md
 - Anthropic skill best practices (progressive disclosure, scripts for reliability): https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
 - Anki-integration findings (community-validated SRS handoff): https://johnwhiles.com/posts/claude-anki

@@ -10,9 +10,9 @@ User-invoked plan execution pattern where a controller dispatches fresh implemen
 
 ## Provenance
 
-- `raw/ingested/obra-superpowers/skills/subagent-driven-development/SKILL.md` — fresh subagent per task, status handling, spec-review then quality-review loop.
-- `raw/ingested/obra-superpowers/skills/subagent-driven-development/implementer-prompt.md` — implementer packet and status contract.
-- `raw/ingested/obra-superpowers/skills/subagent-driven-development/spec-reviewer-prompt.md` and `code-quality-reviewer-prompt.md` — two-stage review model.
+- [obra/superpowers `skills/subagent-driven-development/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/subagent-driven-development/SKILL.md) — fresh subagent per task, status handling, spec-review then quality-review loop.
+- [obra/superpowers `skills/subagent-driven-development/implementer-prompt.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/subagent-driven-development/implementer-prompt.md) — implementer packet and status contract.
+- [obra/superpowers `skills/subagent-driven-development/spec-reviewer-prompt.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/subagent-driven-development/spec-reviewer-prompt.md) and `code-quality-reviewer-prompt.md` — two-stage review model.
 - `concepts/dispatching-parallel-agents/` — related but for independent parallel domains, not sequential plan tasks.
 
 ## Tests

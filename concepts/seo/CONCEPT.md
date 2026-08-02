@@ -13,8 +13,8 @@ A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-
 
 ## Provenance
 
-- `raw/ingested/image-maze-seo-agents/` — snapshot of the user's prompts (authored 2026-06-11) from `~/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.agent/agents/`; the work repo remains a live consumer, not the canon.
-- `raw/ingested/seo-primary-sources/` — the traced primary-documentation evidence base (Google Search Central, web.dev, W3C WAI, OpenAI bot docs); the claim→source map is [body/CITATIONS.md](body/CITATIONS.md), which also lists the three not-yet-snapshotted gaps.
+- the user's own prior image-maze work — snapshot of the user's prompts (authored 2026-06-11) from `~/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.agent/agents/`; the work repo remains a live consumer, not the canon.
+- SEO primary sources (official docs; see concepts/seo) — the traced primary-documentation evidence base (Google Search Central, web.dev, W3C WAI, OpenAI bot docs); the claim→source map is [body/CITATIONS.md](body/CITATIONS.md), which also lists the three not-yet-snapshotted gaps.
 - AI-crawler/llms.txt delta: web research 2026-06-12 — training-vs-search bot split and llms.txt non-adoption corroborated across multiple sources (e.g. digitalapplied.com AI-crawler decision matrix, nohacks.co AI user-agent landscape, limy.ai llms.txt guide); bot lists change, verify at runtime.
 - CWV-claims conflict (reason no numbers were updated): 2026 SEO-blog survey returned contradictory threshold claims; official documentation is the only acceptable source for these, checked at runtime.
 
