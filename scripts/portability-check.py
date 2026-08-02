@@ -23,18 +23,24 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 
-# Paths that only the author has. A live file naming one of these is a bug.
-# `log.md` is an append-only journal whose paths were accurate when written, and
-# dated test/deploy records describe what happened on specific machines.
-PERSONAL = re.compile(r"/home/ben|/Users/ben|Sync/CONFIG|bendecastro")
+# Paths that only the author has. A live file naming one of these is a bug,
+# because nobody else can follow it.
+#
+# Deliberately NOT matched: the author's GitHub username. It appears legitimately
+# in the clone URL, the licence, and provenance citations crediting where a design
+# decision came from. Attribution is not a portability defect, and conflating the
+# two would pressure a future maintainer to strip credit to make a check go green.
+PERSONAL = re.compile(r"/home/ben|/Users/ben|Sync/CONFIG")
+
+# Historical records: an append-only journal and dated run reports. Their paths
+# were accurate on the machine and date they describe, and rewriting them would
+# falsify the record.
 EXEMPT = {
     "log.md",
     "plans/portability.md",  # quotes the problem it exists to solve
-    "concepts/agent-kernel/CONCEPT.md",
+    "concepts/agent-kernel/CONCEPT.md",  # dated per-harness deploy records
     "concepts/agent-kernel/tests/codex-smoke-2026-06-12.md",
-    "README.md",       # clone URL
-    "LICENSE",         # copyright holder
-    "policies/README.md",
+    "scripts/portability-check.py",  # defines the pattern above
 }
 
 failures: list[str] = []
