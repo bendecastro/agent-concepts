@@ -1,0 +1,133 @@
+# Agent concepts
+
+A cross-vendor workspace for engineering coding agents: the instructions they run on, the
+adversarial tests that prove those instructions hold, and the policies that bound what an agent
+is allowed to do on its own.
+
+**Almost everything here was written by coding agents, working under my direction.** That is the
+point rather than a caveat. This workspace exists to make agents do better work, and the fairest
+test of whether it succeeds is whether agents can build and maintain it. The commits are the
+experiment; what follows is what came out of it.
+
+It is not an LLM application. There is no RAG, no vector store, no model serving. The subject is
+the layer above: how you instruct an agent, how you find out whether the instruction actually
+worked, and how you let one run unattended without trusting it blindly.
+
+---
+
+## What's here that isn't obvious
+
+### Instructions are tested adversarially, not just written
+
+A concept that enforces discipline doesn't ship until it has been attacked. Each one gets a
+scenario that role-plays the predictable excuses — *"I'm short on time"*, *"just trust me"*,
+*"it's common knowledge"* — and grading is done against the artifacts the agent produced, never
+its own account of what it did.
+
+**57 PASS, 6 FAIL and 1 MIXED are recorded across 46 result files.** The failures matter more than
+the passes. `tdd` and `diagnosing-bugs` both failed their first run, were rewritten, and passed on
+re-run; `issue-slicing` caved to *"just give me the issues, skip the review"* and had to be taught
+that a human approval gate is not a courtesy. A skill nobody has watched fail is a skill nobody
+has tested.
+
+### The orchestrator was measured, not assumed
+
+`bc-drain-issues` drains a queue of ready GitHub issues unattended: a driver loop claims an issue,
+runs a fresh worker, then puts the diff through independent spec-fidelity and standards-quality
+review before landing it.
+
+Reviewers never see the implementer's reasoning — only the diff, the spec and the standards.
+Contaminating a reviewer with the author's justification is how review becomes agreement. Review
+approvals are bound to a hash of the reviewed diff, so a later edit deterministically invalidates
+them rather than silently inheriting a stale sign-off.
+
+A v2-vs-v3 revision was A/B tested against a locked fixture commit, same model, same thinking
+level, counting child tokens per role:
+
+| | child tokens | cost |
+|---|---:|---:|
+| v1b | 315,474 | $0.79 |
+| v2d | 277,012 | $0.92 |
+
+**−12.2% tokens, and cost went up $0.13.** That is a token win and a cost regression, and it is
+recorded as both. The equivalent measurement for the v3 review-economy revision is still
+outstanding and is marked as such rather than quietly assumed.
+
+### Authorisation is a policy, not a vibe
+
+`policies/publish.yaml` decides when an agent may push or close an issue without asking. It is
+default-deny, and it carries **self-amendment immunity**: changes under `policies/` are never
+publishable under the policy itself, including by rules added later.
+
+> A policy that can publish its own amendments is default-allow in disguise — one self-edit away
+> from authorizing anything.
+
+Repo-local instruction files can *restrict* publishing but cannot *grant* it. Only this
+user-owned file or a live human instruction can.
+
+---
+
+## How it's organised
+
+| Layer | Role |
+|---|---|
+| `concepts/<name>/` | The canonical layer — the only one edited. `CONCEPT.md` (what and why, plus provenance), `body/` (what an agent actually loads), `tests/` (pressure scenarios and results). |
+| `scripts/` | Deterministic helpers: symlink deployment, and a linter for structural drift. |
+| `policies/` | User-owned authorisation. Agents follow it and may propose changes; they may never publish those changes. |
+| `raw/` | Citations for everything ingested. |
+| `index.md`, `log.md` | Catalogue of every concept, and an append-only journal of what changed and why. |
+
+36 concepts, 6,229 lines of instruction material, deployed by relative symlink to Claude Code, Pi,
+OpenCode, Codex, Grok and Composer from this single source. `AGENTS.md` is the operating manual an
+agent reads first.
+
+## The gates
+
+Four rules have a higher bar for revision, because each fails through in-the-moment
+rationalisation — the moment a gate blocks you is when your judgment about it is least
+trustworthy.
+
+- **Canon** — never hand-edit a derived output or anything a deploy symlink points into. The next
+  rebuild silently reverts it, and *"it's a one-line fix"* is how canon and deploys drift apart.
+- **Provenance** — every concept names its sources. An uncredited design decision is a guess no
+  future reader can re-evaluate.
+- **Test** — a discipline-enforcing concept doesn't deploy until it has held under pressure.
+- **Immutability** — ingested source material is evidence and is never edited in place.
+
+They are still defaults with reasons. Each states its rationale so a capable agent can recognise
+where it doesn't apply, and can argue it should change — out loud, and logged.
+
+## Design stance
+
+The workspace is written to **liberate agents rather than constrain them**, on the assumption that
+whoever reads it next may be more capable than whoever wrote it. Rules carry their reasoning so
+they can be generalised correctly. Silent deviation is never legitimate, because it hides the
+disagreement that would have improved the rule. Blind obedience is barely better, because it
+preserves a known flaw.
+
+## Deploying it
+
+```bash
+python3 scripts/deploy-local-skills.py   # relative symlinks into the shared skill bus
+python3 scripts/lint.py                  # structural drift check
+```
+
+Skills are exposed through `~/.agents/skills/`, which Pi, Composer and Grok discover
+automatically, with mirrors for Claude Code and Pi. See `harnesses.md` for per-harness support and
+`bootstrap.md` for copy-paste session prompts.
+
+## Provenance and licensing
+
+This workspace is built by reading other people's work and adapting it — notably Jesse Vincent's
+[superpowers](https://github.com/obra/superpowers) (MIT), [Matt Pocock's
+skills](https://github.com/mattpocock/skills), and published guidance from Anthropic, OpenAI and
+Google. Every concept names what it drew on; `raw/ingested/CITATIONS.md` indexes all 28 sources.
+
+Upstream material is **cited, not redistributed**. Earlier revisions kept local snapshots so
+provenance could be audited offline; those were third-party content and have been removed from the
+working tree and from history. The upstream link is the authority, and it is verifiable in a way a
+private snapshot never was.
+
+The concept bodies here are adaptations, not copies — re-voiced, merged, and specialised to this
+workflow. Where a body could not be written independently, the concept keeps a pointer to the
+upstream instead of vendoring it.

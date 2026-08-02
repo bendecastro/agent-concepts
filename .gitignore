@@ -1,0 +1,14 @@
+# Obsidian vault state — machine-local, noisy
+.obsidian/
+
+# Agent session scratch
+.pi-subagents/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Upstream-maintained skill bodies installed locally, never vendored here.
+# See each concept's body/UPSTREAM.md.
+concepts/herdr/body/SKILL.md
