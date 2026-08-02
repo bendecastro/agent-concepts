@@ -105,16 +105,42 @@ they can be generalised correctly. Silent deviation is never legitimate, because
 disagreement that would have improved the rule. Blind obedience is barely better, because it
 preserves a known flaw.
 
-## Deploying it
+## Installing it
 
 ```bash
-python3 scripts/deploy-local-skills.py   # relative symlinks into the shared skill bus
-python3 scripts/lint.py                  # structural drift check
+git clone https://github.com/bendecastro/agent-concepts.git
+cd agent-concepts
+
+# Point deployed skills at this checkout. Some bodies run scripts from the
+# repository, and a shell needs to know where it is.
+echo 'export AGENT_CONCEPTS="$PWD"' >> ~/.profile   # adjust for your shell
+export AGENT_CONCEPTS="$PWD"
+
+python3 scripts/deploy-local-skills.py --dry-run   # see what would change
+python3 scripts/deploy-local-skills.py            # relative symlinks into the skill bus
 ```
 
+The workspace can live anywhere: the deploy script derives the repository location from its own
+path and writes **relative** symlinks, so they survive different home directories.
+
 Skills are exposed through `~/.agents/skills/`, which Pi, Composer and Grok discover
-automatically, with mirrors for Claude Code and Pi. See `harnesses.md` for per-harness support and
-`bootstrap.md` for copy-paste session prompts.
+automatically, with mirrors for Claude Code and Pi. Use `--harness claude` or `--harness pi` to
+update only one, and `--skip NAME` to leave a concept out.
+
+Five concepts assume software you may not have — `omarchy`, `notebooklm`, `last30days`, `herdr`
+and `qmd`. Their requirements are listed in `index.md` and in each `CONCEPT.md`. The first four
+keep no body here at all (they are maintained upstream), so they are not deployed; they simply
+won't appear.
+
+**Nothing is authorised to publish on your behalf until you say so.** Agents ask before pushing
+unless a rule in `~/.config/agent-concepts/publish.yaml` says otherwise, and that file does not
+exist until you create it. See [`policies/README.md`](policies/README.md).
+
+```bash
+python3 scripts/lint.py   # structural drift check
+```
+
+See `harnesses.md` for per-harness support and `bootstrap.md` for copy-paste session prompts.
 
 ## Provenance and licensing
 

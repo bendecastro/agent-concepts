@@ -5,13 +5,13 @@ Use this file when a harness does not automatically discover a concept from `con
 ## Generic prompts
 
 - **Always-on base include:**
-  `Include ~/Sync/CONFIG/agents/concepts/agent-kernel/body/AGENT-KERNEL.md in the harness's main agent instructions.`
+  `Include <agent-concepts>/concepts/agent-kernel/body/AGENT-KERNEL.md in the harness's main agent instructions.`
 - **Workspace maintenance (any agent):**
-  `Read ~/Sync/CONFIG/agents/AGENTS.md and follow it. Then: <operation>, e.g. "ingest raw/foo.md", "lint the workspace", or "implement the teach concept update".`
+  `Read <agent-concepts>/AGENTS.md and follow it. Then: <operation>, e.g. "ingest raw/foo.md", "lint the workspace", or "implement the teach concept update".`
 - **Concept session (manual harness):**
-  `Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if your harness does not support Agent Skills metadata. Follow the Markdown body as your instructions for this session.`
+  `Read <agent-concepts>/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if your harness does not support Agent Skills metadata. Follow the Markdown body as your instructions for this session.`
 - **Concept test (manual harness):**
-  `Act as the consuming agent for ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md in a throwaway workspace. Run the scenario in ~/Sync/CONFIG/agents/concepts/<name>/tests/<test>. Produce artifacts, then grade by file inspection, not self-report.`
+  `Act as the consuming agent for <agent-concepts>/concepts/<name>/body/SKILL.md in a throwaway workspace. Run the scenario in <agent-concepts>/concepts/<name>/tests/<test>. Produce artifacts, then grade by file inspection, not self-report.`
 
 ## Harness-specific entry points
 
@@ -19,7 +19,7 @@ Use this file when a harness does not automatically discover a concept from `con
 
 Claude Code discovers deployed concepts automatically via relative symlinks:
 
-`~/.claude/skills/<name>` → `../../Sync/CONFIG/agents/concepts/<name>/body`
+`~/.claude/skills/<name>` → `<relative path to>/concepts/<name>/body`
 
 Current deploys are recorded in each concept's `CONCEPT.md` and summarized in `index.md` / `harnesses.md`.
 
@@ -29,11 +29,11 @@ Pi discovers global skills from `~/.pi/agent/skills/`. `teach` is deployed there
 
 For concepts not yet deployed to Pi, use the generic concept-session bootstrap:
 
-`Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if unsupported. Follow the Markdown body as your instructions for this session.`
+`Read <agent-concepts>/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if unsupported. Follow the Markdown body as your instructions for this session.`
 
 For workspace maintenance:
 
-`Read ~/Sync/CONFIG/agents/AGENTS.md and follow it. Then: <operation>.`
+`Read <agent-concepts>/AGENTS.md and follow it. Then: <operation>.`
 
 ### Codex
 
@@ -43,9 +43,9 @@ Example task frame:
 
 ```text
 Goal: Use the <name> concept for this session.
-Context: The canonical instructions are at ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md.
+Context: The canonical instructions are at <agent-concepts>/concepts/<name>/body/SKILL.md.
 Constraints: Read that file fully; ignore YAML frontmatter if unsupported; follow the Markdown body; do not copy or edit deployed outputs.
-Done when: The requested session/task is complete and any canonical changes are made in ~/Sync/CONFIG/agents/.
+Done when: The requested session/task is complete and any canonical changes are made in <agent-concepts>/.
 ```
 
 ### OpenCode
@@ -56,7 +56,7 @@ OpenCode has the `agent-kernel` delta in `~/.config/opencode/AGENTS.md`. If nati
 
 Composer discovers deployed concepts automatically from the shared bus:
 
-`~/.agents/skills/<name>` → `../../Sync/CONFIG/agents/concepts/<name>/body`
+`~/.agents/skills/<name>` → `<relative path to>/concepts/<name>/body`
 
 Populate that bus with `python3 scripts/deploy-local-skills.py` from this workspace (same command as Pi). Restart Composer sessions after deploy if the skill list is stale. For concepts not yet deployed, use the generic concept-session bootstrap.
 
@@ -66,7 +66,7 @@ Grok discovers the same `~/.agents/skills/<name>` symlinks (verified 2026-07-04 
 
 For stale sessions or one-off use, the generic concept-session bootstrap still works:
 
-`Read ~/Sync/CONFIG/agents/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if unsupported. Follow the Markdown body as your instructions for this session.`
+`Read <agent-concepts>/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if unsupported. Follow the Markdown body as your instructions for this session.`
 
 ### Gemini / other agents
 

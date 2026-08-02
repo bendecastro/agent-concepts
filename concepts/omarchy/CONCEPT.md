@@ -2,6 +2,12 @@
 
 Reference skill for end-user customization of Omarchy Linux systems (Hyprland window manager, waybar, walker, terminals, themes, hooks, and the `omarchy` CLI). It encodes the safe-edit boundary — `~/.config/` is editable, `~/.local/share/omarchy/` is read-only upstream source — plus config-file maps and customization patterns.
 
+## Requirements
+
+Omarchy on Arch Linux. The body is not vendored here — Omarchy's own installer
+provides it and symlinks it into the skill path. On any other distribution this
+concept is inert: the paths it edits do not exist.
+
 ## Design decision: no vendored body
 
 Unlike every other concept, this one has **no `body/` directory, on purpose**. The skill is authored and maintained upstream by Basecamp inside the Omarchy distribution itself, and `omarchy update` keeps it current on the machine. Vendoring a copy here would fork it and silently go stale — we explicitly chose to take advantage of upstream maintenance instead (user decision, 2026-06-12).

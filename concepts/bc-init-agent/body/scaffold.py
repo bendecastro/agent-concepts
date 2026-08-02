@@ -94,7 +94,7 @@ This project is wired for the grill→issues→drain loop. See
 
 - Agents may push their own commits and close directly-completed GitHub issues only
   if a matching rule authorizes it in the user-owned publish policy
-  (`~/Sync/CONFIG/agents/policies/publish.yaml`). No matching rule ⇒ ask.
+  (`~/.config/agent-concepts/publish.yaml`). No matching rule ⇒ ask.
 """
 
 
@@ -178,7 +178,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
   `conventions/planning-workflow.md`: it maps generic `CONTEXT.md`/`docs/adr/` persistence
   into this vault's pages.
 - Use `references/agent-skills.md` as the local map of required loop skills and where their
-  canonical bodies live under `~/Sync/CONFIG`.
+  canonical bodies live in the shared agent-concepts workspace.
 - **`tasks/active.md` is the live cursor.** Keep it true every session.
 - `tasks/parking-lot.md` = deferred ideas. `tasks/completed.md` = dated done-log.
 - Plan lifecycle: `Proposed → Approved → In progress → Blocked → Done / Abandoned`.
@@ -344,7 +344,7 @@ Date: __DATE__
 
 This project is wired for the full loop. Use the `bc-` orchestrators with this repo-local
 adapter so planning persistence lands in `.bc-agent/` instead of generic
-`CONTEXT.md` / `docs/adr/` files. See `~/Sync/CONFIG/agents/pipeline.md` for the loop.
+`CONTEXT.md` / `docs/adr/` files. See `$AGENT_CONCEPTS/pipeline.md` for the loop.
 
 ## Planning intent trigger
 
@@ -527,7 +527,7 @@ Normal git discipline applies.
   unrelated edits the human has in progress.
 - Commit agent-made changes before finishing the task.
 - Push / close GitHub issues only when authorized by the user-owned publish policy
-  (`~/Sync/CONFIG/agents/policies/publish.yaml`). After pushing, agents may close issues
+  (`~/.config/agent-concepts/publish.yaml`). After pushing, agents may close issues
   directly completed by the pushed work, leaving a comment with the commit SHA and a
   validation summary; never close partially satisfied or adjacent issues.
 - Keep commits scoped, with concise messages. Do not rewrite history or re-init Git unless asked.
@@ -667,7 +667,7 @@ AGENT_SKILLS = """# Agent Skill Map
 
 Date: __DATE__
 
-The bc loop skills are canonical in `~/Sync/CONFIG/agents/concepts/<skill>/body/SKILL.md`
+The bc loop skills are canonical in `$AGENT_CONCEPTS/concepts/<skill>/body/SKILL.md`
 and are normally deployed into `~/.pi/agent/skills/<skill>` and `~/.agents/skills/<skill>`
 via symlink. Do not vendor/copy their bodies into this repo; use this page as the repo-local
 map so agents know what to invoke.

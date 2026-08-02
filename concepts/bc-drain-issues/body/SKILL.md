@@ -33,7 +33,7 @@ A review rejection is not by itself a human blocker. Preserve useful fixable wor
 Stop and report if a required check fails; AFK work must not invent mid-run decisions.
 
 1. Confirm the target repo is clean, on `master`, and capture its remote and base SHA.
-2. Run `python3 ~/Sync/CONFIG/agents/scripts/publish-check.py --repo "$PWD" --remote "<remote-url>" --branch master`. Exit 0 authorizes the configured operations. Exit 2 aborts unless the user pre-agreed to commit-only-local mode. Never edit the policy to authorize this run.
+2. Run `python3 "$AGENT_CONCEPTS/scripts/publish-check.py" --repo "$PWD" --remote "<remote-url>" --branch master`. Exit 0 authorizes the configured operations. Exit 2 aborts unless the user pre-agreed to commit-only-local mode. Never edit the policy to authorize this run.
 3. Confirm no-force creation/deletion of `bc-drain-claims/issue-<n>` is authorized. Without it, stop unless the user explicitly selected single-run mode. Labels/comments are advisory, not locks.
 4. Ensure `ready-for-agent`, `rework-for-agent`, `needs-human`, and `in-progress-agent` exist.
 5. Confirm issue/comment/close access and the ability to inspect PRD parent/children. A blocked, claimed, deferred, or open child keeps its parent open.

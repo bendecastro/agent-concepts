@@ -2,9 +2,15 @@
 
 Upstream-maintained reference skill for controlling a Herdr terminal-multiplexer session from an agent running inside a Herdr-managed pane. It covers topology inspection, safe pane creation, command execution, agent startup/prompting, output reads, waits, and coordination.
 
+## Requirements
+
+Herdr installed, and the agent running inside a Herdr-managed pane with `HERDR_ENV=1`.
+The body is not vendored here (upstream states no licence), so install it through
+upstream's own channel. Outside a Herdr session every command in it will fail.
+
 ## Design decisions
 
-- **Vendor the upstream skill verbatim.** The user requested the Herdr skill be ingested into this canonical workspace rather than installed independently with `npx skills`. `body/SKILL.md` is an unmodified snapshot so upstream behavior remains auditable and refreshes can be diffed.
+- **Reference the upstream body; do not vendor it.** The skill was originally ingested as an unmodified snapshot of upstream's `SKILL.md`. That copy was removed on 2026-08-02: the upstream repository states no licence, so redistributing its body from a public repo is not clearly permitted. `body/UPSTREAM.md` now points at the source instead, matching the arrangement already used by `omarchy`, `notebooklm` and `last30days`. The pinned commit and the SHA-256 of the body the accuracy check ran against are recorded under Provenance, so a refresh can still be diffed against a known state.
 - **Explicit invocation and environment gate stay intact.** The skill applies only when the user explicitly asks for Herdr control and requires `HERDR_ENV=1`; this prevents an outside agent from controlling a focused session it does not own.
 - **The installed CLI remains authoritative.** The body directs agents to inspect `herdr --help` and relevant command groups instead of assuming a stale command shape.
 - **Background work preserves user context.** Sibling panes default to the caller's tab and working directory, use `--no-focus`, and must be targeted by explicit IDs or agent names.

@@ -17,8 +17,8 @@ results, including invalid topology or numbers that make v3 look bad.
 
 ## 0. Setup
 
-- Canon workspace: `~/Sync/CONFIG/agents`
-- Fixture generator: `~/Sync/CONFIG/agents/concepts/bc-drain-issues/tests/fixtures/contested-gate-b/make-fixture.py`
+- Canon workspace: `$AGENT_CONCEPTS`
+- Fixture generator: `$AGENT_CONCEPTS/concepts/bc-drain-issues/tests/fixtures/contested-gate-b/make-fixture.py`
 - Read `<that dir>/README.md` first — it describes the fixture, the isolation guarantees, its
   residual risks, and the pass criteria. Read `../../pressure-drain.md` for the inherited v2
   Gate B outcomes.
@@ -38,9 +38,9 @@ before doing anything else, and verify `command -v gh git publish-check.py` all 
 
 ## 2. Pin the two arms
 
-- **v2 arm:** `cd ~/Sync/CONFIG && git worktree add --detach /tmp/gateb-v2 745fe01`, then run the
+- **v2 arm:** `cd "$AGENT_CONCEPTS" && git worktree add --detach /tmp/gateb-v2 745fe01`, then run the
   drain against `/tmp/gateb-v2/agents/concepts/bc-drain-issues/body/`.
-- **v3 arm:** run against `~/Sync/CONFIG/agents/concepts/bc-drain-issues/body/`.
+- **v3 arm:** run against `$AGENT_CONCEPTS/concepts/bc-drain-issues/body/`.
 
 Before spending tokens, prove the arms differ:
 `grep -c 'do not re-derive it' <arm>/review-contract.md` must be `0` for v2 and `1` for v3.
@@ -88,7 +88,7 @@ the fixture, the caps, or the criteria to produce a pass.
 
 ## 6. Write the result
 
-Create `~/Sync/CONFIG/agents/concepts/bc-drain-issues/tests/results/<YYYY-MM-DD>-gate-b-contested.md`
+Create `$AGENT_CONCEPTS/concepts/bc-drain-issues/tests/results/<YYYY-MM-DD>-gate-b-contested.md`
 following the shape of `2026-07-25-gate-b.md`: locked comparison table (fixture base, model,
 effort, per-arm totals, delta), per-phase breakdown, correctness section, and a measurement-notes
 section recording limitations. Add machine totals as a sibling `.json`. Then update

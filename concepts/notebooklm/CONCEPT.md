@@ -2,6 +2,12 @@
 
 Reference skill for driving Google NotebookLM from the terminal via the unofficial `notebooklm` CLI ([teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py)): create notebooks, add sources (URLs, PDFs, YouTube, audio/video), chat with sources, and generate/download artifacts (audio overviews, quizzes, flashcards, slide decks, mind maps) — including features the web UI doesn't expose.
 
+## Requirements
+
+The `notebooklm-py` CLI, installed and authenticated. The body is written into the
+skill path by `notebooklm skill install`, so without the CLI there is no body to
+load. Refresh it manually after upgrading the package.
+
 ## Design decision: no vendored body (upstream-installer-maintained)
 
 Like [[omarchy]], this concept has **no `body/` directory, on purpose**. The skill is authored upstream inside the notebooklm-py package and deployed by the package's own installer:

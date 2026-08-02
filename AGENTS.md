@@ -27,7 +27,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
   - `tests/` — pressure scenarios and expected behavior (see Test operation).
 - `build/` — **derived per-agent outputs. Does not exist yet — do not create it** until two agents actually need different formats for the same concept. Today every consumer reads `body/` directly via symlink.
 - `scripts/` — deterministic helpers shared across the workspace.
-- `policies/` — **user-owned authorization policies** (e.g. `publish.yaml`). Agents follow them and may propose changes, but a policy change is never publishable under the policy itself — pushing one requires current explicit user instruction (self-amendment immunity).
+- `policies/` — **documentation for user-owned authorization only.** The real policy lives outside this repository at `~/.config/agent-concepts/publish.yaml`; what is tracked here is `publish.example.yaml`, a template. Agents follow the user's policy and may propose changes, but a policy change is never publishable under the policy itself — pushing one requires current explicit user instruction (self-amendment immunity). Never add a real (non-example) publish policy to this repository: a private authorization file in a public checkout is one `git add -f` from being published, and would be inherited by everyone who clones.
 - `AGENTS.md` (this file), `index.md`, `log.md`, `bootstrap.md`, `harnesses.md` — the schema, catalog, history, bootstrap prompts, and harness compatibility matrix.
 
 ## Operations
@@ -70,7 +70,17 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
 
 ## Conventions
 
-- No hardcoded home paths anywhere — `~` or `$HOME` only; symlinks relative. This directory syncs across macOS, Debian, and Arch via Syncthing.
+- **Nothing in this repository may assume one person's machine.** It is public and installable, so
+  a path only the author has is a bug. Two mechanisms, chosen by context:
+  - `$AGENT_CONCEPTS/...` in anything a **shell executes** — commands inside deployed skill
+    bodies, scripts. The shell expands it at runtime.
+  - `<agent-concepts>/...` in anything a **human reads and pastes** — `bootstrap.md`,
+    `harnesses.md`. An environment variable would not expand in a chat window; a placeholder
+    tells the reader to substitute.
+  `scripts/lint.py` checks inline repo-relative paths, so a stale reference is caught
+  mechanically; it cannot catch a path that is merely personal, which stays a review concern.
+- `log.md` is a historical journal and is exempt: its paths were accurate when written.
+- No hardcoded home paths anywhere — `~` or `$HOME` only; symlinks relative.
 - Commit changes to this directory in the CONFIG git repo with a message saying which operation ran. Publishing follows `~/.config/agent-concepts/publish.yaml`; that user-owned policy currently authorizes pushing agent-authored CONFIG commits after status/diff inspection and validation.
 - Concept names are dash-case and unique across the workspace.
 - This workspace's value comes from encoding the user's specific workflows, not generic skill-list scraping. When ingesting, ask what's idiosyncratic about how the user wants it.

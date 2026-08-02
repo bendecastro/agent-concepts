@@ -1,16 +1,29 @@
 #!/usr/bin/env python3
-"""Deploy canonical CONFIG agent concepts as local harness-discoverable skills.
+"""Deploy the workspace's concepts as local harness-discoverable skills.
 
-For each concepts/<name>/body/SKILL.md, create/update symlinks:
-  ~/.agents/skills/<name> -> ~/Sync/CONFIG/agents/concepts/<name>/body
-  ~/.pi/agent/skills/<name> -> ~/Sync/CONFIG/agents/concepts/<name>/body
-  ~/.claude/skills/<name> -> ~/Sync/CONFIG/agents/concepts/<name>/body
+For each concepts/<name>/body/SKILL.md, create/update relative symlinks:
+  ~/.agents/skills/<name>     -> <this repo>/concepts/<name>/body
+  ~/.pi/agent/skills/<name>   -> <this repo>/concepts/<name>/body
+  ~/.claude/skills/<name>     -> <this repo>/concepts/<name>/body
+
+The repository location is derived from this file, so the workspace can live
+anywhere. Links are relative, which keeps them valid across machines with
+different home directories.
 
 The ~/.agents/skills/ bus is also the Composer (Cursor), Grok, and OpenCode
 discovery path: those harnesses scan it alongside their native skill dirs. No
 extra symlink targets are required for them.
 
+Some concepts assume software that may not be installed (see "Requires" in
+index.md). They self-gate through their descriptions, so deploying them is
+harmless; use --skip to leave them out anyway.
+
 Non-symlink destinations are skipped unless --force is supplied.
+
+Examples:
+  deploy-local-skills.py --dry-run
+  deploy-local-skills.py --harness claude
+  deploy-local-skills.py --skip omarchy --skip herdr
 """
 
 from __future__ import annotations
@@ -38,7 +51,7 @@ DEPLOY_ALIASES = {
 
 def rel_target(target: Path, link_parent: Path) -> str:
     # Symlink targets are interpreted relative to the real directory containing
-    # the link. `~/.pi` is itself a symlink into `~/Sync/CONFIG/.pi`, so compute
+    # the link. A harness dir such as `~/.pi` may itself be a symlink, so compute
     # from the resolved parent to avoid creating links that only work logically.
     return os.path.relpath(target.resolve(), start=link_parent.resolve())
 
@@ -93,11 +106,22 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="show changes without writing symlinks")
     parser.add_argument("--force", action="store_true", help="replace existing non-symlink files only; directories still require manual cleanup")
     parser.add_argument("--harness", choices=["all", "pi", "claude"], default="all", help="which harness-specific skill dir to update (default: all)")
+    parser.add_argument("--skip", action="append", default=[], metavar="NAME",
+                        help="concept to leave undeployed (repeatable)")
     args = parser.parse_args()
 
     skills = discover()
     if not skills:
         raise SystemExit(f"No concept skills found under {CONCEPTS}")
+
+    if args.skip:
+        known = {name for name, _ in skills}
+        unknown = sorted(set(args.skip) - known)
+        if unknown:
+            raise SystemExit(f"--skip names no such concept: {', '.join(unknown)}")
+        skipped = sorted(set(args.skip))
+        skills = [(name, body) for name, body in skills if name not in set(args.skip)]
+        print(f"Skipping {len(skipped)} concept(s): {', '.join(skipped)}")
 
     for name, body in skills:
         global_link = GLOBAL_SKILLS / name

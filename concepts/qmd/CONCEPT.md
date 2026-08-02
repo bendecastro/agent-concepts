@@ -2,6 +2,12 @@
 
 Reference skill for [tobi/qmd](https://github.com/tobi/qmd), a fully local CLI search engine over markdown corpora (SQLite FTS5 BM25 + vector embeddings + LLM reranking via node-llama-cpp GGUF models). The skill teaches agents the **global-mode** architecture used here (one index, collections per knowledge base, searchable from any cwd), the search/retrieval command conventions, the indexing-authority rules (canon file + setup script own collections; timer/driver own freshness; workers search-only), and the context-tree-as-authority-map pattern.
 
+## Requirements
+
+`qmd` installed, plus at least one collection registered in the global index. This
+workspace assumes global mode: one index, collections per knowledge base. Project-local
+`.qmd/` directories are deliberately unsupported — they shadow the global registry.
+
 ## Why it exists
 
 The bc-agent wiki pattern hands cold agents a growing markdown vault and tells them to read "relevant" ADRs/pages — which degrades into grep-and-hope as `decisions/`, `research/`, `findings/`, and `out-of-scope/` accumulate. qmd's hybrid search plus its per-path context descriptions give a fresh drain worker or triage agent the right three documents *pre-labeled with authority* instead of a directory listing. The same failure this guards against is on record: an agent once built a parallel PRD in `docs/` because it never found the vault's authoritative plan.

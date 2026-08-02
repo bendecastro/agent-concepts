@@ -2,6 +2,12 @@
 
 Reference skill for `/last30days`: an agent-led recent-research workflow that searches and synthesizes what people are saying about a topic across social/community/market sources such as Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and web search. Its core value is recency plus engagement-weighted evidence, not generic web summarization.
 
+## Requirements
+
+The upstream `last30days` plugin, installed through its own channel (`npx skills add`
+or the Claude Code plugin marketplace). The skill is coupled to a Python engine that
+ships with it; the Markdown alone does nothing.
+
 ## Design decision: no vendored body (upstream-maintained)
 
 This concept has **no local runtime skill body**, on purpose. The upstream skill is a large Agent Skills package whose `SKILL.md` is tightly coupled to Python engine scripts, assets, fixtures, and install/update mechanics.
