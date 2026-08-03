@@ -477,3 +477,23 @@ than an assertion. See [plans/portability.md](plans/portability.md).
 - **Lesson worth keeping:** the portability test exports `HEAD`, not the working tree — so it
   tests what a stranger receives. It failed the first time precisely because the fixes were
   uncommitted, which is the correct answer to "is this portable right now?"
+
+## [2026-08-03] deploy | second machine onboarded; a relative-symlink trap
+
+Brought the Mac onto the new layout. Both repos had already arrived via Syncthing, so the work was
+the three things that do not sync: the config symlink, the environment variable, and the skill bus.
+
+- **`~/.config` may itself be a symlink.** On the Mac it points at `dotfiles/.config`, so a
+  *relative* link created inside it resolves against the link's own directory, not the path you
+  typed — `../Sync/...` landed in `dotfiles/Sync/...` and silently dangled. `publish-check.py`
+  caught it immediately by reporting no policy found. Fixed with an absolute link, and the Linux
+  box was aligned to match rather than left on the fragile form.
+  `deploy-local-skills.py` already knew about this class of bug: `rel_target()` computes from the
+  **resolved** parent for exactly this reason. The script was right; the hand-made symlink was not.
+- **No systemd on macOS**, so `environment.d` is inert there — `AGENT_CONCEPTS` has to come from
+  `~/.zshenv`, which is also the only file a non-interactive `ssh host cmd` reads.
+- **Left the dangling `omarchy` links alone.** They are Arch-only and were already dangling on the
+  Mac. `~/.claude/skills` and `~/.pi/agent/skills` are synced, so deleting them there would
+  propagate and break the Linux box — the failure recorded in the 2026-06 entry. Dangling on one
+  machine is not evidence of dangling everywhere.
+- Result: 120 links resolve on the Mac, 34 public + 3 private, the 2 known omarchy danglers aside.
