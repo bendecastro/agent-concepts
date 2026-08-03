@@ -29,7 +29,7 @@ Archetypes:
 - **code** — default project execution wiki: PRDs/plans, architecture reviews, ADRs, validation, commands, tasks, architecture-runway nudge tracking, `/bc-plan-to-issues` → `/bc-drain-issues`.
 - **ops** — operational/system wiki like the Music wiki: `components/`, `findings/`, `decisions/`, `open-questions/`, executable plans; evidence before plan.
 - **learning** — bc agents helping the human learn: `learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, plus an explicit link to the `teach` skill.
-- **knowledge** — LLM-maintained knowledge graph like `~/Sync/Wiki`: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
+- **knowledge** — LLM-maintained knowledge graph: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
 - **hybrid** — code execution plus one or more of ops/learning/knowledge when the folder clearly needs more than one durable mode.
 
 ## Process
@@ -53,7 +53,7 @@ Archetypes:
 
    For a **learning workspace**, ask the subject, desired outcome, current level, preferred learning cadence, source material, and whether to invoke the `teach` skill for multi-session tutoring records.
 
-   For a **knowledge-graph workspace**, ask the domain boundary, source-ingest policy, raw immutability expectations, entity/concept granularity, and whether this is personal `~/Sync/Wiki`-style knowledge or project-local knowledge.
+   For a **knowledge-graph workspace**, ask the domain boundary, source-ingest policy, raw immutability expectations, entity/concept granularity, and whether this is personal cross-project knowledge or project-local knowledge.
 
    For an **old/messy project being revived**, treat init as a reconciliation step: cleanup/continuation/archive/rewrite goal; authoritative old plans/specs/ADRs; which files could seed `project/`, `research/`, `decisions/`, `components/`, `findings/`, `open-questions/`, `learning/`, `sources/`, `concepts/`, `raw/`, or `out-of-scope/`; whether file moves are allowed now or should become a migration plan; what must not be touched.
 
@@ -71,7 +71,7 @@ Archetypes:
 
 8. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, note it as a TODO in the vault's `tasks/parking-lot.md` (the scaffold already seeds that reminder).
 
-9. **Register the vault for global search (default yes, opt-out).** New vaults are searchable by default: append an entry for `.bc-agent/` to `~/Sync/Scripts/config/qmd-collections.yml` (collection name = the slug; copy an existing entry's shape, contexts stating each directory's *authority level*), then run `bc-qmd-setup` if qmd is installed here. Ask only if the user wants this vault **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos. Append to the synced YAML even when qmd isn't installed on this machine, so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `qmd` skill).
+9. **Register the vault for global search (default yes, opt-out).** New vaults are searchable by default: append an entry for `.bc-agent/` to the qmd collections file (collection name = the slug; copy an existing entry's shape, contexts stating each directory's *authority level*), then apply it with the setup command — see the `qmd` concept. Skip this step if qmd is not installed. Ask only if the user wants this vault **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos. Append to the synced YAML even when qmd isn't installed on this machine, so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `qmd` skill).
 
 10. **Close out.** Point at the created files and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-issues` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 
