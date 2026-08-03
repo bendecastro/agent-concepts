@@ -127,8 +127,8 @@ Skills are exposed through `~/.agents/skills/`, which Pi, Composer and Grok disc
 automatically, with mirrors for Claude Code and Pi. Use `--harness claude` or `--harness pi` to
 update only one, and `--skip NAME` to leave a concept out.
 
-Five concepts assume software you may not have — `omarchy`, `notebooklm`, `last30days`, `herdr`
-and `qmd`. Their requirements are listed in `index.md` and in each `CONCEPT.md`. The first four
+Four concepts assume software you may not have — `notebooklm`, `last30days`, `herdr` and
+`qmd`. Their requirements are listed in `index.md` and in each `CONCEPT.md`. The first three
 keep no body here at all (they are maintained upstream), so they are not deployed; they simply
 won't appear.
 

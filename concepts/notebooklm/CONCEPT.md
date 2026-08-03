@@ -10,10 +10,10 @@ load. Refresh it manually after upgrading the package.
 
 ## Design decision: no vendored body (upstream-installer-maintained)
 
-Like [[omarchy]], this concept has **no `body/` directory, on purpose**. The skill is authored upstream inside the notebooklm-py package and deployed by the package's own installer:
+This concept has **no `body/` directory, on purpose**. The skill is authored upstream inside the notebooklm-py package and deployed by the package's own installer:
 
 - **Canonical body:** `~/.claude/skills/notebooklm/SKILL.md` (plus `~/.agents/skills/notebooklm/SKILL.md`) — a copy written by `notebooklm skill install`, version-stamped to the installed package.
-- **Update path:** unlike omarchy there is no auto-updater; after upgrading the package (`uv tool upgrade notebooklm-py`), rerun `notebooklm skill install` to refresh the deployed copy. The deployed file carries a `<!-- notebooklm-py vX.Y.Z -->` stamp to check against `notebooklm --version`.
+- **Update path:** there is no auto-updater; after upgrading the package (`uv tool upgrade notebooklm-py`), rerun `notebooklm skill install` to refresh the deployed copy. The deployed file carries a `<!-- notebooklm-py vX.Y.Z -->` stamp to check against `notebooklm --version`.
 - **Canon gate note:** the deployed file is upstream-derived output — never hand-edit it; the next `skill install` would silently revert the edit. Our own additions would be a new concept layered on top, or an upstream PR.
 - **Per-machine:** the CLI is installed per machine (`uv tool install "notebooklm-py[browser]"`), so the deployed skill exists only where the tool does (installed on the Arch box, 2026-06-13). Auth is per machine too (`notebooklm login`, browser-based Google session).
 

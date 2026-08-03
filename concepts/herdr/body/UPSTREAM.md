@@ -9,4 +9,4 @@ Install or refresh it through upstream's own channel, then expose it on the shar
 alongside the concepts deployed from here. `CONCEPT.md` records the accuracy check, the pinned
 commit, and the SHA-256 of the body that check was run against.
 
-This mirrors the arrangement already used by `omarchy`, `notebooklm` and `last30days`.
+This mirrors the arrangement already used by `notebooklm` and `last30days`.

@@ -23,7 +23,7 @@ Non-symlink destinations are skipped unless --force is supplied.
 Examples:
   deploy-local-skills.py --dry-run
   deploy-local-skills.py --harness claude
-  deploy-local-skills.py --skip omarchy --skip herdr
+  deploy-local-skills.py --skip teach --skip seo
 """
 
 from __future__ import annotations

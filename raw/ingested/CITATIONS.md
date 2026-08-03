@@ -28,7 +28,6 @@ is retained alongside this index.
 | `mattpocockskills Skills for Real Engineers. Straight from my .claude directory..md` | [mattpocockskills Skills for Real Engineers. Straight from my .claude directory..md](https://github.com/mattpocock/skills) |  |
 | `notebooklm-skill-upstream` | [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) |  |
 | `obra-superpowers` | [obra/superpowers](https://github.com/obra/superpowers) | MIT (Jesse Vincent). Snapshot was at commit 6fd4507. |
-| `omarchy-skill-upstream` | [basecamp/omarchy](https://github.com/basecamp/omarchy) |  |
 | `openai-codex-prompting-guide.md` | [openai-codex-prompting-guide.md](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide) |  |
 | `openai-gpt-5-2-prompting-guide.md` | [openai-gpt-5-2-prompting-guide.md](https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide) |  |
 | `openai-gpt-5-4-frontend-design.md` | [openai-gpt-5-4-frontend-design.md](https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4) |  |
