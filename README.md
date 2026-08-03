@@ -136,6 +136,27 @@ won't appear.
 unless a rule in `~/.config/agent-concepts/publish.yaml` says otherwise, and that file does not
 exist until you create it. See [`policies/README.md`](policies/README.md).
 
+### Private concepts
+
+Not every useful instruction can be published. Infrastructure topology, employer-specific
+process, or an upstream body whose licence does not permit redistribution are all things you may
+need an agent to know without publishing them to use them.
+
+Put those in `~/.config/agent-concepts/concepts/<name>/body/SKILL.md` — the same shape as
+`concepts/` here, so a concept can move between private and public by moving its directory. The
+deploy script picks them up automatically:
+
+```
+Including 2 private concept(s) from ~/.config/agent-concepts/concepts: herdr, machine-mesh
+```
+
+A private concept with the same name as a public one **wins**, and the override is reported
+rather than silent. That is how an upstream body can be used locally while the public repo keeps
+only a citation: `herdr` ships `body/UPSTREAM.md` here because upstream states no licence, and a
+local copy supplies the body.
+
+The private directory is optional and this workspace works without it.
+
 ```bash
 python3 scripts/lint.py   # structural drift check
 ```

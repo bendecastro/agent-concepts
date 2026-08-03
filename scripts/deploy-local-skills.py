@@ -40,6 +40,14 @@ GLOBAL_SKILLS = HOME / ".agents" / "skills"
 PI_SKILLS = HOME / ".pi" / "agent" / "skills"
 CLAUDE_SKILLS = HOME / ".claude" / "skills"
 
+# Private concepts live beside the user's other personal configuration, outside
+# this repository. Same shape as concepts/ here, so a concept can move between
+# private and public by moving its directory. Nothing here is ever committed to
+# this repo, which is the point: some knowledge (infrastructure topology,
+# employer-specific process) should not be published to use it.
+CONFIG_HOME = Path(os.environ.get("XDG_CONFIG_HOME", HOME / ".config")).expanduser()
+PRIVATE_CONCEPTS = CONFIG_HOME / "agent-concepts" / "concepts"
+
 # Public vocabulary can evolve without breaking existing user muscle memory. Alias
 # destinations must be canonical concept names; aliases never gain their own body.
 DEPLOY_ALIASES = {
@@ -87,7 +95,8 @@ def link_dir(link: Path, target: Path, *, force: bool, dry_run: bool) -> str:
     return action
 
 
-def discover() -> list[tuple[str, Path]]:
+def discover() -> tuple[list[tuple[str, Path]], list[str], list[str]]:
+    """Concepts to deploy, plus the private names and any that shadowed a public one."""
     canonical = {
         skill_file.parents[1].name: skill_file.parent
         for skill_file in sorted(CONCEPTS.glob("*/body/SKILL.md"))
@@ -96,9 +105,20 @@ def discover() -> list[tuple[str, Path]]:
     if missing:
         raise SystemExit(f"Alias target(s) missing from concepts: {', '.join(missing)}")
 
+    private = {
+        skill_file.parents[1].name: skill_file.parent
+        for skill_file in sorted(PRIVATE_CONCEPTS.glob("*/body/SKILL.md"))
+    } if PRIVATE_CONCEPTS.is_dir() else {}
+
+    # A private concept of the same name wins: it is the user's own, and they are
+    # more likely to mean it than the library's. Shadowing is reported rather than
+    # silent, because a name collision is usually accidental.
+    shadowed = sorted(private.keys() & canonical.keys())
+    canonical.update(private)
+
     skills = list(canonical.items())
     skills.extend((alias, canonical[target]) for alias, target in DEPLOY_ALIASES.items())
-    return sorted(skills)
+    return sorted(skills), sorted(private), shadowed
 
 
 def main() -> int:
@@ -110,9 +130,14 @@ def main() -> int:
                         help="concept to leave undeployed (repeatable)")
     args = parser.parse_args()
 
-    skills = discover()
+    skills, private, shadowed = discover()
     if not skills:
         raise SystemExit(f"No concept skills found under {CONCEPTS}")
+    if private:
+        print(f"Including {len(private)} private concept(s) from {PRIVATE_CONCEPTS}: "
+              f"{', '.join(private)}")
+    if shadowed:
+        print(f"NOTE: private concept(s) override the library's: {', '.join(shadowed)}")
 
     if args.skip:
         known = {name for name, _ in skills}
