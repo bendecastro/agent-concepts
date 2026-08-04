@@ -497,3 +497,9 @@ the three things that do not sync: the config symlink, the environment variable,
   propagate and break the Linux box — the failure recorded in the 2026-06 entry. Dangling on one
   machine is not evidence of dangling everywhere.
 - Result: 120 links resolve on the Mac, 34 public + 3 private, the 2 known omarchy danglers aside.
+
+## [2026-08-04] implement | kernel: write agent instructions to AGENTS.md, never CLAUDE.md
+Promoted a per-repo Claude Code memory into the kernel's tool-and-file discipline: project agent
+instructions go in `AGENTS.md`, and a vendor-named file should be a symlink rather than a second
+copy that drifts. It was a cross-vendor rule stranded in one WordPress repo's memory store, which
+is exactly the failure it warns about.
