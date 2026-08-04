@@ -503,3 +503,24 @@ Promoted a per-repo Claude Code memory into the kernel's tool-and-file disciplin
 instructions go in `AGENTS.md`, and a vendor-named file should be a symlink rather than a second
 copy that drifts. It was a cross-vendor rule stranded in one WordPress repo's memory store, which
 is exactly the failure it warns about.
+
+## [2026-08-04] implement | kernel: commit by default, publish never
+The kernel gated pushing thoroughly but never said committing was automatic — it opened with
+"when you changed files:" and went straight to *how* to commit, leaving *whether* to commit
+implicit. In practice that reads as permission-seeking, and agents ask before committing.
+
+Made the asymmetry explicit: **commit freely, publish never.** A commit is local and reversible
+(amend, reset, revert), so an unwanted one costs ~nothing, while uncommitted work is genuinely
+lost to a stray checkout or mixed into the next change. A push is outward-facing and effectively
+permanent. Added a bullet stating that authorization to commit never implies authorization to
+push — the two are separate decisions.
+
+Prompted by a session publishing the homeflix repo, where the agent held work uncommitted while
+asking about publishing; the user's correction was "always commit but don't push". The push side
+of the policy was already correct and is unchanged.
+
+**Test gate: not run.** agent-kernel is discipline-enforcing, so a pressure scenario is warranted.
+The change only *loosens* the commit side and leaves every push gate untouched, so the risk is a
+too-eager commit rather than an unauthorized publish — but the existing anti-push scenarios in
+`tests/pressure-scenarios.md` should be re-run to confirm "commit freely" isn't read as license to
+push. Flagged rather than skipped silently.
