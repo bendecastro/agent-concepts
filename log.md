@@ -504,6 +504,9 @@ instructions go in `AGENTS.md`, and a vendor-named file should be a symlink rath
 copy that drifts. It was a cross-vendor rule stranded in one WordPress repo's memory store, which
 is exactly the failure it warns about.
 
+## [2026-08-12] test+deploy | kernel: answer questions before editing
+Pressure-tested the question→approval boundary in a temporary Git fixture. Two weaker phrasings correctly avoided edits but failed to ask whether to proceed; strengthened the rule to require ending with an explicit permission question whenever any relevant change is identified. The final two-turn run passed: answer + permission question with no tracked mutation, then approved edit + validation + commit. Refreshed the answer-first delta in Pi, Claude Code, OpenCode, Grok, and Codex global instructions.
+
 ## [2026-08-12] implement | kernel: answer questions before editing
 Replaced the plan-only posture line with an answer/action boundary: informational and advisory questions get an answer first, and agents must offer changes and wait for explicit approval; direct concrete change requests still trigger end-to-end action. Added pressure scenario 9 for the two-turn question → approval transition. The cross-harness deltas were not refreshed, and the scenario remains unrun pending deployment.
 
