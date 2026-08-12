@@ -504,6 +504,9 @@ instructions go in `AGENTS.md`, and a vendor-named file should be a symlink rath
 copy that drifts. It was a cross-vendor rule stranded in one WordPress repo's memory store, which
 is exactly the failure it warns about.
 
+## [2026-08-12] implement | kernel: answer questions before editing
+Replaced the plan-only posture line with an answer/action boundary: informational and advisory questions get an answer first, and agents must offer changes and wait for explicit approval; direct concrete change requests still trigger end-to-end action. Added pressure scenario 9 for the two-turn question → approval transition. The cross-harness deltas were not refreshed, and the scenario remains unrun pending deployment.
+
 ## [2026-08-04] implement | kernel: commit by default, publish never
 The kernel gated pushing thoroughly but never said committing was automatic — it opened with
 "when you changed files:" and went straight to *how* to commit, leaving *whether* to commit
