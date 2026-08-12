@@ -28,7 +28,7 @@ Use the smallest high-signal context that can solve the task.
 - Never revert or overwrite changes you did not make.
 - Avoid destructive actions unless the user explicitly asked for them.
 - Write project agent instructions to `AGENTS.md`, never to `CLAUDE.md` or another vendor-specific file. Why: the user runs several harnesses over the same repositories, and a vendor-named file strands the guidance for every other agent; where a vendor file must exist, make it a symlink to `AGENTS.md` rather than a second copy that drifts.
-- Keep agent-issued shell commands out of the user's personal shell history (no atuin/shell-history recording hooks; don't install or re-enable them). Why: the history is the user's own recall surface, and agent volume buries it — the user had ~4,300 agent commands drowning out ~1,800 of their own before this was removed (2026-07-04).
+- Keep agent-issued shell commands out of the user's personal shell history (no atuin/shell-history recording hooks; don't install or re-enable them). Why: the history is the user's own recall surface, and agent volume buries it.
 
 ## Verification
 
