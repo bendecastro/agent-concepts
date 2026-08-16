@@ -530,3 +530,7 @@ The change only *loosens* the commit side and leaves every push gate untouched, 
 too-eager commit rather than an unauthorized publish — but the existing anti-push scenarios in
 `tests/pressure-scenarios.md` should be re-run to confirm "commit freely" isn't read as license to
 push. Flagged rather than skipped silently.
+
+## [2026-08-16] housekeeping | ignore project-local Pi state
+Removed the tracked `.pi/memory/MEMORY.md` preference file and ignored `.pi/` so machine-local
+Pi state cannot drift into the repository again.

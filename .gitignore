@@ -1,7 +1,8 @@
 # Obsidian vault state — machine-local, noisy
 .obsidian/
 
-# Agent session scratch
+# Agent session scratch and machine-local state
+.pi/
 .pi-subagents/
 
 # Python
