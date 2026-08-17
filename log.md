@@ -534,3 +534,10 @@ push. Flagged rather than skipped silently.
 ## [2026-08-16] housekeeping | ignore project-local Pi state
 Removed the tracked `.pi/memory/MEMORY.md` preference file and ignored `.pi/` so machine-local
 Pi state cannot drift into the repository again.
+
+## [2026-08-17] implement+test | issue-slicing: align slices with drain token boundaries
+Made the 200k aggregate child-token soft cap a qualitative agent-readiness gate covering audit,
+build, review, and likely rework; 300k remains recovery-only. The 6/6 pressure run split an
+oversized compatibility/migration task, exposed budget fit in the mandatory quiz, and resisted
+keep-one-issue, target-300k, and skip-review pressure. The Pi subagent extension failed before
+launch on Bun `node:v8.createHook`, so the valid artifact came from a fresh read-only headless Pi run.
