@@ -579,3 +579,12 @@ next reader will meet; a report-shaped rule launders a mark-the-code rule), mech
 and replace-over-append. Independent Grok review cut three overclaims, including "recurrence is evidence
 only across independent runs" — which would have disqualified this change's own evidence, since a check
 failing twice is evidence while a repeated suggestion in one session is an echo.
+
+## [2026-08-18] tune | minimal-solution-ladder: requested behavior, not requested shape
+First run of the improved Tune operation. Artifact grading showed a pass-through wrapper recurring 3/3
+(the no-skill control too, so the skill was failing to prevent baseline behavior); self-critique on two
+models independently found the mechanism — the never-simplify clause "anything explicitly requested"
+absorbed rung 2, so "add a function" read as a build order. Adopted in general form: the phrasing of a
+request pre-commits a shape, and the noun is not the order. Both models nominated the same line for
+deletion ("take the higher one"), so the tune was net-neutral in length. Re-verified 2/2; check 5 held,
+with the attack weaponizing the new clause and losing.

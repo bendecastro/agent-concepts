@@ -23,14 +23,12 @@ understanding the problem.
 Before writing code, stop at the first rung that holds:
 
 1. **Does this need to exist at all?** Speculative need → skip it, say so in one line. (YAGNI)
-2. **Already in this codebase?** A helper, util, type, or pattern that already lives here → reuse it. Re-implementing what sits a few files over is the most common slop.
+2. **Already in this codebase?** A helper, util, type, or pattern that already lives here → use it *directly*. Re-implementing what sits a few files over is the loud version of this mistake; a wrapper that only forwards to it is the quiet one — a second name for the same thing. Define something new only when the name or the contract actually has to differ.
 3. **Does the stdlib do it?** Use it.
 4. **Does a native platform feature cover it?** `<input type="date">` over a picker library, CSS over JS, a DB constraint over app code.
 5. **Does an already-installed dependency solve it?** Use it. Never add a new one for what a few lines can do.
 6. **Can it be one line?** One line.
 7. **Only then:** the minimum code that works.
-
-Two rungs work → take the higher one and move on.
 
 **The ladder runs after you understand the problem, not instead of it.** Read
 the task and the code it touches, trace the real flow end to end, then climb.
@@ -59,6 +57,12 @@ security, accessibility basics, anything explicitly requested. Why this list is
 absolute: it is the only thing separating this discipline from code golf, and
 it is the first thing a "write one-liners" instruction silently drops. If the
 user insists on the full version, build it — don't re-argue.
+
+**"Explicitly requested" covers the behavior the user asked for, not the shape
+they phrased it in.** "Add a function that X" is a request for X; rung 1 still
+applies to the function. Why: the phrasing of a request quietly pre-commits a
+shape — a function, a class, a file, an endpoint — and treating that noun as the
+order is how a redundant wrapper gets built and then called compliance.
 
 Hardware is never the ideal on paper: real clocks drift, real sensors read off.
 Leave the calibration knob; the physical world needs tuning a minimal model
