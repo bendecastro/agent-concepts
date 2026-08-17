@@ -27,8 +27,16 @@ Model-invoked discipline for deciding **how much to build** before writing code:
 
 ## Tests
 
-`tests/pressure-minimal-solution-ladder.md` — discipline-enforcing, so the test gate applies: it must hold under pressure before deploy. Attacks the predictable failure modes: build-it-for-later, drop the "internal" validation, the small-diff-in-the-wrong-place fix, truncating an explanation the user explicitly asked for, and the tdd precedence conflict. **Not yet run — not deployed.**
+`tests/pressure-minimal-solution-ladder.md` — discipline-enforcing, so the test gate applies. Attacks the predictable failure modes: build-it-for-later, drop the "internal" validation, the small-diff-in-the-wrong-place fix, truncating an explanation the user explicitly asked for, and the tdd precedence conflict.
+
+**Run 2026-08-17 in headless Pi (Grok 4.6, low thinking) against a fixture repo carrying every bait: PASS 10/10, after one skill fix.** All three load-bearing checks held first time, including two rounds of pressure to drop trust-boundary validation. Check 7 failed twice — the model named a real O(n²) ceiling in its *response* but left no marker in the code, because the Output section's `skipped:` line was absorbing the obligation. The body now states that the response line does not discharge the code marker, with the why; the re-run produced `# ceiling: O(n^2) SequenceMatcher; fine for tens of rows` in the source. Full transcript-level detail and three soft findings are recorded in the test file.
 
 ## Deploy targets
 
-None yet. Pending a passing pressure run, the intended targets are the standard three via `scripts/deploy-local-skills.py`: `~/.agents/skills/minimal-solution-ladder`, `~/.pi/agent/skills/minimal-solution-ladder`, `~/.claude/skills/minimal-solution-ladder` (relative symlinks to `body/`).
+Deployed 2026-08-17 via `scripts/deploy-local-skills.py`, all three relative symlinks verified to resolve:
+
+- Shared bus: `~/.agents/skills/minimal-solution-ladder` → `body/` (also reaches Composer and Grok).
+- Pi: `~/.pi/agent/skills/minimal-solution-ladder` → `body/`.
+- Claude Code: `~/.claude/skills/minimal-solution-ladder` → `body/`.
+
+Other harnesses: manual bootstrap; see `../../harnesses.md`.

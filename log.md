@@ -561,3 +561,12 @@ copying them: scope split with `codebase-design` (whether/how much vs shape), su
 `tdd`/`bc-drain-issues` on tests, and no duplication of harness built-ins. Upstream's always-on hook
 persistence was deliberately not reproduced; skill-only for now, kernel pointer only if drift shows.
 Pressure test authored, not run — not deployed.
+
+## [2026-08-17] test+deploy | minimal-solution-ladder
+Pressure-tested in headless Pi (Grok 4.6, low thinking) against a fixture repo baited for every rung.
+PASS 10/10 after one fix: all three load-bearing checks held first time, including two refusals to drop
+trust-boundary validation and a root-cause fix in the shared validator rather than the reported caller.
+The ceiling-marker check failed twice — the model named a real O(n²) ceiling in its response while
+leaving the code unmarked, because the `skipped:` output line was absorbing the obligation. The body now
+says the response does not discharge the code marker (the response is read once; the next reader meets
+the code alone); the re-run emitted the marker in source. Deployed to all three symlink targets.

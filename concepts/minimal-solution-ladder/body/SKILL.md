@@ -78,11 +78,16 @@ ceiling is a hidden constraint a future reader cannot recover from the code,
 and an unmarked shortcut is indistinguishable from an oversight. Mark only real
 ceilings — not every small choice.
 
+**Saying it in your response does not discharge this.** If you can name the
+ceiling to the user, that is the signal it belongs in the code — write both.
+Why: your response is read once and thrown away; the next person to hit the
+ceiling meets the code alone, months later, with no transcript.
+
 ## Output
 
 Code first, then at most three short lines: what was skipped, when to add it.
-
-    [code] → skipped: [X], add when [Y].
+End with one line of the form `skipped: <what>, add when <condition>` — the
+words in angle brackets are slots to fill, never text to echo.
 
 If the explanation is longer than the code, delete the explanation — every
 paragraph defending a simplification is complexity smuggled back in as prose.
