@@ -21,6 +21,7 @@ license permits it. The upstream link remains the authority. Every snapshot dire
 | `google-boonstra-prompt-engineering-v7.pdf` | google-boonstra-prompt-engineering-v7.pdf | Lee Boonstra, *Prompt Engineering* whitepaper v7 (Google, March 2025). Source URL unrecorded. |
 | `google-modern-web-guidance` | [GoogleChrome/modern-web-guidance-src](https://github.com/GoogleChrome/modern-web-guidance-src) |  |
 | `image-maze-seo-agents` | The user's own prior image-maze work | Not third-party. |
+| `iso-24495-iplf` | [IPLF ISO standard](https://www.iplfederation.org/iso-standard/) + [ISO 24495-1 catalog](https://www.iso.org/standard/78907.html) | Citation only; no ISO text. Ingested → plain-language (2026-08-18). |
 | `kepano-obsidian-skills` | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | MIT; immutable snapshot at commit `a1dc48e68138490d522c04cbf5822214c6eb1202`; only `obsidian-markdown`, `obsidian-bases`, and `json-canvas` were adapted/deployed; `obsidian-cli` and `defuddle` remain evidence-only. |
 | `karpathy-llm-wiki.md` | [karpathy-llm-wiki.md](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) |  |
 | `last30days-skill-upstream` | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) |  |

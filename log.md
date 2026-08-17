@@ -588,3 +588,10 @@ absorbed rung 2, so "add a function" read as a build order. Adopted in general f
 request pre-commits a shape, and the noun is not the order. Both models nominated the same line for
 deletion ("take the higher one"), so the tune was net-neutral in length. Re-verified 2/2; check 5 held,
 with the attack weaponizing the new clause and losing.
+
+## [2026-08-18] ingest+implement | plain-language from ISO 24495-1 public principles
+New human-facing writing discipline from IPLF's four reader-outcome principles (relevant /
+findable / understandable / usable). Named `plain-language` rather than `iso-24495` to avoid a
+conformance claim; review-default with rewrite on request; inverts off agent-facing skills/gates;
+no numeric readability proxies and no Parts 2–5 clone. Public ISO/IPLF URLs cited, standard text
+not filed. Pressure scenarios authored, not run — not deployed.
