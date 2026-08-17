@@ -220,4 +220,23 @@ When designing a task prompt (rather than standing instructions), pick the light
 
 ## Maintenance technique: metaprompting
 
-When an agent underperforms with instructions from this workspace, ask it — at the end of the disappointing turn — to critique its own instructions: "read your instructions, identify what made this slower/worse than needed, and propose targeted but generalized changes." Run it more than once; adopt only the suggestions that recur, simplified to their general form, and test before deploying (the test gate applies).
+When an agent underperforms with instructions, tune the instructions rather than hand-fixing the output. Two instruments, with different blind spots:
+
+- **Self-critique** finds friction the agent *felt*. At the end of the disappointing turn: "read your instructions, name the specific line that misled you or that you had to work around, and propose a targeted but generalized change."
+- **Artifact grading** finds compliance the agent *believed* it had achieved — exactly where self-critique is weakest, since by its own account it complied. Grade the artifact the next reader will actually meet. The agent's response is not that artifact: a rule to mark something *in the code* is satisfied by a sentence in chat only if you grade the chat.
+
+Start with the instrument the symptom suggests — stalling and complaints point to friction, confident-but-wrong output points to the artifact — but a real defect usually needs both: grade to see the failure, then read the instructions to find what caused it.
+
+**Locate the mechanism before rewriting.** Examples, not a taxonomy to work through:
+
+- a **competing rule absorbed it** — another instruction let the agent feel the obligation was discharged; a report-shaped rule will launder a mark-the-code rule every time;
+- the **trigger never fired** — the rule was right, but nothing connected it to the situation in front of the agent;
+- **it isn't an instruction defect** — the agent lacked the capability or the context. No rewrite fixes either.
+
+Reaching for emphasis (ALWAYS, MUST, bold) is the reflex when the mechanism hasn't been found — and it is what an agent proposes about its own instructions for the same reason.
+
+**Adopt only what recurs, simplified to its general form** — and mind which kind of recurrence you have. A suggestion repeated inside one session is an echo of the last answer; independent runs (fresh context, ideally a different provider) make agreement mean something. The same check failing twice is already evidence. The general form is the whole point: "MUST write `ceiling:` in the code, NEVER only in chat" fixes one skill; "mark it where the next reader will meet it" fixes the class.
+
+**Prefer replacing over appending, and ask what to delete.** A tune that only ever adds is a bloat generator: every added line dilutes the ones already there, and the rule you are fixing may be failing *because* of what surrounds it. Not every finding has to become instruction weight — some belong in the concept's test notes.
+
+**Verify by re-running the check that failed**, never by asking the agent whether it feels better now, and keep that case as a regression check. The test gate applies before redeploy.

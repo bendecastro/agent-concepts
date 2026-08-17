@@ -570,3 +570,12 @@ The ceiling-marker check failed twice — the model named a real O(n²) ceiling 
 leaving the code unmarked, because the `skipped:` output line was absorbing the obligation. The body now
 says the response does not discharge the code marker (the response is read once; the next reader meets
 the code alone); the re-run emitted the marker in source. Deployed to all three symlink targets.
+
+## [2026-08-17] tune | the Tune operation itself
+Expanded metaprompting from self-critique-only after a minimal-solution-ladder run exposed its blind
+spot: the agent named a required `ceiling:` marker in chat, left the code unmarked, and by its own
+account had complied — only artifact grading caught it. Added the general lesson (grade the artifact the
+next reader will meet; a report-shaped rule launders a mark-the-code rule), mechanism-before-rewrite,
+and replace-over-append. Independent Grok review cut three overclaims, including "recurrence is evidence
+only across independent runs" — which would have disqualified this change's own evidence, since a check
+failing twice is evidence while a repeated suggestion in one session is an echo.
