@@ -1,6 +1,6 @@
 # Obsidian Bases accuracy check
 
-Reference concept with no runtime mutation gate; verify the adapted `.base` format guidance against the pinned upstream snapshot and official Obsidian Bases references.
+Reference format concept with a mutation-authority boundary. Verify source accuracy statically, then run the adversarial scenario in `pressure-scenario.md` before deployment.
 
 ## Checks
 
@@ -13,4 +13,4 @@ Reference concept with no runtime mutation gate; verify the adapted `.base` form
 
 ## Result — 2026-08-17
 
-**PASS.** Frontmatter, progressive disclosure, `.base` schema, formula/duration guidance, safety boundary, pinned provenance, raw snapshot, and deployment target were checked during the selective ingest.
+**PASS.** Frontmatter, progressive disclosure, `.base` schema, formula/duration guidance, pinned provenance, raw snapshot, and deployment target were checked during the selective ingest. The mutation-authority boundary then passed `pressure-scenario.md` on 2026-08-17; the fixture hash remained unchanged.

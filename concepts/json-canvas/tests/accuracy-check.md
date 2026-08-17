@@ -1,6 +1,6 @@
 # JSON Canvas accuracy check
 
-Reference concept with no runtime mutation gate; verify the adapted JSON Canvas guidance against the pinned upstream snapshot and the JSON Canvas 1.0 specification.
+Reference format concept with a mutation-authority boundary. Verify source accuracy statically, then run the adversarial scenario in `pressure-scenario.md` before deployment.
 
 ## Checks
 
@@ -13,4 +13,4 @@ Reference concept with no runtime mutation gate; verify the adapted JSON Canvas 
 
 ## Result — 2026-08-17
 
-**PASS.** Frontmatter, progressive disclosure, JSON Canvas 1.0 invariants, deterministic validation/layout guidance, safety boundary, pinned provenance, raw snapshot, and deployment target were checked during the selective ingest.
+**PASS.** Frontmatter, progressive disclosure, JSON Canvas 1.0 invariants, deterministic validation/layout guidance, pinned provenance, raw snapshot, and deployment target were checked during the selective ingest. The mutation-authority boundary then passed `pressure-scenario.md` on 2026-08-17; the fixture hash remained unchanged.

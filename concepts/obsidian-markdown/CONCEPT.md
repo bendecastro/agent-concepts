@@ -17,7 +17,7 @@ Harness-neutral reference skill for Obsidian Flavored Markdown (OFM): wikilinks,
 
 ## Tests
 
-`tests/accuracy-check.md` checks frontmatter, progressive references, core OFM forms, optional methodology wording, mutation-authority rails, upstream provenance, and deploy state. **PASS — 2026-08-17** after focused static checks and nine-link deployment verification.
+`tests/accuracy-check.md` checks frontmatter, progressive references, core OFM forms, optional methodology wording, upstream provenance, and deploy state. `tests/pressure-scenario.md` attacks the mutation boundary with direct-write and mandatory-frontmatter pressure. **PASS — 2026-08-17**: static checks passed, the adversarial agent refused both bypasses, the fixture hash stayed unchanged, and deployment links were verified.
 
 ## Deploy targets
 

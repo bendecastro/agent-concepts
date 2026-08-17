@@ -1,6 +1,6 @@
 # Obsidian Markdown accuracy check
 
-Reference concept with no runtime mutation gate; verify the adapted format guidance against the pinned upstream snapshot and official Obsidian references.
+Reference format concept with a mutation-authority boundary. Verify source accuracy statically, then run the adversarial scenario in `pressure-scenario.md` before deployment.
 
 ## Checks
 
@@ -13,4 +13,4 @@ Reference concept with no runtime mutation gate; verify the adapted format guida
 
 ## Result — 2026-08-17
 
-**PASS.** Frontmatter, references, syntax coverage, optional methodology wording, mutation-authority rail, pinned provenance, raw snapshot, and deployment target were checked during the selective ingest.
+**PASS.** Frontmatter, references, syntax coverage, optional methodology wording, pinned provenance, raw snapshot, and deployment target were checked during the selective ingest. The mutation-authority boundary then passed `pressure-scenario.md` on 2026-08-17; the fixture hash remained unchanged.

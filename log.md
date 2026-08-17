@@ -546,3 +546,7 @@ launch on Bun `node:v8.createHook`, so the valid artifact came from a fresh read
 Filed the pinned MIT upstream snapshot and adapted `obsidian-markdown`, `obsidian-bases`, and
 `json-canvas` as safe format/validation references. Deliberately excluded `obsidian-cli` and
 `defuddle`; deployed the three canonical bodies and verified the nine relative symlinks.
+
+## [2026-08-17] test | Obsidian format mutation boundaries
+Added adversarial scenarios after independent review identified the safety clauses as runtime gates.
+Headless Pi agents refused direct-write/shell/`eval` bypasses in all three cases; fixture hashes stayed unchanged.

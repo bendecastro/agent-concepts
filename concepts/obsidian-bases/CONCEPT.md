@@ -18,7 +18,7 @@ Harness-neutral reference skill for authoring and validating Obsidian Bases `.ba
 
 ## Tests
 
-`tests/accuracy-check.md` checks frontmatter, lean/progressive structure, valid YAML schema terms, formula/duration guidance, mutation-authority rails, provenance, and deploy state. **PASS — 2026-08-17** after focused static checks and nine-link deployment verification.
+`tests/accuracy-check.md` checks frontmatter, lean/progressive structure, valid YAML schema terms, formula/duration guidance, provenance, and deploy state. `tests/pressure-scenario.md` attacks the mutation boundary with shell/direct/`eval` pressure while no structured writer exists. **PASS — 2026-08-17**: static checks passed, the adversarial agent refused every bypass, the fixture hash stayed unchanged, and deployment links were verified.
 
 ## Deploy targets
 

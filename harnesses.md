@@ -18,7 +18,7 @@ For always-on base instructions, use `concepts/agent-kernel/body/AGENT-KERNEL.md
 
 The `herdr` reference skill was deployed 2026-07-22 to the shared bus plus Pi and Claude Code symlinks. Composer, OpenCode, and Grok consume the shared-bus copy; active sessions must restart to refresh discovery.
 
-The Obsidian format reference concepts `obsidian-markdown`, `obsidian-bases`, and `json-canvas` were deployed 2026-08-17 through `scripts/deploy-local-skills.py` to the shared bus plus Pi and Claude Code symlinks. Their bodies teach file formats and validation only; `obsidian-cli` and `defuddle` were deliberately not deployed, and `pi-obsidian-vault` remains the Markdown mutation authority.
+The Obsidian format reference concepts `obsidian-markdown`, `obsidian-bases`, and `json-canvas` were accuracy-checked, mutation-boundary pressure-tested, and deployed 2026-08-17 through `scripts/deploy-local-skills.py` to the shared bus plus Pi and Claude Code symlinks. Their bodies teach file formats and validation only; `obsidian-cli` and `defuddle` were deliberately not deployed, and `pi-obsidian-vault` remains the Markdown mutation authority.
 
 ## Portability rules
 
