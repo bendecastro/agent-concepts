@@ -93,5 +93,12 @@ test file: the rewrite refusal slightly mislabeled the standard as
 
 ## Deploy targets
 
-Not deployed. Deploy to the shared Agent Skills bus, Pi, and Claude Code
-only on an explicit request; the pressure test has now held.
+Deployed 2026-08-18 via `scripts/deploy-local-skills.py`, all three relative
+symlinks verified to resolve:
+
+- Shared bus: `~/.agents/skills/plain-language` → `body/` (also reaches
+  Composer and Grok).
+- Pi: `~/.pi/agent/skills/plain-language` → `body/`.
+- Claude Code: `~/.claude/skills/plain-language` → `body/`.
+
+Other harnesses: manual bootstrap; see `../../harnesses.md`.

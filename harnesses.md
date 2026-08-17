@@ -20,6 +20,8 @@ The `herdr` reference skill was deployed 2026-07-22 to the shared bus plus Pi an
 
 The Obsidian format reference concepts `obsidian-markdown`, `obsidian-bases`, and `json-canvas` were accuracy-checked, mutation-boundary pressure-tested, and deployed 2026-08-17 through `scripts/deploy-local-skills.py` to the shared bus plus Pi and Claude Code symlinks. Their bodies teach file formats and validation only; `obsidian-cli` and `defuddle` were deliberately not deployed, and `pi-obsidian-vault` remains the Markdown mutation authority.
 
+The `plain-language` discipline was pressure-tested **PASS** 6/6 and deployed 2026-08-18 through `scripts/deploy-local-skills.py` to the shared bus plus Pi and Claude Code symlinks. It is unofficial ISO 24495-1 / IPLF reader-outcome guidance for human-facing prose only; restart sessions after deploy so discovery picks it up.
+
 ## Portability rules
 
 - **Canon stays harness-neutral.** Edit `concepts/<name>/body/`, not a deployed copy or generated harness variant.

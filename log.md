@@ -601,3 +601,9 @@ Headless Pi, Grok 4.6, low thinking, isolated `/tmp/pt-plain-language-139910` co
 All four load-bearing checks held: skill why/gate kept under time pressure, no ISO stamp
 on rewrite, deadline and no-share rule survived, review left `notice.md` untouched.
 Reader named and action moved first. Not deployed.
+
+## [2026-08-18] deploy | plain-language
+Deployed via `scripts/deploy-local-skills.py` after the 6/6 pressure pass. Relative
+symlinks created under `~/.agents/skills/plain-language`, `~/.pi/agent/skills/plain-language`,
+and `~/.claude/skills/plain-language`; all three resolve to `concepts/plain-language/body`.
+Restart sessions to refresh advertised skill lists.
