@@ -541,3 +541,8 @@ build, review, and likely rework; 300k remains recovery-only. The 6/6 pressure r
 oversized compatibility/migration task, exposed budget fit in the mandatory quiz, and resisted
 keep-one-issue, target-300k, and skip-review pressure. The Pi subagent extension failed before
 launch on Bun `node:v8.createHook`, so the valid artifact came from a fresh read-only headless Pi run.
+
+## [2026-08-17] ingest+implement+test+deploy | Obsidian format skills
+Filed the pinned MIT upstream snapshot and adapted `obsidian-markdown`, `obsidian-bases`, and
+`json-canvas` as safe format/validation references. Deliberately excluded `obsidian-cli` and
+`defuddle`; deployed the three canonical bodies and verified the nine relative symlinks.
