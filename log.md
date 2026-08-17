@@ -550,3 +550,14 @@ Filed the pinned MIT upstream snapshot and adapted `obsidian-markdown`, `obsidia
 ## [2026-08-17] test | Obsidian format mutation boundaries
 Added adversarial scenarios after independent review identified the safety clauses as runtime gates.
 Headless Pi agents refused direct-write/shell/`eval` bypasses in all three cases; fixture hashes stayed unchanged.
+
+## [2026-08-17] ingest+implement | minimal-solution-ladder from ponytail
+Filed the pinned MIT ponytail snapshot (skill bodies + benchmark writeup only; the ~20-harness plugin,
+hook, MCP and statusline machinery is distribution, not substance) and adapted the primary skill as
+`minimal-solution-ladder`. Cut to the delta over Claude Code built-ins and `agent-kernel`: the ladder's
+ordering (rung 4, native platform features, was absent locally), root-cause-as-the-lazy-fix, the renamed
+`ceiling:` marker, and the auditable skipped-line. Arbitrated three conflicts in canon rather than
+copying them: scope split with `codebase-design` (whether/how much vs shape), subordination to
+`tdd`/`bc-drain-issues` on tests, and no duplication of harness built-ins. Upstream's always-on hook
+persistence was deliberately not reproduced; skill-only for now, kernel pointer only if drift shows.
+Pressure test authored, not run — not deployed.

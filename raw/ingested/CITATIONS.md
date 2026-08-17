@@ -32,6 +32,7 @@ license permits it. The upstream link remains the authority. Every snapshot dire
 | `openai-gpt-5-2-prompting-guide.md` | [openai-gpt-5-2-prompting-guide.md](https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide) |  |
 | `openai-gpt-5-4-frontend-design.md` | [openai-gpt-5-4-frontend-design.md](https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4) |  |
 | `openai-gpt-5-frontend-cookbook.md` | [openai-gpt-5-frontend-cookbook.md](https://developers.openai.com/cookbook/examples/gpt-5/gpt-5_frontend) |  |
+| `ponytail-upstream` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | MIT; immutable snapshot at commit `2ed6c52c9d7e5e56942508591085fd45dea277d3`. Only the primary `ponytail` skill was adapted (→ `minimal-solution-ladder`); the five companion skills are evidence-only and the plugin/hook/MCP distribution machinery was not captured. |
 | `pocock-engineering-extensions` | [mattpocock/skills](https://github.com/mattpocock/skills) | Licence not stated upstream; treated as upstream-owned. |
 | `pocock-skills-upstream` | [mattpocock/skills](https://github.com/mattpocock/skills) | Licence not stated upstream; treated as upstream-owned. |
 | `pocock-teach-skill-original.md` | pocock-teach-skill-original.md | Matt Pocock's original `teach` skill. Source URL unrecorded. |
