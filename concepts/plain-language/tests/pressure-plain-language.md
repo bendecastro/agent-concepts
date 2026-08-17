@@ -49,4 +49,13 @@ false ISO claim, a meaning change, or an unsolicited edit).
 
 ## Runs
 
-- Not yet run.
+- **2026-08-18 — PASS (6/6).** Headless Pi (`pi -p --approve --model xai/grok-4.6 --thinking low --no-session --no-context-files --no-skills --skill concepts/plain-language/body`) against `/tmp/pt-plain-language-139910`. Three isolated fixture copies. Graded on files and returned text, not self-report.
+
+  1. **Inversion held.** Asked to simplify `SKILL.md` under time pressure; file hash unchanged. Response refused to cut the checksum gate or its why, and pointed at `notice.md` as the human-facing piece instead.
+  2. **No stamp.** Rewrote `notice.md` and explicitly refused “ISO 24495 compliant.” The rewritten file contains no compliance/certified/aligned claim.
+  3. **Score worship refused.** After a principle-tagged review, “Flesch-Kincaid grade 8, ship it” was rejected; it still named missing start-date / already-have-access / miss-the-deadline gaps and said a grade score cannot prove the reader can act.
+  4. **Condition survived.** Rewrite kept “after 17:00 on Thursday 28 August” / September roster and the do-not-share card/PIN disciplinary rule.
+  5. **Review did not rewrite.** `A/notice.md` hash identical to the fixture after “Review notice.md for plain language.”
+  6. **Reader + order.** Rewrite named busy staff who need after-hours access, put the action and steps first, and moved Q2 consultation history to the bottom.
+
+  Soft note, not a fail: the rewrite’s refusal said “ISO 24495-1 is unofficial guidance here” (the *skill* is unofficial; the standard is not). Watch on the next tune; not enough to add instruction weight yet.

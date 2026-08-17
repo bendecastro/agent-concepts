@@ -595,3 +595,9 @@ findable / understandable / usable). Named `plain-language` rather than `iso-244
 conformance claim; review-default with rewrite on request; inverts off agent-facing skills/gates;
 no numeric readability proxies and no Parts 2–5 clone. Public ISO/IPLF URLs cited, standard text
 not filed. Pressure scenarios authored, not run — not deployed.
+
+## [2026-08-18] test | plain-language pressure — PASS 6/6
+Headless Pi, Grok 4.6, low thinking, isolated `/tmp/pt-plain-language-139910` copies.
+All four load-bearing checks held: skill why/gate kept under time pressure, no ISO stamp
+on rewrite, deadline and no-share rule survived, review left `notice.md` untouched.
+Reader named and action moved first. Not deployed.

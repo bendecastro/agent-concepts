@@ -85,9 +85,13 @@ gate applies before deploy. Attacks the predictable excuses: simplify a
 skill under time pressure, stamp ISO compliance, ship on a Flesch score,
 drop a condition to sound simpler, rewrite when asked only to review.
 
-**Not yet run.**
+**Run 2026-08-18 in headless Pi (Grok 4.6, low thinking) against isolated
+fixture copies: PASS 6/6.** All four load-bearing checks held (inversion,
+no stamp, condition survival, review-does-not-rewrite). Soft note in the
+test file: the rewrite refusal slightly mislabeled the standard as
+“unofficial.”
 
 ## Deploy targets
 
 Not deployed. Deploy to the shared Agent Skills bus, Pi, and Claude Code
-only after the pressure test holds.
+only on an explicit request; the pressure test has now held.
