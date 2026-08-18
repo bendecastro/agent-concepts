@@ -25,7 +25,9 @@ not own reader-outcome prose (`plain-language`), agent-instruction authoring
 Use it on **source-tree** maintainer docs: README, an existing `docs/` tree,
 architecture pages, package READMEs, and JSDoc that states a contract.
 
-**Do not apply it to `.bc-agent/`.** That vault has its own placement.
+**Do not apply it to `.bc-agent/`.** Do not edit, move, or delete vault
+files to satisfy one-home. The vault has its own placement; a second
+copy there is not this skill's problem to erase.
 **Do not apply it to skill bodies, kernels, gates, or this workspace's
 concept files** unless the user asked to edit those — that is
 `prompting-agents`.
@@ -56,10 +58,13 @@ detail. Why: a README that also retells architecture and the last three
 PRs becomes a second, worse source of truth.
 
 **Do not create a `docs/` tree** because this skill fired, because the
-repo "should have proper docs," or because the README feels crowded.
-Use `docs/` only when it already exists or the user asks for one. Why:
-an invented tree is a second wiki, and this workspace already has
-`.bc-agent/` for that.
+README feels crowded, or because the user said "just make `docs/foo.md`"
+or "I'm short on time." That is a request to document a fact, not a
+request for a docs tree. Update the existing owner (usually README).
+Create `docs/` only when it already exists, or when the user asks for a
+*tree* — architecture, contributor guides, more than one page — not a
+single file that duplicates the README. Why: "just make docs/cli.md"
+is the shortcut that grows a second wiki.
 
 If no page owns the fact, say so. Do not invent a folder to house it.
 
@@ -103,8 +108,12 @@ does.
 These fail by rationalization — the moment they are inconvenient is
 when they matter.
 
-- **Never create `docs/`** unless it exists or the user asked. Why: a
-  new tree duplicates `.bc-agent/` and this skill's one-home rule.
+- **Never create `docs/`** because someone asked for a single file or
+  was short on time. Why: that is how a second wiki starts. A real
+  docs-tree request names more than one page or a new home README
+  cannot own.
+- **Never edit, move, or delete `.bc-agent/`** under this skill. Why:
+  one-home is not a license to empty the vault.
 - **Never skip the owning-page update** because the diff is "obvious"
   or you are short on time. Why: that is how docs and code diverge.
 - **Never dump rationale into a README** to avoid the ADR bar. Why:

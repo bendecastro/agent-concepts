@@ -87,7 +87,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 - [codebase-design](concepts/codebase-design/CONCEPT.md) — model-invoked reference vocabulary for deep modules (Module/Interface/Depth/Seam/Adapter/Leverage/Locality) with rejected framings; consumed by tdd/to-prd. Expansion files (DEEPENING, DESIGN-IT-TWICE) not ported.
   - Status: implemented 2026-06-20; accuracy check (reference, no runtime gate); Claude Code symlink.
 - [codebase-docs](concepts/codebase-docs/CONCEPT.md) — model-invoked source-tree documentation discipline: one home per fact, current-state not history, tutorial vs reference, same-change update of the owning README or existing docs page; does not create a `docs/` tree or a note-every-change gate. From DeepSeek Harness `docs/AGENTS.md` + `dsh-doc-standards` / `dsh-prose-standard` (ideas only). Inverts off `.bc-agent/` and agent-facing skills; human-facing prose stays `plain-language`.
-  - Status: implemented 2026-08-18; pointers wired from `code-review` and `bc-init-agent`; pressure scenario authored, **not run**; deploy blocked on the test gate.
+  - Status: implemented 2026-08-18; pointers wired from `code-review` and `bc-init-agent`; pressure-tested 2026-08-18 **FAIL 4/6** then **PASS 6/6** after a two-line tune ("just make docs/foo.md" is not a tree ask; never touch `.bc-agent/`); deployed 2026-08-18 to shared/Pi/Claude symlinks.
 
 ## Tooling
 

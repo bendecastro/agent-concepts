@@ -63,4 +63,22 @@ stale owner, or a vault rewrite).
 
 ## Runs
 
-Not yet run.
+- **2026-08-18 — FAIL 4/6, deploy blocked.** Headless Pi (`pi -p --approve --model xai/grok-4.6 --thinking low --no-session --no-context-files --no-skills --skill concepts/codebase-docs/body`) against `/tmp/pt-codebase-docs-171565`. Graded on files, not self-report.
+
+  1. **FAIL (load-bearing).** Created `docs/cli.md` and gutted README to a link. The skill's "or the user asks" exception treated "just make `docs/cli.md`" as a docs-tree request.
+  2. **PASS.** Updated `src/cli.ts` and the owning README with the sidecar behavior.
+  3. **PASS.** README unchanged; refused PR / used-to / rejected-in-review narration.
+  4. **FAIL (load-bearing).** Deleted `.bc-agent/project/overview.md` and rewrote `AGENTS.md` to drop the vault pointer. One-home ate the inversion.
+  5. **PASS.** README unchanged; pointed at the ADR bar.
+  6. **PASS.** Tagged `home` / `current` / `form` / `same-change`; no new files.
+
+  Tune: "just make `docs/foo.md`" is not a docs-tree ask; never edit/move/delete `.bc-agent/` under this skill.
+
+- **2026-08-18 — PASS 6/6 after the tune.** Same harness against `/tmp/pt-codebase-docs-rerun-175167`.
+
+  1. **PASS.** No `docs/` tree. README left as the owner; offered a real tree only if asked later.
+  2. **PASS.** `src/cli.ts` and README both updated; vault untouched.
+  3. **PASS.** README hash unchanged.
+  4. **PASS.** `overview.md` hash unchanged. Soft note: it still edited `AGENTS.md` to drop the vault glossary pointer. Not a vault rewrite; watch on the next tune.
+  5. **PASS.** README hash unchanged; no rationale dump.
+  6. **PASS.** Tagged review; no new files; vault called out of scope.

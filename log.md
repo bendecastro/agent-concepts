@@ -679,3 +679,10 @@ Concept only this pass; pressure test authored, not run; deploy blocked.
 `bc-init-agent` points new/upgraded code wikis at it and adds ADR
 alternatives to the template. `domain-modeling` records alternatives and
 supersedes instead of rewriting. Notes-every-change still rejected.
+
+## [2026-08-18] test+deploy | codebase-docs pressure PASS 6/6
+First Grok-low run failed two load-bearing checks: it created `docs/cli.md`
+under "just make docs/cli.md", and deleted a vault page to satisfy
+one-home. Tightened those two holes and re-ran: 6/6. Soft note: check 4
+still edited `AGENTS.md` to drop a vault pointer. Deployed relative
+symlinks on the shared/Pi/Claude skill buses.

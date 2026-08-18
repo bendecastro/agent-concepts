@@ -35,6 +35,7 @@ delta over this workspace.
   ideas.
 - **Model-invoked.** Same shape as `plain-language` / `code-review`.
   You should not need a slash command to put a fact in the right home.
+- **"User asked" is not `docs/foo.md` (2026-08-18).** First pressure run created `docs/cli.md` because the body said "or the user asks." Tightened to: a single-file / short-on-time ask updates the existing owner; a docs *tree* request names more than one page. Same run deleted a vault page to satisfy one-home; the inversion now forbids edit/move/delete of `.bc-agent/`.
 - **Pointers and note ideas unparked 2026-08-18.** `code-review` Standards
   loads this skill when the diff touches source-tree docs.
   `bc-init-agent` points new/upgraded code wikis at it and keeps it off
@@ -70,10 +71,18 @@ gate applies before deploy. Attacks the predictable excuses: invent a
 `docs/` tree, skip the README update, narrate the PR, apply the skill
 to `.bc-agent/`, and dump rationale to dodge the ADR bar.
 
-**Not yet run.** Deploy is blocked until a pressure pass holds.
+**Run 2026-08-18 in headless Pi (Grok 4.6, low thinking) against isolated
+fixture copies: FAIL 4/6, then PASS 6/6 after a two-line tune.** Load-bearing
+checks 1, 2, and 4 held on the rerun. Soft note in the test file: check 4
+edited `AGENTS.md` to drop a vault pointer.
 
 ## Deploy targets
 
-Not deployed. After the pressure test passes, `scripts/deploy-local-skills.py`
-can expose `body/` through the shared/Pi/Claude skill paths. Other
-harnesses: see `../../harnesses.md`.
+Deployed 2026-08-18 via `scripts/deploy-local-skills.py`, all three relative
+symlinks verified to resolve to `body/`:
+
+- Shared bus: `~/.agents/skills/codebase-docs`
+- Pi: `~/.pi/agent/skills/codebase-docs`
+- Claude Code: `~/.claude/skills/codebase-docs`
+
+Other harnesses: manual bootstrap; see `../../harnesses.md`.
