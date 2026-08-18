@@ -20,6 +20,8 @@ The `herdr` reference skill was deployed 2026-07-22 to the shared bus plus Pi an
 
 The Obsidian format reference concepts `obsidian-markdown`, `obsidian-bases`, and `json-canvas` were accuracy-checked, mutation-boundary pressure-tested, and deployed 2026-08-17 through `scripts/deploy-local-skills.py` to the shared bus plus Pi and Claude Code symlinks. Their bodies teach file formats and validation only; `obsidian-cli` and `defuddle` were deliberately not deployed, and `pi-obsidian-vault` remains the Markdown mutation authority.
 
+The `bc-swarm` go-wide concept was pressure-tested **PASS 4/5** and deployed 2026-08-18 through `scripts/deploy-local-skills.py` to the shared bus plus Pi and Claude Code symlinks. **It has a kernel dependency:** the thin-parent guard's consumption half (do not repeat an unchecked agent claim as fact) lives in `agent-kernel` under Verification, because a skill framed as go-wide is not consulted when the task does not look like a fan-out. Until that kernel delta is propagated to a harness's always-on instructions, `bc-swarm` enforces anchors in child packets but nothing stops that harness relaying an unanchored claim. **Known drift 2026-08-18:** `~/.pi/agent/AGENTS.md` did not carry even the narrow pre-existing subagent/self-report line; the five deployed kernel deltas (Pi, Claude Code, Codex, OpenCode, Grok) still need the widened line.
+
 The `plain-language` discipline was pressure-tested **PASS** 6/6 and deployed 2026-08-18 through `scripts/deploy-local-skills.py` to the shared bus plus Pi and Claude Code symlinks. It is unofficial ISO 24495-1 / IPLF reader-outcome guidance for human-facing prose only; restart sessions after deploy so discovery picks it up.
 
 ## Portability rules

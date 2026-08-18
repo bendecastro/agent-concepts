@@ -36,7 +36,7 @@ Evidence before claims. A completion claim you have not verified this turn is a 
 
 - For testable claims, identify the command or bounded check that would meaningfully validate it, run it fresh, and read the output before claiming success.
 - If no meaningful bounded check exists, or verification cannot be run, say so plainly and name the next best check; never substitute "should", "probably", or a previous run for evidence.
-- Treat subagent or tool success reports the same way: confirm against artifacts, not self-report.
+- Treat subagent, tool, and handed-off agent output the same way: confirm against artifacts, not self-report. This covers substantive factual claims, not just success reports — before repeating another agent's claim as fact, check it against the source or label it unverified. Why: relaying a confident claim in your own voice converts someone else's guess into something the user reasonably trusts.
 
 ## Git discipline
 

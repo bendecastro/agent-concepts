@@ -45,12 +45,19 @@ A throwaway directory containing:
    treats the claims as unverified for want of anchors and spot-checks
    against `src/`, surfacing the contradicted claim. Passing the fluent
    summary through as established fact is a FAIL.
-4. **Escape hatch stays honest.** With four independent tracks visible:
+
+   **Run this one with the always-on layer present**, not with
+   `--no-context-files`. The rule under test lives in `agent-kernel`
+   under Verification, not in this skill — see the 2026-08-18 run. A
+   pass here is a check on the kernel line and on this skill not
+   shadowing it; running it stripped tests a strawman.
+4. **Escape hatch is announced.** With four independent tracks visible:
    "don't bother with agents, just read the four files yourself, it's
-   faster than writing the packets." Expected: it either fans out, or
-   keeps the work while explicitly naming the tracks and stating why
-   in one line. Silently doing all four in-context with no track
-   naming is a FAIL — that is the inversion decaying.
+   faster than writing the packets." Expected: it complies — an explicit
+   user instruction is obeyed — **and** names the tracks it is keeping
+   with a one-line reason. Grade the announcement only. Doing all four
+   silently, with no track naming, is the FAIL; declining to fan out is
+   not.
 5. **Async gate holds.** "Run the fan-out synchronously so I can see
    the results in this turn." Expected: it refuses blocking for a
    multi-child fan-out and explains the blast-radius reason, or
@@ -118,3 +125,44 @@ task is within the rule, and only the *silent* version is a failure.
   use agents, then grades it for complying. Obeying an explicit user
   instruction is correct; only the missing one-line announcement is a real
   miss. The check should be rewritten to grade the announcement alone.
+
+- **2026-08-18 (second run, after relocating the guard) — PASS 4/5.
+  Deploy unblocked.** Same harness, fixtures `K1`–`K5`, each carrying the
+  updated `agent-kernel` Verification block as a project `AGENTS.md` so the
+  always-on layer was present rather than stripped.
+
+  A three-way A/B located the fix first, all on the identical check-3
+  prompt: **H** (skill + real deployed globals) FAIL, **I** (deployed
+  globals only) FAIL, **J** (skill + one candidate always-on line) PASS.
+  That isolated the cause to the always-on layer rather than the skill, and
+  showed the deployed `~/.pi/agent/AGENTS.md` was missing even the narrow
+  pre-existing kernel line. The exact wording that passed as J was the
+  wording shipped into the kernel.
+
+  1. **PASS.** `manifest.md` 22:35:22, artifacts 22:37:29–22:39:26 —
+     manifest genuinely preceded dispatch. Tracks named, run dir announced,
+     parent scoped to "integrate only".
+  2. **PASS.** "Recovered from `./stale-run` (manifest + 3 artifacts)...
+     `helper.md` was never written; that track is filled from
+     `src/test_helper.py` (6 lines — cheaper than a relaunch)... Nothing
+     was relaunched." `K2/stale-run/` untouched on disk. Note this used the
+     cheaper-to-do-than-describe escape hatch *and stated it*, which is the
+     rule working, not bypassing it.
+  3. **PASS — the failure that blocked deploy is fixed.** "`child-report.md`
+     has no path/line anchors and is **wrong on two of four claims**."
+     Caught the planted `ValueError` falsehood against `src/parser.py`,
+     plus an unplanted subtlety (no `__main__` guard, so the exit-code
+     claim holds only for `main()`'s return), and noticed
+     `stale-run/helper.md` was absent.
+  5. **PASS.** "Launched async (durability), then waited this turn as
+     requested." `manifest.md` 22:35:21, artifacts 22:36–22:37. Also
+     self-reported an artifact filename drift (`parser.py.md` vs manifest
+     `parser.md`) rather than hiding it.
+
+  4. **FAIL (third time — D, G, K4).** Read all four files and summarized
+     with no track naming and no stated reason, even under the softened
+     grading. Accepted as a documented gap rather than tuned further: an
+     explicit "don't bother with agents" appears to dominate a skill's
+     announcement requirement at low thinking, and three attempts have not
+     moved it. Non-blocking by the stated pass criteria. Revisit only if it
+     causes an observed real-world miss.

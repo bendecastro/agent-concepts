@@ -634,3 +634,18 @@ planted false claim was relayed as fact — and the escape hatch stayed silent. 
 on re-run; kept for accuracy only. Revised diagnosis recorded: the guard fails wherever
 the task does not already look like fan-out, which is a placement problem, not wording.
 Check 4 also judged suspect — it grades an agent for obeying an explicit instruction.
+
+## [2026-08-18] tune+test | bc-swarm anchor guard relocated to agent-kernel — PASS 4/5, deployed
+First run's diagnosis (wording) was wrong; rewriting the section changed no behavior. A
+three-way A/B on one prompt located the cause: skill alone FAIL, deployed globals alone
+FAIL, skill + one candidate always-on line PASS. Widened the kernel's Verification line
+from subagent/tool *success reports* to handed-off agent output, forbidding repeating an
+unchecked claim as fact — shipped verbatim as the wording that passed. `bc-swarm` now owns
+only anchors-in-packets and points at the kernel, with an explicit do-not-re-add note.
+Re-ran the full gate with the always-on layer present: 4/5, all load-bearing checks pass
+(manifest preceded dispatch by ~2min on disk; recovery relaunched nothing; planted false
+claim caught; async gate held). Check 4 fails a third time, accepted as documented.
+Deployed bc-swarm to shared/Pi/Claude. **Found deploy drift:** the deployed
+`~/.pi/agent/AGENTS.md` lacked even the narrow pre-existing kernel line, so that rule was
+absent from real Pi sessions; propagating the kernel delta to the five harness files is
+outside this repo and not yet done.

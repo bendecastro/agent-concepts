@@ -45,13 +45,11 @@ Artifacts are scratch, not knowledge. Anything worth keeping gets explicitly pro
 
 Aggressive delegation buys speed by making the parent's context deliberately thin — which silently removes your ability to catch a child that is confidently wrong. You did not read the file, so you cannot feel the error.
 
-**Children return claims with evidence anchors: a file path plus the quoted line carrying the claim.** Put this in the packet — it does not happen by default.
-
-**The guard fires whenever you consume child output, including output you did not dispatch.** A report handed to you, a file left by an earlier run, a summary from another session — all of it arrives with the same problem: you did not read the source, so you cannot feel the error. Provenance does not make a claim checked.
-
-**An unanchored claim may not be passed on as fact.** Check it against the source, or label it unverified when you report it. Summarizing is not a neutral act — relaying a fluent child's claim in your own voice is exactly how a swarm launders confabulation into something the user reasonably trusts, and "they only asked for a summary" is the sentence that does the laundering.
+**Children return claims with evidence anchors: a file path plus the quoted line carrying the claim.** Put this in the packet — it does not happen by default, and it is the half of the guard this skill owns.
 
 Why anchors rather than trusting or re-reading: re-reading everything defeats the delegation, trusting everything scales confabulation with fan-out, and an anchor makes a spot-check cheap and constant per claim.
+
+**The other half — not repeating an unverified claim as fact — is an always-on verification rule, not a swarm rule.** It lives in the base instructions (`agent-kernel`, under Verification) because it has to fire when nothing about the task looks like a fan-out: someone hands you a report, you are only asked to summarize, and the source was never yours to begin with. Tested 2026-08-18: stating it here did not make it fire; stating it in always-on context did. Do not re-add a copy of it to this skill — a duplicate that cannot fire only launders the obligation.
 
 ## What every child packet adds
 

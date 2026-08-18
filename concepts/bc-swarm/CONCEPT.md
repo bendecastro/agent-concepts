@@ -126,28 +126,53 @@ false claim was relayed to the user as fact) and the silent escape hatch
 path to the decision point — and **re-running both checks showed no behavior
 change at all.** The rewrite was kept for accuracy, not efficacy.
 
-## Open question: the anchor guard may be in the wrong home
+**Second run 2026-08-18, after relocating the guard: PASS 4/5. Deploy
+unblocked.** Checks 1, 2, 3 and 5 all hold with the always-on layer
+present. Check 4 fails for the third time and is accepted as a documented,
+non-blocking gap.
 
-The skill demonstrably drives behavior on the checks that look like fan-out
-work, and demonstrably does not on the two that don't. The document's frame
-is "what to do when you go wide," so "summarize this report" and "don't use
-agents" both read as outside it, and no amount of broadening a sentence
-*inside* that frame makes the guard fire.
+## Resolved: the anchor guard belonged in the kernel, not here
 
-That points at a placement error rather than a wording error. "Do not relay
-an unanchored claim as fact" is not swarm-specific — it applies to any
-agent consuming any other agent's output, which is why it fails precisely
-when the swarm frame is absent. Candidate homes: `agent-kernel` (always-on,
-but the kernel is deliberately tiny), or `research`/`code-review` (already
-evidence-shaped, but neither is loaded during a summarize request either).
-Unresolved; do not deploy this concept as the guard's only home.
+The first run's diagnosis — wording — was wrong, and rewriting the section
+proved it by changing nothing. A three-way A/B on the identical prompt
+located the real cause: **H** (this skill + the real deployed globals)
+failed, **I** (deployed globals alone) failed identically, and **J** (this
+skill + one candidate always-on line) passed, catching the planted false
+claim outright.
+
+Two things followed. First, "do not repeat another agent's claim as fact"
+is not swarm-specific and cannot live behind a user-invoked go-wide skill:
+it has to fire when nothing about the task looks like a fan-out, which is
+exactly when a skill framed as "what to do when you go wide" is not
+consulted. Second, the pre-existing kernel line was too narrow — scoped to
+subagent and tool *success reports*, it never engaged on substantive
+factual claims. It was widened to cover handed-off agent output and to
+forbid relaying an unchecked claim as fact, using verbatim the wording that
+passed as J.
+
+A related deploy-drift finding: the deployed `~/.pi/agent/AGENTS.md` did not
+carry even the narrow pre-existing line, so that rule was absent from real
+Pi sessions entirely. Canon is fixed; propagating the kernel delta to the
+five deployed harness files is tracked separately, since it is outside this
+repository.
+
+This skill now owns only the half it can enforce — requiring anchors *in
+the packet*, which demonstrably worked from the first run — and points at
+the kernel for the consumption half, with an explicit instruction not to
+re-add a copy that cannot fire.
 
 ## Deploy targets
 
-Not yet deployed; blocked on the test gate.
+Deployed 2026-08-18 via `scripts/deploy-local-skills.py` after the 4/5 pass:
 
-Planned, via `scripts/deploy-local-skills.py`: shared bus
-(`~/.agents/skills/bc-swarm`, which also reaches Composer and Grok), Pi
-(`~/.pi/agent/skills/bc-swarm`), and Claude Code
-(`~/.claude/skills/bc-swarm`). Other harnesses: manual bootstrap; see
-`../../harnesses.md`.
+- Shared bus: `~/.agents/skills/bc-swarm` → `body/` (also reaches Composer
+  and Grok).
+- Pi: `~/.pi/agent/skills/bc-swarm` → `body/`.
+- Claude Code: `~/.claude/skills/bc-swarm` → `body/`.
+
+Other harnesses: manual bootstrap; see `../../harnesses.md`.
+
+**Dependency:** the thin-parent guard's consumption half lives in
+`agent-kernel`. Until that delta is propagated to a harness's always-on
+instructions, this skill enforces anchors in packets but nothing stops that
+harness relaying an unanchored claim as fact.
