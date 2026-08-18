@@ -18,8 +18,8 @@ subagent({
   workflowScript: `
     const OUT = "/tmp/bc-swarm/2026-08-18-dsh-recon/";
     return await runs.all([
-      { key: "notes", agent: "scout", output: OUT + "notes.md", task: "..." },
-      { key: "docs",  agent: "scout", output: OUT + "docs.md",  task: "..." },
+      { key: "notes", agent: "scout", thinking: "max", output: OUT + "notes.md", task: "..." },
+      { key: "docs",  agent: "scout", thinking: "max", output: OUT + "docs.md",  task: "..." },
     ]);
   `
 })
@@ -28,6 +28,8 @@ subagent({
 `output` is per child and must be distinct. The path is injected into the child as an authoritative override, so the child does not need to be told the path twice in its task text — but it does need to be told to *append as it goes*.
 
 Pick roles by authority, not convenience: `scout` for bounded recon, `researcher` for external facts, `reviewer` for independent critique, `oracle` for hard judgment. Fan-out of `scout` children is the common shape.
+
+Pass `thinking` on each child to match the announced line. Pass `model` only as a registry id you have resolved (`subagent({ action: "models" })` or this session's routing table). Chat and the manifest keep the routing name (`Luna max`); `model: "luna"` is not a registry id and fails closed (`Unknown subagent model 'luna'`). Role frontmatter can disagree with this session's routing — bundled `scout` thinking is `low`.
 
 ## Failure modes observed on this machine
 

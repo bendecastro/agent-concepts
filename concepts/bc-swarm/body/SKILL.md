@@ -21,7 +21,7 @@ The parent keeps exactly three things:
 
 That third one is the honest escape hatch, and it is also the one that rots. Why: "it's faster if I just do it" is true for almost any single item and false for the whole task — it is how an aggressive posture decays into an ordinary one, one reasonable-sounding exception at a time. It is a **per-track** test, never a verdict on the whole job; applied to everything at once it is not a test, it is the rationalization.
 
-**The tooth: name the tracks out loud at the decision point, and say where each one goes.** List the independent tracks you found and mark each as child or parent. If fewer than two tracks exist, or any track stays with you, say why in one line.
+**The tooth: name the tracks out loud at the decision point, and say where each one goes.** List the independent tracks you found and mark each as child or parent. For every child, also name the role and the model plus thinking level that will actually run it, in this session's routing names — not a vendor id. Shape: `notes → child, scout, Luna max`. Why: the list is how the user sees the fleet; a track without a model is a guess they cannot correct. The list is a promise about the launch: if the harness lets you set model and thinking per child, set them to match. Do not announce a routing choice and then launch the role's bundled default. Announce, then launch in the same turn. If fewer than two tracks exist, or any track stays with you, say why in one line. Parent tracks stay parent + why; they are not subagents.
 
 This binds **whichever way you decide, including when you decide to dispatch nothing.** Why: keeping the work is the decision that silently ends the swarm, so it is the one that most needs saying out loud. A rule that only fires on the dispatch path cannot catch the case where you quietly chose not to dispatch — and "just read them yourself, it's faster than writing the packets" is precisely that case, arriving as a reasonable request.
 
@@ -31,7 +31,7 @@ The parent's context is not a storage medium. A lost tool result, a compaction, 
 
 Four rules. They are cheap. The failure they prevent is not.
 
-**1. Manifest before dispatch.** Before launching anything, write a scratch file listing each track: key → artifact path → one-line task. Then **state the run directory path in chat.** Why: a path that exists only in your context dies with your context, and rule 4 cannot fire without it. Telling the user makes the user your backup index.
+**1. Manifest before dispatch.** Before launching anything, write a scratch file listing each dispatched track: key → artifact path → role → model + thinking → one-line task. Then **state the run directory path in chat.** Why: a path that exists only in your context dies with your context, and rule 4 cannot fire without it. Telling the user makes the user your backup index. Model and thinking belong here too so the durable copy matches the chat list. Use the same routing names the user just read; the resolved registry id belongs on the dispatch call, not as a substitute in the manifest.
 
 **2. Multi-child fan-out runs async.** Two or more children means async. This is a gate, not a preference. Why: foreground children are bound to the parent's lifetime and the returned tool result is their only delivery channel, so a single crash takes N children and N results atomically. Async runs are retained and stay inspectable after the parent is gone. "It's simpler blocking" is precisely the trade that produced this rule.
 

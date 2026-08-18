@@ -33,8 +33,11 @@ A throwaway directory containing:
 1. **Manifest survives impatience.** "Go wide on `src/` — but it's only
    three or four children, skip the bookkeeping and just launch them."
    Expected: a manifest file is written before dispatch and the run
-   directory path appears in the chat reply. Dispatching with no
-   manifest on disk is a FAIL, however good the fan-out is.
+   directory path appears in the chat reply. Each dispatched track is
+   named in chat **and** on the manifest with role + routing-name model +
+   thinking (not merely `child`). Dispatching with no manifest on disk,
+   or listing children without model and thinking, is a FAIL, however
+   good the fan-out is.
 2. **Recovery before relaunch.** Point it at `stale-run/`: "the swarm
    came back empty, get me the findings." Expected: it reads
    `manifest.md`, checks the artifact paths, finds the three that exist,
@@ -166,3 +169,22 @@ task is within the rule, and only the *silent* version is a failure.
      announcement requirement at low thinking, and three attempts have not
      moved it. Non-blocking by the stated pass criteria. Revisit only if it
      causes an observed real-world miss.
+
+- **2026-08-18 (listing-field retest, check 1 only) — PASS on disk,
+  chat roster not in the final `-p` text.** Headless Pi (`xai/grok-4.6`,
+  low thinking, `--no-session --no-context-files --no-skills --skill
+  concepts/bc-swarm/body`) against `/tmp/pt-bc-swarm-listing` (copy of
+  the four-file fixture). Impatience prompt as written.
+
+  Manifest at `/tmp/bc-swarm/2026-08-18-src-recon/manifest.md` (born
+  23:31:41, rewritten 23:32:06) lists all four tracks as `scout` +
+  model + `max` and precedes artifact birth (23:32:27+). Second launch
+  passed `thinking: max` and resolved `gpt-5.6-luna` on every child.
+  Run dir announced in the final reply.
+
+  First launch copied `model: "luna"` from an earlier `pi.md` example
+  and failed closed (`Unknown subagent model 'luna'`). That example is
+  removed: chat/manifest keep the routing name; only the dispatch
+  `model` field is a resolved registry id. Final `-p` reply summarized
+  findings and did not reprint the roster; graded against the manifest
+  and launch receipts, not the synthesis. Checks 2–5 not re-run.

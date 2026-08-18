@@ -659,6 +659,15 @@ context dilution; a controlled project-vs-global comparison and three more sampl
 it was a flake — the global file is loaded (it recalled Luna-max and bc-improve unprompted).
 Rule is a large improvement, not a guarantee, at low thinking.
 
+## [2026-08-18] implement | bc-swarm tooth names role + model + thinking
+Extended the go-wide tooth so each child track is announced with role and this
+session's routing-name model + thinking, then launched in the same turn. Same
+fields go on the manifest. Parent-kept tracks stay parent + why. Pi mechanics
+now pass `thinking` on the child and a resolved registry id as `model`.
+Listing-field retest (check 1): manifest and second launch carried role +
+model + thinking; first launch failed on `model: "luna"` (example removed).
+Deployed to the existing shared/Pi/Claude `bc-swarm` symlinks (already pointed at `body/`).
+
 ## [2026-08-18] ingest | codebase-docs from DeepSeek Harness
 Grilled extract of how `dsh` keeps source-tree docs truthful: one home per
 fact, current-state writing, tutorial vs reference, same-change owner update.
