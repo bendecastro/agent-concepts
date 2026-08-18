@@ -35,9 +35,11 @@ delta over this workspace.
   ideas.
 - **Model-invoked.** Same shape as `plain-language` / `code-review`.
   You should not need a slash command to put a fact in the right home.
-- **This pass is the concept only.** Pointers from `code-review` and
-  `bc-init-agent`, plus the parked note ideas (mandatory alternatives,
-  supersede-don't-rewrite), are follow-ups. Do not sneak them in.
+- **Pointers and note ideas unparked 2026-08-18.** `code-review` Standards
+  loads this skill when the diff touches source-tree docs.
+  `bc-init-agent` points new/upgraded code wikis at it and keeps it off
+  the vault. `domain-modeling` took the two note ideas (alternatives +
+  supersede) without adopting notes-every-change.
 - **Citation, not a vendored clone.** The harness is MIT, but the
   useful extract is a handful of rules. `raw/ingested/deepseek-harness/`
   is a pointer at the commit we read, not a second copy of `dsh`.

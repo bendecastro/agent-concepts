@@ -34,6 +34,9 @@ applies if the file is source-tree docs; wording for human readers is
 `plain-language`.
 
 On a mixed change, apply this skill only to the source-tree doc surface.
+`code-review` loads this skill when a Standards pass sees source-tree docs
+in the diff. `bc-init-agent` points new code wikis at it and keeps it off
+the vault.
 
 ## One home per fact
 

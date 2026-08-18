@@ -69,6 +69,8 @@ See `.bc-agent/references/agent-skills.md` for the local skill map and
 - Do not use or update `~/Wiki` for this project unless the human explicitly asks.
 - Put all agent-created research, plans, scratch, and generated docs under `.bc-agent/`;
   do not create `docs/`-style notes in source folders or the repo root unless asked.
+- Source-tree README, existing `docs/`, and JSDoc follow `codebase-docs` (one home,
+  current state, same-change). Do not apply that skill to this vault.
 - Do not store personal, cross-project, or machine-global knowledge here.
 
 ## Update rules
@@ -618,6 +620,9 @@ The situation and the question being decided. Link the findings/pages that motiv
 ## Decision
 What we chose.
 
+## Alternatives considered
+What else we could have done, and why each lost.
+
 ## Consequences
 What this commits us to, follow-on work, and what it rules out.
 """
@@ -682,6 +687,7 @@ map so agents know what to invoke.
 
 - Intake/evidence: `/triage`, `/prototype`.
 - Planning disciplines: `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `codebase-design`.
+- Source-tree docs: `codebase-docs` — README / existing `docs/` / JSDoc only; not this vault.
 - Execution disciplines: `tdd`, `diagnosing-bugs`, `bc-autoresearch-loop`.
 
 ## Agent behavior
@@ -858,6 +864,10 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
          "`references/agent-skills.md` should tell agents to check the architecture-runway cadence when `/improve-codebase-architecture` is relevant"),
         (vault / "index.md", "architecture-runway.md",
          "`index.md` should link to `conventions/architecture-runway.md`"),
+        (root / "AGENTS.md", "codebase-docs",
+         "root AGENTS.md should point source-tree README/docs/JSDoc at `codebase-docs` and keep that skill off `.bc-agent/`"),
+        (vault / "references" / "agent-skills.md", "codebase-docs",
+         "`references/agent-skills.md` should list `codebase-docs` for source-tree docs, not the vault"),
     ]
     for path, needle, message in checks:
         if path.exists() and not _contains(path, needle):

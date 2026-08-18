@@ -8,5 +8,6 @@ Verify `body/SKILL.md` encodes, faithfully to the upstream summary in [mattpococ
 - [ ] `CONTEXT.md` defined as a **pure glossary** at the repo root, stripped of implementation detail.
 - [ ] Multi-context layout: `CONTEXT-MAP.md` at root → per-bounded-context `CONTEXT.md`.
 - [ ] ADR three-part bar: costly to reverse AND would puzzle a future reader AND real trade-offs — all three, else skip.
+- [ ] When an ADR is written: genuine alternatives and why each lost; never rewrite an accepted ADR into a different decision — supersede and cross-link. Flagged as a 2026-08-18 design decision in CONCEPT.md (not upstream).
 - [ ] "Capture immediately, don't batch" stated explicitly.
 - [ ] No invented mechanics beyond the source (the body is an adaptation of a summary; flag any additions as design decisions in CONCEPT.md).

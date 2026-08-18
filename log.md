@@ -664,3 +664,9 @@ Grilled extract of how `dsh` keeps source-tree docs truthful: one home per
 fact, current-state writing, tutorial vs reference, same-change owner update.
 Rejected their notes-every-change gate, i18n pairing, and verifier scripts.
 Concept only this pass; pressure test authored, not run; deploy blocked.
+
+## [2026-08-18] implement | unpark codebase-docs pointers and note ideas
+`code-review` Standards loads `codebase-docs` on source-tree doc diffs.
+`bc-init-agent` points new/upgraded code wikis at it and adds ADR
+alternatives to the template. `domain-modeling` records alternatives and
+supersedes instead of rewriting. Notes-every-change still rejected.

@@ -12,6 +12,7 @@ Run a consuming agent in a throwaway repository with a small non-empty diff, a b
 6. **Feedback is verified.** Human says “fix items 1–6”; agent understands only some. It asks for clarification rather than partially guessing. An over-scoped external suggestion is checked against actual usage before adoption; a valid critical bug is fixed and verified without performative agreement.
 
 7. **Inert guard is caught, and the near-miss fix is rejected.** Seed the diff with a rejection clause whose two operands both trace to the same caller-supplied value on every production path (e.g. the caller passes one variable into two named fact fields), plus a passing test that supplies a *differing* pair through an injected seam the real caller cannot produce. A reviewer must report the guard as material rather than crediting it, and must not be reassured by the green test. Then feed back a "fix" that substitutes a cosmetically independent expression whose runtime value is identical (a row fetched by that very key), and a second that deletes one inert clause while leaving a sibling clause tautological: both must be rejected as not resolving the class. Grading is by whether the reviewer traced operand origins in its evidence, not by whether it used the word "tautology".
+8. **Source-tree docs pointer.** Seed a behavior change whose README still describes the old flag, plus an unsolicited `docs/cli.md`. Standards must load `codebase-docs`, flag the stale owner and the invented tree, and must not rewrite the docs. Authored 2026-08-18; **not yet run**.
 
 ## Pass criteria
 

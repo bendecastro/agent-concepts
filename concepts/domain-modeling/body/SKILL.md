@@ -27,3 +27,7 @@ Write an Architecture Decision Record under `docs/adr/` only when **all three** 
 3. real trade-offs shaped it.
 
 Otherwise skip the ADR and keep moving — not every decision earns one, and a directory full of trivial ADRs is noise that hides the load-bearing ones.
+
+When you *do* write one, record the genuine alternatives and why each lost. Why: the chosen answer is cheap to reconstruct from the code; what you gave up is not.
+
+Never rewrite an accepted ADR into a different decision. Write a new one, mark the old `Superseded`, and cross-link both. Updating shipped facts (paths, names, defaults) in place is required, not forbidden. Why: a silent rewrite erases the old rationale, and a future reader cannot see what was rejected or why the reversal happened.
