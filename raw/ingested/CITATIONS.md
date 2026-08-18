@@ -17,6 +17,7 @@ license permits it. The upstream link remains the authority. Every snapshot dire
 | `anthropic-context-engineering.md` | [anthropic-context-engineering.md](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) |  |
 | `anthropic-frontend-design-skill.md` | [anthropic-frontend-design-skill.md](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md) |  |
 | `bun-in-rust-zig-port-writeup.md` | [bun-in-rust-zig-port-writeup.md](https://bun.com/blog/bun-in-rust) |  |
+| `deepseek-harness` | [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | MIT; citation only at commit `99f6f02`; ingested → codebase-docs (2026-08-18). |
 | `fission-ai-openspec-readme.md` | [fission-ai-openspec-readme.md](https://github.com/Fission-AI/OpenSpec/) |  |
 | `google-boonstra-prompt-engineering-v7.pdf` | google-boonstra-prompt-engineering-v7.pdf | Lee Boonstra, *Prompt Engineering* whitepaper v7 (Google, March 2025). Source URL unrecorded. |
 | `google-modern-web-guidance` | [GoogleChrome/modern-web-guidance-src](https://github.com/GoogleChrome/modern-web-guidance-src) |  |

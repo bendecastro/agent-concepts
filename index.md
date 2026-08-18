@@ -86,6 +86,8 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
   - Status: implemented 2026-08-17; pressure-tested 2026-08-17 **PASS 10/10** (Pi/Grok; ceiling-marker check failed twice, skill fixed, re-run held); tuned 2026-08-18 (scoped "explicitly requested" to behavior-not-shape after a pass-through wrapper recurred 3/3; one line deleted; re-verified 2/2 with check 5 regression held); deployed to shared/Pi/Claude symlinks.
 - [codebase-design](concepts/codebase-design/CONCEPT.md) — model-invoked reference vocabulary for deep modules (Module/Interface/Depth/Seam/Adapter/Leverage/Locality) with rejected framings; consumed by tdd/to-prd. Expansion files (DEEPENING, DESIGN-IT-TWICE) not ported.
   - Status: implemented 2026-06-20; accuracy check (reference, no runtime gate); Claude Code symlink.
+- [codebase-docs](concepts/codebase-docs/CONCEPT.md) — model-invoked source-tree documentation discipline: one home per fact, current-state not history, tutorial vs reference, same-change update of the owning README or existing docs page; does not create a `docs/` tree or a note-every-change gate. From DeepSeek Harness `docs/AGENTS.md` + `dsh-doc-standards` / `dsh-prose-standard` (ideas only). Inverts off `.bc-agent/` and agent-facing skills; human-facing prose stays `plain-language`.
+  - Status: implemented 2026-08-18; pressure scenario authored, **not run**; deploy blocked on the test gate.
 
 ## Tooling
 
@@ -135,6 +137,7 @@ Top-level `raw/` is the to-ingest inbox; `raw/ingested/` holds sources whose ide
 - [mattpocockskills Skills for Real Engineers. Straight from my .claude directory..md](https://github.com/mattpocock/skills) — clipping of Matt Pocock's skills repo README (2026-07-11 snapshot). Ingested by overlap: its catalog content was already taken up via the earlier snapshot → prompting-agents (2026-06-20); moved to ingested/ 2026-07-12 at user request, no new extractions.
 - [bun-in-rust-zig-port-writeup.md](https://bun.com/blog/bun-in-rust) — "Rewriting Bun in Rust" (Jarred Sumner, Bun Blog, 2026-07-08): 535K lines Zig→Rust in 11 days via ~50 Claude Code dynamic workflows — implementer + 2 adversarial reviewers, task-class guides (PORTING.md/LIFETIMES.tsv), 3-file trial run, fix-the-process doctrine, fleet git-collision lessons. Ingested → dispatching-parallel-agents (pilot-then-scale, task-class guide, isolation why/fallback), bc-drain-issues (recurring-defect tune; fixer rejected), code-review (reviewer context isolation; assume-wrong stance rejected), AGENTS.md Tune op (mid-run variant) (2026-07-16). Assume-wrong reviewer framing and separate-fixer role deliberately not adopted.
 - [iso-24495-iplf/](raw/ingested/iso-24495-iplf/SOURCE.md) — citation record of ISO 24495 catalog pages and IPLF public principle/definition/word-choice materials. Ingested → plain-language (2026-08-18); ISO standard text deliberately not filed.
+- [deepseek-harness/](raw/ingested/deepseek-harness/SOURCE.md) — citation record of DeepSeek Harness docs/notes/skills at commit `99f6f02` (MIT). Ingested → codebase-docs (2026-08-18); Agent Notes gate, i18n pairing, and verifier scripts deliberately not adopted.
 
 ## Gaps
 

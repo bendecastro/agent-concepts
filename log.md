@@ -658,3 +658,9 @@ false claim caught 4/5 runs vs 0/4 before. One failure (H2) was initially misrea
 context dilution; a controlled project-vs-global comparison and three more samples showed
 it was a flake — the global file is loaded (it recalled Luna-max and bc-improve unprompted).
 Rule is a large improvement, not a guarantee, at low thinking.
+
+## [2026-08-18] ingest | codebase-docs from DeepSeek Harness
+Grilled extract of how `dsh` keeps source-tree docs truthful: one home per
+fact, current-state writing, tutorial vs reference, same-change owner update.
+Rejected their notes-every-change gate, i18n pairing, and verifier scripts.
+Concept only this pass; pressure test authored, not run; deploy blocked.
