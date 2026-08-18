@@ -116,3 +116,6 @@ they matter.
 - Visual UI beyond the words → `frontend-design`.
 - Evidence and citations → `research`. This skill can make a human-facing
   note scannable; it does not change what counts as a source.
+- Live grill questions, the architecture-review HTML report, and a drain
+  `needs-human` comment already carry a thin reader-outcome clause in
+  those skills. Do not load this skill on top of them.

@@ -607,3 +607,10 @@ Deployed via `scripts/deploy-local-skills.py` after the 6/6 pressure pass. Relat
 symlinks created under `~/.agents/skills/plain-language`, `~/.pi/agent/skills/plain-language`,
 and `~/.claude/skills/plain-language`; all three resolve to `concepts/plain-language/body`.
 Restart sessions to refresh advertised skill lists.
+
+## [2026-08-18] implement | thin plain-language clauses on three speakers
+Adapted a 2–4 line reader-outcome delta into `grilling` (decision-first question),
+`improve-codebase-architecture` (HTML report for a busy owner choosing a candidate),
+and drain `HUMAN_BLOCKED` comments. Deliberately not a `plain-language` skill load;
+issue-slicing, teach HTML, PRDs, and briefs left unwired. New expected lines added to
+existing tests; not re-run.

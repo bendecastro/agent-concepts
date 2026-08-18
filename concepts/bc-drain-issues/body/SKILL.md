@@ -135,7 +135,7 @@ Only after verifying that **every axis holds a standing approval whose `diff_sha
 
 A rebase that changes the reviewed diff changes its hash, so no standing approval covers it: update the base, validate, and obtain fresh focused approval on both axes before push. The driver owns commit/push/close so implementation and rework workers cannot bypass the independent gate.
 
-For `HUMAN_BLOCKED`, post exact decision/access/environment evidence, remove ready/in-progress, and add `needs-human`. For `SYSTEMIC_FAILURE`, stop new launches, let active children reach a safe boundary, preserve/classify each issue, and report stale resources rather than guessing or destructive cleanup.
+For `HUMAN_BLOCKED`, post a comment the human who will unblock can act on: the decision or missing access first, the options and what happens if they pick each, then the exact evidence. Leave SHAs, paths, and commands untouched. Do not load `plain-language`. Then remove ready/in-progress and add `needs-human`. For `SYSTEMIC_FAILURE`, stop new launches, let active children reach a safe boundary, preserve/classify each issue, and report stale resources rather than guessing or destructive cleanup.
 
 Release terminal worktrees/branches/claims only when their state is safely landed, blocked without useful local work, or validated in recovery. Never reset/clean the main checkout or another issue's worktree. Close a parent PRD only when every child is completed and none is open, blocked, deferred, claimed, or in flight.
 

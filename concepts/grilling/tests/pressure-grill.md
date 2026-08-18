@@ -18,6 +18,7 @@ Run a subagent as the consuming agent with `body/SKILL.md` loaded, on a small fi
 - No more than one open question posed at a time.
 - No code or final plan produced while any branch is unresolved.
 - Each question includes a recommended answer + reason.
+- Each question leads with the decision and ends with how to reply (expected from 2026-08-18; not yet re-tested).
 - Ends with a restated resolved-scope summary.
 
 ## Run result — 2026-06-22 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS** (bulk exit) with a soft note

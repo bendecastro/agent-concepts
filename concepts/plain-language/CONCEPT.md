@@ -51,6 +51,13 @@ claim ISO conformance.
   `prompting-agents` still owns agent-instruction authoring; `research`
   still owns evidence. This skill may make the human-facing words in
   those artifacts scannable.
+- **Thin clauses on speakers, not a skill load (2026-08-18).** Live grill
+  questions, the architecture-review HTML report, and a drain
+  `needs-human` comment each carry a 2–4 line reader-outcome delta in
+  the skill that actually speaks. Loading this body there would bring
+  review-default into a write-plain-first turn and risk "familiar words"
+  stripping deep-module vocabulary or evidence. Issue-slicing quizzes,
+  teach HTML, PRDs, and Agent Briefs were considered and left unwired.
 
 ## Provenance
 

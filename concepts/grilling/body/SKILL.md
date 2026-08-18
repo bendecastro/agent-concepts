@@ -7,7 +7,7 @@ description: Interview the user relentlessly about a plan or design until every 
 
 The reusable interview loop behind `/grill-me`. Interview the user relentlessly about every aspect of the plan until you reach a *genuinely shared* understanding — not polite agreement that papers over open decisions.
 
-Walk down each branch of the design tree, resolving dependencies between decisions one at a time. For every question, give your own **recommended answer and a one-line reason**, so the user is reacting to a concrete proposal rather than starting from a blank page.
+Walk down each branch of the design tree, resolving dependencies between decisions one at a time. For every question, put the **decision first**, then your **recommended answer and a one-line reason**, then how to reply (`yes` / the other option / override). Why: the reader is a busy owner deciding now, not reading a brief — a buried question wastes the turn. Keep a term they already use; do not invent a simpler synonym, and do not load `plain-language` for this utterance.
 
 **One question at a time — this is the gate.** Ask a single question, wait for the answer, then ask the next. Batching questions is bewildering and lets decisions slip through unresolved. Do not move on, and do not start writing code or a plan, while any branch is still open. Don't drop the gate just because pushing for an answer feels slow — "just give me the whole list" / "I'm in a hurry" is often exactly when the interview is most valuable.
 

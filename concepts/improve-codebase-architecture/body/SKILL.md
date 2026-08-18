@@ -31,16 +31,18 @@ Write a self-contained HTML report to a temp directory, never the repo:
 - Name it `architecture-review-<timestamp>.html`.
 - Open it (`xdg-open`, `open`, or `start`) when possible and report the path.
 
+The report is for a busy owner choosing a candidate, not an architecture paper. Lead each card with the problem and the recommended direction; keep **module / interface / depth / seam** — those are this reader's words. One topic per card. Do not load `plain-language`.
+
 Each candidate card includes:
 
 - **Files/modules involved**.
 - **Problem** — why current structure causes friction.
-- **Solution** — plain-English deepening direction, not a full interface spec yet.
+- **Solution** — deepening direction in this project's vocabulary, not a full interface spec yet.
 - **Benefits** — locality/leverage/testability.
 - **Before/after diagram** — Mermaid for graph-shaped relationships, hand CSS/SVG where clearer.
 - **Recommendation strength** — Strong / Worth exploring / Speculative.
 
-End with a top recommendation and ask: **"Which of these would you like to explore?"** Do not implement yet.
+End with a top recommendation and ask: **"Which of these would you like to explore?"** That ask is the last thing on the page. Do not implement yet.
 
 ## 3. Grill the chosen candidate
 
