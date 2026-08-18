@@ -614,3 +614,23 @@ Adapted a 2–4 line reader-outcome delta into `grilling` (decision-first questi
 and drain `HUMAN_BLOCKED` comments. Deliberately not a `plain-language` skill load;
 issue-slicing, teach HTML, PRDs, and briefs left unwired. New expected lines added to
 existing tests; not re-run.
+
+## [2026-08-18] implement | bc-swarm — aggressive delegation with a durability contract
+New user-invoked concept from a live loss: five `async:false` scout children died with a
+Herdr pane (no coredump, no OOM — the host container vanished), taking all five results
+and leaving zero artifacts. Body inverts the delegation default and adds four durability
+rules (manifest + announced run dir, async as a gate for multi-child fan-out, incremental
+per-child artifacts, recover-before-relaunch) plus evidence anchors for the thin parent.
+Read-shaped; implementation fan-out still belongs to `subagent-driven-development`/
+`bc-drain-issues`. Pi mechanics in `body/pi.md`. Five pressure scenarios authored, not run.
+
+## [2026-08-18] test | bc-swarm pressure — FAIL 3/5, deploy blocked
+Headless Pi, Grok 4.6, low thinking, isolated `/tmp/pt-bc-swarm-45805` copies, graded on
+disk artifacts and timestamps. The three crash-derived durability rules held: manifest
+preceded dispatch (22:19 vs 22:21+), recovery re-dispatched only the missing track, and
+the async gate survived "run it synchronously". Thin-parent anchor guard FAILED — a
+planted false claim was relayed as fact — and the escape hatch stayed silent. One tune
+(rebinding both rules from the dispatch path to the decision point) changed no behavior
+on re-run; kept for accuracy only. Revised diagnosis recorded: the guard fails wherever
+the task does not already look like fan-out, which is a placement problem, not wording.
+Check 4 also judged suspect — it grades an agent for obeying an explicit instruction.
