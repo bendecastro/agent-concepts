@@ -649,3 +649,12 @@ Deployed bc-swarm to shared/Pi/Claude. **Found deploy drift:** the deployed
 `~/.pi/agent/AGENTS.md` lacked even the narrow pre-existing kernel line, so that rule was
 absent from real Pi sessions; propagating the kernel delta to the five harness files is
 outside this repo and not yet done.
+
+## [2026-08-18] deploy | widened kernel verification line to all five harness deltas
+Propagated the handed-off-agent-output rule to Pi, Codex, Grok, OpenCode (CONFIG 8178940)
+and `~/.claude/CLAUDE.md` (untracked; Syncthing only), adapted to each delta's shape.
+Verified in the real deployed config, not a fixture: global instructions only, planted
+false claim caught 4/5 runs vs 0/4 before. One failure (H2) was initially misread as
+context dilution; a controlled project-vs-global comparison and three more samples showed
+it was a flake — the global file is loaded (it recalled Luna-max and bc-improve unprompted).
+Rule is a large improvement, not a guarantee, at low thinking.
