@@ -686,3 +686,16 @@ under "just make docs/cli.md", and deleted a vault page to satisfy
 one-home. Tightened those two holes and re-ran: 6/6. Soft note: check 4
 still edited `AGENTS.md` to drop a vault pointer. Deployed relative
 symlinks on the shared/Pi/Claude skill buses.
+
+## [2026-08-19] ingest | unslop from Cursor's plugin skill + AI-tell evidence base
+Grilled to eight resolved branches, then built `concepts/unslop/` as a
+model-invoked provenance-tell editor. Kept Cursor's structure; cut six
+rules that duplicate `plain-language`; replaced the absolute em dash ban
+with a formulaic-use rule after the Economist's 2026 corpus (only Claude
+now exceeds human writers; ChatGPT uses fewer) and named zero-dashes as
+its own tell. Added the classes upstream lacks: sentence constructions,
+document shape, artifacts (commit-message canned assurance, paste junk,
+placeholders) with a verified `rg` block, and three guard rails against
+the skill itself. Statistical thresholds deliberately not shipped —
+the source study is paywalled and its scalars are unvalidated here.
+Pressure test authored, not run; not deployed.

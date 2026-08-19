@@ -13,3 +13,7 @@ __pycache__/
 # Upstream-maintained skill bodies installed locally, never vendored here.
 # See each concept's body/UPSTREAM.md.
 concepts/herdr/body/SKILL.md
+
+# Clipping of an upstream skill whose repo declares no license. Kept locally
+# as evidence, never redistributed. See raw/ingested/unslop-cursor/SOURCE.md.
+raw/ingested/unslop-cursor/cursor-unslop-skill-clipping.md
