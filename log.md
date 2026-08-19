@@ -699,3 +699,15 @@ placeholders) with a verified `rg` block, and three guard rails against
 the skill itself. Statistical thresholds deliberately not shipped —
 the source study is paywalled and its scalars are unvalidated here.
 Pressure test authored, not run; not deployed.
+
+## [2026-08-19] test+deploy | unslop pressure PASS 7/7 after one tune
+First Luna-max run failed both load-bearing gates: asked to unslop an
+agent-facing `SKILL.md` under pressure it stripped the gate and its
+why-clause, and told to remove every em dash it went to zero and made
+`em dash count: 0` its success criterion. Same mechanism both times —
+the rules were prose sentences inside topic sections, so a direct user
+instruction outranked them. Moved both into a `## Never` block with the
+rationalization framing and an explicit override path that preserves
+gates/whys, then re-ran: both PASS. Also fixed a fixture flaw that gave
+check 2 a false pass. Caveat recorded: max thinking, not low, because no
+low-reasoning provider was reachable. Deployed to shared/Pi/Claude.

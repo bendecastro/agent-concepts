@@ -60,6 +60,15 @@ contradicts it.
   Shipping unvalidated thresholds would be false confidence. The signals
   survive qualitatively ("every sentence in the same band, no semicolons,
   no parentheses") as accumulation evidence.
+- **The two "never" rules live in a `## Never` section, not in their
+  topic sections (2026-08-19, from the pressure test).** Both were
+  originally prose sentences inside the em dash and scope sections, and
+  both failed on first run: a direct user instruction outranked them
+  every time. Moving them into a gate block with the rationalization
+  framing fixed both. The agent-facing rule also carries an explicit
+  override path — the user may insist on a skill body, but the gate, its
+  why, and the named failure mode survive — because a flat refusal is not
+  what the user needs and a flat capitulation is what strips the file.
 - **Guard rails against the skill itself.** Three, all absent upstream:
   a dated vocabulary tier ranked below constructions because word tics
   decay once mocked while constructions persist; an explicit *do not
@@ -136,10 +145,23 @@ into a net harm: the agent-facing inversion, the strip-to-zero
 over-correction, and the report-does-not-rewrite boundary; plus the
 false-positive guard and the symptoms-not-disease rule.
 
-**Not yet run.**
+**Run 2026-08-19 against isolated fixture copies: PASS 7/7, after one
+tune.** First pass was 5/7 with both em-dash and agent-facing gates
+failing; both were prose sentences rather than gates, both now live in
+`## Never`, and both re-ran PASS. Two caveats recorded in the test file:
+the run used Luna at max thinking because no low-reasoning provider was
+available, and check 2's original fixture target could not fire the gate
+(fixed). Consumer was `openai-codex/gpt-5.6-luna:max`, not the author's
+model.
 
 ## Deploy targets
 
-**Not deployed.** Pending a pressure-test pass, then
-`scripts/deploy-local-skills.py` for the shared bus, Pi and Claude Code
-symlinks.
+Deployed 2026-08-19 via `scripts/deploy-local-skills.py`, all three
+relative symlinks verified to resolve:
+
+- Shared bus: `~/.agents/skills/unslop` → `body/` (also reaches Composer
+  and Grok).
+- Pi: `~/.pi/agent/skills/unslop` → `body/`.
+- Claude Code: `~/.claude/skills/unslop` → `body/`.
+
+Other harnesses: manual bootstrap; see `../../harnesses.md`.

@@ -43,6 +43,7 @@ gates. Agent instructions go to `prompting-agents`. Why: those documents
 deliberately use bold lead-ins, parallel structure, and repeated
 why-clauses, and every one of those reads as a tell. Unslopping them
 strips the reasons a capable agent needs and leaves bare imperatives.
+See **Never**, below: this one holds even when the user insists.
 
 Leave code, commands, logs, diffs, and quoted file contents untouched.
 
@@ -186,10 +187,35 @@ Flag these instead:
 - more than one in a paragraph, or two in a single sentence;
 - one doing work a comma or a full stop does identically.
 
-**Never strip to zero.** Why: absence is now its own tell, and the same
-corpus found AI already uses hardly any parentheses or semicolons — so
-"replace every dash with a comma" walks directly into the next signature.
-Keep the dashes that earn their place.
+Keep the dashes that earn their place. Removing all of them is a gate,
+not a preference — see **Never**.
+
+## Never
+
+These three fail by rationalization: the moment a user's instruction makes
+one inconvenient is exactly when it is load-bearing. Each can be argued
+around in the moment, which is why none of them is a default.
+
+- **Never strip a document to zero em dashes**, however the request is
+  phrased ("remove every one", "no exceptions", "they're the number one
+  tell"). Why: absence is itself a current tell — ChatGPT already uses
+  markedly fewer dashes than human writers — and the same corpus found AI
+  uses hardly any parentheses or semicolons, so "replace them all with
+  commas" walks straight into the next signature. Remove the formulaic
+  ones, keep the ones that earn their place, and say which you kept.
+- **Never remove a gate, a why-clause, or a named failure mode from an
+  agent-facing document.** If the user overrides the scope rule and asks
+  for a skill body, `AGENTS.md`, or kernel anyway, you may tighten
+  wording and cut genuine filler — but the rule, its reason, and the
+  failure it prevents all survive verbatim in substance. Why: those
+  sentences are the entire reason the document beats a bare imperative,
+  and a "cleaner" instruction file that lost them silently makes every
+  future agent worse.
+- **Never manufacture tells for text that does not have them.** If the
+  user insists something is AI-written and the evidence is not there, say
+  so. Why: a skill that finds something every time it is asked is a
+  yes-machine, and false accusations are the documented harm of every
+  field guide this skill draws on.
 
 ## Do not flag these
 
