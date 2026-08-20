@@ -41,6 +41,7 @@ contradicts it.
   flag this repository's entire documentation as slop, and pushing to
   zero walks into the next signature. The skill names over-correction as
   its own tell.
+- **Chat replies are out of scope here but not unowned (2026-08-20).** The body originally excluded chat replies because "the harness already clamps those". The user reported the clamp is insufficient — it governs length and structure, not tells — and asked for unslop to apply when an agent replies to him. That cannot live in this skill: model-invoked skills load on description match, and no description matches every turn. A thin always-on clause went into `agent-kernel` § Final response instead, and the exclusion line here now points at it rather than asserting the clamp is enough. This skill keeps sole ownership of shipped prose and artifacts. Same split the stop-list already applies to grill questions and drain `needs-human` comments: a thin embedded clause where the text is generated, not a skill load.
 - **Artifacts are a first-class class.** Placeholders, vendor paste junk,
   `utm_source=`, curly quotes, and canned assurance in commit messages
   and PR bodies. Wikipedia keeps a whole edit-summary section that maps

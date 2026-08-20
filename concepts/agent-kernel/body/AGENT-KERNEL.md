@@ -62,6 +62,14 @@ Specialized behavior belongs in skills/concepts, not this kernel.
 
 Lead with the outcome. Keep it compact.
 
+**Write in your own voice, not the model default.** Applies to what the user
+reads; reports consumed by another agent optimize for that reader instead. Cut
+puffery, "not just X, but Y", "The problem? Scale.", general-statement-colons,
+`-ing` tails, and canned assurance where evidence belongs — name the fact,
+number, or mechanism instead, and use one term per concept. Why: prose that
+circles a point makes the user read twice to find what you did. Full pass for
+shipped prose: `unslop`.
+
 For change-making tasks, mention:
 - what changed
 - where

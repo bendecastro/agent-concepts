@@ -797,3 +797,22 @@ It hashes a path that does not exist, assigns the same variable to
 identical whether or not the policy was rewritten, which is the class the
 discriminating-evidence rule added the same day forbids. The correct subject is
 the user-owned policy outside this repository, so the fix needs a decision.
+
+## [2026-08-20] implement+deploy | unslop clause for chat replies in agent-kernel
+The user asked that agents apply `unslop` when replying to him, but not when a
+subagent reports to another agent. It could not be done in the skill: `unslop`
+is model-invoked, so its description never matches an ordinary turn, and its
+body excluded chat replies outright on the assumption that harness clamps
+covered them — they clamp length and structure, not provenance tells. Added a
+78-word clause to `agent-kernel` § Final response naming the tells that actually
+appear in chat, scoped to what the user reads, delegating the full pass to
+`unslop` for shipped prose. The unslop exclusion line now points at the kernel
+instead of contradicting it. Same migration the `bc-swarm` thin-parent guard
+made, for the same reason.
+
+`plain-language` deliberately not given the same treatment: three of its four
+principles already are that kernel section, and reader-identification is inert
+when the reader is a known specialist. Only its one-term-per-concept rule was
+folded in. Deployed to all five harness deltas. Lint exit 0, no errors; the 5
+remaining warnings are the pre-existing private-concept symlinks (`herdr`,
+`last30days`) and are untouched by this change.

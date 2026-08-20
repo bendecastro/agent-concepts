@@ -37,10 +37,11 @@ Human-facing text that ships: docs, READMEs, announcements, emails, blog
 and marketing copy, SEO pages, research writeups, changelogs, commit
 messages, PR and issue bodies.
 
-**Not chat replies** (the harness already clamps those), **not code**, and
-**not agent-facing instructions** — skill bodies, `AGENTS.md`, kernels,
-gates. Agent instructions go to `prompting-agents`. Why: those documents
-deliberately use bold lead-ins, parallel structure, and repeated
+**Not chat replies** (`agent-kernel` § Final response carries a thin always-on
+clause for those, because a model-invoked skill cannot fire on every turn),
+**not code**, and **not agent-facing instructions** — skill bodies,
+`AGENTS.md`, kernels, gates. Agent instructions go to `prompting-agents`.
+Why: those documents deliberately use bold lead-ins, parallel structure, and repeated
 why-clauses, and every one of those reads as a tell. Unslopping them
 strips the reasons a capable agent needs and leaves bare imperatives.
 See **Never**, below: this one holds even when the user insists.
