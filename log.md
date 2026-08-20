@@ -901,3 +901,6 @@ Documented `bc-drain-issues` and `improve-codebase-architecture` as a bounded po
 
 ## [2026-08-20] implement | architecture feedback integration corrections
 Clarified newest-first inbox persistence and current tiered drain outcomes, moved the completed plan to `implemented/`, and updated pipeline/index bookkeeping. Existing lint limitations remain unchanged.
+
+## [2026-08-20] implement+test | prepend evidence and fallback disposition suppression
+Recorded Gate A check 28's newest-first prepend ordering as deterministic producer evidence and the parent-verified two-pass fallback rerun: ledger-before-inbox filtering, exact identity/source suppression of `obs-11`, and unresolved `obs-02` retention. Gate B remains outstanding.

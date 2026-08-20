@@ -161,3 +161,21 @@ Verified outcomes:
 - Inbox/source/canonical/issue state remained unchanged.
 
 This complements the clean declared-bound `N = 4` below-bound alias fixture above by proving bound limiting when enough entries exist. This is parent-verified artifact evidence; this worker did not run the fixture.
+
+## Parent pressure-run clean fallback two-pass rerun — 2026-08-20 — **PASS (parent-verified)**
+
+The parent inspected the current two-pass fallback artifacts from `/tmp/pt-arch-feedback-clean-fallback-rerun`:
+
+- **First run:** [`RESULT.md`](/tmp/pt-arch-feedback-clean-fallback-rerun/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-clean-fallback-rerun/TRACE.json), fallback ledger [`architecture-review-dispositions.md`](/tmp/pt-arch-feedback-clean-fallback-rerun/.bc-agent/research/architecture-review-dispositions.md), and report [`architecture-review-1787260530509630335.html`](/tmp/architecture-review-1787260530509630335.html).
+- **Second run:** [`RESULT.md`](/tmp/pt-arch-feedback-clean-fallback-rerun/second-run/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-clean-fallback-rerun/second-run/TRACE.json), and report [`architecture-review.html`](/tmp/pt-arch-feedback-clean-fallback-rerun/second-run/architecture-review.html).
+
+Verified evidence:
+
+- The first-run trace records the fallback ledger read before inbox filtering (event 2; the ledger was absent before the first disposition). After the accepted outcome at event 17, event 18 wrote exactly one accepted row for `obs-11`, with exact source `issue #42 / commit 7e31c2`, module/seam, both verified evidence links, and verification/disposition reasons.
+- The inbox remained byte-for-byte unchanged with canonical lowercase `status: open`; its SHA-256 was unchanged before/after at `21be8f52cf2e34a954404b7c64ec95245f7448b9b0aed343f5198e0cceabc04e`.
+- The second-run trace read the one-row fallback ledger before inbox filtering, matched the exact `obs-11` identity plus source and terminal `accepted` disposition, and suppressed it before candidate presentation and before the report disposition ledger. `obs-11` received neither a candidate card nor a second-run ledger row.
+- Unresolved `obs-02` remained eligible and was presented as a candidate with full provenance: exact source `issue #43 / commit 8f42d1`, module/seam, and verified links `src/report_store.py#L13-L17` and `src/renderer.py#L8-L15`.
+- The first and second reports, results, traces, and fallback ledger used aggregate-only disclosure: no unread entry identifier or body was presented; older or out-of-bound history was mentioned only in aggregate.
+- Source files, canonical skill/repository state, and issue state were unchanged; no production implementation, direct issue, or commit was created. Earlier old-fallback artifacts remain marked historical/superseded in the section above; this two-pass ledger rerun supersedes them for fallback evidence.
+
+This is parent-verified artifact evidence; this worker did not run the fixtures.
