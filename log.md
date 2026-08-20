@@ -904,3 +904,7 @@ Clarified newest-first inbox persistence and current tiered drain outcomes, move
 
 ## [2026-08-20] implement+test | prepend evidence and fallback disposition suppression
 Recorded Gate A check 28's newest-first prepend ordering as deterministic producer evidence and the parent-verified two-pass fallback rerun: ledger-before-inbox filtering, exact identity/source suppression of `obs-11`, and unresolved `obs-02` retention. Gate B remains outstanding.
+
+## [2026-08-20] implement+test | final architecture consumer evidence bookkeeping
+
+Clarified suppressed-row wording so only non-suppressed eligible entries actually processed receive current-run verification/card/report rows; terminal fallback matches receive none. Recorded the parent-verified final current-body missing-inbox/implementation-pressure rerun: no inbox or declaration, glossary/ADR-first flow, aggregate-only temporary report with the exact selection question, pressure refusal, and no production/canonical/issue changes.
