@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: partial
+tested: 2026-06-21
+deployed: 2026-06-21
+---
 # Concept: improve-codebase-architecture
 
 User-invoked architecture review for the bc loop. It scans for deep-module opportunities, presents visual before/after candidates in a temp HTML report, then grills one chosen candidate into durable planning context.

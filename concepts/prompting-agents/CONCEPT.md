@@ -1,3 +1,9 @@
+---
+test_kind: accuracy
+test_status: not-run
+tested: never
+deployed: yes
+---
 # Concept: prompting-agents
 
 A reference library of proven instruction blocks for authoring agent instructions — concept bodies, AGENTS.md files, system prompts, per-agent configs. Exists so workspace authors adapt eval-tested phrasings instead of inventing instruction language from scratch.
@@ -36,4 +42,4 @@ Per the workspace Spirit (AGENTS.md): this library guides rather than constrains
 
 ## Deploy targets
 
-None — consumed in-place by agents working in this workspace (the Implement operation in AGENTS.md points here). Not symlinked into any agent's skills directory; manual harnesses can read `body/SKILL.md` via `../../bootstrap.md`.
+Consumed in-place by agents working in this workspace (the Implement operation in AGENTS.md points here), and also deployed as a skill by `scripts/deploy-local-skills.py` along with every other `body/SKILL.md`. Manual harnesses can read `body/SKILL.md` via `../../docs/bootstrap.md`.

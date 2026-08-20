@@ -1,3 +1,9 @@
+---
+test_kind: accuracy
+test_status: pass
+tested: 2026-06-13
+deployed: 2026-06-13
+---
 # notebooklm
 
 Reference skill for driving Google NotebookLM from the terminal via the unofficial `notebooklm` CLI ([teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py)): create notebooks, add sources (URLs, PDFs, YouTube, audio/video), chat with sources, and generate/download artifacts (audio overviews, quizzes, flashcards, slide decks, mind maps) — including features the web UI doesn't expose.

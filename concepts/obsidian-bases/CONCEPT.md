@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-08-17
+deployed: 2026-08-17
+---
 # Concept: obsidian-bases
 
 Harness-neutral reference skill for authoring and validating Obsidian Bases `.base` files: YAML filters, formulas, views, properties, and summaries.

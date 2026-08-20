@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-07-16
+deployed: yes
+---
 # Concept: to-spec
 
 User-invoked orchestrator that turns the current conversation + codebase understanding into the project’s PRD-format spec and publishes it as a **GitHub parent issue**. No interview — pure synthesis of what's already been discussed (run `/grill-me` first if scope is still vague). The parent PRD is a coordination artifact; `ready-for-agent` is reserved for implementation slices.
@@ -23,4 +29,4 @@ User-invoked orchestrator that turns the current conversation + codebase underst
 
 - Canonical deploy: `to-spec`; compatibility alias: `to-prd` → `to-spec`.
 - Claude Code: `~/.claude/skills/to-spec` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

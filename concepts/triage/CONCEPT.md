@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: not-run
+tested: never
+deployed: 2026-06-21
+---
 # Concept: triage
 
 User-invoked intake gate for the bc loop. It moves issues/PRs through a small state machine, verifies claims, grills when needed, writes drain-ready Agent Briefs, and records rejected enhancement concepts in `.bc-agent/out-of-scope/`.

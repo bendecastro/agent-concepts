@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-07-16
+deployed: yes
+---
 # Concept: to-tickets
 
 User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbable **GitHub tickets** (GitHub issues) using tracer-bullet vertical slices, quizzing the user on granularity and dependencies before publishing with the `ready-for-agent` label.
@@ -23,4 +29,4 @@ User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbab
 
 - Canonical deploy: `to-tickets`; compatibility alias: `to-issues` → `to-tickets`.
 - Claude Code: `~/.claude/skills/to-tickets` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

@@ -816,3 +816,34 @@ when the reader is a known specialist. Only its one-term-per-concept rule was
 folded in. Deployed to all five harness deltas. Lint exit 0, no errors; the 5
 remaining warnings are the pre-existing private-concept symlinks (`herdr`,
 `last30days`) and are untouched by this change.
+
+## [2026-08-20] implement | status frontmatter, --status board, docs/ layer
+Reorganized for human navigation. Three changes, one motive: "what is untested or
+undeployed?" required reading 43 files.
+
+- **Status frontmatter** (`test_kind`, `test_status`, `tested`, `deployed`) now opens
+  every `CONCEPT.md`. It replaces free prose that stated the same facts in about ten
+  phrasings across 43 files, none of it greppable. `scripts/lint.py --status` prints
+  the board worst-first; `lint.py` validates the enums and dates.
+- **The test gate is now machine-checkable.** It was honor-system prose. Eleven
+  concepts are deployed with no recorded run: bc-init-agent, codebase-design,
+  domain-modeling, frontend-design, grilling, last30days, prd-drafting,
+  prompting-agents, prototype, research, triage. Nine have `test_status: not-run`;
+  domain-modeling and grilling are `partial` but carry no run date at all. Lint
+  reports these as errors, so it exits 1 until they are tested or undeployed. That
+  is a deliberate choice and a decision the user still owns.
+- **Deploy state is taken from disk, not prose.** `deploy-local-skills.py:102` globs
+  every `*/body/SKILL.md`, so a concept ships whether or not its CONCEPT.md agrees.
+  19 files claimed "not deployed yet" while their symlinks were live; 8 carried an
+  outright false "Not deployed yet" line and prompting-agents claimed it was never
+  symlinked. All corrected. Lint now cross-checks both directions.
+- **`docs/`** holds `bootstrap.md`, `harnesses.md`, `pipeline.md`. Root keeps README,
+  AGENTS.md, index.md, log.md, LICENSE. `docs/` was deliberately not added to
+  `INLINE_PATH_PREFIXES`: codebase-docs discusses generic `docs/` trees in other
+  repositories, so the prefix is not unambiguously repo-relative.
+- README's counts were stale (36 concepts; actually 43) and are corrected to 43
+  concepts / 5,039 lines of instruction body.
+
+Extraction ran as a two-scout bc-swarm fan-out (Luna max); anchors spot-checked
+against source before use, and deploy values overridden from disk. `research.md`
+left at root — the user deferred that one.

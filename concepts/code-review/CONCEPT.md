@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: partial
+tested: 2026-07-16
+deployed: yes
+---
 # Concept: code-review
 
 Model-invoked review discipline for both sides of code review: independently assess a fixed diff for Spec fidelity and Standards quality, then request/receive feedback skeptically and constructively.
@@ -38,4 +44,4 @@ Check 8 (Standards loads `codebase-docs` on a stale README / invented `docs/` tr
 
 ## Deploy targets
 
-Not deployed yet. Discipline-enforcing concept; deploy after pressure test.
+Deployed to the shared bus, Pi, and Claude Code by `scripts/deploy-local-skills.py`, which deploys every concept carrying a `body/SKILL.md`. This shipped with that bulk deploy rather than by a per-concept decision, so the intended deploy-after-test sequence did not hold here. Current state is in this file's frontmatter; `python3 scripts/lint.py` fails while a deployed concept is untested.

@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-08-18
+deployed: 2026-08-18
+---
 # Concept: plain-language
 
 Model-invoked discipline for human-facing prose, with a user-invoked
@@ -108,4 +114,4 @@ symlinks verified to resolve:
 - Pi: `~/.pi/agent/skills/plain-language` → `body/`.
 - Claude Code: `~/.claude/skills/plain-language` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.

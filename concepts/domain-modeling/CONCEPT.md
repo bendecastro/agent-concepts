@@ -1,3 +1,9 @@
+---
+test_kind: accuracy
+test_status: partial
+tested: never
+deployed: yes
+---
 # Concept: domain-modeling
 
 Model-invoked discipline for actively building and sharpening a project's domain model: challenge vague/conflicting terms into canonical names, stress-test with edge cases, cross-check claims against code, and persist the result into `CONTEXT.md` (a pure glossary) and — at a high bar — ADRs. The doc-writing engine behind the stateful `grill-me`.
@@ -23,4 +29,4 @@ Model-invoked discipline for actively building and sharpening a project's domain
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/domain-modeling` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

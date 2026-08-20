@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-08-17
+deployed: 2026-08-17
+---
 # Concept: minimal-solution-ladder
 
 Model-invoked discipline for deciding **how much to build** before writing code: an ordered ladder (need it at all → already in this codebase → stdlib → native platform feature → installed dependency → one line → minimum that works), stopped at the first rung that holds, with an absolute never-simplify list and a marker convention for deliberate corner-cuts. Adapted from DietrichGebert/ponytail.
@@ -40,4 +46,4 @@ Deployed 2026-08-17 via `scripts/deploy-local-skills.py`, all three relative sym
 - Pi: `~/.pi/agent/skills/minimal-solution-ladder` → `body/`.
 - Claude Code: `~/.claude/skills/minimal-solution-ladder` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.

@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-07-16
+deployed: 2026-06-21
+---
 # Concept: diagnosing-bugs
 
 Model-invoked debugging discipline for hard bugs and performance regressions: build a tight red-capable feedback loop, reproduce/minimise, rank falsifiable hypotheses, instrument, fix with regression coverage, and clean up.

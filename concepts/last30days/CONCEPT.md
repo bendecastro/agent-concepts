@@ -1,3 +1,9 @@
+---
+test_kind: accuracy
+test_status: not-run
+tested: never
+deployed: yes
+---
 # last30days
 
 Reference skill for `/last30days`: an agent-led recent-research workflow that searches and synthesizes what people are saying about a topic across social/community/market sources such as Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and web search. Its core value is recency plus engagement-weighted evidence, not generic web summarization.

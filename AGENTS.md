@@ -7,7 +7,7 @@ This directory is the canonical, agent-agnostic home for the skills/concepts tha
 1. Read this file, then `index.md`, then the last few `log.md` entries.
 2. Identify the requested operation: ingest, implement/update, tune, test, deploy, or lint.
 3. Open only the concept/source files the index points you to; don't dump the whole workspace.
-4. Make the smallest canonical change in `concepts/` (never `raw/` or derived deploys), update `index.md`/`log.md` plus `harnesses.md` for deploy/portability changes, run `python3 scripts/lint.py`, then commit.
+4. Make the smallest canonical change in `concepts/` (never `raw/` or derived deploys), update `index.md`/`log.md` plus `docs/harnesses.md` for deploy/portability changes, run `python3 scripts/lint.py`, then commit.
 
 ## Spirit
 
@@ -22,14 +22,15 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 
 - `raw/` — **raw sources, immutable once filed.** Gists, articles, skill files from elsewhere, the user's rough notes. You read these; you never modify them. The top level is the **inbox** (filed, awaiting ingestion); `raw/ingested/` holds sources whose ideas have been taken up. Moving a file between them (and updating links to it) is bookkeeping, not an edit — the immutability gate is about content.
 - `concepts/<name>/` — **the canonical layer. The only layer that gets edited.** One directory per skill/concept:
-  - `CONCEPT.md` — what it is, why it exists, design decisions, provenance (which `raw/` files and external sources it derives from), and deploy targets.
+  - `CONCEPT.md` — what it is, why it exists, design decisions, provenance (which `raw/` files and external sources it derives from), and deploy targets. It opens with **status frontmatter** (`test_kind`, `test_status`, `tested`, `deployed`) — the single home for that state. Why: it used to live as prose in 43 files in about ten phrasings, so "what is untested?" could not be answered without reading all of them, and the test gate had no mechanical check. Update it in the same pass as the run or deploy it describes; `scripts/lint.py` validates the values and `--status` prints the board.
   - `body/` — the actual instruction content an agent consumes (usually `SKILL.md` per the [Agent Skills spec](https://agentskills.io); always-injected concepts may use a named Markdown file such as `AGENT-KERNEL.md`; plus supporting files/scripts).
   - `tests/` — pressure scenarios and expected behavior (see Test operation).
 - `build/` — **derived per-agent outputs. Does not exist yet — do not create it** until two agents actually need different formats for the same concept. Today every consumer reads `body/` directly via symlink.
+- `docs/` — **how to install and operate this workspace**, for humans: `harnesses.md` (compatibility matrix), `bootstrap.md` (copy-paste session prompts), `pipeline.md` (the plan→execute loop). Reference pages, not canon: an instruction an agent must follow belongs in a concept `body/` or in this file.
 - `scripts/` — deterministic helpers shared across the workspace.
 - **Private concepts** live outside this repository at `~/.config/agent-concepts/concepts/<name>/body/SKILL.md`, in the same shape as `concepts/` here, and `scripts/deploy-local-skills.py` deploys them alongside the public ones. Use this for anything that must not be published to be useful: infrastructure topology, employer-specific process, or an upstream body whose licence does not permit redistribution. A private concept of the same name overrides the public one, and the override is reported. Never move something private *into* this repository to make tooling simpler — the whole point of the seam is that publishing and using are separate decisions.
 - `policies/` — **documentation for user-owned authorization only.** The real policy lives outside this repository at `~/.config/agent-concepts/publish.yaml`; what is tracked here is `publish.example.yaml`, a template. Agents follow the user's policy and may propose changes, but a policy change is never publishable under the policy itself — pushing one requires current explicit user instruction (self-amendment immunity). Never add a real (non-example) publish policy to this repository: a private authorization file in a public checkout is one `git add -f` from being published, and would be inherited by everyone who clones.
-- `AGENTS.md` (this file), `index.md`, `log.md`, `bootstrap.md`, `harnesses.md` — the schema, catalog, history, bootstrap prompts, and harness compatibility matrix.
+- `AGENTS.md` (this file), `index.md`, `log.md`, `docs/bootstrap.md`, `docs/harnesses.md` — the schema, catalog, history, bootstrap prompts, and harness compatibility matrix.
 
 ## Operations
 
@@ -44,10 +45,10 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 **Deploy.** Make the concept visible to an agent, currently via **relative** symlink (homes differ across machines: `/home/<user>` vs `/Users/<user>`):
 - **Bulk local concepts:** run `scripts/deploy-local-skills.py` from this workspace. It exposes every `concepts/*/body/SKILL.md` through `~/.agents/skills/<name>`, `~/.pi/agent/skills/<name>`, and `~/.claude/skills/<name>` using relative symlinks. OpenCode's `canonical-skill-commands.ts` plugin turns the CONFIG-backed entries on the shared bus (including aliases) into same-named slash commands without duplicating skill bodies; explicit command files may override a generated wrapper but must still load the canonical skill.
 - **Consumers of `~/.agents/skills/`:** Pi, Claude Code (also has its own `~/.claude/skills/` mirror), Composer (Cursor), and Grok. The latter two discover the shared bus automatically — no extra deploy targets needed. Restart sessions after deploy if the advertised skill list is stale.
-- **Other agents:** see `bootstrap.md` and `harnesses.md` — Codex/Gemini still use AGENTS.md deltas or manual bootstrap until a native skills path is verified.
-Record deploy targets in the concept's `CONCEPT.md`, `index.md`, and `harnesses.md`.
+- **Other agents:** see `docs/bootstrap.md` and `docs/harnesses.md` — Codex/Gemini still use AGENTS.md deltas or manual bootstrap until a native skills path is verified.
+Record deploy targets in the concept's `CONCEPT.md`, `index.md`, and `docs/harnesses.md`.
 
-**Lint.** Periodically, or on request: run `python3 scripts/lint.py` for mechanical drift (missing tests/provenance, broken relative links, stale index entries, unindexed raw sources, missing harness docs, dangling deploy symlinks). Fix objective issues, report judgment calls, and log the pass. External link rot in provenance is a judgment call unless the user asked for web validation.
+**Lint.** Periodically, or on request: run `python3 scripts/lint.py` for mechanical drift (missing tests/provenance, invalid or missing status frontmatter, deployed-but-never-run test-gate violations, broken relative links, stale index entries, unindexed raw sources, missing harness docs, dangling deploy symlinks). `python3 scripts/lint.py --status` prints the test/deploy board, worst first — use it to answer what still needs testing or deploying. Fix objective issues, report judgment calls, and log the pass. External link rot in provenance is a judgment call unless the user asked for web validation.
 
 ## Gates
 
@@ -75,8 +76,8 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
   a path only the author has is a bug. Two mechanisms, chosen by context:
   - `$AGENT_CONCEPTS/...` in anything a **shell executes** — commands inside deployed skill
     bodies, scripts. The shell expands it at runtime.
-  - `<agent-concepts>/...` in anything a **human reads and pastes** — `bootstrap.md`,
-    `harnesses.md`. An environment variable would not expand in a chat window; a placeholder
+  - `<agent-concepts>/...` in anything a **human reads and pastes** — `docs/bootstrap.md`,
+    `docs/harnesses.md`. An environment variable would not expand in a chat window; a placeholder
     tells the reader to substitute.
   `scripts/lint.py` checks inline repo-relative paths, so a stale reference is caught
   mechanically; it cannot catch a path that is merely personal, which stays a review concern.

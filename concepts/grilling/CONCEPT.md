@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: partial
+tested: never
+deployed: yes
+---
 # Concept: grilling
 
 The reusable, model-invokable interview loop behind `/grill-me`: relentless, one-question-at-a-time questioning of a plan or design until every branch of the decision tree is resolved. Holds the discipline; `grill-me` is the user-invoked orchestrator that wraps it (and adds persistence).
@@ -24,4 +30,4 @@ The reusable, model-invokable interview loop behind `/grill-me`: relentless, one
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/grilling` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

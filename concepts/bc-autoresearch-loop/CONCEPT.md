@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-06-21
+deployed: 2026-06-21
+---
 # Concept: bc-autoresearch-loop
 
 Model-invoked discipline for objective, bounded code improvement: pick one reproducible metric, lock a correctness check, and iterate one bounded change at a time — keeping a change only when correctness still holds **and** the metric provably improved, reverting otherwise. Self-contained (works in any repo). The conditional optimization step the `bc-drain-issues` per-issue agent runs when a slice targets a measurable improvement. The `bc-` prefix is the user's personal namespace.
@@ -24,4 +30,4 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 
 - Claude Code: `~/.claude/skills/bc-autoresearch-loop` → relative symlink to `body/` (deployed 2026-06-21).
 - Pi: `~/.agents/skills/bc-autoresearch-loop` and `~/.pi/agent/skills/bc-autoresearch-loop` → relative symlinks to `body/` (deployed 2026-06-21).
-- Other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

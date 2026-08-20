@@ -2,7 +2,7 @@
 
 The kernel is always-on base context, so its tests are lightweight behavioral checks run in the consuming harness after injecting `../body/AGENT-KERNEL.md`. Grade by artifacts and command history, not the agent's self-report.
 
-**Baseline rule (do this first).** Rich harnesses pass scenarios 1–4 *without* the kernel — their built-in prompts already teach this behavior, so a pass there proves nothing about the kernel. Before crediting the kernel in a harness, run at least scenarios 5–8 (the kernel-specific deltas) both with and without it, and record both outcomes. If the harness passes everything at baseline, the right conclusion is "this harness doesn't need the kernel" — record that in `../CONCEPT.md` and `../../../harnesses.md` instead of deploying. (Principle from obra's writing-skills: if you didn't watch the agent fail without the document, you don't know the document teaches anything.)
+**Baseline rule (do this first).** Rich harnesses pass scenarios 1–4 *without* the kernel — their built-in prompts already teach this behavior, so a pass there proves nothing about the kernel. Before crediting the kernel in a harness, run at least scenarios 5–8 (the kernel-specific deltas) both with and without it, and record both outcomes. If the harness passes everything at baseline, the right conclusion is "this harness doesn't need the kernel" — record that in `../CONCEPT.md` and `../../../docs/harnesses.md` instead of deploying. (Principle from obra's writing-skills: if you didn't watch the agent fail without the document, you don't know the document teaches anything.)
 
 ## Scenarios 1–4 — general posture (expected to pass at baseline in rich harnesses)
 

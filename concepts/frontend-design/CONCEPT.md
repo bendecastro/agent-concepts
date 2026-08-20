@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: not-run
+tested: never
+deployed: 2026-06-21
+---
 # Concept: frontend-design
 
 Model-invoked taste + discipline skill for building or reshaping web UI where visual quality matters. Drives distinctive art direction and disciplined restraint so generated UI doesn't collapse into the recognizable "AI design" attractors. Inverts to "conform to it" the moment an established design system exists.

@@ -17,7 +17,17 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", "log.md", "bootstrap.md", "harnesses.md"]
+REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", "log.md", "README.md", "docs/bootstrap.md", "docs/harnesses.md"]
+
+# CONCEPT.md frontmatter. The test gate used to be honor-system prose spread
+# across 43 files in ~10 phrasings, so "what is untested" could not be answered
+# without reading all of them. These four keys are the single home for that
+# state; index.md and the --status board read from here.
+STATUS_KEYS = {
+    "test_kind": {"pressure", "accuracy", "none"},
+    "test_status": {"pass", "partial", "fail", "not-run"},
+}
+DATE_OR = re.compile(r"^(\d{4}-\d{2}-\d{2})$")
 KNOWN_DEPLOY_DIRS = [
     Path.home() / ".agents" / "skills",
     Path.home() / ".claude" / "skills",
@@ -94,6 +104,26 @@ def raw_entries_from_index(index: str) -> set[str]:
     return entries
 
 
+def parse_frontmatter(text: str) -> dict[str, str] | None:
+    if not text.startswith("---\n"):
+        return None
+    end = text.find("\n---", 4)
+    if end == -1:
+        return None
+    fields: dict[str, str] = {}
+    for line in text[4:end].splitlines():
+        if ":" not in line or line.lstrip().startswith("#"):
+            continue
+        key, _, value = line.partition(":")
+        fields[key.strip()] = value.split("#", 1)[0].strip()
+    return fields
+
+
+def concept_status(name: str) -> dict[str, str] | None:
+    concept = ROOT / "concepts" / name / "CONCEPT.md"
+    return parse_frontmatter(read(concept)) if concept.is_file() else None
+
+
 def lint_root(issues: list[Issue]) -> None:
     for name in REQUIRED_ROOT_FILES:
         if not (ROOT / name).is_file():
@@ -119,6 +149,9 @@ def lint_links(issues: list[Issue]) -> None:
 # during the 2026-08 extraction. Only prefixes that unambiguously mean
 # "repo-relative path" are checked, so external paths like `~/.claude/skills`
 # and bare filenames are left alone.
+# "docs/" is deliberately absent: concepts like codebase-docs discuss generic
+# docs/ trees in other repositories, so the prefix is not unambiguously
+# repo-relative. Markdown links into docs/ are still checked by lint_links.
 INLINE_PATH_PREFIXES = ("concepts/", "scripts/", "policies/", "plans/", "raw/")
 INLINE_CODE = re.compile(r"`([^`\n]+)`")
 
@@ -168,6 +201,86 @@ def lint_concepts(issues: list[Issue], index: str) -> None:
             issues.append(Issue("ERROR", f"{rel(cdir)} missing markdown body file"))
         if not tests.is_dir() or not any(tests.glob("*.md")):
             issues.append(Issue("WARN", f"{rel(cdir)} has no markdown tests"))
+
+
+def lint_status(issues: list[Issue]) -> None:
+    concepts_dir = ROOT / "concepts"
+    if not concepts_dir.exists():
+        return
+    for cdir in sorted(p for p in concepts_dir.iterdir() if p.is_dir()):
+        concept = cdir / "CONCEPT.md"
+        if not concept.is_file():
+            continue
+        fields = parse_frontmatter(read(concept))
+        if fields is None:
+            issues.append(Issue("ERROR", f"{rel(concept)} has no status frontmatter"))
+            continue
+        for key, allowed in STATUS_KEYS.items():
+            value = fields.get(key)
+            if value is None:
+                issues.append(Issue("ERROR", f"{rel(concept)} frontmatter missing {key}"))
+            elif value not in allowed:
+                issues.append(Issue("ERROR", f"{rel(concept)} {key}={value!r} not one of {sorted(allowed)}"))
+        for key, sentinels in (("tested", ("never",)), ("deployed", ("no", "yes"))):
+            value = fields.get(key)
+            if value is None:
+                issues.append(Issue("ERROR", f"{rel(concept)} frontmatter missing {key}"))
+            elif value not in sentinels and not DATE_OR.match(value):
+                allowed = " or ".join(repr(s) for s in sentinels)
+                issues.append(Issue("ERROR", f"{rel(concept)} {key}={value!r} must be YYYY-MM-DD or {allowed}"))
+
+        # The test gate, mechanically. Deploying something never run is exactly
+        # the drift the gate exists to prevent, and prose could not surface it.
+        deployed = fields.get("deployed", "no")
+        test_status = fields.get("test_status", "not-run")
+        if deployed != "no":
+            if fields.get("tested") == "never" or test_status == "not-run":
+                issues.append(Issue("ERROR", f"test gate: {cdir.name} is deployed ({deployed}) but never run"))
+            elif test_status == "fail":
+                issues.append(Issue("ERROR", f"test gate: {cdir.name} is deployed ({deployed}) with a failing test"))
+        if test_status == "partial":
+            issues.append(Issue("WARN", f"{cdir.name}: passes with a known gap (see its ## Tests section)"))
+
+        # Disk is authoritative for deployment. deploy-local-skills.py globs every
+        # */body/SKILL.md, so a concept ships whether or not its prose says so --
+        # which is how 19 CONCEPT.md files came to claim "not deployed yet" while
+        # live. Concepts without a body/SKILL.md (agent-kernel) deploy as harness
+        # deltas instead and are not symlink-checkable.
+        if (cdir / "body" / "SKILL.md").is_file():
+            live = any((d / cdir.name).exists() for d in KNOWN_DEPLOY_DIRS)
+            if live and deployed == "no":
+                issues.append(Issue("ERROR", f"{cdir.name}: deployed:no but a deploy symlink is live"))
+            elif not live and deployed != "no":
+                issues.append(Issue("ERROR", f"{cdir.name}: deployed:{deployed} but no deploy symlink exists"))
+
+
+RANK = {"fail": 0, "not-run": 1, "partial": 2, "pass": 3}
+
+
+def print_status_board() -> int:
+    concepts_dir = ROOT / "concepts"
+    rows = []
+    for cdir in sorted(p for p in concepts_dir.iterdir() if p.is_dir()):
+        fields = concept_status(cdir.name) or {}
+        rows.append((
+            RANK.get(fields.get("test_status", ""), -1),
+            fields.get("deployed", "?") != "no",
+            cdir.name,
+            fields.get("test_kind", "?"),
+            fields.get("test_status", "MISSING"),
+            fields.get("tested", "?"),
+            fields.get("deployed", "?"),
+        ))
+    rows.sort()
+    width = max((len(r[2]) for r in rows), default=10)
+    print(f"{'concept':<{width}}  {'kind':<8} {'status':<8} {'tested':<10} deployed")
+    print("-" * (width + 40))
+    for _, _, name, kind, status, tested, deployed in rows:
+        print(f"{name:<{width}}  {kind:<8} {status:<8} {tested:<10} {deployed}")
+    needs = [r[2] for r in rows if r[0] != RANK["pass"]]
+    print()
+    print(f"{len(rows)} concepts; {len(needs)} need attention" + (f": {', '.join(needs)}" if needs else ""))
+    return 0
 
 
 def lint_raw(issues: list[Issue], index: str) -> None:
@@ -268,7 +381,11 @@ def lint_deploy_symlinks(issues: list[Issue]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Lint the agents workspace")
     parser.add_argument("--strict", action="store_true", help="treat warnings as failures")
+    parser.add_argument("--status", action="store_true", help="print the concept test/deploy board and exit")
     args = parser.parse_args()
+
+    if args.status:
+        return print_status_board()
 
     issues: list[Issue] = []
     index_path = ROOT / "index.md"
@@ -278,6 +395,7 @@ def main() -> int:
     lint_links(issues)
     lint_inline_paths(issues)
     lint_concepts(issues, index)
+    lint_status(issues)
     lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)

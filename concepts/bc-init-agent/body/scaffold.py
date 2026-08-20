@@ -346,7 +346,7 @@ Date: __DATE__
 
 This project is wired for the full loop. Use the `bc-` orchestrators with this repo-local
 adapter so planning persistence lands in `.bc-agent/` instead of generic
-`CONTEXT.md` / `docs/adr/` files. See `$AGENT_CONCEPTS/pipeline.md` for the loop.
+`CONTEXT.md` / `docs/adr/` files. See `$AGENT_CONCEPTS/docs/pipeline.md` for the loop.
 
 ## Planning intent trigger
 

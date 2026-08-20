@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-08-19
+deployed: 2026-08-19
+---
 # Concept: unslop
 
 Model-invoked discipline for removing the tells that make human-facing
@@ -165,4 +171,4 @@ relative symlinks verified to resolve:
 - Pi: `~/.pi/agent/skills/unslop` → `body/`.
 - Claude Code: `~/.claude/skills/unslop` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.

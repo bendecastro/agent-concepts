@@ -2,6 +2,11 @@
 
 ## Concepts
 
+Test and deploy state lives in each `CONCEPT.md`'s frontmatter, not here. Run
+`python3 scripts/lint.py --status` for the board, worst first. The `Status:` lines
+below are prose summaries kept for context; where one disagrees with the
+frontmatter, the frontmatter is correct.
+
 - [brainstorming](concepts/brainstorming/CONCEPT.md) — user-invoked collaborative design step for unresolved features/behavior/UI/architecture: context first, one question at a time, 2–3 approaches with recommendation, approved design/spec before planning; softened from upstream's “before everything” default to fit local action posture. From obra-superpowers `brainstorming`.
   - Status: implemented 2026-06-25; pressure-tested 2026-07-16 **PASS** (Grok); deploy pending explicit request.
 - [writing-plans](concepts/writing-plans/CONCEPT.md) — user-invoked standalone implementation-plan authoring: exact paths, TDD steps, commands/expected outputs, no placeholders, self-review, then execution-mode handoff. Complements PRD/issue pipeline. From obra-superpowers `writing-plans`.
@@ -44,7 +49,7 @@
 
 ### Workshop pipeline (Matt Pocock AI Engineer Workshop, ingested 2026-06-20)
 
-The plan→execute lifecycle as composable skills. User-invoked orchestrators coordinate; model-invoked disciplines hold reusable behavior. The two `bc-` orchestrators wire the lifecycle into one **loop** — `bc-plan-to-issues` (interactive planning front) → `bc-drain-issues` (AFK execution, also deployed as `/implement`); see [pipeline.md](pipeline.md). The single-step orchestrators (`grill-me`, `to-spec`, `to-tickets`) remain for one-phase-at-a-time use; `/to-prd` and `/to-issues` are compatibility aliases.
+The plan→execute lifecycle as composable skills. User-invoked orchestrators coordinate; model-invoked disciplines hold reusable behavior. The two `bc-` orchestrators wire the lifecycle into one **loop** — `bc-plan-to-issues` (interactive planning front) → `bc-drain-issues` (AFK execution, also deployed as `/implement`); see [docs/pipeline.md](docs/pipeline.md). The single-step orchestrators (`grill-me`, `to-spec`, `to-tickets`) remain for one-phase-at-a-time use; `/to-prd` and `/to-issues` are compatibility aliases.
 
 - [grill-me](concepts/grill-me/CONCEPT.md) — user-invoked, **always-stateful** planning grilling: runs the `grilling` loop and persists resolved vocabulary + hard decisions into `CONTEXT.md`/ADRs via `domain-modeling` as it goes. Merge of Pocock's `grill-me` + `grill-with-docs` (user chose a single stateful skill).
   - Status: implemented 2026-06-20; pressure-tested + Claude Code symlink — see log.
@@ -93,8 +98,8 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 
 ## Tooling
 
-- [harnesses.md](harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
-- [bootstrap.md](bootstrap.md) — copy/paste session prompts per harness.
+- [docs/harnesses.md](docs/harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
+- [docs/bootstrap.md](docs/bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
 - [scripts/deploy-local-skills.py](scripts/deploy-local-skills.py) — bulk deploys every local `concepts/*/body/SKILL.md` into relative symlinks under `~/.agents/skills/` (shared bus for Pi, Composer, Grok, OpenCode, and Codex), `~/.pi/agent/skills/`, and `~/.claude/skills/`, all pointing at canonical concept bodies. OpenCode's global `canonical-skill-commands.ts` plugin dynamically exposes the CONFIG-backed bus entries as slash commands.
 - [policies/publish.example.yaml](policies/publish.example.yaml) — user-owned publish authorization policy; default deny with explicit allow rules for agent-authored pushes in CONFIG, Scripts, Music, and Wiki.
@@ -118,7 +123,7 @@ Top-level `raw/` is the to-ingest inbox; `raw/ingested/` holds sources whose ide
 - [pocock-skills-upstream/](https://github.com/mattpocock/skills) — captured skill bodies behind Matt Pocock's workshop pipeline (grilling, grill-me, grill-with-docs, to-prd, to-issues, tdd + support files, codebase-design verbatim; domain-modeling summary-only). Ingested → grill-me, grilling, domain-modeling, to-prd, to-issues, tdd, codebase-design concepts (2026-06-20).
 - [pocock-engineering-extensions/](https://github.com/mattpocock/skills) — filed upstream Pocock workflow pieces that complement the bc loop: triage, Agent Briefs, out-of-scope KB, diagnosing-bugs, prototype, improve-codebase-architecture. Ingested → triage, diagnosing-bugs, prototype, improve-codebase-architecture, plus bc loop integration (2026-06-21).
 - [openai-gpt-5-2-prompting-guide.md](https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide) — OpenAI's latest flagship prompting guide: verbosity/output-shape control, scope-drift prevention, ambiguity & hallucination handling, compaction, agentic steerability, tool parallelism. Ingested → prompting-agents (2026-06-12).
-- [openai-codex-prompting-guide.md](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide) — how OpenAI prompts their own coding agent: autonomy/persistence, editing constraints, plan tool, final-message style, AGENTS.md usage, compaction. Ingested → prompting-agents + bootstrap.md Codex quirks (2026-06-12).
+- [openai-codex-prompting-guide.md](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide) — how OpenAI prompts their own coding agent: autonomy/persistence, editing constraints, plan tool, final-message style, AGENTS.md usage, compaction. Ingested → prompting-agents + docs/bootstrap.md Codex quirks (2026-06-12).
 - [obra-superpowers/](https://github.com/obra/superpowers) — snapshot of Jesse Vincent's 14 superpowers skills (commit 6fd4507, MIT). Ingested 2026-06-25: new concepts `brainstorming`, `writing-plans`, `executing-plans`, `subagent-driven-development`, `dispatching-parallel-agents`, `code-review`, `using-git-worktrees`, `finishing-development-branch`; existing concepts `tdd`, `diagnosing-bugs`, `agent-kernel`, and `prompting-agents` retain/absorb TDD, systematic-debugging, verification-before-completion, writing-skills, and using-superpowers lessons/provenance without duplicate runtime concepts.
 - [anthropic-claude-prompting-best-practices.md](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) — Anthropic's official prompting reference for current Claude models (clarity, examples, XML structuring, thinking, agentic systems). Ingested → prompting-agents altitude principles (2026-06-12); more remains extractable.
 - [anthropic-claude-code-best-practices.md](https://code.claude.com/docs/en/best-practices) — official Claude Code best practices (context management, plan/execute separation, constraints as guardrails). Ingested → prompting-agents (standing-instruction-file hygiene, verification ladder) + code-review (findings-are-not-obligations) (2026-07-12); harness-specific session/UI advice deliberately not canonized.

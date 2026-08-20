@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-07-16
+deployed: yes
+---
 # Concept: tdd
 
 Model-invoked discipline for test-driven development: a red-green-refactor loop that builds features or fixes bugs one vertical slice at a time, testing behavior through public interfaces. The correctness feedback loop that lets an agent run human-in-the-loop or unattended without drifting silently.
@@ -26,4 +32,4 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/tdd` → relative symlink to `body/`. Discipline skill — deploy after the pressure run holds (or flag as deployed-pending-test in index).
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

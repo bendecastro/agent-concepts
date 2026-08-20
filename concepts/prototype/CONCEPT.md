@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: not-run
+tested: never
+deployed: 2026-06-21
+---
 # Concept: prototype
 
 User-invoked throwaway exploration step for design uncertainty: build a small runnable artifact for logic/state or UI direction, record the answer, then delete or absorb it before production implementation.

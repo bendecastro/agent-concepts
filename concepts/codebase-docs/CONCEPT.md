@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-08-18
+deployed: 2026-08-18
+---
 # Concept: codebase-docs
 
 Model-invoked discipline for source-tree documentation: one home per
@@ -85,4 +91,4 @@ symlinks verified to resolve to `body/`:
 - Pi: `~/.pi/agent/skills/codebase-docs`
 - Claude Code: `~/.claude/skills/codebase-docs`
 
-Other harnesses: manual bootstrap; see `../../harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.

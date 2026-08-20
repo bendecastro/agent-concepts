@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: not-run
+tested: never
+deployed: yes
+---
 # Concept: research
 
 Model-invoked evidence discipline for technical questions that need more than a quick lookup. It uses primary sources, keeps substantial reading in a background agent, and returns cited findings. Repository notes are deliberate artifacts, not an automatic side effect of asking a question.
@@ -20,4 +26,4 @@ Model-invoked evidence discipline for technical questions that need more than a 
 
 ## Deploy targets
 
-Not deployed yet. Deploy to the shared Agent Skills bus, Pi, and Claude Code only after the pressure test holds.
+Deployed to the shared bus, Pi, and Claude Code by `scripts/deploy-local-skills.py`, which deploys every concept carrying a `body/SKILL.md`. This shipped with that bulk deploy rather than by a per-concept decision, so the intended deploy-after-test sequence did not hold here. Current state is in this file's frontmatter; `python3 scripts/lint.py` fails while a deployed concept is untested.

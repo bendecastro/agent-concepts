@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: partial
+tested: 2026-06-12
+deployed: 2026-06-12
+---
 # Concept: teach
 
 A multi-session learning tutor. Turns a dedicated directory into a stateful teaching workspace: mission-grounded lessons taught in conversation, a spaced-repetition review queue, an agent-maintained knowledge wiki compiled from vetted sources, and ADR-style learning records that calibrate difficulty.
@@ -27,4 +33,4 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 - Claude Code: `~/.claude/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; pressure-tested in Claude Code).
 - Pi: `~/.pi/agent/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; not yet pressure-tested in Pi).
 - Codex/Grok/Gemini: manual bootstrap only; read `body/SKILL.md` for the session and ignore YAML frontmatter if unsupported.
-- OpenCode: candidate native Agent Skills deploy; exact skills path not yet verified. Record in `../../harnesses.md` after first real deploy.
+- OpenCode: candidate native Agent Skills deploy; exact skills path not yet verified. Record in `../../docs/harnesses.md` after first real deploy.

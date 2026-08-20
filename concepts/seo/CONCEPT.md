@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-06-12
+deployed: 2026-06-12
+---
 # Concept: seo
 
 A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-first auditing, prioritized by impact × confidence ÷ effort, across crawl/index/rank/present including GEO and AI-crawler policy); `body/IMAGE-SEO.md` is the per-asset image specialist (vision-required metadata packages: filename, alt, caption, ImageObject JSON-LD, IPTC/XMP, delivery). Built from the user's own prior work on the image-maze project.
@@ -27,4 +33,4 @@ A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-
 - Claude Code: `~/.claude/skills/seo` → relative symlink to `body/` (deployed 2026-06-12 after pressure test).
 - Pi: `~/.pi/agent/skills/seo` → relative symlink to `body/` (deployed 2026-06-12 after narrowing trigger and adding citation map).
 - The image-maze work repo currently loads its own copies; migrating its `.claude/agents/` wrappers to point at this canon is a candidate follow-up — decide in that repo, not here.
-- Other harnesses: manual bootstrap (`bootstrap.md`); `IMAGE-SEO.md` additionally requires a vision-capable model.
+- Other harnesses: manual bootstrap (`../../docs/bootstrap.md`); `IMAGE-SEO.md` additionally requires a vision-capable model.

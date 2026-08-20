@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-08-17
+deployed: 2026-08-17
+---
 # Concept: obsidian-markdown
 
 Harness-neutral reference skill for Obsidian Flavored Markdown (OFM): wikilinks, embeds, callouts, properties, tags, comments, and other syntax that extends CommonMark/GFM.

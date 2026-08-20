@@ -1,3 +1,9 @@
+---
+test_kind: accuracy
+test_status: pass
+tested: 2026-07-22
+deployed: 2026-07-22
+---
 # Concept: herdr
 
 Upstream-maintained reference skill for controlling a Herdr terminal-multiplexer session from an agent running inside a Herdr-managed pane. It covers topology inspection, safe pane creation, command execution, agent startup/prompting, output reads, waits, and coordination.

@@ -20,7 +20,7 @@ Beyond that:
 - `~/.config/agent-concepts/publish.yaml` is one person's authorization rules for five private repos, shipped as
   if it were canon.
 - 85 references outside `log.md` point at `~/Sync/CONFIG/...`, including the copy-paste bootstrap
-  prompts in `harnesses.md` that a new user is told to run.
+  prompts in `docs/harnesses.md` that a new user is told to run.
 - Five concepts are environment-coupled (`qmd`, `omarchy`, `herdr`, `notebooklm`, `last30days`)
   with nothing marking them as such.
 - `index.md` embeds deploy status inside each description, so a stranger reads about someone
@@ -86,7 +86,7 @@ Settled by grilling, 2026-08-02.
 4. **Concept labelling** — record requirements in `CONCEPT.md` for `qmd`, `omarchy`, `herdr`,
    `notebooklm`, `last30days`.
 5. **Deploy script** — fix the stale docstring; add `--skip`.
-6. **Docs** — `<agent-concepts>` placeholder through `harnesses.md` and `bootstrap.md`; install
+6. **Docs** — `<agent-concepts>` placeholder through `docs/harnesses.md` and `docs/bootstrap.md`; install
    section in `README.md`; `AGENTS.md` documenting the personal-layer seam.
 7. **Portability smoke test** — clone to a scratch directory under a fake `HOME`, run
    `deploy --dry-run` and `lint`, and assert both pass with no reference to the author's tree.

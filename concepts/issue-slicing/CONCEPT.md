@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-08-17
+deployed: yes
+---
 # Concept: issue-slicing
 
 Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbable **vertical tracer-bullet slices**, dependency-ordered, quizzing the user on granularity and dependencies before finalizing. Holds the reusable *slicing* behavior; it does NOT publish and does NOT touch any parent issue. The user-invoked `to-tickets` wraps it with GitHub publication, and `bc-plan-to-issues` publishes its output as part of the planning run.
@@ -29,4 +35,4 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/issue-slicing` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

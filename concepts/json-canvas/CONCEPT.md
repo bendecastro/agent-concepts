@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-08-17
+deployed: 2026-08-17
+---
 # Concept: json-canvas
 
 Harness-neutral reference skill for JSON Canvas 1.0 `.canvas` files: nodes, edges, groups, links, IDs, layout, and deterministic validation.

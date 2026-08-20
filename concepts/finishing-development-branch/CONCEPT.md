@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-07-16
+deployed: yes
+---
 # Concept: finishing-development-branch
 
 User-invoked completion workflow for choosing what to do with a finished development branch: verify, present merge/PR/keep/discard options, and handle cleanup safely.
@@ -19,4 +25,4 @@ User-invoked completion workflow for choosing what to do with a finished develop
 
 ## Deploy targets
 
-Not deployed yet. Destructive/publishing-adjacent workflow; deploy after pressure test.
+Deployed to the shared bus, Pi, and Claude Code by `scripts/deploy-local-skills.py`, which deploys every concept carrying a `body/SKILL.md`. This shipped with that bulk deploy rather than by a per-concept decision, so the intended deploy-after-test sequence did not hold here. Current state is in this file's frontmatter; `python3 scripts/lint.py` fails while a deployed concept is untested.

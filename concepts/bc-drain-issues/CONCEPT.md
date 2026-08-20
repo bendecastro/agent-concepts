@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: partial
+tested: 2026-07-27
+deployed: 2026-07-25
+---
 # Concept: bc-drain-issues
 
 User-invoked AFK executor for a repo's `ready-for-agent` and `rework-for-agent` GitHub issue queue. A preflight-gated driver claims dependency-ready slices, gives fresh workers isolated worktrees, requires independent Spec + Standards approval, permits bounded same-worktree rework, and mechanically lands approved diffs. It closes a parent PRD only after all children complete. Runs after `bc-plan-to-issues`; `bc-` is the user's personal namespace.
@@ -64,4 +70,4 @@ Canonical body includes `SKILL.md`, `execute-issue.md`, `review-contract.md`, an
 - Claude Code: `~/.claude/skills/bc-drain-issues` → relative symlink to `body/` (v2 deployed 2026-07-25).
 - Shared/Pi: `~/.agents/skills/bc-drain-issues` and `~/.pi/agent/skills/bc-drain-issues` → relative symlinks to `body/` (v2 deployed 2026-07-25).
 - Pi runtime roles: `~/.pi/agent/agents/bc-drain-{auditor,worker,reviewer}.md`; compact tool descriptions at `~/.pi/agent/extensions/subagent/config.json` (deployed 2026-07-25; restart Pi to reload the extension config and advertised agents).
-- Other harnesses: use equivalent fresh minimal roles manually until tested; record in `../../harnesses.md`.
+- Other harnesses: use equivalent fresh minimal roles manually until tested; record in `../../docs/harnesses.md`.

@@ -37,7 +37,7 @@ Scope: bounded smoke validation plus one nested Codex pressure scenario, not the
      - `agents/index.md`
      - `agents/concepts/agent-kernel/CONCEPT.md`
      - `agents/concepts/agent-kernel/body/AGENT-KERNEL.md`
-     - `agents/harnesses.md`
+     - `agents/docs/harnesses.md`
      - `agents/concepts/agent-kernel/tests/pressure-scenarios.md`
    - This is a real current-session exercise of the specialized-concepts pointer for work under `agents/`.
 

@@ -1,3 +1,9 @@
+---
+test_kind: accuracy
+test_status: pass
+tested: 2026-07-14
+deployed: 2026-07-13
+---
 # Concept: qmd
 
 Reference skill for [tobi/qmd](https://github.com/tobi/qmd), a fully local CLI search engine over markdown corpora (SQLite FTS5 BM25 + vector embeddings + LLM reranking via node-llama-cpp GGUF models). The skill teaches agents the **global-mode** architecture used here (one index, collections per knowledge base, searchable from any cwd), the search/retrieval command conventions, the indexing-authority rules (canon file + setup script own collections; timer/driver own freshness; workers search-only), and the context-tree-as-authority-map pattern.
@@ -40,4 +46,4 @@ The bc-agent wiki pattern hands cold agents a growing markdown vault and tells t
 ## Deploy targets
 
 - Deployed 2026-07-13 via `scripts/deploy-local-skills.py`: relative symlinks at `~/.agents/skills/qmd` (shared bus: Pi, Composer, Grok, Codex), `~/.pi/agent/skills/qmd`, and `~/.claude/skills/qmd`, all resolving to `body/` (verified; Claude Code advertised the skill immediately).
-- Other harnesses: manual bootstrap per `../../harnesses.md`.
+- Other harnesses: manual bootstrap per `../../docs/harnesses.md`.

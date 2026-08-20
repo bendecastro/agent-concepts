@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-06-20
+deployed: yes
+---
 # Concept: grill-me
 
 User-invoked orchestrator for a planning/design grilling session that is **always stateful**: it runs the `/grilling` loop and persists the resolved vocabulary and hard decisions into `CONTEXT.md` + ADRs as it goes, via `/domain-modeling`.
@@ -22,4 +28,4 @@ User-invoked orchestrator for a planning/design grilling session that is **alway
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/grill-me` → relative symlink to `body/`. Deploy only after the pressure test holds.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

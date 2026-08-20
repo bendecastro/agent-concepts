@@ -21,7 +21,7 @@ Claude Code discovers deployed concepts automatically via relative symlinks:
 
 `~/.claude/skills/<name>` → `<relative path to>/concepts/<name>/body`
 
-Current deploys are recorded in each concept's `CONCEPT.md` and summarized in `index.md` / `harnesses.md`.
+Current deploys are recorded in each concept's `CONCEPT.md` and summarized in `../index.md` / `harnesses.md`.
 
 ### Pi
 

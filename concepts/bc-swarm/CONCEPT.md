@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: partial
+tested: 2026-08-18
+deployed: 2026-08-18
+---
 # Concept: bc-swarm
 
 User-invoked posture for going wide: while active, delegating investigation,
@@ -184,7 +190,7 @@ Deployed 2026-08-18 via `scripts/deploy-local-skills.py` after the 4/5 pass:
 - Pi: `~/.pi/agent/skills/bc-swarm` → `body/`.
 - Claude Code: `~/.claude/skills/bc-swarm` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.
 
 **Dependency:** the thin-parent guard's consumption half lives in
 `agent-kernel`. Until that delta is propagated to a harness's always-on

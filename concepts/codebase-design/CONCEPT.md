@@ -1,3 +1,9 @@
+---
+test_kind: accuracy
+test_status: not-run
+tested: never
+deployed: yes
+---
 # Concept: codebase-design
 
 Model-invoked **reference vocabulary** for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Shared language the other engineering skills (`tdd`, `to-prd`) reach for so terminology stays consistent across the suite.
@@ -20,4 +26,4 @@ Model-invoked **reference vocabulary** for designing deep modules: a lot of beha
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/codebase-design` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

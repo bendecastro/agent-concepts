@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: not-run
+tested: never
+deployed: 2026-06-21
+---
 # Concept: bc-init-agent
 
 User-invoked adaptive initializer that first inspects a folder/repo, grills only on the decisions that matter for that environment, and then stands up a project-local agent workspace — a repo-root `AGENTS.md` pointing agents at the vault, plus a `.bc-agent/` Markdown wiki that is also a minimal Obsidian vault (maintainer schema, templates, conventions, ADR-0001, the `planning-workflow.md` adapter, architecture-runway nudge tracker, minimal `.obsidian/` metadata, and a repo-local loop skill map), plus `.bc-agent/out-of-scope/` for triage memory — so the repo is ready for the intake→grill→issues→drain loop. The setup step before `triage` / `bc-plan-to-issues`. The `bc-` prefix is the user's personal namespace.
@@ -28,7 +34,7 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 - Existing user-maintained operations wiki pattern (sampled from `~/Sync/Music/.ai/wiki`, 2026-06-26) — components, findings, decisions, open questions, plans, evidence-before-plan maintenance rules.
 - Existing user-maintained knowledge-graph pattern (sampled from `~/Sync/Wiki`, 2026-06-26) — immutable raw sources, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, index/log compounding pattern.
 - `concepts/teach` — future learning-agent archetype support: multi-session tutoring state should live project-locally when initialized for a specific learning workspace.
-- `plans/bc-grill-to-ship-loop.md` + `pipeline.md` — the loop this prepares a repo for; the scaffolded `planning-workflow.md` documents the grill→issues→drain adapter and the `bc-drain-issues` execution phase.
+- `../../plans/bc-grill-to-ship-loop.md` + `../../docs/pipeline.md` — the loop this prepares a repo for; the scaffolded `planning-workflow.md` documents the grill→issues→drain adapter and the `bc-drain-issues` execution phase.
 - `~/.config/agent-concepts/publish.yaml` — the existing allow-rule schema the publish.yaml offer follows.
 - `concepts/prompting-agents/body/SKILL.md` — composition + gate phrasing.
 - `concepts/qmd/` — the global-search layer the close-out registration step feeds (added 2026-07-13; reworked to global mode same day).
@@ -41,4 +47,4 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 
 - Claude Code: `~/.claude/skills/bc-init-agent` → relative symlink to `body/` (carries `scaffold.py`; deployed 2026-06-20, verified 2026-06-21).
 - Pi: `~/.agents/skills/bc-init-agent` and `~/.pi/agent/skills/bc-init-agent` → relative symlinks to `body/` (carries `scaffold.py`; deployed/verified 2026-06-21).
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

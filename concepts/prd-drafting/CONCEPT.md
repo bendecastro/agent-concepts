@@ -1,3 +1,9 @@
+---
+test_kind: accuracy
+test_status: not-run
+tested: never
+deployed: yes
+---
 # Concept: prd-drafting
 
 Model-invoked discipline that drafts a PRD from the current conversation + codebase: synthesize (no interview), sketch and confirm the test seams, and write to the standard PRD template. Holds the reusable *writing* behavior; it does NOT publish. The user-invoked `to-prd` wraps it with GitHub publication, and `bc-plan-to-issues` carries its output straight into slicing.
@@ -23,4 +29,4 @@ Model-invoked discipline that drafts a PRD from the current conversation + codeb
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/prd-drafting` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

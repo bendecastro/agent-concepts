@@ -1,3 +1,9 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-07-16
+deployed: yes
+---
 # Concept: brainstorming
 
 User-invoked collaborative design step for turning a rough idea into an approved, scoped design before implementation planning.
