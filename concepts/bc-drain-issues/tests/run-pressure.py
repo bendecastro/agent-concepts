@@ -691,7 +691,17 @@ assert_(not observation_is_evidence_only(recommendation_shaped),'recommendation-
 configured_rel=Path('.bc-agent/research/architecture-observations.md')
 configured_sink=ART/'sinks/configured'/configured_rel
 configured_sink.parent.mkdir(parents=True,exist_ok=True)
-configured_sink.write_text('# Architecture observations\n')
+configured_header='# Architecture observations'
+older_issue={'number':99,'state':'LANDED','commit':'abc099','tree':'tree099','shape_only':False,'structural_signal':'duplicate'}
+older_observation=make_observation(older_issue)
+
+def format_observation_entry(issue_number,observation):
+ lines=[f'## issue #{issue_number}']
+ lines.extend(f'- {key}: {observation[key]}' for key in OBS_FIELDS)
+ return '\n'.join(lines)+'\n'
+
+configured_sink.write_text(f'{configured_header}\n\n{format_observation_entry(older_issue["number"],older_observation)}')
+configured_before=configured_sink.read_text()
 context_events=['implementation-commit','review-packet','landing']
 
 def persist_observation(observation,sink):
@@ -699,18 +709,37 @@ def persist_observation(observation,sink):
   return {'status':'not applicable'}
  if not sink['declared'] or not sink['exists'] or not sink['writable']:
   return {'status':'not persisted','reason':sink['reason']}
- with sink['path'].open('a') as f:
-  f.write('\n## issue #101\n')
-  for key in OBS_FIELDS:
-   f.write(f'- {key}: {observation[key]}\n')
+ existing=sink['path'].read_text()
+ header,separator,prior_entries=existing.partition('\n\n')
+ if not separator:
+  header,prior_entries=existing.rstrip('\n'),''
+ new_entry=format_observation_entry(101,observation)
+ contents=f'{header}\n\n{new_entry}'
+ if prior_entries.strip():
+  contents+=f'\n{prior_entries.lstrip()}'
+ sink['path'].write_text(contents)
  return {'status':'persisted','path':sink['relative'],'context_commit':'context-101'}
 
 selected_observation=assembled_reports[101]['architecture_observation']
 configured=persist_observation(selected_observation,{'declared':True,'exists':True,'writable':True,'path':configured_sink,'relative':configured_rel.as_posix()})
 context_events.append('context-update')
 configured_text=configured_sink.read_text()
+new_heading='## issue #101'
+older_heading=f"## issue #{older_issue['number']}"
+configured_ordering={
+ 'header':configured_header,
+ 'new_heading':new_heading,
+ 'older_heading':older_heading,
+ 'header_index':configured_text.index(configured_header),
+ 'new_observation_index':configured_text.index(new_heading),
+ 'older_observation_index':configured_text.index(older_heading),
+}
+configured_ordering['newest_first']=configured_ordering['new_observation_index'] < configured_ordering['older_observation_index']
 assert_(configured['status']=='persisted' and configured['path']==configured_rel.as_posix() and configured['context_commit']=='context-101','configured inbox persistence was not reported')
 assert_(configured_text.count('## issue #101')==1,'configured inbox contains more than one observation for the issue')
+assert_(configured_text.count(older_heading)==1,'configured inbox lost or duplicated the older observation')
+assert_(configured_text.startswith(f'{configured_header}\n\n'),'configured inbox header was not preserved')
+assert_(configured_ordering['header_index']==0 and configured_ordering['newest_first'],'new observation was not prepended newest-first before the older entry')
 assert_('issue #102' not in configured_text and 'issue #103' not in configured_text,'non-landed or shape-only issue persisted')
 assert_(context_events.index('context-update')>context_events.index('landing'),'context update happened before landing')
 
@@ -835,7 +864,7 @@ dump('28/architecture-observation.json',{
  'report_counts':{str(issue):count for issue,count in report_counts.items()},
  'reports':reports,
  'observations':observations,
- 'configured_sink':{'report':configured,'content':configured_text,'separate_driver_context':True},
+ 'configured_sink':{'report':configured,'seeded_content':configured_before,'content':configured_text,'ordering':configured_ordering,'separate_driver_context':True},
  'missing_sink':{'case':{key:missing_case[key] for key in ('declared','exists','writable','reason')},'report':missing},
  'unwritable_sink':{'case':{key:unwritable_case[key] for key in ('declared','exists','writable','reason')},'report':unwritable},
  'undeclared_sink':{'case':{key:undeclared_case[key] for key in ('declared','exists','writable','reason')},'report':undeclared,'content_before':undeclared_before,'content_after':undeclared_path.read_text(),'fallback_unchanged':configured_sink.read_text()==configured_text},
@@ -860,7 +889,7 @@ dump('28/architecture-observation.json',{
 })
 
 checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,29)}
-ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture',26:'stale owning page, change-narration, and invented docs tree are material; an undocumented surface and an accurate page are not; remedy is the owning hunk, not a docs rewrite',27:'remote claims are the resume index; adopt/restore/release/report-and-skip dispositions hold; no standing approval crosses a run boundary and an adopted worktree re-runs the gate plus both axes; an unaccountable claim is reported, never released or deleted',28:'candidate counts 101=2 and ordinary/shape-only/deferred=0; report counts 101=1 and ordinary/shape-only/deferred=0; exact evidence/friction-only fields persist only to the declared sink after landing, while the explicit handoff returns the observation and leaves review/rework dispatches, packet, tier, approvals, landing, post-landing labels, and closed issue state unchanged'}
+ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture',26:'stale owning page, change-narration, and invented docs tree are material; an undocumented surface and an accurate page are not; remedy is the owning hunk, not a docs rewrite',27:'remote claims are the resume index; adopt/restore/release/report-and-skip dispositions hold; no standing approval crosses a run boundary and an adopted worktree re-runs the gate plus both axes; an unaccountable claim is reported, never released or deleted',28:'candidate counts 101=2 and ordinary/shape-only/deferred=0; report counts 101=1 and ordinary/shape-only/deferred=0; exact evidence/friction-only fields persist only to the declared sink after landing via a header-preserving newest-first prepend whose new heading/index precedes the older entry, while the explicit handoff returns the observation and leaves review/rework dispatches, packet, tier, approvals, landing, post-landing labels, and closed issue state unchanged'}
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
 summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'checks':len(checks),'all_checks_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}
