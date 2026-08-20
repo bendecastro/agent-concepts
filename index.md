@@ -2,10 +2,11 @@
 
 ## Concepts
 
-Test and deploy state lives in each `CONCEPT.md`'s frontmatter, not here. Run
-`python3 scripts/lint.py --status` for the board, worst first. The `Status:` lines
-below are prose summaries kept for context; where one disagrees with the
-frontmatter, the frontmatter is correct.
+Test and deploy state lives in each `CONCEPT.md`'s frontmatter, not here. Read
+[docs/status.md](docs/status.md) for what needs testing or deploying, or run
+`python3 scripts/lint.py --status` for the same board in the terminal. The
+`Status:` lines below are prose summaries kept for context; where one disagrees
+with the frontmatter, the frontmatter is correct.
 
 - [brainstorming](concepts/brainstorming/CONCEPT.md) — user-invoked collaborative design step for unresolved features/behavior/UI/architecture: context first, one question at a time, 2–3 approaches with recommendation, approved design/spec before planning; softened from upstream's “before everything” default to fit local action posture. From obra-superpowers `brainstorming`.
   - Status: implemented 2026-06-25; pressure-tested 2026-07-16 **PASS** (Grok); deploy pending explicit request.
@@ -98,6 +99,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 
 ## Tooling
 
+- [docs/status.md](docs/status.md) — generated board: what needs testing, what is undeployed, what passes with a known gap. Regenerate with `python3 scripts/lint.py --write-status`; lint fails while it is stale.
 - [docs/harnesses.md](docs/harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
 - [docs/bootstrap.md](docs/bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.

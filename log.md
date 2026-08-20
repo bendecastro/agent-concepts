@@ -847,3 +847,14 @@ undeployed?" required reading 43 files.
 Extraction ran as a two-scout bc-swarm fan-out (Luna max); anchors spot-checked
 against source before use, and deploy values overridden from disk. `research.md`
 left at root — the user deferred that one.
+
+## [2026-08-20] implement | generated docs/status.md
+Follow-up to the frontmatter change: a page answering "what needs testing, what is
+undeployed" in that order, rather than alphabetically.
+
+Generated, not hand-written, and `lint.py` fails while it disagrees with the
+frontmatter — otherwise it becomes the same stale prose the frontmatter just
+replaced. Regenerate with `scripts/lint.py --write-status`. Sections are ordered by
+what needs action: needs testing (11), not deployed (0), deployed with a known gap
+(6), passing and deployed (26). Verified both directions: clean immediately after
+generation, ERROR after a hand edit.
