@@ -26,6 +26,15 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
   shipped (trunk), parked issues flagged for a human  ◄───────────────────┘
 ```
 
+## Optional architecture feedback edge (bounded, not an autonomous phase)
+
+```text
+bc-plan-to-issues → bc-drain-issues → optional observation inbox
+                                      → human-gated improve-codebase-architecture → bc-plan-to-issues
+```
+
+After a landed issue, `bc-drain-issues` may append at most one bounded structural observation to the project's declared context inbox. `improve-codebase-architecture` verifies the open evidence before exploration and keeps its existing human candidate-selection and grilling gates. This is feedback, not another autonomous drain phase or a direct issue-creation path: only the human-gated route back through `bc-plan-to-issues` can turn a verified runway candidate into planned issues.
+
 ## Setup (once per repo) — `/bc-init-agent`
 
 Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from image-maze) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-issues` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-drain-issues` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. Run once; then the two halves below.

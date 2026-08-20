@@ -895,3 +895,6 @@ fireable four ways.
 
 ## [2026-08-20] plan | bc-drain-issues architecture feedback
 Wrote `docs/plans/active/bc-drain-issues-architecture-feedback.md` for the bounded drain → architecture-review feedback edge. The plan keeps observations outside review authority and routes them through a durable, human-verified inbox; implementation and pressure testing remain outstanding.
+
+## [2026-08-20] implement+test | architecture observation feedback edge
+Documented `bc-drain-issues` and `improve-codebase-architecture` as a bounded post-landing observation feedback edge with declared project-context persistence, human disposition, and no autonomous issue creation. Gate A **PASS 28/28**; current clean consumer fixtures are parent-verified **PASS**. Gate B remains outstanding, with no model-token result claimed.

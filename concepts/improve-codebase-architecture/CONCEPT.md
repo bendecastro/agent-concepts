@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-06-21
+test_status: pass
+tested: 2026-08-20
 deployed: 2026-06-21
 ---
 # Concept: improve-codebase-architecture
@@ -15,9 +15,17 @@ User-invoked architecture review for the bc loop. It scans for deep-module oppor
 - **Thin artifact clause, not a `plain-language` load (2026-08-18).** The HTML is a document a busy owner scans to pick a candidate. The body names that reader, leads each card with problem + direction, keeps deep-module vocabulary (terms this reader already uses), and puts the ask last. Loading `plain-language` would invite "familiar words" to strip Module/Interface/Depth.
 - **Uses existing vocabulary.** Built on `codebase-design` and `domain-modeling`; this keeps architecture suggestions aligned with the user's deep-module language and repo glossary.
 - **Bug-seam follow-up.** If `diagnosing-bugs` finds no correct regression seam, this is the structured next move.
+- **Drain observations are optional hypotheses, not decisions (2026-08-20).** Before organic exploration, the skill may read the `bc-drain-issues` observation inbox when the project declares one: `.bc-agent/research/architecture-observations.md` for the scaffolded project convention, or an explicitly declared equivalent. A missing sink preserves the existing glossary/ADR-first flow; the consumer never invents a docs tree or claims persistence.
+- **Inbox reads are bounded for context economy.** Read only canonical lowercase `status: open` entries in current order. With no declared bound, read exactly the 10 newest eligible entries when at least 10 exist, otherwise all available eligible entries. With a declared bound `N`, read exactly the `N` newest when at least `N` exist, otherwise all eligible entries. A capitalized `Status` is eligible only when project instructions explicitly declare it as an alias. Bounds limit context, not authority: unread older entries are not resolved, irrelevant, or inspected.
+- **Verification, ledger, and provenance are required.** Treat each read entry as a hypothesis and verify its module, interface/seam, deletion-test consequence, and every concrete evidence link against the current tree. Stale, shape-only, contradicted, closed, and rejected entries cannot seed cards. Every read entry gets exactly one disposition-ledger row: a candidate card whose `source` exactly preserves the observation source and whose evidence preserves every link used in verification, or an explicit discard reason. Reports and ledgers disclose unread or out-of-bound history only in aggregate; they never name or quote unread IDs or bodies.
+- **Disposition remains human-gated and implementation-free (2026-08-20).** The report still asks which candidate to explore. Only after the user chooses and `grilling` determines the outcome may the consumer update an inline inbox entry to exactly `accepted`, `rejected`, or `deferred`; when inline edits are forbidden, it writes a durable architecture-review artifact after grilling, leaves the inbox `status: open`, and records the observation identity, canonical source, full verified evidence, and disposition reason. Accepted runway returns to `bc-plan-to-issues`; a load-bearing rejection may offer an ADR, while "not now" is deferred without an ADR. The skill never implements production code or creates GitHub issues directly.
 
 ## Provenance
 
+- [bc-drain-issues concept](../bc-drain-issues/CONCEPT.md) and [body](../bc-drain-issues/body/SKILL.md) — the optional producer, exact bounded observation fields/eligibility, declared context sink, and non-authoritative post-landing handoff.
+- [bc-init-agent scaffold](../bc-init-agent/body/scaffold.py) — project-local context layout (`.bc-agent/project/overview.md`, `research/`, and `decisions/`) plus the generated planning-workflow and architecture-runway conventions.
+- [bc-init-agent concept](../bc-init-agent/CONCEPT.md) — the project-local persistence model and advisory architecture-runway cadence.
+- [bc-plan-to-issues body](../bc-plan-to-issues/body/SKILL.md) and [concept](../bc-plan-to-issues/CONCEPT.md) — the human-gated planning path that receives a verified runway candidate.
 - [mattpocock/skills](https://github.com/mattpocock/skills) — upstream Matt Pocock `improve-codebase-architecture/SKILL.md` captured 2026-06-21.
 - `concepts/codebase-design/` — vocabulary and design principles.
 - `concepts/grilling/` and `concepts/domain-modeling/` — used after the user chooses a candidate.
@@ -25,7 +33,7 @@ User-invoked architecture review for the bc loop. It scans for deep-module oppor
 
 ## Tests
 
-`tests/scenario.md` — pressure scenario: writes only temp HTML, uses deep-module vocabulary, asks before exploring a candidate, and does not implement or create issues directly. The 2026-08-18 artifact clause adds: each card leads with problem + direction, vocab stays, ask is last. Pressure-tested 2026-06-21 **PASS**; the new clause is expected behavior for the next run, not yet re-tested.
+[`tests/scenario.md`](tests/scenario.md) is the pressure scenario and the provenance for the consumer contract. Parent-verified clean current-body fixtures on 2026-08-20 **PASS**: exact default and declared-bound reads (including below-bound fallbacks and the declared `Status` alias), stale/shape-only/closed filtering, full evidence provenance and one ledger row per read entry, aggregate-only unread disclosure, post-grilling accepted/rejected/deferred dispositions with the read-only fallback, missing-inbox preservation, implementation-pressure refusal, and unchanged production/canonical/issue state. The report still ends with the human candidate-selection question, and no implementation or direct issue creation occurs.
 
 ## Deploy targets
 
