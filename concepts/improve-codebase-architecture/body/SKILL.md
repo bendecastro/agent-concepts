@@ -13,7 +13,14 @@ Use `codebase-design` vocabulary exactly: **module**, **interface**, **depth**, 
 
 ## 1. Explore
 
-Read project glossary and ADRs first. Then explore organically for friction:
+At the beginning of Explore, locate the project's architecture-observation inbox:
+
+- For a project scaffolded by `bc-init-agent`, use `.bc-agent/research/architecture-observations.md`.
+- Otherwise use an equivalent path only when project instructions explicitly declare it. If no sink exists or is declared, preserve the existing flow; do not invent a docs tree or claim that observations will be persisted.
+
+Before organic exploration, read only a bounded set of entries explicitly marked `status: open` (or the project's equivalent `Status: open`) from that inbox alongside the project glossary and ADRs. Honor any project-defined read bound; when none is declared, take only the current open entries needed to seed this review rather than scanning unbounded history. Treat every entry as a hypothesis, not a decision. Against the current tree, verify its named **module**, **interface**/**seam**, deletion-test consequence, and evidence. Do not present stale, closed/rejected, shape-only, or contradicted entries as candidates. Use verified observations only to seed candidate cards, and never copy an old recommendation into a decision.
+
+Then explore organically for friction:
 
 - Understanding one concept requires bouncing across many files.
 - A module's interface is almost as complex as its implementation.
@@ -46,7 +53,9 @@ End with a top recommendation and ask: **"Which of these would you like to explo
 
 ## 3. Grill the chosen candidate
 
-When the user picks one, run `grilling` one question at a time to resolve constraints, dependencies, the deepened module shape, what sits behind the seam, and what tests survive. Run `domain-modeling` inline for terminology/ADRs that crystallize.
+When the user picks one, if it was seeded by an inbox observation, give that observation a durable disposition. When the project context permits inline edits, update that entry's `Status` in the project observation inbox to exactly `accepted`, `rejected`, or `deferred` according to the outcome. If the context contract forbids inline edits, record the observation identity and exact disposition in the durable architecture-review artifact instead. Reading an entry alone never changes its status or marks it resolved.
+
+Then run `grilling` one question at a time to resolve constraints, dependencies, the deepened module shape, what sits behind the seam, and what tests survive. Run `domain-modeling` inline for terminology/ADRs that crystallize.
 
 If the user rejects a candidate for a load-bearing reason, offer to record an ADR so future architecture reviews don't re-suggest it. Skip ADRs for temporary "not now" reasons.
 
