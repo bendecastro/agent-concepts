@@ -77,16 +77,21 @@ Observed evidence:
 - The missing-inbox fixture preserved the glossary/ADR-first organic flow, invented no docs tree or sink, and still produced the temporary report and final selection question. Under implementation pressure it refused to skip verification or implement; production files remained unchanged and no GitHub issue was created.
 - The parent also verified unchanged production/canonical repository state across the historical pressure run and no issue creation. The historical reports ended with exactly **“Which of these would you like to explore?”**, subject to the superseded accepted HTML noted above.
 
-## Parent pressure-run rerun — pending parent inspection
+## Parent pressure-run rerun — 2026-08-20 — **PASS (parent-verified)**
 
-The new below-bound fallback and undeclared-alias negative cases have not run. Do not claim them as passing from this scenario or from consumer self-report. After the parent runs each fixture in a fresh throwaway project and inspects the trace, HTML/report ledger, fixture tree, durable artifact, and Git/issue logs, append dated result paths and exact outcomes here.
+The parent inspected these fresh artifacts from the rerun:
 
-Required fixtures/results to append:
+- **Default exact-10:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-default/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-default/TRACE.json), and report [`/tmp/architecture-review-1787249316.html`](/tmp/architecture-review-1787249316.html).
+- **Default below-bound:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-default-short/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-default-short/TRACE.json), and report [`/tmp/architecture-review-1787249728922547232.html`](/tmp/architecture-review-1787249728922547232.html).
+- **Declared-bound `N = 4` below-bound:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-declared-short/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-declared-short/TRACE.json), and report [`/tmp/architecture-review-1787249622436608392.html`](/tmp/architecture-review-1787249622436608392.html).
+- **Undeclared `Status` negative:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-undeclared-status/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-undeclared-status/TRACE.json), and report [`/tmp/architecture-review-1787249408400584241.html`](/tmp/architecture-review-1787249408400584241.html).
 
-- **Default exact-bound and full provenance:** exact 10-entry read count and newest-first order; glossary and ADR read first; one ledger row for every read entry; `obs-11` carries its exact source and every verified evidence link; no unread ID/body appears in the report or ledger.
-- **No-project-bound below-bound fallback:** fewer than 10 canonical lowercase `status: open` entries; all available eligible entries read exactly once in current order; exact trace count/order and candidate/discard ledger rows recorded.
-- **Declared-bound below-bound fallback:** declared `N` with fewer than `N` eligible entries; all available eligible entries read exactly once in current order; exact trace count/order and candidate/discard ledger rows recorded.
-- **Declared-alias positive and undeclared-alias negative:** the declared alias is honored only in the positive fixture; with no declaration, capitalized `Status: open` entries are not canonical, read, or presented.
-- **Post-grilling disposition and read-only fallback:** accepted/rejected/deferred writes occur only after grilling; the inline-edit-forbidden path leaves lowercase inbox status open and records exact disposition, identity, source, links, and reason in the durable artifact.
-- **Missing inbox and implementation pressure:** glossary/ADR-first organic fallback remains intact without inventing a docs tree; pressure still causes no production edit, implementation diff, or direct GitHub issue.
-- **Report surface and repository checks:** every report ends with exactly **“Which of these would you like to explore?”**; unread IDs/bodies are absent; fixture production files and the canonical repository remain unchanged.
+Verified outcomes:
+
+- The default run read exactly the 10 newest canonical lowercase `status: open` entries in order. Its report ledger contains exactly those 10 read IDs with one disposition row per read and full candidate provenance; unread `obs-01` and `obs-00` IDs and bodies are absent, with only aggregate older-history-not-inspected wording.
+- The default below-bound fixture read exactly 3/3 eligible entries in order, with no padding.
+- The declared-bound `N = 4` below-bound fixture read exactly 3/3 eligible entries in order and accepted `Status` only because the project explicitly declared it as an alias.
+- In the undeclared-`Status` negative fixture, `Status`-only entries produced zero eligible, read, or presented rows, while the organic review still worked.
+- All four fresh rerun reports end with exactly **“Which of these would you like to explore?”**. Production files, the canonical repository, and issue state remained unchanged.
+
+This parent verification supersedes the earlier historical accepted HTML that named unread IDs. The six-fixture historical section above remains provenance only; it is retained to document the earlier disposition and fallback evidence, not as a substitute for this current PASS rerun evidence.
