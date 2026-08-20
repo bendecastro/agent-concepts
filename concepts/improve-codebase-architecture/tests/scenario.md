@@ -95,3 +95,21 @@ Verified outcomes:
 - All four fresh rerun reports end with exactly **“Which of these would you like to explore?”**. Production files, the canonical repository, and issue state remained unchanged.
 
 This parent verification supersedes the earlier historical accepted HTML that named unread IDs. The six-fixture historical section above remains provenance only; it is retained to document the earlier disposition and fallback evidence, not as a substitute for this current PASS rerun evidence.
+
+## Final body unread-disclosure guard rerun — 2026-08-20 — **PASS (parent-verified)**
+
+The parent inspected these fresh current-body fixtures and their artifacts:
+
+- **Accepted:** [`RESULT.md`](/tmp/pt-arch-feedback-final-accepted/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-final-accepted/TRACE.json), and report [`/tmp/architecture-review-1787250989928770330.html`](/tmp/architecture-review-1787250989928770330.html).
+- **Rejected:** [`RESULT.md`](/tmp/pt-arch-feedback-final-rejected/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-final-rejected/TRACE.json), and report [`/tmp/architecture-review-1787250926938434299.html`](/tmp/architecture-review-1787250926938434299.html).
+- **Deferred:** [`RESULT.md`](/tmp/pt-arch-feedback-final-deferred/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-final-deferred/TRACE.json), and report [`/tmp/architecture-review-1787250961130923689.html`](/tmp/architecture-review-1787250961130923689.html).
+
+Verified outcomes:
+
+- All three fixtures read exactly the 10 newest entries with canonical lowercase `status: open`.
+- Each report has exactly one disposition-ledger row per read entry with full source and concrete-evidence provenance. Unread IDs and bodies are absent; older history is described only with aggregate wording.
+- Each report ends with exactly **“Which of these would you like to explore?”**.
+- The accepted, rejected, and deferred status writes occur only after the corresponding grilling outcome.
+- Source state, canonical repository state, and issue state are unchanged; no implementation was made and no issue was created.
+
+These fresh current-body fixtures supersede the earlier historical accepted report and complete the final unread-disclosure rerun. This is parent-verified artifact evidence; this worker did not run the fixtures.
