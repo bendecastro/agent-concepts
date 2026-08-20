@@ -37,7 +37,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | concept | kind | tested | deployed |
 |---|---|---|---|
 | [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-08-12 | 2026-08-20 |
-| [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-07-27 | 2026-07-25 |
+| [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-08-20 | 2026-07-25 |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-08-18 | 2026-08-18 |
 | [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [improve-codebase-architecture](../concepts/improve-codebase-architecture/CONCEPT.md) | pressure | 2026-06-21 | 2026-06-21 |

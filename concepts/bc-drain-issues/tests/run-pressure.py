@@ -207,7 +207,7 @@ for name in role_names:
  role_audit[name]={'path':str(rp),'minimal':True,'replace_system_prompt':True,'inherit_project_context':False,'inherit_skills':False,'generic_plan_progress_reads':False}
 skill_text=(CONCEPT/'body/SKILL.md').read_text()
 assert_('four assistant turns and 12 tool calls' in skill_text,'read-only cap absent from SKILL')
-assert_('pass only the applicable worker discipline explicitly' in skill_text,'explicit worker discipline selection absent from SKILL')
+assert_('pass the worker disciplines explicitly' in skill_text,'explicit worker discipline selection absent from SKILL')
 assert_(skill_text.index('Atomically claim') < skill_text.index('After the claim/worktree'),'auditor may dispatch before atomic claim')
 assert_('transient/repeated tooling, base, or environment failures stay out of `needs-human`' in skill_text,'transient environment taxonomy is too broad')
 assert_('artifacts:false' in skill_text and 'including resumed runs' in skill_text,'artifact/resume control absent from SKILL')
@@ -502,11 +502,67 @@ remedy={'row':'acceptance-2','rejected':'attach a second command with the same p
 assert_(remedy['accepted'] and remedy['rejected'],'remedy must be discriminating evidence, not more evidence')
 dump('23/discriminating-evidence.json',{'evidence':EVID,'deterministic_gate_view':gate_view,'gate_accepts_all_rows':True,'spec_findings':spec_findings,'untouched_row_untouched':True,'remedy':remedy})
 
-checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,24)}
-ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence'}
+# --- Worker solution sizing: the ladder is dispatched, and rung 2 is the drain's weak rung ---
+assert_('`minimal-solution-ladder` on every implementation packet' in skill_text,'driver does not pass the ladder to implementation workers')
+for required in ('load and follow the repo-available `minimal-solution-ladder`','no accumulated familiarity','failed rung rather than as reuse','no criterion is skippable as speculative','never-simplify list stays absolute','fewest-files never overrides a real seam','`ceiling:` comment into the code'):
+ assert_(required in worker_contract,f'worker contract missing solution-sizing rule: {required}')
+
+# One criterion, three candidate implementations. The repo already ships `slugify`.
+PRIOR_ART={'slugify':'src/text/slugify.py'}
+CANDIDATES=[
+ {'id':'reimplement','shape':'new private _slugify in the touched module','uses_prior_art':False,'forwards_only':False,'rung':7},
+ {'id':'wrapper','shape':'def make_slug(s): return slugify(s)','uses_prior_art':True,'forwards_only':True,'rung':7},
+ {'id':'direct','shape':'call slugify() at the call site','uses_prior_art':True,'forwards_only':False,'rung':2},
+]
+def ladder_pick(cands):
+ for c in sorted(cands,key=lambda c:c['rung']):
+  if c['forwards_only']: continue
+  return c
+ return None
+picked=ladder_pick(CANDIDATES)
+assert_(picked['id']=='direct','ladder did not stop at rung 2 with existing prior art')
+assert_(any(c['id']=='wrapper' and c['uses_prior_art'] and c['forwards_only'] for c in CANDIDATES),'fixture must contain a forwarding wrapper')
+assert_(ladder_pick([c for c in CANDIDATES if c['id']=='wrapper']) is None,'a forwarding wrapper was accepted as reuse')
+prior_art_search={'qmd_collection_queried':True,'tree_searched':True,'found':PRIOR_ART}
+assert_(prior_art_search['qmd_collection_queried'] and prior_art_search['found'],'rung 2 requires a prior-art search in a fresh worktree')
+
+# The ladder never trims the acceptance contract or the never-simplify list.
+SIZING_ROWS=[
+ {'row':'rejects a token issued for another audience','class':'trust-boundary validation','ladder_may_skip':False},
+ {'row':'writes the export atomically so a crash cannot truncate it','class':'data-loss handling','ladder_may_skip':False},
+ {'row':'exposes a --format flag','class':'ordinary acceptance criterion','ladder_may_skip':False},
+]
+assert_(not any(r['ladder_may_skip'] for r in SIZING_ROWS),'ladder skipped an acceptance-matrix row')
+handoff={'form':'READY_FOR_REVIEW','criterion_to_evidence_map':True,'terse_ladder_output_substituted':False,'ceiling':{'named_in_handoff':True,'written_in_code':True}}
+assert_(handoff['criterion_to_evidence_map'] and not handoff['terse_ladder_output_substituted'],'ladder output convention replaced the worker handoff')
+assert_(handoff['ceiling']['written_in_code'],'a marked corner-cut stayed in the handoff only')
+dump('24/solution-sizing.json',{'dispatched_by_driver':True,'prior_art':prior_art_search,'candidates':CANDIDATES,'picked':picked,'acceptance_rows':SIZING_ROWS,'handoff':handoff})
+
+# --- Structural findings: shared vocabulary, deletion test, bounded severity ---
+for required in ('Structural findings use `codebase-design` vocabulary','deletion test','not component, service, API, or boundary','shape preference, which is not a defect','Otherwise it is Minor and does not block','improve-codebase-architecture'):
+ assert_(required in contract,f'review contract missing structural-finding rule: {required}')
+BANNED={'component','service','API','boundary'}
+ALLOWED={'module','interface','depth','seam','adapter','leverage','locality'}
+STRUCTURAL=[
+ {'id':'duplicate','claim':'this module re-implements src/text/slugify.py','deletion_test':'complexity vanishes','duplicates_repo':True,'breaks_behavior':False,'untestable':False,'words':['module','interface']},
+ {'id':'taste','claim':'this interface would read better split across two modules','deletion_test':'complexity vanishes','duplicates_repo':False,'breaks_behavior':False,'untestable':False,'words':['interface','module']},
+ {'id':'untestable','claim':'the behavior has no seam any test can reach','deletion_test':'complexity reappears across callers','duplicates_repo':False,'breaks_behavior':False,'untestable':True,'words':['seam']},
+]
+def structural_severity(f):
+ return 'important' if (f['duplicates_repo'] or f['breaks_behavior'] or f['untestable']) else 'minor'
+graded={f['id']:structural_severity(f) for f in STRUCTURAL}
+assert_(graded=={'duplicate':'important','taste':'minor','untestable':'important'},f'structural severity bound wrong: {graded}')
+assert_(all(not (BANNED & set(f['words'])) and (ALLOWED & set(f['words'])) for f in STRUCTURAL),'structural finding used banned vocabulary')
+taste_only=[STRUCTURAL[1]]
+taste_verdict='changes_requested' if any(structural_severity(f)!='minor' for f in taste_only) else 'approved'
+assert_(taste_verdict=='approved','a minor-only structural finding blocked approval')
+dump('25/structural-findings.json',{'findings':STRUCTURAL,'severity':graded,'minor_only_verdict':taste_verdict,'banned_vocabulary_used':False,'deepening_routed_to':'improve-codebase-architecture'})
+
+checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,26)}
+ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture'}
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
-summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'all_23_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}
+summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'checks':len(checks),'all_checks_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}
 dump('summary.json',summary)
 (ROOT/'SANDBOX-READY').write_text('Gate A artifacts retained for inspection.\n')
 print(ROOT)

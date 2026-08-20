@@ -868,3 +868,15 @@ Added placement READMEs and lifecycle/status lint, synchronized provenance/index
 Moved `notebooklm` and `last30days`, plus their raw provenance snapshots, to the private
 `~/.config/agent-concepts/` layer. Removed their public catalog/status/source-registry entries
 and recorded the follow-up to the portability boundary decision.
+
+## [2026-08-20] implement+test | solution sizing in the drain worker
+Wired `minimal-solution-ladder` into `bc-drain-issues` implementation packets — it was
+deployed on the shared bus but unreachable inside a drain, because the Pi roles exclude the
+broad skill catalog and the dispatch list named only tdd/diagnosing-bugs/autoresearch. Rung 2
+is anchored to the driver's qmd/tree prior-art search, since a fresh worktree has no
+familiarity to reuse. Bounded the Standards axis with `codebase-design` vocabulary plus a
+deletion test and a Minor-unless severity rule, so shape findings cannot fund an architecture
+debate. Rejected the two-builder proposal that prompted this: it is scope creep by the Spec
+axis's own definition, doubles build and review tokens against an unmeasured Gate B, and
+duplicates `improve-codebase-architecture` one layer up. Gate A **PASS 25/25**; new checks
+24–25 verified fireable.
