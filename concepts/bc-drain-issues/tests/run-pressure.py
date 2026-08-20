@@ -605,8 +605,107 @@ assert_(not fate['claim_released'] and not fate['worktree_deleted'] and fate['re
 assert_('Report what resume recovered' in skill_text,'resume outcomes absent from the run report')
 dump('27/resume.json',{'claims':CLAIMS,'dispositions':plan,'adopted':{'issue':adopted['issue'],**carried},'unaccountable':{'issue':unaccountable['issue'],**fate},'authoritative_index':'refs/heads/bc-drain-claims/*'})
 
-checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,28)}
-ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture',26:'stale owning page, change-narration, and invented docs tree are material; an undocumented surface and an accurate page are not; remedy is the owning hunk, not a docs rewrite',27:'remote claims are the resume index; adopt/restore/release/report-and-skip dispositions hold; no standing approval crosses a run boundary and an adopted worktree re-runs the gate plus both axes; an unaccountable claim is reported, never released or deleted'}
+# --- Drain-side architecture observation handoff ---
+# This case is intentionally contract-driven: the fixture models the producer and sink
+# boundaries, while the assertions below make the non-authoritative handoff inspectable.
+for required in (
+ 'at most one optional structural `architecture_observation` field per issue',
+ 'Its exact fields are `source`, `module`, `interface_or_seam`, `friction`, `deletion_test`, `evidence`, and `status: open`.',
+ '`codebase-design` vocabulary (`module`, `interface`, `depth`, `seam`, `adapter`)',
+ 'omit shape-only taste',
+ 'Bind `source` to the landed issue and commit and current tree',
+ 'never cite an unlanded worker diff',
+ '`.bc-agent/research/architecture-observations.md`',
+ 'explicitly declared equivalent path in project instructions',
+ 'separate driver-owned context-only update after landing',
+ 'outside the review packet and implementation diff',
+ 'does not dispatch a child',
+ 'cannot affect review, rework, tier, approval, landing, labels, or issue state',
+ 'Report the inbox path and context commit',
+ '`not persisted` with the reason',
+):
+ assert_(required in skill_text,f'architecture observation contract missing: {required}')
+
+OBS_FIELDS=('source','module','interface_or_seam','friction','deletion_test','evidence','status')
+landed_issue={'number':101,'state':'LANDED','commit':'abc101','tree':'tree101','shape_only':False}
+shape_issue={'number':102,'state':'LANDED','commit':'abc102','tree':'tree102','shape_only':True}
+deferred_issue={'number':103,'state':'REWORK_DEFERRED','commit':None,'tree':'tree103','shape_only':False}
+
+def produce_observation(issue):
+ if issue['state']!='LANDED' or issue['shape_only']:
+  return None
+ return {
+  'source':f"issue #{issue['number']} / commit {issue['commit']} / current tree {issue['tree']}",
+  'module':'`billing` module',
+  'interface_or_seam':'`billing` interface / `ledger` seam',
+  'friction':'billing duplicates ledger normalization across modules',
+  'deletion_test':'deleting the billing helper makes normalization reappear across callers',
+  'evidence':'tests/billing_ledger.py::test_normalization_cross_module',
+  'status':'open',
+ }
+
+observations={issue['number']:produce_observation(issue) for issue in (landed_issue,shape_issue,deferred_issue)}
+assert_(set(observations[101])==set(OBS_FIELDS),'observation fields widened or incomplete')
+assert_(observations[101]['status']=='open','observation is not open')
+observation_slots={issue:([] if observation is None else [observation]) for issue,observation in observations.items()}
+assert_(all(len(slots)<=1 for slots in observation_slots.values()),'more than one observation was produced for an issue')
+assert_(observations[101] is not None and observations[102] is None and observations[103] is None,'shape-only or incomplete diff entered observation production')
+assert_('module' in observations[101]['module'] and 'interface' in observations[101]['interface_or_seam'] and 'seam' in observations[101]['interface_or_seam'],'shared structural vocabulary missing')
+assert_('delet' in observations[101]['deletion_test'] and observations[101]['evidence'],'deletion-test consequence or evidence missing')
+assert_('issue #101' in observations[101]['source'] and 'commit abc101' in observations[101]['source'] and 'current tree' in observations[101]['source'],'source is not bound to landed issue/commit/tree')
+assert_(not observations[101]['source'].startswith('/'),'observation contains a machine-local source path')
+
+# Persist into a project-local declared sink only after landing. The fixture uses a
+# relative path so the report never needs to expose the disposable sandbox location.
+configured_rel=Path('.bc-agent/research/architecture-observations.md')
+configured_sink=ART/'sinks/configured'/configured_rel
+configured_sink.parent.mkdir(parents=True,exist_ok=True)
+configured_sink.write_text('# Architecture observations\n')
+context_events=['implementation-commit','review-packet','landing']
+
+def persist_observation(observation,sink):
+ if observation is None:
+  return {'status':'not applicable'}
+ if not sink['declared'] or not sink['exists'] or not sink['writable']:
+  return {'status':'not persisted','reason':sink['reason']}
+ with sink['path'].open('a') as f:
+  f.write('\n## issue #101\n')
+  for key in OBS_FIELDS:
+   f.write(f'- {key}: {observation[key]}\n')
+ return {'status':'persisted','path':sink['relative'],'context_commit':'context-101'}
+
+configured=persist_observation(observations[101],{'declared':True,'exists':True,'writable':True,'path':configured_sink,'relative':configured_rel.as_posix()})
+context_events.append('context-update')
+configured_text=configured_sink.read_text()
+assert_(configured['status']=='persisted' and configured['path']==configured_rel.as_posix() and configured['context_commit']=='context-101','configured inbox persistence was not reported')
+assert_(configured_text.count('## issue #101')==1,'configured inbox contains more than one observation for the issue')
+assert_('issue #102' not in configured_text and 'issue #103' not in configured_text,'non-landed or shape-only issue persisted')
+assert_(context_events.index('context-update')>context_events.index('landing'),'context update happened before landing')
+
+missing_path=ART/'sinks/missing'/configured_rel
+unwritable_path=ART/'sinks/unwritable'/configured_rel
+unwritable_path.parent.mkdir(parents=True,exist_ok=True)
+unwritable_path.write_text('# Existing context\n')
+missing=persist_observation(observations[101],{'declared':True,'exists':False,'writable':False,'path':missing_path,'relative':configured_rel.as_posix(),'reason':'not persisted: declared inbox is missing'})
+unwritable=persist_observation(observations[101],{'declared':True,'exists':True,'writable':False,'path':unwritable_path,'relative':configured_rel.as_posix(),'reason':'not persisted: declared inbox is unwritable'})
+assert_(missing['status']=='not persisted' and missing['reason'],'missing sink was silently redirected')
+assert_(unwritable['status']=='not persisted' and unwritable['reason'],'unwritable sink was silently redirected')
+assert_(not missing_path.exists() and unwritable_path.read_text()=='# Existing context\n','no-sink handling wrote outside the declared sink')
+
+# The observation is a final-report/context handoff, not a review or authority input.
+reports={101:{'architecture_observation':observation_slots[101][0],'persistence':configured},102:{},103:{}}
+review_packet={'issue':101,'acceptance_matrix':['landed implementation'],'architecture_observation':None}
+review_packet.pop('architecture_observation')
+child_dispatches=[]
+observation_effects={'review':False,'rework':False,'tier':False,'approval':False,'landing':False,'labels':False,'issue_state':False}
+landing_authority={'review_approval':'approved','tier':1,'landed':True,'labels':['ready-for-agent'],'issue_state':'LANDED'}
+assert_('architecture_observation' not in review_packet,'observation entered the review packet')
+assert_(not child_dispatches and not any(observation_effects.values()),'observation changed review topology or landing authority')
+assert_(landing_authority['review_approval']=='approved' and landing_authority['landed'],'observation replaced landing authority')
+dump('28/architecture-observation.json',{'fields':OBS_FIELDS,'reports':reports,'observations':observations,'observation_slots':{str(issue):len(slots) for issue,slots in observation_slots.items()},'configured_sink':{'report':configured,'content':configured_text,'separate_driver_context':True},'missing_sink':missing,'unwritable_sink':unwritable,'context_events':context_events,'review_packet':review_packet,'child_dispatches':child_dispatches,'observation_effects':observation_effects,'landing_authority':landing_authority,'machine_local_source_path':False,'shape_only_omitted':observations[102] is None,'deferred_omitted':observations[103] is None})
+
+checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,29)}
+ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture',26:'stale owning page, change-narration, and invented docs tree are material; an undocumented surface and an accurate page are not; remedy is the owning hunk, not a docs rewrite',27:'remote claims are the resume index; adopt/restore/release/report-and-skip dispositions hold; no standing approval crosses a run boundary and an adopted worktree re-runs the gate plus both axes; an unaccountable claim is reported, never released or deleted',28:'one optional at-most-one landed structural observation uses the exact fields, omits shape-only and deferred issues, persists only to the declared context sink after landing, reports missing or unwritable sinks, and stays outside review/dispatch/landing authority'}
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
 summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'checks':len(checks),'all_checks_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}

@@ -156,6 +156,12 @@ Release terminal worktrees/branches/claims only when their state is safely lande
 
 When the same failure shape appears across at least two workers/reviews, patch the **run-local dispatch packet** for later workers with additive clarification. Never edit canonical concept files during a drain, weaken gates, or hide a recurring failure. Quote the patch and trigger in the final report; promotion to canon is a later user decision.
 
+## Optional architecture observation
+
+After successful landing, the driver may include at most one optional structural `architecture_observation` field per issue in the final report. Its exact fields are `source`, `module`, `interface_or_seam`, `friction`, `deletion_test`, `evidence`, and `status: open`. Use `codebase-design` vocabulary (`module`, `interface`, `depth`, `seam`, `adapter`) where applicable; record concrete structural friction that survives the deletion test or leaves behavior untestable through an interface, and omit shape-only taste. Bind `source` to the landed issue and commit and current tree; never cite an unlanded worker diff.
+
+Resolve the scaffolded-project inbox at `.bc-agent/research/architecture-observations.md`, or an explicitly declared equivalent path in project instructions. The driver persists it only as a separate driver-owned context-only update after landing, outside the review packet and implementation diff. Report the inbox path and context commit, or report `not persisted` with the reason when the sink is missing or unwritable. This handoff does not dispatch a child and cannot affect review, rework, tier, approval, landing, labels, or issue state.
+
 ## Stop and report
 
 Stop when the eligible queue drains, `max-iters` is reached, two consecutive token deferrals occur, or systemic base/tool/environment failures recur. Let active children return to safe boundaries.
