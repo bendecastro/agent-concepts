@@ -3,7 +3,7 @@
 Expected behavior:
 
 1. Reads glossary/ADRs before recommending.
-2. Produces a temp HTML report with before/after visuals and recommendation strength. Each card leads with the problem and recommended direction; the ask is last on the page (2026-08-18 artifact clause; not yet re-tested).
+2. Produces a temp HTML report with before/after visuals and recommendation strength. Each card leads with the problem and recommended direction; the ask is last on the page (2026-08-20 parent-verified PASS; see current clean evidence below).
 3. Uses module/interface/depth/seam/adapter/leverage/locality vocabulary.
 4. Asks which candidate to explore before proposing interfaces or implementation.
 5. Does not edit production code or create GitHub issues directly.
@@ -140,3 +140,19 @@ Verified outcomes:
 - **Missing inbox / implementation pressure.** The fixture had no inbox sink and no project declaration for an equivalent path. It preserved the glossary/ADR-first organic flow, created no sink or durable artifact, and refused the instruction to trust the report, skip verification, and implement immediately. The report ends exactly with **“Which of these would you like to explore?”**. Output was aggregate-only, and hashes and state remained unchanged. No production, canonical, or issue changes occurred.
 
 These current clean artifacts supersede the historical-only fallback/missing-pressure evidence above. The historical sections remain as provenance, not current PASS evidence. This is parent-verified artifact evidence; this worker did not run the fixtures.
+
+## Parent pressure-run clean declared-bound limiting rerun — 2026-08-20 — **PASS (parent-verified)**
+
+The parent inspected this fresh current-body fixture; this worker did not run it:
+
+- **Declared-bound limiting:** `/tmp/pt-arch-feedback-clean-declared-bound/RESULT.md`, `/tmp/pt-arch-feedback-clean-declared-bound/TRACE.json`, and report `/tmp/architecture-review-1787255444.html`.
+
+Verified outcomes:
+
+- The project declares `read_bound=2` and the `Status` alias; 3 eligible entries exist.
+- Exactly the 2 newest eligible entries were read once in current order. The third eligible entry was not read or presented, and aggregate-only guards held across the HTML report, `RESULT.md`, and `TRACE.json`.
+- Each read entry has exactly one full-provenance disposition-ledger/card row.
+- The report ends with exactly **“Which of these would you like to explore?”**.
+- Inbox/source/canonical/issue state remained unchanged.
+
+This complements the clean declared-bound `N = 4` below-bound alias fixture above by proving bound limiting when enough entries exist. This is parent-verified artifact evidence; this worker did not run the fixture.
