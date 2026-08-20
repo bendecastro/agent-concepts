@@ -1,7 +1,7 @@
 # Citations — ingested sources
 
-This workspace is built by reading other people's work and adapting it. Every concept names
-its sources in `CONCEPT.md`; this file is the single index of everything ever ingested.
+This public workspace is built by reading other people's work and adapting it. Every public
+concept names its sources in `CONCEPT.md`; this file indexes the source evidence retained here.
 
 **Most upstream material is cited rather than redistributed here.** This workspace keeps local
 copies only when an explicit ingest decision requires an immutable evidence snapshot and the
@@ -25,10 +25,8 @@ license permits it. The upstream link remains the authority. Every snapshot dire
 | `iso-24495-iplf` | [IPLF ISO standard](https://www.iplfederation.org/iso-standard/) + [ISO 24495-1 catalog](https://www.iso.org/standard/78907.html) | Citation only; no ISO text. Ingested → plain-language (2026-08-18). |
 | `kepano-obsidian-skills` | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | MIT; immutable snapshot at commit `a1dc48e68138490d522c04cbf5822214c6eb1202`; only `obsidian-markdown`, `obsidian-bases`, and `json-canvas` were adapted/deployed; `obsidian-cli` and `defuddle` remain evidence-only. |
 | `karpathy-llm-wiki.md` | [karpathy-llm-wiki.md](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) |  |
-| `last30days-skill-upstream` | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) |  |
 | `mattpocockai-engineer-workshop-2026-project.md` | [mattpocockai-engineer-workshop-2026-project.md](https://github.com/mattpocock/ai-engineer-workshop-2026-project/tree/main) |  |
 | `mattpocockskills Skills for Real Engineers. Straight from my .claude directory..md` | [mattpocockskills Skills for Real Engineers. Straight from my .claude directory..md](https://github.com/mattpocock/skills) |  |
-| `notebooklm-skill-upstream` | [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) |  |
 | `obra-superpowers` | [obra/superpowers](https://github.com/obra/superpowers) | MIT (Jesse Vincent). Snapshot was at commit 6fd4507. |
 | `openai-codex-prompting-guide.md` | [openai-codex-prompting-guide.md](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide) |  |
 | `openai-gpt-5-2-prompting-guide.md` | [openai-gpt-5-2-prompting-guide.md](https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide) |  |

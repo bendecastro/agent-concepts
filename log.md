@@ -863,3 +863,8 @@ generation, ERROR after a hand edit.
 Moved `plans/` into lifecycle folders under `docs/plans/`, moved `raw/` into
 `docs/research/raw/`, and renamed the ISO report to a topic-specific filename.
 Added placement READMEs and lifecycle/status lint, synchronized provenance/index/lint paths, and preserved raw-source immutability.
+
+## [2026-08-20] implement | move environment-coupled concepts private
+Moved `notebooklm` and `last30days`, plus their raw provenance snapshots, to the private
+`~/.config/agent-concepts/` layer. Removed their public catalog/status/source-registry entries
+and recorded the follow-up to the portability boundary decision.

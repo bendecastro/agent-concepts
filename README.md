@@ -139,10 +139,9 @@ Skills are exposed through `~/.agents/skills/`, which Pi, Composer and Grok disc
 automatically, with mirrors for Claude Code and Pi. Use `--harness claude` or `--harness pi` to
 update only one, and `--skip NAME` to leave a concept out.
 
-Four concepts assume software you may not have — `notebooklm`, `last30days`, `herdr` and
-`qmd`. Their requirements are listed in `index.md` and in each `CONCEPT.md`. The first three
-keep no body here at all (they are maintained upstream), so they are not deployed; they simply
-won't appear.
+Some concepts assume machine-specific software or upstream-installed tools. Their
+requirements are listed in `index.md` and in each `CONCEPT.md`; concepts that are not broadly
+reusable live in the private layer described below.
 
 **Nothing is authorised to publish on your behalf until you say so.** Agents ask before pushing
 unless a rule in `~/.config/agent-concepts/publish.yaml` says otherwise, and that file does not
@@ -159,7 +158,7 @@ Put those in `~/.config/agent-concepts/concepts/<name>/body/SKILL.md` — the sa
 deploy script picks them up automatically:
 
 ```
-Including 2 private concept(s) from ~/.config/agent-concepts/concepts: herdr, machine-mesh
+Including 3 private concept(s) from ~/.config/agent-concepts/concepts: crypto-address-picker, herdr, machine-mesh
 ```
 
 A private concept with the same name as a public one **wins**, and the override is reported
@@ -180,7 +179,7 @@ See `docs/harnesses.md` for per-harness support and `docs/bootstrap.md` for copy
 This workspace is built by reading other people's work and adapting it — notably Jesse Vincent's
 [superpowers](https://github.com/obra/superpowers) (MIT), [Matt Pocock's
 skills](https://github.com/mattpocock/skills), and published guidance from Anthropic, OpenAI and
-Google. Every concept names what it drew on; `docs/research/raw/ingested/CITATIONS.md` indexes all 28 sources.
+Google. Every concept names what it drew on; `docs/research/raw/ingested/CITATIONS.md` indexes the public source corpus.
 
 Upstream material is **cited, not redistributed**. Earlier revisions kept local snapshots so
 provenance could be audited offline; those were third-party content and have been removed from the

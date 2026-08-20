@@ -110,3 +110,10 @@ to be legitimate provenance attribution rather than defects, which narrowed the 
 Three guards have only ever been observed passing: the symlink-target check, the
 relative-link check, and the policy-denial check. They are unproven in the sense that
 matters here — nobody has watched them fire.
+
+## Follow-up boundary change
+
+On 2026-08-20, the `notebooklm` and `last30days` reference concepts and their raw
+provenance snapshots moved to the private `~/.config/agent-concepts/` layer. This
+supersedes resolved design item 3 for those two environment-coupled concepts; the
+public catalog continues to label the remaining environment-coupled concepts.
