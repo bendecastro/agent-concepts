@@ -105,7 +105,7 @@ contradicts it.
   content/language/style tells. Upstream declares no license (checked
   2026-08-19, GitHub API reports `license: null`), so the body is cited,
   not redistributed. See
-  [`raw/ingested/unslop-cursor/`](../../raw/ingested/unslop-cursor/SOURCE.md).
+  [`docs/research/raw/ingested/unslop-cursor/`](../../docs/research/raw/ingested/unslop-cursor/SOURCE.md).
 - [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
   (WikiProject AI Cleanup, CC BY-SA) — the primary field guide the Cursor
   list descends from; read as raw wikitext 2026-08-19. Source of the

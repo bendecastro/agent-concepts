@@ -23,7 +23,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 ## Provenance
 
-- `plans/bc-grill-to-ship-loop.md` — the grilled-out build plan this concept implements (decisions locked 2026-06-20).
+- `docs/plans/implemented/bc-grill-to-ship-loop.md` — the grilled-out build plan this concept implements (decisions locked 2026-06-20).
 - [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) — the workshop's plan→execute lifecycle (grill → PRD → tracer-bullet issues) this fuses into one command.
 - `concepts/grill-me/`, `concepts/to-spec/`, `concepts/to-tickets/` — the single-step orchestrators it supersedes for the combined flow (kept standalone for individual use).
 - `concepts/triage/`, `concepts/prototype/`, `concepts/improve-codebase-architecture/` — optional intake/evidence/runway skills integrated around the planning front.

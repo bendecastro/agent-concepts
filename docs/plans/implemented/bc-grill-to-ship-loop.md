@@ -1,7 +1,8 @@
 # Plan: the grill→ship loop (`bc-plan-to-issues` → `bc-drain-issues`)
 
 Date: 2026-06-20
-Status: In progress — built; pressure tests for the two `bc-` orchestrators pending before their deploy.
+Status: implemented
+Verification: both `bc-` orchestrators were pressure-tested on 2026-07-16.
 
 Build plan for the missing **plan→execute loop** that ties the workshop pipeline
 together: a single interactive planning command that produces a `ready-for-agent`

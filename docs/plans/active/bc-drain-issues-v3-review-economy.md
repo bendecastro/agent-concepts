@@ -1,7 +1,8 @@
 # bc-drain-issues v3 — review-phase economy
 
 Date: 2026-07-26
-Status: implemented; Gate A 22/22, deterministic Gate B harness ready, real model A/B outstanding
+Status: active
+Verification: Gate A 22/22; deterministic Gate B harness ready; real model A/B outstanding
 
 ## Problem
 

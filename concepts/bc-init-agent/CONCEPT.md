@@ -34,7 +34,7 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 - Existing user-maintained operations wiki pattern (sampled from `~/Sync/Music/.ai/wiki`, 2026-06-26) — components, findings, decisions, open questions, plans, evidence-before-plan maintenance rules.
 - Existing user-maintained knowledge-graph pattern (sampled from `~/Sync/Wiki`, 2026-06-26) — immutable raw sources, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, index/log compounding pattern.
 - `concepts/teach` — future learning-agent archetype support: multi-session tutoring state should live project-locally when initialized for a specific learning workspace.
-- `../../plans/bc-grill-to-ship-loop.md` + `../../docs/pipeline.md` — the loop this prepares a repo for; the scaffolded `planning-workflow.md` documents the grill→issues→drain adapter and the `bc-drain-issues` execution phase.
+- `../../docs/plans/implemented/bc-grill-to-ship-loop.md` + `../../docs/pipeline.md` — the loop this prepares a repo for; the scaffolded `planning-workflow.md` documents the grill→issues→drain adapter and the `bc-drain-issues` execution phase.
 - `~/.config/agent-concepts/publish.yaml` — the existing allow-rule schema the publish.yaml offer follows.
 - `concepts/prompting-agents/body/SKILL.md` — composition + gate phrasing.
 - `concepts/qmd/` — the global-search layer the close-out registration step feeds (added 2026-07-13; reworked to global mode same day).

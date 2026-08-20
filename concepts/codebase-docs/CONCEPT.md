@@ -48,7 +48,7 @@ delta over this workspace.
   the vault. `domain-modeling` took the two note ideas (alternatives +
   supersede) without adopting notes-every-change.
 - **Citation, not a vendored clone.** The harness is MIT, but the
-  useful extract is a handful of rules. `raw/ingested/deepseek-harness/`
+  useful extract is a handful of rules. `docs/research/raw/ingested/deepseek-harness/`
   is a pointer at the commit we read, not a second copy of `dsh`.
 
 ## Provenance
@@ -62,7 +62,7 @@ delta over this workspace.
   `.agents/skills/dsh-doc-standards/SKILL.md`,
   `.agents/skills/dsh-prose-standard/SKILL.md`,
   `.agents/skills/dsh-trim-cot-leakage/SKILL.md`.
-- [raw/ingested/deepseek-harness/SOURCE.md](../../raw/ingested/deepseek-harness/SOURCE.md)
+- [docs/research/raw/ingested/deepseek-harness/SOURCE.md](../../docs/research/raw/ingested/deepseek-harness/SOURCE.md)
   — citation record; no skill bodies vendored.
 - `concepts/prompting-agents/body/SKILL.md` — altitude, explain-the-why,
   gates only for rationalization.

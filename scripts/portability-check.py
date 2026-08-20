@@ -37,7 +37,7 @@ PERSONAL = re.compile(r"/home/ben|/Users/ben|Sync/CONFIG")
 # falsify the record.
 EXEMPT = {
     "log.md",
-    "plans/portability.md",  # quotes the problem it exists to solve
+    "docs/plans/implemented/portability.md",  # quotes the problem it exists to solve
     "concepts/agent-kernel/CONCEPT.md",  # dated per-harness deploy records
     "concepts/agent-kernel/tests/codex-smoke-2026-06-12.md",
     "scripts/portability-check.py",  # defines the pattern above

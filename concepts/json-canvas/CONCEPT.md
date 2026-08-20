@@ -18,7 +18,7 @@ Harness-neutral reference skill for JSON Canvas 1.0 `.canvas` files: nodes, edge
 
 ## Provenance
 
-- [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) at pinned commit [`a1dc48e68138490d522c04cbf5822214c6eb1202`](https://github.com/kepano/obsidian-skills/tree/a1dc48e68138490d522c04cbf5822214c6eb1202), licensed MIT. The immutable upstream snapshot is in `raw/ingested/kepano-obsidian-skills/`.
+- [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) at pinned commit [`a1dc48e68138490d522c04cbf5822214c6eb1202`](https://github.com/kepano/obsidian-skills/tree/a1dc48e68138490d522c04cbf5822214c6eb1202), licensed MIT. The immutable upstream snapshot is in `docs/research/raw/ingested/kepano-obsidian-skills/`.
 - Official authority: [JSON Canvas 1.0 specification](https://jsoncanvas.org/spec/1.0/) and the [JSON Canvas project](https://github.com/obsidianmd/jsoncanvas).
 - The body is an adaptation with examples and validation split into local references; raw upstream content is evidence, never a runtime deploy source.
 

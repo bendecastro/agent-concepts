@@ -1,7 +1,8 @@
 # bc-drain-issues v2 — token-efficient bounded rework
 
 Date: 2026-07-25
-Status: implemented, pressure-tested, and deployed 2026-07-25
+Status: implemented
+Verification: pressure-tested and deployed 2026-07-25
 
 ## Problem
 

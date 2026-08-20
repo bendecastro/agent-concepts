@@ -15,5 +15,5 @@ __pycache__/
 concepts/herdr/body/SKILL.md
 
 # Clipping of an upstream skill whose repo declares no license. Kept locally
-# as evidence, never redistributed. See raw/ingested/unslop-cursor/SOURCE.md.
-raw/ingested/unslop-cursor/cursor-unslop-skill-clipping.md
+# as evidence, never redistributed. See docs/research/raw/ingested/unslop-cursor/SOURCE.md.
+docs/research/raw/ingested/unslop-cursor/cursor-unslop-skill-clipping.md

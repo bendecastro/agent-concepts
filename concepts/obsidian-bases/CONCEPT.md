@@ -18,7 +18,7 @@ Harness-neutral reference skill for authoring and validating Obsidian Bases `.ba
 
 ## Provenance
 
-- [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) at pinned commit [`a1dc48e68138490d522c04cbf5822214c6eb1202`](https://github.com/kepano/obsidian-skills/tree/a1dc48e68138490d522c04cbf5822214c6eb1202), licensed MIT. The immutable upstream snapshot is in `raw/ingested/kepano-obsidian-skills/`.
+- [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) at pinned commit [`a1dc48e68138490d522c04cbf5822214c6eb1202`](https://github.com/kepano/obsidian-skills/tree/a1dc48e68138490d522c04cbf5822214c6eb1202), licensed MIT. The immutable upstream snapshot is in `docs/research/raw/ingested/kepano-obsidian-skills/`.
 - Official authorities: [Bases syntax](https://help.obsidian.md/bases/syntax), [Bases views](https://help.obsidian.md/bases/views), and [formulas](https://help.obsidian.md/formulas).
 - The body is an adaptation with long material split into local references; raw upstream content is evidence, never a runtime deploy source.
 

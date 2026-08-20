@@ -9,7 +9,7 @@ Reference format concept with a mutation-authority boundary. Verify source accur
 3. Confirm the references cover top-level arrays, node types and required fields, edge endpoints, 16-character hexadecimal IDs, colors, JSON newline escaping, z-order, and deterministic layout/validation.
 4. Confirm all mutation wording requires explicit user intent and a safe authority, and contains no generic CLI or JavaScript-evaluation instructions.
 5. Compare the adapted field rules and validation checklist against the pinned upstream body/reference and JSON Canvas 1.0 specification; resolve any drift before deployment.
-6. Confirm the raw snapshot contains the upstream MIT notice and full `skills/` tree, while the deploy symlink resolves to `concepts/json-canvas/body/`, not `raw/`.
+6. Confirm the raw snapshot contains the upstream MIT notice and full `skills/` tree, while the deploy symlink resolves to `concepts/json-canvas/body/`, not `docs/research/raw/`.
 
 ## Result — 2026-08-17
 

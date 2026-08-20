@@ -17,7 +17,7 @@ Harness-neutral reference skill for Obsidian Flavored Markdown (OFM): wikilinks,
 
 ## Provenance
 
-- [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) at pinned commit [`a1dc48e68138490d522c04cbf5822214c6eb1202`](https://github.com/kepano/obsidian-skills/tree/a1dc48e68138490d522c04cbf5822214c6eb1202), licensed MIT. The immutable upstream snapshot is in `raw/ingested/kepano-obsidian-skills/`.
+- [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) at pinned commit [`a1dc48e68138490d522c04cbf5822214c6eb1202`](https://github.com/kepano/obsidian-skills/tree/a1dc48e68138490d522c04cbf5822214c6eb1202), licensed MIT. The immutable upstream snapshot is in `docs/research/raw/ingested/kepano-obsidian-skills/`.
 - Official authorities: [Obsidian Flavored Markdown](https://help.obsidian.md/obsidian-flavored-markdown), [internal links](https://help.obsidian.md/links), [embeds](https://help.obsidian.md/embeds), [callouts](https://help.obsidian.md/callouts), and [properties](https://help.obsidian.md/properties).
 - The body is an adaptation, not a deploy symlink to raw upstream material. The raw snapshot includes excluded `obsidian-cli` and `defuddle` for evidence only.
 

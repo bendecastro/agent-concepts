@@ -26,7 +26,7 @@ Model-invoked discipline for deciding **how much to build** before writing code:
 
 ## Provenance
 
-- [`raw/ingested/ponytail-upstream/`](../../raw/ingested/ponytail-upstream/SOURCE.md) — immutable MIT snapshot of `DietrichGebert/ponytail` at commit `2ed6c52c9d7e5e56942508591085fd45dea277d3` (2026-08-07): `skills/ponytail/SKILL.md` (the adapted body), the five companion skills, upstream `AGENTS.md`, `README.md`, `LICENSE`, and the 2026-06-18 agentic benchmark writeup.
+- [`docs/research/raw/ingested/ponytail-upstream/`](../../docs/research/raw/ingested/ponytail-upstream/SOURCE.md) — immutable MIT snapshot of `DietrichGebert/ponytail` at commit `2ed6c52c9d7e5e56942508591085fd45dea277d3` (2026-08-07): `skills/ponytail/SKILL.md` (the adapted body), the five companion skills, upstream `AGENTS.md`, `README.md`, `LICENSE`, and the 2026-06-18 agentic benchmark writeup.
 - `concepts/codebase-design/body/SKILL.md` — the deep-module vocabulary this skill defers to for shape; source of arbitration 1.
 - `concepts/tdd/` and `concepts/bc-drain-issues/` — the test disciplines this skill is subordinate to; source of arbitration 2.
 - `concepts/agent-kernel/body/AGENT-KERNEL.md` — the always-on baseline whose overlap determined what to cut; also the precedent for the anti-duplication reasoning in arbitration 3.

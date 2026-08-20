@@ -1,5 +1,9 @@
 # bc-drain-issues Deterministic Gate B Trace Implementation Plan
 
+Date: 2026-07-27
+Status: active
+Verification: fixture self-test and Gate A complete; real model A/B outstanding
+
 **Goal:** Replace the probabilistic deployment Gate B workload with a deterministic two-rework Standards trace while preserving the existing natural fixture as ecological pressure evidence.
 
 **Architecture:** A new fixture generator creates a byte-stable base plus three locked candidate states: S0 contains Standards defect F1, S1 fixes F1 while introducing F2, and S2 fixes F2. A deterministic controller validates state/delta hashes, locked v2/v3 dispatch topology, final exact-hash approvals, isolation metadata, and real-run result envelopes; model invocation remains a thin manual Pi adapter in `AGENT-PROMPT.md`.
@@ -14,21 +18,21 @@
 
 ### Create
 
-- `agents/concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/make-fixture.py` — generate isolated deterministic base/S0/S1/S2 artifacts, local stubs, hashes, findings, and dispatch manifest.
-- `agents/concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/run-trace.py` — deterministic fixture/controller self-test and real-result verifier; never fabricates model usage.
-- `agents/concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/README.md` — deployment benchmark contract and pass criteria.
-- `agents/concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/AGENT-PROMPT.md` — thin real-model runner handoff.
-- `agents/plans/bc-drain-issues-gate-b-deterministic-trace.md` — this implementation record.
+- `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/make-fixture.py` — generate isolated deterministic base/S0/S1/S2 artifacts, local stubs, hashes, findings, and dispatch manifest.
+- `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/run-trace.py` — deterministic fixture/controller self-test and real-result verifier; never fabricates model usage.
+- `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/README.md` — deployment benchmark contract and pass criteria.
+- `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/AGENT-PROMPT.md` — thin real-model runner handoff.
+- `docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md` — this implementation record.
 
 ### Modify
 
-- `agents/concepts/bc-drain-issues/tests/run-pressure.py` — exercise an existing-file Standards-only delta, skipped intermediate Spec review, stale-hash landing rejection, and final Spec hash synchronization.
-- `agents/concepts/bc-drain-issues/tests/pressure-drain.md` — designate the trace as deployment Gate B and the existing fixture as ecological pressure.
-- `agents/concepts/bc-drain-issues/tests/fixtures/contested-gate-b/README.md` — relabel the natural fixture without changing historical criteria.
-- `agents/concepts/bc-drain-issues/tests/fixtures/contested-gate-b/AGENT-PROMPT.md` — stop treating natural pressure as canonical deployment Gate B.
-- `agents/plans/bc-drain-issues-v3-review-economy.md` — record deterministic trace and final hash-sync interpretation.
-- `agents/concepts/bc-drain-issues/CONCEPT.md` — record benchmark/ecological split and outstanding real A/B.
-- `agents/index.md` and `agents/log.md` — update canonical status/bookkeeping.
+- `concepts/bc-drain-issues/tests/run-pressure.py` — exercise an existing-file Standards-only delta, skipped intermediate Spec review, stale-hash landing rejection, and final Spec hash synchronization.
+- `concepts/bc-drain-issues/tests/pressure-drain.md` — designate the trace as deployment Gate B and the existing fixture as ecological pressure.
+- `concepts/bc-drain-issues/tests/fixtures/contested-gate-b/README.md` — relabel the natural fixture without changing historical criteria.
+- `concepts/bc-drain-issues/tests/fixtures/contested-gate-b/AGENT-PROMPT.md` — stop treating natural pressure as canonical deployment Gate B.
+- `docs/plans/active/bc-drain-issues-v3-review-economy.md` — record deterministic trace and final hash-sync interpretation.
+- `concepts/bc-drain-issues/CONCEPT.md` — record benchmark/ecological split and outstanding real A/B.
+- `index.md` and `log.md` — update canonical status/bookkeeping.
 
 ## Task 1 — Build the deterministic trace generator
 
@@ -54,7 +58,7 @@
 - [x] Assert the stale Spec hash cannot land after either edit.
 - [x] Add final focused Spec approval on the final hash and assert landing then succeeds with both exact hashes.
 - [x] Preserve all existing trigger cases and the 22-check count.
-- [x] Run `python3 agents/concepts/bc-drain-issues/tests/run-pressure.py`; expected 22/22 PASS.
+- [x] Run `python3 concepts/bc-drain-issues/tests/run-pressure.py`; expected 22/22 PASS.
 
 ## Task 4 — Split deployment benchmark from ecological pressure
 
@@ -66,7 +70,7 @@
 ## Task 5 — Final verification and publication
 
 - [x] Run fixture self-test and independent-generation identity check.
-- [x] Run Gate A and `python3 agents/scripts/lint.py`.
+- [x] Run Gate A and `python3 scripts/lint.py`.
 - [x] Validate Python syntax, JSON outputs, `git diff --check`, and final status/diff.
 - [x] Commit only agent-authored files with a concise test/design message.
-- [x] Run `agents/scripts/publish-check.py`; push only when authorized.
+- [x] Run `scripts/publish-check.py`; push only when authorized.

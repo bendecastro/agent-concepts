@@ -7,7 +7,7 @@ Use this file when a harness does not automatically discover a concept from `con
 - **Always-on base include:**
   `Include <agent-concepts>/concepts/agent-kernel/body/AGENT-KERNEL.md in the harness's main agent instructions.`
 - **Workspace maintenance (any agent):**
-  `Read <agent-concepts>/AGENTS.md and follow it. Then: <operation>, e.g. "ingest raw/foo.md", "lint the workspace", or "implement the teach concept update".`
+  `Read <agent-concepts>/AGENTS.md and follow it. Then: <operation>, e.g. "ingest docs/research/raw/foo.md", "lint the workspace", or "implement the teach concept update".`
 - **Concept session (manual harness):**
   `Read <agent-concepts>/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if your harness does not support Agent Skills metadata. Follow the Markdown body as your instructions for this session.`
 - **Concept test (manual harness):**

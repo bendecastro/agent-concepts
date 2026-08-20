@@ -20,7 +20,7 @@ Model-invoked discipline for actively building and sharpening a project's domain
 
 - [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — `domain-modeling` section (**summary only**, not verbatim) + the verbatim `grill-with-docs` body that composes it. https://github.com/mattpocock/skills/blob/main/skills/engineering/domain-modeling/SKILL.md
 - [skillsskillsproductivityteach at main.md](https://github.com/mattpocock/skills/tree/main) — catalog #2 "shared language" failure mode and the `CONTEXT.md` before/after example (materialization cascade).
-- [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) `.agents/notes/README.md` at commit `99f6f02` — alternatives-mandatory and supersede-don't-rewrite; the required-every-change gate was inspected and rejected. See `raw/ingested/deepseek-harness/SOURCE.md`.
+- [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) `.agents/notes/README.md` at commit `99f6f02` — alternatives-mandatory and supersede-don't-rewrite; the required-every-change gate was inspected and rejected. See `docs/research/raw/ingested/deepseek-harness/SOURCE.md`.
 
 ## Tests
 

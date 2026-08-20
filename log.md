@@ -858,3 +858,8 @@ replaced. Regenerate with `scripts/lint.py --write-status`. Sections are ordered
 what needs action: needs testing (11), not deployed (0), deployed with a known gap
 (6), passing and deployed (26). Verified both directions: clean immediately after
 generation, ERROR after a hand edit.
+
+## [2026-08-20] implement | docs research and plan lifecycle layout
+Moved `plans/` into lifecycle folders under `docs/plans/`, moved `raw/` into
+`docs/research/raw/`, and renamed the ISO report to a topic-specific filename.
+Added placement READMEs and lifecycle/status lint, synchronized provenance/index/lint paths, and preserved raw-source immutability.

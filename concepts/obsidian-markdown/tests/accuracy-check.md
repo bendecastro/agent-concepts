@@ -9,7 +9,7 @@ Reference format concept with a mutation-authority boundary. Verify source accur
 3. Confirm the body teaches wikilinks, embeds, callouts, properties, tags, comments, and `==highlight==` without making frontmatter/tags/aliases mandatory.
 4. Confirm the body states that an existing agent-safe Obsidian/vault tool owns mutation and forbids shell/direct-write bypasses.
 5. Compare the adapted syntax against the pinned upstream body and the official OFM, links, embeds, callouts, and properties references; resolve any drift before deployment.
-6. Confirm the raw snapshot contains the upstream MIT notice and full `skills/` tree, while the deploy symlink resolves to `concepts/obsidian-markdown/body/`, not `raw/`.
+6. Confirm the raw snapshot contains the upstream MIT notice and full `skills/` tree, while the deploy symlink resolves to `concepts/obsidian-markdown/body/`, not `docs/research/raw/`.
 
 ## Result — 2026-08-17
 

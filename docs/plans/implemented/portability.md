@@ -1,7 +1,8 @@
 # Portability — make the workspace installable by anyone
 
 Date: 2026-08-02
-Status: implemented and passing `scripts/portability-check.py` (2026-08-02)
+Status: implemented
+Verification: passing `scripts/portability-check.py` (2026-08-02)
 
 ## Problem
 

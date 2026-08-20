@@ -33,6 +33,7 @@ KNOWN_DEPLOY_DIRS = [
     Path.home() / ".claude" / "skills",
     Path.home() / ".pi" / "agent" / "skills",
 ]
+PLAN_LIFECYCLES = {"proposed", "active", "implemented", "rejected", "archived"}
 
 
 @dataclass
@@ -95,10 +96,10 @@ def raw_entries_from_index(index: str) -> set[str]:
     in_raw = False
     for line in index.splitlines():
         if line.startswith("## "):
-            in_raw = line.strip().lower() == "## raw"
+            in_raw = line.strip().lower() in {"## raw", "## research"}
             continue
         if in_raw:
-            m = re.search(r"\]\(raw/([^)]+)\)", line)
+            m = re.search(r"\]\(docs/research/raw/([^)]+)\)", line)
             if m:
                 entries.add(m.group(1).rstrip("/"))
     return entries
@@ -134,8 +135,9 @@ def lint_root(issues: list[Issue]) -> None:
 
 def lint_links(issues: list[Issue]) -> None:
     for md in ROOT.rglob("*.md"):
-        # Raw sources are immutable source material; only lint workspace-owned docs.
-        if "raw" in md.relative_to(ROOT).parts:
+        # Raw sources and the append-only journal are not workspace-owned docs
+        # whose links can be rewritten during a structural migration.
+        if "raw" in md.relative_to(ROOT).parts or md.name == "log.md":
             continue
         text = read(md)
         for link in markdown_links(text):
@@ -149,10 +151,10 @@ def lint_links(issues: list[Issue]) -> None:
 # during the 2026-08 extraction. Only prefixes that unambiguously mean
 # "repo-relative path" are checked, so external paths like `~/.claude/skills`
 # and bare filenames are left alone.
-# "docs/" is deliberately absent: concepts like codebase-docs discuss generic
+# Generic "docs/" is deliberately absent: concepts like codebase-docs discuss
 # docs/ trees in other repositories, so the prefix is not unambiguously
-# repo-relative. Markdown links into docs/ are still checked by lint_links.
-INLINE_PATH_PREFIXES = ("concepts/", "scripts/", "policies/", "plans/", "raw/")
+# repo-relative. These two specific workspace subtrees are unambiguous.
+INLINE_PATH_PREFIXES = ("concepts/", "scripts/", "policies/", "docs/plans/", "docs/research/raw/")
 INLINE_CODE = re.compile(r"`([^`\n]+)`")
 
 
@@ -392,11 +394,11 @@ def print_status_board() -> int:
 
 
 def lint_raw(issues: list[Issue], index: str) -> None:
-    # Upstream material is cited, not redistributed, so raw/ingested/ holds only
-    # SOURCE.md notes. The registry of what was ingested is CITATIONS.md — not
-    # index.md, which now links to upstream URLs and therefore contains no
-    # raw/ paths to match against.
-    raw_root = ROOT / "raw"
+    # Upstream material is cited, not redistributed, so docs/research/raw/ingested/
+    # holds only SOURCE.md notes. The registry of what was ingested is
+    # CITATIONS.md; index.md provides navigation links but is not the source
+    # registry.
+    raw_root = ROOT / "docs" / "research" / "raw"
     if not raw_root.exists():
         return
 
@@ -405,7 +407,7 @@ def lint_raw(issues: list[Issue], index: str) -> None:
 
     citations = raw_root / "ingested" / "CITATIONS.md"
     if not citations.is_file():
-        issues.append(Issue("ERROR", "missing source registry: raw/ingested/CITATIONS.md"))
+        issues.append(Issue("ERROR", "missing source registry: docs/research/raw/ingested/CITATIONS.md"))
         return
     cited = read(citations)
 
@@ -419,13 +421,41 @@ def lint_raw(issues: list[Issue], index: str) -> None:
     for name in sorted(ingested):
         d = ingested_dir / name
         if d.is_dir() and not (d / "SOURCE.md").is_file():
-            issues.append(Issue("WARN", f"raw/ingested/{name} has no SOURCE.md"))
+            issues.append(Issue("WARN", f"docs/research/raw/ingested/{name} has no SOURCE.md"))
 
-    # raw/ top level remains the to-ingest inbox; those still belong in index.md.
+    # docs/research/raw/ top level remains the to-ingest inbox; those still belong in index.md.
     inbox = children(raw_root) - {"ingested"}
     indexed_inbox = {e.split("/", 1)[0] for e in raw_entries_from_index(index)}
     for missing in sorted(inbox - indexed_inbox):
-        issues.append(Issue("WARN", f"raw inbox source not listed in index.md: raw/{missing}"))
+        issues.append(Issue("WARN", f"raw inbox source not listed in index.md: docs/research/raw/{missing}"))
+
+
+def lint_plans(issues: list[Issue]) -> None:
+    plans_root = ROOT / "docs" / "plans"
+    if not plans_root.exists():
+        return
+
+    for lifecycle_dir in plans_root.iterdir():
+        if not lifecycle_dir.is_dir() or lifecycle_dir.name == "__pycache__":
+            continue
+        if lifecycle_dir.name not in PLAN_LIFECYCLES:
+            issues.append(Issue("ERROR", f"unknown plan lifecycle folder: {rel(lifecycle_dir)}"))
+            continue
+        for plan in lifecycle_dir.glob("*.md"):
+            if plan.name == "README.md":
+                continue
+            status = next((
+                line.partition(":")[2].strip()
+                for line in read(plan).splitlines()[:12]
+                if line.startswith("Status:")
+            ), None)
+            if status is None:
+                issues.append(Issue("ERROR", f"plan missing Status line: {rel(plan)}"))
+            elif status != lifecycle_dir.name:
+                issues.append(Issue(
+                    "ERROR",
+                    f"plan status does not match folder: {rel(plan)} says {status!r}",
+                ))
 
 
 def lint_policies(issues: list[Issue]) -> None:
@@ -512,6 +542,7 @@ def main() -> int:
     lint_concepts(issues, index)
     lint_status(issues)
     lint_status_doc(issues)
+    lint_plans(issues)
     lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)

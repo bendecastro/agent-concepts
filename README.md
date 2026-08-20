@@ -72,11 +72,11 @@ user-owned file or a live human instruction can.
 | Layer | Role |
 |---|---|
 | `concepts/<name>/` | The canonical layer — the only one edited. `CONCEPT.md` (status frontmatter, what and why, provenance), `body/` (what an agent actually loads), `tests/` (pressure scenarios and results). |
-| `docs/` | How to install and operate it: [`status.md`](docs/status.md) (what needs testing, what is undeployed — generated), `harnesses.md` (per-harness support), `bootstrap.md` (copy-paste session prompts), `pipeline.md` (the plan→execute loop). |
+| `docs/` | Human-facing workspace documentation: operational pages (`status.md`, `harnesses.md`, `bootstrap.md`, `pipeline.md`), lifecycle-organized plans, and research reports/evidence. |
 | `scripts/` | Deterministic helpers: symlink deployment, and a linter for structural drift. |
 | `policies/` | User-owned authorisation. Agents follow it and may propose changes; they may never publish those changes. |
-| `plans/` | Design documents for work that spans several sessions. |
-| `raw/` | Citations for everything ingested. |
+| `docs/plans/` | Lifecycle-organized design and implementation records. |
+| `docs/research/` | Authored research reports and the immutable `raw/` evidence corpus. |
 | `index.md`, `log.md` | Catalogue of every concept, and an append-only journal of what changed and why. |
 
 43 concepts, 5,039 lines of instruction body, deployed by relative symlink to Claude Code, Pi,
@@ -180,7 +180,7 @@ See `docs/harnesses.md` for per-harness support and `docs/bootstrap.md` for copy
 This workspace is built by reading other people's work and adapting it — notably Jesse Vincent's
 [superpowers](https://github.com/obra/superpowers) (MIT), [Matt Pocock's
 skills](https://github.com/mattpocock/skills), and published guidance from Anthropic, OpenAI and
-Google. Every concept names what it drew on; `raw/ingested/CITATIONS.md` indexes all 28 sources.
+Google. Every concept names what it drew on; `docs/research/raw/ingested/CITATIONS.md` indexes all 28 sources.
 
 Upstream material is **cited, not redistributed**. Earlier revisions kept local snapshots so
 provenance could be audited offline; those were third-party content and have been removed from the

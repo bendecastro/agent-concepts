@@ -132,5 +132,3 @@ Do **not** start from de-slop skills if the goal is ISO-style reader outcomes. T
 - No evidence found of a UK, US, or EU **government** checklist that claims ISO 24495-1 alignment.
 - No independent evaluation of whether the GitHub skills actually improve reader outcomes.
 - Suggested next step: buy ISO 24495-1 (and 2 if legal is in scope), read CAN-ASC-3.1 in full, and pressure-test any skill against IPLF case-study documents plus a reader test — never against Flesch alone.
-
-No `research.md` was written (supervisor mid-run: return the survey in this message only).

@@ -51,7 +51,7 @@ Do most of this in your thinking; only show the user ideas once you have confide
 
 ## Build on the modern platform
 
-Don't ship 2019 patterns. Prefer modern, Baseline-safe platform features over legacy hacks: `color-scheme`/`light-dark()` for theming, container queries, view transitions, scroll-driven animation, anchor positioning, `popover`/native dialog, `oklch()` color. Gate anything cutting-edge on actual browser support. If the **Modern Web Guidance** skill (Chrome DevRel) is installed, defer to it for feature-level implementation; it carries live Baseline data. (Raw reference: `raw/ingested/google-modern-web-guidance/`.)
+Don't ship 2019 patterns. Prefer modern, Baseline-safe platform features over legacy hacks: `color-scheme`/`light-dark()` for theming, container queries, view transitions, scroll-driven animation, anchor positioning, `popover`/native dialog, `oklch()` color. Gate anything cutting-edge on actual browser support. If the **Modern Web Guidance** skill (Chrome DevRel) is installed, defer to it for feature-level implementation; it carries live Baseline data. (Raw reference: `docs/research/raw/ingested/google-modern-web-guidance/`.)
 
 ## Stack-agnostic
 

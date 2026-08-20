@@ -81,7 +81,7 @@ claim ISO conformance.
 - [IPLF — word choice](https://www.iplfederation.org/word-choice) —
   ~7% of the standard's ideas concern word choice; readability formulas
   are not the measure.
-- [`raw/ingested/iso-24495-iplf/`](../../raw/ingested/iso-24495-iplf/SOURCE.md)
+- [`docs/research/raw/ingested/iso-24495-iplf/`](../../docs/research/raw/ingested/iso-24495-iplf/SOURCE.md)
   — citation record of the public sources above; no ISO text.
 - [danyuchn/iso-24495-skill](https://github.com/danyuchn/iso-24495-skill)
   — unofficial MIT prior art; structural influence only.
