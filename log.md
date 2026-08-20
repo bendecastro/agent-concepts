@@ -880,3 +880,15 @@ debate. Rejected the two-builder proposal that prompted this: it is scope creep 
 axis's own definition, doubles build and review tokens against an unmeasured Gate B, and
 duplicates `improve-codebase-architecture` one layer up. Gate A **PASS 25/25**; new checks
 24–25 verified fireable.
+
+## [2026-08-20] implement+test | drain docs axis, resume contract, code-review drift fix
+Wired `codebase-docs` into `bc-drain-issues` on both sides — the worker updates an owning
+README/docs page in the same diff, the Standards axis checks for a stale owner, change
+narration, or an invented `docs/` tree — bounded so absent documentation is never a finding.
+Added a `## Resuming an interrupted run` contract adapting `bc-swarm`'s recover-before-relaunch
+to the drain's remote claim refs, which the drain could not inherit because `bc-swarm` hands
+implementation fan-out to it; an adopted worktree takes full fresh review because no standing
+approval survives a run whose reviewer records are gone. Fixed `code-review`'s AFK slice gate,
+which carried three stale copies of drain parameters (both-axes dispatch, full packet, one
+rework cycle) and now points at the drain instead. Gate A **PASS 27/27**; checks 26–27 verified
+fireable four ways.

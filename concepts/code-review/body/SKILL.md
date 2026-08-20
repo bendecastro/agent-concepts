@@ -63,7 +63,11 @@ This does not license adding defensive code for impossible states — see *Findi
 
 ## AFK slice gate
 
-Inside `/bc-drain-issues`, both axes independently approve a worker’s uncommitted, GREEN worktree before its initial commit, push, or close. The driver owns reviewer dispatch and passes the full review packet. One remediation and re-review cycle is allowed; a second material rejection or ambiguity parks the slice. If a non-fast-forward push requires a rebase that changes the reviewed committed diff, the driver re-reviews that diff before a retrying push/close; a material post-rebase finding parks it rather than opening another remediation cycle.
+Inside `/bc-drain-issues`, the reviewed artifact is a worker’s uncommitted, GREEN worktree, and nothing lands until every axis stands approved on the exact diff being landed. A rebase that changes that diff invalidates the approval it carried, so the driver obtains fresh approval before retrying push or close.
+
+**The drain owns its own parameters and this section does not restate them.** Which tier applies, how many reviewers a round dispatches, which axes a rework round re-runs, and how many rework cycles are permitted all live in `bc-drain-issues`' review contract, and reading them from there is not optional politeness — an earlier version of this section carried its own copy of the cycle budget and dispatch rule, both of which silently went stale when that loop changed. One home per fact applies to canon describing canon.
+
+What this skill contributes inside that loop is the part that is genuinely its own: the two scopes stay distinct, reviewers work from the fixed packet and never from implementation reasoning, and evidence a reviewer lacks is blocking rather than an invitation to guess.
 
 ## Requesting review
 

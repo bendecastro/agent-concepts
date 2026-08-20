@@ -24,6 +24,8 @@ For feature/enhancement work, load and follow the repo-available `tdd` disciplin
 
 For metric-bearing work only, load and follow `bc-autoresearch-loop` after GREEN: establish a correctness-bearing baseline, make one bounded refinement, and keep it only when correctness holds and the named metric improves. Do not optimize without an objective metric. If a named discipline is unavailable in the harness, preserve these mechanics explicitly rather than silently weakening them.
 
+When the change alters behavior that a README, an existing `docs/` page, an architecture page, or contract-stating JSDoc already describes, update that owning page in the same diff and follow the repo-available `codebase-docs` for placement. Do not invent a new `docs/` tree, do not restate a contract that already has a home, and do not narrate this issue in a documentation page — the acceptance matrix records what the slice did, and a docs page that narrates a change is stale the moment the next one lands. A repository that keeps no documentation for this surface needs none written to satisfy this rule.
+
 Preserve the driver's baseline cache. Run targeted tests/checks while editing and record commands, outcomes, failing IDs, and concise baseline deltas. Do not run the full project suite; final landing validation belongs to the driver.
 
 ## Review-ready gate

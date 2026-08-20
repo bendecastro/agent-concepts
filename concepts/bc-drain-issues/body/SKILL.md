@@ -45,6 +45,19 @@ Stop and report if a required check fails; AFK work must not invent mid-run deci
 11. If a global qmd collection covers the repo, run `qmd update && qmd embed` once. Workers search it but never re-index.
 12. Cache full project baseline validation once per base SHA: command, exit status, failing test IDs, concise summary, raw-log path outside the worktree, and content hash. This separates known failures from regressions without paying for a full suite every round.
 
+## Resuming an interrupted run
+
+A drain dies between phases more easily than it fails: a killed pane, a lost harness session, a restarted machine. Claims, worktrees, and uncommitted diffs all outlive it. Recover before relaunching — dispatching a fresh drain over live state pays again for work already on disk and can strand a reviewed diff that nobody is left to land.
+
+After preflight and before the loop, list `refs/heads/bc-drain-claims/*` on the remote, then the worktree and recovery roots. The remote claims are the authoritative index of what a previous run owned, and they are authoritative precisely because they are the one record that does not live in a context that just proved it can vanish. For each claim:
+
+- **Worktree present with an uncommitted diff** — adopt it. Re-derive the packet, re-run the deterministic pre-review gate, and take full fresh review on every axis. No standing approval survives a run whose reviewer records are gone; an approval is a record, and an unreadable record is not one.
+- **Valid recovery bundle** — restore through [recovery-bundle.md](recovery-bundle.md) exactly as for a `rework-for-agent` candidate.
+- **Neither, and the issue is untouched** — release the claim and `in-progress-agent`, then treat it as `READY`.
+- **Anything else** — leave the claim, report it, and skip the issue for this run. Never release a claim you cannot account for, and never delete a worktree to make an inconsistency go away: the inconsistency is the evidence.
+
+State the run artifact root and the recovery root in the run's opening report, not only in the final one. A path announced only at the end is announced only if the run reaches the end.
+
 ## Select, classify, and claim
 
 List oldest open candidates and parse dependencies from issue bodies and comments, including dependency headings and inline `blocked by` / `depends on` / `requires` / `after` / `prerequisite` references. Select only when every dependency is closed and neither claimed nor in flight. Skip `needs-human`, live claims, in-flight issues, and unresolved dependencies.
@@ -147,4 +160,4 @@ When the same failure shape appears across at least two workers/reviews, patch t
 
 Stop when the eligible queue drains, `max-iters` is reached, two consecutive token deferrals occur, or systemic base/tool/environment failures recur. Let active children return to safe boundaries.
 
-Report LANDED commits; HUMAN_BLOCKED reasons; REWORK_DEFERRED issues and bundle/brief status; SYSTEMIC_FAILURE classifications; parent PRDs closed/open; blocked/claimed issues; recurring-defect packet patches; stop reason; per-issue and total child tokens by build/audit/review/rework phases (or `unavailable`); soft/hard crossings; review/rework rounds; repeated-finding circuit events; baseline/final full-validation counts; per-issue review tier with its reason and any escalation trigger; axes dispatched per round and re-reviews skipped by standing approval; and any stale worktrees/claims. Confirm the main checkout is clean. In local-only mode, name the review branch and do not close issues.
+Report LANDED commits; HUMAN_BLOCKED reasons; REWORK_DEFERRED issues and bundle/brief status; SYSTEMIC_FAILURE classifications; parent PRDs closed/open; blocked/claimed issues; recurring-defect packet patches; stop reason; per-issue and total child tokens by build/audit/review/rework phases (or `unavailable`); soft/hard crossings; review/rework rounds; repeated-finding circuit events; baseline/final full-validation counts; per-issue review tier with its reason and any escalation trigger; axes dispatched per round and re-reviews skipped by standing approval; and any stale worktrees/claims. Report what resume recovered: claims adopted, bundles restored, claims released as untouched, and claims left in place as unaccountable. Confirm the main checkout is clean. In local-only mode, name the review branch and do not close issues.

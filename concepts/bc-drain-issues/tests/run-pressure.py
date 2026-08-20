@@ -558,8 +558,55 @@ taste_verdict='changes_requested' if any(structural_severity(f)!='minor' for f i
 assert_(taste_verdict=='approved','a minor-only structural finding blocked approval')
 dump('25/structural-findings.json',{'findings':STRUCTURAL,'severity':graded,'minor_only_verdict':taste_verdict,'banned_vocabulary_used':False,'deepening_routed_to':'improve-codebase-architecture'})
 
-checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,26)}
-ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture'}
+# --- Source-tree docs are checked against the diff, never demanded into existence ---
+for required in ('follow the repo-available `codebase-docs` for placement','do not narrate this issue in a documentation page','needs none written to satisfy this rule'):
+ assert_(required in worker_contract,f'worker contract missing docs rule: {required}')
+for required in ('Source-tree documentation is checked against the diff, not written by it','load `codebase-docs`','absent documentation is not a finding','never becomes a docs rewrite request'):
+ assert_(required in contract,f'review contract missing docs rule: {required}')
+DOCS=[
+ {'id':'stale-owner','surface':'README.md','exists':True,'in_diff':False,'describes':'superseded behavior','material':True},
+ {'id':'narration','surface':'docs/architecture.md','exists':True,'in_diff':True,'describes':'this change as a story','material':True},
+ {'id':'invented-tree','surface':'docs/new/contract.md','exists':False,'in_diff':True,'describes':'a contract already homed in README','material':True},
+ {'id':'undocumented-surface','surface':None,'exists':False,'in_diff':False,'describes':'nothing; repo keeps no docs here','material':False},
+ {'id':'accurate','surface':'README.md','exists':True,'in_diff':True,'describes':'current behavior','material':False},
+]
+def docs_finding(d):
+ if d['surface'] is None: return False
+ return d['material']
+graded_docs={d['id']:docs_finding(d) for d in DOCS}
+assert_(graded_docs=={'stale-owner':True,'narration':True,'invented-tree':True,'undocumented-surface':False,'accurate':False},f'docs grading wrong: {graded_docs}')
+assert_(not docs_finding(DOCS[3]),'reviewer demanded documentation a repository does not keep')
+remedy_docs={'accepted':'update the owning README hunk in the same diff','rejected':'open a documentation rewrite'}
+dump('26/source-tree-docs.json',{'surfaces':DOCS,'material':graded_docs,'absent_docs_is_not_a_finding':True,'remedy':remedy_docs})
+
+# --- Resume: recover before relaunch, and never launder an inconsistency ---
+for required in ('## Resuming an interrupted run','Recover before relaunching','refs/heads/bc-drain-claims/*','No standing approval survives a run whose reviewer records are gone','Never release a claim you cannot account for','never delete a worktree to make an inconsistency go away'):
+ assert_(required in skill_text,f'SKILL missing resume rule: {required}')
+CLAIMS=[
+ {'issue':41,'worktree_diff':True,'bundle':None,'issue_touched':True,'prior_approvals':['spec','standards']},
+ {'issue':42,'worktree_diff':False,'bundle':'valid','issue_touched':True,'prior_approvals':[]},
+ {'issue':43,'worktree_diff':False,'bundle':None,'issue_touched':False,'prior_approvals':[]},
+ {'issue':44,'worktree_diff':False,'bundle':'corrupt','issue_touched':True,'prior_approvals':[]},
+]
+def disposition(c):
+ if c['worktree_diff']: return 'adopt'
+ if c['bundle']=='valid': return 'restore'
+ if not c['bundle'] and not c['issue_touched']: return 'release'
+ return 'report-and-skip'
+plan={c['issue']:disposition(c) for c in CLAIMS}
+assert_(plan=={41:'adopt',42:'restore',43:'release',44:'report-and-skip'},f'resume dispositions wrong: {plan}')
+adopted=[c for c in CLAIMS if disposition(c)=='adopt'][0]
+carried={'standing_approvals_carried_across_run_boundary':[], 'gate_rerun':True,'axes_freshly_reviewed':['spec','standards']}
+assert_(adopted['prior_approvals'] and not carried['standing_approvals_carried_across_run_boundary'],'a standing approval survived a lost run')
+assert_(carried['gate_rerun'] and carried['axes_freshly_reviewed']==['spec','standards'],'adopted worktree skipped the gate or an axis')
+unaccountable=[c for c in CLAIMS if disposition(c)=='report-and-skip'][0]
+fate={'claim_released':False,'worktree_deleted':False,'reported':True,'skipped_this_run':True}
+assert_(not fate['claim_released'] and not fate['worktree_deleted'] and fate['reported'],'unaccountable claim was laundered instead of reported')
+assert_('Report what resume recovered' in skill_text,'resume outcomes absent from the run report')
+dump('27/resume.json',{'claims':CLAIMS,'dispositions':plan,'adopted':{'issue':adopted['issue'],**carried},'unaccountable':{'issue':unaccountable['issue'],**fate},'authoritative_index':'refs/heads/bc-drain-claims/*'})
+
+checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,28)}
+ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'active children finish at soft/hard; fallback/circuit recorded',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'complete end-report and additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture',26:'stale owning page, change-narration, and invented docs tree are material; an undocumented surface and an accurate page are not; remedy is the owning hunk, not a docs rewrite',27:'remote claims are the resume index; adopt/restore/release/report-and-skip dispositions hold; no standing approval crosses a run boundary and an adopted worktree re-runs the gate plus both axes; an unaccountable claim is reported, never released or deleted'}
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
 summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'checks':len(checks),'all_checks_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}
