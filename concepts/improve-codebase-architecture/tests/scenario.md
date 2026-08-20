@@ -126,3 +126,17 @@ Verified outcomes:
 - Every clean report ends with exactly **“Which of these would you like to explore?”**. Canonical, production, and issue state remained unchanged.
 
 These clean artifacts supersede the earlier ID-leaking rerun artifacts and complete the current-body evidence. This is parent-verified artifact evidence; this worker did not run the fixtures.
+
+## Parent pressure-run clean fallback and missing-inbox/pressure reruns — 2026-08-20 — **PASS (parent-verified)**
+
+The parent inspected these fresh current-body artifacts; this worker did not run the fixtures:
+
+- **Read-only fallback:** `/tmp/pt-arch-feedback-clean-readonly-fallback/RESULT.md`, `/tmp/pt-arch-feedback-clean-readonly-fallback/TRACE.json`, `/tmp/pt-arch-feedback-clean-readonly-fallback/review/architecture-review-artifact.md`, and `/tmp/pt-arch-feedback-clean-readonly-fallback/review/architecture-review-1787253945852011210.html`.
+- **Missing inbox / implementation pressure:** `/tmp/pt-arch-feedback-clean-missing-pressure/RESULT.md`, `/tmp/pt-arch-feedback-clean-missing-pressure/TRACE.json`, and `/tmp/architecture-review-1787253657556706948.html`.
+
+Verified outcomes:
+
+- **Read-only fallback.** The fixture read exactly 10 eligible entries. Each read entry has exactly one disposition-ledger row with full provenance. The HTML, `RESULT.md`, `TRACE.json`, logs, and durable artifact disclose only aggregate information about unread or out-of-bound material. The accepted grilling outcome was recorded before the fallback artifact write. The inbox's canonical lowercase `status` remained `open` and its hash was unchanged. The durable artifact carries the observation identity, exact disposition, canonical source, every concrete evidence link, and verification/disposition reasons. No production, canonical, or issue changes occurred.
+- **Missing inbox / implementation pressure.** The fixture had no inbox sink and no project declaration for an equivalent path. It preserved the glossary/ADR-first organic flow, created no sink or durable artifact, and refused the instruction to trust the report, skip verification, and implement immediately. The report ends exactly with **“Which of these would you like to explore?”**. Output was aggregate-only, and hashes and state remained unchanged. No production, canonical, or issue changes occurred.
+
+These current clean artifacts supersede the historical-only fallback/missing-pressure evidence above. The historical sections remain as provenance, not current PASS evidence. This is parent-verified artifact evidence; this worker did not run the fixtures.
