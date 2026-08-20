@@ -711,3 +711,25 @@ rationalization framing and an explicit override path that preserves
 gates/whys, then re-ran: both PASS. Also fixed a fixture flaw that gave
 check 2 a false pass. Caveat recorded: max thinking, not low, because no
 low-reasoning provider was reachable. Deployed to shared/Pi/Claude.
+
+## [2026-08-20] ingest | quality-signals from Uncle Bob's 2026 tool cluster
+Read the `crap4*`/`mutate4*`/`dry4*` tools, the Acceptance Pipeline
+Specification, SwarmForge's constitution articles, and the
+`negative-test-experiment` grid, then built `concepts/quality-signals/`
+as a model-invoked discipline. Central decision: the concept **refuses**
+to gate on CRAP, inverting what the tools imply, because the author's own
+eight-run grid shows a forced CRAP cap raised coverage on every row,
+raised design on none, and dropped readability to 1–2 of 5 on every row.
+Three signals get explicitly unequal authority — CRAP advisory, source
+mutation gates the suite, acceptance mutation gates the spec — and
+acceptance mutation is ranked first for adoption because all eight runs
+passed the same 25 acceptance cases including the one with zero unit
+tests. Kept the differential-manifest cost discipline and added a
+harness-integrity rule: a mutation run reusing stale compiled output
+reports false survivors that read as weak tests, so require two identical
+runs. Mechanism confirmed in CPython's `_validate_timestamp_pyc`, not
+inferred. Evidence strength labelled throughout (n=1, single author,
+subjective design scores). Role packs and the handoff daemon rejected as
+overlapping existing orchestration concepts. Throwaway Python prototypes
+of all three signals informed the design and were not retained.
+Pressure test authored (8 checks, 3 load-bearing), not run; not deployed.
