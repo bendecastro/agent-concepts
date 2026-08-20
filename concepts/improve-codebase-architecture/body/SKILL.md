@@ -52,6 +52,8 @@ Each candidate card includes:
 
 Require the temporary architecture report—or the declared durable review artifact when it is the report surface—to show a disposition ledger for every entry actually read: each entry must have either a candidate card with full provenance or an explicit discard reason. Unread entries must not be presented or called resolved.
 
+Do not name, list, quote, or otherwise reveal unread entry IDs or bodies in the temporary report, disposition ledger, trace, or durable review artifact. The only permitted reference is an aggregate statement that older or out-of-bound history was not inspected.
+
 End with a top recommendation and ask: **"Which of these would you like to explore?"** That ask is the last thing on the page. Do not implement yet.
 
 ## 3. Grill the chosen candidate
