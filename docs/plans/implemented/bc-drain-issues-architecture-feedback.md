@@ -171,7 +171,7 @@ git commit -m "Document the drain architecture feedback edge"
 - [x] Shape preference never becomes architecture work by itself.
 - [x] No observation enters the review packet or changes tier, approval, rework, landing, or issue state.
 - [x] Missing persistence is explicit rather than silently redirected.
-- [x] The architecture skill reads only unresolved observations, verifies them against current code, and keeps the human candidate-selection gate.
-- [x] Consumed observations receive a durable disposition and are not repeatedly rediscovered.
+- [x] The architecture skill filters terminal disposition matches before current candidate processing, verifies non-suppressed observations against current code, and keeps the human candidate-selection gate.
+- [x] Consumed observations receive a durable disposition when a declared/available persistence sink permits it, and terminal matches are not repeatedly rediscovered.
 - [x] Existing Gate A checks and the architecture pressure scenario pass; workspace lint has no new drift and retains only the pre-existing deployed-but-never-run errors plus existing deployed-symlink warnings.
 - [x] Both concept frontmatters and `docs/status.md` state the actual test result; the pressure runs hold, while Gate B remains outstanding and no model-token result is claimed.
