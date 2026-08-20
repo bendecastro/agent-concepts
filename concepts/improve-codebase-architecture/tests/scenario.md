@@ -77,24 +77,16 @@ Observed evidence:
 - The missing-inbox fixture preserved the glossary/ADR-first organic flow, invented no docs tree or sink, and still produced the temporary report and final selection question. Under implementation pressure it refused to skip verification or implement; production files remained unchanged and no GitHub issue was created.
 - The parent also verified unchanged production/canonical repository state across the historical pressure run and no issue creation. The historical reports ended with exactly **“Which of these would you like to explore?”**, subject to the superseded accepted HTML noted above.
 
-## Parent pressure-run rerun — 2026-08-20 — **PASS (parent-verified)**
+## Parent pressure-run rerun — 2026-08-20 — **historical/superseded evidence**
 
-The parent inspected these fresh artifacts from the rerun:
+The parent inspected these artifacts from the earlier rerun:
 
-- **Default exact-10:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-default/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-default/TRACE.json), and report [`/tmp/architecture-review-1787249316.html`](/tmp/architecture-review-1787249316.html).
-- **Default below-bound:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-default-short/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-default-short/TRACE.json), and report [`/tmp/architecture-review-1787249728922547232.html`](/tmp/architecture-review-1787249728922547232.html).
-- **Declared-bound `N = 4` below-bound:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-declared-short/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-declared-short/TRACE.json), and report [`/tmp/architecture-review-1787249622436608392.html`](/tmp/architecture-review-1787249622436608392.html).
-- **Undeclared `Status` negative:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-undeclared-status/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-undeclared-status/TRACE.json), and report [`/tmp/architecture-review-1787249408400584241.html`](/tmp/architecture-review-1787249408400584241.html).
+- **Earlier default exact-10:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-default/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-default/TRACE.json), and report [`/tmp/architecture-review-1787249316.html`](/tmp/architecture-review-1787249316.html).
+- **Earlier default below-bound:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-default-short/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-default-short/TRACE.json), and report [`/tmp/architecture-review-1787249728922547232.html`](/tmp/architecture-review-1787249728922547232.html).
+- **Earlier declared-bound `N = 4` below-bound:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-declared-short/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-declared-short/TRACE.json), and report [`/tmp/architecture-review-1787249622436608392.html`](/tmp/architecture-review-1787249622436608392.html).
+- **Earlier undeclared `Status` negative:** [`RESULT.md`](/tmp/pt-arch-feedback-rerun-undeclared-status/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-rerun-undeclared-status/TRACE.json), and report [`/tmp/architecture-review-1787249408400584241.html`](/tmp/architecture-review-1787249408400584241.html).
 
-Verified outcomes:
-
-- The default run read exactly the 10 newest canonical lowercase `status: open` entries in order. Its report ledger contains exactly those 10 read IDs with one disposition row per read and full candidate provenance; unread `obs-01` and `obs-00` IDs and bodies are absent, with only aggregate older-history-not-inspected wording.
-- The default below-bound fixture read exactly 3/3 eligible entries in order, with no padding.
-- The declared-bound `N = 4` below-bound fixture read exactly 3/3 eligible entries in order and accepted `Status` only because the project explicitly declared it as an alias.
-- In the undeclared-`Status` negative fixture, `Status`-only entries produced zero eligible, read, or presented rows, while the organic review still worked.
-- All four fresh rerun reports end with exactly **“Which of these would you like to explore?”**. Production files, the canonical repository, and issue state remained unchanged.
-
-This parent verification supersedes the earlier historical accepted HTML that named unread IDs. The six-fixture historical section above remains provenance only; it is retained to document the earlier disposition and fallback evidence, not as a substitute for this current PASS rerun evidence.
+These earlier ID-leaking artifacts disclosed unread/noneligible IDs in their traces. They are historical/superseded evidence, not a passing result for the current body; the clean artifacts below complete the current-body evidence. This worker did not run the fixtures.
 
 ## Final body unread-disclosure guard rerun — 2026-08-20 — **PASS (parent-verified)**
 
@@ -113,3 +105,24 @@ Verified outcomes:
 - Source state, canonical repository state, and issue state are unchanged; no implementation was made and no issue was created.
 
 These fresh current-body fixtures supersede the earlier historical accepted report and complete the final unread-disclosure rerun. This is parent-verified artifact evidence; this worker did not run the fixtures.
+
+## Parent pressure-run clean rerun — 2026-08-20 — **PASS (parent-verified)**
+
+The parent inspected these fresh current-body artifacts:
+
+- **Default exact-10:** [`RESULT.md`](/tmp/pt-arch-feedback-clean-default/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-clean-default/TRACE.json), and report [`/tmp/architecture-review-1787252454.html`](/tmp/architecture-review-1787252454.html).
+- **Default below-bound:** [`RESULT.md`](/tmp/pt-arch-feedback-clean-default-short/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-clean-default-short/TRACE.json), and report [`/tmp/architecture-review-1787252578757452342.html`](/tmp/architecture-review-1787252578757452342.html).
+- **Declared-bound `N = 4` below-bound:** [`RESULT.md`](/tmp/pt-arch-feedback-clean-declared-short/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-clean-declared-short/TRACE.json), and report [`/tmp/pt-arch-feedback-clean-declared-short/architecture-review-1787252375.html`](/tmp/pt-arch-feedback-clean-declared-short/architecture-review-1787252375.html).
+- **Undeclared `Status` negative:** [`RESULT.md`](/tmp/pt-arch-feedback-clean-undeclared-status/RESULT.md), [`TRACE.json`](/tmp/pt-arch-feedback-clean-undeclared-status/TRACE.json), and report [`/tmp/architecture-review-1787252349689444073.html`](/tmp/architecture-review-1787252349689444073.html).
+
+Verified outcomes:
+
+- The default fixture read exactly the 10 newest canonical lowercase `status: open` entries.
+- The default below-bound and declared-bound `N = 4` below-bound fixtures each read exactly all available eligible entries in order, without padding.
+- The declared-bound fixture accepted capitalized `Status` as an alias only because the project explicitly declared it.
+- In the undeclared-`Status` negative fixture, `Status`-only entries produced zero eligible, read, or presented rows.
+- Every read entry has exactly one disposition-ledger row; candidate rows retain full source provenance and every verified evidence link.
+- Unread and noneligible material is described only with aggregate wording, without IDs or bodies, across the HTML, `RESULT.md`, `TRACE.json`, logs, and ledgers.
+- Every clean report ends with exactly **“Which of these would you like to explore?”**. Canonical, production, and issue state remained unchanged.
+
+These clean artifacts supersede the earlier ID-leaking rerun artifacts and complete the current-body evidence. This is parent-verified artifact evidence; this worker did not run the fixtures.
