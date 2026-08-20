@@ -733,3 +733,21 @@ subjective design scores). Role packs and the handoff daemon rejected as
 overlapping existing orchestration concepts. Throwaway Python prototypes
 of all three signals informed the design and were not retained.
 Pressure test authored (8 checks, 3 load-bearing), not run; not deployed.
+
+## [2026-08-20] implement | narrow quality-signals to acceptance-mutation
+Cut the day-old three-signal concept down to the half that earns its
+place. CRAP tooling exists only for Clojure/Go/Java, and source
+mutation's first instruction to any reader was "build or evaluate a
+harness" — a skill whose opening move is a project rarely gets acted on.
+The authority table existed to hold three things together and went with
+them. What remains leads with the design-time precondition (generated
+tests must consume the spec, not transcribe it) plus a tooling-free
+version of that check, then the mutation itself and a three-kind survivor
+taxonomy that must be named before anything is fixed. Two `## Never`
+rules, both against clearing the report instead of fixing the defect.
+The complexity-threshold rule generalized past CRAP (ruff C901, ESLint
+complexity, Sonar) and moved to `code-review`, where gates actually get
+proposed; its check 9 is authored, not run. Source-mutation harness
+lessons demoted to `implementations.md` rather than deleted. Narrowing
+cost one rewrite because nothing had been deployed or tested yet.
+Pressure test rewritten to 6 checks, not run; still not deployed.

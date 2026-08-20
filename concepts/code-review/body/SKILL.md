@@ -45,6 +45,14 @@ Present findings under `## Spec` and `## Standards`. Do not merge or rerank them
 
 A reviewer prompted to find gaps will report some even when the work is sound — producing findings is what it was asked to do. Chasing every finding causes over-engineering: extra abstraction layers, defensive code for impossible states, tests for cases that can't happen. So reviewers flag only gaps that affect correctness or the stated requirements (everything else is a labelled judgment call, per the Standards rules above), and fixers treat anything below Critical/Important as optional — pushing back with evidence beats padding the code. This matters most in AFK runs, where nobody is watching a remediation spiral.
 
+### Complexity scores are not a quality bar
+
+Do not raise a complexity score as a finding on its own, and do not propose or approve a CI threshold on one — `ruff C901`, ESLint `complexity`, Sonar gates, CRAP. A score is a reason to *read* a function, never the finding itself; the finding is the concrete comprehension problem you found there, which the Standards smells above already name.
+
+Why: this has been measured. Across four testing disciplines, forcing every function under a complexity cap raised coverage on every run, raised design quality on **none**, and lowered readability on **every** one. It does not simplify, it multiplies names — one prompt loop became three mutually-recursive single-branch functions. The published thresholds do not agree with each other either, which is what an arbitrary constant looks like. Evidence: [unclebob/negative-test-experiment](https://github.com/unclebob/negative-test-experiment) (n=1 product, single author, subjective design scores — enough to refuse a threshold, not enough to claim general harm).
+
+If the user wants the gate anyway, that is their call: implement it, and record what it buys and costs somewhere durable rather than dropping the caveat.
+
 ### Verify a guard can actually fire
 
 A rejection clause, validation check, or guard proves nothing until you know its inputs can differ at runtime. Trace each side of the comparison to where the real caller obtains the value. If every production path resolves both sides to the same thing, the check is **inert**: only a test double can supply a differing pair, so it reads as protection, passes review by inspection, and stays permanently green.
