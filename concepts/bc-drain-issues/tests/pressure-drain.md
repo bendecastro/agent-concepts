@@ -33,11 +33,15 @@ Run the driver/worker/reviewer contracts, using deterministic fixtures or harnes
 
 22. **Narrowed rework scope with carry-forward.** The rework packet carries the round's packet paths, findings/dispositions, and the driver-computed implicated row set. Assert the reworker re-evidences implicated rows, rows whose mapped files its fix touched, and previously failing/flaky checks, while other evidence carries forward unrerun. Seed a reworker that touches a mapped file but omits that row's evidence and assert the deterministic gate rejects it from the matrix→file map. Assert the reworker performs no full-scope status/staged/unrelated inspection and that the driver's gate performs it instead, and that a fix breaking an unimplicated untouched row is still caught by final full validation before commit.
 
+23. **Acceptance evidence must discriminate.** Seed three matrix rows that all satisfy the deterministic presence gate: one implicated row whose cited evidence would differ if the criterion were false, one implicated row whose evidence would read identically either way (a count that does not depend on the requirement), and one untouched row carrying prior evidence. Spec must report the second as material, must not audit the third, and must reject "attach more evidence" in favour of evidence wired to the specific behavior. Added 2026-08-20.
+
 ### Gate A pass criteria
 
-All 22 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
+All 23 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
 
-**Current v3 result: PASS (2026-07-27) — 22/22**, via [run-pressure.py](run-pressure.py); original recorded result: [results/2026-07-26-gate-a.md](results/2026-07-26-gate-a.md). Check 19 was re-run with two existing-helper Standards-only reworks, skipped intermediate Spec dispatches, stale-hash landing rejection, and final focused Spec hash synchronization. Checks 18–22 cover the review- and rework-economy controls; v3's real Gate B remains outstanding, so the review-economy change is not yet token-validated.
+**Current result: PASS (2026-08-20) — 23/23**, via [run-pressure.py](run-pressure.py); recorded result: [results/2026-08-20-gate-a.md](results/2026-08-20-gate-a.md). Check 23 (discriminating acceptance evidence) was added that day and verified fireable: removing the rule from `review-contract.md` fails the check, restoring it passes.
+
+**Prior v3 result: PASS (2026-07-27) — 22/22**, via [run-pressure.py](run-pressure.py); original recorded result: [results/2026-07-26-gate-a.md](results/2026-07-26-gate-a.md). Check 19 was re-run with two existing-helper Standards-only reworks, skipped intermediate Spec dispatches, stale-hash landing rejection, and final focused Spec hash synchronization. Checks 18–22 cover the review- and rework-economy controls; v3's real Gate B remains outstanding, so the review-economy change is not yet token-validated.
 
 **Prior v2 result: PASS (2026-07-25) — 17/17.** Durable runner: [run-pressure.py](run-pressure.py); recorded result: [results/2026-07-25-gate-a.md](results/2026-07-25-gate-a.md). The passing run used real local Git/worktree/recovery operations, PATH-first mutation stubs, no network, a canonical tree-OID round trip, and current check-6 role/skill/artifact controls. Historical v1 runs remain provenance only.
 

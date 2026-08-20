@@ -751,3 +751,31 @@ proposed; its check 9 is authored, not run. Source-mutation harness
 lessons demoted to `implementations.md` rather than deleted. Narrowing
 cost one rewrite because nothing had been deployed or tested yet.
 Pressure test rewritten to 6 checks, not run; still not deployed.
+
+## [2026-08-20] implement+test | discriminating acceptance evidence; remove acceptance-mutation
+Verified empirically whether the day-old `acceptance-mutation` concept would
+ever fire: zero `.feature` files and zero BDD runners anywhere in `~/Sync`, and
+the bc pipeline's spec artifacts are prose checkboxes (`issue-slicing`
+criteria → Agent Brief → `acceptance-matrix.json`) that a worker transcribes by
+hand. Nothing consumes them, so there is no value to mutate. Worse, "acceptance"
+is pipeline-wide vocabulary, so the skill's likeliest behavior was firing during
+drains and recommending an IR pipeline for a checkbox list. Concept removed.
+
+The transferable half moved to where the work happens. The drain's deterministic
+gate proves each matrix row *has* evidence and that rework re-evidenced every
+touched row; neither asks whether the evidence would differ had the criterion
+been false. Added that as a Spec-scope rule in `review-contract.md` — sibling to
+the unfireable-guard rule, scoped to implicated rows so it cannot become a
+full-matrix audit, remedy is discriminating evidence rather than more evidence —
+plus a nine-word clause in `execute-issue.md` so workers pick such evidence at
+the source.
+
+Gate A **PASS 23/23** (`results/2026-08-20-gate-a.md`), with 22/22 confirmed
+before the edits so the result is attributable, and check 23 verified fireable
+by deleting the rule and watching it fail. Gate B still not run.
+
+Finding, not fixed: `run-pressure.py` resolves its candidate as `parents[4]` and
+expects the workspace and `.pi/agent/agents/` to be siblings, which stopped
+being true when this workspace moved to `Work/PUBLIC/Agents`. Both runs used a
+two-symlink shim passed as `argv[1]`; the harness was not modified. A durable
+fix is a portability decision about a cross-repository path.

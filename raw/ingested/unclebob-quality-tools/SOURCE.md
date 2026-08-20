@@ -1,8 +1,9 @@
 # Source: Robert C. Martin's 2026 quality-tool cluster
 
-- **What:** Citation record for the sources behind the `quality-signals`
-  concept. Read 2026-08-20 from the GitHub API and `raw.githubusercontent.com`;
-  nothing was cloned or vendored.
+- **What:** Citation record for the sources behind two rules — "complexity
+  scores are not a quality bar" in `code-review`, and "acceptance evidence must
+  discriminate" in `bc-drain-issues`. Read 2026-08-20 from the GitHub API and
+  `raw.githubusercontent.com`; nothing was cloned or vendored.
 - **License:** the tool repositories carry
   `Copyright (c) Robert C. Martin. All rights reserved.` — **no open licence**.
   Bodies are therefore cited, never redistributed. The concept reimplements
@@ -63,9 +64,18 @@
 
 ## Why filed
 
-The `quality-signals` concept inverts the obvious reading of these tools — it
-refuses to gate on CRAP — and that refusal rests entirely on the experiment's
-grid. A rule that contradicts its own source needs the source on file.
+The `code-review` rule inverts the obvious reading of these tools — it refuses
+to gate on a complexity score — and that refusal rests entirely on the
+experiment's grid. A rule that contradicts its own source needs the source on
+file.
+
+Two standalone concepts were built from this material and both were removed the
+same day: `quality-signals` (2026-08-20, commit `25c62a1`), narrowed to
+`acceptance-mutation` (commit `63e51de`), then removed entirely. The reason is
+recorded in `log.md`: the user's repositories contain zero feature files and
+zero BDD runners, and the bc pipeline's specs are prose acceptance criteria that
+no generated test consumes, so the check had no artifact to run against. What
+survived is the transposition of the idea onto acceptance-matrix evidence.
 
 ## Deliberately not filed
 

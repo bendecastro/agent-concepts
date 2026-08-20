@@ -28,7 +28,7 @@ Preserve the driver's baseline cache. Run targeted tests/checks while editing an
 
 Before handoff:
 
-- map every acceptance-matrix row/criterion to observable evidence;
+- map every acceptance-matrix row/criterion to observable evidence that would differ if the criterion were false;
 - run relevant targeted validation and distinguish known baseline failures from regressions;
 - inspect `git status`, changed files, and `git diff <base-sha>` for scope;
 - ensure no file is staged and no unrelated artifact is present;
