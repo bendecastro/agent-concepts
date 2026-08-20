@@ -2,9 +2,17 @@
 import os, sys, json, hashlib, subprocess, tarfile, tempfile, shutil, stat
 from pathlib import Path
 
-DEFAULT_CANDIDATE=Path(__file__).resolve().parents[4]
-CANDIDATE=Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else DEFAULT_CANDIDATE
-CONCEPT=CANDIDATE/'agents/concepts/bc-drain-issues'
+# Two independent roots. The concept lives in this workspace and is derived from the
+# script's own location; the Pi roles/extensions live in the user's Pi config, which is a
+# different repository. Assuming the two were siblings broke the runner when this
+# workspace moved out of CONFIG.
+WORKSPACE=Path(os.environ.get('BC_DRAIN_WORKSPACE') or Path(__file__).resolve().parents[3]).expanduser().resolve()
+CONCEPT=WORKSPACE/'concepts/bc-drain-issues'
+PI_DIR=Path(os.environ.get('BC_DRAIN_PI_DIR') or Path.home()/'.pi'/'agent').expanduser()
+if not (CONCEPT/'body/SKILL.md').is_file():
+    raise SystemExit(f'concept body not found under {CONCEPT}\nset BC_DRAIN_WORKSPACE to the agents workspace root')
+if not (PI_DIR/'agents').is_dir():
+    raise SystemExit(f'Pi role directory not found at {PI_DIR/"agents"}\nset BC_DRAIN_PI_DIR to the Pi agent directory (the one containing agents/ and extensions/)')
 ROOT=Path(tempfile.mkdtemp(prefix='bc-drain-v2-gate-a-'))
 REAL_GIT=shutil.which('git')
 if not REAL_GIT:
@@ -97,7 +105,7 @@ BASE=realgit('rev-parse','HEAD').stdout.strip()
 realgit('--git-dir',str(REMOTE),'fetch',str(REPO),f'{BASE}:refs/heads/master',cwd=ROOT)
 
 # Preflight blocking and labels.
-policy_path=CANDIDATE/'agents/policies/publish.yaml'
+policy_path=WORKSPACE/'policies/publish.yaml'
 policy_before=sha(policy_path) if policy_path.exists() else 'absent'
 pub=run([str(STUB/'publish-check.py'),'--repo',str(REPO),'--remote',str(REMOTE),'--branch','master'],check=False)
 assert_(pub.returncode==2,'unauthorized publish did not block')
@@ -187,7 +195,7 @@ assert_(not staged and complete['raw_log_outside_worktree'],'gate')
 
 # Fresh independent packets, installed minimal Pi roles, strict outputs, and top-level harness controls.
 minimal_keys=['worktree','base_sha','issue','acceptance_matrix','changed_files','diff_range','targeted_validation','baseline_delta','raw_logs']
-role_dir=CANDIDATE/'.pi/agent/agents'
+role_dir=PI_DIR/'agents'
 role_names=['bc-drain-auditor','bc-drain-worker','bc-drain-reviewer']
 role_audit={}
 for name in role_names:
@@ -205,7 +213,7 @@ assert_('transient/repeated tooling, base, or environment failures stay out of `
 assert_('artifacts:false' in skill_text and 'including resumed runs' in skill_text,'artifact/resume control absent from SKILL')
 harness_runs=[{'kind':'initial','artifacts':False,'session_root':None},{'kind':'resume','artifacts':False,'session_root':None},{'kind':'external','artifacts':True,'session_root':str(ART/'harness-sessions')}]
 assert_(all((not x['artifacts']) or not str(x['session_root']).startswith(str(W)) for x in harness_runs),'top-level harness artifacts entered worktree')
-dump('06/pi-role-and-harness-controls.json',{'roles':role_audit,'read_only_caps':{'assistant_turns':4,'tool_calls':12,'encoded_in':'SKILL.md'},'explicit_worker_discipline_selection':True,'claim_precedes_child_dispatch':True,'transient_environment_not_human_blocked':True,'compact_tools_config':json.loads((CANDIDATE/'.pi/agent/extensions/subagent/config.json').read_text()),'top_level_runs':harness_runs,'resume_external_or_disabled':True,'generic_plan_present':False,'generic_progress_present':False,'absence_nonblocking':True})
+dump('06/pi-role-and-harness-controls.json',{'roles':role_audit,'read_only_caps':{'assistant_turns':4,'tool_calls':12,'encoded_in':'SKILL.md'},'explicit_worker_discipline_selection':True,'claim_precedes_child_dispatch':True,'transient_environment_not_human_blocked':True,'compact_tools_config':json.loads((PI_DIR/'extensions/subagent/config.json').read_text()),'top_level_runs':harness_runs,'resume_external_or_disabled':True,'generic_plan_present':False,'generic_progress_present':False,'absence_nonblocking':True})
 for role in ('spec','standards'):
  packet={'role_instance':f'{role}-fresh-001','role':role,'authority':'read-only','parallel_group':'review-1','inputs':minimal_keys,'excluded':['worker_reasoning','parent_transcript','other_reviewer_report','generic plan.md','generic progress.md'],'full_suite_allowed':False,'bounded_targeted_reproduction':True,'assistant_turn_cap':4,'tool_call_cap':12,'generic_plan_progress_absence':'NONBLOCKING','artifact_mode':'top-level disabled/external including resume','scope':'requirements/compatibility/external semantics' if role=='spec' else 'rules/integration/correctness/tests/portability/security/maintainability/docs'}
  dump(f'06/{role}-packet.json',packet); dump(f'06/{role}-output.json',{'verdict':'approved','findings':[]})

@@ -779,3 +779,21 @@ expects the workspace and `.pi/agent/agents/` to be siblings, which stopped
 being true when this workspace moved to `Work/PUBLIC/Agents`. Both runs used a
 two-symlink shim passed as `argv[1]`; the harness was not modified. A durable
 fix is a portability decision about a cross-repository path.
+
+## [2026-08-20] test | fix Gate A runner path resolution
+`run-pressure.py` assumed the agents workspace and the Pi config were siblings
+under one `CANDIDATE` root — true in CONFIG, false since the move to
+`Work/PUBLIC/Agents`, so the default invocation aborted before any check ran.
+Split into two roots: `WORKSPACE` derived from the script's own location
+(`BC_DRAIN_WORKSPACE` to override) and `PI_DIR` defaulting to `~/.pi/agent`, the
+live directory Pi reads (`BC_DRAIN_PI_DIR` to override), each preflighted with an
+actionable error. Positional argument dropped; no documented invocation used one.
+Verified 23/23 with no arguments and no shim, from an unrelated cwd, plus both
+error paths.
+
+Finding recorded, not fixed: check 1's "never edits policy" evidence is inert.
+It hashes a path that does not exist, assigns the same variable to
+`policy_hash_before` and `policy_hash_after`, and never compares them — evidence
+identical whether or not the policy was rewritten, which is the class the
+discriminating-evidence rule added the same day forbids. The correct subject is
+the user-owned policy outside this repository, so the fix needs a decision.
