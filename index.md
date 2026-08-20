@@ -115,6 +115,7 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
 - [bc-grill-to-ship-loop.md](docs/plans/implemented/bc-grill-to-ship-loop.md) — the plan→execute loop design and its planner/executor implementation record.
 - [bc-drain-issues-v2-token-efficiency.md](docs/plans/implemented/bc-drain-issues-v2-token-efficiency.md) — the bounded-rework design shipped after Gate A and Gate B validation.
+- [bc-drain-issues-architecture-feedback.md](docs/plans/implemented/bc-drain-issues-architecture-feedback.md) — the bounded post-landing architecture-observation feedback edge and human-gated consumer handoff.
 - [portability.md](docs/plans/implemented/portability.md) — the portability design and its smoke-test evidence.
 
 ## Research

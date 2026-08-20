@@ -1,8 +1,8 @@
 # bc-drain-issues Architecture Feedback Implementation Plan
 
 Date: 2026-08-20
-Status: active
-Verification: plan reviewed; implementation and pressure runs outstanding
+Status: implemented
+Verification: Gate A 28/28; clean current-body consumer fixtures PASS; workspace lint has only pre-existing deployed-but-never-run errors; completed 2026-08-20
 
 **Goal:** Carry one optional, evidence-backed structural observation from a landed drain issue into the project's architecture-review inbox without adding a drain phase, child dispatch, or review authority.
 
@@ -28,7 +28,7 @@ Verification: plan reviewed; implementation and pressure runs outstanding
 
 ### Create
 
-- `docs/plans/active/bc-drain-issues-architecture-feedback.md` — this implementation plan.
+- `docs/plans/implemented/bc-drain-issues-architecture-feedback.md` — this implementation plan.
 
 ### Modify
 
@@ -76,7 +76,7 @@ Verification: plan reviewed; implementation and pressure runs outstanding
    - use the exact compact fields `source`, `module`, `interface_or_seam`, `friction`, `deletion_test`, `evidence`, and `status: open`;
    - use the shared deep-module vocabulary and omit shape-only taste;
    - bind the observation to the landed issue/commit and current tree, never to an unlanded worker diff;
-   - resolve the scaffolded-project inbox at `.bc-agent/research/architecture-observations.md` or the equivalent path explicitly declared by project instructions, then append it as a separate context-only update, never to the review packet or implementation diff;
+   - resolve the scaffolded-project inbox at `.bc-agent/research/architecture-observations.md` or the equivalent path explicitly declared by project instructions, then prepend the new entry in the consumer's current newest-first order so bounded reads cannot hide new observations below older history; keep it as a separate context-only update, never in the review packet or implementation diff;
    - report the inbox path/context commit or the explicit not-persisted reason;
    - state that this output cannot block, rework, relabel, or otherwise affect the issue.
 2. Keep the existing final report's required fields unchanged; add the observation as an optional per-issue field so ordinary issues produce no extra narrative.
@@ -155,7 +155,7 @@ git diff --check
 git status --short
 ```
 
-Expected results: the drain pressure runner passes all checks, lint reports no stale generated status or broken links, and `git status --short` is clean after the task commit (before that commit it lists only the paths in the task's commit command).
+Expected results: the drain pressure runner passes all checks, lint reports no stale generated status or broken links and retains only the pre-existing deployed-but-never-run errors plus existing deployed-symlink warnings, and `git status --short` is clean after the task commit (before that commit it lists only the paths in the task's commit command).
 
 **Commit**
 
@@ -166,12 +166,12 @@ git commit -m "Document the drain architecture feedback edge"
 
 ## Final acceptance checklist
 
-- [ ] A normal landed issue can omit the observation entirely.
-- [ ] A structural observation is evidence-backed, bounded to one per issue, and uses the shared vocabulary.
-- [ ] Shape preference never becomes architecture work by itself.
-- [ ] No observation enters the review packet or changes tier, approval, rework, landing, or issue state.
-- [ ] Missing persistence is explicit rather than silently redirected.
-- [ ] The architecture skill reads only unresolved observations, verifies them against current code, and keeps the human candidate-selection gate.
-- [ ] Consumed observations receive a durable disposition and are not repeatedly rediscovered.
-- [ ] Existing Gate A checks, the architecture pressure scenario, and workspace lint pass.
-- [ ] Both concept frontmatters and `docs/status.md` state the actual test result; no deployment occurs before the pressure runs hold.
+- [x] A normal landed issue can omit the observation entirely.
+- [x] A structural observation is evidence-backed, bounded to one per issue, and uses the shared vocabulary.
+- [x] Shape preference never becomes architecture work by itself.
+- [x] No observation enters the review packet or changes tier, approval, rework, landing, or issue state.
+- [x] Missing persistence is explicit rather than silently redirected.
+- [x] The architecture skill reads only unresolved observations, verifies them against current code, and keeps the human candidate-selection gate.
+- [x] Consumed observations receive a durable disposition and are not repeatedly rediscovered.
+- [x] Existing Gate A checks and the architecture pressure scenario pass; workspace lint has no new drift and retains only the pre-existing deployed-but-never-run errors plus existing deployed-symlink warnings.
+- [x] Both concept frontmatters and `docs/status.md` state the actual test result; the pressure runs hold, while Gate B remains outstanding and no model-token result is claimed.

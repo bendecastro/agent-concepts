@@ -898,3 +898,6 @@ Wrote `docs/plans/active/bc-drain-issues-architecture-feedback.md` for the bound
 
 ## [2026-08-20] implement+test | architecture observation feedback edge
 Documented `bc-drain-issues` and `improve-codebase-architecture` as a bounded post-landing observation feedback edge with declared project-context persistence, human disposition, and no autonomous issue creation. Gate A **PASS 28/28**; current clean consumer fixtures are parent-verified **PASS**. Gate B remains outstanding, with no model-token result claimed.
+
+## [2026-08-20] implement | architecture feedback integration corrections
+Clarified newest-first inbox persistence and current tiered drain outcomes, moved the completed plan to `implemented/`, and updated pipeline/index bookkeeping. Existing lint limitations remain unchanged.

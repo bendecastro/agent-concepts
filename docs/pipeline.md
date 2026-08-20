@@ -19,11 +19,15 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
   ready-for-agent issue queue  ◄──────────────────────────────────────────┘
    │
    ▼   /bc-drain-issues (/implement) ── autonomous execution (AFK) ──┐
-   │     loop: claim next unblocked issue (remote claim branch)            │
-   │       └► fresh worker: tdd OR diagnosing-bugs ─► validate ─► parallel Spec + Standards review ─► commit ─► push master ─► close
-   │            └► on failure: park (needs-human), continue                │
+   │     loop: claim next unblocked issue (remote claim branch)       │
+   │       └► fresh worker: tdd OR diagnosing-bugs ─► validate        │
+   │            └► deterministic gate ─► tiered review                │
+   │                 (tier 1: combined; tier 2: Spec + Standards axes)
+   │                 └► same-worktree rework/re-review (up to 3 cycles)
+   │                      └► driver-owned commit ─► push master ─► close
+   │       └► terminal outcomes: HUMAN_BLOCKED / REWORK_DEFERRED / SYSTEMIC_FAILURE
    ▼                                                                       │
-  shipped (trunk), parked issues flagged for a human  ◄───────────────────┘
+  shipped (trunk) ◄────────────────────────────────────────────────────────┘
 ```
 
 ## Optional architecture feedback edge (bounded, not an autonomous phase)
@@ -33,7 +37,7 @@ bc-plan-to-issues → bc-drain-issues → optional observation inbox
                                       → human-gated improve-codebase-architecture → bc-plan-to-issues
 ```
 
-After a landed issue, `bc-drain-issues` may append at most one bounded structural observation to the project's declared context inbox. `improve-codebase-architecture` verifies the open evidence before exploration and keeps its existing human candidate-selection and grilling gates. This is feedback, not another autonomous drain phase or a direct issue-creation path: only the human-gated route back through `bc-plan-to-issues` can turn a verified runway candidate into planned issues.
+After a landed issue, `bc-drain-issues` may prepend at most one bounded structural observation to the project's declared context inbox. New entries are written in the consumer's current newest-first order, so bounded reads cannot hide new observations below older history. This is a separate context-only, non-authoritative update. `improve-codebase-architecture` verifies the open evidence before exploration and keeps its existing human candidate-selection and grilling gates. This is feedback, not another autonomous drain phase or a direct issue-creation path: only the human-gated route back through `bc-plan-to-issues` can turn a verified runway candidate into planned issues.
 
 ## Setup (once per repo) — `/bc-init-agent`
 
@@ -47,7 +51,7 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 
 **Planning — `/bc-plan-to-issues`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`CONTEXT.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. Two human gates: the grill and the slicing quiz. Composes model-invoked disciplines only (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never the user-invoked single-step orchestrators.
 
-**Execution — `/bc-drain-issues` / `/implement`** (AFK, run after planning/triage). A preflight-gated driver loop atomically claims each unblocked issue, dispatches a **fresh worker** to build it test-first (or run `diagnosing-bugs` for bugs), then requires independent read-only **Spec + Standards** review before trunk-based landing (commit → push `master` → close with a validation comment). One remediation/re-review is allowed; material unresolved findings park cleanly, and a run of parks trips the circuit-breaker. The only human gate is preflight; everything human happens before the loop starts.
+**Execution — `/bc-drain-issues` / `/implement`** (AFK, run after planning/triage). A preflight-gated driver loop atomically claims each unblocked issue, dispatches a **fresh worker** to build it test-first (or run `diagnosing-bugs` for bugs), runs a deterministic pre-review gate, then applies tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards) before trunk-based landing (commit → push `master` → close with a validation comment). Material findings receive bounded same-worktree rework/re-review for up to three cycles. Terminal outcomes stay distinct: `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable issue-local environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; and `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. Preflight is the only planned human gate; these outcomes are reported rather than collapsed into one parking state.
 
 ## Composition map
 
@@ -65,9 +69,9 @@ The single-step orchestrators (`grill-me`/`to-spec`/`to-tickets`) still exist fo
 - **Push is authorization-gated.** `bc-drain-issues` preflight runs `scripts/publish-check.py`; a repo with no allow rule in `~/.config/agent-concepts/publish.yaml` **blocks** the AFK push (abort, or opt-in commit-only-local). The loop never edits the policy to authorize itself.
 - **Trunk-based, not PR-per-slice** — so dependency-ordered slices see prior work, and it matches what `publish.yaml` authorizes.
 - **Parallel-safe claiming** — each drain runner creates a remote `bc-drain-claims/issue-<n>` branch before working an issue; concurrent runners skip issues they fail to claim.
-- **Park-and-continue + circuit-breaker** — one bad slice doesn't halt the run; a run of parks does.
+- **Bounded outcome handling** — fixable material findings use same-worktree rework/re-review for up to three cycles and then `REWORK_DEFERRED`; `HUMAN_BLOCKED` and `SYSTEMIC_FAILURE` remain distinct classifications.
 - **Completion gate reads the project's own validation conventions**, not a hardcoded test command.
-- **Two-axis review gates landings** — independent Spec + Standards reviewers approve the uncommitted diff; one remediation/re-review is allowed, then unresolved material findings park.
+- **Tiered review gates landings** — the deterministic gate runs first; tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec + Standards), with one-way escalation on gate rejection or a Critical finding.
 - **Optional bounded improvement** — after a slice is GREEN, the per-issue agent runs `bc-autoresearch-loop` *only when* the issue targets a measurable metric; a change is kept only if correctness still holds and the metric provably improves, else reverted. No metric ⇒ skipped (never optimize blind).
 
-See `plans/bc-grill-to-ship-loop.md` for the design rationale and `concepts/<name>/CONCEPT.md` for each skill's decisions.
+See `plans/implemented/bc-grill-to-ship-loop.md` for the design rationale and `concepts/<name>/CONCEPT.md` for each skill's decisions.
