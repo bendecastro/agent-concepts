@@ -892,3 +892,6 @@ approval survives a run whose reviewer records are gone. Fixed `code-review`'s A
 which carried three stale copies of drain parameters (both-axes dispatch, full packet, one
 rework cycle) and now points at the drain instead. Gate A **PASS 27/27**; checks 26–27 verified
 fireable four ways.
+
+## [2026-08-20] plan | bc-drain-issues architecture feedback
+Wrote `docs/plans/active/bc-drain-issues-architecture-feedback.md` for the bounded drain → architecture-review feedback edge. The plan keeps observations outside review authority and routes them through a durable, human-verified inbox; implementation and pressure testing remain outstanding.
