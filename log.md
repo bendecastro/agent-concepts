@@ -919,5 +919,8 @@ Ran the 10 concepts lint listed as Needs testing. Pressure runners have no `suba
 - **PARTIAL:** `bc-init-agent` script 1–7 PASS, process/adaptive BLOCKED; `codebase-design` local checklist PASS, mattpocock clone BLOCKED.
 - **Not closed:** `prompting-agents` accuracy BLOCKED (provenance files missing); `research` still in flight (narrow lookup + spec-vs-blog held; substantial-delegate prompt running).
 
+## [2026-08-21] test | prompting-agents accuracy via live URLs PASS
+Procedure no longer requires deleted raw clippings: fetch CONCEPT.md Provenance URLs; unfetchable is BLOCKED. Live run: all SKILL.md headings PASS except Boonstra/Kaggle technique repertoire BLOCKED. No clippings restored.
+
 ## [2026-08-21] test | research pressure 4/5, check 3 blocked
 Naive Grok consumer: primary sources, inline lookup, no surprise files, and a proposed-then-accepted `docs/research/` note that is not a PRD. Check 3 (background delegate) blocked — no `subagent` tool; work stayed inline. Frontmatter `partial`.

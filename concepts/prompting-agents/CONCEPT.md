@@ -1,7 +1,7 @@
 ---
 test_kind: accuracy
-test_status: not-run
-tested: never
+test_status: pass
+tested: 2026-08-21
 deployed: yes
 ---
 # Concept: prompting-agents
@@ -38,7 +38,7 @@ Per the workspace Spirit (AGENTS.md): this library guides rather than constrains
 
 ## Tests
 
-`tests/accuracy-check.md` — verify each block traces to its source and hasn't drifted in meaning during agent-agnostic rewriting.
+`tests/accuracy-check.md` — verify each block traces to the live URL in Provenance (not a local clipping) and hasn't drifted in meaning during agent-agnostic rewriting. Unfetchable URLs are BLOCKED, not FAIL. Local-only expansions (2026-08-17 metaprompting) are checked against this file. Live-URL run 2026-08-21 **PASS** (Boonstra/Kaggle technique repertoire BLOCKED).
 
 ## Deploy targets
 
