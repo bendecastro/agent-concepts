@@ -1,7 +1,7 @@
 ---
 test_kind: accuracy
-test_status: partial
-tested: never
+test_status: pass
+tested: 2026-08-21
 deployed: yes
 ---
 # Concept: domain-modeling
@@ -24,7 +24,7 @@ Model-invoked discipline for actively building and sharpening a project's domain
 
 ## Tests
 
-`tests/accuracy-check.md` — checks the body faithfully encodes the three disciplines (challenge / stress-test / cross-reference), the pure-glossary rule, the multi-context `CONTEXT-MAP.md` layout, the ADR three-part bar, and the 2026-08-18 alternatives / supersede clauses. Discipline behavior is pressure-tested transitively via `grill-me` (attacks 2–4 there target this skill). The new ADR clauses are accuracy-checked only; no dedicated pressure rerun yet.
+`tests/accuracy-check.md` — checks the body faithfully encodes the three disciplines (challenge / stress-test / cross-reference), the pure-glossary rule, the multi-context `CONTEXT-MAP.md` layout, the ADR three-part bar, and the 2026-08-18 alternatives / supersede clauses. Accuracy-checked 2026-08-21 **PASS** (including the 2026-08-18 ADR alternatives/supersede clauses, flagged in CONCEPT.md as not-upstream). Discipline behavior is pressure-tested transitively via `grill-me` (attacks 2–4 there target this skill).
 
 ## Deploy targets
 

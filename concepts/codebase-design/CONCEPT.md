@@ -1,7 +1,7 @@
 ---
 test_kind: accuracy
-test_status: not-run
-tested: never
+test_status: partial
+tested: 2026-08-21
 deployed: yes
 ---
 # Concept: codebase-design
@@ -21,7 +21,7 @@ Model-invoked **reference vocabulary** for designing deep modules: a lot of beha
 
 ## Tests
 
-`tests/accuracy-check.md` — confirms the glossary terms, the deep-vs-shallow framing, the four principles (depth-is-interface, deletion test, interface-is-test-surface, one-vs-two-adapter), the testability rules, and the rejected framings are present and faithful.
+`tests/accuracy-check.md` — confirms the glossary terms, the deep-vs-shallow framing, the four principles (depth-is-interface, deletion test, interface-is-test-surface, one-vs-two-adapter), the testability rules, and the rejected framings are present and faithful. Accuracy-checked 2026-08-21 **PASS** against the local checklist in `body/SKILL.md`; **BLOCKED** on verbatim comparison to `mattpocock/skills` (clone not in tree). Frontmatter stays `partial` until that comparison runs.
 
 ## Deploy targets
 

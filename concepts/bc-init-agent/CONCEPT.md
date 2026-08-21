@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
+test_status: partial
+tested: 2026-08-21
 deployed: 2026-06-21
 ---
 # Concept: bc-init-agent
@@ -41,7 +41,7 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 
 ## Tests
 
-`tests/scenario.md` — verifies the scaffold produces the expected tree with substituted placeholders, the clobber guard refuses an existing vault, the root `AGENTS.md` is preserved if present, and the publish.yaml step is offer-then-confirm (never auto-push). Process/generative skill (lower silent-failure risk than the gate orchestrators); the script's output is deterministically checkable.
+`tests/scenario.md` — verifies the scaffold produces the expected tree with substituted placeholders, existing files are left untouched, and the publish.yaml step is offer-then-confirm (never auto-push). 2026-08-21: script checks 1–7 **PASS** (tree, substitution, idempotent re-run, additive plug-in, dry-run/no-overwrite, slug validation, archetype overlays). Process checks 8–12 and the six adaptive-onboarding scenarios **BLOCKED** this run (pressure runners have no `subagent` tool). Frontmatter stays `partial` until a naive consumer re-runs the process half. Note: CONCEPT Tests previously said "clobber guard refuses an existing vault"; current `scaffold.py` is additive.
 
 ## Deploy targets
 

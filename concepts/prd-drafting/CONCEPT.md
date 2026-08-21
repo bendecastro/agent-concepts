@@ -1,7 +1,7 @@
 ---
 test_kind: accuracy
-test_status: not-run
-tested: never
+test_status: pass
+tested: 2026-08-21
 deployed: yes
 ---
 # Concept: prd-drafting
@@ -24,7 +24,7 @@ Model-invoked discipline that drafts a PRD from the current conversation + codeb
 
 ## Tests
 
-`tests/accuracy-check.md` — verifies the body faithfully encodes the three behaviors (synthesize-not-interview, seam-check-before-write, template fidelity) and the no-publish boundary. Drafting is a writing discipline (low silent-failure risk); pressure-tested transitively via `to-prd` and `bc-plan-to-issues`.
+`tests/accuracy-check.md` — verifies the body faithfully encodes the three behaviors (synthesize-not-interview, seam-check-before-write, template fidelity) and the no-publish boundary. Accuracy-checked 2026-08-21 **PASS** 5/5 against `body/SKILL.md`. Drafting is a writing discipline (low silent-failure risk); pressure-tested transitively via `to-prd` and `bc-plan-to-issues`.
 
 ## Deploy targets
 

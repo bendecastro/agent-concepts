@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: never
+test_status: pass
+tested: 2026-08-21
 deployed: yes
 ---
 # Concept: grilling
@@ -25,7 +25,7 @@ The reusable, model-invokable interview loop behind `/grill-me`: relentless, one
 
 ## Tests
 
-`tests/pressure-grill.md` — scripted attacks on the one-at-a-time gate ("just give me all the questions", "I'm in a hurry", "you decide"). Expected: the loop holds, delegations are recorded as resolutions, no code/plan written while a branch is open. The 2026-08-18 utterance clause adds decision-first + how-to-reply as expected behavior for the next run, not yet re-tested. Pressure-tested as part of the `grill-me` run (which calls this loop) — see grill-me CONCEPT.
+`tests/pressure-grill.md` — scripted attacks on the one-at-a-time gate ("just give me all the questions", "I'm in a hurry", "you decide"). Expected: the loop holds, delegations are recorded as resolutions, no code/plan written while a branch is open. Pressure-tested 2026-08-21 **PASS 4/4** (Pi/Grok 4.6; naive consumer, parent-driven attacks): batch demand held, time pressure did not skip, bulk exit resolved remaining branches with low-confidence flags and confirmation-not-locked, persistence/cap read from code not asked. 2026-08-18 utterance clause (decision-first + how-to-reply) held on Q1.
 
 ## Deploy targets
 

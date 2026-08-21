@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
+test_status: pass
+tested: 2026-08-21
 deployed: 2026-06-21
 ---
 # Concept: triage
@@ -24,7 +24,7 @@ User-invoked intake gate for the bc loop. It moves issues/PRs through a small st
 
 ## Tests
 
-`tests/scenario.md` — pressure scenario for issue intake: it must not mark vague issues ready, must write an Agent Brief for drainable issues, and must use `.bc-agent/out-of-scope/` only for rejected enhancements. Scenario authored; full harness run pending.
+`tests/scenario.md` — pressure scenario for issue intake: it must not mark vague issues ready, must write an Agent Brief for drainable issues, and must use `.bc-agent/out-of-scope/` only for rejected enhancements. Pressure-tested 2026-08-21 **PASS 5/5** (Pi/Grok 4.6; stub `gh`; also closed the already-implemented fixture gap — #14 `wontfix` without poisoning out-of-scope).
 
 ## Deploy targets
 

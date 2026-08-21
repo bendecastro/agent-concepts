@@ -912,3 +912,9 @@ Clarified suppressed-row wording so only non-suppressed eligible entries actuall
 ## [2026-08-21] ingest+implement+test+deploy | handoff
 Surveyed the public session-handoff skills and built `handoff` from the four that had ideas: Pocock (narrowness, reference-by-path, suggested skills), status203 (active/consumed store, the ledger observation, leak check), orzilca (the handoff is data not instructions; verified/unverified/broken), djhyes (recorded, not adopted). Resolved their three contradictions in `CONCEPT.md`; departed from Pocock on one point, putting the overnight/rate-limit case in scope because compaction cannot cross a process boundary.
 Pressure test 5/7 on first pass. Both failures were guards that could not compete rather than missing rules: the narrowness table was never consulted by the routing (inert guard), and the no-edits rule was prose that lost to "it's a one-liner". Relocated both — narrowness became routing step 1, no-edits became a `## Never` with an order-not-refusal escape — and the full sweep passed 7/7. Deployed to shared/Pi/Claude.
+
+## [2026-08-21] test | lint Needs-testing board (Grok)
+Ran the 10 concepts lint listed as Needs testing. Pressure runners have no `subagent` tool, so parent launched naive Grok consumers and graded artifacts.
+- **PASS:** `prototype` 4/4, `frontend-design` 4/4 (clears 2026-06-21 MIXED), `triage` 5/5 (already-implemented gap closed), `grilling` 4/4 including utterance clause, `prd-drafting` accuracy 5/5, `domain-modeling` accuracy including 2026-08-18 ADR clauses.
+- **PARTIAL:** `bc-init-agent` script 1–7 PASS, process/adaptive BLOCKED; `codebase-design` local checklist PASS, mattpocock clone BLOCKED.
+- **Not closed:** `prompting-agents` accuracy BLOCKED (provenance files missing); `research` still in flight (narrow lookup + spec-vs-blog held; substantial-delegate prompt running).

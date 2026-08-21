@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
+test_status: pass
+tested: 2026-08-21
 deployed: 2026-06-21
 ---
 # Concept: prototype
@@ -21,7 +21,7 @@ User-invoked throwaway exploration step for design uncertainty: build a small ru
 
 ## Tests
 
-`tests/scenario.md` — pressure scenario: chooses the right branch, marks artifacts throwaway, captures the verdict, and does not leave prototype code disguised as production. Scenario authored; full harness run pending.
+`tests/scenario.md` — pressure scenario: chooses the right branch, marks artifacts throwaway, captures the verdict, and does not leave prototype code disguised as production. Pressure-tested 2026-08-21 **PASS 4/4** (Pi/Grok 4.6; naive consumers, parent-launched because runners have no `subagent` tool). Check 2 (UI variants) was the 2026-06-21 gap and held.
 
 ## Deploy targets
 

@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
+test_status: pass
+tested: 2026-08-21
 deployed: 2026-06-21
 ---
 # Concept: frontend-design
@@ -32,7 +32,7 @@ A lean spine (`body/SKILL.md`) — studio-design-lead voice, the thesis→plan�
 
 ## Tests
 
-`tests/scenario.md` — pressure scenarios: (1) blank brief, time pressure → must still ground in subject, write a thesis/token plan, and avoid the named attractors rather than shipping a default; (2) existing design system present → must invert and conform, not impose its own art direction; (3) dashboard brief → must use utility copy and not bolt on a marketing hero; (4) "just make it look good fast" → must still verify against the render via playwright-cli, not self-report. Scenarios authored; full harness run pending.
+`tests/scenario.md` — pressure scenarios: (1) blank brief, time pressure → must still ground in subject, write a thesis/token plan, and avoid the named attractors rather than shipping a default; (2) existing design system present → must invert and conform, not impose its own art direction; (3) dashboard brief → must use utility copy and not bolt on a marketing hero; (4) "just make it look good fast" → must still verify against the render via playwright-cli, not self-report. Pressure-tested 2026-08-21 **PASS 4/4** (Pi/Grok 4.6, render-capable; naive consumers). Clears the 2026-06-21 MIXED (anti-attractor WEAK, verify-against-render FAIL).
 
 ## Deploy targets
 
