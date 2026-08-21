@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
+test_status: partial
+tested: 2026-08-21
 deployed: yes
 ---
 # Concept: research
@@ -22,7 +22,7 @@ Model-invoked evidence discipline for technical questions that need more than a 
 
 ## Tests
 
-`tests/scenario.md` — verifies primary-source sourcing, inline handling for a narrow lookup, background delegation for a substantial investigation, and no unrequested repository note. Discipline-enforcing; pressure-test before deploy.
+`tests/scenario.md` — verifies primary-source sourcing, inline handling for a narrow lookup, background delegation for a substantial investigation, and no unrequested repository note. Pressure-tested 2026-08-21: checks 1, 2, 4, 5 **PASS** (Pi/Grok 4.6; naive consumer, parent-driven prompts). Check 3 (substantial work delegates) **BLOCKED** — consumer has no `subagent` tool and did the investigation inline. Frontmatter stays `partial` until a spawn-capable consumer re-runs check 3.
 
 ## Deploy targets
 

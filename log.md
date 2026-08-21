@@ -918,3 +918,6 @@ Ran the 10 concepts lint listed as Needs testing. Pressure runners have no `suba
 - **PASS:** `prototype` 4/4, `frontend-design` 4/4 (clears 2026-06-21 MIXED), `triage` 5/5 (already-implemented gap closed), `grilling` 4/4 including utterance clause, `prd-drafting` accuracy 5/5, `domain-modeling` accuracy including 2026-08-18 ADR clauses.
 - **PARTIAL:** `bc-init-agent` script 1–7 PASS, process/adaptive BLOCKED; `codebase-design` local checklist PASS, mattpocock clone BLOCKED.
 - **Not closed:** `prompting-agents` accuracy BLOCKED (provenance files missing); `research` still in flight (narrow lookup + spec-vs-blog held; substantial-delegate prompt running).
+
+## [2026-08-21] test | research pressure 4/5, check 3 blocked
+Naive Grok consumer: primary sources, inline lookup, no surprise files, and a proposed-then-accepted `docs/research/` note that is not a PRD. Check 3 (background delegate) blocked — no `subagent` tool; work stayed inline. Frontmatter `partial`.

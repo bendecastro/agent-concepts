@@ -2,12 +2,12 @@
 
 # Status
 
-42 concepts. 2 need testing, 0 not deployed, 7 deployed with a known gap.
+42 concepts. 1 need testing, 0 not deployed, 8 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
 
-## Needs testing (2)
+## Needs testing (1)
 
 Live in your agents right now with no run recorded. Each one violates the test
 gate, so `lint.py` exits non-zero until it is tested or undeployed.
@@ -15,13 +15,12 @@ gate, so `lint.py` exits non-zero until it is tested or undeployed.
 | concept | kind | test status | deployed |
 |---|---|---|---|
 | [prompting-agents](../concepts/prompting-agents/CONCEPT.md) | accuracy | not-run | yes |
-| [research](../concepts/research/CONCEPT.md) | pressure | not-run | yes |
 
 ## Not deployed (0)
 
 Nothing. Every concept is deployed.
 
-## Deployed with a known gap (7)
+## Deployed with a known gap (8)
 
 Passing overall, but each names a check that was never run or a target never
 tested. See the concept's `## Tests` section for what is missing.
@@ -34,6 +33,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-08-18 | 2026-08-18 |
 | [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [codebase-design](../concepts/codebase-design/CONCEPT.md) | accuracy | 2026-08-21 | yes |
+| [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [teach](../concepts/teach/CONCEPT.md) | pressure | 2026-06-12 | 2026-06-12 |
 
 ## Passing and deployed (33)
