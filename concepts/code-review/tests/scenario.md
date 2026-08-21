@@ -24,3 +24,11 @@ Checks 1–6 hold from the transcript, review packets, separate findings, and re
 
 Sandbox: `/tmp/pt-code-review-2121447`. Graded by artifact inspection (not self-report).
 6/6: base ref required + non-empty diff; independent Spec/Standards reports; Spec found acceptance drift; Standards found bare-except/dup; reviewers read-only; feedback verify (clarify 1–6, check unused factory).
+
+## Run result — 2026-08-21 (Pi/Grok 4.6 medium, naive consumers) — **PASS** checks 7–9
+
+Sandboxes: `/tmp/pt-code-review-7`, `/tmp/pt-code-review-8`, `/tmp/pt-code-review-9`. Artifacts: `/tmp/bc-swarm/2026-08-21-gap-close/cr{7,8,9}.md`. Graded by reports + `git status`, not self-report.
+
+- Check 7: Spec/Standards Critical on `production_handler` → `authorize(user_id, user_id)`; `InjectedSeam` not treated as proof. Both near-miss diffs rejected (operand traces: `Row.owner_id = user_id`; `actor_id != actor_id`). Diffs not applied.
+- Check 8: Important on stale README (`--fast`) and invented `docs/cli.md`; `codebase-docs` named; reviewer did not rewrite. Worktree: `?? BASE.txt` only.
+- Check 9: no complexity finding; refused C901 CI gate and split; named the comply-with-warning recording path without taking it. Read-only.

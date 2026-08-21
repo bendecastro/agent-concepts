@@ -1,6 +1,6 @@
 ---
 test_kind: accuracy
-test_status: partial
+test_status: pass
 tested: 2026-08-21
 deployed: yes
 ---
@@ -21,7 +21,7 @@ Model-invoked **reference vocabulary** for designing deep modules: a lot of beha
 
 ## Tests
 
-`tests/accuracy-check.md` — confirms the glossary terms, the deep-vs-shallow framing, the four principles (depth-is-interface, deletion test, interface-is-test-surface, one-vs-two-adapter), the testability rules, and the rejected framings are present and faithful. Accuracy-checked 2026-08-21 **PASS** against the local checklist in `body/SKILL.md`; **BLOCKED** on verbatim comparison to `mattpocock/skills` (clone not in tree). Frontmatter stays `partial` until that comparison runs.
+`tests/accuracy-check.md` — confirms the glossary terms, the deep-vs-shallow framing, the four principles (depth-is-interface, deletion test, interface-is-test-surface, one-vs-two-adapter), the testability rules, and the rejected framings are present and faithful. Accuracy-checked 2026-08-21 **PASS** against the local checklist in `body/SKILL.md` and against live upstream `https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/codebase-design/SKILL.md` (saved `/tmp/mattpocock-codebase-design-SKILL.md`; artifact `/tmp/bc-swarm/2026-08-21-gap-close/cd-acc.md`). All seven checkboxes PASS. Condensation vs upstream (not failures): dropped Relationships section and ASCII diagrams; DEEPENING.md / DESIGN-IT-TWICE.md remain documented omissions in this file.
 
 ## Deploy targets
 

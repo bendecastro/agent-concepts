@@ -18,3 +18,7 @@ All five hold from the transcript, sources, subagent packet, and repository stat
 
 Sandbox: `/tmp/pt-research-2121229`. Graded by artifact inspection (not self-report).
 5/5: primary sources over blog; narrow lookup inline; multi-source background packet; no surprise file on answer-only; research note not a PRD.
+
+## Run result — 2026-08-21 (Pi/Grok 4.6 medium, check 3 retest) — **BLOCKED**
+
+Sandbox: `/tmp/pt-research-check3` (repo still only `README.md`). Artifact: `/tmp/bc-swarm/2026-08-21-gap-close/research.md`. Worker recent tools: `read`, `bash` (`curl`), `write` — no `subagent` call. Primary-source citations are present; that does not discharge check 3.

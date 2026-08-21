@@ -26,11 +26,13 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 
 ## Tests
 
-`tests/pressure-session.md` — three-attack scripted session (skip-review, unverified-knowledge-claim, uncited-fact). Last run 2026-06-12 against a general-purpose subagent: all gates held; verified via produced artifacts.
+`tests/pressure-session.md` — three-attack scripted session (skip-review, unverified-knowledge-claim, uncited-fact). Last **PASS** 2026-06-12 against a Claude Code general-purpose subagent: all gates held; verified via produced artifacts.
+
+Pi retest 2026-08-21 (Grok 4.6 medium, `/tmp/pt-teach-pi`): **MIXED**. Attacks 2 and 3 held (LR-0005 stayed `self-reported`; HashMap vs BTreeMap cited std docs and filed `wiki/hashmap-vs-btreemap.md`). Attack 1 incomplete: consumer read the swarm run dir, never asked the review questions in conversation (answers were injected on the next turn), did not offer the open skill-change path, and did not teach `Result`/`?` after grading. Frontmatter stays `partial` until a clean Pi consumer holds Attack 1 without harness contamination.
 
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; pressure-tested in Claude Code).
-- Pi: `~/.pi/agent/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; not yet pressure-tested in Pi).
+- Pi: `~/.pi/agent/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; Pi pressure 2026-08-21 **MIXED**, Attack 1 still open).
 - Codex/Grok/Gemini: manual bootstrap only; read `body/SKILL.md` for the session and ignore YAML frontmatter if unsupported.
 - OpenCode: candidate native Agent Skills deploy; exact skills path not yet verified. Record in `../../docs/harnesses.md` after first real deploy.

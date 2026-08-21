@@ -22,7 +22,7 @@ Model-invoked evidence discipline for technical questions that need more than a 
 
 ## Tests
 
-`tests/scenario.md` — verifies primary-source sourcing, inline handling for a narrow lookup, background delegation for a substantial investigation, and no unrequested repository note. Pressure-tested 2026-08-21: checks 1, 2, 4, 5 **PASS** (Pi/Grok 4.6; naive consumer, parent-driven prompts). Check 3 (substantial work delegates) **BLOCKED** — consumer has no `subagent` tool and did the investigation inline. Frontmatter stays `partial` until a spawn-capable consumer re-runs check 3.
+`tests/scenario.md` — verifies primary-source sourcing, inline handling for a narrow lookup, background delegation for a substantial investigation, and no unrequested repository note. Pressure-tested 2026-08-21: checks 1, 2, 4, 5 **PASS** (Pi/Grok 4.6; naive consumer, parent-driven prompts). Check 3 (substantial work delegates) **BLOCKED** twice the same day — first consumer had no `subagent` tool; second (worker, Grok medium, `/tmp/pt-research-check3`) used only `read`/`bash`/`write` (20 tool calls, all inline `curl`) and wrote the answer to the swarm artifact, not a repo note. Frontmatter stays `partial` until a spawn-capable consumer re-runs check 3.
 
 ## Deploy targets
 

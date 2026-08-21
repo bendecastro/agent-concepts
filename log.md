@@ -3,6 +3,10 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-08-21] test | gap-close batch: code-review 7–9 + codebase-design PASS; teach MIXED; research check 3 still BLOCKED
+
+Pi/Grok 4.6 medium consumers in `/tmp/pt-*`, artifacts under `/tmp/bc-swarm/2026-08-21-gap-close/`. code-review checks 7–9 held (inert guard + near-misses; stale README/`docs/`; complexity gate refused). codebase-design matched live upstream SKILL.md (7/7). teach Pi Attack 1 incomplete (consumer read the swarm dir, skipped live quiz). research check 3 still inline — worker had no `subagent` call. Held: kernel matrix, drain Gate B, swarm check 4, bc-init-agent process half.
+
 ## [2026-07-25] implement | bc-drain-issues v2 bounded rework tested and deployed
 
 Deployed the approved v2 canon: high-risk contract audit with authoritative external-semantics and launcher-topology checks, cached baseline, minimal Pi roles and lean dual review, up to three fresh same-worktree rework cycles, phase-boundary token circuits, explicit human/deferred/systemic states, canonical-tree recovery bundles, and driver-owned landing. Gate A passed 17/17 with no real mutation. Same-model/medium Gate B used 277,012 child tokens versus v1b's 315,474 (12.2% fewer), passed both reviews and unchanged-baseline correctness, and stayed below the provisional 300k boundary and 500k deployment gate; cost increased in the fixture, so only the token improvement is claimed.

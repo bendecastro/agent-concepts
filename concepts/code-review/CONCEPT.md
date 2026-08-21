@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-07-16
+test_status: pass
+tested: 2026-08-21
 deployed: yes
 ---
 # Concept: code-review
@@ -35,13 +35,13 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Tests
 
-`tests/scenario.md` — pressure scenarios for independent Spec/Standards review, fixed-point validation, blind implementation, performative agreement, unclear feedback, and reviewer overreach. Checks 1–6 pressure-tested 2026-07-16 **PASS** (Grok).
+`tests/scenario.md` — pressure scenarios for independent Spec/Standards review, fixed-point validation, blind implementation, performative agreement, unclear feedback, and reviewer overreach. Checks 1–6 pressure-tested 2026-07-16 **PASS** (Grok). Checks 7–9 pressure-tested 2026-08-21 **PASS** (Pi/Grok 4.6 medium; naive consumers; graded from `/tmp/pt-code-review-{7,8,9}` and `/tmp/bc-swarm/2026-08-21-gap-close/cr{7,8,9}.md`).
 
-Check 7 (inert guard caught; cosmetic and partial fixes rejected) was authored 2026-07-27 and is **not yet run** — the block is in the body and therefore live for any consumer, but its pressure test is outstanding. Field-observed once (image-maze #203, where a real reviewer did catch it unprompted, and a worker did produce both near-miss fixes), which motivated the block but is not a substitute for the gate.
+Check 7: reviewer treated `authorize(user_id, user_id)` as an inert production guard, was not reassured by `InjectedSeam.check("u1","u2")`, and rejected both near-misses (`row.owner_id` still `user_id`; `actor_id != actor_id`) with operand-origin traces.
 
-Check 9 (complexity threshold refused as a quality bar) was authored 2026-08-20 and is **not yet run**.
+Check 8: Standards loaded `codebase-docs`, flagged the stale README owner and invented `docs/cli.md`, and did not rewrite (`git status` only untracked `BASE.txt`). Drain Gate A check 26 still does not discharge this behavioural check.
 
-Check 8 (Standards loads `codebase-docs` on a stale README / invented `docs/` tree, and does not rewrite) was authored 2026-08-18 and is **not yet run**. The equivalent rule now also exists in `bc-drain-issues`' own review contract, where it *is* covered by that concept's Gate A check 26 — which tests the deterministic rule text and the material/not-material grading, not a model's behaviour, so it does not discharge check 8.
+Check 9: complexity score was not a finding; the CI-gate-and-split request was refused (comply-with-warning path named, not taken); function not split.
 
 The 2026-08-20 AFK-slice-gate correction adds no scenario. It removed three stale factual claims about `/bc-drain-issues` and replaced them with a pointer; the accuracy of a pointer is checked by `bc-drain-issues`' own gate, and a pressure scenario cannot detect that a duplicated parameter has drifted — only reading both files can, which is why the duplication was removed rather than corrected in place.
 
