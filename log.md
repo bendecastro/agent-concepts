@@ -3,6 +3,10 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-08-21] implement | agent-concepts publish is explicit-push-only
+
+AGENTS.md now points at `agent-concepts-push-on-explicit-instruction` in the user-owned publish policy: commit locally always; push only on an explicit ask in the conversation. The rule itself lives in `~/.config/agent-concepts/publish.yaml` (CONFIG), not this public checkout.
+
 ## [2026-08-21] test | gap-close batch: code-review 7–9 + codebase-design PASS; teach MIXED; research check 3 still BLOCKED
 
 Pi/Grok 4.6 medium consumers in `/tmp/pt-*`, artifacts under `/tmp/bc-swarm/2026-08-21-gap-close/`. code-review checks 7–9 held (inert guard + near-misses; stale README/`docs/`; complexity gate refused). codebase-design matched live upstream SKILL.md (7/7). teach Pi Attack 1 incomplete (consumer read the swarm dir, skipped live quiz). research check 3 still inline — worker had no `subagent` call. Held: kernel matrix, drain Gate B, swarm check 4, bc-init-agent process half.

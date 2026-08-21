@@ -83,6 +83,6 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
   mechanically; it cannot catch a path that is merely personal, which stays a review concern.
 - `log.md` is a historical journal and is exempt: its paths were accurate when written.
 - No hardcoded home paths anywhere — `~` or `$HOME` only; symlinks relative.
-- Commit changes to this directory in the CONFIG git repo with a message saying which operation ran. Publishing follows `~/.config/agent-concepts/publish.yaml`; that user-owned policy currently authorizes pushing agent-authored CONFIG commits after status/diff inspection and validation.
+- Commit changes to this directory in this repo (not CONFIG) with a message saying which operation ran. Publishing follows `~/.config/agent-concepts/publish.yaml`; this repo's rule (`agent-concepts-push-on-explicit-instruction`) allows a push only when the user has explicitly asked in this conversation — a completed commit is not authorization to push.
 - Concept names are dash-case and unique across the workspace.
 - This workspace's value comes from encoding the user's specific workflows, not generic skill-list scraping. When ingesting, ask what's idiosyncratic about how the user wants it.
