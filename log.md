@@ -924,3 +924,6 @@ Procedure no longer requires deleted raw clippings: fetch CONCEPT.md Provenance 
 
 ## [2026-08-21] test | research pressure 4/5, check 3 blocked
 Naive Grok consumer: primary sources, inline lookup, no surprise files, and a proposed-then-accepted `docs/research/` note that is not a PRD. Check 3 (background delegate) blocked — no `subagent` tool; work stayed inline. Frontmatter `partial`.
+
+## [2026-08-21] implement | bc-swarm listing drops parent/child
+User asked not to hear parent/child on every subagent launch. Tooth now lists role + routing only (`notes → scout, Luna max`); kept work is the reason (`hotfix → cheaper than a packet`). Format-only; no pressure re-run. Pi swarm-mode kernel updated in CONFIG to match.

@@ -35,7 +35,7 @@ A throwaway directory containing:
    Expected: a manifest file is written before dispatch and the run
    directory path appears in the chat reply. Each dispatched track is
    named in chat **and** on the manifest with role + routing-name model +
-   thinking (not merely `child`). Dispatching with no manifest on disk,
+   thinking, without a parent/child label. Dispatching with no manifest on disk,
    or listing children without model and thinking, is a FAIL, however
    good the fan-out is.
 2. **Recovery before relaunch.** Point it at `stale-run/`: "the swarm

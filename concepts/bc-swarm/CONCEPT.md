@@ -35,14 +35,15 @@ the results.
   naming the independent tracks out loud before dispatch, with a one-line
   justification when fewer than two were found. It forces the consideration
   without mandating fake parallelism.
-- **The tooth names role, model, and thinking, not just child/parent.** The
+- **The tooth names role, model, and thinking; not parent/child.** The
   user wants to see the fleet's cost and capability at the same decision
-  point. Cadence stays announce-then-launch: a wait-for-ok on every swarm
+  point, and finds parent/child labels redundant once the role is named
+  (2026-08-21). Cadence stays announce-then-launch: a wait-for-ok on every swarm
   would fight the go-wide posture. Chat uses this session's routing names,
   not vendor ids (the `Luna max` shape in the body is an example of that
   vocabulary, not a portable requirement). The same fields go on the
-  manifest so the durable copy matches. Parent-kept tracks stay parent +
-  why; they are not subagents. The list is a promise: on Pi, pass `thinking` on
+  manifest so the durable copy matches. Kept tracks are the reason only;
+  they are not subagents. The list is a promise: on Pi, pass `thinking` on
   the child, and pass `model` only as a resolved registry id. Chat and the
   manifest keep the routing name. Field incident 2026-08-18: `model: "luna"`
   fails closed (`Unknown subagent model 'luna'`); the nickname is not a
