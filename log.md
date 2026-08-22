@@ -935,3 +935,26 @@ Naive Grok consumer: primary sources, inline lookup, no surprise files, and a pr
 
 ## [2026-08-21] implement | bc-swarm listing drops parent/child
 User asked not to hear parent/child on every subagent launch. Tooth now lists role + routing only (`notes → scout, Luna max`); kept work is the reason (`hotfix → cheaper than a packet`). Format-only; no pressure re-run. Pi swarm-mode kernel updated in CONFIG to match.
+
+## [2026-08-22] ingest+implement | bc-wiki-maintain from Perplexity Brain
+Ingested Perplexity's "Brain: agentic memory as a knowledge wiki" (19 Aug 2026) against the
+user's own vaults. Recon found 12 live project wikis and the diagnosis: rot is not laziness but
+*recorded* triggers — CV's `index.md` omits 21/38 pages incl. all `findings/`, and the
+architecture-runway nudge has read `TODO/TODO/TODO` since 2026-07-31, so it never fired once.
+Root rule adopted: triggers must be **computed** (git/filesystem), never recorded.
+New concept `bc-wiki-maintain`: stdlib detector ported from the personal wiki's `wiki_lint.py`
+(+ vault-root arg, Markdown links, git staleness, unpromoted-log backlog, qmd coverage,
+`PROMOTION_REQUIRED` contract), a promotion skill with three gates (additive-only; one dedicated
+commit; contradictions flagged into `open-questions/`, never resolved), and an **uninstalled**
+systemd user timer. `bc-init-agent` gains the skill-map pointer and its dead runway counter is
+replaced with a git-history signal. Took from Brain: capture/synthesis split, offline compile,
+deterministic lint precondition, git as audit+undo. Rejected: generated index (destroys the
+user's curation), required frontmatter (`updated:` duplicates what git knows), staged-tree
+semantic verification (Perplexity-scale concurrency, not 40 pages/one writer).
+Pressure scenario **not run**; nothing deployed.
+
+## [2026-08-22] lint | qmd registry coverage
+Registered the two unregistered live vaults (Homeflix public + private, `.agent/` not
+`.bc-agent/`, both active through 2026-08-19) and ignored image-maze `temp/` (84 of 238 indexed
+`.md` were generated run artifacts). Committed in Scripts as 79d17c6. CV stays excluded by
+design; the detector now reads that stated reason instead of flagging it.

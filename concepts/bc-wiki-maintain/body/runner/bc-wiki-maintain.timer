@@ -1,0 +1,12 @@
+[Unit]
+Description=Scheduled CV project wiki maintenance
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+RandomizedDelaySec=15min
+Persistent=true
+AccuracySec=1min
+Unit=bc-wiki-maintain.service
+
+[Install]
+WantedBy=timers.target

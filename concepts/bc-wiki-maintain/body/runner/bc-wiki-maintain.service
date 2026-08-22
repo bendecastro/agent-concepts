@@ -1,0 +1,20 @@
+[Unit]
+Description=Promote CV project wiki memory
+Documentation=man:systemd.service(5)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+SyslogIdentifier=bc-wiki-maintain
+WorkingDirectory=%h/Sync/Work/CV
+Environment=AGENT_CONCEPTS=%h/Sync/Work/PUBLIC/Agents
+Environment=VAULT_ROOT=%h/Sync/Work/CV/.bc-agent
+Environment=PI_BIN=%h/.local/bin/pi
+ExecStart=/usr/bin/bash -c 'exec "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/run-promotion.sh"'
+TimeoutStartSec=30min
+StandardOutput=journal
+StandardError=journal
+
+# The wrapper refuses dirty trees and exits non-zero on detection, agent, or commit
+# failures, so systemd records a failed run instead of silently accepting partial work.

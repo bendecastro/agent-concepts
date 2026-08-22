@@ -434,42 +434,70 @@ ARCHITECTURE_RUNWAY = """# Architecture Runway Cadence
 
 Date: __DATE__
 
-For code/hybrid wikis, this page tracks when to gently nudge the human toward
-`/improve-codebase-architecture`. The goal is to refresh architecture runway after enough
-implemented PRD-sized work has accumulated — not on a calendar timer.
+For code/hybrid wikis, this page gives a computed, optional signal for when to offer
+`/improve-codebase-architecture`. The signal comes from Git history; do not maintain a
+counter in this file. The goal is to refresh architecture runway after enough durable project
+work has accumulated, not after a calendar interval.
+
+## Computed check
+
+Run this before planning, refactor, or seam-adjacent work. It finds the newest commit whose
+message names an architecture review, then counts commits touching the durable project and
+live-task surfaces after that review:
+
+```sh
+review_tip="$(
+  git log --format='%H%x09%s' -- .bc-agent |
+    awk 'tolower($0) ~ /architecture.?review|arch.?review|improve-codebase-architecture/ { print $1; exit }'
+)"
+if [ -n "$review_tip" ]; then
+  review_range="$review_tip..HEAD"
+else
+  review_range="HEAD"
+fi
+planning_commits="$(git log --format='%h %cs %s' "$review_range" -- .bc-agent/project .bc-agent/tasks)"
+planning_count="$(printf '%s\\n' "$planning_commits" | sed '/^$/d' | wc -l)"
+printf 'Planning-surface commits since the latest recognized architecture review: %s\\n' "$planning_count"
+printf '%s\\n' "$planning_commits"
+```
+
+The `review_tip` lookup is deliberately fail-safe. If no review commit is recognizable, the
+range includes all reachable history and the signal may over-count. Git can count commits and
+paths; it cannot prove that a change was PRD-sized. Over-counting produces an optional nudge,
+not an unsafe edit. If a review commit uses a different subject, the same fallback applies.
 
 ## Nudge heuristic
 
-Give a brief, optional nudge when the current request is planning/refactor/seam-adjacent **and**
+Give a brief, optional nudge when the current request is planning/refactor/seam-adjacent and
 one of these is true:
 
-- 3 completed PRDs or PRD-sized slice groups have landed since the last architecture review.
-- 1 major architecture-heavy PRD has landed since the last architecture review.
+- `planning_count` is 3 or higher. This is a conservative Git-derived proxy for the former
+  three-PRD / PRD-sized-slice threshold, not a claim that Git understands PRD semantics.
 - The current work shows structural friction: unclear module boundaries, hard-to-test code,
   repeated bugs around the same seam, or "where should this live?" uncertainty.
 
+A request that is itself architecture-heavy can also qualify from its content. This page does
+not pretend to compute that judgment from filenames or commit messages.
+
 Do **not** block concrete fixes. The nudge is advisory:
 
-> Optional architecture runway nudge: I see multiple completed PRD-sized changes since the last architecture review. Before planning more work, do you want to run `/improve-codebase-architecture` to look for seams/testability improvements?
+> Optional architecture runway nudge: Git shows multiple planning-surface changes since the last recognized architecture review. Before planning more work, do you want to run `/improve-codebase-architecture` to look for seams and testability improvements?
 
-## Current cadence state
+## Review record
 
-Last architecture review:
-- Date: TODO
-- Artifact: TODO (`project/arch-review/...`, `research/...`, ADR, or log entry)
-
-Completed PRDs / PRD-sized slice groups since last review:
-- [ ] TODO — add each completed PRD-sized change here when `/bc-drain-issues` lands it
-- [ ] TODO
-- [ ] TODO
-
-Default nudge threshold: 3 completed PRDs, or sooner for architecture-heavy work.
+A review has no hand-maintained entry here. Store the review artifact in the normal project
+wiki location and include `architecture review` in the commit subject so the next computed check
+can find its boundary. If the subject does not use that wording, the fail-safe fallback simply
+counts more history and may nudge again.
 
 ## Agent update rules
 
-- When a PRD-sized implementation lands, add it to the checklist above unless it was already counted.
-- When `/improve-codebase-architecture` runs, reset this checklist and record the review artifact.
-- If `references/agent-skills.md` no longer lists `/improve-codebase-architecture`, remove the nudge and explain why here.
+- Run the computed check when the request is planning/refactor/seam-adjacent; do not edit this
+  page to record the result.
+- When `/improve-codebase-architecture` runs, commit its review artifact with an explicit
+  `architecture review` subject so future checks can establish a new boundary.
+- If `references/agent-skills.md` no longer lists `/improve-codebase-architecture`, remove the
+  nudge and explain why here.
 """
 
 
@@ -689,14 +717,15 @@ map so agents know what to invoke.
 - Planning disciplines: `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `codebase-design`.
 - Source-tree docs: `codebase-docs` — README / existing `docs/` / JSDoc only; not this vault.
 - Execution disciplines: `tdd`, `diagnosing-bugs`, `bc-autoresearch-loop`.
+- Wiki maintenance: `/bc-wiki-maintain` — compute vault health, find index/search drift, and promote durable log entries without silently resolving contradictions.
 
 ## Agent behavior
 
 If the user's request sounds like planning future codebase work, ask whether to enter
 `/bc-plan-to-issues` before implementing. Offer `/improve-codebase-architecture` first when
-the main uncertainty is architecture/seams. In code/hybrid wikis, check
-`conventions/architecture-runway.md` and give the optional architecture-runway nudge when the
-PRD-count threshold has been reached.
+the main uncertainty is architecture/seams. In code/hybrid wikis, run the computed check in
+`conventions/architecture-runway.md` and give the optional architecture-runway nudge when its
+planning-surface signal reaches the threshold.
 """
 
 
@@ -868,6 +897,8 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
          "root AGENTS.md should point source-tree README/docs/JSDoc at `codebase-docs` and keep that skill off `.bc-agent/`"),
         (vault / "references" / "agent-skills.md", "codebase-docs",
          "`references/agent-skills.md` should list `codebase-docs` for source-tree docs, not the vault"),
+        (vault / "references" / "agent-skills.md", "bc-wiki-maintain",
+         "`references/agent-skills.md` should list `/bc-wiki-maintain` as the canonical project-vault maintenance skill"),
     ]
     for path, needle, message in checks:
         if path.exists() and not _contains(path, needle):
