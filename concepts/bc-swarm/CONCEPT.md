@@ -75,13 +75,43 @@ the results.
   the delegation and trusting everything scales confabulation with fan-out;
   an anchor makes spot-checking cheap and constant per claim. Verifying
   *all* anchors was considered and rejected as the same cost as re-reading.
-- **Read-shaped, with a handoff.** Investigation, analysis, and review
-  only. `subagent-driven-development` and `bc-drain-issues` already own
-  implementation fan-out with worker packets, spec/standards review,
-  worktree isolation, and rework loops. A thinner competing path would lose
-  in ways nobody notices until something is merged, and keeping children
-  read-only keeps the durability contract simple: artifacts are files, not
-  conflicting edits.
+- **Read-shaped by default, with a handoff.** The skill itself covers
+  investigation, analysis, and review. `subagent-driven-development` and
+  `bc-drain-issues` already own implementation *fan-out* with worker
+  packets, spec/standards review, worktree isolation, and rework loops. A
+  thinner competing path would lose in ways nobody notices until something
+  is merged, and read-only children keep the durability contract simple:
+  artifacts are files, not conflicting edits. The `swarm-mode` extension
+  relaxes this to single-writer implementation under the specifiability
+  gate below; multi-writer fan-out still hands off.
+- **Specifiability gates implementation delegation.** Send implementation
+  to a worker only when the parent can write acceptance criteria a fresh
+  agent can verify without the parent's context; otherwise keep it in the
+  parent. Parallel writers require independence — disjoint files and no
+  shared interface — rather than worktree isolation alone. CooperBench found
+  cooperating agents scored about 30% lower than doing both tasks solo
+  ([paper](https://arxiv.org/html/2601.13295)), and Nature Machine Intelligence
+  found multi-agent systems slightly degraded SWE-bench Verified when the
+  single-agent baseline exceeded about 45%
+  ([paper](https://www.nature.com/articles/s42256-026-01268-y)).
+- **Children carry a turn budget, set at launch.** `reviewer` gets 45 turns
+  plus 5 grace, `scout` 100 plus 10, so a looping run wraps up with partial
+  findings instead of dying empty. The numbers come from the local turn
+  distribution rather than taste: reviewer median 22, p75 26, p90 32, p95
+  41; scout median 16, p90 36, p95 74, max 85. An earlier 25/3 proposal was
+  rejected once measured — it sat below reviewer p75 and would have
+  truncated about a quarter of normal reviews. The cap is a runaway guard,
+  not a throughput limit; the two longest scouts produced this workspace's
+  largest useful artifacts. Settings `agentOverrides` accepts no
+  `turnBudget` field (`pi-subagents/src/agents/agents.ts` parses
+  `toolBudget` only; `docs/agents.md:114` omits it), and overriding the
+  builtin with a same-named agent file would replace its bundled prompt and
+  tool allowlist — so the budget is a launch-time obligation recorded in
+  `AGENTS.md` and the swarm kernel, and an omitted budget means an
+  unbudgeted child. Evidence: one reviewer ran 185 assistant turns and
+  61,595,089 tokens into an 1800-second timeout, returning only timeout
+  text — 22% of the child-token ledger
+  (`/tmp/bc-swarm/2026-08-22-subagent-cost/local-spend.md`).
 - **Lean portable body plus `pi.md`.** The contract is harness-neutral; the
   mechanics that actually failed (`runs.all`, per-child `output`,
   `children.list`, async retention, `/tmp/pi-subagent-*`) are Pi's
@@ -121,6 +151,14 @@ the results.
   — the implementation-fan-out boundary this concept hands off to.
 - Pi's `pi-subagents` extension skill — tool surface for `runs.all`,
   per-child `output`, `children.list`, `subagent_wait`, and async retention.
+- **Routing design evidence, 2026-08-22.** The external review-asymmetry,
+  multi-agent failure, and fan-out research is recorded in
+  `/tmp/bc-swarm/2026-08-22-subagent-fit/external.md`; the local machinery
+  inventory in `/tmp/bc-swarm/2026-08-22-subagent-fit/inventory.md`; the
+  measured child-spend and timeout audit in
+  `/tmp/bc-swarm/2026-08-22-subagent-cost/local-spend.md`; and the OAuth
+  subscription quota research in
+  `/tmp/bc-swarm/2026-08-22-subagent-cost/external-costs.md`.
 
 ## Tests
 

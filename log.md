@@ -958,3 +958,6 @@ Registered the two unregistered live vaults (Homeflix public + private, `.agent/
 `.bc-agent/`, both active through 2026-08-19) and ignored image-maze `temp/` (84 of 238 indexed
 `.md` were generated run artifacts). Committed in Scripts as 79d17c6. CV stays excluded by
 design; the detector now reads that stated reason instead of flagging it.
+
+## [2026-08-22] implement | subagent routing: review asymmetry, spec gate, fan-out band
+Routing now puts Grok review on a separate subscription meter, gates implementation delegation on verifiable acceptance criteria, requires writer independence rather than worktree isolation, and bounds fan-out width. Reviewer 45/5 and scout 100/10 turn budgets come from the measured local turn distribution and must be passed at launch, since `agentOverrides` accepts no `turnBudget`. Evidence: one unbudgeted reviewer burned 61.6M tokens over 185 turns into a timeout and returned nothing.
