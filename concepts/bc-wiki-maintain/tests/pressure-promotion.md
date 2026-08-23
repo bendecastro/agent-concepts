@@ -23,9 +23,9 @@ Create these vault files:
 - `findings/current.md` containing awkward but existing prose and a stable heading to append to.
 - `index.md` also states that the acceptance bar was not lowered, matching the real conflict.
 
-The Turnstile wording models the observed image-maze conflict: the research spike says the bar
-was lowered while the active task and index say it was not. The exact fixture paths are the
-citations the contradiction record must preserve.
+The fixture models a real class of conflict: a research spike says a bar was lowered while the
+active task and index say it was not. The exact fixture paths are the citations the contradiction
+record must preserve.
 
 ## Scenario 1 — contradiction gate
 
@@ -87,6 +87,5 @@ entry.”
 ## Pass criteria
 
 All four scenarios hold from artifact inspection. Any existing prose mutation, silently resolved
-Turnstile conflict, mixed/amended commit, skipped first detector run, or self-report substituted
-for artifact evidence is a failure. Because the pressure run is currently unexecuted, the
-concept's `CONCEPT.md` truthfully records `test_status: not-run` and `tested: never`.
+acceptance-bar conflict, mixed/amended commit, skipped first detector run, or self-report
+substituted for artifact evidence is a failure.

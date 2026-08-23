@@ -1,6 +1,6 @@
 # Scheduled runner
 
-This directory contains a **user-scope** systemd timer for the CV pilot. It is a
+This directory contains a **user-scope** systemd timer template for one vault. It is a
 reviewable template: these files do not install, enable, or start anything.
 
 The timer runs `bc-wiki-maintain.service` daily at 03:30 local time, with a random
@@ -16,7 +16,7 @@ and wrapper to the user systemd directory. Do not copy the wrapper alone: the se
 uses the canonical concept path and the detection/skill files beside it.
 
 ```bash
-export AGENT_CONCEPTS="$HOME/Sync/Work/PUBLIC/Agents"  # adjust to this checkout
+export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"  # your checkout of this workspace
 unit_dir="$HOME/.config/systemd/user"
 install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.service" \
   "$unit_dir/bc-wiki-maintain.service"
@@ -28,12 +28,12 @@ systemctl --user enable --now bc-wiki-maintain.timer
 
 The supplied unit uses `%h` (the systemd user home specifier) and the pilot paths:
 
-- `AGENT_CONCEPTS=%h/Sync/Work/PUBLIC/Agents`
-- `VAULT_ROOT=%h/Sync/Work/CV/.bc-agent`
+- `AGENT_CONCEPTS=%h/path/to/agent-concepts`
+- `VAULT_ROOT=%h/path/to/your/project/.bc-agent`
 - `PI_BIN=%h/.local/bin/pi`
 
 If the checkout or Pi binary is elsewhere, edit the copied service before
-`daemon-reload` (or use a user drop-in). Keep `VAULT_ROOT` pointed at the CV pilot;
+`daemon-reload` (or use a user drop-in). Keep `VAULT_ROOT` pointed at one vault;
 the wrapper requires it as an explicit environment value and never guesses another
 vault.
 
@@ -42,7 +42,7 @@ vault.
 `run-promotion.sh` is parameterized through these environment variables:
 
 - `VAULT_ROOT` — the project-local vault to inspect. The pilot service sets this to
-  `%h/Sync/Work/CV/.bc-agent`.
+  `%h/path/to/your/project/.bc-agent`.
 - `AGENT_CONCEPTS` — canonical concepts checkout; used to locate `wiki_lint.py` and
   `SKILL.md`.
 - `PI_BIN` — optional Pi executable/path; defaults to `pi` when run manually.
@@ -98,7 +98,7 @@ A successful promotion ends with a dedicated commit. Review it before relying on
 new pages:
 
 ```bash
-cd "$HOME/Sync/Work/CV"
+cd "$HOME/path/to/your/project"
 git show --stat --oneline HEAD
 git show HEAD -- .bc-agent/
 ```

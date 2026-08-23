@@ -1001,3 +1001,10 @@ caught a genuine CV factual conflict (Treehouse track "Front End Web Developer, 
 vs "full web development track, ~2016"). Wall clock 8m29s, 33s CPU.
 Added `concepts/bc-wiki-maintain/README.md`, the first human-facing guide in a concept dir:
 `body/SKILL.md` = agent instructions, `CONCEPT.md` = design rationale, `README.md` = user guide.
+
+## [2026-08-23] implement | depersonalize bc-wiki-maintain public surface
+README, SKILL, CONCEPT, tests, runner units, and the catalog line no longer name author
+vaults, training records, or machine paths. The shipped systemd unit is now a template
+(`%h/path/to/...`); the already-installed user copy is a separate file and still points
+at the live pilot. `docs/plans/active/bc-wiki-maintain.md` keeps the original vault names
+as an implementation record, not a user guide.

@@ -98,9 +98,9 @@ When a candidate conflicts with an existing page or two sources disagree, write 
 `open-questions/` with both source paths and the relevant `log.md` dates/headings. **Do not pick
 a winner, rewrite either source, or turn the conflict into an accepted ADR. Stop the conflicting
 promotion after recording the question.** The scheduled agent must not silently decide that a
-spike is outdated or that the newer-looking statement wins. A real fixture is the Turnstile
-conflict: `research/turnstile-viability-spike.md` says the acceptance bar was "formally lowered",
-while `tasks/active.md` and `index.md` say it was not.
+spike is outdated or that the newer-looking statement wins. A typical fixture: a research page
+says an acceptance bar was "formally lowered", while `tasks/active.md` and `index.md` say it
+was not.
 
 ### 5. Verify the artifact, then commit
 

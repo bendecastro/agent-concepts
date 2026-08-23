@@ -1,5 +1,9 @@
+# TEMPLATE — edit the three Environment= paths below before installing.
+# Copy this into ~/.config/systemd/user/ rather than symlinking it, so your local
+# paths are not overwritten when this repository updates.
+
 [Unit]
-Description=Promote CV project wiki memory
+Description=Promote project wiki memory
 Documentation=man:systemd.service(5)
 Wants=network-online.target
 After=network-online.target
@@ -7,9 +11,13 @@ After=network-online.target
 [Service]
 Type=oneshot
 SyslogIdentifier=bc-wiki-maintain
-WorkingDirectory=%h/Sync/Work/CV
-Environment=AGENT_CONCEPTS=%h/Sync/Work/PUBLIC/Agents
-Environment=VAULT_ROOT=%h/Sync/Work/CV/.bc-agent
+# EDIT: the repository containing the vault (%h expands to your home directory).
+WorkingDirectory=%h/path/to/your/project
+# EDIT: your checkout of the agent-concepts workspace.
+Environment=AGENT_CONCEPTS=%h/path/to/agent-concepts
+# EDIT: the vault root. Use .agent or agent/wiki here if that is your layout.
+Environment=VAULT_ROOT=%h/path/to/your/project/.bc-agent
+# EDIT: the agent CLI used for the promotion pass.
 Environment=PI_BIN=%h/.local/bin/pi
 ExecStart=/usr/bin/bash -c 'exec "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/run-promotion.sh"'
 TimeoutStartSec=30min

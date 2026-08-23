@@ -51,8 +51,8 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   https://www.perplexity.ai/hub/blog/brain-agentic-memory-as-a-knowledge-wiki
 - Perplexity, “Brain: Agentic Memory as a Knowledge Wiki,” 19 Aug 2026:
   https://www.perplexity.ai/hub/blog/brain-agentic-memory-as-a-knowledge-wiki
-- `~/Sync/Wiki/scripts/wiki_lint.py` — the ported prior art for broken links, ambiguous links,
-  orphan pages, and missing index entries.
+- A maintained personal-wiki lint script (broken links, ambiguous links, orphan pages, missing
+  index entries) — ported into `body/wiki_lint.py`, not vendored from a private path.
 - `concepts/bc-init-agent/` — the additive, idempotent, never-deletes project-vault scaffold
   this concept extends.
 - `concepts/qmd/` — the global search overlay whose collection coverage the detector reports.
@@ -101,7 +101,7 @@ Deployed 2026-08-23 via `scripts/deploy-local-skills.py` to the three relative s
 `body/`, carrying `SKILL.md`, `wiki_lint.py`, and `runner/`.
 
 The systemd user timer is a separate runner with its own install step (`body/runner/README.md`);
-it is scoped to the CV pilot vault and is not part of the skill deploy.
+it is scoped to one vault chosen at install time and is not part of the skill deploy.
 
 ## Open risks
 

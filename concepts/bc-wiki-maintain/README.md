@@ -25,9 +25,9 @@ the hard half never does.
 
 Two pieces of evidence from this machine, both found while building this:
 
-- The CV notebook's `index.md` listed 17 pages. There were 38. Every market-research page and two
-  of three architecture decisions existed on disk and appeared nowhere in the contents. An agent
-  reading the contents would never learn they existed.
+- One notebook's `index.md` listed 17 pages. There were 38 on disk. Every research page and two
+  of three architecture decisions were absent from the contents. An agent reading the contents
+  would never learn they existed.
 - `conventions/architecture-runway.md` shipped a nudge that fires after three chunks of work land.
   Its counter read `TODO / TODO / TODO` in every vault from July onward. It never fired once,
   because firing required an agent to remember to increment it by hand.
@@ -48,7 +48,7 @@ Read-only. Takes a notebook path and reports drift. Run it on anything, any time
 installed:
 
 ```bash
-python3 ~/.agents/skills/bc-wiki-maintain/wiki_lint.py ~/Sync/Work/CV/.bc-agent
+python3 ~/.agents/skills/bc-wiki-maintain/wiki_lint.py <project>/.bc-agent
 ```
 
 It reports:
@@ -67,13 +67,13 @@ Two notes on reading it.
 
 **Raw counts overstate the problem.** "Missing from index: 21" sounds alarming, but many will be
 empty `README.md` stubs and unfilled templates. Sort by file size — the real signal is the large
-pages. In CV, six pages over 1 KB held about 30 KB of genuine research and decisions; the rest
-was scaffolding noise.
+pages. In one measured case, six pages over 1 KB held about 30 KB of genuine research and
+decisions; the rest was scaffolding noise.
 
-**A documented exclusion is not a defect.** CV is deliberately kept out of global search because
-it holds personal data. Rather than nagging, the checker reads the stated reason from
-`project/overview.md` and quotes it back. If you exclude a notebook on purpose, write down why
-and the tool will stop asking.
+**A documented exclusion is not a defect.** A notebook may be deliberately excluded from search —
+because it holds private data, or is a scratch space. Rather than nagging, the checker reads the
+stated reason from `project/overview.md` and quotes it back. If you exclude a notebook on
+purpose, write down why and the tool will stop asking.
 
 The last line, `PROMOTION_REQUIRED=0` or `=1`, is for machines. The runner greps exactly that.
 
@@ -83,7 +83,7 @@ An agent reads the diary, files durable entries into the right pages, updates th
 commits once. You can invoke it yourself in any agent session that has the skill:
 
 ```
-/bc-wiki-maintain ~/Sync/Work/CV/.bc-agent
+/bc-wiki-maintain <project>/.bc-agent
 ```
 
 Or let the timer do it (see below).
@@ -211,7 +211,7 @@ make.
 
 ## A real run
 
-First supervised run against the CV notebook, 2026-08-23. Ten unfiled diary entries:
+First supervised run against a real project notebook with ten unfiled diary entries:
 
 ```
 8 files changed, 111 insertions(+)
@@ -219,14 +219,16 @@ First supervised run against the CV notebook, 2026-08-23. Ten unfiled diary entr
 
 Zero deletions. `log.md` byte-identical afterwards — filing entries does not consume the diary.
 
-It created two findings pages, appended to `conventions/validation.md`, `references/gotchas.md`
-and an existing scan page, added everything new to the contents, and raised two questions it
-refused to answer.
+It created two findings pages, appended sections to three existing pages, added everything new to
+the contents, and raised two questions it refused to answer.
 
-One of those questions was worth more than the filing. It noticed the notebook disagreed with
-itself about a training record — one page said "Front End Web Developer, started 2015-01",
-another said "full web development track, ~2016" — and flagged it instead of picking. On a CV,
-that is the kind of detail that matters.
+One of those questions was worth more than the filing. Two pages recorded the same historical
+detail with different values — different job title, different year — and neither page knew about
+the other. The pass cited both and stopped. Nobody had noticed the conflict in the months it had
+been sitting there, and a human reading either page alone would have believed it.
+
+That is the argument for rule 3 in one example. The filing saves you time; the questions are
+where the value is.
 
 ## Limits worth knowing
 

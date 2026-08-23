@@ -1,5 +1,5 @@
 [Unit]
-Description=Scheduled CV project wiki maintenance
+Description=Scheduled project wiki maintenance
 
 [Timer]
 OnCalendar=*-*-* 03:30:00
