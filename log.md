@@ -991,3 +991,13 @@ Repaired the dead `~/Sync/CONFIG/agents` path in 12 instructional files across s
 live instruction. The Agents repo itself is deliberately NOT a `bc-wiki-maintain` target: its
 `scripts/lint.py` already covers link/index/status drift, and its `log.md` is the curated output
 of operations rather than raw material to promote — two linters would disagree over one tree.
+
+## [2026-08-23] deploy | first supervised promotion run; human guide added
+Triggered `bc-wiki-maintain.service` by hand against the CV pilot. Result: 8 files, 111
+insertions, **0 deletions**, `log.md` byte-identical — the additive gate held on real data, not
+just fixtures. It filed two new findings, appended to validation/gotchas/an existing scan page,
+indexed everything it created, and raised two open questions rather than resolving them. One
+caught a genuine CV factual conflict (Treehouse track "Front End Web Developer, started 2015-01"
+vs "full web development track, ~2016"). Wall clock 8m29s, 33s CPU.
+Added `concepts/bc-wiki-maintain/README.md`, the first human-facing guide in a concept dir:
+`body/SKILL.md` = agent instructions, `CONCEPT.md` = design rationale, `README.md` = user guide.

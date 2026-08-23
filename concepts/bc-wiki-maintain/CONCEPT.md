@@ -84,6 +84,15 @@ for the decision to lint index drift rather than generate the index.
 Fixtures and consumer transcripts: `/tmp/bc-swarm/2026-08-22-brain-wiki/pressure/` (ephemeral).
 Not yet re-run against a vault using `[[wikilinks]]` rather than Markdown links.
 
+## Human guide
+
+`README.md` in this directory is the user-facing guide: what the tool is for, how to read a
+checker report, the routine after a scheduled run, and how to get more out of it. It is the first
+concept here to carry one — the three audiences had collapsed into two files, and a person
+learning the tool was being handed either agent instructions or design rationale. Split:
+`body/SKILL.md` is what the agent follows, `CONCEPT.md` is why it is built this way, `README.md`
+is how a human uses it.
+
 ## Deploy targets
 
 Deployed 2026-08-23 via `scripts/deploy-local-skills.py` to the three relative skill symlinks:
