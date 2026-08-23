@@ -94,7 +94,13 @@ systemctl --user daemon-reload
 systemctl --user enable --now bc-wiki-maintain.timer
 ```
 
-The supplied unit uses `%h` (the systemd user home specifier) and the pilot paths:
+To add another vault, copy those two files to a new name (`bc-wiki-maintain-other.service`
+and matching `.timer`), edit `WorkingDirectory` / `VAULT_ROOT` / `SyslogIdentifier`, and give
+the timer a different `OnCalendar` so two promotion agents do not start at once. One unit per
+vault: a dirty tree in one project must not skip the others. The wrapper already accepts
+`.bc-agent/`, `.agent/`, or any other vault subdirectory.
+
+The supplied unit uses `%h` (the systemd user home specifier) and placeholder paths:
 
 - `AGENT_CONCEPTS=%h/path/to/agent-concepts`
 - `VAULT_ROOT=%h/path/to/your/project/.bc-agent`

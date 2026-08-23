@@ -1016,3 +1016,8 @@ skips `temp/`/`scratch/`/`.obsidian`/`vendor` and does not fail a vault on examp
 `templates/` — image-maze's vendor tree was drowning the report. First live sweep: 8 checked,
 2 fail (Music leftover example wikilinks; codebase-design broken/ambiguous `[[plan]]` /
 `[[image-maze]]`).
+
+## [2026-08-23] deploy | promotion timers for image-maze and public Homeflix
+Local systemd copies of the promotion unit, staggered after the lint sweep. First runs
+will be large: those vaults have never had a `wiki: promote` commit. Commits stay local
+until something pushes — both remotes exist. Runner README now documents one-unit-per-vault.
