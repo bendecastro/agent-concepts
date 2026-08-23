@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass
 tested: 2026-08-22
-deployed: no
+deployed: 2026-08-23
 ---
 # Concept: bc-wiki-maintain
 
@@ -86,10 +86,13 @@ Not yet re-run against a vault using `[[wikilinks]]` rather than Markdown links.
 
 ## Deploy targets
 
-Not deployed. After the pressure test passes, the intended targets are the normal relative skill
-symlinks (`~/.agents/skills/bc-wiki-maintain`, `~/.pi/agent/skills/bc-wiki-maintain`, and
-`~/.claude/skills/bc-wiki-maintain`) through the workspace deploy script. The systemd user timer
-is a separate runner and must be installed only after the pilot is explicitly authorized.
+Deployed 2026-08-23 via `scripts/deploy-local-skills.py` to the three relative skill symlinks:
+`~/.agents/skills/bc-wiki-maintain` (shared bus — also serves Composer and Grok),
+`~/.pi/agent/skills/bc-wiki-maintain`, and `~/.claude/skills/bc-wiki-maintain`. Each resolves to
+`body/`, carrying `SKILL.md`, `wiki_lint.py`, and `runner/`.
+
+The systemd user timer is a separate runner with its own install step (`body/runner/README.md`);
+it is scoped to the CV pilot vault and is not part of the skill deploy.
 
 ## Open risks
 
