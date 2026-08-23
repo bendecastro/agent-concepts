@@ -981,3 +981,13 @@ user timer for the CV pilot only; first run Mon 2026-08-24 03:39 BST. Detection 
 environment confirms CV at `PROMOTION_REQUIRED=1` (10 unpromoted entries, 21 pages missing from
 index). The four legacy `.agent`/`agent/wiki` vaults have no `references/agent-skills.md` and were
 deliberately skipped.
+
+## [2026-08-23] deploy | pointers in both Homeflix vaults; stale canon path repaired
+Created `references/agent-skills.md` in the public and private Homeflix `.agent/` vaults (neither
+had a repo-local skill map) and indexed both; the private one additionally binds the maintenance
+pass to `conventions/secrets.md` and says an upstream conflict is recorded, not reconciled.
+Repaired the dead `~/Sync/CONFIG/agents` path in 12 instructional files across six vaults;
+`log.md`/`tasks/`/`findings/` mentions were deliberately left, being accurate history rather than
+live instruction. The Agents repo itself is deliberately NOT a `bc-wiki-maintain` target: its
+`scripts/lint.py` already covers link/index/status drift, and its `log.md` is the curated output
+of operations rather than raw material to promote — two linters would disagree over one tree.
