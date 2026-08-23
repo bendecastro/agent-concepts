@@ -971,3 +971,13 @@ four recorded the conflict in `open-questions/` citing all three sources and pic
 Detector-first held against "skip the lint run". Incidental: `log.md` byte-identical and
 `index.md` insertions-only in all four, which is direct evidence for linting index drift rather
 than generating the index. Frontmatter now `pass` / `2026-08-22`; still `deployed: no`.
+
+## [2026-08-23] deploy | bc-wiki-maintain live; six vaults pointed; CV timer armed
+Skill deployed to shared/Pi/Claude symlinks after the 4/4 pressure pass. Added the
+`/bc-wiki-maintain` pointer to `references/agent-skills.md` in the six scaffold-shaped vaults
+(Music, Scripts, image-maze, CV, Learning/codebase-design, Learning/sql), one commit each, staging
+only that file — Music's untracked Obsidian files were left alone. Installed and enabled the
+user timer for the CV pilot only; first run Mon 2026-08-24 03:39 BST. Detection under the service
+environment confirms CV at `PROMOTION_REQUIRED=1` (10 unpromoted entries, 21 pages missing from
+index). The four legacy `.agent`/`agent/wiki` vaults have no `references/agent-skills.md` and were
+deliberately skipped.
