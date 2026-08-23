@@ -146,18 +146,30 @@ def qmd_status(vault: Path) -> dict:
     result["reason"] = "vault path is absent from qmd registry"
     return result
 
+SKIP_DIR_NAMES = {".git", ".obsidian", "scratch", "temp", "node_modules", "vendor"}
+
 def maintenance_report(path: Path, vault: Path) -> bool:
     item = path.relative_to(vault)
     return len(item.parts) >= 2 and item.parts[0] == "_meta" and item.name.startswith(("lint-", "health-check-", "semantic-consolidation-"))
 
+def ignored_path(path: Path, vault: Path) -> bool:
+    return any(part in SKIP_DIR_NAMES for part in path.relative_to(vault).parts)
+
 def lint(vault: Path, stale_days: int) -> dict:
-    pages_list = sorted(path for path in (item.resolve() for item in vault.rglob("*.md")) if path.is_relative_to(vault))
+    pages_list = sorted(
+        path
+        for path in (item.resolve() for item in vault.rglob("*.md"))
+        if path.is_relative_to(vault) and not ignored_path(path, vault)
+    )
     pages = {key(path.relative_to(vault)): path for path in pages_list}
     stems: dict[str, list[Path]] = {}
     for path in pages_list:
         stems.setdefault(path.stem, []).append(path)
     incoming, broken, ambiguous = dict.fromkeys(pages_list, 0), [], []
     for path in pages_list:
+        # Templates hold example links on purpose; do not fail the vault on them.
+        if "templates" in path.relative_to(vault).parts:
+            continue
         for target, display in links(text(path)):
             resolution = resolve_link(path, target, vault, pages, stems)
             if resolution is None:

@@ -1,0 +1,15 @@
+# TEMPLATE — copy this file; do not symlink it. Edit the service paths before
+# installing and enabling the timer.
+
+[Unit]
+Description=Scheduled lint for project wiki vaults
+
+[Timer]
+OnCalendar=*-*-* 04:15:00
+RandomizedDelaySec=15min
+Persistent=true
+AccuracySec=1min
+Unit=bc-wiki-lint.service
+
+[Install]
+WantedBy=timers.target

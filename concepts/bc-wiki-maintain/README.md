@@ -75,7 +75,42 @@ because it holds private data, or is a scratch space. Rather than nagging, the c
 stated reason from `project/overview.md` and quotes it back. If you exclude a notebook on
 purpose, write down why and the tool will stop asking.
 
-The last line, `PROMOTION_REQUIRED=0` or `=1`, is for machines. The runner greps exactly that.
+The last line, `PROMOTION_REQUIRED=0` or `=1`, is for machines. The promotion runner greps
+exactly that.
+
+### Lint all your vaults on a schedule
+
+If you have more than one project notebook, use the lint-only runner rather than installing a
+promotion timer for each one. Put one vault root per line in a list file; blank lines and `#`
+comments are ignored, and a leading `~` expands to your home directory:
+
+```text
+# One vault per line
+~/path/to/project-a/.bc-agent
+~/path/to/project-b/.agent
+/absolute/path/to/project-c/agent/wiki
+```
+
+Install the `bc-wiki-lint.service` and `bc-wiki-lint.timer` templates from
+[`body/runner/`](body/runner/), edit their `AGENT_CONCEPTS` and `VAULT_LIST` placeholders, then
+enable the timer. The timer runs the read-only detector for every listed vault at its scheduled
+time and prints a separate report for each one. It continues after a bad path or failed detector,
+then returns nonzero if any vault failed. Advisory findings — orphan pages, missing index entries,
+stale references, and unpromoted log entries — remain visible in the report but do not fail the
+service.
+
+This lint-all timer does **not** invoke an agent, promote log entries, edit files, write Git state,
+or commit. It is safe to schedule broadly. The existing one-vault promotion runner is separate
+and should be enabled only for vaults whose promotion behavior you have reviewed.
+
+Read results with:
+
+```bash
+systemctl --user status bc-wiki-lint.service
+journalctl --user -u bc-wiki-lint.service --since today
+```
+
+The full install/list-file instructions are in [`body/runner/README.md`](body/runner/README.md).
 
 ### 2. The promotion pass (`body/SKILL.md`)
 

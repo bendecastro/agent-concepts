@@ -9,6 +9,74 @@ and fails visibly when detection, the agent, or the dedicated commit fails. syst
 is intentional here: `journalctl --user` and `systemctl --user status` make silent
 scheduler failures observable.
 
+## Lint all configured vaults (detection only)
+
+The separate `bc-wiki-lint.service` runs `run-lint.sh` against a list of vault roots. It is
+**detection only**: it never invokes Pi or another agent, edits files, writes Git state, or
+commits. Each vault gets a human-readable header and the normal `wiki_lint.py` report. The
+runner continues after a missing vault or detector failure so one bad path cannot hide the other
+reports, then exits nonzero if any path failed. Orphans, missing index entries, stale references,
+and unpromoted-log findings are advisory; only a detector nonzero result (currently broken or
+ambiguous links) fails the overall run.
+
+The list file contains one path per line. Blank lines and lines beginning with `#` are ignored;
+leading `~` and `~/` expand to `$HOME`. Use absolute paths or paths whose meaning is stable from
+the service working directory:
+
+```text
+# Project vaults to inspect
+~/path/to/project-a/.bc-agent
+~/path/to/project-b/.agent
+/absolute/path/to/project-c/agent/wiki
+```
+
+Install the lint-only timer after editing the copied service's two placeholders:
+
+```bash
+export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"
+unit_dir="$HOME/.config/systemd/user"
+list_file="$HOME/.config/agent-concepts/wiki-lint-vaults.txt"
+mkdir -p "$(dirname "$list_file")"
+$EDITOR "$list_file"
+install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-lint.service" \
+  "$unit_dir/bc-wiki-lint.service"
+install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-lint.timer" \
+  "$unit_dir/bc-wiki-lint.timer"
+$EDITOR "$unit_dir/bc-wiki-lint.service"  # set AGENT_CONCEPTS and VAULT_LIST
+systemd-analyze --user verify "$unit_dir/bc-wiki-lint.service"
+systemd-analyze --user verify "$unit_dir/bc-wiki-lint.timer"
+systemctl --user daemon-reload
+systemctl --user enable --now bc-wiki-lint.timer
+```
+
+The lint timer is scheduled at 04:15 with a 15-minute random delay, separate from the
+promotion timer's 03:30 schedule. Check it with:
+
+```bash
+systemctl --user status bc-wiki-lint.timer
+systemctl --user status bc-wiki-lint.service
+journalctl --user -u bc-wiki-lint.service --since today
+```
+
+The journal shows one `=== wiki lint: ... ===` section per configured path and a final failure
+count. A successful service means every listed directory ran the detector and every detector
+returned zero; it does **not** mean the vaults have no advisory findings. To run the same check
+manually without installing a timer:
+
+```bash
+export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"
+export VAULT_LIST="$HOME/.config/agent-concepts/wiki-lint-vaults.txt"
+"$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/run-lint.sh"
+```
+
+To disable only the lint-all timer:
+
+```bash
+systemctl --user disable --now bc-wiki-lint.timer
+```
+
+The lint-all runner is intentionally separate from the one-vault promotion runner below.
+
 ## Install after review
 
 Set `AGENT_CONCEPTS` to the checkout that contains this concept, then copy the units

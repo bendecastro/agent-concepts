@@ -1008,3 +1008,11 @@ vaults, training records, or machine paths. The shipped systemd unit is now a te
 (`%h/path/to/...`); the already-installed user copy is a separate file and still points
 at the live pilot. `docs/plans/active/bc-wiki-maintain.md` keeps the original vault names
 as an implementation record, not a user guide.
+
+## [2026-08-23] implement | scheduled lint across all live project vaults
+Added `run-lint.sh` plus template `bc-wiki-lint` units: detection only, no agent, no commit.
+Local list is `~/.config/agent-concepts/wiki-lint-vaults.txt` (eight live vaults). Detector now
+skips `temp/`/`scratch/`/`.obsidian`/`vendor` and does not fail a vault on example links in
+`templates/` — image-maze's vendor tree was drowning the report. First live sweep: 8 checked,
+2 fail (Music leftover example wikilinks; codebase-design broken/ambiguous `[[plan]]` /
+`[[image-maze]]`).

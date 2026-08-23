@@ -1,0 +1,23 @@
+# TEMPLATE — edit the Environment= paths before installing.
+# Copy this file; do not symlink it. Local paths should not be overwritten when
+# this repository updates.
+
+[Unit]
+Description=Lint project wiki vaults
+Documentation=man:systemd.service(5)
+
+[Service]
+Type=oneshot
+SyslogIdentifier=bc-wiki-lint
+# EDIT: your checkout of the agent-concepts workspace.
+WorkingDirectory=%h/path/to/agent-concepts
+Environment=AGENT_CONCEPTS=%h/path/to/agent-concepts
+# EDIT: one vault path per line; blank lines and # comments are ignored.
+Environment=VAULT_LIST=%h/.config/agent-concepts/wiki-lint-vaults.txt
+ExecStart=/usr/bin/bash -c 'exec "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/run-lint.sh"'
+TimeoutStartSec=15min
+StandardOutput=journal
+StandardError=journal
+
+# This service is detection-only: it does not invoke an agent, write Git state,
+# or commit. A nonzero result means at least one detector or vault path failed.
