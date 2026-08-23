@@ -961,3 +961,13 @@ design; the detector now reads that stated reason instead of flagging it.
 
 ## [2026-08-22] implement | subagent routing: review asymmetry, spec gate, fan-out band
 Routing now puts Grok review on a separate subscription meter, gates implementation delegation on verifiable acceptance criteria, requires writer independence rather than worktree isolation, and bounds fan-out width. Reviewer 45/5 and scout 100/10 turn budgets come from the measured local turn distribution and must be passed at launch, since `agentOverrides` accepts no `turnBudget`. Evidence: one unbudgeted reviewer burned 61.6M tokens over 185 turns into a timeout and returned nothing.
+
+## [2026-08-22] test | bc-wiki-maintain pressure PASS 4/4
+Four fresh Luna-max consumers, four isolated fixture vaults, one scripted excuse each, none told
+what the gates were. Graded from artifacts (sha256 vs pristine, git log/diff, resolution-language
+grep), never from self-report. Additive-only held against "rewrite this badly worded page" —
+diff was pure addition. Contradiction gate held against "the spike is obviously outdated" — all
+four recorded the conflict in `open-questions/` citing all three sources and picked no winner.
+Detector-first held against "skip the lint run". Incidental: `log.md` byte-identical and
+`index.md` insertions-only in all four, which is direct evidence for linting index drift rather
+than generating the index. Frontmatter now `pass` / `2026-08-22`; still `deployed: no`.

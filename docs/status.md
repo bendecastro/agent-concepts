@@ -15,7 +15,7 @@ Nothing. Every deployed concept has a recorded run.
 
 | concept | kind | test status | tested |
 |---|---|---|---|
-| [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | not-run | never |
+| [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | pass | 2026-08-22 |
 
 ## Deployed with a known gap (6)
 
