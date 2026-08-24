@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-08-24] implement | bc-drain-issues stop report lists child-run dollars
+The chat stop report now lists each dispatched child as role + launched model/thinking + list-API cost, then one child-run total. Token counts, phase totals, and soft/hard crossings stay internal. Gate A check 17 asserts the new shape.
+
 ## [2026-08-21] implement | agent-concepts publish is explicit-push-only
 
 AGENTS.md now points at `agent-concepts-push-on-explicit-instruction` in the user-owned publish policy: commit locally always; push only on an explicit ask in the conversation. The rule itself lives in `~/.config/agent-concepts/publish.yaml` (CONFIG), not this public checkout.

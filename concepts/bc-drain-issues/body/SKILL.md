@@ -166,4 +166,15 @@ Resolve the scaffolded-project inbox at `.bc-agent/research/architecture-observa
 
 Stop when the eligible queue drains, `max-iters` is reached, two consecutive token deferrals occur, or systemic base/tool/environment failures recur. Let active children return to safe boundaries.
 
-Report LANDED commits; HUMAN_BLOCKED reasons; REWORK_DEFERRED issues and bundle/brief status; SYSTEMIC_FAILURE classifications; parent PRDs closed/open; blocked/claimed issues; recurring-defect packet patches; stop reason; per-issue and total child tokens by build/audit/review/rework phases (or `unavailable`); soft/hard crossings; review/rework rounds; repeated-finding circuit events; baseline/final full-validation counts; per-issue review tier with its reason and any escalation trigger; axes dispatched per round and re-reviews skipped by standing approval; and any stale worktrees/claims. Report what resume recovered: claims adopted, bundles restored, claims released as untouched, and claims left in place as unaccountable. Confirm the main checkout is clean. In local-only mode, name the review branch and do not close issues.
+Report LANDED commits; HUMAN_BLOCKED reasons; REWORK_DEFERRED issues and bundle/brief status; SYSTEMIC_FAILURE classifications; parent PRDs closed/open; blocked/claimed issues; recurring-defect packet patches; stop reason; each dispatched child as `role — launched model + thinking — list-API $` plus the child-run total (or `$unavailable` on a row or the total); review/rework rounds; repeated-finding circuit events; baseline/final full-validation counts; per-issue review tier with its reason and any escalation trigger; axes dispatched per round and re-reviews skipped by standing approval; and any stale worktrees/claims. Report what resume recovered: claims adopted, bundles restored, claims released as untouched, and claims left in place as unaccountable. Confirm the main checkout is clean. In local-only mode, name the review branch and do not close issues.
+
+The chat report lists children, not tokens. A token sum is noise here: cache swamps it, and Luna tokens are not Grok tokens. The comparable unit is list-API dollars. Each row is one dispatched auditor, worker, reviewer, or rework child — drain-phase role (`audit` / `build` / `review-spec` / `review-standards` / `review-combined` / `rework`), the launched model and thinking level, and that child's list-API cost — then `List-API estimate` as their sum:
+
+```text
+## Child runs
+- #17 build — GPT-5.6 Luna max — $0.27
+- #17 review-combined — Grok 4.6 high — $0.17
+List-API estimate: $0.44
+```
+
+Price by summing the harness per-call `cost.total` when present, otherwise the provider's published input/cached/output rates. Write `$unavailable` rather than inventing a price. These are list equivalents, not subscription debits. Never report a single turn's `totalTokens` as the run. The driver session is not a child row. Soft/hard 200k/300k crossings still use summed child tokens internally and do not appear in the report.
