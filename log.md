@@ -1044,3 +1044,10 @@ and HEAD untouched; wrapper stages and commits) from direct manual runs. Focused
 ## [2026-08-24] implement | bc-wiki-maintain commit-authority checklist
 Aligned the final verification checklist with Gate 2: automatic runs hand an unchanged index and
 `HEAD` back to the wrapper, while direct manual runs stage and create the dedicated commit.
+
+## [2026-08-25] implement | bc-wiki-maintain classify / stale / index
+Live first-runs closed 55/26-heading backlogs after a thin write because any `wiki: promote`
+commit made `log.md` at that moment look fully considered. The wrapper now refuses that commit
+unless a same-pass JSONL file classifies every detector-listed heading. Gate 3 now splits
+mutually exclusive claims (flag, continue) from stale snapshots (dated append). Gate 1 appends
+index links for existing `findings/` and `decisions/` pages. Pressure scenarios updated; not re-run.

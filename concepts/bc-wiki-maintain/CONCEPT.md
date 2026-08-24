@@ -26,8 +26,10 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   adaptation of the user's small stdlib-only personal-wiki linter. It must accept a root rather
   than hardcode `.bc-agent`, because live vaults also use `.agent/` and `agent/wiki/` variants.
 - **Curated index, not generated index.** `index.md` carries editorial groupings and annotations.
-  The pass reports missing entries and appends only the link for a newly created page; it never
-  replaces the index with a generated catalog.
+  The pass reports missing entries and appends a link for a newly created page. It also appends
+  links for existing `findings/` and `decisions/` pages the detector lists as missing, except
+  README stubs and templates — those were the cold-start misses the first live CV run left
+  behind. It never generates, reorders, or backfills the rest of the catalog.
 - **Git supplies dates; pages do not gain required frontmatter.** A second `updated` field would
   be hand-maintained state that can drift. Page kind comes from its directory; date evidence comes
   from `git log -1 --format=%cs -- <path>`.
@@ -36,10 +38,19 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   detector computes that range from standard dated log headings, and the wrapper rejects any
   index changes left by the agent before staging its own files. Git history makes the entire
   result inspectable and reversible without a human approval queue.
-- **Contradictions are first-class unresolved work.** When pages disagree, the run creates or
-  appends an `open-questions/` record containing both citations and stops the conflicting
-  promotion. It never silently chooses the newer, more detailed, or more plausible claim. This
-  protects scheduled runs from turning ambiguity into false canonical truth.
+- **A promotion commit considers the whole current heading list.** The detector's unpromoted set
+  is every `##` heading not present in `log.md` at the last dedicated promotion commit. Live
+  first runs showed the failure: Homeflix public filed 16 lines from 55 headings, image-maze
+  filed one open question from 26, and the wrapper committed anyway, so the next night saw
+  `PROMOTION_REQUIRED=0`. The wrapper now refuses that commit unless a same-pass JSONL
+  classification covers every listed heading (`promote` / `skip` + reason / `conflict`). The
+  file is a temp artifact, not a vault page and not a counter someone must remember to update.
+- **Contradictions are mutually exclusive claims, not stale snapshots.** When two statements
+  cannot both be true, the run writes both citations to `open-questions/` and does not promote
+  either as current truth — then continues the rest of the pass. When the log has later verified
+  state and a project page still describes the earlier snapshot, that is a dated append, which
+  is what a human had to do by hand after Homeflix prod dumped six staleness items into one
+  open-question page. The pass never silently chooses a winner or rewrites the old sentence.
 - **No broad cleanup during promotion.** The pass does not reflow prose, delete stale pages,
   normalize headings, or modify qmd registry policy. Those are separate, explicitly scoped
   operations. The pilot is one writer against a small vault; staged whole-graph semantic
@@ -90,8 +101,12 @@ Not yet re-run against a vault using `[[wikilinks]]` rather than Markdown links.
 public detector CLI and promotion runner with temporary Git repositories: fenced/inline code and
 append-only log links are excluded without weakening prose-link failures; initial/subsequent
 ranges are computed; a newer promotion in another vault cannot reset the configured vault's
-boundary; the wrapper creates the exact range subject; invalid ranges fail before Pi; and staged
-inside-vault or repo-root outside-vault changes fail without advancing `HEAD`.
+boundary; the wrapper creates the exact range subject; invalid ranges fail before Pi; staged
+inside-vault or repo-root outside-vault changes fail without advancing `HEAD`; and a vault write
+without a complete heading classification cannot advance `HEAD`.
+
+The 2026-08-22 pressure pass predates the classification gate and the stale-vs-exclusive split.
+Those scenarios were updated in `tests/pressure-promotion.md` and have not been re-run.
 
 ## Human guide
 
@@ -119,7 +134,9 @@ it is scoped to one vault chosen at install time and is not part of the skill de
 - The detector derives later ranges from the heading difference between the latest relevant
   promotion commit and the current log; non-standard headings remain counted but deliberately
   produce an invalid range so unattended promotion fails closed.
-- An unresolved contradiction deliberately stops its conflicting promotion, so a scheduled run
-  may need human follow-up rather than silently making progress.
+- An unresolved mutually exclusive claim is filed and skipped as truth; the rest of the pass
+  continues. A scheduled run may still need human follow-up on the question.
+- Heading lists already closed by a thin 2026-08-23/24 promotion commit stay closed; this gate
+  prevents the next occurrence and does not resurrect consumed headings.
 - The concept's no-staged-tree choice is bounded to the single-writer pilot; concurrent writers
   or a much larger vault may require a staged-tree and semantic-verification design later.

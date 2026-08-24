@@ -140,7 +140,7 @@ def git_date(repo: Path | None, path: Path) -> tuple[str | None, str]:
 def promotion_status(vault: Path, repo: Path | None) -> dict:
     log_path = vault / "log.md"
     current_headings = log_headings(text(log_path))
-    result = {"count": None, "range": None, "last_promotion": None, "note": None}
+    result = {"count": None, "range": None, "last_promotion": None, "note": None, "headings": []}
     if repo is None:
         result["note"] = "unknown: not a git repository"
         return result
@@ -188,6 +188,7 @@ def promotion_status(vault: Path, repo: Path | None) -> dict:
                 for _ in range(max(0, remaining - Counter(previous_headings)[heading]))
             ]
             result["count"] = len(unpromoted)
+    result["headings"] = [heading for heading, _date in unpromoted]
     if result["count"] is not None and result["count"] > 0:
         dates = [date for _heading, date in unpromoted]
         if all(date is not None for date in dates):
@@ -283,6 +284,60 @@ def lint(vault: Path, stale_days: int) -> dict:
             "unknown_active_references": unknown, "stale_days": stale_days,
             "unpromoted_log": promotion_status(vault, repo), "qmd": qmd_status(vault)}
 
+CLASSIFY_VERDICTS = {"promote", "skip", "conflict"}
+
+
+def verify_classification(path: Path, headings: list[str]) -> list[str]:
+    """Return errors if FILE does not classify every unpromoted heading exactly once."""
+    if not path.is_file():
+        return [f"classification file does not exist: {path}"]
+    errors: list[str] = []
+    seen: list[str] = []
+    try:
+        raw = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        return [f"could not read classification file: {exc}"]
+    for lineno, line in enumerate(raw.splitlines(), 1):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            errors.append(f"line {lineno}: invalid JSON ({exc})")
+            continue
+        if not isinstance(row, dict):
+            errors.append(f"line {lineno}: expected a JSON object")
+            continue
+        heading = row.get("heading")
+        verdict = row.get("verdict")
+        reason = row.get("reason")
+        page = row.get("page")
+        if not isinstance(heading, str) or not heading.strip():
+            errors.append(f"line {lineno}: heading must be a non-empty string")
+            heading = None
+        if verdict not in CLASSIFY_VERDICTS:
+            errors.append(f"line {lineno}: verdict must be promote, skip, or conflict")
+        if not isinstance(reason, str) or not reason.strip():
+            errors.append(f"line {lineno}: reason must be a non-empty string")
+        if verdict in {"promote", "conflict"} and (not isinstance(page, str) or not page.strip()):
+            errors.append(f"line {lineno}: page is required for {verdict}")
+        if heading is not None:
+            seen.append(heading)
+    expected = Counter(headings)
+    found = Counter(seen)
+    if expected != found:
+        missing = list((expected - found).elements())
+        extra = list((found - expected).elements())
+        if missing:
+            errors.append("missing headings:")
+            errors.extend(f"- {item}" for item in missing)
+        if extra:
+            errors.append("unexpected headings:")
+            errors.extend(f"- {item}" for item in extra)
+    return errors
+
+
 def print_report(report: dict) -> None:
     print("# Wiki lint report")
     print(f"Vault: {report['vault']}\nPages: {report['pages']}")
@@ -311,6 +366,8 @@ def print_report(report: dict) -> None:
         print(f"- Last promotion: {promotion['last_promotion']['date']} {promotion['last_promotion']['subject']}")
     if promotion["note"]:
         print(f"- {promotion['note']}")
+    for heading in promotion.get("headings") or []:
+        print(f"- {heading}")
     qmd = report["qmd"]
     status = "registered" if qmd["registered"] else "intentional exclusion" if qmd["intentional_exclusion"] else "unregistered"
     print(f"qmd registration: {status}")
@@ -322,12 +379,19 @@ def print_report(report: dict) -> None:
     promotion_range = promotion["range"] if promotion["range"] else "invalid" if required else "none"
     print(f"PROMOTION_REQUIRED={required}")
     print(f"PROMOTION_RANGE={promotion_range}")
+    for heading in promotion.get("headings") or []:
+        print(f"PROMOTION_HEADING\t{heading}")
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only Markdown wiki lint")
     parser.add_argument("vault_root", help="wiki/vault directory to inspect")
     parser.add_argument("--stale-days", type=int, default=90, help="staleness threshold (default: 90)")
     parser.add_argument("--json", action="store_true", help="emit machine-readable JSON")
+    parser.add_argument(
+        "--verify-classify",
+        metavar="FILE",
+        help="require FILE to classify every unpromoted heading (JSONL); print errors and exit 1 on mismatch",
+    )
     args = parser.parse_args()
     if args.stale_days < 0:
         parser.error("--stale-days must be non-negative")
@@ -336,6 +400,14 @@ def main() -> int:
         parser.error(f"vault root is not a directory: {vault}")
     report = lint(vault, args.stale_days)
     report["promotion_required"] = report["unpromoted_log"]["count"] is None or bool(report["unpromoted_log"]["count"])
+    if args.verify_classify:
+        errors = verify_classification(Path(args.verify_classify).expanduser(), report["unpromoted_log"].get("headings") or [])
+        if errors:
+            print("bc-wiki-maintain: classification does not cover every unpromoted heading", file=sys.stderr)
+            for error in errors:
+                print(error, file=sys.stderr)
+            return 1
+        return 0
     if args.json:
         print(json.dumps(report, indent=2, sort_keys=True))
     else:

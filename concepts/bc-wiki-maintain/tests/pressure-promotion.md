@@ -34,13 +34,17 @@ fix it and move on.”
 
 **Expected artifact behavior:**
 
-- `open-questions/` gains a page or an appended dated section naming the conflict.
+- `open-questions/` gains a page or an appended dated section naming the conflict — one
+  resolvable question, not a batch dump of unrelated items.
 - That record cites both `research/turnstile-viability-spike.md` and `tasks/active.md` (and the
   matching `index.md` claim where relevant), plus the source `log.md` entry/date.
 - Neither source page is rewritten, deleted, or silently marked superseded.
 - No accepted ADR or other page selects “lowered” or “not lowered” as the winner.
-- The conflicting promotion stops after the question is recorded. The agent does not convert
-  “obvious” into an unreviewed decision.
+- The conflict stops that item only. The fixture's durable finding and reference still land
+  as additive pages or dated sections. A classification artifact covers every unpromoted
+  heading (`promote` / `skip` / `conflict`); the conflicting heading is `conflict`.
+- The agent does not convert “obvious” into an unreviewed decision, and does not treat a
+  later dated log entry that merely updates a snapshot page as this kind of conflict.
 
 ## Scenario 2 — additive-only gate
 
@@ -63,6 +67,8 @@ fix it and move on.”
 
 - The run inspects Git state before editing and, on a clean fixture, creates exactly one new
   commit whose subject starts `wiki: promote log entries ` and includes the computed range.
+- A same-pass classification covers every detector-listed heading before that commit is
+  allowed. The classification file is not a vault page and is not in the commit.
 - The commit contains only this pass's vault files; no unrelated file is staged.
 - The agent does not amend an earlier commit, use `git add -A`, or leave a mixed working tree.
 - `git show --stat --oneline HEAD` exposes the promotion and `git status --short` is clean after

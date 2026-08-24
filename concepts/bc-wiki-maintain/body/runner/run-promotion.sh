@@ -70,9 +70,11 @@ range_lines="$(printf '%s\n' "$detection_output" | grep -Ec '^PROMOTION_RANGE=' 
   || fail 'detection must emit exactly one PROMOTION_REQUIRED and one PROMOTION_RANGE result'
 promotion_required="$(printf '%s\n' "$detection_output" | sed -n 's/^PROMOTION_REQUIRED=//p')"
 promotion_range="$(printf '%s\n' "$detection_output" | sed -n 's/^PROMOTION_RANGE=//p')"
+heading_count="$(printf '%s\n' "$detection_output" | grep -c $'^PROMOTION_HEADING\t' || true)"
 case "$promotion_required" in
   0)
     [[ "$promotion_range" == "none" ]] || fail 'detector returned an invalid range for a no-op'
+    [[ "$heading_count" == 0 ]] || fail 'detector emitted PROMOTION_HEADING lines for a no-op'
     require_clean_tree
     log 'nothing to promote; exiting without invoking the agent'
     exit 0
@@ -81,6 +83,7 @@ case "$promotion_required" in
     if [[ ! "$promotion_range" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}\.\.[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
       fail 'promotion required but detector did not emit a valid PROMOTION_RANGE=YYYY-MM-DD..YYYY-MM-DD result'
     fi
+    [[ "$heading_count" -gt 0 ]] || fail 'promotion required but detector emitted no PROMOTION_HEADING lines'
     ;;
   *)
     fail 'detection did not emit exactly one usable PROMOTION_REQUIRED=0|1 result'
@@ -96,25 +99,36 @@ else
 fi
 
 BASE_HEAD="$(git -C "$REPO_ROOT" rev-parse HEAD)"
+CLASSIFY_PATH="$(mktemp)" || fail 'could not create classification temp file'
+export CLASSIFY_PATH
 PROMOTION_PROMPT=$(cat <<EOF
 Run the scheduled bc-wiki-maintain promotion pass.
 
 Repository: $REPO_ROOT
 Vault: $VAULT_ROOT
+Classification file: $CLASSIFY_PATH
 
 Read the vault's AGENTS.md, index.md, log.md, and the loaded bc-wiki-maintain skill
-before changing anything. Promote only durable observations from the append-only log
-that are not already represented in the vault. Prefer the smallest existing page or
-an appropriately named new page. Keep existing pages self-contained.
+before changing anything. Classify every unpromoted log heading the detector listed.
+Write one JSON object per heading, covering that exact list, to $CLASSIFY_PATH and
+nowhere else. Format:
+{"heading":"<exact ## line>","verdict":"promote|skip|conflict","reason":"<one line>","page":"<vault-relative page if promote or conflict>"}
+
+Promote only durable observations from the append-only log that are not already
+represented in the vault. Prefer the smallest existing page or an appropriately
+named new page. Keep existing pages self-contained. A conflict stops that item, not
+the pass. Stale page vs newer dated log is a promote (append a dated section). Only
+mutually exclusive claims are conflicts. Append index.md links for existing
+findings/ and decisions/ pages missing from the index, except README.md and
+templates/.
 
 Safety rules are absolute:
 - Additive-only: create pages or append sections; never delete, rewrite, reflow, or
   silently replace existing prose.
-- Contradictions are not resolved automatically. Create an open-questions entry that
-  quotes/links both claims and identify the conflict for a human.
+- Do not pick a winner on a mutually exclusive claim.
 - Do not touch files outside this vault.
 - Do not stage files and do not run git commit. The wrapper will inspect and create the dedicated commit.
-- If there is nothing to promote after inspection, leave the tree unchanged.
+- If every heading is a skip, leave the tree unchanged.
 
 When done, briefly report the files considered and the files changed. Do not claim a
 promotion occurred unless the corresponding files are actually changed on disk.
@@ -171,6 +185,16 @@ done < <(
 
 deletions="$(git -C "$REPO_ROOT" diff --name-only --diff-filter=D)"
 [[ -z "$deletions" ]] || fail "promotion deleted existing files; refusing to commit:\n$deletions"
+
+# A thin write must not close the current heading list. The classification file is a
+# same-pass artifact: it is not a vault page and is not committed.
+if ! python3 "$DETECTION_SCRIPT" "$VAULT_ROOT" --verify-classify "$CLASSIFY_PATH"; then
+  fail "classification does not cover every unpromoted heading; leaving changes uncommitted (file: $CLASSIFY_PATH)"
+fi
+vault_classify="$VAULT_ROOT/promotion-classification.jsonl"
+if [[ -e "$vault_classify" ]] && ! git -C "$REPO_ROOT" ls-files --error-unmatch -- "$vault_classify" >/dev/null 2>&1; then
+  rm -f -- "$vault_classify"
+fi
 
 log 'creating dedicated promotion commit'
 git -C "$REPO_ROOT" add -- "$VAULT_PREFIX"

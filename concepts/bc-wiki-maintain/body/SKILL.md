@@ -21,6 +21,7 @@ find the last dedicated promotion commit and the filesystem to find the current 
 <!-- Adapted from prompting-agents: scope discipline. -->
 **Implement EXACTLY and ONLY what the log evidence supports.** No extra pages, cleanup, or
 reorganization. If adjacent work looks useful, report it as optional; do not do it in this pass.
+Skipping a heading still requires classifying it; silence is not a skip.
 
 ## The maintenance loop
 
@@ -34,7 +35,9 @@ reorganization. If adjacent work looks useful, report it as optional; do not do 
   history boundary, not a file marker, identifies the previous promotion. If none exists, inspect
   the log from its beginning and avoid duplicating facts already present in pages.
 - The detector supplies the exact `YYYY-MM-DD..YYYY-MM-DD` range of standard dated log headings
-  awaiting promotion. Preserve that range for the wrapper-owned commit subject.
+  awaiting promotion, and lists each unpromoted heading. Preserve that range for the
+  wrapper-owned commit subject. The next dedicated commit treats the whole listed set as
+  considered, so every heading must be classified before that commit is allowed.
 
 ### 2. Run detection first
 
@@ -46,26 +49,48 @@ python3 <skill-dir>/wiki_lint.py "<vault-root>"
 
 Read the report and act on it. Broken or ambiguous links that affect a candidate must be
 resolved by the smallest additive change or reported as a blocker; never hide them with a
-rewrite. Missing index entries are fixed by the hand-curated index update described below.
-Distinguish pre-existing findings from defects introduced by this pass. The detector is
-read-only; its report is evidence, not a license to skip the safety gates.
+rewrite. Missing `findings/` and `decisions/` index entries are fixed by the additive index
+update in Gate 1. Distinguish pre-existing findings from defects introduced by this pass. The
+detector is read-only; its report is evidence, not a license to skip the safety gates.
 
-### 3. Read the evidence and classify it
+### 3. Read the evidence and classify every unpromoted heading
 
-Read the unpromoted `log.md` entries after the Git boundary, the pages they mention, and the
+Read the unpromoted `log.md` headings the detector listed, the pages they mention, and the
 relevant `index.md` section. Keep `log.md` intact: it is the evidence trail, not a queue to
-truncate. For each durable item, choose the smallest existing page or a new page by meaning:
+truncate.
+
+Classify **every** listed heading. A later dedicated commit closes this list whether you filed
+one item or twenty; a thin write must not be allowed to swallow the rest.
+
+- `promote` — durable and not already represented accurately; file it
+- `skip` — transient status, a transcript, a TODO with no durable claim, or a fact already
+  represented accurately; one-line reason required
+- `conflict` — mutually exclusive claims (Gate 3); file the question, do not promote either
+  side as current truth
+
+Write one JSON object per heading, covering the detector list as a multiset of exact `##`
+lines, to `$CLASSIFY_PATH` when that environment variable is set. Otherwise write the same
+JSONL to a temp file you report and do not put it in the vault:
+
+```json
+{"heading":"## [YYYY-MM-DD] …","verdict":"promote","reason":"…","page":"references/gotchas.md"}
+```
+
+`page` is required for `promote` and `conflict`. Do not commit this file; it is a same-pass
+gate, not a wiki page.
+
+For each `promote`, choose the smallest existing page or a new page by meaning:
 
 - verified discovery, scan result, or durable observation → `findings/`;
 - a costly or irreversible choice with a real alternative → the next numbered ADR in
   `decisions/` (inspect existing numbering first);
 - stable command, path, external reference, or gotcha → `references/`;
 - durable workflow rule or operating convention → `conventions/`;
-- unresolved uncertainty or conflicting claims → `open-questions/`.
+- unresolved uncertainty or mutually exclusive claims → `open-questions/`.
 
-Do not promote transient status, a transcript, a TODO with no durable claim, or a fact already
-represented accurately. Do not invent frontmatter: the directory supplies the page kind and Git
-supplies dates (`git log -1 --format=%cs -- <path>`).
+Do not invent frontmatter: the directory supplies the page kind and Git supplies dates
+(`git log -1 --format=%cs -- <path>`). Name appended sections after the fact, not after the
+maintenance pass.
 
 ### 4. Apply the three gates before and during promotion
 
@@ -76,10 +101,14 @@ change is small, obvious, or time-sensitive.
 #### Gate 1 — Additive-only
 
 Create missing pages and append a dated section to an existing page. Append a new link in the
-appropriate curated section of `index.md` when a page is created. **Never delete, rewrite, or
-reflow existing prose.** Do not improve wording while you are in the file, normalize headings,
-or reorder the index. This mirrors `scaffold.py`'s additive/idempotent/never-deletes precedent:
-the existing record is not yours to rewrite, and an additive diff is inspectable and reversible.
+appropriate curated section of `index.md` when a page is created. Also append a link for an
+existing `findings/` or `decisions/` page the detector lists as missing from the index, except
+`README.md` and anything under `templates/`. **Never delete, rewrite, or reflow existing
+prose.** Do not improve wording while you are in the file, normalize headings, generate the
+index, or reorder it. Do not backfill `conventions/`, `references/`, stubs, or other
+directories in this pass. This mirrors `scaffold.py`'s additive/idempotent/never-deletes
+precedent: the existing record is not yours to rewrite, and an additive diff is inspectable
+and reversible.
 
 #### Gate 2 — One dedicated Git commit
 
@@ -89,23 +118,34 @@ After promotion, land all of this pass as one commit with the subject:
 wiki: promote log entries <from>..<to>
 ```
 
+That commit is allowed only when the classification file covers every detector-listed heading.
 When the automatic runner invoked this pass, leave the index and `HEAD` unchanged: the wrapper
-checks the result, stages only the vault files changed by this pass, and creates the dedicated
-commit. Do not use `git add -A`, stage changes, commit, amend an unrelated commit, or edit a dirty
-tree in place. Only a direct manual invocation without the automatic wrapper may stage the
-verified vault files and create this one commit itself, after running the same checks. A separate
-commit is not noise: Git is the audit trail and the undo path (`git show` and `git revert`). If no
-durable item needs promotion, make no empty commit and report the no-op.
+checks classification coverage, stages only the vault files changed by this pass, and creates
+the dedicated commit. Do not use `git add -A`, stage changes, commit, amend an unrelated
+commit, or edit a dirty tree in place. Only a direct manual invocation without the automatic
+wrapper may stage the verified vault files and create this one commit itself, after running the
+same checks — including classification coverage. A separate commit is not noise: Git is the
+audit trail and the undo path (`git show` and `git revert`). If every heading is a skip, make
+no empty commit and report the no-op; the list stays unpromoted until a later pass files or
+classifies it into a commit.
 
-#### Gate 3 — Flag contradictions; never resolve them
+#### Gate 3 — Flag mutually exclusive claims; do not halt on staleness
 
-When a candidate conflicts with an existing page or two sources disagree, write the conflict to
-`open-questions/` with both source paths and the relevant `log.md` dates/headings. **Do not pick
-a winner, rewrite either source, or turn the conflict into an accepted ADR. Stop the conflicting
-promotion after recording the question.** The scheduled agent must not silently decide that a
-spike is outdated or that the newer-looking statement wins. A typical fixture: a research page
-says an acceptance bar was "formally lowered", while `tasks/active.md` and `index.md` say it
-was not.
+Two different disagreements exist. Only the first is a contradiction.
+
+- **Mutually exclusive claims** cannot both be true: a research spike says an acceptance bar
+  was "formally lowered" while the ADR addendum and `tasks/active.md` say it was not. Write
+  both citations to `open-questions/` (one resolvable question per page or heading, not a
+  batch dump), do not promote either claim as current truth, and classify that heading
+  `conflict`. Continue the rest of the pass.
+- **Stale page vs newer dated log** is the promotion job: the log has later verified state
+  and a project page still describes the earlier snapshot. Append a dated section with the
+  newer observation; do not rewrite the old sentence. Optionally note the leftover sentence
+  in `open-questions/` if it would mislead a cold reader. Classify `promote`.
+
+A conflict stops that item, not the pass. Do not pick a winner, rewrite either source, or
+turn a conflict into an accepted ADR. The scheduled agent must not silently decide that a
+spike is outdated or that the newer-looking statement wins.
 
 ### 5. Verify the artifact, then hand off or commit
 
@@ -115,20 +155,25 @@ Before the wrapper handoff or direct-manual commit:
    no file was deleted or renamed, and every new page has an index entry.
 2. Re-run `python3 <skill-dir>/wiki_lint.py "<vault-root>"`. Separate pre-existing warnings
    from new defects; do not claim a clean report when it is not clean.
-3. Check `git status --short`. Under the automatic runner, leave the index and `HEAD` unchanged
-   for the wrapper. In a direct manual invocation, stage only this pass's verified vault files.
-4. Under the automatic runner, return control without committing. In a direct manual invocation,
-   commit once with the exact detector-provided `wiki: promote log entries <from>..<to>` subject.
-5. After the wrapper or manual commit, verify `git show --stat --oneline HEAD` and a clean
+3. Confirm the classification file covers every detector-listed heading
+   (`python3 <skill-dir>/wiki_lint.py "<vault-root>" --verify-classify "$CLASSIFY_PATH"`).
+4. Check `git status --short`. Under the automatic runner, leave the index and `HEAD`
+   unchanged for the wrapper. In a direct manual invocation, stage only this pass's verified
+   vault files.
+5. Under the automatic runner, return control without committing. In a direct manual
+   invocation, commit once with the exact detector-provided `wiki: promote log entries
+   <from>..<to>` subject.
+6. After the wrapper or manual commit, verify `git show --stat --oneline HEAD` and a clean
    `git status --short`.
 
-Report the detector output, promoted pages, any open-question conflict, commit ID, and checks
-run. The next reader should be able to audit the result from the commit and the preserved log,
-not from your self-report.
+Report the detector output, the classification verdicts, promoted pages, any open-question
+conflict, commit ID, and checks run. The next reader should be able to audit the result from
+the commit and the preserved log, not from your self-report.
 
 ## Automatic runner contract
 
 A scheduler may invoke this skill headlessly, but it does not relax any gate. A dirty tree,
-ambiguous evidence, or contradiction is a safe stop, not a reason to guess. Keep the run scoped
-to the supplied vault; do not modify qmd registry policy, other repositories, or the personal
-wiki from this skill.
+missing or partial classification, or a mutually exclusive claim that cannot even be filed as
+an open question is a safe stop, not a reason to guess. Keep the run scoped to the supplied
+vault; do not modify qmd registry policy, other repositories, or the personal wiki from this
+skill.

@@ -135,19 +135,25 @@ Test it survived: an agent was told "that page is badly worded, rewrite it prope
 deliberately ugly prose. It appended below and touched nothing.
 
 **2. One dedicated commit.** Everything lands in a single commit named
-`wiki: promote log entries <date>`. Review with `git show`, undo with `git revert`. Git is the
-safety net — not a human approval step, because approval steps get skipped and git does not.
+`wiki: promote log entries <from>..<to>`. That commit is allowed only after every unpromoted
+diary heading is classified (file it, skip it with a reason, or record a real contradiction).
+Review with `git show`, undo with `git revert`. Git is the safety net — not a human approval
+step, because approval steps get skipped and git does not.
 
-**3. Contradictions are recorded, never resolved.** When two pages disagree, it writes the
-conflict into `open-questions/` citing both sides, and stops. It does not pick a winner.
+**3. Mutually exclusive claims are recorded, never resolved.** When two statements cannot both
+be true, it writes the conflict into `open-questions/` citing both sides and does not treat
+either as current truth. It then continues the rest of the diary. A page that is merely behind
+the log — last month's snapshot vs this month's verified state — is not that kind of conflict;
+it gets a dated section appended.
 
 This is the most important rule. A wrong answer written confidently into a project's memory
 outlives the session that wrote it, and everything downstream inherits it. Recording the question
 costs you one decision; a silently wrong resolution costs you every decision built on it.
 
-Rules 1 and 3 are also enforced *outside* the agent. After it finishes, the wrapper checks that
-nothing was deleted, nothing outside the notebook changed, and the agent did not commit. An agent
-that talks itself past an instruction still cannot get past those checks.
+Rules 1–3 are also enforced *outside* the agent. After it finishes, the wrapper checks that
+nothing was deleted, nothing outside the notebook changed, every listed heading was classified,
+and the agent did not commit. An agent that talks itself past an instruction still cannot get
+past those checks.
 
 ## Running it on a schedule
 
@@ -239,10 +245,10 @@ pass and read `open-questions/`. It reads every page; you would skim.
 **Run the checker before planning.** Broken links and unindexed pages mean an agent is about to
 plan against a partial picture. Thirty seconds, read-only.
 
-**Do not fix the whole backlog at once.** The pass indexes pages it creates, not the ones already
-missing. Those keep appearing in the report. That is deliberate — your contents page is curated,
-with annotations a generator would flatten, so filing pre-existing pages stays a judgment you
-make.
+**The pass now indexes existing findings and decisions.** If a research page or ADR is on disk
+but absent from the contents, this run appends the link. README stubs, templates, and the rest
+of the catalog stay unfilled on purpose — those keep appearing in the report so curation stays
+yours.
 
 ## A real run
 
@@ -259,15 +265,16 @@ the contents, and raised two questions it refused to answer.
 
 One of those questions was worth more than the filing. Two pages recorded the same historical
 detail with different values — different job title, different year — and neither page knew about
-the other. The pass cited both and stopped. Nobody had noticed the conflict in the months it had
-been sitting there, and a human reading either page alone would have believed it.
+the other. The pass cited both and left them unresolved. Nobody had noticed the conflict in the
+months it had been sitting there, and a human reading either page alone would have believed it.
 
 That is the argument for rule 3 in one example. The filing saves you time; the questions are
 where the value is.
 
 ## Limits worth knowing
 
-- **It does not fix the existing backlog.** Only pages it creates get indexed.
+- **It does not rebuild the catalog.** Existing `findings/` and `decisions/` pages get an index
+  link; other missing pages stay a human curation choice.
 - **Only tested against Markdown-link notebooks.** Wikilink-style vaults are supported in the
   code but not yet exercised under test.
 - **Promotion needs a model; the checker does not.** The checker is plain Python and free. The

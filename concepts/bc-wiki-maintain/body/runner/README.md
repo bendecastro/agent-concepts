@@ -124,7 +124,8 @@ vault.
 - `PROMOTION_SKILL` — optional override for the loaded skill file.
 
 The detection script receives the vault root as its sole positional argument and must
-emit exactly one anchored pair of machine-readable lines:
+emit exactly one anchored pair of machine-readable lines, plus one `PROMOTION_HEADING`
+line per unpromoted heading when promotion is required:
 
 ```text
 PROMOTION_REQUIRED=0
@@ -136,21 +137,26 @@ or, when dated log headings need promotion:
 ```text
 PROMOTION_REQUIRED=1
 PROMOTION_RANGE=2026-08-10..2026-08-14
+PROMOTION_HEADING	## [2026-08-10] first
+PROMOTION_HEADING	## [2026-08-14] last
 ```
 
 The range is computed from standard `## [YYYY-MM-DD] ...` headings: all log headings on
 an initial pass, or headings added after the latest relevant dedicated promotion commit on later
 passes. If any unpromoted heading is non-standard, the detector keeps promotion required and emits
 `PROMOTION_RANGE=invalid`; the wrapper fails closed instead of guessing a range. It may emit a
-human-readable report around the pair. Missing, duplicate, or malformed results fail closed.
+human-readable report around the contract lines. Missing, duplicate, or malformed results fail closed.
 `PROMOTION_REQUIRED=0` exits before Pi is checked or invoked.
 The parent integration must preserve this contract when wiring the detection script.
 
 Before detection, and again before promotion, the wrapper requires a clean Git
 worktree. It also checks that the promotion agent did not commit unexpectedly, stage any
-index changes, touch files outside the vault, or delete an existing file. The wrapper owns
-the dedicated commit and uses the detector's exact range; a failed safety check leaves
-changes uncommitted for inspection rather than resetting them.
+index changes, touch files outside the vault, or delete an existing file. If the agent
+changed vault files, the wrapper refuses the dedicated commit unless
+`wiki_lint.py --verify-classify` accepts a JSONL file covering every unpromoted heading.
+That file is a temp path exported as `CLASSIFY_PATH`; it is not a vault page and is not
+committed. The wrapper owns the dedicated commit and uses the detector's exact range; a
+failed safety check leaves changes uncommitted for inspection rather than resetting them.
 
 The verified headless command is Pi 0.84.2 with the installed Luna model:
 
@@ -163,8 +169,8 @@ pi --print --no-session --approve \
 
 A no-tools probe of this exact model/flag combination returned status 0 on this
 machine. The real runner keeps tools enabled because the agent must read and edit the
-vault; it passes additive-only, contradiction, and no-commit rules in the prompt and
-then performs the commit itself.
+vault; it passes additive-only, classify-every-heading, stale-vs-exclusive, and no-commit
+rules in the prompt and then performs the commit itself.
 
 ## Check a run
 
