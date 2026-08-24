@@ -1040,3 +1040,7 @@ outside the temporary Git repository while retaining their test lifetime.
 Corrected the staged-change regression to stage a repo-root path outside the configured vault, and
 added a two-vault boundary test. The skill now distinguishes automatic-wrapper runs (leave index
 and HEAD untouched; wrapper stages and commits) from direct manual runs. Focused tests pass.
+
+## [2026-08-24] implement | bc-wiki-maintain commit-authority checklist
+Aligned the final verification checklist with Gate 2: automatic runs hand an unchanged index and
+`HEAD` back to the wrapper, while direct manual runs stage and create the dedicated commit.

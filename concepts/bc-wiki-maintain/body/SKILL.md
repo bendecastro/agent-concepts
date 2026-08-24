@@ -107,18 +107,20 @@ spike is outdated or that the newer-looking statement wins. A typical fixture: a
 says an acceptance bar was "formally lowered", while `tasks/active.md` and `index.md` say it
 was not.
 
-### 5. Verify the artifact, then commit
+### 5. Verify the artifact, then hand off or commit
 
-Before the dedicated commit:
+Before the wrapper handoff or direct-manual commit:
 
 1. Inspect `git diff --check` and the diff itself. Confirm existing prose was not rewritten,
    no file was deleted or renamed, and every new page has an index entry.
 2. Re-run `python3 <skill-dir>/wiki_lint.py "<vault-root>"`. Separate pre-existing warnings
    from new defects; do not claim a clean report when it is not clean.
-3. Check `git status --short` and leave the index unchanged; the wrapper stages only the files
-   this promotion created or appended to after checking for staged agent changes.
-4. Commit once with the exact detector-provided `wiki: promote log entries <from>..<to>` subject.
-5. Verify `git show --stat --oneline HEAD` and a clean `git status --short`.
+3. Check `git status --short`. Under the automatic runner, leave the index and `HEAD` unchanged
+   for the wrapper. In a direct manual invocation, stage only this pass's verified vault files.
+4. Under the automatic runner, return control without committing. In a direct manual invocation,
+   commit once with the exact detector-provided `wiki: promote log entries <from>..<to>` subject.
+5. After the wrapper or manual commit, verify `git show --stat --oneline HEAD` and a clean
+   `git status --short`.
 
 Report the detector output, promoted pages, any open-question conflict, commit ID, and checks
 run. The next reader should be able to audit the result from the commit and the preserved log,
