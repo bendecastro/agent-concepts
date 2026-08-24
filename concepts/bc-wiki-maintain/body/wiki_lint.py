@@ -2,6 +2,7 @@
 """Read-only Markdown wiki lint (stdlib only); qmd paths use a narrow YAML line parser."""
 from __future__ import annotations
 import argparse
+from collections import Counter
 import datetime as dt
 import json
 import os
@@ -12,6 +13,45 @@ import sys
 from urllib.parse import unquote
 WIKI_LINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]")
 MD_LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(\s*(?:<([^>\n]+)>|([^\s)\n]+))(?:\s+(?:\"[^\"]*\"|'[^']*'|\([^)]*\)))?\s*\)")
+INLINE_CODE_RE = re.compile(r"(`+)([^`\n]*?)\1")
+FENCE_RE = re.compile(r"^[ \t]{0,3}(`{3,}|~{3,})")
+LOG_HEADING_RE = re.compile(r"^## \[(\d{4}-\d{2}-\d{2})\](?:\s|$)")
+
+
+def without_code(value: str) -> str:
+    """Mask fenced blocks and inline code while preserving line structure."""
+    visible: list[str] = []
+    fence_char: str | None = None
+    fence_length = 0
+    for line in value.splitlines(keepends=True):
+        match = FENCE_RE.match(line)
+        if fence_char is not None:
+            if match and match.group(1)[0] == fence_char and len(match.group(1)) >= fence_length:
+                fence_char = None
+                fence_length = 0
+            visible.append("\n" if line.endswith("\n") else "")
+            continue
+        if match:
+            fence_char = match.group(1)[0]
+            fence_length = len(match.group(1))
+            visible.append("\n" if line.endswith("\n") else "")
+            continue
+        visible.append(INLINE_CODE_RE.sub(lambda match: "".join("\n" if char == "\n" else " " for char in match.group(0)), line))
+    return "".join(visible)
+
+
+def log_heading_dates(value: str) -> list[str]:
+    dates = []
+    for line in without_code(value).splitlines():
+        match = LOG_HEADING_RE.match(line)
+        if not match:
+            continue
+        try:
+            dt.date.fromisoformat(match.group(1))
+        except ValueError:
+            continue
+        dates.append(match.group(1))
+    return dates
 
 def rel(path: Path, vault: Path) -> str:
     return path.relative_to(vault).as_posix()
@@ -23,6 +63,7 @@ def text(path: Path) -> str:
         return ""
 
 def links(value: str):
+    value = without_code(value)
     for match in WIKI_LINK_RE.finditer(value):
         target = match.group(1).strip()
         yield target, f"[[{target}]]"
@@ -92,8 +133,8 @@ def git_date(repo: Path | None, path: Path) -> tuple[str | None, str]:
 
 def promotion_status(vault: Path, repo: Path | None) -> dict:
     log_path = vault / "log.md"
-    current_entries = sum(line.startswith("## ") for line in text(log_path).splitlines())
-    result = {"count": None, "last_promotion": None, "note": None}
+    current_dates = log_heading_dates(text(log_path))
+    result = {"count": None, "range": None, "last_promotion": None, "note": None}
     if repo is None:
         result["note"] = "unknown: not a git repository"
         return result
@@ -105,19 +146,39 @@ def promotion_status(vault: Path, repo: Path | None) -> dict:
     if not listed or listed.returncode != 0:
         result["note"] = "unknown: log.md is untracked"
         return result
-    found = git(repo, "log", "-1", "--format=%H%x00%cs%x00%s", "--grep=^wiki: promote")
-    value = found.stdout.strip() if found else ""
-    if not value:
-        result["count"] = current_entries
+
+    # Promotion commits do not touch log.md, so scope the subject search by the
+    # vault directory instead of using a path-limited git log.
+    promotion_log = git(repo, "log", "--format=%H%x00%cs%x00%s", "--grep=^wiki: promote")
+    promotion_record = None
+    vault_prefix = str(Path(relative).parent)
+    if promotion_log and promotion_log.returncode == 0:
+        for record in promotion_log.stdout.splitlines():
+            fields = record.split("\x00", 2)
+            if len(fields) != 3:
+                continue
+            commit, date, subject = fields
+            touched = git(repo, "diff-tree", "--no-commit-id", "--name-only", "-r", commit, "--", vault_prefix)
+            if touched and touched.returncode == 0 and touched.stdout.strip():
+                promotion_record = (commit, date, subject)
+                break
+
+    if promotion_record is None:
+        dates = current_dates
+        result["count"] = len(dates)
         result["note"] = "no wiki: promote commit found; all current log entries are unpromoted"
-        return result
-    commit, date, subject = value.split("\x00", 2)
-    result["last_promotion"] = {"commit": commit, "date": date, "subject": subject}
-    diff = git(repo, "diff", "--no-color", "--unified=0", commit, "--", relative)
-    if not diff or diff.returncode != 0:
-        result["note"] = "unknown: could not compare log.md with last promotion commit"
     else:
-        result["count"] = sum(line.startswith("+## ") for line in diff.stdout.splitlines())
+        commit, date, subject = promotion_record
+        result["last_promotion"] = {"commit": commit, "date": date, "subject": subject}
+        previous = git(repo, "show", f"{commit}:{relative}")
+        if not previous or previous.returncode != 0:
+            result["note"] = "unknown: could not compare log.md with last promotion commit"
+        else:
+            previous_dates = log_heading_dates(previous.stdout)
+            dates = list((Counter(current_dates) - Counter(previous_dates)).elements())
+            result["count"] = len(dates)
+    if result["count"] is not None and result["count"] > 0:
+        result["range"] = f"{min(dates)}..{max(dates)}"
     return result
 
 def qmd_status(vault: Path) -> dict:
@@ -167,6 +228,9 @@ def lint(vault: Path, stale_days: int) -> dict:
         stems.setdefault(path.stem, []).append(path)
     incoming, broken, ambiguous = dict.fromkeys(pages_list, 0), [], []
     for path in pages_list:
+        # log.md is append-only evidence, not a graph source; its links may be historical or cross-vault.
+        if path.name == "log.md":
+            continue
         # Templates hold example links on purpose; do not fail the vault on them.
         if "templates" in path.relative_to(vault).parts:
             continue
@@ -240,8 +304,11 @@ def print_report(report: dict) -> None:
     if qmd["reason"]:
         print(f"- {qmd['reason']}")
     # Machine-readable contract consumed by runner/run-promotion.sh. Fails closed:
-    # an unknown count means git could not answer, so do not licence an unattended write.
-    print(f"PROMOTION_REQUIRED={1 if promotion['count'] else 0}")
+    # an unknown count means git could not answer, so do not license an unattended write.
+    required = 1 if promotion["count"] is None or promotion["count"] > 0 else 0
+    promotion_range = promotion["range"] if promotion["range"] else "invalid" if required else "none"
+    print(f"PROMOTION_REQUIRED={required}")
+    print(f"PROMOTION_RANGE={promotion_range}")
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only Markdown wiki lint")
@@ -255,7 +322,7 @@ def main() -> int:
     if not vault.is_dir():
         parser.error(f"vault root is not a directory: {vault}")
     report = lint(vault, args.stale_days)
-    report["promotion_required"] = bool(report["unpromoted_log"]["count"])
+    report["promotion_required"] = report["unpromoted_log"]["count"] is None or bool(report["unpromoted_log"]["count"])
     if args.json:
         print(json.dumps(report, indent=2, sort_keys=True))
     else:

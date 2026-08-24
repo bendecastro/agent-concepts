@@ -30,9 +30,11 @@ reorganization. If adjacent work looks useful, report it as optional; do not do 
 - Run `git -C "<vault-root>" status --short` before touching anything. If it is not clean,
   **stop**. Do not stash, reset, or fold the promotion into someone else's working changes.
 - Identify the repository root with Git; the dedicated commit belongs to that repository.
-- Find the latest commit whose subject starts `wiki: promote log entries `. That Git history
-  boundary, not a file marker, identifies the previous promotion. If none exists, inspect the
-  log from its beginning and avoid duplicating facts already present in pages.
+- Find the latest relevant commit whose subject starts `wiki: promote log entries `. That Git
+  history boundary, not a file marker, identifies the previous promotion. If none exists, inspect
+  the log from its beginning and avoid duplicating facts already present in pages.
+- The detector supplies the exact `YYYY-MM-DD..YYYY-MM-DD` range of standard dated log headings
+  awaiting promotion. Preserve that range for the wrapper-owned commit subject.
 
 ### 2. Run detection first
 
@@ -110,8 +112,9 @@ Before the dedicated commit:
    no file was deleted or renamed, and every new page has an index entry.
 2. Re-run `python3 <skill-dir>/wiki_lint.py "<vault-root>"`. Separate pre-existing warnings
    from new defects; do not claim a clean report when it is not clean.
-3. Check `git status --short` and stage only the files this promotion created or appended to.
-4. Commit once with the exact `wiki: promote log entries <from>..<to>` subject.
+3. Check `git status --short` and leave the index unchanged; the wrapper stages only the files
+   this promotion created or appended to after checking for staged agent changes.
+4. Commit once with the exact detector-provided `wiki: promote log entries <from>..<to>` subject.
 5. Verify `git show --stat --oneline HEAD` and a clean `git status --short`.
 
 Report the detector output, promoted pages, any open-question conflict, commit ID, and checks

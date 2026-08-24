@@ -1024,3 +1024,9 @@ skips `temp/`/`scratch/`/`.obsidian`/`vendor` and does not fail a vault on examp
 Local systemd copies of the promotion unit, staggered after the lint sweep. First runs
 will be large: those vaults have never had a `wiki: promote` commit. Commits stay local
 until something pushes — both remotes exist. Runner README now documents one-unit-per-vault.
+
+## [2026-08-24] implement | bc-wiki-maintain runner hardening
+The detector now computes strict dated-log promotion ranges and ignores code spans, fenced examples,
+and append-only `log.md` links as graph sources. The wrapper rejects any agent-staged index change,
+requires a valid range, and commits with the exact `<from>..<to>` subject. Added temporary-repository
+regression tests for CLI linting, ranges, exact commits, invalid ranges, and inside/outside staging.

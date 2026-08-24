@@ -64,17 +64,23 @@ if [[ -n "$detection_output" ]]; then
   printf '%s\n' "$detection_output"
 fi
 
-promotion_required="$(
-printf '%s\n' "$detection_output" \
-  | awk -F= '/^PROMOTION_REQUIRED=(0|1)$/ { value = $2 } END { print value }'
-)"
+required_lines="$(printf '%s\n' "$detection_output" | grep -Ec '^PROMOTION_REQUIRED=' || true)"
+range_lines="$(printf '%s\n' "$detection_output" | grep -Ec '^PROMOTION_RANGE=' || true)"
+[[ "$required_lines" == 1 && "$range_lines" == 1 ]] \
+  || fail 'detection must emit exactly one PROMOTION_REQUIRED and one PROMOTION_RANGE result'
+promotion_required="$(printf '%s\n' "$detection_output" | sed -n 's/^PROMOTION_REQUIRED=//p')"
+promotion_range="$(printf '%s\n' "$detection_output" | sed -n 's/^PROMOTION_RANGE=//p')"
 case "$promotion_required" in
   0)
+    [[ "$promotion_range" == "none" ]] || fail 'detector returned an invalid range for a no-op'
     require_clean_tree
     log 'nothing to promote; exiting without invoking the agent'
     exit 0
     ;;
   1)
+    if [[ ! "$promotion_range" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}\.\.[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+      fail 'promotion required but detector did not emit a valid PROMOTION_RANGE=YYYY-MM-DD..YYYY-MM-DD result'
+    fi
     ;;
   *)
     fail 'detection did not emit exactly one usable PROMOTION_REQUIRED=0|1 result'
@@ -107,7 +113,7 @@ Safety rules are absolute:
 - Contradictions are not resolved automatically. Create an open-questions entry that
   quotes/links both claims and identify the conflict for a human.
 - Do not touch files outside this vault.
-- Do not run git commit. The wrapper will inspect and create the dedicated commit.
+- Do not stage files and do not run git commit. The wrapper will inspect and create the dedicated commit.
 - If there is nothing to promote after inspection, leave the tree unchanged.
 
 When done, briefly report the files considered and the files changed. Do not claim a
@@ -139,6 +145,13 @@ if [[ "$(git -C "$REPO_ROOT" rev-parse HEAD)" != "$BASE_HEAD" ]]; then
   fail 'promotion agent committed unexpectedly; inspect the new commit before enabling the timer'
 fi
 
+# The agent must never stage anything. Compare the complete index with the
+# pre-agent tree before inspecting or staging its working-tree changes.
+if ! git -C "$REPO_ROOT" diff --cached --quiet "$BASE_HEAD" --; then
+  git -C "$REPO_ROOT" diff --cached --name-status "$BASE_HEAD" >&2 || true
+  fail 'promotion agent left staged changes; refusing to inspect or create a commit'
+fi
+
 status="$(repo_status)"
 if [[ -z "$status" ]]; then
   log 'agent found nothing to promote; no commit created'
@@ -161,7 +174,7 @@ deletions="$(git -C "$REPO_ROOT" diff --name-only --diff-filter=D)"
 
 log 'creating dedicated promotion commit'
 git -C "$REPO_ROOT" add -- "$VAULT_PREFIX"
-git -C "$REPO_ROOT" commit -m "wiki: promote log entries $(date -u +%F)"
+git -C "$REPO_ROOT" commit -m "wiki: promote log entries $promotion_range"
 
 if [[ -n "$(repo_status)" ]]; then
   fail 'promotion commit completed but the repository is still dirty'

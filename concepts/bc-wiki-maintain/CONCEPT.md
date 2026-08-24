@@ -32,8 +32,10 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   be hand-maintained state that can drift. Page kind comes from its directory; date evidence comes
   from `git log -1 --format=%cs -- <path>`.
 - **Automatic promotion is additive and auditable.** A run may create a page or append a dated
-  section, then lands exactly one dedicated `wiki: promote log entries <from>..<to>` commit. Git
-  history makes the entire result inspectable and reversible without a human approval queue.
+  section, then lands exactly one dedicated `wiki: promote log entries <from>..<to>` commit. The
+  detector computes that range from standard dated log headings, and the wrapper rejects any
+  index changes left by the agent before staging its own files. Git history makes the entire
+  result inspectable and reversible without a human approval queue.
 - **Contradictions are first-class unresolved work.** When pages disagree, the run creates or
   appends an `open-questions/` record containing both citations and stops the conflicting
   promotion. It never silently chooses the newer, more detailed, or more plausible claim. This
@@ -84,6 +86,12 @@ for the decision to lint index drift rather than generate the index.
 Fixtures and consumer transcripts: `/tmp/bc-swarm/2026-08-22-brain-wiki/pressure/` (ephemeral).
 Not yet re-run against a vault using `[[wikilinks]]` rather than Markdown links.
 
+**2026-08-24 — PASS — stdlib regression suite.** `tests/test_wiki_maintain.py` exercises the
+public detector CLI and promotion runner with temporary Git repositories: fenced/inline code and
+append-only log links are excluded without weakening prose-link failures; initial/subsequent
+ranges are computed; the wrapper creates the exact range subject; invalid ranges fail before Pi;
+and staged inside-vault or outside-vault changes fail without advancing `HEAD`.
+
 ## Human guide
 
 `README.md` in this directory is the user-facing guide: what the tool is for, how to read a
@@ -107,6 +115,9 @@ it is scoped to one vault chosen at install time and is not part of the skill de
 
 - Promotion still requires a capable headless agent to classify evidence; the detector cannot
   prove semantic truth by itself.
+- The detector derives later ranges from the dated-heading difference between the latest relevant
+  promotion commit and the current log; unusual log rewrites or non-standard headings are
+  intentionally not treated as promotable evidence.
 - An unresolved contradiction deliberately stops its conflicting promotion, so a scheduled run
   may need human follow-up rather than silently making progress.
 - The concept's no-staged-tree choice is bounded to the single-writer pilot; concurrent writers
