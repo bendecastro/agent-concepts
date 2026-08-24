@@ -1035,3 +1035,8 @@ regression tests for CLI linting, ranges, exact commits, invalid ranges, and ins
 Promotion detection now preserves every real unpromoted `##` log heading and fails closed when any
 new heading lacks a valid date. Fixed the invalid-range regression seam and kept fake runner scripts
 outside the temporary Git repository while retaining their test lifetime.
+
+## [2026-08-24] test | bc-wiki-maintain review fixes
+Corrected the staged-change regression to stage a repo-root path outside the configured vault, and
+added a two-vault boundary test. The skill now distinguishes automatic-wrapper runs (leave index
+and HEAD untouched; wrapper stages and commits) from direct manual runs. Focused tests pass.

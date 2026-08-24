@@ -89,10 +89,13 @@ After promotion, land all of this pass as one commit with the subject:
 wiki: promote log entries <from>..<to>
 ```
 
-Inspect the diff, stage only the vault files changed by this pass, and run the relevant checks
-before committing. Do not use `git add -A`, amend an unrelated commit, or edit a dirty tree in
-place. A separate commit is not noise: Git is the audit trail and the undo path (`git show` and
-`git revert`). If no durable item needs promotion, make no empty commit and report the no-op.
+When the automatic runner invoked this pass, leave the index and `HEAD` unchanged: the wrapper
+checks the result, stages only the vault files changed by this pass, and creates the dedicated
+commit. Do not use `git add -A`, stage changes, commit, amend an unrelated commit, or edit a dirty
+tree in place. Only a direct manual invocation without the automatic wrapper may stage the
+verified vault files and create this one commit itself, after running the same checks. A separate
+commit is not noise: Git is the audit trail and the undo path (`git show` and `git revert`). If no
+durable item needs promotion, make no empty commit and report the no-op.
 
 #### Gate 3 — Flag contradictions; never resolve them
 

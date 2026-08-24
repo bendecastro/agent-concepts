@@ -89,8 +89,9 @@ Not yet re-run against a vault using `[[wikilinks]]` rather than Markdown links.
 **2026-08-24 — PASS — stdlib regression suite.** `tests/test_wiki_maintain.py` exercises the
 public detector CLI and promotion runner with temporary Git repositories: fenced/inline code and
 append-only log links are excluded without weakening prose-link failures; initial/subsequent
-ranges are computed; the wrapper creates the exact range subject; invalid ranges fail before Pi;
-and staged inside-vault or outside-vault changes fail without advancing `HEAD`.
+ranges are computed; a newer promotion in another vault cannot reset the configured vault's
+boundary; the wrapper creates the exact range subject; invalid ranges fail before Pi; and staged
+inside-vault or repo-root outside-vault changes fail without advancing `HEAD`.
 
 ## Human guide
 

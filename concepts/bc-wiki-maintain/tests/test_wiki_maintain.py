@@ -107,6 +107,44 @@ Prose [[missing-prose]].
             self.assertEqual(promotion["count"], 1)
             self.assertEqual(promotion["range"], "2026-08-05..2026-08-05")
 
+    def test_newer_promotion_in_another_vault_does_not_reset_boundary(self) -> None:
+        temp = tempfile.TemporaryDirectory()
+        repo = Path(temp.name) / "repo"
+        vault_a = repo / "vault-a"
+        vault_b = repo / "vault-b"
+        vault_a.mkdir(parents=True)
+        vault_b.mkdir()
+        for vault, date in ((vault_a, "2026-08-01"), (vault_b, "2026-08-02")):
+            (vault / "index.md").write_text("# Index\n", encoding="utf-8")
+            (vault / "page.md").write_text("# Page\n", encoding="utf-8")
+            (vault / "log.md").write_text(f"## [{date}] initial\n", encoding="utf-8")
+        run("git", "init", "-q", cwd=repo)
+        run("git", "config", "user.name", "Test", cwd=repo)
+        run("git", "config", "user.email", "test@example.invalid", cwd=repo)
+        run("git", "add", ".", cwd=repo)
+        run("git", "commit", "-qm", "initial", cwd=repo)
+        with temp:
+            (vault_a / "promoted.md").write_text("# A promoted\n", encoding="utf-8")
+            run("git", "add", str(vault_a / "promoted.md"), cwd=repo)
+            run("git", "commit", "-qm", "wiki: promote log entries 2026-08-01..2026-08-01", cwd=repo)
+            with (vault_a / "log.md").open("a", encoding="utf-8") as handle:
+                handle.write("\n## [2026-08-03] A second\n")
+            run("git", "add", str(vault_a / "log.md"), cwd=repo)
+            run("git", "commit", "-qm", "capture A second", cwd=repo)
+
+            (vault_b / "promoted.md").write_text("# B promoted\n", encoding="utf-8")
+            run("git", "add", str(vault_b / "promoted.md"), cwd=repo)
+            run("git", "commit", "-qm", "wiki: promote log entries 2026-08-02..2026-08-02", cwd=repo)
+            with (vault_a / "log.md").open("a", encoding="utf-8") as handle:
+                handle.write("\n## [2026-08-04] A third\n")
+            run("git", "add", str(vault_a / "log.md"), cwd=repo)
+            run("git", "commit", "-qm", "capture A third", cwd=repo)
+
+            report = json.loads(run("python3", str(LINTER), str(vault_a), "--json", cwd=ROOT).stdout)
+            promotion = report["unpromoted_log"]
+            self.assertEqual(promotion["count"], 2)
+            self.assertEqual(promotion["range"], "2026-08-03..2026-08-04")
+
     def test_nonstandard_headings_keep_promotion_required_and_invalid_range(self) -> None:
         temp, repo, vault = make_repo("## [2026-08-01] first\n\n## not dated\n")
         with temp:
@@ -152,7 +190,7 @@ class PromotionRunnerTests(unittest.TestCase):
             self.assertEqual(git(repo, "log", "-1", "--format=%s"), "wiki: promote log entries 2026-08-10..2026-08-14")
             self.assertEqual(git(repo, "status", "--porcelain"), "")
 
-    def assert_staged_change_fails_closed(self, stage_body: str) -> None:
+    def assert_staged_change_fails_closed(self, stage_body: str, expected_staged_path: str | None = None) -> None:
         temp, repo, vault = make_repo("## [2026-08-10] first\n")
         with temp:
             pi = self.write_pi(repo, stage_body)
@@ -162,17 +200,21 @@ class PromotionRunnerTests(unittest.TestCase):
             self.assertIn("staged", result.stderr)
             self.assertEqual(git(repo, "rev-parse", "HEAD"), base)
             self.assertNotEqual(git(repo, "status", "--porcelain"), "")
+            if expected_staged_path is not None:
+                self.assertEqual(git(repo, "diff", "--cached", "--name-only"), expected_staged_path)
 
     def test_staged_inside_vault_fails_before_commit(self) -> None:
         self.assert_staged_change_fails_closed(
             "printf '# inside\\n' > \"$VAULT_ROOT/inside.md\"\n"
-            "git -C \"$VAULT_ROOT/..\" add \"$VAULT_ROOT/inside.md\"\n"
+            "git -C \"$VAULT_ROOT/..\" add \"$VAULT_ROOT/inside.md\"\n",
+            "vault/inside.md",
         )
 
     def test_staged_outside_vault_fails_before_commit(self) -> None:
         self.assert_staged_change_fails_closed(
-            "printf 'outside\\n' > outside.md\n"
-            "git add outside.md\n"
+            "printf 'outside\\n' > \"$VAULT_ROOT/../outside.md\"\n"
+            "git -C \"$VAULT_ROOT/..\" add outside.md\n",
+            "outside.md",
         )
 
     def test_staged_deletion_fails_before_commit(self) -> None:
