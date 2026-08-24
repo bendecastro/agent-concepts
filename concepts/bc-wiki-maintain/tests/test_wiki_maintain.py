@@ -26,7 +26,8 @@ def git(repo: Path, *args: str) -> str:
 
 def make_repo(log: str) -> tuple[tempfile.TemporaryDirectory[str], Path, Path]:
     temp = tempfile.TemporaryDirectory()
-    repo = Path(temp.name)
+    repo = Path(temp.name) / "repo"
+    repo.mkdir()
     vault = repo / "vault"
     vault.mkdir()
     (vault / "index.md").write_text("# Index\n\n- [page](page.md)\n", encoding="utf-8")
@@ -83,7 +84,7 @@ Prose [[missing-prose]].
 
     def test_initial_and_subsequent_promotion_ranges(self) -> None:
         temp, repo, vault = make_repo(
-            "## [2026-08-01] first\n\n## [2026-08-03] second\n\n## not dated\n\n```text\n## [2026-09-09] example\n```\n"
+            "## [2026-08-01] first\n\n## [2026-08-03] second\n\n```text\n## [2026-09-09] example\n```\n"
         )
         with temp:
             initial = run("python3", str(LINTER), str(vault), "--json", cwd=ROOT)
@@ -106,10 +107,38 @@ Prose [[missing-prose]].
             self.assertEqual(promotion["count"], 1)
             self.assertEqual(promotion["range"], "2026-08-05..2026-08-05")
 
+    def test_nonstandard_headings_keep_promotion_required_and_invalid_range(self) -> None:
+        temp, repo, vault = make_repo("## [2026-08-01] first\n\n## not dated\n")
+        with temp:
+            initial = run("python3", str(LINTER), str(vault), "--json", cwd=ROOT)
+            report = json.loads(initial.stdout)
+            promotion = report["unpromoted_log"]
+            self.assertEqual(promotion["count"], 2)
+            self.assertIsNone(promotion["range"])
+            self.assertTrue(report["promotion_required"])
+
+            (vault / "promoted.md").write_text("# Promoted\n", encoding="utf-8")
+            run("git", "add", str(vault / "promoted.md"), cwd=repo)
+            run("git", "commit", "-qm", "wiki: promote log entries invalid", cwd=repo)
+            with (vault / "log.md").open("a", encoding="utf-8") as handle:
+                handle.write("\n## newly captured\n")
+            run("git", "add", str(vault / "log.md"), cwd=repo)
+            run("git", "commit", "-qm", "capture nonstandard", cwd=repo)
+
+            subsequent = run("python3", str(LINTER), str(vault), "--json", cwd=ROOT)
+            report = json.loads(subsequent.stdout)
+            promotion = report["unpromoted_log"]
+            self.assertEqual(promotion["count"], 1)
+            self.assertIsNone(promotion["range"])
+            self.assertTrue(report["promotion_required"])
+            rendered = run("python3", str(LINTER), str(vault), cwd=ROOT, check=False)
+            self.assertIn("PROMOTION_REQUIRED=1", rendered.stdout)
+            self.assertIn("PROMOTION_RANGE=invalid", rendered.stdout)
+
 
 class PromotionRunnerTests(unittest.TestCase):
     def write_pi(self, directory: Path, body: str) -> Path:
-        pi = Path(tempfile.mkdtemp()) / "fake-pi.sh"
+        pi = directory.parent / "fake-pi.sh"
         pi.write_text("#!/usr/bin/env bash\nset -eu\n" + textwrap.dedent(body), encoding="utf-8")
         pi.chmod(0o755)
         return pi
@@ -152,10 +181,10 @@ class PromotionRunnerTests(unittest.TestCase):
     def test_invalid_required_range_fails_before_agent(self) -> None:
         temp, repo, vault = make_repo("## [2026-08-10] first\n")
         with temp:
-            detector = repo / "detector.sh"
+            detector = repo.parent / "detector.py"
             marker = repo / "agent-ran"
             detector.write_text(
-                "#!/usr/bin/env bash\nprintf 'PROMOTION_REQUIRED=1\\nPROMOTION_RANGE=invalid\\n'\n",
+                "#!/usr/bin/env python3\nprint('PROMOTION_REQUIRED=1')\nprint('PROMOTION_RANGE=invalid')\n",
                 encoding="utf-8",
             )
             detector.chmod(0o755)
@@ -164,6 +193,7 @@ class PromotionRunnerTests(unittest.TestCase):
             base = git(repo, "rev-parse", "HEAD")
             result = run("bash", str(RUNNER), cwd=repo, env=env, check=False)
             self.assertNotEqual(result.returncode, 0)
+            self.assertIn("promotion required but detector did not emit a valid PROMOTION_RANGE", result.stderr)
             self.assertFalse(marker.exists())
             self.assertEqual(git(repo, "rev-parse", "HEAD"), base)
 

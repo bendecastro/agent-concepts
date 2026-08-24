@@ -115,9 +115,9 @@ it is scoped to one vault chosen at install time and is not part of the skill de
 
 - Promotion still requires a capable headless agent to classify evidence; the detector cannot
   prove semantic truth by itself.
-- The detector derives later ranges from the dated-heading difference between the latest relevant
-  promotion commit and the current log; unusual log rewrites or non-standard headings are
-  intentionally not treated as promotable evidence.
+- The detector derives later ranges from the heading difference between the latest relevant
+  promotion commit and the current log; non-standard headings remain counted but deliberately
+  produce an invalid range so unattended promotion fails closed.
 - An unresolved contradiction deliberately stops its conflicting promotion, so a scheduled run
   may need human follow-up rather than silently making progress.
 - The concept's no-staged-tree choice is bounded to the single-writer pilot; concurrent writers

@@ -138,10 +138,12 @@ PROMOTION_REQUIRED=1
 PROMOTION_RANGE=2026-08-10..2026-08-14
 ```
 
-The range is computed from standard `## [YYYY-MM-DD] ...` headings: all dated headings on
-an initial pass, or dated headings added after the latest relevant dedicated promotion commit
-on later passes. It may emit a human-readable report around the pair. Missing, duplicate, or
-malformed results fail closed. `PROMOTION_REQUIRED=0` exits before Pi is checked or invoked.
+The range is computed from standard `## [YYYY-MM-DD] ...` headings: all log headings on
+an initial pass, or headings added after the latest relevant dedicated promotion commit on later
+passes. If any unpromoted heading is non-standard, the detector keeps promotion required and emits
+`PROMOTION_RANGE=invalid`; the wrapper fails closed instead of guessing a range. It may emit a
+human-readable report around the pair. Missing, duplicate, or malformed results fail closed.
+`PROMOTION_REQUIRED=0` exits before Pi is checked or invoked.
 The parent integration must preserve this contract when wiring the detection script.
 
 Before detection, and again before promotion, the wrapper requires a clean Git

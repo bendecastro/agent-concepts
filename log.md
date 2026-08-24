@@ -1030,3 +1030,8 @@ The detector now computes strict dated-log promotion ranges and ignores code spa
 and append-only `log.md` links as graph sources. The wrapper rejects any agent-staged index change,
 requires a valid range, and commits with the exact `<from>..<to>` subject. Added temporary-repository
 regression tests for CLI linting, ranges, exact commits, invalid ranges, and inside/outside staging.
+
+## [2026-08-24] implement | bc-wiki-maintain nonstandard log headings
+Promotion detection now preserves every real unpromoted `##` log heading and fails closed when any
+new heading lacks a valid date. Fixed the invalid-range regression seam and kept fake runner scripts
+outside the temporary Git repository while retaining their test lifetime.

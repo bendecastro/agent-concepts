@@ -15,7 +15,8 @@ WIKI_LINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]")
 MD_LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(\s*(?:<([^>\n]+)>|([^\s)\n]+))(?:\s+(?:\"[^\"]*\"|'[^']*'|\([^)]*\)))?\s*\)")
 INLINE_CODE_RE = re.compile(r"(`+)([^`\n]*?)\1")
 FENCE_RE = re.compile(r"^[ \t]{0,3}(`{3,}|~{3,})")
-LOG_HEADING_RE = re.compile(r"^## \[(\d{4}-\d{2}-\d{2})\](?:\s|$)")
+LOG_HEADING_RE = re.compile(r"^## (.+?)\s*$")
+LOG_DATED_HEADING_RE = re.compile(r"^## \[(\d{4}-\d{2}-\d{2})\](?:\s|$)")
 
 
 def without_code(value: str) -> str:
@@ -40,18 +41,23 @@ def without_code(value: str) -> str:
     return "".join(visible)
 
 
-def log_heading_dates(value: str) -> list[str]:
-    dates = []
+def log_headings(value: str) -> list[tuple[str, str | None]]:
+    headings = []
     for line in without_code(value).splitlines():
-        match = LOG_HEADING_RE.match(line)
-        if not match:
+        line = line.rstrip()
+        if not LOG_HEADING_RE.match(line):
             continue
-        try:
-            dt.date.fromisoformat(match.group(1))
-        except ValueError:
-            continue
-        dates.append(match.group(1))
-    return dates
+        dated = LOG_DATED_HEADING_RE.match(line)
+        date = None
+        if dated:
+            try:
+                dt.date.fromisoformat(dated.group(1))
+            except ValueError:
+                pass
+            else:
+                date = dated.group(1)
+        headings.append((line, date))
+    return headings
 
 def rel(path: Path, vault: Path) -> str:
     return path.relative_to(vault).as_posix()
@@ -133,7 +139,7 @@ def git_date(repo: Path | None, path: Path) -> tuple[str | None, str]:
 
 def promotion_status(vault: Path, repo: Path | None) -> dict:
     log_path = vault / "log.md"
-    current_dates = log_heading_dates(text(log_path))
+    current_headings = log_headings(text(log_path))
     result = {"count": None, "range": None, "last_promotion": None, "note": None}
     if repo is None:
         result["note"] = "unknown: not a git repository"
@@ -164,21 +170,28 @@ def promotion_status(vault: Path, repo: Path | None) -> dict:
                 break
 
     if promotion_record is None:
-        dates = current_dates
-        result["count"] = len(dates)
-        result["note"] = "no wiki: promote commit found; all current log entries are unpromoted"
+        unpromoted = current_headings
+        result["count"] = len(unpromoted)
+        result["note"] = "no wiki: promote log entries commit found; all current log entries are unpromoted"
     else:
         commit, date, subject = promotion_record
         result["last_promotion"] = {"commit": commit, "date": date, "subject": subject}
         previous = git(repo, "show", f"{commit}:{relative}")
         if not previous or previous.returncode != 0:
             result["note"] = "unknown: could not compare log.md with last promotion commit"
+            unpromoted = []
         else:
-            previous_dates = log_heading_dates(previous.stdout)
-            dates = list((Counter(current_dates) - Counter(previous_dates)).elements())
-            result["count"] = len(dates)
+            previous_headings = log_headings(previous.stdout)
+            unpromoted = [
+                heading
+                for heading, remaining in Counter(current_headings).items()
+                for _ in range(max(0, remaining - Counter(previous_headings)[heading]))
+            ]
+            result["count"] = len(unpromoted)
     if result["count"] is not None and result["count"] > 0:
-        result["range"] = f"{min(dates)}..{max(dates)}"
+        dates = [date for _heading, date in unpromoted]
+        if all(date is not None for date in dates):
+            result["range"] = f"{min(dates)}..{max(dates)}"
     return result
 
 def qmd_status(vault: Path) -> dict:
