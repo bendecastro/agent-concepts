@@ -1093,3 +1093,8 @@ recover patches or recorded Git objects before relaunch. Check 6 is authored but
 Pressure check 6 first passed packet production but failed recover-before-relaunch: a low-thinking
 consumer stashed named stale-run evidence and launched a replacement. Added the pre-routing gate,
 packet seam, preserved-worktree stop condition, and guarded patch/full-range/SHA recovery; rerun is pending.
+
+## [2026-08-25] test | bc-swarm worktree durability PASS 3/3
+Low-thinking headless Pi held the tuned check 6: a real worker wrote own-line commit/branch records;
+the reaped fixture recovered the exact seeded object with zero replacement runs or stashes; the
+unrecoverable fixture skipped fsck and relaunched exactly one track. Moved the plan to implemented.

@@ -1,8 +1,8 @@
 # Gap: the swarm durability contract does not cover a worktree child's commits
 
 Date: 2026-08-25
-Status: active
-Verification: first pressure check 6 failed (producer half PASS; recovery half FAIL); recovery-trigger and recovery-safety tune implemented; rerun pending
+Status: implemented
+Verification: first pressure check 6 failed (producer half PASS; recovery half FAIL); trigger/safety tune then passed the three-fixture rerun (3/3)
 
 Hand this file to an agent. It is self-contained; you need no other context to act on it.
 

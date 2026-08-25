@@ -25,7 +25,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-08-12 | 2026-08-20 |
 | [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-08-24 | 2026-07-25 |
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
-| [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-08-18 | 2026-08-18 |
+| [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-08-25 | 2026-08-18 |
 | [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-08-22 | 2026-08-23 |
 | [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [teach](../concepts/teach/CONCEPT.md) | pressure | 2026-06-12 | 2026-06-12 |

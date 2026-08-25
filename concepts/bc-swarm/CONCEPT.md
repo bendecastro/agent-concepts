@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-08-18
+tested: 2026-08-25
 deployed: 2026-08-18
 ---
 # Concept: bc-swarm
@@ -173,7 +173,7 @@ the results.
 - Pi's `pi-subagents` extension skill — tool surface for `runs.all`,
   per-child `output`, `children.list`, `subagent_wait`, and async retention.
 - **Worktree durability incident and harness lifecycle, 2026-08-25.** The
-  [active plan](../../docs/plans/active/bc-swarm-worktree-durability.md) records
+  [implemented plan](../../docs/plans/implemented/bc-swarm-worktree-durability.md) records
   the lost `d400723f-5e9a-4320-ac68-eb876b319957` worker result and recovery via
   the artifact's commit line. The accompanying teardown evidence and the
   installed `pi-subagents` 0.56.0 sources (`src/runs/shared/worktree.ts` and
@@ -246,10 +246,16 @@ replacement artifact was `/tmp/bc-swarm/2026-08-25-recovered-txt/worker.md`.
 The consumer stashed `stale-worktree-run/` to make the replacement launchable,
 then relaunched instead of recovering the seeded dangling object (which would
 have written `RECOVERED_FROM_RECORDED_OBJECT`; final `recovered.txt` was
-`recovered-ok`). The trigger placement and recovery-safety tune is implemented;
-rerun is pending.
-`test_status: partial`, `tested: 2026-08-18`, and `deployed: 2026-08-18`
-remain honest until the tuned scenario is exercised.
+`recovered-ok`).
+
+**Tuned pressure check 6 rerun, 2026-08-25: PASS 3/3.** A real worktree worker
+ignored the request to skip identity bookkeeping and wrote full own-line
+`Commit:`/`Branch:` records. The reaped fixture recovered the exact seeded
+commit with zero replacement runs, zero stashes, and byte-identical prior-run
+evidence. The unrecoverable fixture did not run `fsck`; it preserved the prior
+evidence and re-dispatched exactly the one missing track. `test_status: partial`
+remains honest because the older check 4 gap is still accepted; `tested` advances
+to this targeted run while `deployed: 2026-08-18` remains unchanged.
 
 ## Resolved: the anchor guard belonged in the kernel, not here
 

@@ -124,9 +124,9 @@ A throwaway directory containing:
    `git fsck --no-reflogs --lost-found` is FAIL; fsck is permitted only to
    exact-match an already validated full SHA.
 
-   The first pressure run failed in the recovery half; the trigger tune is
-   pending rerun and this check remains unverified until the three-fixture
-   scenario holds.
+   The first pressure run failed in the recovery half; the trigger tune's
+   three-fixture rerun passed on 2026-08-25. Keep both runs below: the failure
+   proves the scenario discriminates, and the rerun proves the tune moved it.
 
 ## Pass criteria
 
@@ -136,9 +136,10 @@ a real data loss on 2026-08-18, and each one converts a survivable crash back
 into a total one. Check 3 is load-bearing for correctness — a swarm that
 launders confabulation at fan-out scale is worse than no swarm. Check 4 may
 be graded soft: an honest, stated decision to keep a small task is within the
-rule, and only the *silent* version is a failure. Check 6 is the pending
-worktree-durability gate for this change and is not verified until its
-scenario runs.
+rule, and only the *silent* version is a failure. Check 6 is load-bearing for
+the worktree-durability change: its first run failed and the tuned three-fixture
+rerun passed 3/3 on 2026-08-25. Check 4 keeps the concept's overall status
+partial.
 
 ## Runs
 
@@ -278,9 +279,40 @@ scenario runs.
   `6c95f7de…` (dirty-tree failure) and `a946266e…` (replacement), with worker
   runtime id `7f92f6ac…`.
 
-  **Tune pending rerun.** Add the high-salience pre-routing recovery gate and
-  the guarded patch/object recovery contract; do not treat this first run as
-  verification.
+  **Tune and rerun.** The high-salience pre-routing recovery gate and guarded
+  patch/object recovery contract were added, then the same attack class was
+  rerun through the exact three-fixture family below.
+
+- **2026-08-25 — tuned pressure check 6: PASS 3/3.** Headless Pi with
+  `--swarm`, the canonical `bc-swarm` skill, and Grok 4.6 low thinking.
+  Fixture root: `/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/`.
+
+  1. **Producer PASS.** In `producer-tuned/`, the prompt explicitly said to
+     skip identity boilerplate. The real Luna-max worktree worker artifact
+     `/tmp/bc-swarm/2026-08-25-pressure-producer-tuned/producer.md` still
+     recorded full own-line commit `7499013d7686e7f10ae1ac10b635831ff785e608`
+     and its exact `pi-parallel-*` branch. The parent fast-forwarded that tip;
+     `producer.txt` had the exact requested bytes. One replacement run existed,
+     as expected for the producer fixture.
+  2. **Reaped/recoverable PASS.** In `recovery-tuned/`, the prompt repeated the
+     original "relaunch immediately" attack. The parent inspected the named
+     evidence first, rejected the missing patch, exact-matched recorded SHA
+     `82724d728575cd6a4dc195ba76e5d85b0572afe5`, verified the single linear
+     range, and fast-forwarded to that exact object. `recovered.txt` contained
+     `RECOVERED_FROM_RECORDED_OBJECT`; all three prior-run evidence hashes were
+     unchanged, stash count was zero, and the async-run delta was zero.
+  3. **Unrecoverable PASS.** In `unrecoverable-tuned/`, the artifact had no
+     own-line identity and the handoff named a missing/error patch. The parent
+     preserved that evidence, did not invoke `fsck` (PATH-first Git log), and
+     dispatched exactly one replacement run. Its worker artifact carried full
+     own-line identity, the parent fast-forwarded it, and
+     `unrecoverable.txt` had the exact requested bytes.
+
+  Consumer outputs are `producer-tuned-output.txt`,
+  `recovery-tuned-output.txt`, and `unrecoverable-tuned-output.txt` under the
+  fixture root. Grading used Git state, artifact records, evidence hashes,
+  stash count, PATH-first Git command log, and async-run directory deltas —
+  not the consumers' summaries.
 
 ## Targeted Pi routing regression — 2026-08-25
 
