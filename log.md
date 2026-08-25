@@ -1098,3 +1098,9 @@ packet seam, preserved-worktree stop condition, and guarded patch/full-range/SHA
 Low-thinking headless Pi held the tuned check 6: a real worker wrote own-line commit/branch records;
 the reaped fixture recovered the exact seeded object with zero replacement runs or stashes; the
 unrecoverable fixture skipped fsck and relaunched exactly one track. Moved the plan to implemented.
+
+## [2026-08-25] fix | bc-wiki-maintain qmd coverage checks the machine index
+The detector judged qmd coverage from the canonical `qmd-collections.yml` alone, so both Homeflix
+vaults reported `registered` while the live `~/.config/qmd/index.yml` had no such collection — a
+read-path health signal that could not see read-path failure. `qmd_status` now reads both files and
+distinguishes `unindexed` drift from `unregistered`; 6 new tests, injectable registry paths.
