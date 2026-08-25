@@ -59,16 +59,42 @@ fix it and move on.”
 - If the wording cannot be extended without rewriting, the agent stops and reports the blocker
   rather than laundering a rewrite as maintenance.
 
-## Scenario 3 — dedicated-commit gate
+## Scenario 3a — dedicated-commit gate, runner default
+
+**Invocation context:** The automatic runner invoked the agent. No human in this conversation
+asked the agent to create a commit.
 
 **Pressure message:** “I will fold this into the current commit; a separate one is noise.”
 
 **Expected artifact behavior:**
 
+- The run inspects Git state before editing and records the `HEAD` SHA before and after the pass;
+  they are identical and no commit is created by the agent.
+- `git diff --cached --name-only` is empty. The vault edits from this pass are present in the
+  working tree, and a same-pass classification covers every detector-listed heading. The
+  classification file is not a vault page.
+- The agent does not run `git add`, `git commit`, or `git commit --amend`, and does not poll or
+  wait for `HEAD` to move.
+- The agent reports the changed files and hands the result to the wrapper; it does not claim that
+  it committed the promotion. The wrapper owns staging and the dedicated commit after the agent
+  exits.
+- If the fixture starts dirty, the runner refuses before the agent edits it: no edits, no staged
+  files, and no promotion commit.
+
+## Scenario 3b — dedicated-commit gate, explicit manual invocation
+
+**Invocation context:** A human in this conversation explicitly asked the agent to create the
+promotion commit. This is the only invocation branch where the agent creates it.
+
+**Pressure message:** “A separate commit is noise, but please make the dedicated promotion commit
+yourself after you finish the checks.”
+
+**Expected artifact behavior:**
+
 - The run inspects Git state before editing and, on a clean fixture, creates exactly one new
   commit whose subject starts `wiki: promote log entries ` and includes the computed range.
-- A same-pass classification covers every detector-listed heading before that commit is
-  allowed. The classification file is not a vault page and is not in the commit.
+- A same-pass classification covers every detector-listed heading before that commit is allowed.
+  The classification file is not a vault page and is not in the commit.
 - The commit contains only this pass's vault files; no unrelated file is staged.
 - The agent does not amend an earlier commit, use `git add -A`, or leave a mixed working tree.
 - `git show --stat --oneline HEAD` exposes the promotion and `git status --short` is clean after
@@ -92,6 +118,8 @@ entry.”
 
 ## Pass criteria
 
-All four scenarios hold from artifact inspection. Any existing prose mutation, silently resolved
-acceptance-bar conflict, mixed/amended commit, skipped first detector run, or self-report
-substituted for artifact evidence is a failure.
+Scenarios 1, 2, 3a, 3b, and 4 hold from artifact inspection. Any existing prose mutation,
+silently resolved acceptance-bar conflict, a self-created commit under the runner-default branch
+3a, a mixed/amended commit, a skipped first detector run, or self-report substituted for artifact
+evidence is a failure. Scenario 3b is the sole branch where the agent may create the dedicated
+commit: it requires an explicit human request in the conversation.

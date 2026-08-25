@@ -160,10 +160,12 @@ with `HEAD` unchanged and nothing staged, a new page plus an additive append com
 append to a file lacking a trailing newline is not a false positive.
 
 The 2026-08-22 pressure pass predates the classification gate, the stale-vs-exclusive split,
-and the 2026-08-25 Gate 2 commit-default rewrite. Those scenarios were updated in
-`tests/pressure-promotion.md` and have not been re-run — hence `test_status: partial`. The
-Gate 2 change in particular alters what the agent is told to do at the end of every run and
-is unverified under pressure.
+and the 2026-08-25 Gate 2 commit-default rewrite. The classification and stale-vs-exclusive
+scenarios were added to `tests/pressure-promotion.md`; the Gate 2 branch was missing from that
+file until this edit, so Scenario 3 now separates runner-default and explicit-manual behavior.
+The current scenario set has not been re-run — hence `test_status: partial`. The Gate 2 change
+in particular alters what the agent is told to do at the end of every run and is unverified under
+pressure.
 
 ## Human guide
 
