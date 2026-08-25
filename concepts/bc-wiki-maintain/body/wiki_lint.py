@@ -140,7 +140,14 @@ def git_date(repo: Path | None, path: Path) -> tuple[str | None, str]:
 def promotion_status(vault: Path, repo: Path | None) -> dict:
     log_path = vault / "log.md"
     current_headings = log_headings(text(log_path))
-    result = {"count": None, "range": None, "last_promotion": None, "note": None, "headings": []}
+    result = {
+        "count": None,
+        "range": None,
+        "last_promotion": None,
+        "note": None,
+        "headings": [],
+        "undatable_headings": [],
+    }
     if repo is None:
         result["note"] = "unknown: not a git repository"
         return result
@@ -189,9 +196,10 @@ def promotion_status(vault: Path, repo: Path | None) -> dict:
             ]
             result["count"] = len(unpromoted)
     result["headings"] = [heading for heading, _date in unpromoted]
+    result["undatable_headings"] = [heading for heading, date in unpromoted if date is None]
     if result["count"] is not None and result["count"] > 0:
-        dates = [date for _heading, date in unpromoted]
-        if all(date is not None for date in dates):
+        dates = [date for _heading, date in unpromoted if date is not None]
+        if dates:
             result["range"] = f"{min(dates)}..{max(dates)}"
     return result
 
@@ -388,6 +396,11 @@ def print_report(report: dict) -> None:
         print(f"- {promotion['note']}")
     for heading in promotion.get("headings") or []:
         print(f"- {heading}")
+    undatable = promotion.get("undatable_headings") or []
+    if undatable:
+        print(f"Warning: undatable unpromoted log headings: {len(undatable)}")
+        for heading in undatable:
+            print(f"- {heading}")
     qmd = report["qmd"]
     status = "registered" if qmd["registered"] else "intentional exclusion" if qmd["intentional_exclusion"] else "unregistered"
     print(f"qmd registration: {status}")

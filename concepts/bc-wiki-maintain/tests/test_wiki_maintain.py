@@ -150,14 +150,35 @@ Prose [[missing-prose]].
             self.assertEqual(promotion["count"], 2)
             self.assertEqual(promotion["range"], "2026-08-03..2026-08-04")
 
+    def test_mixed_dated_and_undatable_headings_narrow_promotion_range(self) -> None:
+        temp, repo, vault = make_repo("## [2026-08-01] first\n\n## 2026-08-02\n\n## [2026-08-03] last\n")
+        with temp:
+            report = json.loads(run("python3", str(LINTER), str(vault), "--json", cwd=ROOT).stdout)
+            promotion = report["unpromoted_log"]
+            self.assertEqual(promotion["count"], 3)
+            self.assertEqual(promotion["range"], "2026-08-01..2026-08-03")
+            self.assertEqual(
+                promotion["headings"],
+                ["## [2026-08-01] first", "## 2026-08-02", "## [2026-08-03] last"],
+            )
+            self.assertEqual(promotion["undatable_headings"], ["## 2026-08-02"])
+            self.assertTrue(report["promotion_required"])
+            rendered = run("python3", str(LINTER), str(vault), cwd=ROOT, check=False)
+            self.assertIn("PROMOTION_REQUIRED=1", rendered.stdout)
+            self.assertIn("PROMOTION_RANGE=2026-08-01..2026-08-03", rendered.stdout)
+            self.assertIn("PROMOTION_HEADING\t## 2026-08-02", rendered.stdout)
+            self.assertIn("Warning: undatable unpromoted log headings: 1", rendered.stdout)
+            self.assertIn("- ## 2026-08-02", rendered.stdout)
+
     def test_nonstandard_headings_keep_promotion_required_and_invalid_range(self) -> None:
-        temp, repo, vault = make_repo("## [2026-08-01] first\n\n## not dated\n")
+        temp, repo, vault = make_repo("## 2026-08-01\n\n## not dated\n")
         with temp:
             initial = run("python3", str(LINTER), str(vault), "--json", cwd=ROOT)
             report = json.loads(initial.stdout)
             promotion = report["unpromoted_log"]
             self.assertEqual(promotion["count"], 2)
             self.assertIsNone(promotion["range"])
+            self.assertEqual(promotion["undatable_headings"], ["## 2026-08-01", "## not dated"])
             self.assertTrue(report["promotion_required"])
 
             (vault / "promoted.md").write_text("# Promoted\n", encoding="utf-8")
@@ -177,6 +198,7 @@ Prose [[missing-prose]].
             rendered = run("python3", str(LINTER), str(vault), cwd=ROOT, check=False)
             self.assertIn("PROMOTION_REQUIRED=1", rendered.stdout)
             self.assertIn("PROMOTION_RANGE=invalid", rendered.stdout)
+            self.assertIn("Warning: undatable unpromoted log headings: 1", rendered.stdout)
 
 
 class PromotionRunnerTests(unittest.TestCase):
