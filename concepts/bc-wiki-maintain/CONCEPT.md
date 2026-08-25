@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial
 tested: 2026-08-22
 deployed: 2026-08-23
 ---
@@ -50,6 +50,21 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   writes the verdict summary into the commit body: `git show` answers why a heading was skipped
   without a temp path or a journal entry. On any failure the file is kept and its path reported
   instead, because then it is the only record of what the agent decided.
+- **Gate 1 is mechanically enforced, not merely asserted.** The wrapper rejects any tracked
+  vault file whose diff contains deleted lines unless the committed bytes remain an exact
+  prefix of the new file — which permits a no-trailing-newline append and cannot hide an
+  in-place rewrite. Files with no deleted lines short-circuit, so mid-file insertion still
+  works, which the curated `index.md` link appends require. Before this, "never rewrite
+  existing prose" was prose only: the 2026-08-22 pressure pass caught rewrites solely because
+  a human graded them by hand with SHA-256, and an unattended run had nothing stopping it.
+- **The agent's default is not to commit.** Gate 2 previously opened with "land all of this
+  pass as one commit" and step 5.6 asked the agent to verify `git show HEAD` — but under the
+  runner the wrapper commits *after* the agent process exits, so an agent completing that
+  checklist mints the commit itself. Since the detector derives the next boundary from the
+  latest `wiki: promote` commit, that self-made commit permanently closes the whole heading
+  list: the thin-write failure, re-entered through the front door. The mode is also not
+  detectable from inside the skill, so the text now assumes the runner unless a human
+  explicitly asked for a commit in that conversation.
 - **A promotion pass only ever adds Markdown.** The commit stages the whole vault prefix, so a
   scratch artifact left in the vault would be committed as if it were a page. The wrapper fails
   on any new non-Markdown file rather than deleting one guessed filename, which caught only the
@@ -119,8 +134,16 @@ audit gaps the classification gate left open: the verdict summary reaches the co
 new non-Markdown file in the vault fails the commit, and `--verify-classify` refuses an unknown
 heading list instead of passing vacuously.
 
-The 2026-08-22 pressure pass predates the classification gate and the stale-vs-exclusive split.
-Those scenarios were updated in `tests/pressure-promotion.md` and have not been re-run.
+**2026-08-25 — PASS — regression suite extended (18 tests).** Gate 1 became mechanically
+enforceable: a purely additive append commits, an in-place rewrite of an existing line fails
+with `HEAD` unchanged and nothing staged, a new page plus an additive append commits, and an
+append to a file lacking a trailing newline is not a false positive.
+
+The 2026-08-22 pressure pass predates the classification gate, the stale-vs-exclusive split,
+and the 2026-08-25 Gate 2 commit-default rewrite. Those scenarios were updated in
+`tests/pressure-promotion.md` and have not been re-run — hence `test_status: partial`. The
+Gate 2 change in particular alters what the agent is told to do at the end of every run and
+is unverified under pressure.
 
 ## Human guide
 

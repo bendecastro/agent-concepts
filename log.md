@@ -1058,3 +1058,12 @@ with no cleanup, its verdicts reached no artifact, the vault cleanup knew one gu
 and `--verify-classify` passed vacuously when the heading list was unknown. Verdicts now become
 the promotion commit body, any new non-Markdown vault file fails the commit, the temp file is
 kept only on failure, and an unknown list is a safe stop. Regression suite 14/14.
+
+## [2026-08-25] implement | bc-wiki-maintain Gate 1 enforcement + Gate 2 commit default
+Gate 1 was prose-only: the wrapper checked staged changes, HEAD, deletions, and new
+non-Markdown files, but never deleted lines, so an in-place rewrite committed silently.
+It now requires the committed bytes to stay a byte prefix when a diff shows deletions
+(18 regression tests). Gate 2 opened with "land all of this pass as one commit" while
+step 5.6 asked the agent to verify HEAD after a commit the wrapper only makes once the
+agent has exited — an agent finishing that checklist minted the boundary-closing commit
+itself. Default is now no commit. test_status downgraded to partial: unverified under pressure.

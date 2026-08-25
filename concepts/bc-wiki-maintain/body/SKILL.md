@@ -112,24 +112,34 @@ directories in this pass. This mirrors `scaffold.py`'s additive/idempotent/never
 precedent: the existing record is not yours to rewrite, and an additive diff is inspectable
 and reversible.
 
-#### Gate 2 — One dedicated Git commit
+#### Gate 2 — One dedicated Git commit, which you are probably not the one making
 
-After promotion, land all of this pass as one commit with the subject:
+This pass produces exactly one commit, with the subject:
 
 ```text
 wiki: promote log entries <from>..<to>
 ```
 
-That commit is allowed only when the classification file covers every detector-listed heading.
-When the automatic runner invoked this pass, leave the index and `HEAD` unchanged: the wrapper
-checks classification coverage, stages only the vault files changed by this pass, and creates
-the dedicated commit. Do not use `git add -A`, stage changes, commit, amend an unrelated
-commit, or edit a dirty tree in place. Only a direct manual invocation without the automatic
-wrapper may stage the verified vault files and create this one commit itself, after running the
-same checks — including classification coverage. A separate commit is not noise: Git is the
-audit trail and the undo path (`git show` and `git revert`). If every heading is a skip, make
-no empty commit and report the no-op; the list stays unpromoted until a later pass files or
-classifies it into a commit.
+**Default: do not create it.** Assume the automatic runner invoked you unless a human, in this
+conversation, explicitly told you to commit. Under the runner the wrapper checks classification
+coverage, stages only the vault files this pass changed, and commits — all after your process
+has exited. You will never see that commit. Do not `git add`, do not `git commit`, and do not
+wait for `HEAD` to move.
+
+A commit *you* create with that subject permanently closes the entire unpromoted heading list,
+because the detector computes the next boundary from the latest such commit. That is the
+thin-write failure this gate exists to prevent, entered through the front door. Never use
+`git add -A`, amend an unrelated commit, or edit a dirty tree in place.
+
+Only in a direct manual invocation, where a human asked for the commit, do you create it
+yourself — after running the same checks the wrapper would, including classification coverage.
+Then stage only this pass's verified vault files, commit once with the exact detector-provided
+subject and the verdict summary as the body, and confirm with `git show --stat --oneline HEAD`
+and a clean `git status --short`.
+
+A separate commit is not noise: Git is the audit trail and the undo path (`git show` and
+`git revert`). If every heading is a skip, make no empty commit and report the no-op; the list
+stays unpromoted until a later pass files or classifies it into a commit.
 
 #### Gate 3 — Flag mutually exclusive claims; do not halt on staleness
 
@@ -149,26 +159,24 @@ A conflict stops that item, not the pass. Do not pick a winner, rewrite either s
 turn a conflict into an accepted ADR. The scheduled agent must not silently decide that a
 spike is outdated or that the newer-looking statement wins.
 
-### 5. Verify the artifact, then hand off or commit
+### 5. Verify the artifact, then hand off
 
 Before the wrapper handoff or direct-manual commit:
 
 1. Inspect `git diff --check` and the diff itself. Confirm existing prose was not rewritten,
-   no file was deleted or renamed, and every new page has an index entry.
+   no file was deleted or renamed, and every new page has an index entry. The wrapper also
+   rejects any non-additive change to a tracked page, so a rewrite fails the whole run rather
+   than landing quietly — find it here, not in the failure log.
 2. Re-run `python3 <skill-dir>/wiki_lint.py "<vault-root>"`. Separate pre-existing warnings
    from new defects; do not claim a clean report when it is not clean.
 3. Confirm the classification file covers every detector-listed heading
    (`python3 <skill-dir>/wiki_lint.py "<vault-root>" --verify-classify "$CLASSIFY_PATH"`). It
    prints the verdict summary on success and fails when the unpromoted list is unknown; an
    unknown list is a safe stop, not a pass.
-4. Check `git status --short`. Under the automatic runner, leave the index and `HEAD`
-   unchanged for the wrapper. In a direct manual invocation, stage only this pass's verified
-   vault files.
-5. Under the automatic runner, return control without committing. In a direct manual
-   invocation, commit once with the exact detector-provided `wiki: promote log entries
-   <from>..<to>` subject and that verdict summary as the commit body.
-6. After the wrapper or manual commit, verify `git show --stat --oneline HEAD` and a clean
-   `git status --short`.
+4. Check `git status --short`. Leave the index and `HEAD` unchanged, then stop and report:
+   the wrapper stages and commits after you exit. Do not try to verify a commit — while you
+   are running there is none to see. Committing yourself is the Gate 2 failure.
+   In a direct manual invocation only, follow the commit steps in Gate 2 instead.
 
 Report the detector output, the classification verdicts, promoted pages, any open-question
 conflict, commit ID, and checks run. The next reader should be able to audit the result from
