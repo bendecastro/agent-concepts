@@ -1080,3 +1080,8 @@ nullified it for the whole unpromoted set and the unattended runner failed close
 codebase-design had exactly one bare `## 2026-06-28` blocking 18 valid headings. The range now
 comes from the datable headings only; undatable ones stay in the classification list and are
 warned about; a wholly undatable set still fails closed, so Scripts and sql are unchanged.
+
+## [2026-08-25] implement | bc-swarm worktree durability
+Updated the canon, Pi lifecycle/recovery guidance, pressure check 6, active plan, index, and
+reachable swarm-mode kernel so worktree workers record full commit/branch lines and parents
+recover patches or recorded Git objects before relaunch. Check 6 is authored but unrun.

@@ -68,7 +68,18 @@ the results.
   Repo-local storage would force a gitignore-or-commit decision every run,
   and this workspace already has canonical homes for durable knowledge.
   `~/.cache/` was considered for reboot survival and rejected: cross-session
-  swarm resumption is not a demonstrated need.
+  swarm resumption is not a demonstrated need. A worktree worker's Git commit
+  object and harness patch are the deliberate handoff records for its real
+  deliverable, not a reason to make the run artifact a repo file.
+- **Worktree commit identity is an artifact checkpoint (2026-08-25).** The
+  2026-08-25 incident showed that `pi-subagents` can reap a successfully handed
+  off worktree and branch while leaving the worker's commit only as a dangling
+  object. The worker therefore records a full `Commit:` SHA and exact `Branch:`
+  on their own lines immediately after each commit; the parent consumes the
+  harness patch or recorded commit on the first completion wake, without
+  turning async launch into a wait. Recon still treats its file as the
+  deliverable; a worktree worker treats its commit plus harness patch as the
+  deliverable.
 - **Evidence anchors are the thin-parent guard.** Aggressive delegation
   buys speed by thinning the parent's context, which silently removes its
   ability to catch a confidently wrong child. Re-reading everything defeats
@@ -151,6 +162,17 @@ the results.
   — the implementation-fan-out boundary this concept hands off to.
 - Pi's `pi-subagents` extension skill — tool surface for `runs.all`,
   per-child `output`, `children.list`, `subagent_wait`, and async retention.
+- **Worktree durability incident and harness lifecycle, 2026-08-25.** The
+  [active plan](../../docs/plans/active/bc-swarm-worktree-durability.md) records
+  the lost `d400723f-5e9a-4320-ac68-eb876b319957` worker result and recovery via
+  the artifact's commit line. The accompanying teardown evidence and the
+  installed `pi-subagents` 0.56.0 sources (`src/runs/shared/worktree.ts` and
+  `src/runs/shared/parallel-handoff.ts`) establish the current lifecycle:
+  successful handoff captures a patch and handoff JSON, then removes the
+  temporary worktree and branch; dirty, divergent, blocked, or retained-child
+  cases preserve leftovers instead. That source-backed distinction is why
+  recovery checks the handoff patch before a recorded Git object and uses
+  `git fsck --no-reflogs --lost-found` only to match an already recorded SHA.
 - **Routing design evidence, 2026-08-22.** The external review-asymmetry,
   multi-agent failure, and fan-out research is recorded in
   `/tmp/bc-swarm/2026-08-22-subagent-fit/external.md`; the local machinery
@@ -163,11 +185,12 @@ the results.
 ## Tests
 
 `tests/pressure-bc-swarm.md` — discipline-enforcing, so the test gate
-applies before deploy. Five checks attacking the predictable excuses: skip
-the manifest because it's only a few children, re-run the whole fan-out
-instead of recovering, accept a fluent unanchored child report, "just read
-it yourself, it's faster", and "run it synchronously so I can see results
-now." Check 1 also grades the listing fields: each child line in chat and
+applies before deploy. Six checks attack the predictable excuses: skip the
+manifest because it's only a few children, re-run the whole fan-out instead
+of recovering, accept a fluent unanchored child report, "just read it
+yourself, it's faster", "run it synchronously so I can see results now", and
+lose a worktree commit because its packet or recovery path omitted its own
+identity. Check 1 also grades the listing fields: each child line in chat and
 in the manifest must carry role + routing-name model + thinking.
 
 **Run 2026-08-18 in headless Pi (Grok 4.6, low thinking) against isolated
@@ -189,6 +212,12 @@ change at all.** The rewrite was kept for accuracy, not efficacy.
 unblocked.** Checks 1, 2, 3 and 5 all hold with the always-on layer
 present. Check 4 fails for the third time and is accepted as a documented,
 non-blocking gap.
+
+**Durability follow-up, 2026-08-25.** Pressure check 6 was authored for the
+worktree commit-identity packet requirement and recover-before-relaunch path,
+but it was not run in this implementation pass. `test_status: partial`,
+`tested: 2026-08-18`, and `deployed: 2026-08-18` remain honest until that
+scenario is exercised.
 
 ## Resolved: the anchor guard belonged in the kernel, not here
 

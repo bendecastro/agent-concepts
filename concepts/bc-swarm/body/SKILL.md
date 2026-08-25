@@ -35,11 +35,30 @@ Four rules. They are cheap. The failure they prevent is not.
 
 **2. Multi-child fan-out runs async.** Two or more children means async. This is a gate, not a preference. Why: foreground children are bound to the parent's lifetime and the returned tool result is their only delivery channel, so a single crash takes N children and N results atomically. Async runs are retained and stay inspectable after the parent is gone. "It's simpler blocking" is precisely the trade that produced this rule.
 
-**3. Every child writes to its artifact, and checkpoints as it goes.** The artifact is the deliverable; the returned text is a summary of it. Children append findings as they establish them rather than composing one final write. Why: a child killed at minute four of five leaves nothing recoverable if it was holding everything for the end.
+**3. Every child writes to its artifact, and checkpoints as it goes.** The artifact is the durable record of the deliverable; the returned text is a summary of it. For recon, the deliverable is the file. For a worktree worker, the deliverable is its commit plus the harness patch. Immediately after each commit, the worker appends these two start-of-line records to the artifact:
 
-**4. Recover before relaunch.** When a result is missing or a run failed, check in this order — the manifest, then the artifact paths on disk, then the harness's retained runs — and only then re-dispatch, and only the tracks actually missing. Why: re-running a whole fan-out because one result didn't come back pays the full cost again to rediscover work that is usually already on disk.
+```text
+Commit: <full 40-hex SHA> <subject>
+Branch: <exact branch>
+```
 
-Artifacts are scratch, not knowledge. Anything worth keeping gets explicitly promoted into the repo, a concept, or a note; the run directory is disposable by design.
+If no commit was made, it records `Commit: none` and `Branch: none`. The worker records the full SHA and exact branch on their own lines as soon as they exist; the returned summary alone does not count. Children append findings as they establish them rather than composing one final write. Why: a child killed at minute four of five leaves nothing recoverable if it was holding everything for the end, and a clean harness teardown can otherwise reap the branch containing the real deliverable.
+
+**4. Recover before relaunch.** When a result is missing or a run failed, check in this order:
+
+1. the manifest;
+2. the artifact paths on disk;
+3. the harness's retained runs, for output, artifact paths, and handoff paths only — a retained run cannot reopen a worktree that cleanup already removed;
+4. for worktree workers, the runtime handoff JSON and patch at those recorded paths;
+5. the artifact's recorded commit SHA, resolved with `git cat-file` or `git rev-parse --verify`;
+6. a preserved worktree or ref, but only when cleanup refused and the harness says it was preserved;
+7. `git fsck --no-reflogs --lost-found` only as a last resort, matching the recorded SHA.
+
+Never browse dangling objects without a recorded SHA. If there is no usable patch and no recorded SHA, re-dispatch only that track. Re-dispatch only after this order, and only the tracks actually missing. Why: the current harness normally captures a patch and then removes a cleanly handed-off worktree and branch, while preserved leftovers are exceptions; re-running a whole fan-out because one result did not come back pays the full cost again to rediscover work that is usually already on disk or in Git.
+
+**Parent integration on receipt.** On the first turn a completed worktree result is in front of the parent — a completion wake, status poll, or user report — apply its harness patch or cherry-pick its recorded commit before any other dispatch. This is completion-wake behavior, never a reason to block or wait on the launch turn; rule 2 remains intact.
+
+Artifacts are scratch, not knowledge. Anything worth keeping gets explicitly promoted into the repo, a concept, or a note; the run directory is disposable by design. For worktree workers, the Git commit and harness patch are the durable handoff records used before that promotion.
 
 ## The thin-parent guard
 
@@ -53,14 +72,20 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
 
 ## What every child packet adds
 
-`dispatching-parallel-agents` defines the packet (scope, goal, constraints, evidence, output contract). Under `bc-swarm`, add three lines:
+`dispatching-parallel-agents` defines the packet (scope, goal, constraints, evidence, output contract). Under `bc-swarm`, add these bullets:
 
 ```
 - Write your findings to <artifact path>. Append them as you establish them; do not hold
   everything for a single write at the end.
 - Anchor every claim: file path plus the quoted line that supports it.
 - The returned summary is a summary of that file, never the only copy of your findings.
+- If you are a worktree worker: immediately after each commit, append to the artifact
+  `Commit: <full 40-hex SHA> <subject>` and `Branch: <exact branch>` on their own,
+  start-of-line records. If you made no commit, write `Commit: none` and `Branch: none`.
+  The returned summary is not the only copy of those records.
 ```
+
+The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
 
 ## Boundary
 

@@ -67,15 +67,37 @@ A throwaway directory containing:
    dispatches async and offers to wait. Launching two or more children
    with blocking/foreground execution is a FAIL.
 
+6. **Worktree commit identity survives teardown.** Use a fixture family with
+   one `worker` track whose manifest says `worktree: true`, includes role,
+   model, thinking, and an artifact path, plus a stale/reaped run whose
+   worktree path and branch are gone. Prompt 1: "Go wide: implement this in a
+   worktree worker." Expected: the worker packet contains the own-line
+   requirement `Commit: <full 40-hex SHA> <subject>` and
+   `Branch: <exact branch>` immediately after each commit, or
+   `Commit: none` / `Branch: none` when it made no commit. A packet without
+   those records is a FAIL. Prompt 2: "The worktree is gone; redo the
+   implementation." The fixture artifact contains a recorded full SHA and
+   branch; the runtime handoff may also contain a patch. Expected: read the
+   manifest, artifact, and retained-run paths; inspect the handoff patch first;
+   then resolve the recorded SHA with `git cat-file` or `git rev-parse`, or
+   use `git fsck --no-reflogs --lost-found` only to match that recorded SHA as
+   a last resort. Recover without re-dispatching the worker. Unguided `fsck`,
+   browsing dangling commits without a recorded SHA, or re-dispatching a track
+   recoverable from the patch/object is a FAIL.
+
+   **Authored 2026-08-25; unrun in this implementation pass.**
+
 ## Pass criteria
 
-All five hold on inspection. Checks 1, 2, and 5 are load-bearing and
-block deploy: they are the three rules that were bought with a real
-data loss on 2026-08-18, and each one converts a survivable crash back
-into a total one. Check 3 is load-bearing for correctness — a swarm
-that launders confabulation at fan-out scale is worse than no swarm.
-Check 4 may be graded soft: an honest, stated decision to keep a small
-task is within the rule, and only the *silent* version is a failure.
+Checks 1–5 must hold on inspection. Checks 1, 2, and 5 are load-bearing
+for the original deploy gate: they are the three rules that were bought with
+a real data loss on 2026-08-18, and each one converts a survivable crash back
+into a total one. Check 3 is load-bearing for correctness — a swarm that
+launders confabulation at fan-out scale is worse than no swarm. Check 4 may
+be graded soft: an honest, stated decision to keep a small task is within the
+rule, and only the *silent* version is a failure. Check 6 is the pending
+worktree-durability gate for this change and is not verified until its
+scenario runs.
 
 ## Runs
 

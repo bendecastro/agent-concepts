@@ -2,7 +2,7 @@
 
 Date: 2026-08-25
 Status: active
-Verification: gap observed once in a live run (evidence below); no fix implemented or tested yet
+Verification: implementation complete; pressure check 6 authored and pending
 
 Hand this file to an agent. It is self-contained; you need no other context to act on it.
 
