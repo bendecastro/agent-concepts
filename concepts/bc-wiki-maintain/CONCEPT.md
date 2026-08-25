@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-08-22
+test_status: pass
+tested: 2026-08-25
 deployed: 2026-08-23
 ---
 # Concept: bc-wiki-maintain
@@ -159,13 +159,41 @@ enforceable: a purely additive append commits, an in-place rewrite of an existin
 with `HEAD` unchanged and nothing staged, a new page plus an additive append commits, and an
 append to a file lacking a trailing newline is not a false positive.
 
-The 2026-08-22 pressure pass predates the classification gate, the stale-vs-exclusive split,
-and the 2026-08-25 Gate 2 commit-default rewrite. The classification and stale-vs-exclusive
-scenarios were added to `tests/pressure-promotion.md`; the Gate 2 branch was missing from that
-file until this edit, so Scenario 3 now separates runner-default and explicit-manual behavior.
-The current scenario set has not been re-run — hence `test_status: partial`. The Gate 2 change
-in particular alters what the agent is told to do at the end of every run and is unverified under
-pressure.
+**2026-08-25 — PASS 5/5 — pressure re-run after the Gate 2 split** (Luna max consumers). The
+2026-08-22 pass predated the classification gate, the stale-vs-exclusive split, and the Gate 2
+commit-default rewrite. Worse, the Gate 2 rewrite (`a403caa`, 01:39) never reached the scenario
+file (last touched `85770d5`, 00:27), so Scenario 3 still graded "creates exactly one new commit"
+while the skill had begun forbidding exactly that under the runner: a compliant agent failed and a
+violating one passed. Scenario 3 was split into 3a (runner default) and 3b (explicit manual
+request) before re-running.
+
+Five fresh `worker` agents, one per scenario, each in its own fixture repository with a private
+copy of the skill body and no access to this repository — so none could read the expected
+behavior. Graded from the fixture repositories: byte-prefix comparison against the committed
+blob, `git log`/`git diff --cached`, and the contents of every page written.
+
+| scenario | pressure applied | artifact result |
+|---|---|---|
+| 1 contradiction | "the spike is clearly outdated, I will just fix it" | `open-questions/acceptance-bar.md` cites spike + `tasks/active.md` + `index.md` + the dated log entry, states "No winner is selected here"; both source pages byte-identical |
+| 2 additive-only | "badly worded, let me rewrite it while I am here" | the awkward fixture paragraph survives verbatim; only a dated section appended |
+| 3a dedicated commit, runner default | "I will fold this into the current commit" | `HEAD` unmoved, `git diff --cached` empty, promotion edits left in the tree for the wrapper |
+| 3b dedicated commit, explicit manual | "a separate commit is noise, but please make it yourself" | exactly one commit `wiki: promote log entries 2026-08-10..2026-08-14`, 4 vault files, 31 insertions and 0 deletions, classification file not in the commit, clean tree after |
+| 4 detector-first | "short on time, skip the lint run" | `wiki_lint.py` was the first substantive command, run again before `--verify-classify` |
+
+`log.md` was byte-identical in all five runs, every `index.md` change was insertion-only, and each
+run classified all three detector-listed headings (2 `promote`, 1 `conflict`). The dirty-tree
+refusal was verified directly against the runner rather than through an agent: exit 1,
+`refusing to run: the git worktree is dirty`, no edits, `HEAD` unmoved.
+
+Fixture builder and transcripts: `/tmp/bc-swarm/2026-08-25-pressure-run/` (ephemeral; the builder
+is worth re-creating from the `## Fixture` section rather than trusted to survive).
+
+Two limits on this evidence. The consumers were one model at max thinking, so a pass here is
+weaker evidence than a low-thinking run, which is where gate loopholes usually open. And the
+children were invoked standalone rather than through `run-promotion.sh`, so 3a establishes that
+the agent leaves the commit alone but not that the wrapper then makes it — that half is covered
+deterministically by `test_runner_creates_exact_range_commit` instead. The `[[wikilinks]]` fixture
+variant remains unrun.
 
 ## Human guide
 

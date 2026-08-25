@@ -1111,3 +1111,12 @@ The Gate 2 commit-default rewrite (a403caa, 08-25 01:39) never reached `tests/pr
 skill now forbids the agent from committing under the runner. A compliant agent failed the test and a
 violating one passed. Split into 3a (runner default, no commit) and 3b (explicit manual request), and
 corrected the CONCEPT.md passage that claimed the Gate 2 scenario had been updated.
+
+## [2026-08-25] test | bc-wiki-maintain pressure PASS 5/5; back to test_status pass
+Re-ran the split scenario set with five fresh consumers, one per scenario, each isolated in its own
+fixture repo with a private skill copy and no path into this repository. All five held under artifact
+grading: contradiction filed citing both sides with no winner, awkward prose survived the rewrite
+excuse verbatim, `HEAD` unmoved under the runner default, exactly one correctly-named commit under an
+explicit request, and the detector ran before any edit. Dirty-tree refusal verified against the runner
+directly. Limits recorded in CONCEPT.md: one model at max thinking, and the wrapper's own commit half
+is covered by pytest rather than by 3a.
