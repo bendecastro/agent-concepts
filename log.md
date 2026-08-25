@@ -1073,3 +1073,10 @@ A worker child's worktree and branch were destroyed before the parent read them;
 survived only as a dangling object, recoverable because the artifact named the SHA. Rule 3
 calls the artifact the deliverable, which is false for a worktree worker, and rule 4's
 recovery order omits Git objects entirely. Filed as docs/plans/active/bc-swarm-worktree-durability.md.
+
+## [2026-08-25] fix | bc-wiki-maintain range narrowing around undatable headings
+promotion_status() guarded the range with all(date is not None), so one malformed heading
+nullified it for the whole unpromoted set and the unattended runner failed closed forever.
+codebase-design had exactly one bare `## 2026-06-28` blocking 18 valid headings. The range now
+comes from the datable headings only; undatable ones stay in the classification list and are
+warned about; a wholly undatable set still fails closed, so Scripts and sql are unchanged.

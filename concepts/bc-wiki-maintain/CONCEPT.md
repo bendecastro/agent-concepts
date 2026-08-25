@@ -50,6 +50,15 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   writes the verdict summary into the commit body: `git show` answers why a heading was skipped
   without a temp path or a journal entry. On any failure the file is kept and its path reported
   instead, because then it is the only record of what the agent decided.
+- **An undatable heading narrows the range; it does not disable the vault.** The range is now
+  computed from the datable unpromoted headings only. Undatable ones stay in the heading list,
+  so the classification gate still forces a verdict on them, and the report names them under a
+  warning. A set with *no* datable heading still yields an invalid range and still fails closed.
+  The old `all(date is not None)` guard meant one malformed heading nullified the range for the
+  whole set: `codebase-design` had exactly one bare `## 2026-06-28` at line 6 of its log among
+  otherwise textbook headings, and it blocked 18 valid ones permanently, with no path to
+  self-recovery. The cost accepted here is audit precision — an undatable heading is retired by a
+  commit whose subject range does not span it, though the commit body still carries its verdict.
 - **Gate 1 is mechanically enforced, not merely asserted.** The wrapper rejects any tracked
   vault file whose diff contains deleted lines unless the committed bytes remain an exact
   prefix of the new file — which permits a no-trailing-newline append and cannot hide an
@@ -134,6 +143,12 @@ audit gaps the classification gate left open: the verdict summary reaches the co
 new non-Markdown file in the vault fails the commit, and `--verify-classify` refuses an unknown
 heading list instead of passing vacuously.
 
+**2026-08-25 — PASS — range narrowing (19 tests).** A mixed set narrows the range to its datable
+headings while keeping the undatable one in the heading list and naming it in the report; a
+wholly undatable set still yields `PROMOTION_RANGE=invalid`. Verified read-only against the four
+live vaults: `codebase-design` moved from `invalid` to `2026-06-28..2026-07-14` with 18 headings,
+`sql` and `Scripts` stayed `invalid`, and `Music` was unchanged at `2026-05-29..2026-08-05`.
+
 **2026-08-25 — PASS — regression suite extended (18 tests).** Gate 1 became mechanically
 enforceable: a purely additive append commits, an in-place rewrite of an existing line fails
 with `HEAD` unchanged and nothing staged, a new page plus an additive append commits, and an
@@ -169,8 +184,11 @@ it is scoped to one vault chosen at install time and is not part of the skill de
 - Promotion still requires a capable headless agent to classify evidence; the detector cannot
   prove semantic truth by itself.
 - The detector derives later ranges from the heading difference between the latest relevant
-  promotion commit and the current log; non-standard headings remain counted but deliberately
-  produce an invalid range so unattended promotion fails closed.
+  promotion commit and the current log. Non-standard headings are excluded from the range but
+  still listed for classification; only a wholly undatable set produces an invalid range and
+  fails closed. Vaults using the bare `## YYYY-MM-DD` form throughout (`Scripts`, `sql`)
+  therefore stay blocked until a human normalises their headings — an edit to the append-only
+  `log.md`, and so a deliberate human act, never something a promotion pass does to itself.
 - An unresolved mutually exclusive claim is filed and skipped as truth; the rest of the pass
   continues. A scheduled run may still need human follow-up on the question.
 - Heading lists already closed by a thin 2026-08-23/24 promotion commit stay closed; this gate
