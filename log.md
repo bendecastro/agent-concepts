@@ -1088,3 +1088,8 @@ warned about; a wholly undatable set still fails closed, so Scripts and sql are 
 Updated the canon, Pi lifecycle/recovery guidance, pressure check 6, active plan, index, and
 reachable swarm-mode kernel so worktree workers record full commit/branch lines and parents
 recover patches or recorded Git objects before relaunch. Check 6 is authored but unrun.
+
+## [2026-08-25] tune | bc-swarm recovery trigger and guarded worktree recovery
+Pressure check 6 first passed packet production but failed recover-before-relaunch: a low-thinking
+consumer stashed named stale-run evidence and launched a replacement. Added the pre-routing gate,
+packet seam, preserved-worktree stop condition, and guarded patch/full-range/SHA recovery; rerun is pending.

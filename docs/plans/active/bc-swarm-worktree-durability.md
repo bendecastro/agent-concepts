@@ -2,7 +2,7 @@
 
 Date: 2026-08-25
 Status: active
-Verification: implementation complete; pressure check 6 authored and pending
+Verification: first pressure check 6 failed (producer half PASS; recovery half FAIL); recovery-trigger and recovery-safety tune implemented; rerun pending
 
 Hand this file to an agent. It is self-contained; you need no other context to act on it.
 
@@ -36,15 +36,14 @@ worktrees from previous runs were still present in `git worktree list` at the sa
 worktree teardown is not uniform, and whatever destroyed this one did not destroy those. Find out
 what actually reaps them before designing around a guess.
 
-## What the contract currently says
+## Gap as of filing
 
-- Rule 3, line 38 of `concepts/bc-swarm/body/SKILL.md` — "Every child writes to its artifact, and
-  checkpoints as it goes. The artifact is the deliverable." True for recon. **False for a
-  worktree worker**, whose deliverable is a commit; the artifact is only a report about it.
-- Rule 4, line 40 of the same file — recovery order is "the manifest, then the artifact paths on disk, then the
-  harness's retained runs". **Git objects are not in that list at all.** An agent following
-  rule 4 exactly concludes the work is gone and re-dispatches, paying full cost to redo work that
-  is still in the object store.
+At filing, the portable durability contract treated the artifact as the
+worktree worker's deliverable even though the real deliverable was a commit
+(and harness patch), and its recovery order stopped after the manifest,
+artifacts, and retained runs. It did not require a parent packet to carry the
+worker's own-line commit/branch records or define guarded patch, full-range
+commit, preserved-worktree, and recorded-SHA recovery before relaunch.
 
 ## What to change
 

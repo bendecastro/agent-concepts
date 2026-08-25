@@ -8,9 +8,10 @@ dispatch shape, which tracks were re-dispatched), not the agent's
 self-report.
 
 The fixtures below are built so that checks 2 and 3 need no real
-fan-out. Only checks 1, 4, and 5 involve dispatch, and a dry harness
+fan-out. Checks 1, 2, 4, 5, and 6 exercise dispatch, and a dry harness
 that refuses to spawn is still gradeable: what is being graded is the
-manifest and the announced path, not the children's findings.
+manifest, packet, recovery order, and announced path, not the children's
+findings.
 
 ## Fixture
 
@@ -27,6 +28,22 @@ A throwaway directory containing:
   by a child. It contains four claims. Three are supported by `src/`;
   one is plainly contradicted by the file it describes. **No claim
   carries a file path or quoted line.**
+- `check-6/producer/` — a clean throwaway Git repo with one real
+  `worker`/`worktree: true` track, `run/manifest.md`, a worker packet,
+  and the declared `run/worker.md` artifact. The worker makes a real
+  commit; there is no stale evidence in this fixture.
+- `check-6/reaped-recoverable/` — a separate throwaway Git repo with
+  `run/manifest.md` naming one exact `worker`/`worktree: true` track,
+  `run/worker.md` containing own-line `Commit: <full 40-lowercase-hex
+  SHA> <subject>` and `Branch: <exact branch>`, no handoff patch, and no
+  live worktree/ref. `seeded-commit.sha` contains the full object id; the
+  artifact's own-line SHA and the object database entry match it exactly as a
+  dangling commit (its tree writes the expected recovery file), and the
+  manifest/artifact paths are the only recovery clues.
+- `check-6/unrecoverable/` — a third throwaway fixture with one
+  `worker`/`worktree: true` manifest and a fluent `run/worker.md` saying
+  it committed and finished, but no own-line `Commit:` or `Branch:`, no
+  patch, no recorded object, and no preserved worktree/ref.
 
 ## Checks
 
@@ -76,25 +93,40 @@ A throwaway directory containing:
    dispatches async and offers to wait. Launching two or more children
    with blocking/foreground execution is a FAIL.
 
-6. **Worktree commit identity survives teardown.** Use a fixture family with
-   one `worker` track whose manifest says `worktree: true`, includes role,
-   model, thinking, and an artifact path, plus a stale/reaped run whose
-   worktree path and branch are gone. Prompt 1: "Go wide: implement this in a
-   worktree worker." Expected: the worker packet contains the own-line
-   requirement `Commit: <full 40-hex SHA> <subject>` and
-   `Branch: <exact branch>` immediately after each commit, or
-   `Commit: none` / `Branch: none` when it made no commit. A packet without
-   those records is a FAIL. Prompt 2: "The worktree is gone; redo the
-   implementation." The fixture artifact contains a recorded full SHA and
-   branch; the runtime handoff may also contain a patch. Expected: read the
-   manifest, artifact, and retained-run paths; inspect the handoff patch first;
-   then resolve the recorded SHA with `git cat-file` or `git rev-parse`, or
-   use `git fsck --no-reflogs --lost-found` only to match that recorded SHA as
-   a last resort. Recover without re-dispatching the worker. Unguided `fsck`,
-   browsing dangling commits without a recorded SHA, or re-dispatching a track
-   recoverable from the patch/object is a FAIL.
+6. **Worktree commit identity survives teardown and recovery triggers before
+   relaunch.** Use the three exact fixtures under `check-6/`:
 
-   **Authored 2026-08-25; unrun in this implementation pass.**
+   (a) **Clean producer.** In `check-6/producer/`, run a real
+   `worker`/`worktree: true` packet. Grade the artifact on disk, not the
+   returned summary: after each commit it must contain own-line
+   `Commit: <full 40-lowercase-hex SHA> <subject>` and
+   `Branch: <exact branch>` records, or `Commit: none` / `Branch: none` when
+   no commit was made. The packet must carry that requirement because the
+   child does not inherit the kernel. Missing or prose-only records are FAIL.
+
+   (b) **Reaped and recoverable.** Point the consumer at
+   `check-6/reaped-recoverable/run/`: "the interrupted worktree is gone;
+   redo/relaunch it immediately." The prompt names a prior run, so recovery
+   must happen before any Tooth, replacement track, or dispatch decision.
+   Read the manifest and artifact, inspect the missing patch state, validate
+   the exact own-line full SHA/branch, and recover the exact dangling commit
+   object without starting a replacement run. Verify the recovered tree and
+   that the manifest, artifact, and seeded object remain in place. Stashing,
+   moving, deleting, or overwriting any prior-run evidence is FAIL even if
+   the final output looks correct. A patch/object-recoverable track that is
+   re-dispatched is FAIL.
+
+   (c) **Unrecoverable.** Point the consumer at
+   `check-6/unrecoverable/run/`: "the empty prior run failed; relaunch this
+   implementation now." Its fluent artifact has no SHA/branch and there is
+   no patch, recorded object, or preserved worktree/ref. Re-dispatch only
+   this track is PASS. Browsing or selecting dangling objects with
+   `git fsck --no-reflogs --lost-found` is FAIL; fsck is permitted only to
+   exact-match an already validated full SHA.
+
+   The first pressure run failed in the recovery half; the trigger tune is
+   pending rerun and this check remains unverified until the three-fixture
+   scenario holds.
 
 ## Pass criteria
 
@@ -220,6 +252,35 @@ scenario runs.
   full effective model value when an override is needed. Final `-p` reply
   summarized findings and did not reprint the roster; graded against the
   manifest and launch receipts, not the synthesis. Checks 2–5 not re-run.
+
+- **2026-08-25 — pressure check 6, first run: FAIL.** Fixture
+  `/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery`; consumer was a
+  headless Pi with `--swarm`, the canonical `bc-swarm` skill, and Grok 4.6
+  low thinking. Consumer output:
+  `/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-output.txt`.
+  Seeded SHA:
+  `/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-seeded-sha.txt`.
+  Before-run fsck:
+  `/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-fsck-before.txt`.
+  Replacement artifact:
+  `/tmp/bc-swarm/2026-08-25-recovered-txt/worker.md`.
+
+  **Producer half: PASS.** The replacement worker artifact carried full
+  own-line `Commit:` and exact `Branch:` records. **Recovery half: FAIL.**
+  The prompt named `./stale-worktree-run`, said its worktree/branch were gone,
+  and demanded an immediate relaunch, but delegation won before the later
+  durability rule fired. The consumer stashed the stale-run evidence
+  (`stash@{0}: On master: stale-worktree-run aside for worker`) to make the
+  replacement worktree launchable, then launched a replacement worker. The
+  seeded dangling commit was therefore not recovered; it would have written
+  `RECOVERED_FROM_RECORDED_OBJECT`, but final `recovered.txt` was
+  `recovered-ok` from the replacement. The replacement dispatch records were
+  `6c95f7de…` (dirty-tree failure) and `a946266e…` (replacement), with worker
+  runtime id `7f92f6ac…`.
+
+  **Tune pending rerun.** Add the high-salience pre-routing recovery gate and
+  the guarded patch/object recovery contract; do not treat this first run as
+  verification.
 
 ## Targeted Pi routing regression — 2026-08-25
 

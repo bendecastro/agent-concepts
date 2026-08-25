@@ -81,6 +81,15 @@ the results.
   turning async launch into a wait. Recon still treats its file as the
   deliverable; a worktree worker treats its commit plus harness patch as the
   deliverable.
+- **Recovery triggers before routing (2026-08-25).** Pressure check 6's first
+  low-thinking consumer saw a named stale interrupted run and an explicit
+  immediate-relaunch demand, but delegation won before the later durability
+  rule fired. Recovery therefore has a high-salience gate before the Tooth in
+  both the portable body and the injected swarm kernel: interrupted, failed,
+  empty, missing, and reaped runs are recovery even when the user says redo or
+  relaunch; prior evidence cannot be moved or hidden to make a replacement
+  launchable. The parent packet repeats the worktree `Commit:`/`Branch:` lines
+  because children do not inherit the kernel.
 - **Evidence anchors are the thin-parent guard.** Aggressive delegation
   buys speed by thinning the parent's context, which silently removes its
   ability to catch a confidently wrong child. Re-reading everything defeats
@@ -225,11 +234,22 @@ unblocked.** Checks 1, 2, 3 and 5 all hold with the always-on layer
 present. Check 4 fails for the third time and is accepted as a documented,
 non-blocking gap.
 
-**Durability follow-up, 2026-08-25.** Pressure check 6 was authored for the
-worktree commit-identity packet requirement and recover-before-relaunch path,
-but it was not run in this implementation pass. `test_status: partial`,
-`tested: 2026-08-18`, and `deployed: 2026-08-18` remain honest until that
-scenario is exercised.
+**Durability follow-up, 2026-08-25 — first pressure check 6: FAIL.** The
+producer half passed: the replacement worker artifact carried full own-line
+`Commit:` and exact `Branch:` records. The recovery half failed. Fixture
+`/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery` produced consumer output
+at `/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-output.txt`; seeded SHA
+and before-run fsck evidence were at
+`/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-seeded-sha.txt` and
+`/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-fsck-before.txt`, and the
+replacement artifact was `/tmp/bc-swarm/2026-08-25-recovered-txt/worker.md`.
+The consumer stashed `stale-worktree-run/` to make the replacement launchable,
+then relaunched instead of recovering the seeded dangling object (which would
+have written `RECOVERED_FROM_RECORDED_OBJECT`; final `recovered.txt` was
+`recovered-ok`). The trigger placement and recovery-safety tune is implemented;
+rerun is pending.
+`test_status: partial`, `tested: 2026-08-18`, and `deployed: 2026-08-18`
+remain honest until the tuned scenario is exercised.
 
 ## Resolved: the anchor guard belonged in the kernel, not here
 

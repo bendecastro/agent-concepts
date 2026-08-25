@@ -39,6 +39,8 @@ Never copy or pass the bare `openai-codex/gpt-5.6-luna` registry id when the con
 
 A child `thinking` field or a bare model belongs only in a deliberate reproduction probe for this behavior, not in an ordinary swarm launch.
 
+Children do not inherit the swarm kernel, so the swarm-mode parent must copy the own-line `Commit:`/`Branch:` requirement into every worktree worker task. Keep the scoped worker bullet from `SKILL.md` in that packet; recon tasks do not need it.
+
 ## Failure modes observed on this machine
 
 **Children silently share one default output path.** Omitting `output` makes every child resolve to the same configured default (`<cwd>/context.md`), and the workflow aborts with `Workflow children 'notes' and 'docs' resolve output to the same path`. Always set `output` explicitly per child. This one fails cheaply — under 100ms — but it aborts the entire fan-out before any child runs.
@@ -56,7 +58,7 @@ handoff, and do not treat a cleaned worktree as resumable.
 
 ## Recovery, in order
 
-Use the recorded paths and SHA; do not guess from temporary-directory names.
+Use the recorded paths and identity; do not guess from temporary-directory names. A prompt naming an interrupted, failed, empty, missing, or reaped run is recovery even when it says redo or relaunch. Before naming a replacement track, execute this order. Never stash, delete, move, or overwrite prior-run evidence merely to make a replacement launchable.
 
 ```sh
 # 1. What was dispatched.
@@ -70,46 +72,72 @@ find "$RUN_DIR" -maxdepth 3 -type f -print | sort
 #    Run this as a subagent tool call, not as a filesystem guess:
 #    subagent({ action: "children.list" })
 
-# 4. Worktree tracks only: inspect the handoff JSON and patch paths exposed by
-#    artifactPaths or the handoff manifest. Apply a usable patch first:
+# 4. Worktree tracks only: use the exact child entry from the handoff JSON.
+#    Bind CHILD, EXPECTED_BRANCH, BASE, and PATCH from that entry and manifest;
+#    do not infer any of them from a temporary-directory name.
+#    Require all of these before treating the patch as recovery:
+#      - this exact child; patch.branch and Branch: equal EXPECTED_BRANCH
+#      - nonempty file (`test -s "$PATCH"`)
+#      - patch.changed == true
+#      - no patch.error or capture error
+#      - handoff baseCommit == the expected BASE, which is a commit
+#    An empty, error, mismatched, or wrong-base patch is not recovery.
+#    Inspect it, then require the check before mutation:
 git -C "$REPO" apply --check "$PATCH"
+#    Only after that succeeds:
 git -C "$REPO" apply "$PATCH"
+#    Verify the resulting diff/tree before any commit or report.
 
-# 5. If there is no usable patch, resolve the artifact's recorded full SHA.
-git -C "$REPO" cat-file -t "$SHA"
-git -C "$REPO" rev-parse --verify "$SHA^{commit}"
-# If the object exists, integrate it without relaunching:
-git -C "$REPO" cherry-pick "$SHA"
+# 5. If there is no usable patch, use the artifact's LAST own-line Commit:
+#    record and its Branch: record equal to EXPECTED_BRANCH. Require
+#    ^Commit: [0-9a-f]{40} <subject> (full lowercase SHA), then validate both
+#    the tip and BASE as commits before any integration:
+git -C "$REPO" cat-file -t "$TIP"
+git -C "$REPO" rev-parse --verify "${TIP}^{commit}"
+git -C "$REPO" rev-parse --verify "${BASE}^{commit}"
+#    Inspect the complete linear range, not only TIP:
+git -C "$REPO" rev-list --parents --reverse "$BASE..$TIP"
+#    Require one ordered parent chain rooted at BASE; stop on non-linear or
+#    ambiguous history. If this succeeds, TIP is already integrated:
+git -C "$REPO" merge-base --is-ancestor "$TIP" HEAD
+#    If HEAD == BASE, use only:
+git -C "$REPO" merge --ff-only "$TIP"
+#    Otherwise require parent HEAD to be an advance from the same BASE:
+git -C "$REPO" merge-base --is-ancestor "$BASE" HEAD
+#    Inspect the ordered BASE..TIP list and cherry-pick each commit in that
+#    order. Stop on conflict; never guess or cherry-pick TIP alone. Verify the
+#    resulting diff/tree.
 
 # 6. Only when the handoff says cleanup was refused, inspect preserved state.
 git -C "$REPO" worktree list
 git -C "$REPO" branch --list "$BRANCH"
+# No patch plus no SHA does not license relaunch while this preserved state exists.
 
-# 7. Last resort: match the SHA already recorded in the artifact. Never run
-#    fsck to browse dangling objects or choose a commit without that SHA.
-git -C "$REPO" fsck --no-reflogs --lost-found | grep -F -- "$SHA"
+# 7. Last resort: only after TIP passed the full-SHA and commit checks above,
+#    exact-match that SHA. Never browse or select dangling objects:
+git -C "$REPO" fsck --no-reflogs --lost-found | awk -v sha="$TIP" '$NF == sha'
 
-# 8. Re-dispatch only the track with no usable patch, recorded object, or
-#    preserved worktree/ref. No patch plus no recorded SHA means re-dispatch
-#    only that track.
+# 8. Only now re-dispatch a track that has no usable artifact, valid handoff
+#    patch, recorded Git object, or preserved worktree/ref.
 ```
 
-`$PATCH`, `$SHA`, and `$BRANCH` above come from the artifact and runtime handoff;
-they are not values inferred from a guessed `/tmp` name. A retained run can supply
-artifact and handoff paths, but cannot reopen a worktree whose cleanup already
-removed it. If the patch applies, verify the resulting tree before committing; if
-only the recorded commit survives, cherry-pick it after `cat-file`/`rev-parse`
-verification. The `git fsck` line is valid only as a last-resort match against that
-recorded SHA.
+`$PATCH`, `$TIP`, `$BASE`, and `$BRANCH` above come from the exact artifact and
+runtime handoff; they are not values inferred from a guessed `/tmp` name. A
+worktree artifact without valid own-line `Commit:`/`Branch:` records is not a
+usable deliverable (`none`/`none` is valid when no commit was made). A retained
+run can supply artifact and handoff paths, but cannot reopen a worktree whose
+cleanup already removed it. The `git fsck` line is valid only as an exact match
+against the already validated recorded SHA, never as a way to browse or choose
+among dangling commits.
 
 `/tmp/pi-subagent-*` directories are launch receipts only. They hold the child's
 system prompt rather than its findings; listing them can confirm that a dispatch
 happened but cannot recover a result.
 
-Re-dispatch only the tracks with no usable artifact, handoff patch, recorded Git
-object, or preserved worktree/ref.
+Re-dispatch only the tracks with no usable artifact, valid handoff patch, recorded
+Git object, or preserved worktree/ref.
 
 
 ## Waiting
 
-Async fan-out should return control to the user and let the session wake on completion. Use `subagent_wait({ all: true })` only when the current turn genuinely must have the results before it ends — a run-to-completion request, or a headless run. Do not block a turn on a large fan-out merely to make it look synchronous; blocking is what rule 2 exists to prevent. On the first turn a completed worktree result is in front of the parent, apply its handoff patch or cherry-pick its recorded commit before any other dispatch; completion wake is not a reason to wait on the launch turn.
+Async fan-out should return control to the user and let the session wake on completion. Use `subagent_wait({ all: true })` only when the current turn genuinely must have the results before it ends — a run-to-completion request, or a headless run. Do not block a turn on a large fan-out merely to make it look synchronous; blocking is what rule 2 exists to prevent. On the first turn a completed worktree result is in front of the parent, apply its validated handoff patch or integrate its validated full commit range before any other dispatch; completion wake is not a reason to wait on the launch turn.

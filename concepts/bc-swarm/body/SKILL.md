@@ -9,6 +9,10 @@ Go wide. While this skill is active, delegating is the default and **keeping** w
 
 It composes `dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
 
+## Recovery gate — before routing
+
+If a prompt names an interrupted, failed, empty, missing, or reaped prior run, treat it as recovery even when it says redo, relaunch, or start again. Stop before the Tooth or any replacement track, manifest, or dispatch decision and execute rule 4 for that prior run. Never stash, delete, move, or overwrite prior-run evidence merely to make a replacement launchable. Do not name or launch a replacement until recovery proves that track has no usable artifact, valid handoff patch, recorded Git object, or preserved worktree/ref.
+
 ## The inversion
 
 Normally you delegate when a split is obvious. Here it flips: assume every unit of work goes to a child, and justify what you keep.
@@ -49,14 +53,14 @@ If no commit was made, it records `Commit: none` and `Branch: none`. The worker 
 1. the manifest;
 2. the artifact paths on disk;
 3. the harness's retained runs, for output, artifact paths, and handoff paths only — a retained run cannot reopen a worktree that cleanup already removed;
-4. for worktree workers, the runtime handoff JSON and patch at those recorded paths;
-5. the artifact's recorded commit SHA, resolved with `git cat-file` or `git rev-parse --verify`;
+4. for a worktree worker, the exact child entry in the runtime handoff JSON and its patch. A patch is usable only when it belongs to that exact child and branch (matching the expected `Branch:` record), is nonempty, says `changed: true`, has no capture error, and carries the expected `baseCommit` that resolves as a commit. Inspect it and require `git apply --check` before any mutation. Empty, error, mismatched, or wrong-base patches are not recovery;
+5. the artifact's last own-line `Commit:` record as the worker tip, with its matching `Branch:` record equal to that track's expected branch. Accept only a full 40-character lowercase-hex SHA and verify it resolves as a commit. Recover the full linear `baseCommit..tip` range, not only the tip: if tip is already an ancestor of parent `HEAD`, it is integrated; if parent `HEAD` equals `baseCommit`, use a fast-forward-only merge; if parent advanced from that same base, inspect and cherry-pick the ordered range. Stop on non-linear or ambiguous history or conflict rather than guessing, then verify the resulting diff/tree;
 6. a preserved worktree or ref, but only when cleanup refused and the harness says it was preserved;
-7. `git fsck --no-reflogs --lost-found` only as a last resort, matching the recorded SHA.
+7. `git fsck --no-reflogs --lost-found` only with that validated full SHA, and only to exact-match it — never browse or select dangling objects.
 
-Never browse dangling objects without a recorded SHA. If there is no usable patch and no recorded SHA, re-dispatch only that track. Re-dispatch only after this order, and only the tracks actually missing. Why: the current harness normally captures a patch and then removes a cleanly handed-off worktree and branch, while preserved leftovers are exceptions; re-running a whole fan-out because one result did not come back pays the full cost again to rediscover work that is usually already on disk or in Git.
+After applying a valid patch, verify the resulting diff/tree before any commit or report. An artifact for a worktree worker is usable only when its own-line `Commit:`/`Branch:` records are valid (`none`/`none` is valid when no commit was made). Re-dispatch only after this order, and only a track with no usable artifact, valid handoff patch, recorded commit object, or preserved worktree/ref. No patch plus no SHA does not license relaunch while a preserved worktree/ref exists. Why: the current harness normally captures a patch and then removes a cleanly handed-off worktree and branch, while preserved leftovers are exceptions; re-running a whole fan-out because one result did not come back pays the full cost again to rediscover work that is usually already on disk or in Git.
 
-**Parent integration on receipt.** On the first turn a completed worktree result is in front of the parent — a completion wake, status poll, or user report — apply its harness patch or cherry-pick its recorded commit before any other dispatch. This is completion-wake behavior, never a reason to block or wait on the launch turn; rule 2 remains intact.
+**Parent integration on receipt.** On the first turn a completed worktree result is in front of the parent — a completion wake, status poll, or user report — apply its validated handoff patch or integrate its validated full commit range before any other dispatch. This is completion-wake behavior, never a reason to block or wait on the launch turn; rule 2 remains intact.
 
 Artifacts are scratch, not knowledge. Anything worth keeping gets explicitly promoted into the repo, a concept, or a note; the run directory is disposable by design. For worktree workers, the Git commit and harness patch are the durable handoff records used before that promotion.
 
