@@ -18,8 +18,8 @@ subagent({
   workflowScript: `
     const OUT = "/tmp/bc-swarm/2026-08-18-dsh-recon/";
     return await runs.all([
-      { key: "notes", agent: "scout", thinking: "max", output: OUT + "notes.md", task: "..." },
-      { key: "docs",  agent: "scout", thinking: "max", output: OUT + "docs.md",  task: "..." },
+      { key: "notes", agent: "scout", output: OUT + "notes.md", task: "..." },
+      { key: "docs",  agent: "scout", output: OUT + "docs.md",  task: "..." },
     ]);
   `
 })
@@ -29,7 +29,15 @@ subagent({
 
 Pick roles by authority, not convenience: `scout` for bounded recon, `researcher` for external facts, `reviewer` for independent critique, `oracle` for hard judgment. Fan-out of `scout` children is the common shape.
 
-Pass `thinking` on each child to match the announced line. Pass `model` only as a registry id you have resolved (`subagent({ action: "models" })` or this session's routing table). Chat and the manifest keep the routing name (`Luna max`); `model: "luna"` is not a registry id and fails closed (`Unknown subagent model 'luna'`). Role frontmatter can disagree with this session's routing — bundled `scout` thinking is `low`.
+For ordinary dispatch, omit both `model` and child `thinking` when the selected role's configured route is correct. Child `thinking` is not a routing control: current child execution ignores it. If an explicit override is needed, preserve the full effective model value, including its thinking suffix, for example:
+
+```js
+{ key: "notes", agent: "scout", model: "openai-codex/gpt-5.6-luna:max", output: OUT + "notes.md", task: "..." }
+```
+
+Never copy or pass the bare `openai-codex/gpt-5.6-luna` registry id when the configured route is `:max`: the 2026-08-25 matrix showed that shape running at scout frontmatter low. Every probe in that matrix used `scout`; worker and reviewer fallback behavior was not tested. The nickname `model: "luna"` is not a registry id and fails closed (`Unknown subagent model 'luna'`). Chat and the manifest keep the routing name (`Luna max`) as effective-route metadata; they do not require those fields in the child object.
+
+A child `thinking` field or a bare model belongs only in a deliberate reproduction probe for this behavior, not in an ordinary swarm launch.
 
 ## Failure modes observed on this machine
 

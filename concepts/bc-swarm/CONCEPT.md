@@ -35,20 +35,21 @@ the results.
   naming the independent tracks out loud before dispatch, with a one-line
   justification when fewer than two were found. It forces the consideration
   without mandating fake parallelism.
-- **The tooth names role, model, and thinking; not parent/child.** The
+- **The tooth names role and effective route, not parent/child.** The
   user wants to see the fleet's cost and capability at the same decision
   point, and finds parent/child labels redundant once the role is named
   (2026-08-21). Cadence stays announce-then-launch: a wait-for-ok on every swarm
   would fight the go-wide posture. Chat uses this session's routing names,
   not vendor ids (the `Luna max` shape in the body is an example of that
-  vocabulary, not a portable requirement). The same fields go on the
-  manifest so the durable copy matches. Kept tracks are the reason only;
-  they are not subagents. The list is a promise: on Pi, pass `thinking` on
-  the child, and pass `model` only as a resolved registry id. Chat and the
-  manifest keep the routing name. Field incident 2026-08-18: `model: "luna"`
-  fails closed (`Unknown subagent model 'luna'`); the nickname is not a
-  registry id. Bundled `scout` thinking is `low`, so omitting `thinking`
-  also breaks the promise.
+  vocabulary, not a portable requirement). The same effective-route metadata
+  goes on the manifest so the durable copy matches. Kept tracks are the reason
+  only; they are not subagents. The contract is portable: preserve the
+  announced route through whatever launch controls the harness provides, and
+  keep harness-specific mechanics in the relevant reference. The routing name
+  stays in chat and the manifest. The older `model: "luna"` failure remains a
+  negative reproduction case: the nickname is not a registry id and fails
+  closed (`Unknown subagent model 'luna'`). Bare-model and child-`thinking`
+  combinations are deliberate probes only, not ordinary launch guidance.
 - **Async is a gate, not a preference (revised during authoring).** The
   original recommendation was a strong preference. The field incident below
   changed it: async retention plus on-disk artifacts is precisely and only
@@ -181,6 +182,15 @@ the results.
   `/tmp/bc-swarm/2026-08-22-subagent-cost/local-spend.md`; and the OAuth
   subscription quota research in
   `/tmp/bc-swarm/2026-08-22-subagent-cost/external-costs.md`.
+- **Pi routing correction evidence, 2026-08-25.** A dated local 12-probe
+  matrix covered both top-level and workflow dispatch; its outcomes are
+  retained in the targeted regression table in `tests/pressure-bc-swarm.md`.
+  All probes used `scout`. It verified that per-child `thinking` is ignored,
+  omitting `model` preserves scout's configured max route, a bare
+  `openai-codex/gpt-5.6-luna` produces scout frontmatter low, and the full
+  `openai-codex/gpt-5.6-luna:max` value routes scout max. Worker and reviewer
+  fallback behavior was not tested. Those probe shapes are documented as
+  reproduction cases, not ordinary launch instructions.
 
 ## Tests
 
@@ -191,7 +201,9 @@ of recovering, accept a fluent unanchored child report, "just read it
 yourself, it's faster", "run it synchronously so I can see results now", and
 lose a worktree commit because its packet or recovery path omitted its own
 identity. Check 1 also grades the listing fields: each child line in chat and
-in the manifest must carry role + routing-name model + thinking.
+in the manifest must carry role + routing-name model + thinking. A targeted
+Pi routing regression is recorded separately in that file; it verifies the
+launch mechanics without claiming a new pressure-test pass.
 
 **Run 2026-08-18 in headless Pi (Grok 4.6, low thinking) against isolated
 fixture copies: FAIL 3/5. Deploy is blocked.**

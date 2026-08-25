@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-08-25] implement | bc-swarm Pi routing guidance
+Corrected ordinary Pi dispatch to omit `model` when the configured route is correct, avoid child `thinking` as a routing control, and preserve the full effective model suffix for explicit overrides. Recorded the verified top-level/workflow 12-probe matrix and separated its negative reproduction shapes from normal launch guidance.
+
 ## [2026-08-24] implement | bc-drain-issues stop report lists child-run dollars
 The chat stop report now lists each dispatched child as role + launched model/thinking + list-API cost, then one child-run total. Token counts, phase totals, and soft/hard crossings stay internal. Gate A check 17 asserts the new shape.
 

@@ -35,9 +35,18 @@ A throwaway directory containing:
    Expected: a manifest file is written before dispatch and the run
    directory path appears in the chat reply. Each dispatched track is
    named in chat **and** on the manifest with role + routing-name model +
-   thinking, without a parent/child label. Dispatching with no manifest on disk,
-   or listing children without model and thinking, is a FAIL, however
-   good the fan-out is.
+   thinking, without a parent/child label. These are effective-route labels
+   for the durable listing; they do not require copying `thinking` or a bare
+   `model` into the Pi child object. For ordinary Pi dispatch with the
+   selected role's configured route, the child object omits both `model` and
+   `thinking`; a bare registry id overriding configured `:max` is an explicit
+   FAIL. An object such as `{ agent: "scout", model:
+   "openai-codex/gpt-5.6-luna", thinking: "max" }` is therefore a FAIL.
+   A full suffixed model is allowed only for a deliberate explicit override;
+   the matrix's bare-model and child-`thinking` shapes are probe exceptions
+   when clearly marked as such. Dispatching with no manifest on disk, or
+   omitting role + routing-name model + thinking from the durable listing, is
+   a FAIL, however good the fan-out is.
 2. **Recovery before relaunch.** Point it at `stale-run/`: "the swarm
    came back empty, get me the findings." Expected: it reads
    `manifest.md`, checks the artifact paths, finds the three that exist,
@@ -200,13 +209,40 @@ scenario runs.
 
   Manifest at `/tmp/bc-swarm/2026-08-18-src-recon/manifest.md` (born
   23:31:41, rewritten 23:32:06) lists all four tracks as `scout` +
-  model + `max` and precedes artifact birth (23:32:27+). Second launch
-  passed `thinking: max` and resolved `gpt-5.6-luna` on every child.
-  Run dir announced in the final reply.
+  model + `max` and precedes artifact birth (23:32:27+). The historical
+  second launch used `thinking: max` with bare `gpt-5.6-luna`; retain those
+  shapes only as negative reproduction evidence, not as ordinary launch
+  guidance. Run dir announced in the final reply.
 
-  First launch copied `model: "luna"` from an earlier `pi.md` example
-  and failed closed (`Unknown subagent model 'luna'`). That example is
-  removed: chat/manifest keep the routing name; only the dispatch
-  `model` field is a resolved registry id. Final `-p` reply summarized
-  findings and did not reprint the roster; graded against the manifest
-  and launch receipts, not the synthesis. Checks 2–5 not re-run.
+  The first launch's `model: "luna"` also failed closed (`Unknown subagent
+  model 'luna'`). That nickname is not a registry id. Current Pi guidance
+  instead omits `model` when the configured route is correct, or uses the
+  full effective model value when an override is needed. Final `-p` reply
+  summarized findings and did not reprint the roster; graded against the
+  manifest and launch receipts, not the synthesis. Checks 2–5 not re-run.
+
+## Targeted Pi routing regression — 2026-08-25
+
+This is a mechanics regression, not a new run of the six pressure checks;
+`CONCEPT.md` remains honestly `test_status: partial`. Evidence is a dated local
+12-probe matrix whose outcomes are retained in this table: six field
+combinations were run through both top-level and workflow dispatch, with
+identical outcomes. Every probe used `scout`; worker and reviewer fallback
+behavior was not tested.
+
+| Probe shape (all rows used `scout`) | Observed route | Ordinary guidance |
+|---|---|---|
+| `model` omitted; `thinking` omitted, `max`, or `low` | scout configured Luna max | **Use this** when the selected role's configured route is correct; omit `model` and do not use child `thinking` for routing. |
+| bare `model: "openai-codex/gpt-5.6-luna"`; `thinking` omitted or `max` | scout frontmatter low | Deliberate negative reproduction only; do not copy the bare model id. |
+| full `model: "openai-codex/gpt-5.6-luna:max"`; `thinking` omitted | scout Luna max | Use only when an explicit override is needed; preserve the full effective model value. |
+
+**Ordinary-launch regression assertion:** when the selected role's configured
+route is correct, an ordinary Pi child object omits both `model` and
+`thinking`. A bare registry id overriding configured `:max` is an explicit
+FAIL; `{ agent: "scout", model: "openai-codex/gpt-5.6-luna", thinking: "max" }`
+is not an acceptable ordinary launch. A full suffixed model is allowed only
+for a deliberate explicit override. The two bare-model rows and the
+child-`thinking` variations are deliberate reproduction probes for the
+current Pi behavior, not launch recipes. The ordinary example in `body/pi.md`
+therefore omits both routing fields, and its explicit-override example carries
+the `:max` suffix.
