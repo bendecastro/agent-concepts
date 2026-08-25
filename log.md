@@ -1104,3 +1104,10 @@ The detector judged qmd coverage from the canonical `qmd-collections.yml` alone,
 vaults reported `registered` while the live `~/.config/qmd/index.yml` had no such collection — a
 read-path health signal that could not see read-path failure. `qmd_status` now reads both files and
 distinguishes `unindexed` drift from `unregistered`; 6 new tests, injectable registry paths.
+
+## [2026-08-25] test | bc-wiki-maintain pressure scenario 3 split for the Gate 2 default
+The Gate 2 commit-default rewrite (a403caa, 08-25 01:39) never reached `tests/pressure-promotion.md`
+(last touched 85770d5, 00:27), so Scenario 3 still graded "creates exactly one new commit" while the
+skill now forbids the agent from committing under the runner. A compliant agent failed the test and a
+violating one passed. Split into 3a (runner default, no commit) and 3b (explicit manual request), and
+corrected the CONCEPT.md passage that claimed the Gate 2 scenario had been updated.
