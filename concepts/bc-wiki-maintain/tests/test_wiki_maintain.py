@@ -2,6 +2,9 @@
 """CLI and runner regression tests for bc-wiki-maintain safety contracts."""
 from __future__ import annotations
 
+import contextlib
+import importlib.util
+import io
 import json
 import os
 from pathlib import Path
@@ -14,6 +17,10 @@ ROOT = Path(__file__).resolve().parents[3]
 LINTER = ROOT / "concepts/bc-wiki-maintain/body/wiki_lint.py"
 RUNNER = ROOT / "concepts/bc-wiki-maintain/body/runner/run-promotion.sh"
 SKILL = ROOT / "concepts/bc-wiki-maintain/body/SKILL.md"
+LINTER_SPEC = importlib.util.spec_from_file_location("bc_wiki_maintain_linter", LINTER)
+assert LINTER_SPEC and LINTER_SPEC.loader
+WIKI_LINT = importlib.util.module_from_spec(LINTER_SPEC)
+LINTER_SPEC.loader.exec_module(WIKI_LINT)
 
 
 def run(*args: str, cwd: Path | None = None, env: dict[str, str] | None = None, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -199,6 +206,116 @@ Prose [[missing-prose]].
             self.assertIn("PROMOTION_REQUIRED=1", rendered.stdout)
             self.assertIn("PROMOTION_RANGE=invalid", rendered.stdout)
             self.assertIn("Warning: undatable unpromoted log headings: 1", rendered.stdout)
+
+
+class QmdStatusTests(unittest.TestCase):
+    def make_qmd_fixture(
+        self,
+        canonical_paths: list[Path],
+        machine_paths: list[Path] | None = None,
+        exclusion: bool = False,
+    ) -> tuple[tempfile.TemporaryDirectory[str], Path, Path, Path]:
+        temp = tempfile.TemporaryDirectory()
+        root = Path(temp.name)
+        vault = root / "vault"
+        (vault / "project").mkdir(parents=True)
+        (vault / "index.md").write_text("# Index\n", encoding="utf-8")
+        (vault / "log.md").write_text("", encoding="utf-8")
+        if exclusion:
+            (vault / "project" / "overview.md").write_text(
+                "This vault is excluded from the global qmd index because it contains personal data.\n",
+                encoding="utf-8",
+            )
+        canonical = root / "qmd-collections.yml"
+        canonical.write_text(
+            "collections:\n"
+            + "".join(f"  collection-{index}:\n    path: {path}\n" for index, path in enumerate(canonical_paths)),
+            encoding="utf-8",
+        )
+        machine = root / "index.yml"
+        if machine_paths is not None:
+            machine.write_text(
+                "collections:\n"
+                + "".join(f"  collection-{index}:\n    path: {path}\n" for index, path in enumerate(machine_paths)),
+                encoding="utf-8",
+            )
+        return temp, vault, canonical, machine
+
+    def render(self, vault: Path, canonical: Path, machine: Path) -> str:
+        report = WIKI_LINT.lint(
+            vault,
+            90,
+            qmd_registry=canonical,
+            qmd_machine_index=machine,
+        )
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            WIKI_LINT.print_report(report)
+        return output.getvalue()
+
+    def test_registered_requires_canonical_and_machine_coverage(self) -> None:
+        temp, vault, canonical, machine = self.make_qmd_fixture([])
+        with temp:
+            canonical.write_text(f"collections:\n  fixture:\n    path: {vault}\n", encoding="utf-8")
+            machine.write_text(f"collections:\n  fixture:\n    path: {vault}\n", encoding="utf-8")
+            status = WIKI_LINT.qmd_status(vault, canonical, machine)
+            self.assertTrue(status["registered"])
+            self.assertFalse(status["unindexed"])
+            self.assertEqual(status["canonical_path"], str(vault))
+            self.assertEqual(status["machine_path"], str(vault))
+
+    def test_canonical_only_is_unindexed_and_renderer_names_drift(self) -> None:
+        temp, vault, canonical, machine = self.make_qmd_fixture([], machine_paths=[])
+        with temp:
+            canonical.write_text(f"collections:\n  fixture:\n    path: {vault}\n", encoding="utf-8")
+            output = self.render(vault, canonical, machine)
+            self.assertIn("qmd registration: unindexed", output)
+            self.assertIn(f"covered by canonical path {vault}", output)
+            self.assertIn(f"machine index lacks a covering path at {machine}", output)
+            status = WIKI_LINT.qmd_status(vault, canonical, machine)
+            self.assertFalse(status["registered"])
+            self.assertTrue(status["unindexed"])
+
+    def test_documented_exclusion_remains_intentional_exclusion(self) -> None:
+        temp, vault, canonical, machine = self.make_qmd_fixture([], machine_paths=[], exclusion=True)
+        with temp:
+            status = WIKI_LINT.qmd_status(vault, canonical, machine)
+            self.assertFalse(status["registered"])
+            self.assertFalse(status["unindexed"])
+            self.assertTrue(status["intentional_exclusion"])
+
+    def test_absent_from_both_registries_is_unregistered(self) -> None:
+        temp, vault, canonical, machine = self.make_qmd_fixture([], machine_paths=[])
+        with temp:
+            status = WIKI_LINT.qmd_status(vault, canonical, machine)
+            self.assertFalse(status["registered"])
+            self.assertFalse(status["unindexed"])
+            self.assertFalse(status["intentional_exclusion"])
+            self.assertEqual(status["reason"], "vault path is absent from qmd registry")
+
+    def test_missing_machine_index_falls_back_to_canonical_only(self) -> None:
+        temp, vault, canonical, machine = self.make_qmd_fixture([])
+        with temp:
+            canonical.write_text(f"collections:\n  fixture:\n    path: {vault}\n", encoding="utf-8")
+            status = WIKI_LINT.qmd_status(vault, canonical, machine)
+            self.assertTrue(status["registered"])
+            self.assertFalse(status["unindexed"])
+            self.assertIn("machine index unavailable", status["reason"])
+            self.assertIn("reporting canonical-only coverage", status["reason"])
+
+    def test_nested_vault_below_registered_collection_is_covered(self) -> None:
+        temp, vault, canonical, machine = self.make_qmd_fixture([])
+        with temp:
+            parent = vault.parent / "collection-root"
+            nested = parent / "nested" / "vault"
+            nested.mkdir(parents=True)
+            canonical.write_text(f"collections:\n  fixture:\n    path: {parent}\n", encoding="utf-8")
+            machine.write_text(f"collections:\n  fixture:\n    path: {parent}\n", encoding="utf-8")
+            status = WIKI_LINT.qmd_status(nested, canonical, machine)
+            self.assertTrue(status["registered"])
+            self.assertFalse(status["unindexed"])
+            self.assertEqual(status["canonical_path"], str(parent.resolve()))
+            self.assertEqual(status["machine_path"], str(parent.resolve()))
 
 
 class PromotionRunnerTests(unittest.TestCase):

@@ -203,30 +203,89 @@ def promotion_status(vault: Path, repo: Path | None) -> dict:
             result["range"] = f"{min(dates)}..{max(dates)}"
     return result
 
-def qmd_status(vault: Path) -> dict:
-    registry = Path.home() / "Sync" / "Scripts" / "config" / "qmd-collections.yml"
-    result = {"registered": False, "intentional_exclusion": False, "registry": str(registry), "reason": None}
-    if not registry.exists():
-        result["reason"] = "registry file is missing; skipped"
-        return result
+def qmd_paths(registry: Path) -> list[Path]:
     path_re = re.compile(r"^\s+path:\s*(?:\"([^\"]+)\"|'([^']+)'|(\S.*?))\s*$")
+    paths = []
     for line in text(registry).splitlines():
         match = path_re.match(line)
         if not match:
             continue
         value = next(group for group in match.groups() if group is not None)
-        registered = Path(os.path.expandvars(value).strip()).expanduser().resolve()
+        paths.append(Path(os.path.expandvars(value).strip()).expanduser().resolve())
+    return paths
+
+
+def qmd_covering_path(vault: Path, paths: list[Path]) -> Path | None:
+    for registered in paths:
         try:
             vault.relative_to(registered)
         except ValueError:
             continue
-        result["registered"], result["reason"] = True, f"covered by {registered}"
+        return registered
+    return None
+
+
+def qmd_status(
+    vault: Path,
+    registry: Path | None = None,
+    machine_index: Path | None = None,
+) -> dict:
+    registry = registry or Path.home() / "Sync" / "Scripts" / "config" / "qmd-collections.yml"
+    machine_index = machine_index or Path.home() / ".config" / "qmd" / "index.yml"
+    result = {
+        "registered": False,
+        "unindexed": False,
+        "intentional_exclusion": False,
+        "registry": str(registry),
+        "machine_index": str(machine_index),
+        "canonical_path": None,
+        "machine_path": None,
+        "reason": None,
+    }
+    if not registry.exists():
+        result["reason"] = "registry file is missing; skipped"
         return result
-    for line in text(vault / "project" / "overview.md").splitlines():
-        if "excluded from the global qmd index" in line.lower():
-            result.update(intentional_exclusion=True, reason=line.strip())
-            return result
-    result["reason"] = "vault path is absent from qmd registry"
+
+    canonical_path = qmd_covering_path(vault, qmd_paths(registry))
+    result["canonical_path"] = str(canonical_path) if canonical_path else None
+    if canonical_path is None:
+        for line in text(vault / "project" / "overview.md").splitlines():
+            if "excluded from the global qmd index" in line.lower():
+                result.update(intentional_exclusion=True, reason=line.strip())
+                return result
+        if machine_index.exists():
+            machine_path = qmd_covering_path(vault, qmd_paths(machine_index))
+            result["machine_path"] = str(machine_path) if machine_path else None
+            result["reason"] = (
+                f"vault path is absent from canonical qmd registry; machine index covers {machine_path}"
+                if machine_path
+                else "vault path is absent from qmd registry"
+            )
+        else:
+            result["reason"] = (
+                "vault path is absent from qmd registry; "
+                f"machine index unavailable at {machine_index}"
+            )
+        return result
+
+    if not machine_index.exists():
+        result["registered"] = True
+        result["reason"] = (
+            f"covered by canonical path {canonical_path}; machine index unavailable at {machine_index}; "
+            "reporting canonical-only coverage"
+        )
+        return result
+
+    machine_path = qmd_covering_path(vault, qmd_paths(machine_index))
+    result["machine_path"] = str(machine_path) if machine_path else None
+    if machine_path:
+        result["registered"] = True
+        result["reason"] = f"covered by canonical path {canonical_path} and machine index path {machine_path}"
+    else:
+        result["unindexed"] = True
+        result["reason"] = (
+            f"covered by canonical path {canonical_path}; machine index lacks a covering path at {machine_index}"
+        )
     return result
 
 SKIP_DIR_NAMES = {".git", ".obsidian", "scratch", "temp", "node_modules", "vendor"}
@@ -238,7 +297,13 @@ def maintenance_report(path: Path, vault: Path) -> bool:
 def ignored_path(path: Path, vault: Path) -> bool:
     return any(part in SKIP_DIR_NAMES for part in path.relative_to(vault).parts)
 
-def lint(vault: Path, stale_days: int) -> dict:
+def lint(
+    vault: Path,
+    stale_days: int,
+    *,
+    qmd_registry: Path | None = None,
+    qmd_machine_index: Path | None = None,
+) -> dict:
     pages_list = sorted(
         path
         for path in (item.resolve() for item in vault.rglob("*.md"))
@@ -290,7 +355,9 @@ def lint(vault: Path, stale_days: int) -> dict:
     return {"vault": str(vault), "pages": len(pages_list), "broken_links": broken, "ambiguous_links": ambiguous,
             "orphans": orphans, "missing_index": missing, "stale_active_references": stale,
             "unknown_active_references": unknown, "stale_days": stale_days,
-            "unpromoted_log": promotion_status(vault, repo), "qmd": qmd_status(vault)}
+            "unpromoted_log": promotion_status(vault, repo),
+            "qmd": qmd_status(vault, registry=qmd_registry, machine_index=qmd_machine_index),
+        }
 
 CLASSIFY_VERDICTS = {"promote", "skip", "conflict"}
 
@@ -402,7 +469,15 @@ def print_report(report: dict) -> None:
         for heading in undatable:
             print(f"- {heading}")
     qmd = report["qmd"]
-    status = "registered" if qmd["registered"] else "intentional exclusion" if qmd["intentional_exclusion"] else "unregistered"
+    status = (
+        "registered"
+        if qmd["registered"]
+        else "unindexed"
+        if qmd["unindexed"]
+        else "intentional exclusion"
+        if qmd["intentional_exclusion"]
+        else "unregistered"
+    )
     print(f"qmd registration: {status}")
     if qmd["reason"]:
         print(f"- {qmd['reason']}")

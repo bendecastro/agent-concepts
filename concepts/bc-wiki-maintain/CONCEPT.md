@@ -25,6 +25,11 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 - **Central detector with a vault-root argument.** The bundled `body/wiki_lint.py` is the project
   adaptation of the user's small stdlib-only personal-wiki linter. It must accept a root rather
   than hardcode `.bc-agent`, because live vaults also use `.agent/` and `agent/wiki/` variants.
+- **qmd coverage checks intent and machine reality.** The detector parses both the canonical
+  `qmd-collections.yml` and the machine's `~/.config/qmd/index.yml`. A vault is `registered` only
+  when both cover it; canonical-only coverage is `unindexed` drift, while a documented personal
+  vault remains an `intentional exclusion`. If the machine index is unavailable, the detector
+  reports canonical-only coverage without falsely claiming drift.
 - **Curated index, not generated index.** `index.md` carries editorial groupings and annotations.
   The pass reports missing entries and appends a link for a newly created page. It also appends
   links for existing `findings/` and `decisions/` pages the detector lists as missing, except
