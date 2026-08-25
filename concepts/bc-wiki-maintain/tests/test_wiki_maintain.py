@@ -209,6 +209,71 @@ class PromotionRunnerTests(unittest.TestCase):
             self.assertIn("promote ## [2026-08-10] first -> promoted.md: new page", body)
             self.assertIn("skip ## [2026-08-14] last: already on page.md", body)
 
+    def test_purely_additive_append_commits(self) -> None:
+        temp, repo, vault = make_repo("## [2026-08-10] first\n")
+        with temp:
+            classify = self.write_classify(
+                json.dumps({"heading": "## [2026-08-10] first", "verdict": "promote", "reason": "append", "page": "page.md"})
+            )
+            pi = self.write_pi(repo, classify + "printf 'Added evidence\\n' >> \"$VAULT_ROOT/page.md\"\n")
+            base = git(repo, "rev-parse", "HEAD")
+            result = run("bash", str(RUNNER), cwd=repo, env=runner_env(repo, vault, pi), check=False)
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            self.assertNotEqual(git(repo, "rev-parse", "HEAD"), base)
+            self.assertEqual(git(repo, "status", "--porcelain"), "")
+            self.assertIn("Added evidence", (vault / "page.md").read_text(encoding="utf-8"))
+
+    def test_in_place_rewrite_refuses_commit_and_leaves_nothing_staged(self) -> None:
+        temp, repo, vault = make_repo("## [2026-08-10] first\n")
+        with temp:
+            classify = self.write_classify(
+                json.dumps({"heading": "## [2026-08-10] first", "verdict": "promote", "reason": "rewrite", "page": "page.md"})
+            )
+            pi = self.write_pi(repo, classify + "printf '# Rewritten\\n' > \"$VAULT_ROOT/page.md\"\n")
+            base = git(repo, "rev-parse", "HEAD")
+            result = run("bash", str(RUNNER), cwd=repo, env=runner_env(repo, vault, pi), check=False)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("page.md", result.stderr)
+            self.assertIn("deleted lines", result.stderr)
+            self.assertEqual(git(repo, "rev-parse", "HEAD"), base)
+            self.assertEqual(git(repo, "diff", "--cached", "--name-only"), "")
+            self.assertIn("M vault/page.md", git(repo, "status", "--porcelain"))
+
+    def test_new_page_and_additive_append_commit(self) -> None:
+        temp, repo, vault = make_repo("## [2026-08-10] first\n")
+        with temp:
+            classify = self.write_classify(
+                json.dumps({"heading": "## [2026-08-10] first", "verdict": "promote", "reason": "new page", "page": "new-page.md"})
+            )
+            pi = self.write_pi(
+                repo,
+                classify
+                + "printf '# New page\\n' > \"$VAULT_ROOT/new-page.md\"\n"
+                + "printf 'Added evidence\\n' >> \"$VAULT_ROOT/page.md\"\n",
+            )
+            base = git(repo, "rev-parse", "HEAD")
+            result = run("bash", str(RUNNER), cwd=repo, env=runner_env(repo, vault, pi), check=False)
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            self.assertNotEqual(git(repo, "rev-parse", "HEAD"), base)
+            self.assertEqual(git(repo, "status", "--porcelain"), "")
+            self.assertTrue((vault / "new-page.md").exists())
+            self.assertIn("Added evidence", (vault / "page.md").read_text(encoding="utf-8"))
+
+    def test_append_to_file_without_trailing_newline_commits(self) -> None:
+        temp, repo, vault = make_repo("## [2026-08-10] first\n")
+        with temp:
+            (vault / "page.md").write_bytes(b"# Page")
+            run("git", "add", str(vault / "page.md"), cwd=repo)
+            run("git", "commit", "-qm", "seed page without trailing newline", cwd=repo)
+            classify = self.write_classify(
+                json.dumps({"heading": "## [2026-08-10] first", "verdict": "promote", "reason": "append", "page": "page.md"})
+            )
+            pi = self.write_pi(repo, classify + "printf '\\nAdded evidence\\n' >> \"$VAULT_ROOT/page.md\"\n")
+            result = run("bash", str(RUNNER), cwd=repo, env=runner_env(repo, vault, pi), check=False)
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            self.assertEqual(git(repo, "status", "--porcelain"), "")
+            self.assertEqual((vault / "page.md").read_bytes(), b"# Page\nAdded evidence\n")
+
     def test_missing_classification_refuses_commit(self) -> None:
         temp, repo, vault = make_repo("## [2026-08-10] first\n")
         with temp:

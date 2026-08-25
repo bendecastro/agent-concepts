@@ -213,6 +213,37 @@ if ! classification_summary="$(python3 "$DETECTION_SCRIPT" "$VAULT_ROOT" --verif
   fail 'classification does not cover every unpromoted heading; leaving changes uncommitted'
 fi
 
+# A no-newline append may show one deleted line; allow it only when the committed bytes
+# are an exact prefix of the new file, which cannot hide an in-place rewrite.
+numstat_output="$(git -C "$REPO_ROOT" diff --numstat -- "$VAULT_PREFIX")" \
+  || fail 'could not determine whether tracked vault changes are additive'
+non_additive=''
+while IFS=$'\t' read -r added deleted changed_path; do
+  [[ -z "$added" && -z "$deleted" && -z "$changed_path" ]] && continue
+  if [[ -z "$changed_path" || ! "$added" =~ ^[0-9]+$ && "$added" != '-' || ! "$deleted" =~ ^[0-9]+$ && "$deleted" != '-' ]]; then
+    fail "could not determine additivity for changed vault path: $added<TAB>$deleted<TAB>$changed_path"
+  fi
+  [[ "$deleted" == '0' ]] && continue
+  if [[ "$deleted" == '-' ]]; then
+    fail "could not determine additivity for tracked vault file: $changed_path (binary diff)"
+  fi
+
+  old_bytes="$(git -C "$REPO_ROOT" cat-file blob "$BASE_HEAD:$changed_path" | wc -c)" \
+    || fail "could not read committed contents for tracked vault file: $changed_path"
+  current_bytes="$(wc -c < "$REPO_ROOT/$changed_path")" \
+    || fail "could not read working-tree contents for tracked vault file: $changed_path"
+  if [[ ! "$old_bytes" =~ ^[0-9]+$ || ! "$current_bytes" =~ ^[0-9]+$ ]]; then
+    fail "could not determine byte lengths for tracked vault file: $changed_path"
+  fi
+  if (( current_bytes < old_bytes )) \
+    || ! git -C "$REPO_ROOT" show "$BASE_HEAD:$changed_path" \
+      | cmp -n "$old_bytes" - "$REPO_ROOT/$changed_path" >/dev/null 2>&1; then
+    non_additive+="  $changed_path (deleted lines: $deleted; committed content is not a byte prefix of the new file)"$'\n'
+  fi
+done <<< "$numstat_output"
+[[ -z "$non_additive" ]] \
+  || fail $'promotion rewrote existing tracked vault files; refusing to commit:\n'"$non_additive"
+
 log 'creating dedicated promotion commit'
 git -C "$REPO_ROOT" add -- "$VAULT_PREFIX"
 git -C "$REPO_ROOT" commit -m "wiki: promote log entries $promotion_range" -m "$classification_summary"
