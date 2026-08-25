@@ -153,10 +153,13 @@ Before detection, and again before promotion, the wrapper requires a clean Git
 worktree. It also checks that the promotion agent did not commit unexpectedly, stage any
 index changes, touch files outside the vault, or delete an existing file. If the agent
 changed vault files, the wrapper refuses the dedicated commit unless
-`wiki_lint.py --verify-classify` accepts a JSONL file covering every unpromoted heading.
-That file is a temp path exported as `CLASSIFY_PATH`; it is not a vault page and is not
-committed. The wrapper owns the dedicated commit and uses the detector's exact range; a
-failed safety check leaves changes uncommitted for inspection rather than resetting them.
+`wiki_lint.py --verify-classify` accepts a JSONL file covering every unpromoted heading, and
+it refuses any new non-Markdown file left in the vault. That JSONL is a temp path exported as
+`CLASSIFY_PATH`; it is not a vault page and is not committed. Its verdicts become the commit
+body, so `git log -1` explains why each heading was promoted, skipped, or flagged. The file is
+removed after a successful run and kept — with its path printed — after a failure. The wrapper
+owns the dedicated commit and uses the detector's exact range; a failed safety check leaves
+changes uncommitted for inspection rather than resetting them.
 
 The verified headless command is Pi 0.84.2 with the installed Luna model:
 

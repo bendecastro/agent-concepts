@@ -287,16 +287,21 @@ def lint(vault: Path, stale_days: int) -> dict:
 CLASSIFY_VERDICTS = {"promote", "skip", "conflict"}
 
 
-def verify_classification(path: Path, headings: list[str]) -> list[str]:
-    """Return errors if FILE does not classify every unpromoted heading exactly once."""
+def verify_classification(path: Path, promotion: dict) -> tuple[list[str], list[dict]]:
+    """Return errors and rows for FILE against every unpromoted heading, exactly once."""
+    if promotion["count"] is None:
+        note = promotion["note"] or "the unpromoted heading list could not be computed"
+        return ([f"cannot verify classification: {note}"], [])
+    headings = promotion["headings"]
     if not path.is_file():
-        return [f"classification file does not exist: {path}"]
+        return ([f"classification file does not exist: {path}"], [])
     errors: list[str] = []
     seen: list[str] = []
+    rows: list[dict] = []
     try:
         raw = path.read_text(encoding="utf-8")
     except OSError as exc:
-        return [f"could not read classification file: {exc}"]
+        return ([f"could not read classification file: {exc}"], [])
     for lineno, line in enumerate(raw.splitlines(), 1):
         line = line.strip()
         if not line:
@@ -324,6 +329,7 @@ def verify_classification(path: Path, headings: list[str]) -> list[str]:
             errors.append(f"line {lineno}: page is required for {verdict}")
         if heading is not None:
             seen.append(heading)
+            rows.append({"heading": heading, "verdict": verdict, "reason": reason, "page": page})
     expected = Counter(headings)
     found = Counter(seen)
     if expected != found:
@@ -335,7 +341,21 @@ def verify_classification(path: Path, headings: list[str]) -> list[str]:
         if extra:
             errors.append("unexpected headings:")
             errors.extend(f"- {item}" for item in extra)
-    return errors
+    return errors, rows
+
+
+def classification_summary(rows: list[dict]) -> str:
+    """Render verdicts for the promotion commit body, so skip reasons outlive the temp file."""
+    counts = Counter(row["verdict"] for row in rows)
+    header = "Classification: " + ", ".join(
+        f"{counts[verdict]} {verdict}" for verdict in sorted(CLASSIFY_VERDICTS)
+    )
+    lines = [header, ""]
+    for row in rows:
+        flat = {key: " ".join(str(value).split()) for key, value in row.items() if value is not None}
+        target = f" -> {flat['page']}" if flat.get("page") else ""
+        lines.append(f"{flat['verdict']} {flat['heading']}{target}: {flat['reason']}")
+    return "\n".join(lines)
 
 
 def print_report(report: dict) -> None:
@@ -386,11 +406,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only Markdown wiki lint")
     parser.add_argument("vault_root", help="wiki/vault directory to inspect")
     parser.add_argument("--stale-days", type=int, default=90, help="staleness threshold (default: 90)")
-    parser.add_argument("--json", action="store_true", help="emit machine-readable JSON")
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--json", action="store_true", help="emit machine-readable JSON")
+    mode.add_argument(
         "--verify-classify",
         metavar="FILE",
-        help="require FILE to classify every unpromoted heading (JSONL); print errors and exit 1 on mismatch",
+        help="require FILE to classify every unpromoted heading (JSONL); print the verdict"
+             " summary on success, or errors and exit 1 on mismatch",
     )
     args = parser.parse_args()
     if args.stale_days < 0:
@@ -401,12 +423,13 @@ def main() -> int:
     report = lint(vault, args.stale_days)
     report["promotion_required"] = report["unpromoted_log"]["count"] is None or bool(report["unpromoted_log"]["count"])
     if args.verify_classify:
-        errors = verify_classification(Path(args.verify_classify).expanduser(), report["unpromoted_log"].get("headings") or [])
+        errors, rows = verify_classification(Path(args.verify_classify).expanduser(), report["unpromoted_log"])
         if errors:
             print("bc-wiki-maintain: classification does not cover every unpromoted heading", file=sys.stderr)
             for error in errors:
                 print(error, file=sys.stderr)
             return 1
+        print(classification_summary(rows))
         return 0
     if args.json:
         print(json.dumps(report, indent=2, sort_keys=True))

@@ -70,14 +70,16 @@ one item or twenty; a thin write must not be allowed to swallow the rest.
 
 Write one JSON object per heading, covering the detector list as a multiset of exact `##`
 lines, to `$CLASSIFY_PATH` when that environment variable is set. Otherwise write the same
-JSONL to a temp file you report and do not put it in the vault:
+JSONL to a temp file you report and do not put it in the vault — a new non-Markdown file left
+in the vault fails the pass:
 
 ```json
 {"heading":"## [YYYY-MM-DD] …","verdict":"promote","reason":"…","page":"references/gotchas.md"}
 ```
 
 `page` is required for `promote` and `conflict`. Do not commit this file; it is a same-pass
-gate, not a wiki page.
+gate, not a wiki page. Its verdicts are carried into the promotion commit body, so write each
+`reason` for the next reader auditing why a heading was never filed.
 
 For each `promote`, choose the smallest existing page or a new page by meaning:
 
@@ -156,13 +158,15 @@ Before the wrapper handoff or direct-manual commit:
 2. Re-run `python3 <skill-dir>/wiki_lint.py "<vault-root>"`. Separate pre-existing warnings
    from new defects; do not claim a clean report when it is not clean.
 3. Confirm the classification file covers every detector-listed heading
-   (`python3 <skill-dir>/wiki_lint.py "<vault-root>" --verify-classify "$CLASSIFY_PATH"`).
+   (`python3 <skill-dir>/wiki_lint.py "<vault-root>" --verify-classify "$CLASSIFY_PATH"`). It
+   prints the verdict summary on success and fails when the unpromoted list is unknown; an
+   unknown list is a safe stop, not a pass.
 4. Check `git status --short`. Under the automatic runner, leave the index and `HEAD`
    unchanged for the wrapper. In a direct manual invocation, stage only this pass's verified
    vault files.
 5. Under the automatic runner, return control without committing. In a direct manual
    invocation, commit once with the exact detector-provided `wiki: promote log entries
-   <from>..<to>` subject.
+   <from>..<to>` subject and that verdict summary as the commit body.
 6. After the wrapper or manual commit, verify `git show --stat --oneline HEAD` and a clean
    `git status --short`.
 

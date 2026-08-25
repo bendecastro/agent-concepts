@@ -137,7 +137,8 @@ deliberately ugly prose. It appended below and touched nothing.
 **2. One dedicated commit.** Everything lands in a single commit named
 `wiki: promote log entries <from>..<to>`. That commit is allowed only after every unpromoted
 diary heading is classified (file it, skip it with a reason, or record a real contradiction).
-Review with `git show`, undo with `git revert`. Git is the safety net — not a human approval
+Those verdicts are written into the commit message, so `git show` tells you why a heading was
+filed or skipped, and `git revert` undoes the lot. Git is the safety net — not a human approval
 step, because approval steps get skipped and git does not.
 
 **3. Mutually exclusive claims are recorded, never resolved.** When two statements cannot both

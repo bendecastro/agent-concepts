@@ -204,6 +204,10 @@ class PromotionRunnerTests(unittest.TestCase):
             self.assertEqual(git(repo, "log", "-1", "--format=%s"), "wiki: promote log entries 2026-08-10..2026-08-14")
             self.assertEqual(git(repo, "status", "--porcelain"), "")
             self.assertNotIn("promotion-classification.jsonl", git(repo, "show", "--name-only", "--pretty=", "HEAD"))
+            body = git(repo, "log", "-1", "--format=%b")
+            self.assertIn("Classification: 0 conflict, 1 promote, 1 skip", body)
+            self.assertIn("promote ## [2026-08-10] first -> promoted.md: new page", body)
+            self.assertIn("skip ## [2026-08-14] last: already on page.md", body)
 
     def test_missing_classification_refuses_commit(self) -> None:
         temp, repo, vault = make_repo("## [2026-08-10] first\n")
@@ -213,6 +217,7 @@ class PromotionRunnerTests(unittest.TestCase):
             result = run("bash", str(RUNNER), cwd=repo, env=runner_env(repo, vault, pi), check=False)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("classification does not cover every unpromoted heading", result.stderr)
+            self.assertIn("kept classification file for review", result.stderr)
             self.assertEqual(git(repo, "rev-parse", "HEAD"), base)
             self.assertIn("promoted.md", git(repo, "status", "--porcelain"))
 
@@ -239,8 +244,42 @@ class PromotionRunnerTests(unittest.TestCase):
                 encoding="utf-8",
             )
             result = run("python3", str(LINTER), str(vault), "--verify-classify", str(classify), cwd=ROOT)
-            self.assertEqual(result.stdout, "")
             self.assertEqual(result.returncode, 0)
+            self.assertEqual(
+                result.stdout,
+                "Classification: 1 conflict, 0 promote, 1 skip\n\n"
+                "skip ## [2026-08-10] first: already represented\n"
+                "conflict ## [2026-08-14] last -> open-questions/bar.md: spike vs ADR\n",
+            )
+
+    def test_verify_classify_refuses_an_unknown_heading_list(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            vault = Path(temp) / "vault"
+            vault.mkdir()
+            (vault / "log.md").write_text("## [2026-08-10] first\n", encoding="utf-8")
+            classify = Path(temp) / "classify.jsonl"
+            classify.write_text("", encoding="utf-8")
+            result = run("python3", str(LINTER), str(vault), "--verify-classify", str(classify), cwd=ROOT, check=False)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("cannot verify classification", result.stderr)
+
+    def test_new_non_markdown_vault_file_refuses_commit(self) -> None:
+        temp, repo, vault = make_repo("## [2026-08-10] first\n")
+        with temp:
+            classify = self.write_classify(
+                json.dumps({"heading": "## [2026-08-10] first", "verdict": "promote", "reason": "new page", "page": "promoted.md"})
+            )
+            pi = self.write_pi(
+                repo,
+                classify
+                + "printf '# promoted\\n' > \"$VAULT_ROOT/promoted.md\"\n"
+                + "printf '{}\\n' > \"$VAULT_ROOT/classify.jsonl\"\n",
+            )
+            base = git(repo, "rev-parse", "HEAD")
+            result = run("bash", str(RUNNER), cwd=repo, env=runner_env(repo, vault, pi), check=False)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("non-Markdown file in the vault", result.stderr)
+            self.assertEqual(git(repo, "rev-parse", "HEAD"), base)
 
     def assert_staged_change_fails_closed(self, stage_body: str, expected_staged_path: str | None = None) -> None:
         temp, repo, vault = make_repo("## [2026-08-10] first\n")

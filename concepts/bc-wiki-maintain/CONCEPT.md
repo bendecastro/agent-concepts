@@ -45,6 +45,15 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   `PROMOTION_REQUIRED=0`. The wrapper now refuses that commit unless a same-pass JSONL
   classification covers every listed heading (`promote` / `skip` + reason / `conflict`). The
   file is a temp artifact, not a vault page and not a counter someone must remember to update.
+- **The verdicts outlive the file that proved them.** The classification file is deleted on a
+  successful run, but the commit it gated retires those headings permanently, so the wrapper
+  writes the verdict summary into the commit body: `git show` answers why a heading was skipped
+  without a temp path or a journal entry. On any failure the file is kept and its path reported
+  instead, because then it is the only record of what the agent decided.
+- **A promotion pass only ever adds Markdown.** The commit stages the whole vault prefix, so a
+  scratch artifact left in the vault would be committed as if it were a page. The wrapper fails
+  on any new non-Markdown file rather than deleting one guessed filename, which caught only the
+  name the prompt happened to suggest.
 - **Contradictions are mutually exclusive claims, not stale snapshots.** When two statements
   cannot both be true, the run writes both citations to `open-questions/` and does not promote
   either as current truth — then continues the rest of the pass. When the log has later verified
@@ -104,6 +113,11 @@ ranges are computed; a newer promotion in another vault cannot reset the configu
 boundary; the wrapper creates the exact range subject; invalid ranges fail before Pi; staged
 inside-vault or repo-root outside-vault changes fail without advancing `HEAD`; and a vault write
 without a complete heading classification cannot advance `HEAD`.
+
+**2026-08-25 — PASS — regression suite extended (14 tests).** Added coverage for the three
+audit gaps the classification gate left open: the verdict summary reaches the commit body, a
+new non-Markdown file in the vault fails the commit, and `--verify-classify` refuses an unknown
+heading list instead of passing vacuously.
 
 The 2026-08-22 pressure pass predates the classification gate and the stale-vs-exclusive split.
 Those scenarios were updated in `tests/pressure-promotion.md` and have not been re-run.

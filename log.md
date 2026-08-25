@@ -1051,3 +1051,10 @@ commit made `log.md` at that moment look fully considered. The wrapper now refus
 unless a same-pass JSONL file classifies every detector-listed heading. Gate 3 now splits
 mutually exclusive claims (flag, continue) from stale snapshots (dated append). Gate 1 appends
 index links for existing `findings/` and `decisions/` pages. Pressure scenarios updated; not re-run.
+
+## [2026-08-25] implement | bc-wiki-maintain classification audit trail
+Review of the classification gate found it destroyed its own evidence: the JSONL was a `mktemp`
+with no cleanup, its verdicts reached no artifact, the vault cleanup knew one guessed filename,
+and `--verify-classify` passed vacuously when the heading list was unknown. Verdicts now become
+the promotion commit body, any new non-Markdown vault file fails the commit, the temp file is
+kept only on failure, and an unknown list is a safe stop. Regression suite 14/14.

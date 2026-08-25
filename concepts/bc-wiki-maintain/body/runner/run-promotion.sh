@@ -101,6 +101,17 @@ fi
 BASE_HEAD="$(git -C "$REPO_ROOT" rev-parse HEAD)"
 CLASSIFY_PATH="$(mktemp)" || fail 'could not create classification temp file'
 export CLASSIFY_PATH
+# On success the verdicts are already in the commit body; on any failure the file is the
+# only record of what the agent decided, so keep it for review.
+cleanup_classify() {
+  local status=$?
+  if [[ "$status" -eq 0 ]]; then
+    rm -f -- "$CLASSIFY_PATH"
+  else
+    printf 'bc-wiki-maintain: kept classification file for review: %s\n' "$CLASSIFY_PATH" >&2
+  fi
+}
+trap cleanup_classify EXIT
 PROMOTION_PROMPT=$(cat <<EOF
 Run the scheduled bc-wiki-maintain promotion pass.
 
@@ -111,7 +122,7 @@ Classification file: $CLASSIFY_PATH
 Read the vault's AGENTS.md, index.md, log.md, and the loaded bc-wiki-maintain skill
 before changing anything. Classify every unpromoted log heading the detector listed.
 Write one JSON object per heading, covering that exact list, to $CLASSIFY_PATH and
-nowhere else. Format:
+nowhere else; a new non-Markdown file left in the vault fails the pass. Format:
 {"heading":"<exact ## line>","verdict":"promote|skip|conflict","reason":"<one line>","page":"<vault-relative page if promote or conflict>"}
 
 Promote only durable observations from the append-only log that are not already
@@ -186,19 +197,25 @@ done < <(
 deletions="$(git -C "$REPO_ROOT" diff --name-only --diff-filter=D)"
 [[ -z "$deletions" ]] || fail "promotion deleted existing files; refusing to commit:\n$deletions"
 
+# The commit stages the whole vault prefix, so a scratch artifact left behind would be
+# committed as if it were a page. A promotion pass only ever adds Markdown.
+while IFS= read -r -d '' new_path; do
+  case "$new_path" in
+    *.md) ;;
+    *) fail "promotion left a new non-Markdown file in the vault; refusing to commit: $new_path" ;;
+  esac
+done < <(git -C "$REPO_ROOT" ls-files --others --exclude-standard -z)
+
 # A thin write must not close the current heading list. The classification file is a
-# same-pass artifact: it is not a vault page and is not committed.
-if ! python3 "$DETECTION_SCRIPT" "$VAULT_ROOT" --verify-classify "$CLASSIFY_PATH"; then
-  fail "classification does not cover every unpromoted heading; leaving changes uncommitted (file: $CLASSIFY_PATH)"
-fi
-vault_classify="$VAULT_ROOT/promotion-classification.jsonl"
-if [[ -e "$vault_classify" ]] && ! git -C "$REPO_ROOT" ls-files --error-unmatch -- "$vault_classify" >/dev/null 2>&1; then
-  rm -f -- "$vault_classify"
+# same-pass artifact: it is not a vault page and is not committed, so its verdicts go
+# into the commit body where the next reader can audit each skip.
+if ! classification_summary="$(python3 "$DETECTION_SCRIPT" "$VAULT_ROOT" --verify-classify "$CLASSIFY_PATH")"; then
+  fail 'classification does not cover every unpromoted heading; leaving changes uncommitted'
 fi
 
 log 'creating dedicated promotion commit'
 git -C "$REPO_ROOT" add -- "$VAULT_PREFIX"
-git -C "$REPO_ROOT" commit -m "wiki: promote log entries $promotion_range"
+git -C "$REPO_ROOT" commit -m "wiki: promote log entries $promotion_range" -m "$classification_summary"
 
 if [[ -n "$(repo_status)" ]]; then
   fail 'promotion commit completed but the repository is still dirty'
