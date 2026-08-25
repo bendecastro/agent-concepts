@@ -1067,3 +1067,9 @@ It now requires the committed bytes to stay a byte prefix when a diff shows dele
 step 5.6 asked the agent to verify HEAD after a commit the wrapper only makes once the
 agent has exited — an agent finishing that checklist minted the boundary-closing commit
 itself. Default is now no commit. test_status downgraded to partial: unverified under pressure.
+
+## [2026-08-25] implement | brief: bc-swarm worktree durability gap
+A worker child's worktree and branch were destroyed before the parent read them; its commit
+survived only as a dangling object, recoverable because the artifact named the SHA. Rule 3
+calls the artifact the deliverable, which is false for a worktree worker, and rule 4's
+recovery order omits Git objects entirely. Filed as docs/plans/active/bc-swarm-worktree-durability.md.
