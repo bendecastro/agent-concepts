@@ -1120,3 +1120,18 @@ excuse verbatim, `HEAD` unmoved under the runner default, exactly one correctly-
 explicit request, and the detector ran before any edit. Dirty-tree refusal verified against the runner
 directly. Limits recorded in CONCEPT.md: one model at max thinking, and the wrapper's own commit half
 is covered by pytest rather than by 3a.
+
+## [2026-08-25] implement | qmd registry repair, wiki-lint failures cleared, plan doc landed
+Fixed the four queued items. The `agents` qmd collection had pointed at `~/Sync/CONFIG/agents` since
+its first commit -- a path that never existed -- yet held 491 indexed documents, so searches returned
+content from a vanished directory rather than nothing. Repointed at the workspace (232 files) and
+corrected its context sub-paths; note that `bc-qmd-setup` skips a collection already registered under
+a different path, so the stale machine entry had to be removed first. Registered the codebase-design
+learning vault; declared `sql` an explicit exclusion while it is scaffold with no sessions.
+Cleared the daily `bc-wiki-lint.service` failure: Music had 1 broken link and codebase-design 5 broken
+plus 3 ambiguous, all real -- pages that were never written, and a bare `[[plan]]` colliding with
+`templates/plan.md`. Service now reports failures=0 over 8 vaults. CV's architecture-runway counter
+now records a true zero instead of template TODOs.
+Moved `docs/plans/active/bc-wiki-maintain.md` to `implemented/`, corrected the six statements that had
+gone stale, marked the superseded design decisions inline, and recorded the Gate 2 test-drift
+inversion and the 5/5 pressure re-run.

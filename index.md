@@ -114,10 +114,10 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
 - [bc-drain-issues-v3-review-economy.md](docs/plans/active/bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.
 - [bc-drain-issues-gate-b-deterministic-trace.md](docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md) — deterministic two-rework Gate B trace and exact-hash approval verification.
-- [bc-wiki-maintain.md](docs/plans/active/bc-wiki-maintain.md) — project-wiki rot diagnosis (computed vs recorded triggers), the eleven resolved decisions, the three safety constraints on unattended promotion, and a one-vault-then-widen rollout.
 
 ### Implemented
 
+- [bc-wiki-maintain.md](docs/plans/implemented/bc-wiki-maintain.md) — project-wiki rot diagnosis (computed vs recorded triggers), the eleven resolved decisions with later supersessions marked, and the record of the eight-vault rollout, the Gate 2 test-drift inversion, and the 5/5 pressure re-run.
 - [bc-swarm-worktree-durability.md](docs/plans/implemented/bc-swarm-worktree-durability.md) — worktree-worker commit identity, guarded handoff/full-range recovery, pre-routing recovery trigger, and the FAIL→PASS pressure record.
 - [bc-grill-to-ship-loop.md](docs/plans/implemented/bc-grill-to-ship-loop.md) — the plan→execute loop design and its planner/executor implementation record.
 - [bc-drain-issues-v2-token-efficiency.md](docs/plans/implemented/bc-drain-issues-v2-token-efficiency.md) — the bounded-rework design shipped after Gate A and Gate B validation.
