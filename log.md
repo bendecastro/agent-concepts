@@ -1174,3 +1174,21 @@ bash runner that has no lock, leaving "a deliberately skipped run" unsatisfiable
 exit-1 paths that exist and stays quiet on the legitimate no-op. W4 had no acceptance criteria at all and
 is now a harness: 20 committed questions with gold paths, bytes÷4 to match the 4,543 baseline derivation,
 and hard bars at median ≤800 and miss rate ≤0.30.
+
+## [2026-08-27] implement | widen the read-path plan to span bc-init-agent
+The owner named the real goal — knowledge an agent can traverse cheaply — and `bc-init-agent` is half of
+it: the scaffold decides the shape knowledge is written into, `bc-wiki-maintain` keeps that shape true.
+Renamed the plan to `agent-vault-read-path.md` and added W5, which stops the scaffold minting the old
+`index.md`-first navigation in four separate directives plus its upgrade-notes hint.
+
+A survey of the eight live vaults broke three assumptions. Directory taxonomy has diverged to 27 distinct
+top-level directories, only six universal, with `concepts/` and `plans/` meaning different things by
+archetype — so the catalog's `kind` is now the vault-relative directory path, not the basename. A third of
+the benchmark vault is gitignored: 84 of image-maze's 239 pages sit under `temp/`, where `git log` returns
+no date, and excluding them leaves 155 eligible pages, matching the memo's independently derived 151. And
+the first-move line has drifted into three variants across the eight vaults, four of which carry a second
+`START` paragraph, with Music on a different workflow entirely — W2 is eight edits, not a find-replace.
+
+The scaffold emits no frontmatter and its templates open with TODOs, so deterministic summaries degrade to
+page titles. Whether to fix that at the source is recorded as an open decision rather than assumed:
+additive idempotency means shape changes reach only new vaults, never the eight where the knowledge is.
