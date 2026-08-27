@@ -1192,3 +1192,9 @@ the first-move line has drifted into three variants across the eight vaults, fou
 The scaffold emits no frontmatter and its templates open with TODOs, so deterministic summaries degrade to
 page titles. Whether to fix that at the source is recorded as an open decision rather than assumed:
 additive idempotency means shape changes reach only new vaults, never the eight where the knowledge is.
+
+## [2026-08-28] implement | qmd-default direct BM25 fallback
+Added the stdlib-only `body/wiki_search.py` direct BM25 reader and its tests. The preregistered
+fallback benchmark compares it with a ranked `rg` count pipeline and the existing qmd/index/catalog
+measurements without writing the target vault; both no-index fallbacks reached 3/20 misses, with
+full per-question output and Wilson intervals in `concepts/bc-wiki-maintain/tests/retrieval-results-fallback.md`.

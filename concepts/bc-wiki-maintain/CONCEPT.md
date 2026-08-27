@@ -30,6 +30,15 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   when both cover it; canonical-only coverage is `unindexed` drift, while a documented personal
   vault remains an `intentional exclusion`. If the machine index is unavailable, the detector
   reports canonical-only coverage without falsely claiming drift.
+- **qmd is the default; direct BM25 is the fallback.** qmd supplies ranked full-text retrieval
+  when its binary and collection are available. `body/wiki_search.py` handles the unavailable-
+  qmd case by reading the supplied vault at query time and scoring tracked Markdown with the
+  standard-library-only BM25 formula; it creates no cache, generated catalog, or index. The
+  fallback benchmark in `tests/retrieval-results-fallback.md` found direct BM25 and the simpler
+  ranked `rg` pipeline comparable on this 20-question sample, so the script is the portable
+  installed fallback and the shell pipeline remains a zero-deployment emergency option. The
+  report records the uncertainty rather than treating a small-sample accuracy difference as a
+  win.
 - **Curated index, not generated index.** `index.md` carries editorial groupings and annotations.
   The pass reports missing entries and appends a link for a newly created page. It also appends
   links for existing `findings/` and `decisions/` pages the detector lists as missing, except
