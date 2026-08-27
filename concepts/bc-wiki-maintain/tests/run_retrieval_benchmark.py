@@ -433,6 +433,7 @@ def render_results(
     within_two = sum(1 for depth in depths.values() if depth <= 2)
     index_label = "$IMAGE_MAZE_VAULT/index.md"
     catalog_bytes = catalog.stat().st_size
+    questions_label = QUESTIONS_PATH.relative_to(ROOT).as_posix()
     keyword_top = {}
     sentence_top = {}
     for value in all_results["C_qmd_keywords"]:
@@ -594,7 +595,7 @@ def render_results(
             "",
             "## Source citations",
             "",
-            f"- `{QUESTIONS_PATH}`: the pre-registered table supplies each question and gold path; its vault note says "
+            f"- `{questions_label}`: the pre-registered table supplies each question and gold path; its vault note says "
             '"155 eligible pages (tracked Markdown, `temp/` excluded)."',
             f"- `{index_label}`: the incumbent source begins `# image-maze Agent Wiki` and its navigation begins at "
             '`## Start here`; the byte count and graph counts above were measured from this exact file and its linked pages.',

@@ -5,7 +5,7 @@ committed before this harness ran; see the commit record in the parent run artif
 
 ## Result
 
-The vault supplied **155 eligible tracked Markdown pages**. The harness read `$IMAGE_MAZE_VAULT/index.md` as the incumbent and generated a **42,421-byte** seven-column catalog at `/tmp/bc-retrieval-catalog-cyc94v78.tsv` only. Frozen query commit: `f18492510492b7036c29e06af63c98b502397683`.
+The vault supplied **155 eligible tracked Markdown pages**. The harness read `$IMAGE_MAZE_VAULT/index.md` as the incumbent and generated a **42,421-byte** seven-column catalog at `/tmp/bc-retrieval-catalog-9p2kndtj.tsv` only. Frozen query commit: `f18492510492b7036c29e06af63c98b502397683`.
 The index graph reaches 118 pages at depth 1 and 139 at depth <=2; the benchmark does not infer a hit from reachability alone: A_index_read uses the explicit row judgments below.
 
 Cost is UTF-8 stdout bytes / 4 for search/filter output. A_index_read is the full index byte size / 4; no follow-on page is opened because each judgment is whether the index row identifies the gold page. The bars are median <= 800 tokens and miss rate <= 0.30, and both are required.
@@ -125,6 +125,6 @@ A miss means the declared gold path is not identified by the method's allowed ou
 
 ## Source citations
 
-- `/tmp/pi-worktree-7a1f8b62-90fc-46ad-8a6e-6125ea955077-0/concepts/bc-wiki-maintain/tests/retrieval-questions.md`: the pre-registered table supplies each question and gold path; its vault note says "155 eligible pages (tracked Markdown, `temp/` excluded)."
+- `concepts/bc-wiki-maintain/tests/retrieval-questions.md`: the pre-registered table supplies each question and gold path; its vault note says "155 eligible pages (tracked Markdown, `temp/` excluded)."
 - `$IMAGE_MAZE_VAULT/index.md`: the incumbent source begins `# image-maze Agent Wiki` and its navigation begins at `## Start here`; the byte count and graph counts above were measured from this exact file and its linked pages.
-- `/tmp/bc-retrieval-catalog-cyc94v78.tsv`: generated scratch artifact with the seven columns specified by the benchmark; its byte count and row contents are the source for the catalog measurements above.
+- `/tmp/bc-retrieval-catalog-9p2kndtj.tsv`: generated scratch artifact with the seven columns specified by the benchmark; its byte count and row contents are the source for the catalog measurements above.
