@@ -1,12 +1,5 @@
 # Current agent-wiki reality
 
-> Verbatim copy of the scout artifact, with one disclosed change: two paths in
-> sections C and F that were written relative to the codebase-design vault (its
-> concepts/plus-operator-coercion.md and concepts/README.md) were qualified with
-> their vault root. They otherwise read as paths in this repository, which is
-> ambiguous to a reader and a false positive for `scripts/lint.py`. No
-> measurement, command, or number was altered.
-
 Measured 2026-08-26. This is a read-only measurement; the only intended write is this artifact. Search used max depth 10 and pruned `node_modules`, `.git`, and `/home/ben/Sync/Work/PUBLIC/Agents/docs/research`.
 
 ## A. Inventory
@@ -102,7 +95,7 @@ image-maze                                 400/0              345/0      0:14,1:
 Homeflix                                   210/0              182/0      1:6,2:3,3:3,4:8,5:8,6:1,7:3,8:2,9:1,10:1,21:1 41/37                 0/0          0
 homeflix-prod                              272/0              242/0      1:7,2:3,3:3,4:4,5:5,6:5,7:1,8:3,9:2,10:2,11:1,12:1,13:1,14:1,23:1 41/40       0/0          0
 ```
-All nine pass the mechanical hub threshold, but only public Homeflix has zero `missing_index`; the detector reports nonzero missing-index counts for the other 8/9. The top inbound targets include `codebase-design/.bc-agent/concepts/plus-operator-coercion.md` line 7 (codebase-design), `findings/existing-music-stack-recon.md:11` (Music), `decisions/adr-0010-abandon-wallpaper-crossfade.md:7` (Scripts), `project/plans/digital-chest-unlock/referral-unlock-plan.md:10` (image-maze), `decisions/adr-0008-single-filesystem-data-root-hardlinks.md:21` (Homeflix), and the same ADR at `:23` (homeflix-prod).
+All nine pass the mechanical hub threshold, but only public Homeflix has zero `missing_index`; the detector reports nonzero missing-index counts for the other 8/9. The top inbound targets include `concepts/plus-operator-coercion.md:7` (codebase-design), `findings/existing-music-stack-recon.md:11` (Music), `decisions/adr-0010-abandon-wallpaper-crossfade.md:7` (Scripts), `project/plans/digital-chest-unlock/referral-unlock-plan.md:10` (image-maze), `decisions/adr-0008-single-filesystem-data-root-hardlinks.md:21` (Homeflix), and the same ADR at `:23` (homeflix-prod).
 
 ## D. Page anatomy samples
 
@@ -216,7 +209,7 @@ homeflix-prod: Pages 45; Broken 0; Ambiguous 0; Orphans 0; Missing index 3; Unpr
 Concrete stuck/failure instances from `--json` and raw `grep -n '^## ' log.md`:
 - **Invalid promotion range:** `sql/.bc-agent/log.md:6` is `## 2026-07-31`; `Scripts/.bc-agent/log.md` has 12 bare headings (`## 2026-06-26`, `## 2026-07-13`, `## 2026-07-15`, `## 2026-07-22`, `## 2026-07-23`, `## 2026-07-25`, `## 2026-07-26`, `## 2026-07-27` twice, `## 2026-07-29`, `## 2026-08-18`, `## 2026-08-24`). All 13 are undatable and both vaults emit `PROMOTION_RANGE=invalid`.
 - **Unpromoted log backlog:** no dedicated promotion commit exists for codebase-design (18 headings, including bare `## 2026-06-28`), sql (1), Music (37), Scripts (12), or dng (0 headings). Music’s backlog starts `## [2026-05-29] maintenance | Initialized plan wiki` and ends `## [2026-08-05] convention | AGENTS.md trimmed to rules; reference material demoted`. homeflix-prod has one post-boundary heading: `## [2026-08-24] wiki | Resolved all six 2026-08-24 promotion conflicts`. CV’s latest promotion is `cdf6775` on 2026-08-25; image-maze `7a241f6`; public Homeflix `be448a5`; homeflix-prod `c5f9ec1`.
-- **Missing index examples:** codebase-design 14 includes `codebase-design/.bc-agent/concepts/README.md`, `references/paths.md`, `tasks/parking-lot.md`; sql 20 includes `GLOSSARY.md`, `MISSION.md`, `NOTES.md`; Music 13 includes `decisions/vocabulary-gated-comment-writes.md` and `findings/sticker-db-syncthing-fork.md`; Scripts 7 includes `references/paths.md`; CV 13 includes `findings/README.md`; dng 6 includes `project/create-agent-wiki-plan.md` and `project/seo-deep-improved-search-2026-plan.md`; image-maze 16 includes `references/dcu-trusted-proxy.md`, `references/docker.md`, and four unlisted PRD/plan pages; homeflix-prod 3 are `project/agent-first-acquisition-plan.md`, `project/agent-first-core-setup-plan.md`, and `project/agent-first-storage-plan.md`.
+- **Missing index examples:** codebase-design 14 includes `concepts/README.md`, `references/paths.md`, `tasks/parking-lot.md`; sql 20 includes `GLOSSARY.md`, `MISSION.md`, `NOTES.md`; Music 13 includes `decisions/vocabulary-gated-comment-writes.md` and `findings/sticker-db-syncthing-fork.md`; Scripts 7 includes `references/paths.md`; CV 13 includes `findings/README.md`; dng 6 includes `project/create-agent-wiki-plan.md` and `project/seo-deep-improved-search-2026-plan.md`; image-maze 16 includes `references/dcu-trusted-proxy.md`, `references/docker.md`, and four unlisted PRD/plan pages; homeflix-prod 3 are `project/agent-first-acquisition-plan.md`, `project/agent-first-core-setup-plan.md`, and `project/agent-first-storage-plan.md`.
 - **Orphan examples (exact graph counts above):** codebase-design has 21 including all ten `learning-records/*.md`; sql has 17 including `learning/plan.md`; Music has 12 including `home.md` and `decisions/adr-0001-local-project-agent-wiki.md`; Scripts has 7 including `conventions/file-layout.md`; CV has 12 including `findings/README.md`; dng has 6 including both project plans; image-maze has 14 including `project/plans/digital-chest-unlock/referral-engine-study.md`, `references/age-verification-seam.md`, and `references/wordpress-local-env.md`. Homeflix and homeflix-prod have zero orphans.
 
 No repository file was edited or committed. `/home/ben/Sync/Work/PUBLIC/Agents` status at the end showed only the task-provided untracked `docs/research/wiki-autonomy-council/` directory; its contents were not inspected.

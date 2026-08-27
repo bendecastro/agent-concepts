@@ -166,6 +166,9 @@ def lint_inline_paths(issues: list[Issue]) -> None:
         # log.md is a historical journal; its paths were true when written.
         if md.name == "log.md":
             continue
+        # Captured evidence quotes other repositories' trees; its paths were true in their own context.
+        if parts[:2] == ("docs", "research") and "evidence" in parts[2:-1]:
+            continue
         for match in INLINE_CODE.findall(read(md)):
             ref = match.strip().split()[0] if match.strip() else ""
             ref = ref.rstrip(".,;:)")

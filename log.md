@@ -1150,3 +1150,8 @@ and `scaffold.py:307` emits `## __DATE__` while `wiki_lint.py:19` requires `## [
 the root cause of the two permanently blocked vaults. Also found `~/Sync/Wiki` already runs daily
 unattended LLM consolidation at 0 orphans / 0 missing index entries — prior art to port rather than
 reinvent. No concept changed yet; the memo's step 1 ships with a benchmark before any build.
+
+## [2026-08-27] lint | exempt captured evidence paths
+`lint_inline_paths` now skips Markdown under `docs/research/**/evidence/` because captured artifacts
+quote paths from their source repositories. Documented the convention and restored the council evidence
+artifact byte-for-byte.
