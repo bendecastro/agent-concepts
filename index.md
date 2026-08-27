@@ -114,6 +114,7 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
 - [bc-drain-issues-v3-review-economy.md](docs/plans/active/bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.
 - [bc-drain-issues-gate-b-deterministic-trace.md](docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md) — deterministic two-rework Gate B trace and exact-hash approval verification.
+- [bc-wiki-maintain-v2-read-path.md](docs/plans/active/bc-wiki-maintain-v2-read-path.md) — the wiki read path as a generated catalog agents filter rather than an index they load, scoped to step 1 behind a token benchmark.
 
 ### Implemented
 

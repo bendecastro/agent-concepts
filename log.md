@@ -1155,3 +1155,22 @@ reinvent. No concept changed yet; the memo's step 1 ships with a benchmark befor
 `lint_inline_paths` now skips Markdown under `docs/research/**/evidence/` because captured artifacts
 quote paths from their source repositories. Documented the convention and restored the council evidence
 artifact byte-for-byte.
+
+## [2026-08-27] implement | wiki read-path plan activated from the council memo
+Turned the wiki-autonomy council memo into `docs/plans/active/bc-wiki-maintain-v2-read-path.md`, scoped
+to step 1 (generated catalog, first-move change, benchmark) plus failure notification, with steps 2-4
+deferred behind the benchmark. All five owner decisions resolved: cache location deferred to
+`$XDG_CACHE_HOME`, desktop notification in scope, port evaluated, `dng` out of scope, Music unattended.
+Recon corrected four memo details before drafting — the scaffold defects live in `bc-init-agent`, which
+makes the first-move fix a cross-concept change; coverage is 4/8 vaults rather than 4/9 once `dng` is
+excluded; the exit line is `wiki_lint.py:526`; and the personal wiki is 383 pages. The port question
+resolved against reuse: the consolidation script is coupled to its own layout and prompt.
+
+An independent reviewer then blocked the first draft on three P0s, all confirmed at source. The scaffold
+is additively idempotent, so a template-only first-move change would have left all eight live vaults
+loading `index.md` and made the benchmark measure nothing; W2 now covers the live vault instructions.
+W3 had imported defences against the personal Python wrapper's PID-lock and `TimeoutExpired` bugs into a
+bash runner that has no lock, leaving "a deliberately skipped run" unsatisfiable; it now notifies on the
+exit-1 paths that exist and stays quiet on the legitimate no-op. W4 had no acceptance criteria at all and
+is now a harness: 20 committed questions with gold paths, bytes÷4 to match the 4,543 baseline derivation,
+and hard bars at median ≤800 and miss rate ≤0.30.
