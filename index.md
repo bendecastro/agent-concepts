@@ -129,6 +129,7 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 Research reports and source evidence live under [docs/research/](docs/research/README.md). The top-level `docs/research/raw/` directory is the to-ingest inbox; `docs/research/raw/ingested/` holds sources whose ideas have been taken up (even partially — picking a couple of ideas counts).
 
 - [iso-24495-1-operationalization.md](docs/research/iso-24495-1-operationalization.md) — research report on ISO 24495-1 operationalization and related plain-language standards.
+- [wiki-autonomy-council/](docs/research/wiki-autonomy-council/03-memo.md) — three-advisor council on making `bc-wiki-maintain` seamless and automatic while keeping traversal token-cheap. Diagnosis: the write path works and the read path barely exists — 0 broken links but up to 42% orphans, `index.md` alone costs 4,543 tokens in image-maze, and `qmd query` measured 67.1s. Unanimous resolution is filter-don't-read via a generated catalog. Records three verified defects (scaffolded `map.md` contributes zero graph edges because its targets are code spans; Gate 1 does *not* mechanically block link insertion; `scaffold.py` mints `## __DATE__` headings the detector cannot parse) and the `~/Sync/Wiki` prior art already achieving 0 orphans under daily unattended maintenance. Brief, claim matrix, supervisor findings, memo, and advisor evidence.
 
 ### Raw sources
 

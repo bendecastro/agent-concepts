@@ -1135,3 +1135,18 @@ now records a true zero instead of template TODOs.
 Moved `docs/plans/active/bc-wiki-maintain.md` to `implemented/`, corrected the six statements that had
 gone stale, marked the superseded design decisions inline, and recorded the Gate 2 test-drift
 inversion and the 5/5 pressure re-run.
+
+## [2026-08-26] research | wiki-autonomy council: automatic maintenance and cheap traversal
+Ran a 3-advisor bounded council (council-grok, council-sol, council-opus; fresh context, 2 passes) on
+making `bc-wiki-maintain` seamless and automatic. Filed brief, claim matrix, supervisor findings, memo,
+and advisor evidence under `docs/research/wiki-autonomy-council/`.
+Diagnosis: the read path is the gap, not the write path — 0 broken links across 9 vaults but 7-21
+orphans each, `index.md` alone is 4,543 tokens in image-maze, and `qmd query` measured 67.1s. All three
+advisors independently converged on filter-don't-read via a generated catalog.
+Three defects verified at source, not relayed: scaffolded `map.md` contributes zero graph edges because
+`without_code()` blanks its code-span targets before `links()`; Gate 1 does NOT mechanically block link
+insertion (`run-promotion.sh:226` short-circuits on zero deletions), so that prohibition is policy only;
+and `scaffold.py:307` emits `## __DATE__` while `wiki_lint.py:19` requires `## [YYYY-MM-DD]`, which is
+the root cause of the two permanently blocked vaults. Also found `~/Sync/Wiki` already runs daily
+unattended LLM consolidation at 0 orphans / 0 missing index entries — prior art to port rather than
+reinvent. No concept changed yet; the memo's step 1 ships with a benchmark before any build.

@@ -1,0 +1,165 @@
+{
+ "pass": 2,
+ "advisors": [
+  {
+   "key": "cross-grok",
+   "agent": "council-grok",
+   "runId": "dee6b54b-4682-4e4b-8a52-e063e47ed0c8",
+   "report": {
+    "responses": [
+     {
+      "claimId": "D1",
+      "disposition": "reject",
+      "reason": "A 10-minute poller does not beat installing the existing nightly oneshot on all nine vaults. The measured hole is coverage, not latency: backlogs sit on vaults with no promotion timer or invalid range, while tonight\u2019s CV/image-maze/Homeflix runs correctly no-op\u2019d at PROMOTION_RANGE=none. wiki_lint.py every 10 minutes is cheap; invoking Pi is not. run-promotion.sh:42\u201349 already fail-closes on a dirty tree, so the daemon would mostly spin during real work and only write when HEAD is clean \u2014 which is also when a human or task agent is most likely to start the next edit. That races the single-writer pilot (CONCEPT.md:229\u2013230).\n\n\u201clog.md quiet 10 minutes\u201d is a bad session proxy. Capture is the cheap mid-task act (CONCEPT.md:13\u201315); agents append a log line and keep working. Quiet log \u2260 session done. Nightly 03:30 is the existing \u201cnobody is in the repo\u201d heuristic (runner/README.md). If same-day filing is wanted, a second OnCalendar is cheaper than a new global daemon. Do not replace nightly.",
+      "sources": [
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:13-19",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:229-230",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/runner/run-promotion.sh:42-49",
+       "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md"
+      ]
+     },
+     {
+      "claimId": "D2",
+      "disposition": "refine",
+      "reason": "I withdraw silent parser-widen as the unblock. CONCEPT.md:221\u2013226 (not :96\u201397; that citation was wrong) does require a deliberate human act so promotion never redefines the heading grammar by itself. The advisor\u2019s \u201crange spans dates the author never wrote in that form\u201d is overstated: Scripts/sql headings are exactly `## 2026-06-26` / `## 2026-07-31` (Scripts log.md:6, sql log.md:6); those dates exist. The real failure of widen is hiding a schema split, not a false calendar.\n\nRoot cause: scaffold.py:307 emits `## __DATE__` while wiki_lint.py:19 requires `## [YYYY-MM-DD]`. Louder failure is necessary but not sufficient: lint today exits 0 on invalid range (wiki_lint.py:527; only broken/ambiguous fail) and Scripts has no promotion timer, so the block is inaudible. Fix: (1) scaffold writes `## [__DATE__]`; (2) lint nonzero on PROMOTION_RANGE=invalid; (3) one explicit non-promotion edit of the two live logs. Do not let an unattended pass absorb the second grammar.",
+      "sources": [
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:59-67",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:221-226",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:19",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:527",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-init-agent/body/scaffold.py:307",
+       "/home/ben/Sync/Scripts/.bc-agent/log.md:6",
+       "/home/ben/Sync/Documents/Learning/sql/.bc-agent/log.md:6"
+      ]
+     },
+     {
+      "claimId": "D3",
+      "disposition": "refine",
+      "reason": "The Syncthing risk is real and moves the file, not the catalog idea. Vaults live under ~/Sync. Homeflix already records `.sync-conflict-*` as a Syncthing failure mode (project/deployment.md:64). A gitignored `_meta/catalog.jsonl` still syncs; conflict copies are not ignored by name. `_meta/dirs.sync-conflict-*.md` would enter lint\u2019s `*.md` walk (wiki_lint.py:206\u2013214) and would not match maintenance_report\u2019s lint-/health-check-/semantic- prefix (wiki_lint.py:295).\n\nPut generated roster bytes in $XDG_CACHE_HOME/bc-wiki/<vault-realpath-hash>/, outside Sync. Cold-agent discoverability is the skill\u2019s first-move command (`wiki_lint.py --write-catalog`), not colocating a file next to index.md. Agents already fail to use the in-vault map.md. Cache-miss regen is the same computed trigger as before.",
+      "sources": [
+       "/home/ben/Sync/Work/PUBLIC/Homeflix/.agent/project/deployment.md:64",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:206-214",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:295"
+      ]
+     },
+     {
+      "claimId": "D4",
+      "disposition": "reject",
+      "reason": "SQLite FTS is a third index beside Git pages and qmd. Largest eligible graph is image-maze 151 pages (vault-reality.md). A ~30KB jsonl is rg-scale; neighbor lists can be computed fields from the existing link walker (wiki_lint.py:71\u201379, 318\u2013336). qmd search is already the BM25 fallback (~0.5s, qmd SKILL.md:17\u201322). At ~1000 pages jsonl is still ~200KB; ranking pain is what `qmd search` is for. Build FTS only if a measured probe shows rg+qmd-search both miss. Do not add a daemonized query wrapper to the first move.",
+      "sources": [
+       "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/qmd/body/SKILL.md:17-22",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:71-79"
+      ]
+     },
+     {
+      "claimId": "D5",
+      "disposition": "accept",
+      "reason": "Verified on disk. scaffold.py:262\u2013292 writes targets as `- `path``. All nine live map.md files use that form; Homeflix and image-maze map.md have zero `](` or `[[` matches. without_code() (wiki_lint.py:23\u201340) blanks inline code before links() (:71\u201379), and lint walks map.md (only log.md and templates/ are skipped, :319\u2013324). So map.md contributes zero outbound edges; lint has never validated its targets. index.md does link `[Context map](map.md)` (Homeflix index.md:29), so map.md itself is not an orphan.\n\n`map_is_scaffold_stub` is not enough: Homeflix\u2019s best-maintained map is still graph-invisible. Required: scaffold MAP uses Markdown links; lint extracts map targets (backtick or link) or reports `map_unlinked_targets`; catalog remains the completeness layer. Do not treat map.md as the link graph.",
+      "sources": [
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-init-agent/body/scaffold.py:262-292",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:23-40",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:71-79",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:319-324",
+       "/home/ben/Sync/Work/PUBLIC/Homeflix/.agent/map.md",
+       "/home/ben/Sync/Work/PUBLIC/Homeflix/.agent/index.md:29",
+       "/home/ben/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent/map.md"
+      ]
+     }
+    ],
+    "recommendationChanged": {
+     "changed": true,
+     "reason": "Two build-order changes, not a new architecture. Withdraw silent LOG_DATED_HEADING_RE widen; unblock Scripts/sql via loud lint + scaffold `## [date]` + an explicit non-promotion heading edit. Move the generated catalog from gitignored vault `_meta/` to $XDG_CACHE_HOME because Syncthing conflict copies would re-enter the page graph. Keep nightly promotion pointed at all nine vaults, jsonl+rg (not SQLite), no end-of-session dispatcher, gates unchanged. Promote map.md link extraction from a stub check to a detector fix."
+    },
+    "outOfScopeFindings": [
+     "Pass-1 citation CONCEPT.md:96-97 for the human-normalise rule was the wrong line; the load-bearing text is CONCEPT.md:221-226."
+    ]
+   }
+  },
+  {
+   "key": "cross-sol",
+   "agent": "council-sol",
+   "runId": "01a59ed6-90cf-4e63-960e-6d12033805c1",
+   "report": {
+    "responses": [
+     {
+      "claimId": "D1",
+      "disposition": "accept",
+      "reason": "The measured distribution is correct: timer-covered CV/image-maze/Homeflix/homeflix-prod have 0+0+0+1 headings, while uncovered codebase-design/sql/Music/Scripts/dng have 18+1+37+12+0=68. A 10-minute dispatcher does not earn its complexity, especially because promotion refuses a dirty tree before detection and again before agent invocation. Adopt one nightly sequential promotion service over the vault scope. However, the existing list has only 8 paths and omits dng, so it reaches 9/9 only after adding/discovering dng; the list is scope configuration, not a recorded trigger.",
+      "sources": [
+       "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md:178-188",
+       "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md:198-211",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/runner/run-promotion.sh:42-51",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/runner/run-promotion.sh:78-93"
+      ]
+     },
+     {
+      "claimId": "D2",
+      "disposition": "accept",
+      "reason": "All nine live vaults have `map.md`. The scaffold explicitly calls it the smallest-context picker but emits targets as code spans. `without_code()` masks those spans before `links()`, so map targets produce no validated graph edges. Music's map is still the scaffold template; directly it names 11 unique files, not all 69 pages (the packet's exact \u201c34\u201d is only reproducible as 45 index-linked pages minus those 11, not as total-page omissions). image-maze is demonstrably stale for architecture work: map stops at rounds 4\u20137 while index contains rounds 8 and 9. Revised design: preserve `map.md` as the curated task-bundle layer, make new scaffold maps real relative Markdown links, lint legacy code-span targets for existence, and add a separate generated `catalog.md` containing every eligible page. Do not overwrite editorial maps automatically.",
+      "sources": [
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-init-agent/body/scaffold.py:262-298",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:23-40",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:71-79",
+       "/home/ben/Sync/Music/.bc-agent/map.md:1-37",
+       "/home/ben/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent/map.md:39-48",
+       "/home/ben/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent/index.md:31,53",
+       "/home/ben/Sync/Documents/Learning/codebase-design/.bc-agent/map.md:1",
+       "/home/ben/Sync/Documents/Learning/sql/.bc-agent/map.md:1",
+       "/home/ben/Sync/Scripts/.bc-agent/map.md:1",
+       "/home/ben/Sync/Work/CV/.bc-agent/map.md:1",
+       "/home/ben/Sync/Work/Development/dng/files/pub/agent/wiki/map.md:1",
+       "/home/ben/Sync/Work/PUBLIC/Homeflix/.agent/map.md:1",
+       "/home/ben/Sync/Work/homeflix-prod/.agent/map.md:1"
+      ]
+     },
+     {
+      "claimId": "D3",
+      "disposition": "reject",
+      "reason": "The mechanical claim is false. The byte-prefix fallback runs only when a tracked diff reports deleted lines; files with zero deleted lines short-circuit, and CONCEPT.md explicitly records that mid-file insertion works. A standalone Markdown link can therefore be inserted into an existing page, and an appended `## Related` section is also allowed. The proposal survives mechanically, but policy should be narrow: a new page must link outward to one meaningful context page; adding a reciprocal standalone link to an existing page is optional and must be part of that promotion, never bulk auto-linking. Gate 1 already permits additive sections/index insertions while forbidding rewrites.",
+      "sources": [
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:67-73",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/runner/run-promotion.sh:216-245",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/SKILL.md:103-110"
+      ]
+     },
+     {
+      "claimId": "D4",
+      "disposition": "refine",
+      "reason": "Adopt the flat, clone-portable artifact and drop SQLite/wrapper as the default. Generate tracked `catalog.md`, one compact line per eligible page: real relative link, title, \u226420-word summary, aliases, and Git date. A cold agent's first move is plain `rg -i '<terms>' <vault>/catalog.md | head`; no full-file load or special binary. Markdown is preferable to TSV/JSONL here because existing lint can validate its links and it directly makes every page reachable. Keep curated `map.md` for task bundles and curated `index.md` for editorial annotations; `catalog.md` is explicitly derived, never a replacement for either. Refresh it deterministically in a separate nightly operation and dedicated `wiki: refresh catalog` commit, writing only that generated path. Promotion's additive gate remains unchanged because broad/generated maintenance is already a separately scoped operation.",
+      "sources": [
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:33-37",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:92-96",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:300-337",
+       "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md:66-68",
+       "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md:167-174"
+      ]
+     },
+     {
+      "claimId": "D5",
+      "disposition": "owner-decision",
+      "reason": "Default to the current fail-closed parser until the owner deliberately changes policy. The implementation and tests intentionally treat wholly bare-date sets as invalid, and CONCEPT.md explicitly requires human normalization of the append-only log. Widening to exact ISO dates would not literally be silent\u2014the classification gate covers every exact heading and records verdicts in the commit body\u2014but it would change an audited safety decision and retire headings under machine-interpreted dates. Evidence establishes both mechanical safety and the current deliberate boundary; it cannot establish whether these legacy headings were intended as promotion dates. If approved, change the canon first, accept only exact valid ISO dates, retain exact-heading classification, and add pressure/regression tests.",
+      "sources": [
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:18-48",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:151-155",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:221-226",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/runner/run-promotion.sh:209-213",
+       "/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/runner/run-promotion.sh:247-249"
+      ]
+     }
+    ],
+    "recommendationChanged": {
+     "changed": true,
+     "reason": "Keep the core recommendation\u2014a generated, token-cheap all-page read path plus unchanged promotion gates\u2014but simplify it materially: nightly 9/9 coverage instead of 10-minute dispatch, tracked flat `catalog.md` instead of machine-local SQLite, and explicit use/repair of existing curated `map.md`. Bare-date widening moves from recommendation to owner decision."
+    },
+    "outOfScopeFindings": [
+     "The challenge's \u201cMusic map omits 34 of 69 pages\u201d is not the direct total-page count: the map names 11 unique files, so it omits 58 of 69 Markdown pages; 34 is the difference between the measured 45 index-linked pages and those 11 map targets."
+    ]
+   }
+  },
+  {
+   "key": "cross-opus",
+   "report": "Agent 'council-opus' was given an implementation task, but its tool allowlist has no mutation-capable tools. Add bash, edit, write, or another mutation-capable tool to the agent, or use a read-only task/agent."
+  }
+ ]
+}
