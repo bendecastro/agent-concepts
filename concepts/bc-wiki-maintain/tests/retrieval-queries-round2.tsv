@@ -1,0 +1,23 @@
+# Round-two agent-style queries, selected from each question text before retrieval.
+# Columns: question number<TAB>primary 1-2 terms<TAB>one reformulation 1-2 terms.
+# First attempt is reformulated only on zero rows or >15 rows (flooded).
+1	durable fact	ending work
+2	picture metadata	writing metadata
+3	corner sizes	button panel
+4	subscription lifecycle	payment adapters
+5	cleanup approach	keep record
+6	mouse click	touch tap
+7	rate limiting	referral traffic
+8	WordPress adapter	extract first
+9	publish delay	actions v1
+10	JavaScript queue	PHP rules
+11	vibration drag	stay silent
+12	upload response	retry lost
+13	focus Escape	chest fullscreen
+14	preview source	cache changes
+15	code checks	pipeline release
+16	download URL	live mode
+17	Git server	local machine
+18	theme output	authored WordPress
+19	site URLs	environment setting
+20	compliance material	explicit serving
