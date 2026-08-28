@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Search a Markdown agent vault without an index or third-party dependency.
 
-This is the qmd fallback: it reads tracked Markdown files from the vault's Git
+This is the default single-vault reader: it reads tracked Markdown files from the vault's Git
 repository at query time, scores them with BM25, and writes only ranked vault-
 relative paths to stdout. It never writes the vault or a search artifact.
 """
