@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial
 tested: 2026-08-25
 deployed: 2026-08-23
 ---
@@ -30,15 +30,22 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   when both cover it; canonical-only coverage is `unindexed` drift, while a documented personal
   vault remains an `intentional exclusion`. If the machine index is unavailable, the detector
   reports canonical-only coverage without falsely claiming drift.
-- **qmd is the default; direct BM25 is the fallback.** qmd supplies ranked full-text retrieval
-  when its binary and collection are available. `body/wiki_search.py` handles the unavailable-
-  qmd case by reading the supplied vault at query time and scoring tracked Markdown with the
-  standard-library-only BM25 formula; it creates no cache, generated catalog, or index. The
-  fallback benchmark in `tests/retrieval-results-fallback.md` found direct BM25 and the simpler
-  ranked `rg` pipeline comparable on this 20-question sample, so the script is the portable
-  installed fallback and the shell pipeline remains a zero-deployment emergency option. The
-  report records the uncertainty rather than treating a small-sample accuracy difference as a
-  win.
+- **Direct BM25 is the default local read path; qmd is the cross-vault overlay.**
+  `body/wiki_search.py` reads the supplied vault at query time and scores tracked Markdown with
+  the standard-library-only BM25 formula; it creates no cache, generated catalog, or index. qmd
+  remains useful when one query must span explicitly named collections, which the direct reader
+  cannot do. The fallback benchmark in `tests/retrieval-results-fallback.md` (committed in
+  `e72e4652325f6645378ac9691fe98800316e686d`) measured direct BM25 at 171 median tokens and
+  3/20 misses versus qmd at 500 tokens and 4/20 misses under the same 15-row cap. The accuracy
+  difference is inside noise at n=20; the order is inverted for the operational properties: no
+  install, registration, or stale index, compact path-only output, and coverage of orphan pages.
+  The shell-ranked emergency pipeline remains available when the concept checkout itself is not
+  available.
+- **The read path assumes a discoverable concept checkout.** Vault instructions invoke the
+  canonical reader through `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py` rather
+  than a machine-specific home path. `$AGENT_CONCEPTS` is an environment assumption, not a
+  guarantee: if it is unset or invalid, repair or resolve the canonical checkout through the
+  harness instead of inventing a hardcoded path or reading the whole vault.
 - **Curated index, not generated index.** `index.md` carries editorial groupings and annotations.
   The pass reports missing entries and appends a link for a newly created page. It also appends
   links for existing `findings/` and `decisions/` pages the detector lists as missing, except
@@ -118,10 +125,24 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 - `concepts/qmd/` — the global search overlay whose collection coverage the detector reports.
 - `concepts/prompting-agents/body/SKILL.md` — adapted scope-discipline, gate, evidence, and
   verification instruction blocks used in the body.
+- `tests/retrieval-results.md` (commit `166437c3c0919862a41379bfc1f4dd253cf7db62`) — the
+  pre-registered image-maze comparison that exposed the sentence-versus-keyword query-shape
+  failure: 17/20 full-sentence misses versus 5/20 keyword misses, with Wilson intervals recorded
+  in the report.
+- `tests/retrieval-results-round2.md` (commit `a09d3e38469ea5cd2f460aa5319eaace29a84b71`) —
+  the agent-style re-score and independent blind correction of the incumbent index judgment.
+- `tests/retrieval-results-fallback.md` (commit `e72e4652325f6645378ac9691fe98800316e686d`) —
+  the direct-BM25, ranked-shell, qmd, index, and catalog comparison that supports this read-path
+  order. Its n=20 accuracy intervals overlap; it is provenance for the operational decision, not
+  an accuracy superiority claim.
 
 ## Tests
 
-`tests/pressure-promotion.md` defines the pressure scenarios.
+`tests/pressure-promotion.md` defines the promotion-gate pressure scenarios.
+`tests/pressure-read-path.md` defines the five read-path rationalisation attacks: index shortcut,
+empty-result-as-absence, whole-question query, hub-page result, and missing-qmd fallback. This
+revision's read-path scenario must hold before the changed body is redeployed; the frontmatter
+therefore records a partial status rather than claiming the older promotion run covered it.
 
 **2026-08-22 — PASS 4/4** (Pi/Luna max consumers). Four fresh `worker` agents ran the pass against
 four isolated copies of a seeded fixture vault (`git init`, one baseline commit), each handed one

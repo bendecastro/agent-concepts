@@ -23,6 +23,89 @@ find the last dedicated promotion commit and the filesystem to find the current 
 reorganization. If adjacent work looks useful, report it as optional; do not do it in this pass.
 Skipping a heading still requires classifying it; silence is not a skip.
 
+## Find context before reading it
+
+When a task needs a fact from the vault, filter the pages before opening one. The default
+single-vault reader is the bundled direct-BM25 script: it reads tracked Markdown at query time,
+prints a bounded list of paths, and creates no index or cache. Distill the task to **2–4
+meaningful content keywords**; do not paste the user's whole question. The benchmark recorded
+17/20 misses for full-sentence qmd searches (Wilson 95% CI `[0.64, 0.95]`) versus 5/20 for the
+same questions phrased as keywords (CI `[0.11, 0.47]`); see
+[`tests/retrieval-results.md`](../tests/retrieval-results.md) and its reproduced finding in
+[`tests/retrieval-results-round2.md`](../tests/retrieval-results-round2.md). Query shape is the
+safe conclusion; the small sample does **not** prove one retriever is more accurate.
+
+Run this from the directory containing the vault's `AGENTS.md`:
+
+```bash
+VAULT_ROOT="$PWD"
+python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py" \
+  --limit 15 "$VAULT_ROOT" "term one" "term two"
+```
+
+Treat returned paths as leads, open the relevant page, and verify the answer in its text. Empty
+output is not evidence that the vault lacks the answer: reformulate once with a different 2–4
+keyword set. If the top results are `index.md`, `map.md`, or `log.md`, the query is too generic;
+add a distinguishing term rather than opening a hub as the answer. Do not grep `index.md` rows
+for lookup. Read `index.md` for broad project orientation only — it is a curated human-facing
+surface, not the retrieval mechanism.
+
+For a deliberate **cross-vault** lookup, use qmd with every collection named explicitly and the
+same short-keyword discipline:
+
+```bash
+qmd search "term one term two" -c vault-a -c vault-b --format files -n 15
+```
+
+Never run an unscoped qmd search: it can return rows from unrelated corpora. Resolve
+collection keys from the qmd registry; never derive one from a `.agent` or `.bc-agent` directory
+basename. `qmd search` may exit 0 while returning `[]`, so an exit status is not an answer signal.
+Never use `qmd query`; its model-expansion and reranking path is not suitable for an inline read.
+If the bundled reader cannot run, do not read the whole vault as a fallback; use a bounded lexical
+candidate search and verify the pages it returns.
+
+### Pasteable vault instruction block
+
+The following block is the canonical replacement for the old `index.md`-first paragraph in a
+vault's `AGENTS.md`. Run it from the directory containing that file. **Music is the exception in
+workflow shape:** keep its plans-first route after this search step (the relevant plan and its
+open questions); adapt the block rather than replacing Music's local workflow with the generic
+one.
+
+~~~md
+<!-- BEGIN canonical vault read path -->
+## First move: search the vault, do not read the index
+
+For any task that needs a fact from this vault, run from the directory containing this
+`AGENTS.md`:
+
+```bash
+VAULT_ROOT="$PWD"
+python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py" \
+  --limit 15 "$VAULT_ROOT" "term one" "term two"
+```
+
+Use **2–4 meaningful content keywords**, not the user's full question. Open the relevant
+returned path(s) and verify the answer in the page text. If output is empty, reformulate once
+with a different 2–4 keyword set; empty output is not proof that this vault lacks the answer.
+If the top result is `index.md`, `map.md`, or `log.md`, add a distinguishing term and search
+again — those are hub/orientation pages, not answers. Do not grep `index.md` rows for lookup.
+
+Use qmd only for a deliberate cross-vault lookup, with every collection named explicitly:
+
+```bash
+qmd search "term one term two" -c vault-a -c vault-b --format files -n 15
+```
+
+Never run qmd unscoped, guess a collection from a `.agent`/`.bc-agent` basename, treat exit 0
+or `[]` as proof of an answer's absence, or use `qmd query`. If `wiki_search.py` cannot run,
+do not read the whole vault; use a bounded lexical candidate search and verify its pages.
+
+Read `index.md` only for broad project orientation ("what is this project?"); never load it
+whole or grep its rows to locate a page.
+<!-- END canonical vault read path -->
+~~~
+
 ## The maintenance loop
 
 ### 1. Establish the boundary before writing

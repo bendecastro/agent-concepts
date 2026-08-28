@@ -1198,3 +1198,8 @@ Added the stdlib-only `body/wiki_search.py` direct BM25 reader and its tests. Th
 fallback benchmark compares it with a ranked `rg` count pipeline and the existing qmd/index/catalog
 measurements without writing the target vault; both no-index fallbacks reached 3/20 misses, with
 full per-question output and Wilson intervals in `concepts/bc-wiki-maintain/tests/retrieval-results-fallback.md`.
+
+## [2026-08-28] implement | direct-BM25 vault read-path instruction
+Added the canonical single-vault search instruction, qmd cross-vault guardrails, a pasteable
+vault-AGENTS block, and a five-attack pressure scenario. The changed discipline stays partial
+until that scenario is run; live-vault rollout remains a separate parent-owned step.

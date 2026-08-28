@@ -2,7 +2,7 @@
 
 # Status
 
-43 concepts. 0 need testing, 0 not deployed, 6 deployed with a known gap.
+43 concepts. 0 need testing, 0 not deployed, 7 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -15,7 +15,7 @@ Nothing. Every deployed concept has a recorded run.
 
 Nothing. Every concept is deployed.
 
-## Deployed with a known gap (6)
+## Deployed with a known gap (7)
 
 Passing overall, but each names a check that was never run or a target never
 tested. See the concept's `## Tests` section for what is missing.
@@ -26,9 +26,10 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-08-24 | 2026-07-25 |
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-08-25 | 2026-08-18 |
+| [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-08-25 | 2026-08-23 |
 | [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [teach](../concepts/teach/CONCEPT.md) | pressure | 2026-06-12 | 2026-06-12 |
 
-## Passing and deployed (37)
+## Passing and deployed (36)
 
-[bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md), [bc-plan-to-issues](../concepts/bc-plan-to-issues/CONCEPT.md), [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md), [brainstorming](../concepts/brainstorming/CONCEPT.md), [code-review](../concepts/code-review/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [diagnosing-bugs](../concepts/diagnosing-bugs/CONCEPT.md), [dispatching-parallel-agents](../concepts/dispatching-parallel-agents/CONCEPT.md), [domain-modeling](../concepts/domain-modeling/CONCEPT.md), [executing-plans](../concepts/executing-plans/CONCEPT.md), [finishing-development-branch](../concepts/finishing-development-branch/CONCEPT.md), [frontend-design](../concepts/frontend-design/CONCEPT.md), [grill-me](../concepts/grill-me/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [handoff](../concepts/handoff/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [improve-codebase-architecture](../concepts/improve-codebase-architecture/CONCEPT.md), [issue-slicing](../concepts/issue-slicing/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [prompting-agents](../concepts/prompting-agents/CONCEPT.md), [prototype](../concepts/prototype/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md), [tdd](../concepts/tdd/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [to-tickets](../concepts/to-tickets/CONCEPT.md), [triage](../concepts/triage/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md), [using-git-worktrees](../concepts/using-git-worktrees/CONCEPT.md), [writing-plans](../concepts/writing-plans/CONCEPT.md)
+[bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md), [bc-plan-to-issues](../concepts/bc-plan-to-issues/CONCEPT.md), [brainstorming](../concepts/brainstorming/CONCEPT.md), [code-review](../concepts/code-review/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [diagnosing-bugs](../concepts/diagnosing-bugs/CONCEPT.md), [dispatching-parallel-agents](../concepts/dispatching-parallel-agents/CONCEPT.md), [domain-modeling](../concepts/domain-modeling/CONCEPT.md), [executing-plans](../concepts/executing-plans/CONCEPT.md), [finishing-development-branch](../concepts/finishing-development-branch/CONCEPT.md), [frontend-design](../concepts/frontend-design/CONCEPT.md), [grill-me](../concepts/grill-me/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [handoff](../concepts/handoff/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [improve-codebase-architecture](../concepts/improve-codebase-architecture/CONCEPT.md), [issue-slicing](../concepts/issue-slicing/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [prompting-agents](../concepts/prompting-agents/CONCEPT.md), [prototype](../concepts/prototype/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md), [tdd](../concepts/tdd/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [to-tickets](../concepts/to-tickets/CONCEPT.md), [triage](../concepts/triage/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md), [using-git-worktrees](../concepts/using-git-worktrees/CONCEPT.md), [writing-plans](../concepts/writing-plans/CONCEPT.md)
