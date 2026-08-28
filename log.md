@@ -1203,3 +1203,18 @@ full per-question output and Wilson intervals in `concepts/bc-wiki-maintain/test
 Added the canonical single-vault search instruction, qmd cross-vault guardrails, a pasteable
 vault-AGENTS block, and a five-attack pressure scenario. The changed discipline stays partial
 until that scenario is run; live-vault rollout remains a separate parent-owned step.
+
+## [2026-08-28] test | read-path pressure scenario run
+Two agents got ordinary-looking work with the rationalisation embedded and were not told they
+were being tested. Both held: one searched despite pressure to just read `index.md`, the other
+refused to read an unhelpful first search as proof the fact was undocumented. Gate passes.
+Also recorded that frozen benchmark queries understate live performance — a live agent reached
+Q5's gold page at rank 1 where every method missed under the frozen list.
+
+## [2026-08-28] deploy | canonical read path rolled out to all eight vaults
+Search-first replaces index.md-first in Music, Scripts, image-maze, CV, codebase-design, sql,
+Homeflix and homeflix-prod, each committed in its own repo. Music kept its plans-first route
+with search inserted ahead of it. Four lean vaults carry a one-line form only — see the note in
+`docs/plans/active/agent-vault-read-path.md` about their missing empty-result and hub-page rules.
+Prerequisite fixed en route: `~/.zshenv` set `AGENT_CONCEPTS` to a nonexistent path, which broke
+every skill command using the variable.
