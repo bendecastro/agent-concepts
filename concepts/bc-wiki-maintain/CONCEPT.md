@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-08-25
+test_status: pass
+tested: 2026-08-28
 deployed: 2026-08-23
 ---
 # Concept: bc-wiki-maintain
