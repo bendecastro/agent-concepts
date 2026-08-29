@@ -11,6 +11,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 5. **No overwrite without force; dry-run writes nothing.** Default never overwrites an existing file; `--dry-run` reports intended writes but creates 0 files; `--force`/`--force-root` are the only paths that replace existing content (and still delete nothing). Existing `.obsidian/*` files are preserved byte-for-byte on rerun.
 6. **Slug validation.** A slug with spaces or uppercase is rejected (exit 1).
 7. **Archetype overlays.** `--archetype ops` creates components/findings/open-questions/plans seed files; `--archetype learning` creates learning/sources/concepts/questions/sessions + teach reference; `--archetype knowledge` creates raw + compiled wiki seed files; `--archetype hybrid` creates all overlay families. Default `code` preserves the original base tree without extra archetype folders. Code/hybrid scaffolds include `conventions/architecture-runway.md` with a computed Git-history planning-surface signal, not a hand-maintained counter.
+7a. **Generated read-path and heading contract.** In a fresh throwaway Git repo, run `scaffold.py --root <tmp> --slug demo-proj --date 2026-08-29` and assert that root `AGENTS.md` lists `.bc-agent/AGENTS.md` as read 1, vault `AGENTS.md` contains the marker-delimited canonical search block (including the empty-result and hub-page rules), and `decisions/adr-0001-local-project-agent-wiki.md` plus `tasks/active.md` describe search before page lookup. Assert `index.md` says `## Orientation`, HOME/MAP call themselves human-facing orientation, and both generated date-bearing pages use `## [2026-08-29]`; any `index.md` occurrence in the generated tree must be orientation guidance rather than an instruction to load it for lookup.
 
 ## Skill process checks
 
@@ -21,7 +22,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 12. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, and the next steps (`/bc-plan-to-issues` → `/bc-drain-issues`); commits the scaffold staging only the new files.
 
 ## Pass criteria
-Script checks 1–7 pass on inspection of the generated tree; process checks 8–12 hold in the subagent transcript.
+Script checks 1–7 plus 7a pass on inspection of the generated tree; process checks 8–12 hold in the subagent transcript.
 
 ## Run result — 2026-06-21 — **PASS**
 

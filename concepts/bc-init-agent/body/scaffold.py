@@ -39,10 +39,10 @@ This project has a local, project-scoped agent wiki at `.bc-agent/`.
 
 Before making non-trivial changes, read:
 
-1. `.bc-agent/index.md`
-2. `.bc-agent/AGENTS.md` — you are the wiki's maintainer; this is how to keep it live
-3. `.bc-agent/map.md`
-4. Any linked page relevant to the task
+1. `.bc-agent/AGENTS.md` — follow its canonical search-first path for vault facts
+2. Any page returned by that search that is relevant to the task
+3. `.bc-agent/tasks/active.md` if work is already in flight
+4. `.bc-agent/map.md` when choosing additional context
 
 Keep the wiki live as you work: track in-flight work in
 `.bc-agent/tasks/active.md`, check off plan steps, record forks as ADRs in
@@ -140,6 +140,42 @@ OBSIDIAN_APPEARANCE = """{
 
 
 # --- vault AGENTS.md (maintainer schema) --------------------------------------
+# Keep this block byte-for-byte aligned with bc-wiki-maintain's pasteable vault
+# instruction block. The scaffold runs it from the vault directory, where $PWD
+# is the boundary that wiki_search.py must search.
+CANONICAL_VAULT_READ_PATH = """<!-- BEGIN canonical vault read path -->
+## First move: search the vault, do not read the index
+
+For any task that needs a fact from this vault, run from the directory containing this
+`AGENTS.md`:
+
+```bash
+VAULT_ROOT="$PWD"
+python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py" \\
+  --limit 15 "$VAULT_ROOT" "term one" "term two"
+```
+
+Use **2–4 meaningful content keywords**, not the user's full question. Open the relevant
+returned path(s) and verify the answer in the page text. If output is empty, reformulate once
+with a different 2–4 keyword set; empty output is not proof that this vault lacks the answer.
+If the top result is `index.md`, `map.md`, or `log.md`, add a distinguishing term and search
+again — those are hub/orientation pages, not answers. Do not grep `index.md` rows for lookup.
+
+Use qmd only for a deliberate cross-vault lookup, with every collection named explicitly:
+
+```bash
+qmd search "term one term two" -c vault-a -c vault-b --format files -n 15
+```
+
+Never run qmd unscoped, guess a collection from a `.agent`/`.bc-agent` basename, treat exit 0
+or `[]` as proof of an answer's absence, or use `qmd query`. If `wiki_search.py` cannot run,
+do not read the whole vault; use a bounded lexical candidate search and verify its pages.
+
+Read `index.md` only for broad project orientation ("what is this project?"); never load it
+whole or grep its rows to locate a page.
+<!-- END canonical vault read path -->
+"""
+
 VAULT_AGENTS = """# __SLUG__ Agent Wiki — Maintainer Instructions
 
 > **You are the primary user and maintainer of this wiki.** A human rarely reads it.
@@ -152,6 +188,8 @@ from the user's personal `~/Wiki` (see [ADR-0001](decisions/adr-0001-local-proje
 The repo-root `AGENTS.md` holds the scope/where-things-go rules; **this file is the
 how-to-maintain schema.**
 
+""" + CANONICAL_VAULT_READ_PATH + """
+
 ## The deal: keep it live or it's worthless
 
 Update the wiki *in the same turn* as the work — not "later," not only when asked.
@@ -160,7 +198,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 
 | When you… | Do this |
 |---|---|
-| Start non-trivial work | Read `index.md` → this file → `map.md` → `tasks/active.md` and any in-flight plan. |
+| Start non-trivial work | Follow the canonical search-first read path above, then read the relevant returned pages and any in-flight plan. |
 | Hear planning intent for codebase work | Before implementing, ask whether to enter `/bc-plan-to-issues`; offer `/improve-codebase-architecture` first for architecture runway. For code/hybrid wikis, check `conventions/architecture-runway.md` and nudge if the PRD-count threshold has been reached. |
 | Verify/learn a durable fact | Update the smallest relevant `project/` or `references/` page (dated); append a line to `log.md`. |
 | Find a recurring command / path / gotcha | Put it in `references/commands.md` / `paths.md` / `gotchas.md`. |
@@ -215,7 +253,10 @@ INDEX = """# __SLUG__ Agent Wiki
 The local, project-scoped agent wiki for `__SLUG__`. Detached from the user's personal
 `~/Wiki`; use it only for context about this repository.
 
-## Start here
+## Orientation
+
+This catalog is for broad human-facing orientation. For a fact lookup, follow the
+search-first read path in `AGENTS.md` rather than loading this page wholesale.
 
 - [Agent maintainer instructions](AGENTS.md) — you maintain this wiki
 - [Home](home.md)
@@ -242,7 +283,8 @@ This wiki is also a standalone Obsidian vault rooted at `.bc-agent/`.
 
 HOME = """# __SLUG__ Agent Wiki Home
 
-Obsidian home note for the local project agent wiki.
+Human-facing orientation for the local project agent wiki. For a fact lookup, follow the
+search-first read path in `AGENTS.md` rather than treating this page as the source.
 
 - [Agent instructions](AGENTS.md)
 - [Index](index.md)
@@ -261,7 +303,8 @@ This vault is local to `.bc-agent/` and detached from the user's personal `~/Wik
 
 MAP = """# Context Map
 
-Use this page to choose the smallest context set for a task. Extend the sections as the
+This human-facing map helps choose the smallest context set after the canonical search path
+in `AGENTS.md`; it is orientation, not the lookup mechanism. Extend the sections as the
 project grows.
 
 ## Always useful
@@ -304,7 +347,7 @@ LOG = """# Agent Log
 Append-only journal of durable discoveries and session outcomes. Newest at the bottom.
 One to three lines each; no transcripts or long command output.
 
-## __DATE__
+## [__DATE__]
 
 - Scaffolded the project agent workspace (root `AGENTS.md` + `.bc-agent/` vault) with
   `bc-init-agent`. Ready for the grill → issues → drain workflow. Validation/file-layout
@@ -590,7 +633,7 @@ agents to use it as the project-scoped context source. The wiki must not depend 
 ## Consequences
 
 - Project context travels with this repository.
-- Agents start from `AGENTS.md` and `.bc-agent/index.md`.
+- Agents begin with the vault's `AGENTS.md`; its first move is to search the vault using the canonical search path, and `index.md` remains for broad orientation only.
 - Personal/global wiki context stays separate.
 - Durable discoveries are committed with the project.
 """
@@ -598,8 +641,9 @@ agents to use it as the project-scoped context source. The wiki must not depend 
 
 ACTIVE = """# Active Tasks
 
-The live cursor for in-flight work. Keep this true every session — the first thing the next
-agent reads after `index.md`. See [AGENTS.md](../AGENTS.md).
+The live cursor for in-flight work. Keep this true every session — the next agent's first
+move is the search-first path in [AGENTS.md](../AGENTS.md), then it reads this page when work
+is in flight.
 
 ## In flight
 
@@ -629,7 +673,7 @@ Deferred / future ideas and wiki improvements.
 
 COMPLETED = """# Completed Tasks
 
-## __DATE__
+## [__DATE__]
 
 - Scaffolded the project agent workspace with `bc-init-agent`.
 """
@@ -879,11 +923,26 @@ def _contains(path: Path, needle: str) -> bool:
 
 def upgrade_notes(root: Path, archetype: str) -> list[str]:
     """Manual merge hints for existing files that were intentionally left untouched."""
-    if archetype not in {"code", "hybrid"}:
-        return []
-
     vault = root / ".bc-agent"
     notes: list[str] = []
+
+    # This contract applies to every archetype. Keep it outside the code/hybrid
+    # gate below so learning and knowledge vaults receive the same migration hint.
+    read_path_checks = [
+        (root / "AGENTS.md", "1. `.bc-agent/AGENTS.md`",
+         "root AGENTS.md should make `.bc-agent/AGENTS.md` the first read and defer vault retrieval to its canonical search-first path"),
+        (vault / "AGENTS.md", "<!-- BEGIN canonical vault read path -->",
+         "`.bc-agent/AGENTS.md` should include the canonical search-first vault read path block from `bc-wiki-maintain`"),
+    ]
+    for path, needle, message in read_path_checks:
+        if path.exists() and not _contains(path, needle):
+            notes.append(message)
+
+    # These existing upgrade hints depend on the code/hybrid architecture
+    # overlay and remain scoped to those archetypes.
+    if archetype not in {"code", "hybrid"}:
+        return notes
+
     checks = [
         (root / "AGENTS.md", "architecture-runway.md",
          "root AGENTS.md should point coding/planning requests at `.bc-agent/conventions/architecture-runway.md` for the optional `/improve-codebase-architecture` nudge"),
@@ -978,7 +1037,7 @@ def main() -> int:
         root_agents = root / "AGENTS.md"
         if root_agents in skipped:
             print(f"\nNOTE: existing {root_agents} was left as-is. Merge the 'read .bc-agent first' "
-                  f"pointer into it by hand (see `.bc-agent/AGENTS.md` / `index.md`).")
+                  f"pointer into it by hand (see `.bc-agent/AGENTS.md` and its canonical search-first block).")
 
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
           "read .bc-agent/references/agent-skills.md for the loop skill map; "
