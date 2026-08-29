@@ -256,11 +256,24 @@ survive contact:
 - **Empty is not proof.** `qmd search` exits 0 while printing `[]`, and unscoped it returned 110
   of 146 rows from unrelated corpora. Exit status is not an answer signal.
 
-**Interactive environment corrected 2026-08-29.** `~/.zshenv:3` and
-`~/.config/environment.d/agent-concepts.conf:4` now resolve `AGENT_CONCEPTS` to the canonical
-workspace. Processes started before that correction may retain the stale value; new interactive
-shells use the corrected configuration. This blocker is closed and was not inherited by the
-successor plan.
+**Config corrected 2026-08-29; the live environment is still broken.** `~/.zshenv:3` and
+`~/.config/environment.d/agent-concepts.conf:4` both resolve `AGENT_CONCEPTS` to the canonical
+workspace, so the files on disk are right. The running environment is not, and re-measurement the
+same day showed the earlier "blocker closed" claim was too strong:
+
+- `systemctl --user show-environment` reports `AGENT_CONCEPTS=/home/ben/Sync/agents`, and
+  `ls -ld /home/ben/Sync/agents` returns *No such file or directory*.
+- The stale value sits in the **systemd user manager**, so it is inherited by every newly spawned
+  session, not only by processes started before the fix. Verified up one live tree:
+  `herdr` → `zsh` → `pi` all carry it.
+- `bash -c`, `sh -c`, and `bash -lc` therefore all return the broken path. Only `zsh -c` looks
+  correct, because `.zshenv` re-exports the right value on each invocation.
+
+That matters for this plan specifically: agent tool shells are `bash`/`sh`, and the canonical read
+path's search command is written as `"$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py"`.
+As of this measurement it fails for exactly the agents the read path is written for. The
+configuration half is closed; refreshing the user manager's environment is not, and was not
+inherited by the successor plan.
 
 #### Original W2 notes (blast radius still accurate)
 
