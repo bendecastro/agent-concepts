@@ -51,8 +51,9 @@ for vault in "${vaults[@]}"; do
   fi
 
   ran=$((ran + 1))
-  # wiki_lint.py returns nonzero for broken/ambiguous links. Its advisory findings
-  # (orphans, missing index, stale references, and log backlog) remain non-fatal.
+  # wiki_lint.py returns nonzero for broken/ambiguous links or a required invalid
+  # promotion range. Its advisory findings (orphans, missing index, stale references,
+  # and a valid log backlog) remain non-fatal.
   if python3 "$DETECTION_SCRIPT" "$vault"; then
     printf 'bc-wiki-lint: PASS: detector completed for %s\n' "$vault"
   else

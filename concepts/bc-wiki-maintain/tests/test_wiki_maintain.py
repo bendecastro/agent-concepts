@@ -180,7 +180,8 @@ Prose [[missing-prose]].
     def test_nonstandard_headings_keep_promotion_required_and_invalid_range(self) -> None:
         temp, repo, vault = make_repo("## 2026-08-01\n\n## not dated\n")
         with temp:
-            initial = run("python3", str(LINTER), str(vault), "--json", cwd=ROOT)
+            initial = run("python3", str(LINTER), str(vault), "--json", cwd=ROOT, check=False)
+            self.assertEqual(initial.returncode, 1)
             report = json.loads(initial.stdout)
             promotion = report["unpromoted_log"]
             self.assertEqual(promotion["count"], 2)
@@ -196,7 +197,8 @@ Prose [[missing-prose]].
             run("git", "add", str(vault / "log.md"), cwd=repo)
             run("git", "commit", "-qm", "capture nonstandard", cwd=repo)
 
-            subsequent = run("python3", str(LINTER), str(vault), "--json", cwd=ROOT)
+            subsequent = run("python3", str(LINTER), str(vault), "--json", cwd=ROOT, check=False)
+            self.assertEqual(subsequent.returncode, 1)
             report = json.loads(subsequent.stdout)
             promotion = report["unpromoted_log"]
             self.assertEqual(promotion["count"], 1)
@@ -206,6 +208,28 @@ Prose [[missing-prose]].
             self.assertIn("PROMOTION_REQUIRED=1", rendered.stdout)
             self.assertIn("PROMOTION_RANGE=invalid", rendered.stdout)
             self.assertIn("Warning: undatable unpromoted log headings: 1", rendered.stdout)
+
+    def test_all_undatable_required_range_exits_nonzero(self) -> None:
+        temp, repo, vault = make_repo("## 2026-08-01\n\n## not dated\n")
+        with temp:
+            result = run("python3", str(LINTER), str(vault), cwd=ROOT, check=False)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("PROMOTION_REQUIRED=1", result.stdout)
+            self.assertIn("PROMOTION_RANGE=invalid", result.stdout)
+            self.assertIn("PROMOTION_HEADING\t## 2026-08-01", result.stdout)
+            self.assertIn("PROMOTION_HEADING\t## not dated", result.stdout)
+
+    def test_mixed_backlog_exits_zero_and_lists_undatable_heading(self) -> None:
+        temp, repo, vault = make_repo(
+            "## [2026-08-01] first\n\n## 2026-08-02\n\n## [2026-08-03] last\n"
+        )
+        with temp:
+            result = run("python3", str(LINTER), str(vault), cwd=ROOT, check=False)
+            self.assertEqual(result.returncode, 0)
+            self.assertIn("PROMOTION_REQUIRED=1", result.stdout)
+            self.assertIn("PROMOTION_RANGE=2026-08-01..2026-08-03", result.stdout)
+            self.assertIn("PROMOTION_HEADING\t## 2026-08-02", result.stdout)
+            self.assertIn("Warning: undatable unpromoted log headings: 1", result.stdout)
 
 
 class QmdStatusTests(unittest.TestCase):

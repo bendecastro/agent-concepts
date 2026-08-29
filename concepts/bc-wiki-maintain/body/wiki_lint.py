@@ -523,7 +523,9 @@ def main() -> int:
         print(json.dumps(report, indent=2, sort_keys=True))
     else:
         print_report(report)
-    return 1 if report["broken_links"] or report["ambiguous_links"] else 0
+    promotion = report["unpromoted_log"]
+    invalid_required_range = report["promotion_required"] and not promotion["range"]
+    return 1 if report["broken_links"] or report["ambiguous_links"] or invalid_required_range else 0
 
 if __name__ == "__main__":
     sys.exit(main())
