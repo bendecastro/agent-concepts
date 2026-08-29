@@ -114,10 +114,10 @@ See [`docs/harnesses.md`](docs/harnesses.md) and [`docs/bootstrap.md`](docs/boot
 
 ## Build your own skill
 
-You do this in chat. Drop a source into `docs/research/raw/` — an article, a gist, someone else's
-skill, your notes — and tell the agent to ingest it. The agent researches, writes the concept,
-attacks it with a pressure test, deploys, and lints. You decide what the source should actually
-change, and whether a failing test is a loophole or a bad test.
+You do this in chat. Describe an idea, or point at something that already exists — drop an
+article, gist, skill or notes into `docs/research/raw/`, or paste a link. The agent researches,
+writes the concept, attacks it with a pressure test, deploys, and lints. You decide what should
+actually change, and whether a failing test is a loophole or a bad test.
 
 What you get that a prompt file does not: named sources so a rule can be re-evaluated later, a test
 that tried to break it before it shipped, and a linter that fails if either is missing.

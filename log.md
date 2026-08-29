@@ -1251,3 +1251,7 @@ user manager and broke the read path for every bash/sh agent shell.
 Cut the five-step "Build your own skill" tutorial down to a chat: drop a source, the agent
 ingests/writes/tests/deploys, you curate. The old length made the work look like a manual the
 reader had to run themselves.
+
+## [2026-08-29] implement | two entry points in README skill-building
+The section only described ingesting a dropped source. Readers can also start from an idea in
+chat, or paste a link. Tightened the run-on that added those paths.
