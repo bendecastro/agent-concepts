@@ -1227,3 +1227,14 @@ image-maze one entry from it. Filed `docs/plans/active/agent-vault-write-read-co
 seven work items. An independent review caught five wrong claims in the first draft, including a
 W1 instruction that would have pasted the vault search block into root `AGENTS.md` and searched
 whole repositories; all five are corrected in the filed version.
+
+## [2026-08-29] implement | rewrite the README for practitioners
+Retargeted the README from a portfolio artifact to a reader building their own agent workflow:
+dropped the author framing, the token/cost A/B table and volatile counts, and added the
+init → plan → queue → architecture loop, the knowledge write/read design, and how to research,
+write, attack and deploy a concept. Corrected four claims the old page got wrong — the A/B was
+v1b-vs-v2d rather than v2-vs-v3, the body-line count was stale, `--harness` always writes the
+shared bus, and 16 upstream skill files are tracked, so "cited, not redistributed" was false.
+Opening and qualifying section follow adoption research: capability and anchor first, then a
+job-and-constraint filter, with the limitation placed after the claim rather than before it
+(Eisend 2006 — negative-first costs credibility). Vocabulary swept to what practitioners say.

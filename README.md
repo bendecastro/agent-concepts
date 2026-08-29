@@ -1,191 +1,207 @@
 # Agent concepts
 
-A cross-vendor workspace for engineering coding agents: the instructions they run on, the
-adversarial tests that prove those instructions hold, and the policies that bound what an agent
-is allowed to do on its own.
+Skills for coding agents that come with the test that tried to break them.
 
-**Almost everything here was written by coding agents, working under my direction.** That is the
-point rather than a caveat. This workspace exists to make agents do better work, and the fairest
-test of whether it succeeds is whether agents can build and maintain it. The commits are the
-experiment; what follows is what came out of it.
+`CLAUDE.md` and `AGENTS.md` are advisory. A model can read a rule and not apply it, and you find
+that out in your own repo. Here, every rule that constrains an agent ships with a pressure test
+that attacked it in a throwaway workspace first, and `scripts/lint.py` fails when a rule was
+deployed without one.
 
-It is not an LLM application. There is no RAG, no vector store, no model serving. The subject is
-the layer above: how you instruct an agent, how you find out whether the instruction actually
-worked, and how you let one run unattended without trusting it blindly.
+That does not make a model obey. It moves the moment you discover the loophole to before you
+depended on it.
 
----
+Two things are on offer. A loop that takes a feature from idea to landed commit with agents doing
+the typing. And a structure for building your own skills — researched, written, attacked, deployed
+— instead of collecting prompts.
 
-## What's here that isn't obvious
+## The loop
 
-### Instructions are tested adversarially, not just written
+Four concepts chain into a cycle. Each hands the next a durable artifact on disk or in your
+tracker, so no stage depends on a session staying alive.
 
-A concept that enforces discipline doesn't ship until it has been attacked. Each one gets a
-scenario that role-plays the predictable excuses — *"I'm short on time"*, *"just trust me"*,
-*"it's common knowledge"* — and grading is done against the artifacts the agent produced, never
-its own account of what it did.
+**`/bc-init-agent` — give the repo a memory.** It reads your repo first, asks only about decisions
+it cannot infer, proposes a plan, and then scaffolds `.bc-agent/`: an append-only `log.md` for
+discoveries, `decisions/` for ADRs, `references/` for commands and gotchas, `conventions/` for how
+this project validates and commits, `tasks/active.md` as the live cursor. Additive and idempotent —
+it never overwrites or deletes without an explicit flag. Run it on an existing repo safely.
 
-**57 PASS, 6 FAIL and 1 MIXED are recorded across 46 result files.** The failures matter more than
-the passes. `tdd` and `diagnosing-bugs` both failed their first run, were rewritten, and passed on
-re-run; `issue-slicing` caved to *"just give me the issues, skip the review"* and had to be taught
-that a human approval gate is not a courtesy. A skill nobody has watched fail is a skill nobody
-has tested.
+**`/bc-plan-to-issues` — turn an idea into a queue.** Grills you one question at a time until every
+branch is resolved, drops canonical vocabulary into the glossary and expensive trade-offs into
+ADRs, writes a PRD under `docs/changes/<slug>/`, merges the resolved requirements into
+`docs/specs/` as current truth, then slices the work into vertical tracer bullets and publishes
+them as GitHub issues in dependency order. The slicing quiz is the last human gate before anything
+runs on its own, and the skill is written to refuse to skip it.
 
-### The orchestrator was measured, not assumed
+**`/bc-drain-issues` — work the queue while you sleep.** Claims an issue by pushing a claim branch
+(the remote branch is the lock; labels are advisory), runs a fresh worker in an isolated worktree,
+then puts the diff through review. High-risk work gets a read-only audit before any code is
+written, mapping each rejection clause to evidence that its inputs can actually differ in
+production. Workers own code, tests and
+validation, and nothing else: they cannot commit, push, label or close. The driver lands the change
+only when every review axis approves the exact final diff.
 
-`bc-drain-issues` drains a queue of ready GitHub issues unattended: a driver loop claims an issue,
-runs a fresh worker, then puts the diff through independent spec-fidelity and standards-quality
-review before landing it.
+**`/improve-codebase-architecture` — decide what to build next.** Reviews module depth and seams,
+applies the deletion test, and asks which candidate you want to explore. It never writes production
+code or files issues; accepted work goes back to planning.
 
-Reviewers never see the implementer's reasoning — only the diff, the spec and the standards.
-Contaminating a reviewer with the author's justification is how review becomes agreement. Review
-approvals are bound to a hash of the reviewed diff, so a later edit deterministically invalidates
-them rather than silently inheriting a stale sign-off.
+`/triage` handles issues arriving from elsewhere, turning them into the same brief the planner
+emits.
 
-A v2-vs-v3 revision was A/B tested against a locked fixture commit, same model, same thinking
-level, counting child tokens per role:
+## When this fits
 
-| | child tokens | cost |
-|---|---:|---:|
-| v1b | 315,474 | $0.79 |
-| v2d | 277,012 | $0.92 |
+Use it if you already keep instruction files for an agent and would rather have them tested than
+accumulated. Or if you want a queue worked overnight by workers that cannot commit, push or close
+their own change. Or if a project's notes have grown past the point where an agent can read the
+index to orient itself.
 
-**−12.2% tokens, and cost went up $0.13.** That is a token win and a cost regression, and it is
-recorded as both. The equivalent measurement for the v3 review-economy revision is still
-outstanding and is marked as such rather than quietly assumed.
+Take one piece if that is all you need. `bc-init-agent` alone gives a repo a wiki for agents.
+`improve-codebase-architecture` needs no tracker at all. `/bc-drain-issues` needs GitHub and a
+ready brief, but not the planner that usually writes one.
 
-### Authorisation is a policy, not a vibe
+Everything needs Git. Claude Code and Pi are the tested harnesses; the rest is shared-bus discovery
+or manual bootstrap, described under Install.
 
-`~/.config/agent-concepts/publish.yaml` decides when an agent may push or close an issue without asking. It is
-default-deny, and it carries **self-amendment immunity**: changes under `policies/` are never
-publishable under the policy itself, including by rules added later.
+This is not a session-memory tool and not a model wrapper. The memory it keeps is the project's
+rather than the conversation's: durable facts in Git that any fresh agent can retrieve on demand.
+If you want recall across past sessions, or an agent that holds the thread through a long one,
+nothing here does that.
 
-> A policy that can publish its own amendments is default-allow in disguise — one self-edit away
-> from authorizing anything.
+## Knowledge that grows without getting harder to use
 
-Repo-local instruction files can *restrict* publishing but cannot *grant* it. Only this
-user-owned file or a live human instruction can.
+A project's notes decay in a specific way. Appending to a log is easy; filing a fact into the right
+page takes judgment. So the easy half happens every time and the hard half never does, orphan pages
+pile up, and a cold agent either loads a huge index or greps and hopes.
 
----
+The fix splits capture from synthesis. Agents append cheap one-line entries to `log.md`.
+`bc-wiki-maintain` later detects which entries were never promoted — by diffing the log against the
+last promotion commit, so there is no counter to maintain — and files each one into the smallest
+page that already covers it. Every entry gets classified exactly once as promoted, skipped with a
+reason, or a genuine contradiction, which goes to `open-questions/` with both citations and no
+winner. Promotion is gated to new pages and appends only.
 
-## How it's organised
+Reading uses ranked search rather than an index load. `wiki_search.py` runs BM25 over the vault's
+tracked Markdown and prints a bounded list of paths; the agent opens two or three. On a 20-question
+benchmark authored before any of the retrieval methods existed, that cost a median 171 output
+tokens against 4,543 for loading `index.md`. Miss rates were 0.15 against 0.30, but at that sample
+size the intervals overlap and the ranking is not statistically safe — the case rests on the cost
+figures, which are measurements. The tool needs no install, no index that can go stale, and no
+registration. `qmd` remains available for hybrid search across vaults when you have it.
 
-| Layer | Role |
-|---|---|
-| `concepts/<name>/` | The canonical layer — the only one edited. `CONCEPT.md` (status frontmatter, what and why, provenance), `body/` (what an agent actually loads), `tests/` (pressure scenarios and results). |
-| `docs/` | Human-facing workspace documentation: operational pages (`status.md`, `harnesses.md`, `bootstrap.md`, `pipeline.md`), lifecycle-organized plans, and research reports/evidence. |
-| `scripts/` | Deterministic helpers: symlink deployment, and a linter for structural drift. |
-| `policies/` | User-owned authorisation. Agents follow it and may propose changes; they may never publish those changes. |
-| `docs/plans/` | Lifecycle-organized design and implementation records. |
-| `docs/research/` | Authored research reports and the immutable `raw/` evidence corpus. |
-| `index.md`, `log.md` | Catalogue of every concept, and an append-only journal of what changed and why. |
+The archive still grows. What stays flat is what an agent must read to orient.
 
-43 concepts, 5,039 lines of instruction body, deployed by relative symlink to Claude Code, Pi,
-OpenCode, Codex, Grok and Composer from this single source. `AGENTS.md` is the operating manual an
-agent reads first.
-
-Every concept carries its test and deploy state in `CONCEPT.md` frontmatter, so
-[`docs/status.md`](docs/status.md) can answer what is untested or undeployed without
-reading 43 files. That page is generated by `python3 scripts/lint.py --write-status`
-and lint fails while it is stale, so it cannot quietly rot; `--status` prints the
-same board to the terminal.
-
-The same fields make the test gate machine-checkable: `lint.py` fails when a
-concept is marked deployed but was never run. That check currently reports 11
-concepts — debt it was written to expose.
-
-## The gates
-
-Four rules have a higher bar for revision, because each fails through in-the-moment
-rationalisation — the moment a gate blocks you is when your judgment about it is least
-trustworthy.
-
-- **Canon** — never hand-edit a derived output or anything a deploy symlink points into. The next
-  rebuild silently reverts it, and *"it's a one-line fix"* is how canon and deploys drift apart.
-- **Provenance** — every concept names its sources. An uncredited design decision is a guess no
-  future reader can re-evaluate.
-- **Test** — a discipline-enforcing concept doesn't deploy until it has held under pressure.
-- **Immutability** — ingested source material is evidence and is never edited in place.
-
-They are still defaults with reasons. Each states its rationale so a capable agent can recognise
-where it doesn't apply, and can argue it should change — out loud, and logged.
-
-## Design stance
-
-The workspace is written to **liberate agents rather than constrain them**, on the assumption that
-whoever reads it next may be more capable than whoever wrote it. Rules carry their reasoning so
-they can be generalised correctly. Silent deviation is never legitimate, because it hides the
-disagreement that would have improved the rule. Blind obedience is barely better, because it
-preserves a known flaw.
-
-## Installing it
+## Install
 
 ```bash
 git clone https://github.com/bendecastro/agent-concepts.git
 cd agent-concepts
 
-# Point deployed skills at this checkout. Some bodies run scripts from the
-# repository, and a shell needs to know where it is.
+# Some skill bodies run scripts from the checkout, so the shell needs its location.
 echo 'export AGENT_CONCEPTS="$PWD"' >> ~/.profile   # adjust for your shell
 export AGENT_CONCEPTS="$PWD"
 
-python3 scripts/deploy-local-skills.py --dry-run   # see what would change
-python3 scripts/deploy-local-skills.py            # relative symlinks into the skill bus
+python3 scripts/deploy-local-skills.py --dry-run
+python3 scripts/deploy-local-skills.py
 ```
 
-The workspace can live anywhere: the deploy script derives the repository location from its own
-path and writes **relative** symlinks, so they survive different home directories.
+Flags: `--dry-run`, `--force`, `--harness {all,pi,claude}`, `--skip NAME` (repeatable). The shared
+`~/.agents/skills/` bus is always updated; `--harness` picks which harness-specific mirror is
+written alongside it. The checkout can live anywhere — the script finds itself and writes relative
+symlinks, so they survive a different `$HOME`.
 
-Skills are exposed through `~/.agents/skills/`, which Pi, Composer and Grok discover
-automatically, with mirrors for Claude Code and Pi. Use `--harness claude` or `--harness pi` to
-update only one, and `--skip NAME` to leave a concept out.
+Support is uneven and worth knowing before you commit. Claude Code and Pi are the tested paths.
+Composer and Grok read the shared bus (Grok's bundled skills can shadow same-named concepts).
+OpenCode needs a small plugin to expose skills as slash commands. Codex runs the always-on kernel
+globally and reaches everything else through repo `AGENTS.md` pointers. Gemini is manual bootstrap.
+See [`docs/harnesses.md`](docs/harnesses.md) and [`docs/bootstrap.md`](docs/bootstrap.md).
 
-Some concepts assume machine-specific software or upstream-installed tools. Their
-requirements are listed in `index.md` and in each `CONCEPT.md`; concepts that are not broadly
-reusable live in the private layer described below.
+## Build your own skill
 
-**Nothing is authorised to publish on your behalf until you say so.** Agents ask before pushing
-unless a rule in `~/.config/agent-concepts/publish.yaml` says otherwise, and that file does not
-exist until you create it. See [`policies/README.md`](policies/README.md).
+The structure is the reusable part. A concept is a directory with four things a prompt file does
+not have, and the workspace is the operations that maintain them.
 
-### Private concepts
+**Research it.** Drop the source — an article, a gist, someone else's skill, your own notes — into
+`docs/research/raw/`. Read it, decide with the agent what it should actually change, then write
+that into a concept. Sources are never edited afterwards; they are the evidence base, and
+corrections belong in the concept that cites them. `CONCEPT.md` names which sources a rule came
+from. An uncredited design decision cannot be re-evaluated later, only obeyed or ignored.
 
-Not every useful instruction can be published. Infrastructure topology, employer-specific
-process, or an upstream body whose licence does not permit redistribution are all things you may
-need an agent to know without publishing them to use them.
+**Write it.** `body/` is the canonical copy and the only one you edit. A lean entry file that links
+to reference files loaded only when needed, because recall degrades as context grows. Anything a
+model does unreliably — date arithmetic, diffing, counting — becomes a script instead of an
+instruction. Adapt phrasing from `prompting-agents` rather than inventing it; that concept is a
+block library of gates, rituals and behavioural rules that have already survived contact.
 
-Put those in `~/.config/agent-concepts/concepts/<name>/body/SKILL.md` — the same shape as
-`concepts/` here, so a concept can move between private and public by moving its directory. The
-deploy script picks them up automatically:
+**Attack it.** Nothing that constrains an agent deploys until something has tried to break it. Run
+a subagent as the consuming agent in a throwaway workspace, scripted to push the excuses that
+actually work — "I'm short on time", "just trust me", "it's common knowledge" — ordered so each
+gate has to bite. Then grade the files it produced. Its own account of what it did is not evidence.
+Scenario and result go in `tests/`, including the runs that failed.
 
-```
-Including 3 private concept(s) from ~/.config/agent-concepts/concepts: crypto-address-picker, herdr, machine-mesh
-```
+**Deploy and lint.** One command symlinks bodies to every harness. `scripts/lint.py` fails on a
+concept marked deployed but never run, on broken links, on stale index entries, and on dangling
+symlinks. `--status` prints the test and deploy board.
 
-A private concept with the same name as a public one **wins**, and the override is reported
-rather than silent. That is how an upstream body can be used locally while the public repo keeps
-only a citation: `herdr` ships `body/UPSTREAM.md` here because upstream states no licence, and a
-local copy supplies the body.
+**When it underperforms, fix the instruction, not the output.** Ask the agent to critique its own
+instructions and you learn where it felt friction, which is blind wherever it believed it complied.
+So grade the artifact the next reader will meet. Then find the mechanism before rewriting: a
+competing rule, a trigger that never fired, and a capability limit all look identical in the output
+and need different fixes. Only one of them is "say it more emphatically." Prefer replacing text
+over appending to it, then re-run the check that failed.
 
-The private directory is optional and this workspace works without it.
+## Authorisation
 
-```bash
-python3 scripts/lint.py   # structural drift check
-```
+`~/.config/agent-concepts/publish.yaml` is user-owned, lives outside this repo, and is default-deny.
+An agent may push, open a PR, or close an issue only when a rule there matches or you say so in the
+conversation.
 
-See `docs/harnesses.md` for per-harness support and `docs/bootstrap.md` for copy-paste session prompts.
+Repo-local instruction files can restrict publishing. They cannot grant it. Changes under
+`policies/` are never publishable under the policy itself, including by rules added later — a
+policy that can publish its own amendments is default-allow wearing a disguise. See
+[`policies/README.md`](policies/README.md).
+
+## Four gates
+
+These get a higher bar for revision than anything else here, because each fails through
+in-the-moment rationalisation. The moment a gate blocks you is when your judgment about that gate
+is least trustworthy.
+
+- **Canon** — never hand-edit a derived output or anything a deploy symlink points into. The next
+  rebuild reverts it, and "it's a one-line fix" is how canon and deploys drift apart.
+- **Provenance** — every concept names its sources. An uncredited decision is a guess nobody can
+  re-evaluate.
+- **Test** — nothing that constrains an agent deploys until it has held under pressure. These
+  instructions fail in ways their authors cannot see.
+- **Immutability** — ingested sources are never edited in place. Annotations belong in the concept
+  that cites them, where they carry provenance.
+
+Each states its reason, so you can tell where it does not apply and argue that it should change —
+out loud, and logged.
+
+## Private concepts
+
+Infrastructure topology, employer process, an upstream body whose licence forbids redistribution:
+things an agent needs to know that you cannot publish.
+
+Put them in `~/.config/agent-concepts/concepts/<name>/body/SKILL.md`, the same shape as `concepts/`
+here, and the deploy script picks them up. A private concept overrides a public one of the same
+name and reports the collision rather than swallowing it. The directory is optional.
+
+## Design stance
+
+Written to liberate agents rather than constrain them, assuming the next reader may be more capable
+than the last. Rules carry their reasoning so they can be generalised correctly.
+
+Disagreeing with a rule here is legitimate; the move is to say so and change it. Silent deviation
+hides the disagreement that would have improved the rule. Blind obedience preserves a known flaw.
 
 ## Provenance and licensing
 
-This workspace is built by reading other people's work and adapting it — notably Jesse Vincent's
+Built by reading other people's work and adapting it: Jesse Vincent's
 [superpowers](https://github.com/obra/superpowers) (MIT), [Matt Pocock's
 skills](https://github.com/mattpocock/skills), and published guidance from Anthropic, OpenAI and
-Google. Every concept names what it drew on; `docs/research/raw/ingested/CITATIONS.md` indexes the public source corpus.
+Google. `docs/research/raw/ingested/CITATIONS.md` indexes the corpus.
 
-Upstream material is **cited, not redistributed**. Earlier revisions kept local snapshots so
-provenance could be audited offline; those were third-party content and have been removed from the
-working tree and from history. The upstream link is the authority, and it is verifiable in a way a
-private snapshot never was.
-
-The concept bodies here are adaptations, not copies — re-voiced, merged, and specialised to this
-workflow. Where a body could not be written independently, the concept keeps a pointer to the
-upstream instead of vendoring it.
+Concept bodies are adaptations — re-voiced, merged, specialised — not copies. Where a body could
+not be written independently, the concept points upstream instead of vendoring it; public `herdr`
+works this way because upstream states no licence. Some licensed upstream snapshots remain under
+`docs/research/raw/ingested/` as immutable evidence, under their own terms.
