@@ -97,7 +97,6 @@ Archetypes:
     `Unit=`), stagger `OnCalendar` at least 15 minutes away from any
     existing `bc-wiki-maintain*.timer`, then reload and enable:
 
-    Put the following commands in a markdown bash fence in the skill:
     ```bash
     unit_dir="$HOME/.config/systemd/user"
     slug="<slug>"
