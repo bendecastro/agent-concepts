@@ -73,7 +73,61 @@ Archetypes:
 
 9. **Register the vault for global search (default yes, opt-out).** New vaults are searchable by default: append an entry for `.bc-agent/` to the qmd collections file (collection name = the slug; copy an existing entry's shape, contexts stating each directory's *authority level*), then apply it with the setup command — see the `qmd` concept. Skip this step if qmd is not installed. Ask only if the user wants this vault **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos. Append to the synced YAML even when qmd isn't installed on this machine, so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `qmd` skill).
 
-10. **Close out.** Point at the created files and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-issues` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
+10. **Offer rolling wiki maintenance (offer-then-confirm).** Capture into
+    `.bc-agent/log.md` is cheap; promotion is not. Without a per-vault user
+    timer, the new wiki will not promote overnight. This is not qmd:
+    `bc-qmd-refresh.timer` only refreshes search indexes. `/bc-wiki-maintain`
+    is the maintenance skill; its systemd templates
+    (`$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/`) do not install,
+    enable, or start themselves.
+
+    Show the user the exact slug-suffixed unit names and env, then **offer to
+    install** after they confirm.
+    Never copy, enable, or start units without confirmation. Never write the
+    unsuffixed `bc-wiki-maintain.service` — that name may already bind another
+    vault. Never vendor runner scripts into the project.
+
+    If `systemctl --user` is unavailable, skip install and append a
+    parking-lot TODO pointing at
+    `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/README.md`.
+
+    On confirm, copy — do not symlink — the templates to slug-suffixed
+    names, edit the placeholders from the runner README (WorkingDirectory,
+    VAULT_ROOT, AGENT_CONCEPTS, PI_BIN, SyslogIdentifier, the timer's
+    `Unit=`), stagger `OnCalendar` at least 15 minutes away from any
+    existing `bc-wiki-maintain*.timer`, then reload and enable:
+
+    Put the following commands in a markdown bash fence in the skill:
+    ```bash
+    unit_dir="$HOME/.config/systemd/user"
+    slug="<slug>"
+    vault="<repo-root>/.bc-agent"
+    install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.service" \
+      "$unit_dir/bc-wiki-maintain-${slug}.service"
+    install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.timer" \
+      "$unit_dir/bc-wiki-maintain-${slug}.timer"
+    # edit placeholders, then:
+    systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-${slug}.service"
+    systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-${slug}.timer"
+    systemctl --user daemon-reload
+    systemctl --user enable --now "bc-wiki-maintain-${slug}.timer"
+    systemctl --user status "bc-wiki-maintain-${slug}.timer"
+    ```
+
+    Resolve `AGENT_CONCEPTS` from the environment, else from the skill
+    directory (the `bc-init-agent` body lives at
+    `$AGENT_CONCEPTS/concepts/bc-init-agent/body`). Resolve `PI_BIN` with
+    `command -v pi` falling back to `$HOME/.local/bin/pi`. If a matching
+    slug-suffixed unit already exists for this `VAULT_ROOT`, report it and
+    skip.
+
+    On decline, append the same parking-lot TODO as the no-systemd case.
+    If `$HOME/.config/agent-concepts/wiki-lint-vaults.txt` already exists,
+    mention that it is detection-only and offer to append this vault path;
+    do not install `bc-wiki-lint.timer`.
+
+11. **Close out.** Point at the created files, the wiki-maintain timer offer
+    outcome, and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-issues` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 
 ## Notes
 - The vault is detached from the user's personal `~/Wiki` (seeded as ADR-0001).
