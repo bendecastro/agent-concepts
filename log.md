@@ -1268,3 +1268,7 @@ name. Folded "long-term" into the existing sentence so it cannot be read as sess
 ## [2026-08-29] implement | README: promotion is append-only
 Dropped the classification taxonomy. The sentence now says promotion creates or appends and
 does not rewrite existing pages.
+
+## [2026-08-29] implement | plain-language the wiki read path
+Replaced "ranked search"/BM25/miss-rate decimals with: don't load the whole wiki, get a short
+list, open two or three, 171 vs 4,543 tokens, 3 vs 6 misses. qmd is optional multi-vault search.

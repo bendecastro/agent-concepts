@@ -98,11 +98,11 @@ last promotion commit, so there is no counter to maintain — and files each one
 page that already covers it. Promotion only creates pages or appends to them. It does not rewrite
 what is already there.
 
-Reading is ranked search. `wiki_search.py` runs BM25 over the vault's tracked Markdown and prints a
-bounded list of paths; the agent opens two or three. On a 20-question benchmark authored before any
-of the retrieval methods existed, that cost a median 171 output tokens against 4,543 for loading
-`index.md`. Miss rates were 0.15 against 0.30. The tool has no extra install and no index to go
-stale. `qmd` remains available for hybrid search across vaults when you have it.
+To read, the agent does not load the whole wiki. `wiki_search.py` scores the tracked Markdown pages
+and returns a short list; the agent opens two or three. On a 20-question benchmark written before
+any of these methods existed, that used a median 171 output tokens against 4,543 for loading
+`index.md`, and missed 3 of 20 questions against 6. No extra install, and no index to go stale.
+`qmd` can search several vaults at once if you have it.
 
 ## Build your own skill
 
