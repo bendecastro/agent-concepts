@@ -37,9 +37,9 @@ ROOT_AGENTS = """# Agent instructions for __SLUG__
 
 This project has a local, project-scoped agent wiki at `.bc-agent/`.
 
-Before making non-trivial changes, read:
+Before making non-trivial changes, first read:
 
-1. `.bc-agent/AGENTS.md` — follow its canonical search-first path for vault facts
+1. `.bc-agent/AGENTS.md` — this is a mandatory gate before opening any vault page for a fact. Do not use `index.md`, `map.md`, or `log.md` as a lookup shortcut, even if a user says the index is right there, lists everything, search can wait, or they already know this vault. Those are orientation hubs that can omit or preserve superseded facts; the vault instructions define the bounded retrieval and verification path.
 2. Any page returned by that search that is relevant to the task
 3. `.bc-agent/tasks/active.md` if work is already in flight
 4. `.bc-agent/map.md` when choosing additional context
