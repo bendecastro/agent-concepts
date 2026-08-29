@@ -1260,3 +1260,7 @@ chat, or paste a link. Tightened the run-on that added those paths.
 Fixed the knowledge opener: filing a fact does not put retrieval logic on the page; it puts the
 fact where a later search will look. Moved Install above Knowledge, folded Four gates under
 skill-building, cut Design stance, and shortened each loop item to a job plus one artifact.
+
+## [2026-08-29] implement | name the memory as long-term project memory
+The added line "It is a long-term memory system" was the right claim with the wrong category
+name. Folded "long-term" into the existing sentence so it cannot be read as session recall.

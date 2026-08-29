@@ -53,8 +53,8 @@ ready brief, but not the planner that usually writes one.
 Everything needs Git. Claude Code and Pi are the tested harnesses; the rest is described under
 Install.
 
-The memory it keeps is the project's: durable facts in Git that any fresh agent can retrieve on
-demand. It does not recall past sessions or hold a thread through a long one.
+The memory it keeps is long-term project memory: durable facts in Git that any fresh agent can
+retrieve on demand. It does not recall past sessions or hold a thread through a long one.
 
 ## Install
 
