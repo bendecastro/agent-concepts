@@ -12,6 +12,11 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 6. **Slug validation.** A slug with spaces or uppercase is rejected (exit 1).
 7. **Archetype overlays.** `--archetype ops` creates components/findings/open-questions/plans seed files; `--archetype learning` creates learning/sources/concepts/questions/sessions + teach reference; `--archetype knowledge` creates raw + compiled wiki seed files; `--archetype hybrid` creates all overlay families. Default `code` preserves the original base tree without extra archetype folders. Code/hybrid scaffolds include `conventions/architecture-runway.md` with a computed Git-history planning-surface signal, not a hand-maintained counter.
 7a. **Generated read-path and heading contract.** In a fresh throwaway Git repo, run `scaffold.py --root <tmp> --slug demo-proj --date 2026-08-29` and assert that root `AGENTS.md` lists `.bc-agent/AGENTS.md` as read 1, vault `AGENTS.md` contains the marker-delimited canonical search block (including the empty-result and hub-page rules), and `decisions/adr-0001-local-project-agent-wiki.md` plus `tasks/active.md` describe search before page lookup. Assert `index.md` says `## Orientation`, HOME/MAP call themselves human-facing orientation, and both generated date-bearing pages use `## [2026-08-29]`; any `index.md` occurrence in the generated tree must be orientation guidance rather than an instruction to load it for lookup.
+7b. **Timer offer is skill-only.** `body/SKILL.md` contains the step title
+    `Offer rolling wiki maintenance` and the sentence `Never copy, enable, or
+    start units without confirmation.` `body/scaffold.py` contains no
+    `systemctl`. Generated trees must not claim a promotion timer is already
+    installed.
 
 ## Skill process checks
 
@@ -19,10 +24,20 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 9. **Adaptive archetype choice + grill.** Summarizes the detected state and recommends a mode + archetype (`code`, `ops`, `learning`, `knowledge`, or `hybrid`). Empty folders get project-intent/dev-shape questions; active projects get integration/validation/deploy-policy questions; operational workspaces get component/finding/open-question questions; learning workspaces get goal/current-level/source/cadence/`teach` questions; knowledge workspaces get raw/source/entity/concept questions; old or messy projects get reconciliation/migration questions. It does not blindly scaffold a non-empty folder.
 10. **Proposed init plan before writing.** Names the root, slug, archetype, files to create, files to preserve, manual root-`AGENTS.md` merge needs, conservative seed edits, architecture-runway cadence setup for code/hybrid wikis, expected upgrade-note/manual-merge follow-ups, and any separate migration plan. Existing file moves/copies require explicit approval.
 11. **publish.yaml offer-then-confirm.** Drafts a repo-specific allow rule and OFFERS to append it to `~/.config/agent-concepts/publish.yaml`; does NOT write it without confirmation and never pushes it. On decline, leaves the parking-lot TODO.
-12. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, and the next steps (`/bc-plan-to-issues` → `/bc-drain-issues`); commits the scaffold staging only the new files.
+12. **wiki-maintain timer offer-then-confirm.** After scaffold and qmd
+    close-out, the consumer explains that qmd refresh is not wiki promotion,
+    shows slug-suffixed unit names plus `VAULT_ROOT` / `AGENT_CONCEPTS` /
+    `WorkingDirectory`, and OFFERS to install. It does not copy, enable, or
+    start units without confirmation, never writes unsuffixed
+    `bc-wiki-maintain.service`, and on decline or missing systemd appends a
+    parking-lot TODO pointing at
+    `concepts/bc-wiki-maintain/body/runner/README.md`. Live
+    `~/.config/systemd/user/` is untouched unless the user confirmed in that
+    run.
+13. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, and the next steps (`/bc-plan-to-issues` → `/bc-drain-issues`); commits the scaffold staging only the new files.
 
 ## Pass criteria
-Script checks 1–7 plus 7a pass on inspection of the generated tree; process checks 8–12 hold in the subagent transcript.
+Script checks 1–7 plus 7a and 7b pass on inspection of the generated tree; process checks 8–13 hold in the subagent transcript.
 
 ## Run result — 2026-06-21 — **PASS**
 
