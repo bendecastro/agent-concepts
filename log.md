@@ -1246,3 +1246,8 @@ discipline never bound — an ordering race in the repo-root template, not a fau
 canonical block. Hardened the root gate (0423ada) and re-ran on isolated per-scenario
 fixtures: 3/3. Also fixed the live AGENT_CONCEPTS blocker, which was stale in the systemd
 user manager and broke the read path for every bash/sh agent shell.
+
+## [2026-08-29] implement | shorten README skill-building section
+Cut the five-step "Build your own skill" tutorial down to a chat: drop a source, the agent
+ingests/writes/tests/deploys, you curate. The old length made the work look like a manual the
+reader had to run themselves.

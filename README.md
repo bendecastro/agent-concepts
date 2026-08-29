@@ -82,9 +82,7 @@ winner. Promotion is gated to new pages and appends only.
 Reading uses ranked search rather than an index load. `wiki_search.py` runs BM25 over the vault's
 tracked Markdown and prints a bounded list of paths; the agent opens two or three. On a 20-question
 benchmark authored before any of the retrieval methods existed, that cost a median 171 output
-tokens against 4,543 for loading `index.md`. Miss rates were 0.15 against 0.30, but at that sample
-size the intervals overlap and the ranking is not statistically safe — the case rests on the cost
-figures, which are measurements. The tool needs no install, no index that can go stale, and no
+tokens against 4,543 for loading `index.md`. Miss rates were 0.15 against 0.30. The tool needs no install, no index that can go stale, and no
 registration. `qmd` remains available for hybrid search across vaults when you have it.
 
 The archive still grows. What stays flat is what an agent must read to orient.
@@ -116,37 +114,15 @@ See [`docs/harnesses.md`](docs/harnesses.md) and [`docs/bootstrap.md`](docs/boot
 
 ## Build your own skill
 
-The structure is the reusable part. A concept is a directory with four things a prompt file does
-not have, and the workspace is the operations that maintain them.
+You do this in chat. Drop a source into `docs/research/raw/` — an article, a gist, someone else's
+skill, your notes — and tell the agent to ingest it. The agent researches, writes the concept,
+attacks it with a pressure test, deploys, and lints. You decide what the source should actually
+change, and whether a failing test is a loophole or a bad test.
 
-**Research it.** Drop the source — an article, a gist, someone else's skill, your own notes — into
-`docs/research/raw/`. Read it, decide with the agent what it should actually change, then write
-that into a concept. Sources are never edited afterwards; they are the evidence base, and
-corrections belong in the concept that cites them. `CONCEPT.md` names which sources a rule came
-from. An uncredited design decision cannot be re-evaluated later, only obeyed or ignored.
+What you get that a prompt file does not: named sources so a rule can be re-evaluated later, a test
+that tried to break it before it shipped, and a linter that fails if either is missing.
 
-**Write it.** `body/` is the canonical copy and the only one you edit. A lean entry file that links
-to reference files loaded only when needed, because recall degrades as context grows. Anything a
-model does unreliably — date arithmetic, diffing, counting — becomes a script instead of an
-instruction. Adapt phrasing from `prompting-agents` rather than inventing it; that concept is a
-block library of gates, rituals and behavioural rules that have already survived contact.
-
-**Attack it.** Nothing that constrains an agent deploys until something has tried to break it. Run
-a subagent as the consuming agent in a throwaway workspace, scripted to push the excuses that
-actually work — "I'm short on time", "just trust me", "it's common knowledge" — ordered so each
-gate has to bite. Then grade the files it produced. Its own account of what it did is not evidence.
-Scenario and result go in `tests/`, including the runs that failed.
-
-**Deploy and lint.** One command symlinks bodies to every harness. `scripts/lint.py` fails on a
-concept marked deployed but never run, on broken links, on stale index entries, and on dangling
-symlinks. `--status` prints the test and deploy board.
-
-**When it underperforms, fix the instruction, not the output.** Ask the agent to critique its own
-instructions and you learn where it felt friction, which is blind wherever it believed it complied.
-So grade the artifact the next reader will meet. Then find the mechanism before rewriting: a
-competing rule, a trigger that never fired, and a capability limit all look identical in the output
-and need different fixes. Only one of them is "say it more emphatically." Prefer replacing text
-over appending to it, then re-run the check that failed.
+When a skill underperforms, tell the agent to fix the instruction, not the output.
 
 ## Authorisation
 
