@@ -1264,3 +1264,7 @@ skill-building, cut Design stance, and shortened each loop item to a job plus on
 ## [2026-08-29] implement | name the memory as long-term project memory
 The added line "It is a long-term memory system" was the right claim with the wrong category
 name. Folded "long-term" into the existing sentence so it cannot be read as session recall.
+
+## [2026-08-29] implement | README: promotion is append-only
+Dropped the classification taxonomy. The sentence now says promotion creates or appends and
+does not rewrite existing pages.

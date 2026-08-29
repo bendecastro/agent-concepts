@@ -86,24 +86,23 @@ through repo `AGENTS.md` pointers. Gemini is manual bootstrap. See
 
 ## Knowledge that grows without getting harder to use
 
+The archive can grow. What an agent must read to orient stays bounded.
+
 A project's notes decay in a specific way. Appending to a log is easy; filing a fact onto the page
-a later search will return takes judgment. So the easy half happens every time and the hard half
+that a later search will return takes judgment. So the easy half happens every time and the hard half
 never does, orphan pages pile up, and a cold agent either loads a huge index or greps and hopes.
 
 The fix splits capture from synthesis. Agents append cheap one-line entries to `log.md`.
 `bc-wiki-maintain` later detects which entries were never promoted — by diffing the log against the
 last promotion commit, so there is no counter to maintain — and files each one into the smallest
-page that already covers it. Every entry is classified once: promoted, skipped with a reason, or a
-contradiction filed in `open-questions/` with both citations and no winner. Promotion is gated to
-new pages and appends only.
+page that already covers it. Promotion only creates pages or appends to them. It does not rewrite
+what is already there.
 
 Reading is ranked search. `wiki_search.py` runs BM25 over the vault's tracked Markdown and prints a
 bounded list of paths; the agent opens two or three. On a 20-question benchmark authored before any
 of the retrieval methods existed, that cost a median 171 output tokens against 4,543 for loading
 `index.md`. Miss rates were 0.15 against 0.30. The tool has no extra install and no index to go
 stale. `qmd` remains available for hybrid search across vaults when you have it.
-
-The archive can grow. What an agent must read to orient stays bounded.
 
 ## Build your own skill
 
