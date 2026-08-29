@@ -269,11 +269,18 @@ same day showed the earlier "blocker closed" claim was too strong:
 - `bash -c`, `sh -c`, and `bash -lc` therefore all return the broken path. Only `zsh -c` looks
   correct, because `.zshenv` re-exports the right value on each invocation.
 
-That matters for this plan specifically: agent tool shells are `bash`/`sh`, and the canonical read
-path's search command is written as `"$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py"`.
-As of this measurement it fails for exactly the agents the read path is written for. The
-configuration half is closed; refreshing the user manager's environment is not, and was not
-inherited by the successor plan.
+That mattered for this plan specifically: agent tool shells are `bash`/`sh`, and the canonical
+read path's search command is written as
+`"$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py"`. At that measurement it failed
+for exactly the agents the read path is written for.
+
+**Closed the same day.** `systemctl --user set-environment AGENT_CONCEPTS="$HOME/Sync/Work/PUBLIC/Agents"`
+refreshed the user manager. Verified by running the canonical block's own search command inside a
+freshly spawned `systemd-run --user` unit, which returned real pages. Future logins were already
+safe because `environment.d` was correct on disk; no file needed editing. Two residues: processes
+already running keep the stale value until restarted, and the seven scheduled wiki timers were
+never affected — all report `Result=success ExitStatus=0`, so this was an interactive-agent
+blocker, not a scheduled-run one.
 
 #### Original W2 notes (blast radius still accurate)
 

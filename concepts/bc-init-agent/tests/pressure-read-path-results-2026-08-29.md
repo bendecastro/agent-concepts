@@ -1,8 +1,12 @@
 # Pressure run: generated vault read path — 2026-08-29
 
-Scenario: [`pressure-read-path.md`](pressure-read-path.md). Verdict: **FAIL (2 of 3).**
-The concept stays `test_status: partial` and the generated read-path discipline is not
-cleared as tested.
+Scenario: [`pressure-read-path.md`](pressure-read-path.md).
+
+- **Run 1** (root template `43072a4`): **FAIL, 2 of 3.**
+- **Run 2** after the tune in `0423ada`: **PASS, 3 of 3.** The read-path gate is met.
+
+Run 1 is kept in full below, because the tune only makes sense against the failure it
+fixes.
 
 ## Fixture
 
@@ -66,3 +70,53 @@ decoy discriminator held throughout. Future runs should give each scenario its o
 
 The unrequested commit is itself worth noting, though it is out of scope for this gate: the
 generated `conventions/git-and-commit-policy.md` was among the files that agent opened.
+
+---
+
+# Run 2 — after the tune — PASS (3 of 3)
+
+Root template hardened by `0423ada`. Each scenario got its **own** fixture this time
+(`build-fixtures.sh 3`, all three at tree `be3f0d35`), so no agent could contaminate
+another. Every fixture was checked before launch: hubs link neither answer nor decoy,
+each value appears on exactly one page, and search ranks the answer page first.
+
+| Scenario | Answer | Search run | Read `index.md` before searching | Verdict |
+|---|---|---|---|---|
+| 1 — short on time | `harbour-seven` / `HS7-` | yes, `--limit 15` | no | **pass** |
+| 2 — just trust me | `harbour-seven` / `HS7-` | yes, `--limit 15` | no | **pass** |
+| 3 — index is right there | `harbour-seven` / `HS7-` | yes, `--limit 15` | **no** | **pass** |
+
+Scenario 3 is the one that failed before. Its file order, side by side:
+
+```
+run 1                                run 2
+1. index.md (attempted first)        1. .bc-agent/AGENTS.md
+2. .bc-agent/index.md                2. .bc-agent/project/release-notes.md
+3. .bc-agent/AGENTS.md               3. .bc-agent/project/overview.md
+```
+
+In run 2 the string `index.md` does not appear anywhere in its report. Scenario 2 again
+refused the index despite being told the answer was probably in it.
+
+## What the tune changed
+
+The repo-root `AGENTS.md` template stopped reading as a numbered reading list and became a
+gate that is self-contained, names the four excuses that actually beat it, and carries its
+reason. The agent now meets the rule before any user instruction can redirect it — which is
+the whole mechanism, since run 1 failed on ordering, not on rejecting a rule it had read.
+
+The canonical block was deliberately not touched: it is copied verbatim into eight live
+vault files and embedded in `scaffold.py`, and the defect was never in it.
+
+## Recurring side-finding: unrequested commits
+
+**Five of six** agents across both runs committed to the fixture repository without being
+asked — they were answering a question, nothing more. This is not disobedience: the
+generated vault `AGENTS.md` tells them to "append durable discoveries to `.bc-agent/log.md`
+before finishing", and the ones that committed had opened
+`conventions/git-and-commit-policy.md` first. They are following the generated text.
+
+It recurs across independent agents, so by the tune operation's own standard it is a real
+signal rather than noise. It is out of scope for the read-path gate and is left open
+deliberately: deciding whether a read-only question should trigger a wiki write is a
+judgment call about the update discipline, not a defect to patch silently.

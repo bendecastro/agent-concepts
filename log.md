@@ -1238,3 +1238,11 @@ shared bus, and 16 upstream skill files are tracked, so "cited, not redistribute
 Opening and qualifying section follow adoption research: capability and anchor first, then a
 job-and-constraint filter, with the limitation placed after the claim rather than before it
 (Eisend 2006 — negative-first costs credibility). Vocabulary swept to what practitioners say.
+
+## [2026-08-29] test | vault read path clears its gate after a root-file tune
+Pressure-ran the generated vault instructions twice. Run 1 failed 2/3: the "index.md is
+right there" scenario read the index before it had opened the vault AGENTS.md, so the
+discipline never bound — an ordering race in the repo-root template, not a fault in the
+canonical block. Hardened the root gate (0423ada) and re-ran on isolated per-scenario
+fixtures: 3/3. Also fixed the live AGENT_CONCEPTS blocker, which was stale in the systemd
+user manager and broke the read path for every bash/sh agent shell.

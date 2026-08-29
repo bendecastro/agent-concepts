@@ -2,6 +2,27 @@
 
 Date: 2026-08-29
 Status: active
+
+## Progress (2026-08-29)
+
+W1, W2, W5, W6 and W7 landed. W3 and W4 remain open, which is why this plan is still active.
+
+| Item | State | Evidence |
+|---|---|---|
+| W1 scaffold mints the read path | **done** | `43072a4`, hardened by `0423ada`; pressure gate passes 3/3 ([results](../../../concepts/bc-init-agent/tests/pressure-read-path-results-2026-08-29.md)) |
+| W2.1 scaffold emits `## [__DATE__]` | **done** | `43072a4`; generated vault lints to a valid range |
+| W2.2 normalize five existing logs | **done** | one commit in each of Scripts, sql, codebase-design, CV, image-maze; heading counts unchanged, diffs heading-only |
+| W2.3 lint fails closed on `invalid` | **done** | `56cc7bd`; all eight live vaults still exit 0, a pre-normalization backlog now exits 1 |
+| W3 search corpus boundary | **open** | owner chose **tracked-only** and **write-discipline placement** on 2026-08-29; not yet written into `bc-wiki-maintain` |
+| W4 non-lexical ranker signal | **open** | not measured |
+| W5 promotion runner prompt | **done** | `6794ee3` |
+| W6 catch up eight vaults | **done** | one commit per repo; all eight vault files carry the empty-result and hub-page rules, no root file is index-first |
+| W7 reconcile predecessor | **done** | `6f20b27`; the `$AGENT_CONCEPTS` blocker was re-measured, found still live, then fixed |
+
+One finding outside the original scope, left open deliberately: five of six pressure agents
+committed to a fixture repo without being asked, while correctly following the generated
+"append durable discoveries to `log.md`" instruction. Whether a read-only question should
+trigger a wiki write is an update-discipline decision, not a defect.
 Verification: no work item implemented. The findings below come from running
 [`wiki_lint.py`](../../../concepts/bc-wiki-maintain/body/wiki_lint.py) against all eight live
 vaults on 2026-08-29, reading the current
