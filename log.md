@@ -1218,3 +1218,12 @@ with search inserted ahead of it. Four lean vaults carry a one-line form only â€
 `docs/plans/active/agent-vault-read-path.md` about their missing empty-result and hub-page rules.
 Prerequisite fixed en route: `~/.zshenv` set `AGENT_CONCEPTS` to a nonexistent path, which broke
 every skill command using the variable.
+
+## [2026-08-29] implement | plan the vault write/read contract
+Assessed the landed read path against the write path and found they share no contract: the
+scaffold still generates index-first instructions and `## YYYY-MM-DD` log headings the promotion
+detector cannot parse, which leaves Scripts and sql at `PROMOTION_RANGE=invalid` and CV and
+image-maze one entry from it. Filed `docs/plans/active/agent-vault-write-read-contract.md` with
+seven work items. An independent review caught five wrong claims in the first draft, including a
+W1 instruction that would have pasted the vault search block into root `AGENTS.md` and searched
+whole repositories; all five are corrected in the filed version.

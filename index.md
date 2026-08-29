@@ -115,6 +115,7 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 - [bc-drain-issues-v3-review-economy.md](docs/plans/active/bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.
 - [bc-drain-issues-gate-b-deterministic-trace.md](docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md) — deterministic two-rework Gate B trace and exact-hash approval verification.
 - [agent-vault-read-path.md](docs/plans/active/agent-vault-read-path.md) — cheap vault traversal across `bc-init-agent` and `bc-wiki-maintain`. The benchmark resolved it against the plan's own design: ranked search over the vault (stdlib BM25, no stored artifact) beat both the generated catalog it proposed and the `index.md` it meant to replace, so W1 is dropped and the first move is now a keyword search in all eight live vaults.
+- [agent-vault-write-read-contract.md](docs/plans/active/agent-vault-write-read-contract.md) — the write side of the same goal: `bc-init-agent` still mints the retired index-first read path and log headings its own detector cannot parse, which leaves promotion hard-blocked in two vaults and latent in two more. Seven work items across the generator, the detector, the runner prompt, and a one-time catch-up of the eight live vaults.
 
 ### Implemented
 
