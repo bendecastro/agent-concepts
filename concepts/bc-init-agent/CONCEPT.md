@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-08-21
+tested: 2026-08-29
 deployed: 2026-06-21
 ---
 # Concept: bc-init-agent
@@ -43,7 +43,7 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 
 ## Tests
 
-`tests/scenario.md` — verifies the scaffold produces the expected tree with substituted placeholders, existing files are left untouched, and the publish.yaml step is offer-then-confirm (never auto-push). 2026-08-21: script checks 1–7 **PASS** (tree, substitution, idempotent re-run, additive plug-in, dry-run/no-overwrite, slug validation, archetype overlays). Process checks 8–12 and the six adaptive-onboarding scenarios **BLOCKED** this run (pressure runners have no `subagent` tool). 2026-08-29: deterministic read-path/heading check 7a **PASS**; `tests/pressure-read-path.md` is authored and awaits a fresh-consumer pressure run. Frontmatter stays `partial` until a naive consumer re-runs the process half. Note: CONCEPT Tests previously said "clobber guard refuses an existing vault"; current `scaffold.py` is additive.
+`tests/scenario.md` — verifies the scaffold produces the expected tree with substituted placeholders, existing files are left untouched, and the publish.yaml step is offer-then-confirm (never auto-push). 2026-08-21: script checks 1–7 **PASS** (tree, substitution, idempotent re-run, additive plug-in, dry-run/no-overwrite, slug validation, archetype overlays). Process checks 8–12 and the six adaptive-onboarding scenarios **BLOCKED** this run (pressure runners have no `subagent` tool). 2026-08-29: deterministic read-path/heading check 7a **PASS**. `tests/pressure-read-path.md` was run against three fresh consumers — [results](tests/pressure-read-path-results-2026-08-29.md) — and **FAILED 2 of 3**: all three resisted a superseded decoy and answered from a page reachable only by search, but the "index.md is right there" scenario opened `index.md` before it had read the vault `AGENTS.md`, so the generated discipline never bound. The gap is in the repo-root file's ordering instruction, not in the canonical block. The read-path discipline therefore does **not** clear the test gate. Frontmatter stays `partial` until a naive consumer re-runs the process half. Note: CONCEPT Tests previously said "clobber guard refuses an existing vault"; current `scaffold.py` is additive.
 
 ## Deploy targets
 
