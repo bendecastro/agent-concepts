@@ -101,8 +101,8 @@ what is already there.
 To read, the agent does not load the whole wiki. `wiki_search.py` scores the tracked Markdown pages
 and returns a short list; the agent opens two or three. On a 20-question benchmark written before
 any of these methods existed, that used a median 171 output tokens against 4,543 for loading
-`index.md`, and missed 3 of 20 questions against 6. No extra install, and no index to go stale.
-`qmd` can search several vaults at once if you have it.
+`index.md`. No extra install, and no index to go stale. If you already have `qmd`, it can
+search several vaults at once.
 
 ## Build your own skill
 

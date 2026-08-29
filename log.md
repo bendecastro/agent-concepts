@@ -1272,3 +1272,7 @@ does not rewrite existing pages.
 ## [2026-08-29] implement | plain-language the wiki read path
 Replaced "ranked search"/BM25/miss-rate decimals with: don't load the whole wiki, get a short
 list, open two or three, 171 vs 4,543 tokens, 3 vs 6 misses. qmd is optional multi-vault search.
+
+## [2026-08-29] implement | drop wiki miss-rate; qmd is optional extra
+Removed the 3-vs-6 miss comparison (cost is the claim). qmd is optional multi-vault search, not
+the default the new path replaced.
