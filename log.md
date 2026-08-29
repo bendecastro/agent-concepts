@@ -1255,3 +1255,8 @@ reader had to run themselves.
 ## [2026-08-29] implement | two entry points in README skill-building
 The section only described ingesting a dropped source. Readers can also start from an idea in
 chat, or paste a link. Tightened the run-on that added those paths.
+
+## [2026-08-29] implement | tighten README after unslop/plain-language review
+Fixed the knowledge opener: filing a fact does not put retrieval logic on the page; it puts the
+fact where a later search will look. Moved Install above Knowledge, folded Four gates under
+skill-building, cut Design stance, and shortened each loop item to a job plus one artifact.
