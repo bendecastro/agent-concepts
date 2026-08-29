@@ -45,15 +45,3 @@ README path. No unit files written.
 
 **Expected:** Honors the decline. Parking-lot TODO as in scenario 3.
 No unit files written.
-
-Then run this and confirm it is currently RED (assertion failure on the skill title):
-python3 - <<'PY'
-from pathlib import Path
-root = Path('concepts/bc-init-agent')
-skill = (root / 'body/SKILL.md').read_text()
-scaffold = (root / 'body/scaffold.py').read_text()
-assert 'Offer rolling wiki maintenance' in skill, 'skill step missing (expected red)'
-assert 'systemctl' not in scaffold
-print('unexpected: skill already has the step')
-PY
-Expected: assertion failure on the skill title. Do NOT add the skill step to make it green.
