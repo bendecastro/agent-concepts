@@ -110,6 +110,10 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 
 Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
+### Proposed
+
+- [bc-init-agent-wiki-maintain.md](docs/plans/proposed/bc-init-agent-wiki-maintain.md) — `/bc-init-agent` close-out offers to install a per-vault `bc-wiki-maintain` promotion timer after confirm so a new wiki can promote overnight from day one.
+
 ### Active
 
 - [bc-drain-issues-v3-review-economy.md](docs/plans/active/bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.

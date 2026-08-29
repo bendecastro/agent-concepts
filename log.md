@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-08-29] implement | bc-init-agent wiki-maintain timer plan
+Proposed close-out: `/bc-init-agent` offers to copy slug-suffixed `bc-wiki-maintain` user units after confirm; scaffold stays timer-free; qmd refresh is not promotion.
+
 ## [2026-08-25] implement | bc-swarm Pi routing guidance
 Corrected ordinary Pi dispatch to omit `model` when the configured route is correct, avoid child `thinking` as a routing control, and preserve the full effective model suffix for explicit overrides. Recorded the verified top-level/workflow 12-probe matrix and separated its negative reproduction shapes from normal launch guidance.
 
