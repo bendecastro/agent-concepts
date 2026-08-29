@@ -1,6 +1,6 @@
 # Agent vault read path — cheap traversal across `bc-init-agent` and `bc-wiki-maintain`
 
-Date: 2026-08-27, updated 2026-08-28
+Date: 2026-08-27, updated 2026-08-29
 Status: active
 Verification: W4 ran. Three rounds of measurement are committed under
 [`concepts/bc-wiki-maintain/tests/`](../../../concepts/bc-wiki-maintain/tests/) at commit `e72e465`.
@@ -226,11 +226,16 @@ precisely what keeps the catalog from becoming the next `map.md`.
 
 ### W2 — Make ranked search the actual first move in the live vaults
 
-**Still required, with different content.** Everything below about *blast radius* holds — eight
-separate edits, three drifted variants, four vaults carrying a second `**START**` paragraph, and
-Music needing its own rewrite. What changed is what the instruction should say. There is no
-catalog to filter and no cold-cache regeneration step, because the default reads the vault
-directly at query time.
+**Partially landed 2026-08-29; remaining live-vault work is inherited by the successor plan.**
+The ranked-search decision and canonical vault instruction block landed in `bc-wiki-maintain`'s
+`SKILL.md`. The unfinished runner-prompt remainder was inherited as successor W5 and is now fixed
+by this change. The eight existing-vault instruction edits remain outstanding and are inherited
+as successor W6; this predecessor W2 remains open only for that live-vault catch-up.
+
+Everything below about *blast radius* holds — eight separate edits, three drifted variants, four
+vaults carrying a second `**START**` paragraph, and Music needing its own rewrite. What changed is
+what the instruction should say. There is no catalog to filter and no cold-cache regeneration
+step, because the default reads the vault directly at query time.
 
 The new order, from [W4 result](#w4-result--what-the-benchmark-actually-decided):
 
@@ -251,10 +256,11 @@ survive contact:
 - **Empty is not proof.** `qmd search` exits 0 while printing `[]`, and unscoped it returned 110
   of 146 rows from unrelated corpora. Exit status is not an answer signal.
 
-**Blocker found 2026-08-28.** `~/.zshenv` sets `AGENT_CONCEPTS=$HOME/Sync/agents`, which does not
-exist; the correct value is in `~/.config/environment.d/`. The systemd units are unaffected because
-they set the variable explicitly, but every *interactive* command using it is currently broken.
-Fix that before this instruction ships, or the first move fails on its first use.
+**Interactive environment corrected 2026-08-29.** `~/.zshenv:3` and
+`~/.config/environment.d/agent-concepts.conf:4` now resolve `AGENT_CONCEPTS` to the canonical
+workspace. Processes started before that correction may retain the stale value; new interactive
+shells use the corrected configuration. This blocker is closed and was not inherited by the
+successor plan.
 
 #### Original W2 notes (blast radius still accurate)
 
@@ -300,6 +306,12 @@ from any inline path.
   applies.
 
 ### W3 — Notify when a scheduled run fails
+
+**Open in this predecessor plan; not inherited by `agent-vault-write-read-contract.md` (verified
+2026-08-29).** Neither referenced service template contains `OnFailure=`:
+`concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.service` (lines 5–28) and
+`concepts/bc-wiki-maintain/body/runner/bc-wiki-lint.service` (lines 5–23). This remains an active work item;
+the successor's non-goal leaves notification here.
 
 Today nothing tells the user a scheduled run failed. Recon confirmed `OnFailure=` is unset and
 `FailureAction=none` on every wiki unit; the only signals are journald, systemd state, and a
@@ -400,6 +412,11 @@ spent from vault entry to opening the correct page, and whether the correct page
   a cheap local embedding step — not this design.
 
 ### W5 — `bc-init-agent` stops minting the old first move
+
+**Inherited by `agent-vault-write-read-contract.md` as W1; not yet landed.** The ranked-search
+wording is now present in `bc-wiki-maintain`'s skill and promotion runner, but all four
+`scaffold.py` directives below still encode the old access verb. The successor plan owns this
+remaining scaffold work as W1 and must not treat this predecessor item as complete.
 
 **Still required, with the W2 wording rather than the catalog wording.** All four `scaffold.py`
 directives below still encode the old access verb and still have to change together. The
@@ -514,8 +531,9 @@ Blocked on W4 clearing its bars:
    `wiki_lint.py:526` exit nonzero on `PROMOTION_RANGE=invalid`, and let one explicit human edit
    normalise the 13 existing headings. Widening the parser regex was proposed by two advisors and
    **withdrawn by both** under cross-examination; do not revive it.
-4. **`map.md` link repair and summary lines.** Emit map targets as real Markdown links so they
-   enter the graph, and have lint validate them. `map.md` stays a curated task-bundle layer.
+4. **`map.md` link repair and summary lines.** **Open here; not inherited by
+   `agent-vault-write-read-contract.md`.** Emit map targets as real Markdown links so they enter
+   the graph, and have lint validate them. `map.md` stays a curated task-bundle layer.
 5. **Scaffold shape changes** — see [Open decision](#open-decision--does-the-scaffolds-shape-change-too).
 
 ## Open risks

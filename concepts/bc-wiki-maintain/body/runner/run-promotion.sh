@@ -119,8 +119,11 @@ Repository: $REPO_ROOT
 Vault: $VAULT_ROOT
 Classification file: $CLASSIFY_PATH
 
-Read the vault's AGENTS.md, index.md, log.md, and the loaded bc-wiki-maintain skill
-before changing anything. Classify every unpromoted log heading the detector listed.
+Read the vault's AGENTS.md, the loaded bc-wiki-maintain skill, and the relevant log.md
+entries needed to classify the detector's headings before changing anything. Use the skill's
+search-first retrieval (wiki_search.py) to locate relevant pages and verify them. Use index.md
+only for broad project orientation, never as the lookup mechanism. Classify every unpromoted log
+heading the detector listed.
 Write one JSON object per heading, covering that exact list, to $CLASSIFY_PATH and
 nowhere else; a new non-Markdown file left in the vault fails the pass. Format:
 {"heading":"<exact ## line>","verdict":"promote|skip|conflict","reason":"<one line>","page":"<vault-relative page if promote or conflict>"}
