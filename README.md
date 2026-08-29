@@ -106,8 +106,8 @@ search several vaults at once.
 
 ## Build your own skill
 
-You do this in chat. Describe an idea, or point at something that already exists — drop an
-article, gist, skill or notes into `docs/research/raw/`, or paste a link. The agent researches,
+You do this in chat. Describe an idea, or point at something that already exists — paste a link or drop an
+article, gist, skill or notes into `docs/research/raw/`. The agent researches,
 writes the concept, attacks it with a pressure test, deploys, and lints. You decide what should
 actually change, and whether a failing test is a loophole or a bad test.
 
