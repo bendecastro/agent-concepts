@@ -274,6 +274,17 @@ vault and journal reason on a successful stubbed display, and missing display su
 nonzero. A temporary-repository no-op test confirms `PROMOTION_REQUIRED=0` exits 0 without
 invoking the notification command; no real systemd unit or desktop notification is touched.
 
+The stubs are argument-aware on purpose. An earlier revision stubbed `journalctl` to print a
+reason regardless of its arguments, so the suite passed against a priority filter that matched
+nothing in production. Each stub now exits 1 on an unexpected query, and the fixed script was
+confirmed by mutation: ignoring `notify-send`'s exit status, dropping the `-t` scoping, and
+restoring the priority filter on both journal reads each turn a test red. Restoring it on the
+scoped read alone stays green, correctly — the unscoped fallback still returns the real reason.
+
+Still unverified: the `OnFailure=` chain end to end. The notifier was exercised against a real
+failed transient unit and resolved both vault and reason from live systemd data, but no test lets
+systemd trigger it, because that needs an installed unit.
+
 ## Human guide
 
 `README.md` in this directory is the user-facing guide: what the tool is for, how to read a

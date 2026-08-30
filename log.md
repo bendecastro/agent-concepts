@@ -1346,3 +1346,8 @@ unit-template, notifier, README, and temporary-fixture regression coverage.
 The W3 notifier filtered `-p err..emerg`, but systemd logs unit stderr at notice, so every alert
 would have degraded to "no error output found". Scoped the read by `SyslogIdentifier` instead,
 with an unscoped fallback, and added a regression test whose `journalctl` stub honours its filter.
+
+## [2026-08-30] implement | close review findings on the failure notifier
+Independent review found the install recipe never copied `bc-wiki-notify@.service`, leaving
+`OnFailure=` pointing at a missing unit, and two stubs that passed regardless of what the script
+did. Fixed the recipe, made the stubs argument-aware, and added a `notify-send`-fails case.

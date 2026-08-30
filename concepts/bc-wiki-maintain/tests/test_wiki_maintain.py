@@ -376,9 +376,28 @@ class FailureNotificationTests(unittest.TestCase):
             self.write_command(
                 directory,
                 "systemctl",
-                "printf '%s\\n' 'Environment=AGENT_CONCEPTS=/tmp/concepts VAULT_ROOT=/tmp/example-vault'\n",
+                """
+                case "$*" in
+                  *SyslogIdentifier*) printf '%s\\n' 'SyslogIdentifier=bc-wiki-maintain' ;;
+                  *Environment*) printf '%s\\n' 'Environment=AGENT_CONCEPTS=/tmp/concepts VAULT_ROOT=/tmp/example-vault' ;;
+                  *) exit 1 ;;
+                esac
+                """,
             )
-            self.write_command(directory, "journalctl", "printf '%s\\n' 'detector failed: example reason'\n")
+            self.write_command(
+                directory,
+                "journalctl",
+                """
+                case "$*" in
+                  *"-u bc-wiki-maintain.service"*) ;;
+                  *) exit 1 ;;
+                esac
+                case "$*" in
+                  *"-t bc-wiki-maintain"*) printf '%s\\n' 'detector failed: example reason' ;;
+                  *) exit 1 ;;
+                esac
+                """,
+            )
             self.write_command(
                 directory,
                 "notify-send",
@@ -402,6 +421,25 @@ class FailureNotificationTests(unittest.TestCase):
             self.assertIn("--urgency=critical", args)
             self.assertIn("/tmp/example-vault", args)
             self.assertIn("detector failed: example reason", args)
+
+    def test_notifier_fails_when_notify_send_reports_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            self.write_command(directory, "systemctl", "exit 1\n")
+            self.write_command(directory, "journalctl", "exit 1\n")
+            self.write_command(directory, "notify-send", "exit 1\n")
+            env = os.environ.copy()
+            env["PATH"] = f"{directory}{os.pathsep}{env['PATH']}"
+            result = run(
+                "/usr/bin/bash",
+                str(NOTIFIER),
+                "bc-wiki-maintain.service",
+                cwd=ROOT,
+                env=env,
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("could not display failure", result.stderr)
 
     def test_notifier_reads_the_journal_at_the_priority_systemd_actually_uses(self) -> None:
         # systemd logs unit stderr at notice; a -p err..emerg query matches nothing.

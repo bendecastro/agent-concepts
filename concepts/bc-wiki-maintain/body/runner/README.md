@@ -120,13 +120,18 @@ install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-ma
   "$unit_dir/bc-wiki-maintain.service"
 install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.timer" \
   "$unit_dir/bc-wiki-maintain.timer"
+# Required: the service's OnFailure= points here. Without it a failed run notifies nobody.
+install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-notify@.service" \
+  "$unit_dir/bc-wiki-notify@.service"
+$EDITOR "$unit_dir/bc-wiki-notify@.service"  # set AGENT_CONCEPTS
 systemctl --user daemon-reload
 systemctl --user enable --now bc-wiki-maintain.timer
 ```
 
-To add another vault, copy those two files to a new name (`bc-wiki-maintain-other.service`
+To add another vault, copy the service and timer to a new name (`bc-wiki-maintain-other.service`
 and matching `.timer`), edit `WorkingDirectory` / `VAULT_ROOT` / `SyslogIdentifier`, and give
-the timer a different `OnCalendar` so two promotion agents do not start at once. One unit per
+the timer a different `OnCalendar` so two promotion agents do not start at once. The notifier
+template is instanced per failed unit, so one copy of it serves every vault. One unit per
 vault: a dirty tree in one project must not skip the others. The wrapper already accepts
 `.bc-agent/`, `.agent/`, or any other vault subdirectory.
 
