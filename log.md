@@ -1320,3 +1320,8 @@ Extended the existing n=20 corpus with eight verified compiled-page/log overlap 
 production direct BM25 with the page-kind candidate. Direct BM25 was 3/20 misses at 174.88 median;
 the candidate was 2/20 at 179.88, but overlapping Wilson intervals made the one-miss improvement
 noisy, so the report records a null result and production scoring remains lexical.
+
+## [2026-08-30] tune | wiki conflict records cite originating log heading
+Gate 3 now requires every conflict open-question to cite the exact originating `log.md` heading/date
+in addition to both mutually exclusive source pages. First post-`6794ee3` promotion pressure was
+4/5; the contradiction rerun is not claimed.

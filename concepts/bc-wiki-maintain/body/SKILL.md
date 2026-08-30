@@ -233,8 +233,10 @@ Two different disagreements exist. Only the first is a contradiction.
 
 - **Mutually exclusive claims** cannot both be true: a research spike says an acceptance bar
   was "formally lowered" while the ADR addendum and `tasks/active.md` say it was not. Write
-  both citations to `open-questions/` (one resolvable question per page or heading, not a
-  batch dump), do not promote either claim as current truth, and classify that heading
+  both mutually exclusive source pages **and** the exact originating `log.md` heading/date
+  into `open-questions/` (one resolvable question per page or heading, not a batch dump).
+  The next reader needs that log provenance; a date on the open-question heading is not a
+  source citation. Do not promote either claim as current truth, and classify that heading
   `conflict`. Continue the rest of the pass.
 - **Stale page vs newer dated log** is the promotion job: the log has later verified state
   and a project page still describes the earlier snapshot. Append a dated section with the

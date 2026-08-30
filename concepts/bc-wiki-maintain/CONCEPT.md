@@ -105,11 +105,13 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   on any new non-Markdown file rather than deleting one guessed filename, which caught only the
   name the prompt happened to suggest.
 - **Contradictions are mutually exclusive claims, not stale snapshots.** When two statements
-  cannot both be true, the run writes both citations to `open-questions/` and does not promote
-  either as current truth — then continues the rest of the pass. When the log has later verified
-  state and a project page still describes the earlier snapshot, that is a dated append, which
-  is what a human had to do by hand after Homeflix prod dumped six staleness items into one
-  open-question page. The pass never silently chooses a winner or rewrites the old sentence.
+  cannot both be true, the run writes both source-page citations **and** the exact originating
+  `log.md` heading/date to `open-questions/` and does not promote either as current truth — then
+  continues the rest of the pass. A date on the open-question heading is not that log citation.
+  When the log has later verified state and a project page still describes the earlier snapshot,
+  that is a dated append, which is what a human had to do by hand after Homeflix prod dumped six
+  staleness items into one open-question page. The pass never silently chooses a winner or
+  rewrites the old sentence.
 - **No broad cleanup during promotion.** The pass does not reflow prose, delete stale pages,
   normalize headings, or modify qmd registry policy. Those are separate, explicitly scoped
   operations. The pilot is one writer against a small vault; staged whole-graph semantic
@@ -228,6 +230,15 @@ refusal was verified directly against the runner rather than through an agent: e
 
 Fixture builder and transcripts: `/tmp/bc-swarm/2026-08-25-pressure-run/` (ephemeral; the builder
 is worth re-creating from the `## Fixture` section rather than trusted to survive).
+
+**2026-08-30 — MIXED 4/5 after the W5 runner-prompt change; contradiction citation tune, rerun pending.**
+Five fresh consumers against isolated fixtures after `6794ee3`. Additive-only, runner-default
+commit, explicit-manual commit, and detector-first held from Git objects and file bytes. The
+contradiction open-question cited both conflicting pages and carried the `2026-08-27` date, but
+did not explicitly cite the originating `log.md` heading/date that `tests/pressure-promotion.md`
+grades. Gate 3 named both page citations and omitted that log provenance; the 2026-08-30 skill
+tune requires the exact originating log heading/date because a date token is not a source
+citation. This record does **not** claim the contradiction scenario has been re-run.
 
 Two limits on this evidence. The consumers were one model at max thinking, so a pass here is
 weaker evidence than a low-thinking run, which is where gate loopholes usually open. And the

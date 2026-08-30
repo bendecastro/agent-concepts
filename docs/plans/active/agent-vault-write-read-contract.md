@@ -5,8 +5,9 @@ Status: active
 
 ## Progress (2026-08-30)
 
-W1, W2, W3, W4, W6 and W7 are implemented. W5's runner-prompt implementation is landed, but
-its required post-change pressure evidence remains parent-owned; this plan therefore stays active.
+W1, W2, W3, W4, W6 and W7 are implemented. W5's runner-prompt implementation is landed; the first
+post-change pressure run was **4/5**, with the contradiction log-heading citation still pending
+rerun. This plan therefore stays active.
 
 | Item | State | Evidence |
 |---|---|---|
@@ -16,7 +17,7 @@ its required post-change pressure evidence remains parent-owned; this plan there
 | W2.3 lint fails closed on `invalid` | **done** | `56cc7bd`; all eight live vaults still exit 0, a pre-normalization backlog now exits 1 |
 | W3 search corpus boundary | **done** | owner chose **tracked-only** on 2026-08-29; boundary is recorded in `bc-wiki-maintain` and both canonical instruction copies; untracked-page regression passes |
 | W4 non-lexical ranker signal | **done — null result** | 2026-08-30 round-two report: direct BM25 3/20 misses, 174.88 median; page-kind candidate 2/20, 179.88 median; overlapping Wilson intervals make the one-miss delta noisy, so production remains lexical |
-| W5 promotion runner prompt | **implementation done; pressure pending** | `6794ee3`; parent-owned post-change `pressure-promotion.md` run still required |
+| W5 promotion runner prompt | **implementation done; pressure 4/5, contradiction rerun pending** | `6794ee3`; first post-change `pressure-promotion.md` run passed additive-only, runner-default, explicit-manual, and detector-first; contradiction cited both pages plus a date but not the originating `log.md` heading/date |
 | W6 catch up eight vaults | **done** | one commit per repo; all eight vault files carry the empty-result and hub-page rules, no root file is index-first |
 | W7 reconcile predecessor | **done** | `6f20b27`; the `$AGENT_CONCEPTS` blocker was re-measured, found still live, then fixed |
 
@@ -28,8 +29,9 @@ Verification: W1/W2/W3/W4/W5 implementation, W6 catch-up, and W7 reconciliation 
 above and below. W3's tracked-only boundary is covered by focused reader and generator tests;
 W4's reproducible 20-question page-kind experiment is in
 [`retrieval-results-round2.md`](../../../concepts/bc-wiki-maintain/tests/retrieval-results-round2.md)
-and produced a null result. The W5 implementation is present, but its post-`6794ee3` pressure
-run is intentionally left to the parent after integration. The original 2026-08-29 findings
+and produced a null result. The W5 implementation is present. The first post-`6794ee3` pressure
+run is **4/5**; the contradiction citation rerun is still pending and is why this plan stays
+active. The original 2026-08-29 findings
 below remain as baseline rationale and are labeled where their current state changed.
 
 Successor to [`agent-vault-read-path.md`](agent-vault-read-path.md), which resolved the retrieval
@@ -272,8 +274,11 @@ excerpts are in `retrieval-results-round2.md`, with deterministic coverage in
 The predecessor's W2 acceptance required removing the wholesale index read from the promotion
 runner. That implementation landed in `6794ee3`: `run-promotion.sh:122-123` now names the vault
 `AGENTS.md`, search-first retrieval, and relevant log entries instead of reading `index.md` and
-`log.md` wholesale. The implementation is complete; the current consuming-agent pressure proof
-is still parent-owned and remains the reason this target plan stays active.
+`log.md` wholesale. The implementation is complete. The first post-change consuming-agent
+pressure run was **4/5**: additive-only, runner-default, explicit-manual, and detector-first
+held from artifacts. Contradiction cited both conflicting pages and carried the date, but did
+not explicitly cite the originating `log.md` heading/date. That remaining scenario, not a missing
+implementation, is why this target plan stays active.
 
 **Acceptance.** The runner prompt names search-first retrieval instead of a wholesale `index.md`
 read, and the promotion pressure scenario
