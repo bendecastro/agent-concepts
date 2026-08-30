@@ -330,3 +330,127 @@ def validate_graph(root: Path, edges: list[Edge]) -> list[str]:
         errors.append(f"mandatory loads cycle: {cycle}")
 
     return errors
+
+
+def _condition_suffix(edge: Edge) -> str:
+    requiredness = "required" if edge.required else "optional"
+    if edge.when is None:
+        return f"{requiredness}."
+    return f"{requiredness}, when {edge.when}."
+
+
+def _outgoing_verb(edge: Edge) -> str:
+    if edge.relation == "loads":
+        return f"loads `{edge.target}`"
+    if edge.relation == "adapts":
+        return f"adapts `{edge.target}`"
+    if edge.relation == "depends_on_contract":
+        return f"depends on `{edge.target}`'s contract"
+    if edge.relation == "hands_off":
+        return f"hands off to `{edge.target}`"
+    raise ValueError(f"unknown relationship: {edge.relation}")
+
+
+def _incoming_verb(edge: Edge) -> str:
+    if edge.relation == "loads":
+        return "loads this concept"
+    if edge.relation == "adapts":
+        return "adapts this concept"
+    if edge.relation == "depends_on_contract":
+        return "depends on this concept's contract"
+    if edge.relation == "hands_off":
+        return "hands off to this concept"
+    raise ValueError(f"unknown relationship: {edge.relation}")
+
+
+def _source_link(edge: Edge, name: str, incoming: bool) -> tuple[str, str]:
+    source_parts = _source_parts(edge.source)
+    if source_parts is None:
+        # Rendering is normally reached only after validation. Keeping this
+        # fallback deterministic makes malformed fixture edges inspectable.
+        path_text, fragment = edge.source, None
+    else:
+        path_text, fragment = source_parts
+
+    # Use POSIX path arithmetic so generated Markdown is stable across
+    # platforms; source references in the graph are repository-relative.
+    import posixpath
+
+    href_text = posixpath.relpath(path_text, posixpath.join("concepts", name))
+    label = path_text.removeprefix("concepts/") if incoming else href_text
+
+    if fragment is not None:
+        href_text += f"#{fragment}"
+    return label, href_text
+
+
+def _outgoing_row(edge: Edge, name: str) -> list[str]:
+    label, href = _source_link(edge, name, incoming=False)
+    return [
+        f"- {_outgoing_verb(edge)} — {_condition_suffix(edge)}",
+        f"  {edge.reason}",
+        f"  Source: [{label}]({href})",
+    ]
+
+
+def _incoming_row(edge: Edge, name: str) -> list[str]:
+    label, href = _source_link(edge, name, incoming=True)
+    return [
+        f"- incoming from [{edge.owner}](../{edge.owner}/{VIEW_NAME}): "
+        f"{_incoming_verb(edge)} — {_condition_suffix(edge)}",
+        f"  {edge.reason}",
+        f"  Source: [{label}]({href})",
+    ]
+
+
+def render_view(name: str, edges: list[Edge]) -> str:
+    """Render one concept's direct outgoing and incoming relationship view."""
+    outgoing = sorted(
+        (edge for edge in edges if edge.owner == name),
+        key=lambda edge: (edge.target, edge.relation, edge.when or ""),
+    )
+    incoming = sorted(
+        (edge for edge in edges if edge.target == name),
+        key=lambda edge: (edge.owner, edge.relation, edge.when or ""),
+    )
+
+    outgoing_lines: list[str] = []
+    for edge in outgoing:
+        if outgoing_lines:
+            outgoing_lines.append("")
+        outgoing_lines.extend(_outgoing_row(edge, name))
+    if not outgoing_lines:
+        outgoing_lines = ["None."]
+
+    incoming_lines: list[str] = []
+    for edge in incoming:
+        if incoming_lines:
+            incoming_lines.append("")
+        incoming_lines.extend(_incoming_row(edge, name))
+    if not incoming_lines:
+        incoming_lines = ["None."]
+
+    lines = [
+        GENERATED_HEADER,
+        "",
+        f"# {name} relationships",
+        "",
+        "Source of truth is [concepts/relationships.json](../relationships.json). Regenerate with",
+        "`python3 scripts/lint.py --write-relationships`; `python3 scripts/lint.py` fails while this file is stale.",
+        "",
+        "## Outgoing",
+        "",
+        *outgoing_lines,
+        "",
+        "## Incoming",
+        "",
+        *incoming_lines,
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def render_all(edges: list[Edge]) -> dict[str, str]:
+    """Render direct views for concepts participating in at least one edge."""
+    names = sorted({edge.owner for edge in edges} | {edge.target for edge in edges})
+    return {name: render_view(name, edges) for name in names}
