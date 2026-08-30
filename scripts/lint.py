@@ -15,6 +15,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import relationships
+
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", "log.md", "README.md", "docs/bootstrap.md", "docs/harnesses.md"]
@@ -370,6 +372,23 @@ def lint_status_doc(issues: list[Issue]) -> None:
         issues.append(Issue("ERROR", "docs/status.md is stale; run scripts/lint.py --write-status"))
 
 
+def lint_relationships(issues: list[Issue]) -> None:
+    edges, load_errors = relationships.load_graph(ROOT)
+    for error in load_errors:
+        issues.append(Issue("ERROR", f"relationship graph: {error}"))
+    if load_errors:
+        return
+
+    validation_errors = relationships.validate_graph(ROOT, edges)
+    for error in validation_errors:
+        issues.append(Issue("ERROR", f"relationship graph: {error}"))
+    if validation_errors:
+        return
+
+    for error in relationships.check_views(ROOT, edges):
+        issues.append(Issue("ERROR", f"relationship graph: {error}"))
+
+
 def print_status_board() -> int:
     concepts_dir = ROOT / "concepts"
     rows = []
@@ -524,6 +543,11 @@ def main() -> int:
     parser.add_argument("--strict", action="store_true", help="treat warnings as failures")
     parser.add_argument("--status", action="store_true", help="print the concept test/deploy board and exit")
     parser.add_argument("--write-status", action="store_true", help="regenerate docs/status.md and exit")
+    parser.add_argument(
+        "--write-relationships",
+        action="store_true",
+        help="regenerate concepts/*/RELATIONSHIPS.md and exit",
+    )
     args = parser.parse_args()
 
     if args.status:
@@ -533,6 +557,17 @@ def main() -> int:
         STATUS_DOC.parent.mkdir(parents=True, exist_ok=True)
         STATUS_DOC.write_text(render_status_doc(), encoding="utf-8")
         print(f"wrote {rel(STATUS_DOC)}")
+        return 0
+
+    if args.write_relationships:
+        edges, load_errors = relationships.load_graph(ROOT)
+        errors = load_errors or relationships.validate_graph(ROOT, edges)
+        if errors:
+            for error in errors:
+                print(f"ERROR: relationship graph: {error}")
+            return 1
+        for path in relationships.write_views(ROOT, edges):
+            print(f"wrote {path}")
         return 0
 
     issues: list[Issue] = []
@@ -545,6 +580,7 @@ def main() -> int:
     lint_concepts(issues, index)
     lint_status(issues)
     lint_status_doc(issues)
+    lint_relationships(issues)
     lint_plans(issues)
     lint_raw(issues, index)
     lint_policies(issues)

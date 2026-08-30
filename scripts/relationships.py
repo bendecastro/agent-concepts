@@ -454,3 +454,73 @@ def render_all(edges: list[Edge]) -> dict[str, str]:
     """Render direct views for concepts participating in at least one edge."""
     names = sorted({edge.owner for edge in edges} | {edge.target for edge in edges})
     return {name: render_view(name, edges) for name in names}
+
+
+def _view_path(root: Path, name: str) -> Path:
+    return root / "concepts" / name / VIEW_NAME
+
+
+def _existing_view_names(root: Path) -> set[str]:
+    concepts = root / "concepts"
+    if not concepts.is_dir():
+        return set()
+    names: set[str] = set()
+    for concept in concepts.iterdir():
+        if concept.is_dir() and (concept / VIEW_NAME).exists():
+            names.add(concept.name)
+    return names
+
+
+def check_views(root: Path, edges: list[Edge]) -> list[str]:
+    """Return missing, extra, and stale generated-view errors without mutating."""
+    expected = render_all(edges)
+    errors: list[str] = []
+
+    for name in sorted(expected):
+        view = _view_path(root, name)
+        relative = view.relative_to(root)
+        if not view.is_file():
+            errors.append(f"missing generated relationship view: {relative}")
+        else:
+            try:
+                actual = view.read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError) as exc:
+                errors.append(f"could not read generated relationship view {relative}: {exc}")
+            else:
+                if actual != expected[name]:
+                    errors.append(f"stale generated relationship view: {relative}")
+
+    expected_names = set(expected)
+    for name in sorted(_existing_view_names(root) - expected_names):
+        errors.append(f"extra generated relationship view: {_view_path(root, name).relative_to(root)}")
+
+    return errors
+
+
+def write_views(root: Path, edges: list[Edge]) -> list[str]:
+    """Write changed generated views and remove views for concepts without edges."""
+    expected = render_all(edges)
+    changed: list[str] = []
+
+    for name in sorted(expected):
+        view = _view_path(root, name)
+        content = expected[name]
+        if view.is_file() and view.read_text(encoding="utf-8") == content:
+            continue
+        view.parent.mkdir(parents=True, exist_ok=True)
+        view.write_text(content, encoding="utf-8")
+        changed.append(str(view.relative_to(root)))
+
+    expected_names = set(expected)
+    concepts = root / "concepts"
+    if concepts.is_dir():
+        for concept in sorted((path for path in concepts.iterdir() if path.is_dir()), key=lambda path: path.name):
+            if concept.name in expected_names:
+                continue
+            view = concept / VIEW_NAME
+            if not view.is_file() and not view.is_symlink():
+                continue
+            view.unlink()
+            changed.append(str(view.relative_to(root)))
+
+    return sorted(changed)

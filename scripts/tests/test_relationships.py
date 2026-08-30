@@ -526,6 +526,81 @@ None.
         self.assertNotIn("loads `c`", rendered["a"])
         self.assertNotIn("incoming from [c]", rendered["a"])
 
+    def view_edges(self) -> list[Any]:
+        return [
+            relationships.Edge(
+                owner="source",
+                target="target",
+                relation="loads",
+                required=True,
+                when=None,
+                source="concepts/source/body/SKILL.md",
+                reason="source loads target.",
+            )
+        ]
+
+    def test_missing_view_is_reported(self) -> None:
+        root = self.workspace()
+        errors = relationships.check_views(root, self.view_edges())
+        self.assertTrue(any("missing" in error and "source" in error for error in errors))
+        self.assertTrue(any("missing" in error and "target" in error for error in errors))
+
+    def test_hand_edited_view_is_reported_stale(self) -> None:
+        root = self.workspace()
+        edges = self.view_edges()
+        relationships.write_views(root, edges)
+        view = root / "concepts" / "source" / relationships.VIEW_NAME
+        view.write_text(view.read_text(encoding="utf-8").replace("source loads target.", "edited."), encoding="utf-8")
+        errors = relationships.check_views(root, edges)
+        self.assertTrue(any("stale" in error and "source" in error for error in errors))
+
+    def test_view_for_concept_without_edges_is_extra(self) -> None:
+        root = self.workspace()
+        orphan = root / "concepts" / "orphan"
+        orphan.mkdir()
+        (orphan / relationships.VIEW_NAME).write_text("manual\n", encoding="utf-8")
+        errors = relationships.check_views(root, self.view_edges())
+        self.assertTrue(any("extra" in error and "orphan" in error for error in errors))
+
+    def test_empty_view_for_concept_without_edges_is_extra(self) -> None:
+        root = self.workspace()
+        view = root / "concepts" / "source" / relationships.VIEW_NAME
+        view.write_text("", encoding="utf-8")
+        errors = relationships.check_views(root, [])
+        self.assertTrue(any("extra" in error and "source" in error for error in errors))
+
+    def test_write_views_is_idempotent_and_check_is_clean(self) -> None:
+        root = self.workspace()
+        edges = self.view_edges()
+        first = relationships.write_views(root, edges)
+        first_bytes = {
+            name: (root / "concepts" / name / relationships.VIEW_NAME).read_bytes()
+            for name in ("source", "target")
+        }
+        second = relationships.write_views(root, edges)
+        second_bytes = {
+            name: (root / "concepts" / name / relationships.VIEW_NAME).read_bytes()
+            for name in ("source", "target")
+        }
+        self.assertEqual(set(first), {
+            "concepts/source/RELATIONSHIPS.md",
+            "concepts/target/RELATIONSHIPS.md",
+        })
+        self.assertEqual(second, [])
+        self.assertEqual(first_bytes, second_bytes)
+        self.assertEqual(relationships.check_views(root, edges), [])
+
+    def test_write_views_removes_extra_view(self) -> None:
+        root = self.workspace()
+        extra = root / "concepts" / "orphan"
+        extra.mkdir()
+        extra_view = extra / relationships.VIEW_NAME
+        extra_view.write_text("extra\n", encoding="utf-8")
+        removed = relationships.write_views(root, self.view_edges())
+        self.assertIn("concepts/orphan/RELATIONSHIPS.md", removed)
+        self.assertFalse(extra_view.exists())
+        self.assertEqual(relationships.check_views(root, self.view_edges()), [])
+
 
 if __name__ == "__main__":
     unittest.main()
