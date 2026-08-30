@@ -113,6 +113,7 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 ### Proposed
 
 - [bc-init-agent-wiki-maintain.md](docs/plans/proposed/bc-init-agent-wiki-maintain.md) — `/bc-init-agent` close-out offers to install a per-vault `bc-wiki-maintain` promotion timer after confirm so a new wiki can promote overnight from day one.
+- [bilateral-skill-relationships.md](docs/plans/proposed/bilateral-skill-relationships.md) — one authoritative forward relationship graph with generated incoming views so maintainers can inspect callers and change impact without hand-maintaining reverse links.
 
 ### Active
 

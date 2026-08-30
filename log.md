@@ -1279,3 +1279,7 @@ list, open two or three, 171 vs 4,543 tokens, 3 vs 6 misses. qmd is optional mul
 ## [2026-08-29] implement | drop wiki miss-rate; qmd is optional extra
 Removed the 3-vs-6 miss comparison (cost is the claim). qmd is optional multi-vault search, not
 the default the new path replaced.
+
+## [2026-08-30] implement | bilateral skill relationship design
+Added the proposed one-source relationship graph design: curated forward edges, generated incoming
+views, maintainer-only impact review, and deterministic lint/generator requirements.
