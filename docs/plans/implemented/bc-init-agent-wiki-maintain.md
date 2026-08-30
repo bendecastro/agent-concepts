@@ -1,7 +1,7 @@
 # `/bc-init-agent` wiki-maintain timer offer
 
 Date: 2026-08-29
-Status: proposed
+Status: implemented
 
 **Goal:** After scaffolding a project wiki, `/bc-init-agent` offers to install that vault’s promotion timer so maintenance can run overnight from day one, and installs it only after the user confirms.
 **Architecture:** Close-out instruction in `bc-init-agent`, modeled on the existing `publish.yaml` offer. `scaffold.py` stays timer-free. Install copies the existing `bc-wiki-maintain` runner templates to slug-suffixed user units; it does not vendor the runner into the project and does not treat qmd refresh as wiki promotion.

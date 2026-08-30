@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-08-30] test | bc-init-agent wiki-maintain timer offer
+Pressure 4/4 on offer-then-confirm; scaffold remains timer-free.
+
 ## [2026-08-29] implement | bc-init-agent wiki-maintain timer plan
 Proposed close-out: `/bc-init-agent` offers to copy slug-suffixed `bc-wiki-maintain` user units after confirm; scaffold stays timer-free; qmd refresh is not promotion.
 

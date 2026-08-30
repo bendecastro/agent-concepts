@@ -110,10 +110,6 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 
 Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
-### Proposed
-
-- [bc-init-agent-wiki-maintain.md](docs/plans/proposed/bc-init-agent-wiki-maintain.md) — `/bc-init-agent` close-out offers to install a per-vault `bc-wiki-maintain` promotion timer after confirm so a new wiki can promote overnight from day one.
-
 ### Active
 
 - [bilateral-skill-relationships.md](docs/plans/active/bilateral-skill-relationships.md) — one authoritative forward relationship graph with generated incoming views so maintainers can inspect callers and change impact without hand-maintaining reverse links. Seven tasks: a validated schema, deterministic rendering, lint wiring with a single write mode, six verified pilot edges, the AGENTS upkeep rule, and its pressure run.
@@ -125,6 +121,7 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
 ### Implemented
 
+- [bc-init-agent-wiki-maintain.md](docs/plans/implemented/bc-init-agent-wiki-maintain.md) — `/bc-init-agent` close-out offers to install a per-vault `bc-wiki-maintain` promotion timer after confirm; pressure 4/4 on 2026-08-30.
 - [bc-wiki-maintain.md](docs/plans/implemented/bc-wiki-maintain.md) — project-wiki rot diagnosis (computed vs recorded triggers), the eleven resolved decisions with later supersessions marked, and the record of the eight-vault rollout, the Gate 2 test-drift inversion, and the 5/5 pressure re-run.
 - [bc-swarm-worktree-durability.md](docs/plans/implemented/bc-swarm-worktree-durability.md) — worktree-worker commit identity, guarded handoff/full-range recovery, pre-routing recovery trigger, and the FAIL→PASS pressure record.
 - [bc-grill-to-ship-loop.md](docs/plans/implemented/bc-grill-to-ship-loop.md) — the plan→execute loop design and its planner/executor implementation record.
