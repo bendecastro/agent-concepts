@@ -1,1 +1,54 @@
-{"schema": 1, "edges": []}
+{
+  "schema": 1,
+  "edges": [
+    {
+      "from": "bc-drain-issues",
+      "to": "tdd",
+      "relation": "loads",
+      "required": true,
+      "when": "feature/enhancement work",
+      "source": "concepts/bc-drain-issues/body/execute-issue.md#build-loop",
+      "reason": "Feature workers follow red-green-refactor."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "grilling",
+      "relation": "loads",
+      "required": true,
+      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "reason": "Step 1 interviews the idea before any artifact is written."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "domain-modeling",
+      "relation": "loads",
+      "required": true,
+      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "reason": "Step 2 captures terms and decisions inline during the grill."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "prd-drafting",
+      "relation": "loads",
+      "required": true,
+      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "reason": "Step 3 synthesizes the PRD from the grill and the codebase."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "issue-slicing",
+      "relation": "loads",
+      "required": true,
+      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "reason": "Step 6 slices the PRD and runs the last human gate."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "bc-drain-issues",
+      "relation": "hands_off",
+      "required": false,
+      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "reason": "Close-out recommends draining the published queue; the user decides."
+    }
+  ]
+}
