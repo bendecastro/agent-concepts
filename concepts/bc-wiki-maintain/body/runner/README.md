@@ -9,6 +9,36 @@ and fails visibly when detection, the agent, or the dedicated commit fails. syst
 is intentional here: `journalctl --user` and `systemctl --user status` make silent
 scheduler failures observable.
 
+## Failure notifications
+
+Both runner services set `OnFailure=bc-wiki-notify@%n.service`. When either service exits
+nonzero, systemd starts the `bc-wiki-notify@.service` template with the failed unit name as
+`%i`. The runner-local `notify-failure.sh` resolves that unit's `VAULT_ROOT`, reads a short
+error from its user journal, and sends a critical desktop notification with `notify-send`.
+If the vault or journal cannot be inspected, the message says so; if `notify-send` is missing
+or fails, the notifier exits nonzero instead of silently succeeding.
+
+A healthy no-op does not fire the notifier: the promotion runner exits 0 for
+`PROMOTION_REQUIRED=0` before invoking Pi, and the lint runner exits 0 when all detectors pass.
+The notifier is only a failure path; it does not replace the journal or `systemctl --user`
+status checks.
+
+Install the notifier template alongside whichever runner service(s) you use, after editing its
+`AGENT_CONCEPTS` placeholder:
+
+```bash
+export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"
+unit_dir="$HOME/.config/systemd/user"
+install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-notify@.service" \
+  "$unit_dir/bc-wiki-notify@.service"
+$EDITOR "$unit_dir/bc-wiki-notify@.service"  # set AGENT_CONCEPTS
+systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"
+```
+
+Copy the notifier template, the matching runner service, and its timer before running
+`systemctl --user daemon-reload`. Do not symlink the templates: the copied unit's
+`AGENT_CONCEPTS` value must point at the checkout containing this runner.
+
 ## Lint all configured vaults (detection only)
 
 The separate `bc-wiki-lint.service` runs `run-lint.sh` against a list of vault roots. It is

@@ -1,0 +1,16 @@
+# TEMPLATE — edit the Environment= path below before installing.
+# Copy this into ~/.config/systemd/user/ rather than symlinking it, so your local
+# paths are not overwritten when this repository updates.
+
+[Unit]
+Description=Notify about a failed wiki runner (%i)
+Documentation=man:systemd.service(5)
+
+[Service]
+Type=oneshot
+SyslogIdentifier=bc-wiki-notify
+# EDIT: your checkout of the agent-concepts workspace.
+Environment=AGENT_CONCEPTS=%h/path/to/agent-concepts
+ExecStart=/usr/bin/bash -c 'exec "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/notify-failure.sh" "%i"'
+StandardOutput=journal
+StandardError=journal

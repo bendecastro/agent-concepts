@@ -16,6 +16,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[3]
 LINTER = ROOT / "concepts/bc-wiki-maintain/body/wiki_lint.py"
 RUNNER = ROOT / "concepts/bc-wiki-maintain/body/runner/run-promotion.sh"
+NOTIFIER = ROOT / "concepts/bc-wiki-maintain/body/runner/notify-failure.sh"
+RUNNER_DIR = ROOT / "concepts/bc-wiki-maintain/body/runner"
 SKILL = ROOT / "concepts/bc-wiki-maintain/body/SKILL.md"
 LINTER_SPEC = importlib.util.spec_from_file_location("bc_wiki_maintain_linter", LINTER)
 assert LINTER_SPEC and LINTER_SPEC.loader
@@ -340,6 +342,89 @@ class QmdStatusTests(unittest.TestCase):
             self.assertFalse(status["unindexed"])
             self.assertEqual(status["canonical_path"], str(parent.resolve()))
             self.assertEqual(status["machine_path"], str(parent.resolve()))
+
+
+class FailureNotificationTests(unittest.TestCase):
+    def write_command(self, directory: Path, name: str, body: str) -> Path:
+        command = directory / name
+        command.write_text("#!/usr/bin/env bash\nset -eu\n" + textwrap.dedent(body), encoding="utf-8")
+        command.chmod(0o755)
+        return command
+
+    def test_runner_services_start_the_failure_notifier(self) -> None:
+        expected = "OnFailure=bc-wiki-notify@%n.service"
+        for filename in ("bc-wiki-maintain.service", "bc-wiki-lint.service"):
+            self.assertIn(expected, (RUNNER_DIR / filename).read_text(encoding="utf-8"))
+
+    def test_notifier_fails_when_desktop_display_is_unavailable(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            result = run(
+                "/usr/bin/bash",
+                str(NOTIFIER),
+                "bc-wiki-maintain.service",
+                cwd=ROOT,
+                env={"PATH": temp},
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("notify-send is unavailable", result.stderr)
+
+    def test_notifier_includes_vault_and_journal_reason(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            args_file = directory / "notify-args"
+            self.write_command(
+                directory,
+                "systemctl",
+                "printf '%s\\n' 'Environment=AGENT_CONCEPTS=/tmp/concepts VAULT_ROOT=/tmp/example-vault'\n",
+            )
+            self.write_command(directory, "journalctl", "printf '%s\\n' 'detector failed: example reason'\n")
+            self.write_command(
+                directory,
+                "notify-send",
+                "printf '%s\\n' \"$@\" > \"$NOTIFY_ARGS_FILE\"\n",
+            )
+            env = os.environ.copy()
+            env.update({
+                "PATH": f"{directory}{os.pathsep}{env['PATH']}",
+                "NOTIFY_ARGS_FILE": str(args_file),
+            })
+            result = run(
+                "/usr/bin/bash",
+                str(NOTIFIER),
+                "bc-wiki-maintain.service",
+                cwd=ROOT,
+                env=env,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            args = args_file.read_text(encoding="utf-8")
+            self.assertIn("--urgency=critical", args)
+            self.assertIn("/tmp/example-vault", args)
+            self.assertIn("detector failed: example reason", args)
+
+    def test_promotion_noop_exits_zero_without_notification(self) -> None:
+        temp, repo, vault = make_repo("")
+        with temp:
+            directory = Path(temp.name) / "bin"
+            directory.mkdir()
+            marker = Path(temp.name) / "notify-called"
+            self.write_command(directory, "notify-send", "printf 'called\\n' > \"$NOTIFY_MARKER\"\n")
+            env = runner_env(repo, vault, repo / "missing-pi")
+            env.update({
+                "PATH": f"{directory}{os.pathsep}{env['PATH']}",
+                "NOTIFY_MARKER": str(marker),
+            })
+            result = run(
+                "/usr/bin/bash",
+                str(RUNNER),
+                cwd=repo,
+                env=env,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            self.assertIn("PROMOTION_REQUIRED=0", result.stdout)
+            self.assertFalse(marker.exists())
 
 
 class PromotionRunnerTests(unittest.TestCase):

@@ -7,6 +7,7 @@ Description=Promote project wiki memory
 Documentation=man:systemd.service(5)
 Wants=network-online.target
 After=network-online.target
+OnFailure=bc-wiki-notify@%n.service
 
 [Service]
 Type=oneshot

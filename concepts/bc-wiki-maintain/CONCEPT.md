@@ -117,6 +117,13 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   that is a dated append, which is what a human had to do by hand after Homeflix prod dumped six
   staleness items into one open-question page. The pass never silently chooses a winner or
   rewrites the old sentence.
+- **Scheduled failures notify and fail closed.** Both systemd runner templates use
+  `OnFailure=bc-wiki-notify@%n.service`; the copied `bc-wiki-notify@.service` passes the failed
+  unit name to the runner-local `notify-failure.sh`. The notifier asks systemd for that unit's
+  `VAULT_ROOT`, reads a short error from its user journal, and sends a critical `notify-send`
+  alert. Missing or failing desktop display is a nonzero notifier result rather than a silent
+  success; unavailable vault or journal data is named honestly in the message. A
+  `PROMOTION_REQUIRED=0` no-op remains a zero exit and therefore does not trigger `OnFailure`.
 - **No broad cleanup during promotion.** The pass does not reflow prose, delete stale pages,
   normalize headings, or modify qmd registry policy. Those are separate, explicitly scoped
   operations. The pilot is one writer against a small vault; staged whole-graph semantic
@@ -256,6 +263,12 @@ children were invoked standalone rather than through `run-promotion.sh`, so 3a e
 the agent leaves the commit alone but not that the wrapper then makes it — that half is covered
 deterministically by `test_runner_creates_exact_range_commit` instead. The `[[wikilinks]]` fixture
 variant remains unrun.
+
+**2026-08-30 — PASS — scheduled failure notification.** `tests/test_wiki_maintain.py` verifies
+both service templates wire `OnFailure`, the runner-local notifier includes the configured
+vault and journal reason on a successful stubbed display, and missing display support exits
+nonzero. A temporary-repository no-op test confirms `PROMOTION_REQUIRED=0` exits 0 without
+invoking the notification command; no real systemd unit or desktop notification is touched.
 
 ## Human guide
 

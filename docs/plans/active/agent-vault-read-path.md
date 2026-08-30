@@ -329,16 +329,18 @@ from any inline path.
 
 ### W3 — Notify when a scheduled run fails
 
-**Open in this predecessor plan; not inherited by `agent-vault-write-read-contract.md` (verified
-2026-08-29).** Neither referenced service template contains `OnFailure=`:
-`concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.service` (lines 5–28) and
-`concepts/bc-wiki-maintain/body/runner/bc-wiki-lint.service` (lines 5–23). This remains an active work item;
-the successor's non-goal leaves notification here.
+**Closed 2026-08-30.** Added the runner-local `notify-failure.sh` and
+`bc-wiki-notify@.service` template, wired both runner services to
+`OnFailure=bc-wiki-notify@%n.service`, and documented installation in `body/runner/README.md`.
+The notifier resolves `VAULT_ROOT` from the failed unit, includes a short user-journal reason,
+sends a critical desktop notification, and exits nonzero when display is unavailable. Regression
+tests cover both service directives, successful message construction, unavailable display, and
+the no-op path.
 
-Today nothing tells the user a scheduled run failed. Recon confirmed `OnFailure=` is unset and
-`FailureAction=none` on every wiki unit; the only signals are journald, systemd state, and a
-committed `status: needs-review` file the user has to go looking for. The seven-week gap
-(2026-06-30 → 2026-08-19) is confirmed against Git artifacts, with the retained journal showing
+Before this change nothing told the user a scheduled run failed. Recon confirmed `OnFailure=` was
+unset and `FailureAction=none` on every wiki unit; the only signals were journald, systemd state,
+and a committed `status: needs-review` file the user had to go looking for. The seven-week gap
+(2026-06-30 → 2026-08-19) was confirmed against Git artifacts, with the retained journal showing
 `Lock exists, skipping` then `Finished` on each of 2026-08-12 through 08-18 — the run returned 0,
 so systemd reported success while nothing happened.
 
@@ -350,11 +352,11 @@ to defend against. Its early exits are:
 - nothing to promote (`:74-80`) — `exit 0`, a legitimate no-op. **Do not notify.** Treating the
   healthy case as an alert is how notifications get ignored.
 
-Add `OnFailure=` to the `bc-wiki-maintain` and `bc-wiki-lint` unit templates. The notifier must
-be **runner-local** and must **exit nonzero if it cannot display**. It must not be
+The `bc-wiki-maintain` and `bc-wiki-lint` unit templates now add `OnFailure=` to the
+runner-local notifier. It exits nonzero if it cannot display. It does not use
 `~/Sync/Scripts/lib/notify.sh`: that helper is documented as a "silent no-op (exit 0)" when
-headless, which recreates the exact failure mode this work item exists to close, and this
-repository may not depend on one person's machine.
+headless, which is the exact failure mode this work item exists to close, and this repository may
+not depend on one person's machine.
 
 Do **not** port the personal wrapper's PID lock or `TimeoutExpired` handling.
 
@@ -547,12 +549,10 @@ Blocked on W4 clearing its bars:
    otherwise sql and Scripts failing on `PROMOTION_RANGE=invalid` silently stops the other six.
    Measure: total unpromoted headings, 68 → <10. Music's first run (37 headings) is allowed to
    proceed unattended — [decision 5](#resolved-decisions) is closed, do not re-open it.
-3. **Scaffold heading fix plus loud lint.** `scaffold.py:307` emits `## __DATE__` while
-   `wiki_lint.py:19` requires `## [YYYY-MM-DD]` — the scaffold has been minting headings its own
-   detector cannot read. Fix at the root (scaffold emits `## [__DATE__]`), make
-   `wiki_lint.py:526` exit nonzero on `PROMOTION_RANGE=invalid`, and let one explicit human edit
-   normalise the 13 existing headings. Widening the parser regex was proposed by two advisors and
-   **withdrawn by both** under cross-examination; do not revive it.
+3. **Scaffold heading fix plus loud lint — done.** `concepts/bc-init-agent/body/scaffold.py`
+   (line 353) emits `## [__DATE__]`; `concepts/bc-wiki-maintain/body/wiki_lint.py` (lines
+   527–528) computes an invalid required range and returns nonzero. Widening the parser regex was
+   proposed by two advisors and **withdrawn by both** under cross-examination; do not revive it.
 4. **`map.md` link repair and summary lines.** **Open here; not inherited by
    `agent-vault-write-read-contract.md`.** Emit map targets as real Markdown links so they enter
    the graph, and have lint validate them. `map.md` stays a curated task-bundle layer.

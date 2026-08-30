@@ -1337,3 +1337,7 @@ Added a regression that the round-two report renderer never interpolates a resol
 ## [2026-08-30] lint | regenerate status after wiki-maintain tested date
 Ran `python3 scripts/lint.py --write-status` because `bc-wiki-maintain` `tested` moved to 2026-08-30,
 then `python3 scripts/lint.py`.
+
+## [2026-08-30] implement | scheduled wiki failure notification
+Added runner-local fail-closed desktop notification wiring for both systemd wiki services, with
+unit-template, notifier, README, and temporary-fixture regression coverage.

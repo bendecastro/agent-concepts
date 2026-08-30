@@ -5,6 +5,7 @@
 [Unit]
 Description=Lint project wiki vaults
 Documentation=man:systemd.service(5)
+OnFailure=bc-wiki-notify@%n.service
 
 [Service]
 Type=oneshot
