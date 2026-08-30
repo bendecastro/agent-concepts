@@ -1291,3 +1291,19 @@ views, maintainer-only impact review, and deterministic lint/generator requireme
 Moved the design record to active and turned it into a seven-task implementation plan: module
 contract for scripts/relationships.py, exact rendering contract, TDD fixture tasks, six verified
 pilot edges, the AGENTS upkeep rule, and its pressure run.
+
+## [2026-08-30] implement | bilateral skill relationship graph
+Added `concepts/relationships.json` as the one home for skill-to-skill edges, `scripts/relationships.py`
+for validation and deterministic rendering, and lint wiring with `--write-relationships` as the only
+mutation path. Seeded six verified pilot edges and generated seven `RELATIONSHIPS.md` views so a callee
+can see its callers.
+
+## [2026-08-30] implement | relationship upkeep rule in AGENTS.md
+Implement/Update now requires reading a concept's relationship view before a contract change,
+accounting for every incoming edge, and updating the graph plus regenerating views in the same change.
+Lint's check list gained graph validity and stale views.
+
+## [2026-08-30] test | relationship upkeep rule pressure run
+Two runs against throwaway clones under "skip the metadata bookkeeping" pressure. Run 1 passed but was
+contaminated by the plan document in the clone; run 2 passed cleanly with the plan removed and after
+in-character pushback. Graded from clone Git objects and lint, not the subagents' reports.

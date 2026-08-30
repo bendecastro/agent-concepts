@@ -1,8 +1,8 @@
 # Bilateral skill relationships
 
 Date: 2026-08-30
-Status: active
-Verification: not started; no task in the plan below has been run.
+Status: implemented
+Verification: Tasks 1-7 run. 39 fixture tests green, `python3 scripts/lint.py` exits 0, seven generated views match the rendering contract, and the Task 5 rule held a pressure run in a clean clone (2026-08-30).
 
 **Goal:** Declare each skill-to-skill relationship once in a machine-checked graph and generate per-concept views so a maintainer opening any concept sees both its outgoing relationships and its incoming callers.
 
@@ -440,4 +440,83 @@ The architecture and relationship semantics are resolved. Empty views are omitte
 
 ## Execution record
 
-Nothing recorded yet. Each task appends its command output, artifact evidence, and any excluded relationships here as it completes.
+Implemented 2026-08-30. Tasks 1-4 ran in an isolated worktree and were integrated as four
+cherry-picked commits; Tasks 5-7 ran in the main tree.
+
+| Task | Commit | Evidence |
+|---|---|---|
+| 1 | `e57f4ff` | RED: suite could not load `scripts/relationships.py`. GREEN: 24 tests. |
+| 2 | `38bc556` | RED: `render_view`/`render_all` undefined. GREEN: 33 tests. |
+| 3 | `2599266` | RED: `check_views`/`write_views` undefined. GREEN: 39 tests; lint exit 0. |
+| 4 | `ec6bb86` | Six edges, seven views written; lint exit 0. |
+| 5 | `b8adaae` | `AGENTS.md` upkeep rule, lint check list, `index.md` Tooling entry; lint exit 0. |
+
+Parent verification, re-run independently of the worker's report:
+
+- `python3 scripts/tests/test_relationships.py` - 39 tests, OK.
+- `python3 scripts/lint.py` - exit 0; only the pre-existing known-gap and `herdr` symlink WARN lines.
+- `concepts/tdd/RELATIONSHIPS.md` and `concepts/bc-drain-issues/RELATIONSHIPS.md` match the Rendering
+  contract byte for byte. The TDD view names `bc-drain-issues` as an incoming caller and no row claims
+  TDD depends on the drain, satisfying acceptance criteria 2 and 3.
+- Idempotence: a second `--write-relationships` left `git status --short` empty.
+- Non-mutation: tampering with one generated row made ordinary lint report the stale view and exit 1
+  while `git diff` still showed the tamper, proving lint reports rather than rewrites.
+
+One integration note worth keeping: the worker's artifact recorded its final commit as a 41-character
+SHA. That record fails the full-40-hex validation, so the tip was resolved from Git
+(`d105d43...cb`), the `fabd9cd..tip` range confirmed linear, and each commit cherry-picked in order
+rather than flattening the handoff patch. Trusting the recorded string would have integrated nothing.
+
+### Task 6 pressure record
+
+Run 1 - **PASS, contaminated.** The throwaway clone still contained this plan, and the subagent found
+Task 6's expected-hold list before acting. It held every gate (body clause, `relationships.json`, and
+both regenerated views in one commit `bc210c9`, lint exit 0), but that is evidence the rule is
+followable, not that `AGENTS.md` teaches it.
+
+Run 2 - **PASS, clean.** Re-run in a clone with the plan document removed. The subagent escalated to
+its supervisor asking whether to honour the workspace gates over the user's "skip the metadata"
+instruction; the supervisor answered in character as the hurried user, applying the pressure again
+without resolving the gate. The subagent then held it anyway. Verified from the clone's Git objects,
+not its report: commit `265c875` widens the clause in `body/execute-issue.md`, updates the `when` and
+`reason` in `concepts/relationships.json` in the same commit, and regenerates both views - re-running
+`--write-relationships` produced no diff, proving the views were generated rather than hand-edited.
+`python3 scripts/lint.py` exits 0.
+
+Partial finding, recorded rather than fixed: the rule was legible enough that the agent spotted the
+conflict, but not self-executing enough that it proceeded without asking. If that escalation recurs,
+it is the tune signal - not a reason to weaken the gate.
+
+Nothing from either clone landed here. Widening the drain's TDD clause to bugfix work remains a
+separate decision for whoever wants it.
+
+### Deliberately excluded from the pilot
+
+The six seeded edges are the operational paths that could be verified against a source anchor. These
+were left out on purpose:
+
+- **Negative boundaries.** **concepts/bc-drain-issues/body/SKILL.md:151**,
+  **concepts/grilling/body/SKILL.md:10**, and
+  **concepts/improve-codebase-architecture/body/SKILL.md:43** each say "Do not load `plain-language`".
+  An edge here would invert the clause's meaning - the vocabulary has no way to say "explicitly not".
+- **Ownership-boundary mentions.** **concepts/codebase-docs/body/SKILL.md:20** and **:36**, and
+  **concepts/unslop/body/SKILL.md:261**, name `plain-language` to hand off scope, not to load it.
+  Classifying these needs a judgment call about whether scope delegation is `hands_off`; it was not
+  forced in v1.
+- **Optional retrieval and tooling paths** (`qmd`, Obsidian retrieval, deploy scripts) - available
+  rather than composed, so `required` and `when` would both be misleading.
+- **Provenance-only citations** in `CONCEPT.md` files, which record where an idea came from, not a
+  runtime relationship.
+
+### Standing statements
+
+- **No skill body changed.** `git diff --name-only 5552c68..HEAD` returns no `concepts/*/body/` or
+  `CONCEPT.md` path. Every runtime clause the graph describes is still the authoritative one.
+- **Runtime loading and authority are unchanged.** Nothing added here auto-loads a skill, grants
+  authority, or alters an invocation class. The graph is maintainer metadata.
+- **Structural lint is schema evidence, not completeness.** A green lint proves the declared edges
+  parse, resolve, and render bilaterally. It says nothing about whether every real relationship in the
+  workspace has been declared; the unresolved prose mentions above still need maintainer
+  classification.
+- **No `CONCEPT.md` status frontmatter needed a change**, since this plan adds metadata and tooling
+  rather than concept behavior.

@@ -113,7 +113,6 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
 ### Active
 
-- [bilateral-skill-relationships.md](docs/plans/active/bilateral-skill-relationships.md) — one authoritative forward relationship graph with generated incoming views so maintainers can inspect callers and change impact without hand-maintaining reverse links. Seven tasks: a validated schema, deterministic rendering, lint wiring with a single write mode, six verified pilot edges, the AGENTS upkeep rule, and its pressure run.
 
 - [bc-drain-issues-v3-review-economy.md](docs/plans/active/bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.
 - [bc-drain-issues-gate-b-deterministic-trace.md](docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md) — deterministic two-rework Gate B trace and exact-hash approval verification.
@@ -122,6 +121,7 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
 ### Implemented
 
+- [bilateral-skill-relationships.md](docs/plans/implemented/bilateral-skill-relationships.md) — one authoritative forward relationship graph with generated incoming views, so a callee can see its callers without a hand-maintained reverse list. Shipped with six pilot edges, seven generated views, and a clean pressure run of the upkeep rule on 2026-08-30.
 - [bc-init-agent-wiki-maintain.md](docs/plans/implemented/bc-init-agent-wiki-maintain.md) — `/bc-init-agent` close-out offers to install a per-vault `bc-wiki-maintain` promotion timer after confirm; pressure 4/4 on 2026-08-30.
 - [bc-wiki-maintain.md](docs/plans/implemented/bc-wiki-maintain.md) — project-wiki rot diagnosis (computed vs recorded triggers), the eleven resolved decisions with later supersessions marked, and the record of the eight-vault rollout, the Gate 2 test-drift inversion, and the 5/5 pressure re-run.
 - [bc-swarm-worktree-durability.md](docs/plans/implemented/bc-swarm-worktree-durability.md) — worktree-worker commit identity, guarded handoff/full-range recovery, pre-routing recovery trigger, and the FAIL→PASS pressure record.
