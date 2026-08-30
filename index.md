@@ -103,6 +103,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 - [docs/harnesses.md](docs/harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
 - [docs/bootstrap.md](docs/bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
+- [concepts/relationships.json](concepts/relationships.json) — the one home for skill-to-skill relationships, declared once as forward edges and rendered into per-concept `RELATIONSHIPS.md` views carrying both outgoing relationships and incoming callers. Regenerate with `python3 scripts/lint.py --write-relationships`; lint fails while a view is stale. Maintainer metadata for change-impact review, never a runtime loader.
 - [scripts/deploy-local-skills.py](scripts/deploy-local-skills.py) — bulk deploys every local `concepts/*/body/SKILL.md` into relative symlinks under `~/.agents/skills/` (shared bus for Pi, Composer, Grok, OpenCode, and Codex), `~/.pi/agent/skills/`, and `~/.claude/skills/`, all pointing at canonical concept bodies. OpenCode's global `canonical-skill-commands.ts` plugin dynamically exposes the CONFIG-backed bus entries as slash commands.
 - [policies/publish.example.yaml](policies/publish.example.yaml) — user-owned publish authorization policy; default deny with explicit allow rules for agent-authored pushes in CONFIG, Scripts, Music, and Wiki.
 
