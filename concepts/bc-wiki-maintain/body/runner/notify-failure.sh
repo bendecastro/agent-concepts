@@ -21,6 +21,11 @@ if ! command -v notify-send >/dev/null 2>&1; then
   exit 1
 fi
 
+syslog_identifier=''
+if identifier_output="$(systemctl --user show -p SyslogIdentifier "$failed_unit" 2>/dev/null)"; then
+  syslog_identifier="${identifier_output#SyslogIdentifier=}"
+fi
+
 vault_display='unavailable (could not read VAULT_ROOT from the failed unit)'
 environment_output=''
 if environment_output="$(systemctl --user show -p Environment "$failed_unit" 2>/dev/null)"; then
@@ -37,10 +42,22 @@ else
   vault_display='unavailable (could not inspect the failed unit environment)'
 fi
 
+# No priority filter: systemd logs unit stderr at notice, not err, so filtering on
+# err..emerg silently matches nothing. Scope by SyslogIdentifier to drop systemd's own
+# lifecycle lines, then fall back unscoped so a unit killed before printing still reports.
+read_journal() {
+  if [[ -n "$syslog_identifier" ]]; then
+    journal_output="$(journalctl --user -u "$failed_unit" -t "$syslog_identifier" -n 5 --no-pager -o cat 2>/dev/null)" || return 1
+    [[ "$journal_output" =~ [^[:space:]] ]] && return 0
+  fi
+  journal_output="$(journalctl --user -u "$failed_unit" -n 5 --no-pager -o cat 2>/dev/null)" || return 1
+  return 0
+}
+
 reason='unavailable (could not read the user journal)'
 journal_output=''
 if command -v journalctl >/dev/null 2>&1; then
-  if journal_output="$(journalctl --user -u "$failed_unit" -p err..emerg -n 5 --no-pager -o cat 2>/dev/null)"; then
+  if read_journal; then
     if [[ "$journal_output" =~ [^[:space:]] ]]; then
       reason="${journal_output//$'\n'/; }"
       reason="${reason//$'\r'/}"

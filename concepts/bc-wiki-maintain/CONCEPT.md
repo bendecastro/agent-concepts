@@ -121,7 +121,11 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   `OnFailure=bc-wiki-notify@%n.service`; the copied `bc-wiki-notify@.service` passes the failed
   unit name to the runner-local `notify-failure.sh`. The notifier asks systemd for that unit's
   `VAULT_ROOT`, reads a short error from its user journal, and sends a critical `notify-send`
-  alert. Missing or failing desktop display is a nonzero notifier result rather than a silent
+  alert. The journal read is scoped by `SyslogIdentifier`, **not** by priority: systemd logs unit
+  stderr at notice, so the obvious-looking `-p err..emerg` filter matches nothing and every alert
+  degrades to "no error output found". Measured 2026-08-30 — `run-promotion.sh`'s `fail()` line
+  lands at priority 5 and systemd's own failure line at 4. A regression test stubs `journalctl` so
+  that it honours the filter arguments, because a stub that ignores them passes either way. Missing or failing desktop display is a nonzero notifier result rather than a silent
   success; unavailable vault or journal data is named honestly in the message. A
   `PROMOTION_REQUIRED=0` no-op remains a zero exit and therefore does not trigger `OnFailure`.
 - **No broad cleanup during promotion.** The pass does not reflow prose, delete stale pages,

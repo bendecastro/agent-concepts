@@ -403,6 +403,56 @@ class FailureNotificationTests(unittest.TestCase):
             self.assertIn("/tmp/example-vault", args)
             self.assertIn("detector failed: example reason", args)
 
+    def test_notifier_reads_the_journal_at_the_priority_systemd_actually_uses(self) -> None:
+        # systemd logs unit stderr at notice; a -p err..emerg query matches nothing.
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            args_file = directory / "notify-args"
+            self.write_command(
+                directory,
+                "systemctl",
+                """
+                case "$*" in
+                  *SyslogIdentifier*) printf '%s\\n' 'SyslogIdentifier=bc-wiki-maintain' ;;
+                  *) printf '%s\\n' 'Environment=VAULT_ROOT=/tmp/example-vault' ;;
+                esac
+                """,
+            )
+            self.write_command(
+                directory,
+                "journalctl",
+                """
+                for arg in "$@"; do
+                  case "$arg" in
+                    *err..emerg*|*err..alert*) exit 0 ;;
+                  esac
+                done
+                printf '%s\\n' 'refusing to run: the git worktree is dirty'
+                """,
+            )
+            self.write_command(
+                directory,
+                "notify-send",
+                "printf '%s\\n' \"$@\" > \"$NOTIFY_ARGS_FILE\"\n",
+            )
+            env = os.environ.copy()
+            env.update({
+                "PATH": f"{directory}{os.pathsep}{env['PATH']}",
+                "NOTIFY_ARGS_FILE": str(args_file),
+            })
+            result = run(
+                "/usr/bin/bash",
+                str(NOTIFIER),
+                "bc-wiki-maintain.service",
+                cwd=ROOT,
+                env=env,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            args = args_file.read_text(encoding="utf-8")
+            self.assertIn("the git worktree is dirty", args)
+            self.assertNotIn("no error output found", args)
+
     def test_promotion_noop_exits_zero_without_notification(self) -> None:
         temp, repo, vault = make_repo("")
         with temp:

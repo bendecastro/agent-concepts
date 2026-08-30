@@ -1341,3 +1341,8 @@ then `python3 scripts/lint.py`.
 ## [2026-08-30] implement | scheduled wiki failure notification
 Added runner-local fail-closed desktop notification wiring for both systemd wiki services, with
 unit-template, notifier, README, and temporary-fixture regression coverage.
+
+## [2026-08-30] implement | notifier reads the journal at systemd's real priority
+The W3 notifier filtered `-p err..emerg`, but systemd logs unit stderr at notice, so every alert
+would have degraded to "no error output found". Scoped the read by `SyslogIdentifier` instead,
+with an unscoped fallback, and added a regression test whose `journalctl` stub honours its filter.
