@@ -41,7 +41,7 @@ After a landed issue, `bc-drain-issues` may prepend at most one bounded structur
 
 ## Setup (once per repo) — `/bc-init-agent`
 
-Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from image-maze) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-issues` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-drain-issues` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. Run once; then the two halves below.
+Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from image-maze) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-issues` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-drain-issues` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. It also offers to install a per-vault `bc-wiki-maintain` systemd user timer so log promotion can run overnight; install happens only after confirm. Run once; then the two halves below.
 
 ## The two halves
 
