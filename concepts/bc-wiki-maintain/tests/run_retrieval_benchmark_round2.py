@@ -30,6 +30,12 @@ DEFAULT_RESULTS_PATH = Path(__file__).with_name("retrieval-results-round2.md")
 SKIP_DIR_NAMES = {".git", ".obsidian", "scratch", "temp", "node_modules", "vendor"}
 FLOOD_LIMIT = 15
 QMD_LIMIT = 20
+LOG_OVERLAP_MIN_TOKENS = 6
+PAGE_KIND_WEIGHTS = {
+    "root": 0.50,
+    "decisions": 1.20,
+    "project": 1.20,
+}
 
 # This is the same explicit incumbent judgment table used in round one. It is exposed in
 # the report rather than pretending that loading a curated index is a scriptable ranking task.
@@ -131,6 +137,7 @@ class Outcome:
 class AgentQuery:
     primary: str
     reformulation: str
+    log_overlap: bool = False
 
 
 def command(args: list[str], *, cwd: Path | None = None, timeout: int = 180) -> subprocess.CompletedProcess[bytes]:
@@ -147,11 +154,24 @@ def load_linter():
     if spec is None or spec.loader is None:
         raise RuntimeError(f"could not load linter module: {path}")
     module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_search():
+    path = ROOT / "concepts/bc-wiki-maintain/body/wiki_search.py"
+    spec = importlib.util.spec_from_file_location("bc_wiki_maintain_search_round2", path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"could not load search module: {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
 
 
 WIKI_LINT = load_linter()
+WIKI_SEARCH = load_search()
 
 
 def parse_questions(path: Path) -> list[Question]:
@@ -196,15 +216,18 @@ def parse_agent_queries(path: Path) -> dict[int, AgentQuery]:
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         fields = line.split("\t")
-        if len(fields) != 3:
-            raise ValueError(f"agent query row is not three tab-separated fields in {path}: {line!r}")
+        if len(fields) not in (3, 4):
+            raise ValueError(f"query row must have three fields plus an optional marker in {path}: {line!r}")
         number = int(fields[0])
-        primary, reformulation = (field.strip() for field in fields[1:])
+        primary, reformulation = (field.strip() for field in fields[1:3])
+        marker = fields[3].strip() if len(fields) == 4 else ""
+        if marker not in {"", "log-overlap"}:
+            raise ValueError(f"question {number} has an unknown marker in {path}: {marker!r}")
         if not 1 <= len(primary.split()) <= 2 or not 1 <= len(reformulation.split()) <= 2:
             raise ValueError(f"question {number} agent queries must each contain 1..2 words")
         if number in queries:
             raise ValueError(f"duplicate agent query number in {path}: {number}")
-        queries[number] = AgentQuery(primary, reformulation)
+        queries[number] = AgentQuery(primary, reformulation, marker == "log-overlap")
     if set(queries) != set(range(1, 21)):
         raise ValueError(f"expected agent query numbers 1..20 in {path}, found {sorted(queries)}")
     return queries
@@ -239,6 +262,38 @@ def eligible_pages(vault: Path, repo: Path) -> list[Page]:
         content = path.read_bytes()
         pages.append(Page(relative_path.as_posix(), path, content, decode(content)))
     return sorted(pages, key=lambda item: item.relative)
+
+
+def search_documents(pages: list[Page]):
+    return [
+        WIKI_SEARCH.Document(
+            page.relative,
+            WIKI_SEARCH.Counter(WIKI_SEARCH.tokenize(page.text)),
+            len(WIKI_SEARCH.tokenize(page.text)),
+        )
+        for page in pages
+    ]
+
+
+def page_kind(relative: str) -> str:
+    path = Path(relative)
+    return "root" if path.parent == Path(".") else path.parts[0]
+
+
+def page_kind_weighted_rank(documents, query: str, limit: int = FLOOD_LIMIT):
+    """Apply the one benchmark-only page-kind adjustment to the incumbent BM25 scores."""
+    if not documents:
+        return []
+    baseline = WIKI_SEARCH.rank_documents(documents, query, limit=len(documents))
+    weighted = [
+        WIKI_SEARCH.RankedDocument(
+            item.relative,
+            item.score * PAGE_KIND_WEIGHTS.get(page_kind(item.relative), 1.0),
+        )
+        for item in baseline
+    ]
+    weighted.sort(key=lambda item: (-item.score, item.relative))
+    return weighted[:limit]
 
 
 def page_key(relative: str) -> str:
@@ -504,6 +559,62 @@ def fixed_filter(raw: bytes, query: str, gold: str) -> Attempt:
     return Attempt(query, len(output), len(lines), rank is not None, bool(lines), rank=rank)
 
 
+def ranked_filter(ranked, query: str, gold: str) -> Attempt:
+    paths = [item.relative for item in ranked]
+    output = "".join(f"{path}\\n" for path in paths).encode("utf-8")
+    rank = next((index for index, path in enumerate(paths, 1) if path == gold), None)
+    return Attempt(query, len(output), len(paths), rank is not None, bool(paths), rank=rank, top_path=paths[0] if paths else None)
+
+
+def shared_log_excerpt(page_text: str, log_text: str, minimum: int = LOG_OVERLAP_MIN_TOKENS) -> str:
+    """Return the longest exact token run shared by a gold page and the append-only log."""
+    page_tokens = WIKI_SEARCH.tokenize(page_text)
+    log_tokens = WIKI_SEARCH.tokenize(log_text)
+    positions: dict[tuple[str, ...], int] = {}
+    for index in range(len(log_tokens) - minimum + 1):
+        positions.setdefault(tuple(log_tokens[index : index + minimum]), index)
+    best: list[str] = []
+    for index in range(len(page_tokens) - minimum + 1):
+        log_index = positions.get(tuple(page_tokens[index : index + minimum]))
+        if log_index is None:
+            continue
+        length = minimum
+        while (
+            index + length < len(page_tokens)
+            and log_index + length < len(log_tokens)
+            and page_tokens[index + length] == log_tokens[log_index + length]
+        ):
+            length += 1
+        if length > len(best):
+            best = page_tokens[index : index + length]
+    return " ".join(best)
+
+
+def log_overlap_excerpts(
+    questions: list[Question], agent_queries: dict[int, AgentQuery], pages: list[Page], vault: Path
+) -> dict[int, str]:
+    marked = [question for question in questions if agent_queries[question.number].log_overlap]
+    if len(marked) != 8:
+        raise ValueError(f"expected exactly eight log-overlap questions, found {len(marked)}")
+    by_relative = {page.relative: page for page in pages}
+    log_path = vault / "log.md"
+    if not log_path.is_file():
+        raise ValueError(f"missing log for overlap experiment: {log_path}")
+    log_text = log_path.read_text(encoding="utf-8", errors="replace")
+    excerpts: dict[int, str] = {}
+    for question in marked:
+        if page_kind(question.gold) == "root":
+            raise ValueError(f"log-overlap question {question.number} must target a compiled page: {question.gold}")
+        page = by_relative.get(question.gold)
+        if page is None:
+            raise ValueError(f"log-overlap gold page is not eligible: {question.gold}")
+        excerpt = shared_log_excerpt(page.text, log_text)
+        if not excerpt:
+            raise ValueError(f"log-overlap question {question.number} has no shared text: {question.gold}")
+        excerpts[question.number] = excerpt
+    return excerpts
+
+
 def qmd_paths(stdout: bytes, collection: str) -> list[str]:
     paths: list[str] = []
     prefix = f"qmd://{collection}/"
@@ -528,6 +639,28 @@ def qmd_attempt(qmd_bin: str, collection: str, query: str, gold: str, limit: int
         note = f"qmd exit {result.returncode}: {decode(result.stderr).strip()}"
     usable = 1 <= len(paths) <= FLOOD_LIMIT
     return Attempt(query, len(result.stdout), len(paths), rank is not None, usable, rank=rank, top_path=paths[0] if paths else None, note=note)
+
+
+def run_direct_filter(documents, query: AgentQuery, gold: str, *, weighted: bool = False) -> Outcome:
+    def attempt(query_text: str) -> Attempt:
+        ranked = (
+            page_kind_weighted_rank(documents, query_text, limit=FLOOD_LIMIT)
+            if weighted
+            else WIKI_SEARCH.rank_documents(documents, query_text, limit=FLOOD_LIMIT)
+        )
+        return ranked_filter(ranked, query_text, gold)
+
+    first = attempt(query.primary)
+    attempts = [first]
+    if first.rows == 0 or first.rows > FLOOD_LIMIT:
+        attempts.append(attempt(query.reformulation))
+    final = attempts[-1]
+    return Outcome(
+        sum(item.output_bytes for item in attempts) / 4,
+        final.usable and final.hit,
+        tuple(attempts),
+        "reformulated after zero/flood" if len(attempts) == 2 else "single usable attempt",
+    )
 
 
 def run_agent_filter(raw: bytes, query: AgentQuery, gold: str) -> Outcome:
@@ -664,6 +797,7 @@ def render_report(
     affected: list[int],
     query_commit: str,
     original_commit: str,
+    log_excerpts: dict[int, str],
 ) -> str:
     eligible = len(pages)
     direct = sum(depth == 1 for depth in depths.values())
@@ -692,6 +826,45 @@ def render_report(
         "",
     ]
     lines.extend(summary_table(agent_results))
+    incumbent = agent_results["E_bm25_direct"]
+    candidate = agent_results["F_page_kind_weighted"]
+    incumbent_misses = sum(not value.hit for value in incumbent)
+    candidate_misses = sum(not value.hit for value in candidate)
+    incumbent_rate = incumbent_misses / len(incumbent)
+    candidate_rate = candidate_misses / len(candidate)
+    incumbent_median = statistics.median(value.cost_tokens for value in incumbent)
+    candidate_median = statistics.median(value.cost_tokens for value in candidate)
+    incumbent_ci = wilson(incumbent_misses, len(incumbent))
+    candidate_ci = wilson(candidate_misses, len(candidate))
+    material_improvement = candidate_rate < incumbent_rate and candidate_ci[1] < incumbent_ci[0]
+    if candidate_median <= 800 and candidate_rate <= 0.30 and material_improvement:
+        experiment_decision = "retain the page-kind weighting in production"
+    else:
+        experiment_decision = "record a null result and leave production scoring lexical"
+    lines.extend(
+        [
+            "",
+            "## W4 page-kind experiment",
+            "",
+            f"The extended query corpus keeps **20 questions** and marks **{len(log_excerpts)}** compiled-page cases whose gold-page text shares an exact contiguous run of at least {LOG_OVERLAP_MIN_TOKENS} normalized tokens with `log.md`. The harness verifies those overlaps against the live tracked pages before measuring either reader.",
+            "",
+            "The incumbent `E_bm25_direct` calls the production `wiki_search.py` BM25 scorer. The only experimental candidate, `F_page_kind_weighted`, multiplies those same scores by page kind: `root` = 0.50, `decisions` = 1.20, `project` = 1.20, and every other top-level directory = 1.00. This tests whether compiled pages should outrank root hubs and logs without changing query terms or corpus eligibility.",
+            "",
+            f"Observed incumbent: **{incumbent_misses}/20 misses ({incumbent_rate:.2f}), median {incumbent_median:.2f} tokens**, Wilson 95% CI [{incumbent_ci[0]:.2f}, {incumbent_ci[1]:.2f}]. Candidate: **{candidate_misses}/20 misses ({candidate_rate:.2f}), median {candidate_median:.2f} tokens**, Wilson 95% CI [{candidate_ci[0]:.2f}, {candidate_ci[1]:.2f}]. The candidate must improve on the 0.15 incumbent miss rate, stay at or below 800 median tokens and 0.30 miss rate, and show a non-overlapping interval before production adoption; n=20 makes a small delta/noisy overlap insufficient.",
+            "",
+            f"**Decision: {experiment_decision}.** No production weighting is retained unless all three bars and the non-noisy improvement test hold.",
+            "",
+            "| Q | Gold compiled page | Exact page/log overlap excerpt | Primary → reformulation |",
+            "|---:|---|---|---|",
+        ]
+    )
+    for question in questions:
+        if question.number not in log_excerpts:
+            continue
+        query = agent_queries[question.number]
+        lines.append(
+            f"| {question.number} | `{question.gold}` | `{log_excerpts[question.number]}` | `{query.primary}` → `{query.reformulation}` |"
+        )
     lines.extend(
         [
             "",
@@ -701,8 +874,9 @@ def render_report(
             "",
             "## Protocol",
             "",
-            f"The frozen agent query file is `{agent_label}` (commit `{query_commit}`). Each primary and reformulation has "
-            "one or two concrete terms selected from the question wording before retrieval was run; the two attempts are "
+            f"The extended agent query file is `{agent_label}` (commit `{query_commit}`). Each primary and reformulation has "
+            "one or two concrete terms selected from the question wording before retrieval was run; rows marked `log-overlap` "
+            "identify the compiled-page/log cases above. The two attempts are "
             "fixed for all methods. A first result with **zero rows or more than 15 rows is flooded** and triggers exactly "
             "one reformulation. A nonzero result of 1–15 rows is usable; a nonzero miss in that width does not get a third "
             "attempt. Both attempts' UTF-8 output bytes are charged when the second runs.",
@@ -710,6 +884,8 @@ def render_report(
             "`B_index_agent_filter` applies case-insensitive whole-word OR to each line of `index.md`. "
             "`D_catalog_agent_filter` applies the identical OR matcher to each seven-column catalog row. "
             "`C_qmd_agent_filter` runs `qmd search <terms> -c <collection> --format files -n 20`; qmd paths are the rows. "
+            "`E_bm25_direct` runs the production stdlib BM25 reader over tracked Markdown; `F_page_kind_weighted` applies "
+            "the single page-kind adjustment to those same scores. "
             "A usable hit requires the exact gold relative path in the usable output. The filter output itself, not process "
             "startup or the catalog build, is context and costs bytes/4.",
             "",
@@ -722,8 +898,8 @@ def render_report(
             "For a single usable attempt, no reformulation was permitted. `initial-hit` means the gold path was present even "
             "if the result was flooded; the final status requires a usable 1–15-row result after any required reformulation.",
             "",
-            "| # | Gold | Primary → reformulation | A index | B index filter | C qmd filter | D catalog filter |",
-            "|---:|---|---|---:|---|---|---|",
+            "| # | Gold | Primary → reformulation | A index | B index filter | C qmd filter | D catalog filter | E direct BM25 | F page-kind weighted |",
+            "|---:|---|---|---:|---|---|---|---|---|",
         ]
     )
     for index, question in enumerate(questions):
@@ -733,7 +909,9 @@ def render_report(
             f"{a_results[index].cost_tokens:.2f}t/{'hit' if a_results[index].hit else 'MISS'} | "
             f"{attempt_cell(agent_results['B_index_agent_filter'][index])} | "
             f"{attempt_cell(agent_results['C_qmd_agent_filter'][index])} | "
-            f"{attempt_cell(agent_results['D_catalog_agent_filter'][index])} |"
+            f"{attempt_cell(agent_results['D_catalog_agent_filter'][index])} | "
+            f"{attempt_cell(agent_results['E_bm25_direct'][index])} | "
+            f"{attempt_cell(agent_results['F_page_kind_weighted'][index])} |"
         )
     lines.extend(
         [
@@ -844,7 +1022,9 @@ def render_report(
             "## Source citations",
             "",
             f"- `{qlabel}`: the 20 questions and gold paths used by this run.",
-            f"- `{agent_label}`: pre-registered one/two-term primary and reformulation pairs.",
+            f"- `{agent_label}`: pre-registered one/two-term primary and reformulation pairs, with eight `log-overlap` markers for W4.",
+            "- `concepts/bc-wiki-maintain/body/wiki_search.py`: the incumbent tracked-only BM25 scorer used by E.",
+            "- `page_kind_weighted_rank` in this benchmark: the one experimental page-kind adjustment used by F; no production scorer change was made.",
             f"- `{original_label}`: exact pre-width-fix query strings from the ea0e1f9 tree.",
             f"- `{catalog}`: this run's generated seven-column catalog; it is disposable and not an in-vault artifact.",
             f"- `{vault / 'index.md'}`: incumbent index bytes and graph source.",
@@ -871,6 +1051,8 @@ def run(args: argparse.Namespace) -> None:
     pages = eligible_pages(vault, repo)
     if len(pages) != 155:
         raise RuntimeError(f"expected image-maze benchmark corpus to contain 155 eligible pages, found {len(pages)}")
+    log_excerpts = log_overlap_excerpts(questions, agent_queries, pages, vault)
+    search_docs = search_documents(pages)
     incoming, outgoing = graph(vault, pages)
     depths = index_reachability(vault, outgoing)
     index_path = (vault / "index.md").resolve()
@@ -889,7 +1071,8 @@ def run(args: argparse.Namespace) -> None:
     index_raw = index_bytes
     catalog_raw = catalog.read_bytes()
     agent_results: dict[str, list[Outcome]] = {name: [] for name in (
-        "A_index_read", "B_index_agent_filter", "C_qmd_agent_filter", "D_catalog_agent_filter"
+        "A_index_read", "B_index_agent_filter", "C_qmd_agent_filter", "D_catalog_agent_filter",
+        "E_bm25_direct", "F_page_kind_weighted",
     )}
     for question in questions:
         query = agent_queries[question.number]
@@ -897,6 +1080,8 @@ def run(args: argparse.Namespace) -> None:
         agent_results["B_index_agent_filter"].append(run_agent_filter(index_raw, query, question.gold))
         agent_results["C_qmd_agent_filter"].append(run_agent_qmd(qmd_bin, collection, query, question.gold))
         agent_results["D_catalog_agent_filter"].append(run_agent_filter(catalog_raw, query, question.gold))
+        agent_results["E_bm25_direct"].append(run_direct_filter(search_docs, query, question.gold))
+        agent_results["F_page_kind_weighted"].append(run_direct_filter(search_docs, query, question.gold, weighted=True))
 
     fixed_names = ["B_index_OR", "B_index_AND", "C_qmd", "D_catalog_OR", "D_catalog_AND"]
     fixed_current: dict[str, list[Attempt]] = {name: [] for name in fixed_names}
@@ -927,7 +1112,7 @@ def run(args: argparse.Namespace) -> None:
     results_path.write_text(
         render_report(
             vault, collection, questions, agent_queries, current_queries, original_queries, pages, catalog, index_bytes,
-            depths, agent_results, fixed_current, fixed_original, affected, query_commit, original_commit,
+            depths, agent_results, fixed_current, fixed_original, affected, query_commit, original_commit, log_excerpts,
         ),
         encoding="utf-8",
     )

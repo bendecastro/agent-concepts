@@ -40,3 +40,11 @@ weakest — neighbouring ADRs describe the same gesture vocabulary.
 | 18 | where do authored theme files become the WordPress theme, and what output must I never edit by hand? | `references/theme-build-flow.md` | references | 2026-07-12 |
 | 19 | what environment setting controls the site URLs in local versus hosted WordPress? | `references/wordpress-local-env.md` | references | 2026-08-17 |
 | 20 | what compliance work is still missing before serving explicit material? | `research/adult-content-compliance-research.md` | research | 2026-07-08 |
+
+## W4 log-overlap extension
+
+The round-two query file marks eight of these 20 questions as `log-overlap` cases. Each marked
+case targets a non-root compiled page; the benchmark verifies that the gold page and the
+append-only `log.md` share an exact contiguous run of at least six normalized tokens before
+measuring the incumbent and the page-kind candidate. The remaining 12 rows retain the original
+round-two query protocol, so the experiment stays n=20 rather than adding a second question set.

@@ -56,6 +56,24 @@ class WikiSearchTests(unittest.TestCase):
             self.assertEqual([relative for relative, _ in paths], ["vault/alpha.md", "vault/beta.md", "vault/index.md"])
             self.assertEqual(len(WIKI_SEARCH.load_documents(vault)), 3)
 
+    def test_untracked_markdown_is_invisible_until_git_added(self) -> None:
+        temp, root, vault = self.make_repo()
+        with temp:
+            new_page = vault / "new-page.md"
+            new_page.write_text(
+                "# New page\n\nThe freshly created visibility contract is here.\n", encoding="utf-8"
+            )
+            before_add = WIKI_SEARCH.rank_documents(
+                WIKI_SEARCH.load_documents(vault), "freshly created visibility", limit=15
+            )
+            self.assertNotIn("new-page.md", [item.relative for item in before_add])
+
+            run("git", "add", str(new_page), cwd=root)
+            after_add = WIKI_SEARCH.rank_documents(
+                WIKI_SEARCH.load_documents(vault), "freshly created visibility", limit=15
+            )
+            self.assertIn("new-page.md", [item.relative for item in after_add])
+
     def test_bm25_ranks_matching_specific_page_and_ties_by_path(self) -> None:
         documents = [
             WIKI_SEARCH.Document("z.md", WIKI_SEARCH.Counter({"needle": 1}), 1),

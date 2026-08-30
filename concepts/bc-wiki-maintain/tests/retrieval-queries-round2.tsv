@@ -1,21 +1,24 @@
 # Round-two agent-style queries, selected from each question text before retrieval.
-# Columns: question number<TAB>primary 1-2 terms<TAB>one reformulation 1-2 terms.
+# Columns: question number<TAB>primary 1-2 terms<TAB>one reformulation 1-2 terms<TAB>optional marker.
+# The eight `log-overlap` rows keep n=20 while targeting compiled gold pages whose text is
+# verified by the benchmark to appear in the append-only log; unmarked rows retain the original
+# round-two query set.
 # First attempt is reformulated only on zero rows or >15 rows (flooded).
 1	durable fact	ending work
 2	picture metadata	writing metadata
-3	corner sizes	button panel
-4	subscription lifecycle	payment adapters
-5	cleanup approach	keep record
+3	corner sizes	button panel	log-overlap
+4	subscription lifecycle	payment adapters	log-overlap
+5	cleanup approach	keep record	log-overlap
 6	mouse click	touch tap
 7	rate limiting	referral traffic
 8	WordPress adapter	extract first
-9	publish delay	actions v1
-10	JavaScript queue	PHP rules
-11	vibration drag	stay silent
-12	upload response	retry lost
+9	publish delay	actions v1	log-overlap
+10	JavaScript queue	PHP rules	log-overlap
+11	vibration drag	stay silent	log-overlap
+12	upload response	retry lost	log-overlap
 13	focus Escape	chest fullscreen
 14	preview source	cache changes
-15	code checks	pipeline release
+15	code checks	pipeline release	log-overlap
 16	download URL	live mode
 17	Git server	local machine
 18	theme output	authored WordPress

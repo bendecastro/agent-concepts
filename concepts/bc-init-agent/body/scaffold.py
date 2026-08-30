@@ -156,10 +156,13 @@ python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py" \\
 ```
 
 Use **2–4 meaningful content keywords**, not the user's full question. Open the relevant
-returned path(s) and verify the answer in the page text. If output is empty, reformulate once
-with a different 2–4 keyword set; empty output is not proof that this vault lacks the answer.
-If the top result is `index.md`, `map.md`, or `log.md`, add a distinguishing term and search
-again — those are hub/orientation pages, not answers. Do not grep `index.md` rows for lookup.
+returned path(s) and verify the answer in the page text. The corpus is tracked Markdown only:
+a newly created page is invisible until `git add` registers it with Git. If the fact may be in
+an untracked page, do not interpret an empty result as absence; add the page and rerun the
+search. Otherwise, if output is empty, reformulate once with a different 2–4 keyword set;
+empty output is not proof that this vault lacks the answer. If the top result is `index.md`,
+`map.md`, or `log.md`, add a distinguishing term and search again — those are hub/orientation
+pages, not answers. Do not grep `index.md` rows for lookup.
 
 Use qmd only for a deliberate cross-vault lookup, with every collection named explicitly:
 

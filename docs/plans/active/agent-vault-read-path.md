@@ -78,7 +78,9 @@ The memo left five owner decisions open. All five were answered on 2026-08-27.
 ## What recon corrected in the memo
 
 Three read-only recon passes on 2026-08-27 verified the memo's claims and then surveyed both
-concepts. All seven of the memo's defect claims are **VERIFIED and still live**.
+concepts. All seven of the memo's defect claims were **VERIFIED and live at that snapshot**;
+the successor plan has since landed the scaffold, runner, heading, and eight-vault read-path fixes
+recorded below.
 
 **A. The scaffold is in a different concept.** The memo cites `scaffold.py:163` and
 `scaffold.py:307` with no concept path. The file is `concepts/bc-init-agent/body/scaffold.py`.
@@ -226,11 +228,11 @@ precisely what keeps the catalog from becoming the next `map.md`.
 
 ### W2 — Make ranked search the actual first move in the live vaults
 
-**Partially landed 2026-08-29; remaining live-vault work is inherited by the successor plan.**
-The ranked-search decision and canonical vault instruction block landed in `bc-wiki-maintain`'s
-`SKILL.md`. The unfinished runner-prompt remainder was inherited as successor W5 and is now fixed
-by this change. The eight existing-vault instruction edits remain outstanding and are inherited
-as successor W6; this predecessor W2 remains open only for that live-vault catch-up.
+**Closed by successor W5/W6 on 2026-08-29.** The ranked-search decision and canonical vault
+instruction block landed in `bc-wiki-maintain`'s `SKILL.md`; successor W5 fixed the promotion
+runner prompt, and successor W6 applied the first-read and empty-result/hub rules to all eight
+existing vaults. The original blast-radius notes remain below as historical context, not open
+work in this plan.
 
 Everything below about *blast radius* holds — eight separate edits, three drifted variants, four
 vaults carrying a second `**START**` paragraph, and Music needing its own rewrite. What changed is
@@ -282,7 +284,7 @@ already running keep the stale value until restarted, and the seven scheduled wi
 never affected — all report `Result=success ExitStatus=0`, so this was an interactive-agent
 blocker, not a scheduled-run one.
 
-#### Original W2 notes (blast radius still accurate)
+#### Original W2 notes (historical snapshot)
 
 The catalog is inert if the instructions still send agents elsewhere. The scaffold is
 deliberately additive — it "creates only the files that are missing and leaves every existing
@@ -433,18 +435,18 @@ spent from vault entry to opening the correct page, and whether the correct page
 
 ### W5 — `bc-init-agent` stops minting the old first move
 
-**Inherited by `agent-vault-write-read-contract.md` as W1; not yet landed.** The ranked-search
-wording is now present in `bc-wiki-maintain`'s skill and promotion runner, but all four
-`scaffold.py` directives below still encode the old access verb. The successor plan owns this
-remaining scaffold work as W1 and must not treat this predecessor item as complete.
+**Closed by successor W1 on 2026-08-29.** The successor landed the canonical ranked-search block
+in the generator, moved the root first read to the vault `AGENTS.md`, updated the seeded ADR,
+tasks, and orientation templates, and added the generated read-path check. The original defect
+and acceptance record follows as historical context; it is not open work in this predecessor.
 
-**Still required, with the W2 wording rather than the catalog wording.** All four `scaffold.py`
-directives below still encode the old access verb and still have to change together. The
-substitution is ranked search, not catalog filtering, and there is no cold-cache step to teach.
+**Historical requirement, satisfied by successor W1.** All four `scaffold.py` directives had to
+change together. The substitution was ranked search, not catalog filtering, and there is no
+cold-cache step to teach.
 
-#### Original W5 specification
+#### Original W5 specification (historical snapshot)
 
-Every new vault the scaffold creates carries the navigation W2 is removing. Four separate
+Every new vault the scaffold creates carried the navigation W2 was removing. Four separate
 directives in `scaffold.py` encode the old access verb, and they must change together or the
 generated vault contradicts itself:
 

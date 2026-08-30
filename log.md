@@ -1307,3 +1307,10 @@ Lint's check list gained graph validity and stale views.
 Two runs against throwaway clones under "skip the metadata bookkeeping" pressure. Run 1 passed but was
 contaminated by the plan document in the clone; run 2 passed cleanly with the plan removed and after
 in-character pushback. Graded from clone Git objects and lint, not the subagents' reports.
+
+## [2026-08-30] implement | vault write/read contract W3 and W4
+Recorded the tracked-only/new-page boundary in the canonical maintainer and generated vault instructions,
+added exclusion/synchronization regressions, and measured the sole page-kind candidate across the extended
+20-question corpus. The candidate improved 3/20 to 2/20 misses but its overlapping Wilson intervals made
+that one-miss delta noisy, so production BM25 remains unchanged; predecessor and active-plan status text was
+reconciled while the W5 pressure gate stays parent-owned.

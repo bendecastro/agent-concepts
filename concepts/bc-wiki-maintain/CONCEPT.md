@@ -51,6 +51,11 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   links for existing `findings/` and `decisions/` pages the detector lists as missing, except
   README stubs and templates — those were the cold-start misses the first live CV run left
   behind. It never generates, reorders, or backfills the rest of the catalog.
+- **Tracked-only visibility is deliberate (owner decision, 2026-08-29).** The reader searches
+  tracked Markdown from the working tree, so a newly created page is not searchable until it is
+  registered with Git via `git add`. The write/read discipline states this boundary and tells an
+  agent not to treat an empty result as absence when an untracked page may contain the answer;
+  widening the corpus to on-disk untracked Markdown was rejected as unnecessary scratch exposure.
 - **Git supplies dates; pages do not gain required frontmatter.** A second `updated` field would
   be hand-maintained state that can drift. Page kind comes from its directory; date evidence comes
   from `git log -1 --format=%cs -- <path>`.
@@ -183,6 +188,12 @@ headings while keeping the undatable one in the heading list and naming it in th
 wholly undatable set still yields `PROMOTION_RANGE=invalid`. Verified read-only against the four
 live vaults: `codebase-design` moved from `invalid` to `2026-06-28..2026-07-14` with 18 headings,
 `sql` and `Scripts` stayed `invalid`, and `Music` was unchanged at `2026-05-29..2026-08-05`.
+
+**2026-08-30 — PASS — tracked-only visibility regression.** `tests/test_wiki_search.py` now
+creates a new Markdown page, verifies that the direct reader excludes it before `git add`, then
+verifies that the same page is searchable after it is registered in Git. The generated copy of
+the canonical vault block is checked byte-for-byte against `body/SKILL.md` by
+`../bc-init-agent/tests/test_read_contract.py`; both checks preserve the tracked-only boundary.
 
 **2026-08-25 — PASS — regression suite extended (18 tests).** Gate 1 became mechanically
 enforceable: a purely additive append commits, an in-place rewrite of an existing line fails

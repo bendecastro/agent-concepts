@@ -1,11 +1,12 @@
 # Agent vault write/read contract — make the scaffold and the maintainer agree
 
-Date: 2026-08-29
+Date: 2026-08-29, updated 2026-08-30
 Status: active
 
-## Progress (2026-08-29)
+## Progress (2026-08-30)
 
-W1, W2, W5, W6 and W7 landed. W3 and W4 remain open, which is why this plan is still active.
+W1, W2, W3, W4, W6 and W7 are implemented. W5's runner-prompt implementation is landed, but
+its required post-change pressure evidence remains parent-owned; this plan therefore stays active.
 
 | Item | State | Evidence |
 |---|---|---|
@@ -13,9 +14,9 @@ W1, W2, W5, W6 and W7 landed. W3 and W4 remain open, which is why this plan is s
 | W2.1 scaffold emits `## [__DATE__]` | **done** | `43072a4`; generated vault lints to a valid range |
 | W2.2 normalize five existing logs | **done** | one commit in each of Scripts, sql, codebase-design, CV, image-maze; heading counts unchanged, diffs heading-only |
 | W2.3 lint fails closed on `invalid` | **done** | `56cc7bd`; all eight live vaults still exit 0, a pre-normalization backlog now exits 1 |
-| W3 search corpus boundary | **open** | owner chose **tracked-only** and **write-discipline placement** on 2026-08-29; not yet written into `bc-wiki-maintain` |
-| W4 non-lexical ranker signal | **open** | not measured |
-| W5 promotion runner prompt | **done** | `6794ee3` |
+| W3 search corpus boundary | **done** | owner chose **tracked-only** on 2026-08-29; boundary is recorded in `bc-wiki-maintain` and both canonical instruction copies; untracked-page regression passes |
+| W4 non-lexical ranker signal | **done — null result** | 2026-08-30 round-two report: direct BM25 3/20 misses, 174.88 median; page-kind candidate 2/20, 179.88 median; overlapping Wilson intervals make the one-miss delta noisy, so production remains lexical |
+| W5 promotion runner prompt | **implementation done; pressure pending** | `6794ee3`; parent-owned post-change `pressure-promotion.md` run still required |
 | W6 catch up eight vaults | **done** | one commit per repo; all eight vault files carry the empty-result and hub-page rules, no root file is index-first |
 | W7 reconcile predecessor | **done** | `6f20b27`; the `$AGENT_CONCEPTS` blocker was re-measured, found still live, then fixed |
 
@@ -23,12 +24,13 @@ One finding outside the original scope, left open deliberately: five of six pres
 committed to a fixture repo without being asked, while correctly following the generated
 "append durable discoveries to `log.md`" instruction. Whether a read-only question should
 trigger a wiki write is an update-discipline decision, not a defect.
-Verification: no work item implemented. The findings below come from running
-[`wiki_lint.py`](../../../concepts/bc-wiki-maintain/body/wiki_lint.py) against all eight live
-vaults on 2026-08-29, reading the current
-[`scaffold.py`](../../../concepts/bc-init-agent/body/scaffold.py), and an independent review that
-corrected five claims in the first draft — the citation audit is in that review, and its
-corrections are folded in below.
+Verification: W1/W2/W3/W4/W5 implementation, W6 catch-up, and W7 reconciliation are recorded
+above and below. W3's tracked-only boundary is covered by focused reader and generator tests;
+W4's reproducible 20-question page-kind experiment is in
+[`retrieval-results-round2.md`](../../../concepts/bc-wiki-maintain/tests/retrieval-results-round2.md)
+and produced a null result. The W5 implementation is present, but its post-`6794ee3` pressure
+run is intentionally left to the parent after integration. The original 2026-08-29 findings
+below remain as baseline rationale and are labeled where their current state changed.
 
 Successor to [`agent-vault-read-path.md`](agent-vault-read-path.md), which resolved the retrieval
 question and left the write side untouched. That plan proved ranked search beats every
@@ -39,24 +41,28 @@ knowledge is written by one concept and maintained by another that does not acce
 
 ## Problem
 
-`bc-init-agent` and `bc-wiki-maintain` were designed at different times and share no contract.
-Init writes a shape the maintainer cannot consume, and the maintainer expects a shape init does
-not produce. Three consequences, each verified against the code rather than inferred:
+At filing on 2026-08-29, `bc-init-agent` and `bc-wiki-maintain` were designed at different times
+and shared no contract. W1/W2/W5/W6 now close the scaffold, heading, runner, and existing-vault
+parts of that mismatch; W3 records the remaining tracked-only visibility boundary and W4 records
+the measured ranking result. The original consequences below remain as the diagnosis that drove
+the work, with their post-implementation state called out explicitly.
 
-**New vaults are born on the retired read path.** `scaffold.py:40-42` still emits "Before making
-non-trivial changes, read: 1. `.bc-agent/index.md`", and `scaffold.py:163` still emits "Read
+**Baseline diagnosis (fixed by W1): new vaults were born on the retired read path.** At filing,
+`scaffold.py:40-42` emitted "Before making
+non-trivial changes, read: 1. `.bc-agent/index.md`", and `scaffold.py:163` also emitted "Read
 `index.md` → this file → `map.md` → `tasks/active.md`". The maintainer says the opposite:
 "First move: search the vault, do not read the index"
 ([`SKILL.md:75`](../../../concepts/bc-wiki-maintain/body/SKILL.md)). The 2026-08-28 rollout
 edited eight existing vaults by hand; it did not touch the generator that mints the ninth. Every
 future vault regresses, and the rollout has to be repeated manually forever.
 
-**The promoter fails closed when no heading in a vault's backlog is datable.** Init emits
+**Baseline diagnosis (fixed by W2): the promoter failed closed when no heading in a vault's backlog was datable.** At filing, init emitted
 `## __DATE__`, rendered to `## 2026-06-26` (`scaffold.py:307`). The detector matches only
 `^## \[(\d{4}-\d{2}-\d{2})\]` (`wiki_lint.py:19`). A backlog with no datable heading yields
 `PROMOTION_RANGE=invalid`, and
 [`run-promotion.sh:82-84`](../../../concepts/bc-wiki-maintain/body/runner/run-promotion.sh)
-aborts. Lint still exits 0, so nothing surfaces it.
+aborted. Lint still exited 0, so nothing surfaced it. W2 now emits detector-compatible headings,
+normalizes the five affected live logs, and fails closed for an all-undatable backlog.
 
 A mixed backlog is **not** a failure and must not be treated as one: an undatable heading narrows
 the range while staying in the emitted heading list, so the classification gate still forces a
@@ -64,14 +70,16 @@ verdict on it ([`CONCEPT.md:74-77`](../../../concepts/bc-wiki-maintain/CONCEPT.m
 `tests/test_wiki_maintain.py:107-119`). That behavior is deliberate and this plan does not touch
 it.
 
-**Newly created pages are invisible to the next search.** The retrieval corpus is `git ls-files`
-(`wiki_search.py:65-76`), read from the working tree (`:121`). Edits to tracked pages are
-therefore findable immediately; a page created this turn is not findable until it is tracked,
-which collides with the same-turn update discipline.
+**Newly created pages are invisible to the next search by deliberate choice.** The retrieval corpus
+is `git ls-files` (`wiki_search.py:65-76`), read from the working tree (`:121`). Edits to tracked
+pages are therefore findable immediately; a page created this turn is not findable until it is
+registered with Git via `git add`. W3 records that write/read boundary and requires an agent not
+to interpret an empty result as absence when an untracked page may contain the answer.
 
-## What the 2026-08-29 sweep found
+## What the 2026-08-29 sweep found (baseline)
 
-`wiki_lint.py` against each live vault, plus `grep -c "^## \["` on each `log.md`. An independent
+`wiki_lint.py` against each live vault, plus `grep -c "^## \["` on each `log.md`. W1/W2/W6
+corrected the generated and live surfaces after this inventory. An independent
 reviewer re-grepped the heading counts and confirmed all eight; the Git-derived columns were not
 independently re-run.
 
@@ -98,9 +106,10 @@ Three states:
 Only Music, homeflix-prod, and Homeflix are structurally safe, and only because their logs were
 written in the bracketed style the workspace root uses.
 
-The read-path rollout is also uneven. All eight vault `AGENTS.md` files name `wiki_search.py`, but
+Before W6, the read-path rollout was also uneven. All eight vault `AGENTS.md` files name
+`wiki_search.py`, but
 four (Scripts, codebase-design, sql, CV) carry the one-line form with no empty-result or hub-page
-rules. And **all eight root `AGENTS.md` files still route a cold agent to `index.md` first** —
+rules. And **before W6, all eight root `AGENTS.md` files routed a cold agent to `index.md` first** —
 `Music/AGENTS.md:9`, `Scripts/AGENTS.md:5`, `Homeflix/AGENTS.md:11`, `homeflix-prod/AGENTS.md:12`,
 and `:7` in each of CV, sql, codebase-design, and image-maze. A fresh agent pays the old cost
 before it reaches the vault file that replaced it.
@@ -222,6 +231,13 @@ This is an owner decision, not a defect. Options:
 does not read an empty result as absence. A fresh agent cannot close this item without that
 answer; asking is the first step, not an optional one.
 
+**Result (2026-08-30 — done).** The owner chose tracked-only with the boundary in the write/read
+discipline: a newly created Markdown page is invisible until `git add` registers it with Git,
+and an empty result is not proof of absence when that page may be untracked. The canonical block
+in `bc-wiki-maintain/body/SKILL.md` and its generator copy in `bc-init-agent/body/scaffold.py`
+state the rule. `test_wiki_search.py` proves exclusion before `git add` and visibility afterward;
+`bc-init-agent/tests/test_read_contract.py` proves the two canonical copies stay synchronized.
+
 ### W4 — measure whether the ranker needs a non-lexical signal
 
 BM25 scores term counts and length only (`wiki_search.py:132-164`). Consequences: `log.md`
@@ -242,11 +258,22 @@ exceeding the 800-token bar (`agent-vault-read-path.md:346,398`). Note the prede
 constraint: n=20 cannot rank retrievers by accuracy (`:357-359`), so a small miss-rate delta is
 not evidence. A null result is a valid outcome and closes the item.
 
+**Result (2026-08-30 — done, null).** The extended 20-question corpus marks eight compiled-page
+cases with exact six-or-more-token page/log overlap. The incumbent direct BM25 reader measured
+3/20 misses (0.15), median 174.88 tokens; the sole page-kind candidate measured 2/20 misses
+(0.10), median 179.88 tokens. Both candidate bars passed, but the Wilson intervals overlap and
+the one-miss delta is therefore noisy at n=20. No production weighting was retained; the
+production reader remains lexical. The reproducible per-question measurements and overlap
+excerpts are in `retrieval-results-round2.md`, with deterministic coverage in
+`tests/test_retrieval_benchmark_round2.py`.
+
 ### W5 — inherit the unfinished remainder of the predecessor's W2
 
 The predecessor's W2 acceptance required removing the wholesale index read from the promotion
-runner. It is still there: `run-promotion.sh:122-123` instructs the agent to "Read the vault's
-AGENTS.md, index.md, log.md". That contradicts the read path in the same concept's own skill.
+runner. That implementation landed in `6794ee3`: `run-promotion.sh:122-123` now names the vault
+`AGENTS.md`, search-first retrieval, and relevant log entries instead of reading `index.md` and
+`log.md` wholesale. The implementation is complete; the current consuming-agent pressure proof
+is still parent-owned and remains the reason this target plan stays active.
 
 **Acceptance.** The runner prompt names search-first retrieval instead of a wholesale `index.md`
 read, and the promotion pressure scenario
