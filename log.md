@@ -1283,3 +1283,8 @@ the default the new path replaced.
 ## [2026-08-30] implement | bilateral skill relationship design
 Added the proposed one-source relationship graph design: curated forward edges, generated incoming
 views, maintainer-only impact review, and deterministic lint/generator requirements.
+
+## [2026-08-30] implement | bilateral skill relationships plan activated
+Moved the design record to active and turned it into a seven-task implementation plan: module
+contract for scripts/relationships.py, exact rendering contract, TDD fixture tasks, six verified
+pilot edges, the AGENTS upkeep rule, and its pressure run.

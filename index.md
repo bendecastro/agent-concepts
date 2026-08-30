@@ -113,9 +113,10 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 ### Proposed
 
 - [bc-init-agent-wiki-maintain.md](docs/plans/proposed/bc-init-agent-wiki-maintain.md) — `/bc-init-agent` close-out offers to install a per-vault `bc-wiki-maintain` promotion timer after confirm so a new wiki can promote overnight from day one.
-- [bilateral-skill-relationships.md](docs/plans/proposed/bilateral-skill-relationships.md) — one authoritative forward relationship graph with generated incoming views so maintainers can inspect callers and change impact without hand-maintaining reverse links.
 
 ### Active
+
+- [bilateral-skill-relationships.md](docs/plans/active/bilateral-skill-relationships.md) — one authoritative forward relationship graph with generated incoming views so maintainers can inspect callers and change impact without hand-maintaining reverse links. Seven tasks: a validated schema, deterministic rendering, lint wiring with a single write mode, six verified pilot edges, the AGENTS upkeep rule, and its pressure run.
 
 - [bc-drain-issues-v3-review-economy.md](docs/plans/active/bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.
 - [bc-drain-issues-gate-b-deterministic-trace.md](docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md) — deterministic two-rework Gate B trace and exact-hash approval verification.
