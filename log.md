@@ -1314,3 +1314,9 @@ added exclusion/synchronization regressions, and measured the sole page-kind can
 20-question corpus. The candidate improved 3/20 to 2/20 misses but its overlapping Wilson intervals made
 that one-miss delta noisy, so production BM25 remains unchanged; predecessor and active-plan status text was
 reconciled while the W5 pressure gate stays parent-owned.
+
+## [2026-08-30] test | vault write/read W4 page-kind benchmark
+Extended the existing n=20 corpus with eight verified compiled-page/log overlap cases and compared
+production direct BM25 with the page-kind candidate. Direct BM25 was 3/20 misses at 174.88 median;
+the candidate was 2/20 at 179.88, but overlapping Wilson intervals made the one-miss improvement
+noisy, so the report records a null result and production scoring remains lexical.
