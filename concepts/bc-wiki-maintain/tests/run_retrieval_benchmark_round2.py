@@ -37,6 +37,15 @@ PAGE_KIND_WEIGHTS = {
     "project": 1.20,
 }
 
+
+def display_path(path: Path) -> str:
+    """Render a filesystem path for committed reports without a resolved home prefix."""
+    text = str(path)
+    home = str(Path.home())
+    if text == home or text.startswith(home + os.sep):
+        return "$HOME" + text[len(home):]
+    return text
+
 # This is the same explicit incumbent judgment table used in round one. It is exposed in
 # the report rather than pretending that loading a curated index is a scriptable ranking task.
 INDEX_READ_ASSESSMENTS: dict[int, tuple[bool, str]] = {
@@ -811,6 +820,7 @@ def render_report(
     qlabel = QUESTIONS_PATH.relative_to(ROOT).as_posix()
     agent_label = AGENT_QUERIES_PATH.relative_to(ROOT).as_posix()
     original_label = ORIGINAL_QUERIES_PATH.relative_to(ROOT).as_posix()
+    vault_display = display_path(vault)
     lines = [
         "# Image-maze retrieval benchmark — round two",
         "",
@@ -818,7 +828,7 @@ def render_report(
         "",
         "## Answer to the review question",
         "",
-        f"The benchmark uses **{eligible} eligible tracked Markdown pages** from `{vault}`. The proposed catalog has "
+        f"The benchmark uses **{eligible} eligible tracked Markdown pages** from `{vault_display}`. The proposed catalog has "
         f"**{catalog.stat().st_size:,} bytes / {catalog.stat().st_size / 4:.2f} tokens** before any filter output. "
         f"The index has {len(index_bytes):,} bytes / {len(index_bytes) / 4:.2f} tokens.",
         "",
@@ -1027,7 +1037,7 @@ def render_report(
             "- `page_kind_weighted_rank` in this benchmark: the one experimental page-kind adjustment used by F; no production scorer change was made.",
             f"- `{original_label}`: exact pre-width-fix query strings from the ea0e1f9 tree.",
             f"- `{catalog}`: this run's generated seven-column catalog; it is disposable and not an in-vault artifact.",
-            f"- `{vault / 'index.md'}`: incumbent index bytes and graph source.",
+            f"- `{display_path(vault / 'index.md')}`: incumbent index bytes and graph source.",
             "",
         ]
     )

@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: pass
-tested: 2026-08-28
+tested: 2026-08-30
 deployed: 2026-08-23
 ---
 # Concept: bc-wiki-maintain
@@ -56,6 +56,11 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   registered with Git via `git add`. The write/read discipline states this boundary and tells an
   agent not to treat an empty result as absence when an untracked page may contain the answer;
   widening the corpus to on-disk untracked Markdown was rejected as unnecessary scratch exposure.
+- **Page-kind weighting was measured and not retained (2026-08-30).** The sole W4 candidate
+  multiplied the production BM25 score by page kind (`root` 0.50, `decisions`/`project` 1.20).
+  On the extended 20-question corpus it moved 3/20 misses at 174.88 median tokens to 2/20 at
+  179.88, but the Wilson intervals overlapped, so n=20 cannot treat the one-miss delta as
+  evidence. A null result is the recorded outcome; production scoring stays lexical BM25.
 - **Git supplies dates; pages do not gain required frontmatter.** A second `updated` field would
   be hand-maintained state that can drift. Page kind comes from its directory; date evidence comes
   from `git log -1 --format=%cs -- <path>`.
@@ -138,6 +143,10 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   in the report.
 - `tests/retrieval-results-round2.md` (commit `a09d3e38469ea5cd2f460aa5319eaace29a84b71`) —
   the agent-style re-score and independent blind correction of the incumbent index judgment.
+- `tests/retrieval-results-round2.md` (commit `8ddc169a74aad6a2e7ecc9b5b150b777cc3fd6e1`) —
+  the W4 page-kind experiment on the current round-two result: direct BM25 3/20 misses at
+  174.88 median versus page-kind 2/20 at 179.88, overlapping Wilson intervals, null result,
+  production remains lexical.
 - `tests/retrieval-results-fallback.md` (commit `e72e4652325f6645378ac9691fe98800316e686d`) —
   the direct-BM25, ranked-shell, qmd, index, and catalog comparison that supports this read-path
   order. Its n=20 accuracy intervals overlap; it is provenance for the operational decision, not
@@ -147,9 +156,9 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 
 `tests/pressure-promotion.md` defines the promotion-gate pressure scenarios.
 `tests/pressure-read-path.md` defines the five read-path rationalisation attacks: index shortcut,
-empty-result-as-absence, whole-question query, hub-page result, and missing-qmd fallback. This
-revision's read-path scenario must hold before the changed body is redeployed; the frontmatter
-therefore records a partial status rather than claiming the older promotion run covered it.
+empty-result-as-absence, whole-question query, hub-page result, and missing-qmd fallback. The
+latest discipline-enforcing promotion pressure is the 2026-08-30 **PASS 5/5** record below;
+frontmatter `test_status: pass` / `tested: 2026-08-30` matches that run.
 
 **2026-08-22 — PASS 4/4** (Pi/Luna max consumers). Four fresh `worker` agents ran the pass against
 four isolated copies of a seeded fixture vault (`git init`, one baseline commit), each handed one
@@ -231,14 +240,15 @@ refusal was verified directly against the runner rather than through an agent: e
 Fixture builder and transcripts: `/tmp/bc-swarm/2026-08-25-pressure-run/` (ephemeral; the builder
 is worth re-creating from the `## Fixture` section rather than trusted to survive).
 
-**2026-08-30 — MIXED 4/5 after the W5 runner-prompt change; contradiction citation tune, rerun pending.**
-Five fresh consumers against isolated fixtures after `6794ee3`. Additive-only, runner-default
-commit, explicit-manual commit, and detector-first held from Git objects and file bytes. The
-contradiction open-question cited both conflicting pages and carried the `2026-08-27` date, but
-did not explicitly cite the originating `log.md` heading/date that `tests/pressure-promotion.md`
-grades. Gate 3 named both page citations and omitted that log provenance; the 2026-08-30 skill
-tune requires the exact originating log heading/date because a date token is not a source
-citation. This record does **not** claim the contradiction scenario has been re-run.
+**2026-08-30 — PASS 5/5 after one Gate 3 tune and contradiction rerun.** First post-`6794ee3`
+consuming-agent run was **4/5**: additive-only, runner-default, explicit-manual, and
+detector-first held from Git objects and file bytes; contradiction cited both pages and a date
+but not the originating `log.md` heading/date. Gate 3 was tuned to require that citation. The
+contradiction-only rerun then cited `.bc-agent/log.md` heading `## [2026-08-27] Acceptance-bar
+contradiction` (date 2026-08-27), left spike/tasks/`log.md` bytes unchanged, classified 1
+conflict + 2 promote, and did not stage or commit. Combined grade: **PASS 5/5**. Luna/Codex
+transport failed before any fixture write; that attempt is not a gate result. Durable record:
+[`tests/pressure-promotion-results-2026-08-30.md`](tests/pressure-promotion-results-2026-08-30.md).
 
 Two limits on this evidence. The consumers were one model at max thinking, so a pass here is
 weaker evidence than a low-thinking run, which is where gate loopholes usually open. And the
@@ -273,9 +283,9 @@ it is scoped to one vault chosen at install time and is not part of the skill de
 - The detector derives later ranges from the heading difference between the latest relevant
   promotion commit and the current log. Non-standard headings are excluded from the range but
   still listed for classification; only a wholly undatable set produces an invalid range and
-  fails closed. Vaults using the bare `## YYYY-MM-DD` form throughout (`Scripts`, `sql`)
-  therefore stay blocked until a human normalises their headings — an edit to the append-only
-  `log.md`, and so a deliberate human act, never something a promotion pass does to itself.
+  fails closed. W2.2 already wrapped the live Scripts and sql logs, so those vaults are not
+  blocked by a wholly undatable backlog. Remaining heading-form drift is still a human edit to
+  the append-only `log.md`, never something a promotion pass does to itself.
 - An unresolved mutually exclusive claim is filed and skipped as truth; the rest of the pass
   continues. A scheduled run may still need human follow-up on the question.
 - Heading lists already closed by a thin 2026-08-23/24 promotion commit stay closed; this gate

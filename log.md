@@ -1325,3 +1325,15 @@ noisy, so the report records a null result and production scoring remains lexica
 Gate 3 now requires every conflict open-question to cite the exact originating `log.md` heading/date
 in addition to both mutually exclusive source pages. First post-`6794ee3` promotion pressure was
 4/5; the contradiction rerun is not claimed.
+
+## [2026-08-30] implement | close vault write/read contract
+Recorded W5 promotion pressure PASS 5/5 after the Gate 3 tune and contradiction rerun, made the
+round-two report emit `$HOME` display paths, and moved the write/read contract plan to implemented.
+
+## [2026-08-30] test | vault promotion pressure 5/5 and portable display path
+Durable results artifact grades fallback 4/5 plus the tuned contradiction rerun as combined PASS 5/5.
+Added a regression that the round-two report renderer never interpolates a resolved home path.
+
+## [2026-08-30] lint | regenerate status after wiki-maintain tested date
+Ran `python3 scripts/lint.py --write-status` because `bc-wiki-maintain` `tested` moved to 2026-08-30,
+then `python3 scripts/lint.py`.

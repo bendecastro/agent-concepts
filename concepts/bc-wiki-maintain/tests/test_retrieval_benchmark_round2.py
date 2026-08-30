@@ -42,6 +42,19 @@ class RetrievalBenchmarkRoundTwoTests(unittest.TestCase):
         self.assertEqual(excerpt, "durable compiled page records the chosen contract for later readers")
         self.assertEqual(ROUND_TWO.shared_log_excerpt("one two three", "one two three"), "")
 
+    def test_display_path_uses_home_placeholder_not_resolved_home(self) -> None:
+        home = Path.home()
+        vault = home / "Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent"
+        shown = ROUND_TWO.display_path(vault)
+        self.assertEqual(
+            shown,
+            "$HOME/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent",
+        )
+        self.assertNotIn(str(home), shown)
+        self.assertEqual(ROUND_TWO.display_path(vault / "index.md"), shown + "/index.md")
+        self.assertEqual(ROUND_TWO.display_path(Path("/tmp/vault")), "/tmp/vault")
+        self.assertEqual(ROUND_TWO.display_path(home), "$HOME")
+
 
 if __name__ == "__main__":
     unittest.main()

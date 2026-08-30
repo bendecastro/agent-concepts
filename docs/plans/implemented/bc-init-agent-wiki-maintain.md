@@ -301,4 +301,4 @@ git commit -m "test | bc-init-agent wiki-maintain timer offer pressure"
 - No installer script, no scaffold timer, no lint-timer install, no alias.
 - Paths and unit names are consistent (`bc-wiki-maintain-<slug>.*`).
 - Task 1 before Task 2; pressure before claiming the gate.
-- Neighboring plan `docs/plans/active/agent-vault-write-read-contract.md` is not in the file map.
+- Neighboring plan `docs/plans/implemented/agent-vault-write-read-contract.md` is not in the file map.
