@@ -1,0 +1,29 @@
+# TEMPLATE — edit the three Environment= paths below before installing.
+# Copy this into ~/.config/systemd/user/ rather than symlinking it, so your local
+# paths are not overwritten when this repository updates.
+
+[Unit]
+Description=Promote all configured project wikis
+Documentation=man:systemd.service(5)
+Wants=network-online.target
+After=network-online.target
+OnFailure=bc-wiki-notify@%n.service
+
+[Service]
+Type=oneshot
+SyslogIdentifier=bc-wiki-maintain-all
+# EDIT: your checkout of the agent-concepts workspace.
+WorkingDirectory=%h/path/to/agent-concepts
+Environment=AGENT_CONCEPTS=%h/path/to/agent-concepts
+# Deliberately separate from the read-only lint list; this list authorises writes.
+Environment=VAULT_LIST=%h/.config/agent-concepts/wiki-promotion-vaults.txt
+# EDIT: the agent CLI used for the promotion passes.
+Environment=PI_BIN=%h/.local/bin/pi
+ExecStart=/usr/bin/bash -c 'exec "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/run-promotion-all.sh"'
+# Eight serial runs at the single-vault 30min limit, plus an hour for overhead.
+TimeoutStartSec=5h
+StandardOutput=journal
+StandardError=journal
+
+# The wrapper continues after a vault-level failure and exits nonzero if any vault failed.
+# Install this as an alternative to, not alongside, one-vault promotion services.

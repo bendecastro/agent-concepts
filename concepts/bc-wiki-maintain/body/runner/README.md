@@ -107,6 +107,71 @@ systemctl --user disable --now bc-wiki-lint.timer
 
 The lint-all runner is intentionally separate from the one-vault promotion runner below.
 
+## Promote all configured vaults (list-driven alternative)
+
+`run-promotion-all.sh` reads a configured `VAULT_LIST`, prints one header per entry, and invokes
+`run-promotion.sh` once for each directory. The child runner retains every
+per-vault safety check and commit rule. A missing directory or failed child is reported and does
+not stop later vaults; the all-vault runner exits nonzero when any vault fails and its final
+summary lists each failing path on its own line.
+
+Use a separate list from `wiki-lint-vaults.txt`. Lint only reads vaults, while promotion invokes
+an agent that writes and commits, so adding a vault to the lint list must not silently authorise a
+scheduled write. The promotion list is machine-local and uses the same syntax as the lint list:
+
+```text
+# Vaults explicitly authorised for scheduled promotion
+~/Sync/Music/.bc-agent
+~/Sync/Scripts/.bc-agent
+~/path/to/project/.bc-agent
+```
+
+This list-driven timer is an **alternative** to the one-vault promotion timers, not an addition
+to them. Disable the per-vault promotion timers before enabling this timer, so a vault cannot be
+processed concurrently by two agents.
+
+Install the all-vault timer after review; this only copies templates and does not install anything
+by itself:
+
+```bash
+export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"
+unit_dir="$HOME/.config/systemd/user"
+list_file="$HOME/.config/agent-concepts/wiki-promotion-vaults.txt"
+mkdir -p "$(dirname "$list_file")"
+$EDITOR "$list_file"
+install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain-all.service" \
+  "$unit_dir/bc-wiki-maintain-all.service"
+install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain-all.timer" \
+  "$unit_dir/bc-wiki-maintain-all.timer"
+install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-notify@.service" \
+  "$unit_dir/bc-wiki-notify@.service"
+$EDITOR "$unit_dir/bc-wiki-maintain-all.service"  # set AGENT_CONCEPTS, VAULT_LIST, and PI_BIN
+$EDITOR "$unit_dir/bc-wiki-notify@.service"       # set AGENT_CONCEPTS
+systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-all.service"
+systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-all.timer"
+systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"
+# Disable every installed bc-wiki-maintain-*.timer for the one-vault alternative first.
+systemctl --user daemon-reload
+systemctl --user enable --now bc-wiki-maintain-all.timer
+```
+
+Check the all-vault run and its per-vault failure summary with:
+
+```bash
+systemctl --user status bc-wiki-maintain-all.timer
+systemctl --user status bc-wiki-maintain-all.service
+journalctl --user -u bc-wiki-maintain-all.service --since today
+```
+
+The all-vault service has no single `VAULT_ROOT`; when it fails, the runner's final journal
+summary names every failed vault path so the notifier's short excerpt remains actionable.
+
+Disable the list-driven timer without deleting its copied units:
+
+```bash
+systemctl --user disable --now bc-wiki-maintain-all.timer
+```
+
 ## Install after review
 
 Set `AGENT_CONCEPTS` to the checkout that contains this concept, then copy the units

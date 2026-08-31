@@ -1,0 +1,16 @@
+# TEMPLATE — copy this file; do not symlink it. Edit the service paths before
+# installing and enabling the timer.
+
+[Unit]
+Description=Scheduled promotion for all configured project wiki vaults
+
+[Timer]
+# Distinct from the one-vault promotion timer at 03:30 and lint-all at 04:15.
+OnCalendar=*-*-* 02:30:00
+RandomizedDelaySec=15min
+Persistent=true
+AccuracySec=1min
+Unit=bc-wiki-maintain-all.service
+
+[Install]
+WantedBy=timers.target

@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: pass
-tested: 2026-08-30
+tested: 2026-08-31
 deployed: 2026-08-23
 ---
 # Concept: bc-wiki-maintain
@@ -128,6 +128,14 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   that it honours the filter arguments, because a stub that ignores them passes either way. Missing or failing desktop display is a nonzero notifier result rather than a silent
   success; unavailable vault or journal data is named honestly in the message. A
   `PROMOTION_REQUIRED=0` no-op remains a zero exit and therefore does not trigger `OnFailure`.
+- **List-driven scheduling has a separate write-authorisation list (owner decision, 2026-08-31).**
+  `body/runner/run-promotion-all.sh` reads `VAULT_LIST` and delegates each entry to the unchanged
+  `run-promotion.sh`, preserving the per-vault clean-tree, additive-write, classification, and
+  dedicated-commit gates while continuing after a vault-level failure. Its systemd template uses
+  `wiki-promotion-vaults.txt`, not the lint list: lint only reads, whereas promotion writes and
+  commits, so adding a vault to lint must not silently authorise scheduled writes. The all-vault
+  unit is an alternative to one-vault timers, not an additional concurrent writer; its final
+  journal summary names every failed path for the failure notifier.
 - **No broad cleanup during promotion.** The pass does not reflow prose, delete stale pages,
   normalize headings, or modify qmd registry policy. Those are separate, explicitly scoped
   operations. The pilot is one writer against a small vault; staged whole-graph semantic

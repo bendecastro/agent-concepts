@@ -16,6 +16,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[3]
 LINTER = ROOT / "concepts/bc-wiki-maintain/body/wiki_lint.py"
 RUNNER = ROOT / "concepts/bc-wiki-maintain/body/runner/run-promotion.sh"
+PROMOTION_ALL = ROOT / "concepts/bc-wiki-maintain/body/runner/run-promotion-all.sh"
 NOTIFIER = ROOT / "concepts/bc-wiki-maintain/body/runner/notify-failure.sh"
 RUNNER_DIR = ROOT / "concepts/bc-wiki-maintain/body/runner"
 SKILL = ROOT / "concepts/bc-wiki-maintain/body/SKILL.md"
@@ -730,6 +731,286 @@ class PromotionRunnerTests(unittest.TestCase):
             self.assertIn("promotion required but detector did not emit a valid PROMOTION_RANGE", result.stderr)
             self.assertFalse(marker.exists())
             self.assertEqual(git(repo, "rev-parse", "HEAD"), base)
+
+
+class PromotionAllRunnerTests(unittest.TestCase):
+    def write_promotion_runner(self, directory: Path, visits: Path) -> Path:
+        runner = directory / "promotion-runner.sh"
+        runner.write_text(
+            textwrap.dedent(
+                """\
+                #!/usr/bin/env bash
+                set -eu
+                if [[ "$#" -ne 0 ]]; then
+                  printf 'unexpected arguments: %s\n' "$*" >&2
+                  exit 64
+                fi
+                : "${VAULT_ROOT:?VAULT_ROOT is missing}"
+                : "${AGENT_CONCEPTS:?AGENT_CONCEPTS is missing}"
+                : "${PI_BIN:?PI_BIN is missing}"
+                : "${VISITS:?VISITS is missing}"
+                printf '%s\t%s\t%s\n' "$VAULT_ROOT" "$AGENT_CONCEPTS" "$PI_BIN" >> "$VISITS"
+                if [[ "${FAIL_VAULT:-}" == "$VAULT_ROOT" ]]; then
+                  printf 'stub failure for %s\n' "$VAULT_ROOT" >&2
+                  exit 23
+                fi
+                """
+            ),
+            encoding="utf-8",
+        )
+        runner.chmod(0o755)
+        return runner
+
+    def runner_environment(
+        self,
+        list_file: Path,
+        runner: Path,
+        visits: Path,
+        **extra: str,
+    ) -> dict[str, str]:
+        env = os.environ.copy()
+        env.update(
+            {
+                "AGENT_CONCEPTS": str(ROOT),
+                "VAULT_LIST": str(list_file),
+                "PROMOTION_RUNNER": str(runner),
+                "PI_BIN": "inherited-pi",
+                "VISITS": str(visits),
+            }
+        )
+        env.update(extra)
+        return env
+
+    def run_all(
+        self,
+        list_file: Path,
+        runner: Path,
+        visits: Path,
+        **extra: str,
+    ) -> subprocess.CompletedProcess[str]:
+        return run(
+            "/usr/bin/bash",
+            str(PROMOTION_ALL),
+            cwd=ROOT,
+            env=self.runner_environment(list_file, runner, visits, **extra),
+            check=False,
+        )
+
+    @staticmethod
+    def visited_rows(visits: Path) -> list[list[str]]:
+        return [line.split("\t") for line in visits.read_text(encoding="utf-8").splitlines()]
+
+    def test_visits_every_listed_vault_in_list_order_and_inherits_environment(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            vaults = [root / name for name in ("first", "second", "third")]
+            for vault in vaults:
+                vault.mkdir()
+            list_file = root / "vaults.txt"
+            list_file.write_text("\n".join(str(vault) for vault in vaults) + "\n", encoding="utf-8")
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+
+            result = self.run_all(list_file, runner, visits)
+
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            rows = self.visited_rows(visits)
+            self.assertEqual([row[0] for row in rows], [str(vault) for vault in vaults])
+            self.assertTrue(all(row[1] == str(ROOT) for row in rows))
+            self.assertTrue(all(row[2] == "inherited-pi" for row in rows))
+
+    def test_failing_vault_does_not_stop_later_vaults_and_is_named_in_summary(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            vaults = [root / name for name in ("before", "failed", "after")]
+            for vault in vaults:
+                vault.mkdir()
+            list_file = root / "vaults.txt"
+            list_file.write_text("\n".join(str(vault) for vault in vaults) + "\n", encoding="utf-8")
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+
+            result = self.run_all(list_file, runner, visits, FAIL_VAULT=str(vaults[1]))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(
+                [row[0] for row in self.visited_rows(visits)],
+                [str(vault) for vault in vaults],
+            )
+            self.assertIn("failures=1", result.stdout)
+            self.assertIn("bc-wiki-maintain-all: failing vaults:", result.stdout)
+            self.assertIn(str(vaults[1]), result.stdout)
+            self.assertGreater(
+                result.stdout.index(f"=== wiki promotion: {vaults[2]} ==="),
+                result.stdout.index(f"=== wiki promotion: {vaults[1]} ==="),
+            )
+
+    def test_all_vaults_succeed_with_zero_exit_and_no_failed_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            vaults = [root / "one", root / "two"]
+            for vault in vaults:
+                vault.mkdir()
+            list_file = root / "vaults.txt"
+            list_file.write_text("\n".join(str(vault) for vault in vaults) + "\n", encoding="utf-8")
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+
+            result = self.run_all(list_file, runner, visits)
+
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            self.assertIn("checked 2 vault(s), failures=0", result.stdout)
+            self.assertIn("failing vaults: (none)", result.stdout)
+
+    def test_list_parser_handles_comments_whitespace_crlf_and_tilde_forms(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            home = root / "home"
+            tilde_vault = home / "tilde-vault"
+            home.mkdir()
+            tilde_vault.mkdir()
+            absolute_vault = root / "absolute-vault"
+            absolute_vault.mkdir()
+            list_file = root / "vaults.txt"
+            list_file.write_bytes(
+                b"  \r\n"
+                b"  # ignored comment\r\n"
+                b"  ~/tilde-vault  \r\n"
+                b"~\r\n"
+                + f"  {absolute_vault}  \r\n".encode()
+            )
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+
+            result = self.run_all(list_file, runner, visits, HOME=str(home))
+
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            self.assertEqual(
+                [row[0] for row in self.visited_rows(visits)],
+                [str(tilde_vault), str(home), str(absolute_vault)],
+            )
+
+    def test_unset_agent_concepts_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            list_file = root / "vaults.txt"
+            list_file.write_text(str(root) + "\n", encoding="utf-8")
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+            env = self.runner_environment(list_file, runner, visits)
+            env.pop("AGENT_CONCEPTS")
+
+            result = run("/usr/bin/bash", str(PROMOTION_ALL), cwd=ROOT, env=env, check=False)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("AGENT_CONCEPTS is not set", result.stderr)
+            self.assertFalse(visits.exists())
+
+    def test_unset_vault_list_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            list_file = root / "vaults.txt"
+            list_file.write_text(str(root) + "\n", encoding="utf-8")
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+            env = self.runner_environment(list_file, runner, visits)
+            env.pop("VAULT_LIST")
+
+            result = run("/usr/bin/bash", str(PROMOTION_ALL), cwd=ROOT, env=env, check=False)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("VAULT_LIST is not set", result.stderr)
+            self.assertFalse(visits.exists())
+
+    def test_missing_vault_list_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            list_file = root / "missing-vaults.txt"
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+
+            result = self.run_all(list_file, runner, visits)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("vault list does not exist", result.stderr)
+            self.assertFalse(visits.exists())
+
+    def test_unreadable_vault_list_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            list_file = root / "vaults.txt"
+            list_file.write_text(str(root) + "\n", encoding="utf-8")
+            list_file.chmod(0)
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+            try:
+                if os.access(list_file, os.R_OK):
+                    self.skipTest("the test user bypasses file read permissions")
+                result = self.run_all(list_file, runner, visits)
+            finally:
+                list_file.chmod(0o644)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("vault list is not readable", result.stderr)
+            self.assertFalse(visits.exists())
+
+    def test_empty_vault_list_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            list_file = root / "vaults.txt"
+            list_file.write_bytes(b" \r\n # comment\r\n\t\r\n")
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+
+            result = self.run_all(list_file, runner, visits)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("vault list contains no vault paths", result.stderr)
+            self.assertFalse(visits.exists())
+
+    def test_non_directory_is_reported_and_does_not_stop_batch(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            first = root / "first"
+            not_directory = root / "not-directory"
+            last = root / "last"
+            first.mkdir()
+            not_directory.write_text("not a directory", encoding="utf-8")
+            last.mkdir()
+            list_file = root / "vaults.txt"
+            list_file.write_text(
+                f"{first}\n{not_directory}\n{last}\n",
+                encoding="utf-8",
+            )
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+
+            result = self.run_all(list_file, runner, visits)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(
+                [row[0] for row in self.visited_rows(visits)],
+                [str(first), str(last)],
+            )
+            self.assertIn("vault is not a directory", result.stderr)
+            self.assertIn(str(not_directory), result.stdout)
+            self.assertIn("failures=1", result.stdout)
+
+    def test_all_vault_service_has_distinct_failure_identity_and_write_list(self) -> None:
+        service = (RUNNER_DIR / "bc-wiki-maintain-all.service").read_text(encoding="utf-8")
+        self.assertIn("OnFailure=bc-wiki-notify@%n.service", service)
+        self.assertIn("SyslogIdentifier=bc-wiki-maintain-all", service)
+        self.assertNotIn("SyslogIdentifier=bc-wiki-maintain\n", service)
+        self.assertIn(
+            "Environment=VAULT_LIST=%h/.config/agent-concepts/wiki-promotion-vaults.txt",
+            service,
+        )
+        self.assertNotIn("wiki-lint-vaults.txt", service)
+        timer = (RUNNER_DIR / "bc-wiki-maintain-all.timer").read_text(encoding="utf-8")
+        calendar = next(line for line in timer.splitlines() if line.startswith("OnCalendar="))
+        self.assertNotIn("03:30", calendar)
+        self.assertNotIn("04:15", calendar)
+        self.assertIn("Unit=bc-wiki-maintain-all.service", timer)
 
 
 if __name__ == "__main__":

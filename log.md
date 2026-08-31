@@ -1351,3 +1351,10 @@ with an unscoped fallback, and added a regression test whose `journalctl` stub h
 Independent review found the install recipe never copied `bc-wiki-notify@.service`, leaving
 `OnFailure=` pointing at a missing unit, and two stubs that passed regardless of what the script
 did. Fixed the recipe, made the stubs argument-aware, and added a `notify-send`-fails case.
+
+## [2026-08-31] implement | list-driven wiki promotion runner
+Added a separate-list batch runner, all-vault systemd templates, and temporary-fixture regressions.
+The batch delegates unchanged per-vault safety gates and reports every failed vault without aborting.
+
+## [2026-08-31] lint | refresh bc-wiki-maintain test status
+Updated generated `docs/status.md` after recording the 2026-08-31 regression run, then reran lint.
