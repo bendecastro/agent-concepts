@@ -544,18 +544,62 @@ is the branch this plan already pre-registered — not page shape.
 
 Blocked on W4 clearing its bars:
 
-2. **List-driven promotion across all 8 vaults.** One unit looping the existing vault list,
-   taking coverage from 4/8 to 8/8. Must skip-and-report per vault, never abort the batch —
-   otherwise sql and Scripts failing on `PROMOTION_RANGE=invalid` silently stops the other six.
-   Measure: total unpromoted headings, 68 → <10. Music's first run (37 headings) is allowed to
-   proceed unattended — [decision 5](#resolved-decisions) is closed, do not re-open it.
+2. **List-driven promotion across all 8 vaults. Mechanism landed 2026-08-31; coverage still
+   pending install.** `run-promotion-all.sh` plus `bc-wiki-maintain-all.service`/`.timer` loop a
+   vault list and delegate each entry to the unmodified `run-promotion.sh`, so every per-vault
+   safety gate stays in one implementation. It skips and reports per vault and names every failing
+   path in its final summary.
+
+   Three things were decided or found during implementation that the original item did not
+   anticipate:
+
+   - **Promotion reads its own list**, `wiki-promotion-vaults.txt`, not the lint list. Lint only
+     reads; promotion invokes an agent that writes and commits, so one shared file would make
+     "add this vault to lint" a scheduled-commit grant.
+   - **The stale `PROMOTION_RANGE=invalid` worry is gone.** Deferred item 3's scaffold heading fix
+     closed it: all four uncovered vaults now emit a valid range. Measured 2026-08-31 — Music 37,
+     codebase-design 18, Scripts 12, sql 1, all `PROMOTION_REQUIRED=1` with valid ranges.
+   - **A per-vault `timeout --kill-after` is required, not optional.** One unit covering every
+     vault means a hung agent consumes the whole `TimeoutStartSec` budget and the vaults after it
+     never run — an exposure per-vault units never had. `--kill-after` is load-bearing: plain
+     `timeout` sends SIGTERM then waits indefinitely, so a child that traps it is not bounded at
+     all. Measured against a SIGTERM-ignoring child, `timeout 1s` ran the full 60s.
+
+   **Not self-healing, and this is the operational catch.** A timeout can land mid-write, and
+   `run-promotion.sh` refuses a dirty tree, so a timed-out vault fails closed on every later run
+   until a human clears it. The runner says so on stderr.
+
+   Measure: total unpromoted headings, 68 → <10. **Not yet met** — it requires enabling the timer,
+   which also requires disabling the four installed per-vault promotion timers, since nothing
+   mechanically prevents two agents processing one vault concurrently and the 5h batch window
+   overlaps the 03:30 per-vault schedule. Music's first run (37 headings) is allowed to proceed
+   unattended — [decision 5](#resolved-decisions) is closed, do not re-open it.
 3. **Scaffold heading fix plus loud lint — done.** `concepts/bc-init-agent/body/scaffold.py`
    (line 353) emits `## [__DATE__]`; `concepts/bc-wiki-maintain/body/wiki_lint.py` (lines
    527–528) computes an invalid required range and returns nonzero. Widening the parser regex was
    proposed by two advisors and **withdrawn by both** under cross-examination; do not revive it.
-4. **`map.md` link repair and summary lines.** **Open here; not inherited by
-   `agent-vault-write-read-contract.md`.** Emit map targets as real Markdown links so they enter
-   the graph, and have lint validate them. `map.md` stays a curated task-bundle layer.
+4. **`map.md` link repair — scaffold side done 2026-08-31; live-vault migration still open.**
+   `scaffold.py` now emits map targets as real Markdown links, so they enter the graph and the
+   **existing** broken/ambiguous validation covers them — no `wiki_lint.py` change was needed,
+   which was the pleasant surprise of this item. `upgrade_notes()` flags a pre-change vault whose
+   map is still inline code, which is the designed migration path for additive idempotency.
+
+   Verified on a real generated vault, before vs after: map rows 15 → 15, links parsed by
+   production `links()` **0 → 15**, broken 0 → 0, ambiguous 0 → 0, orphans **7 → 3**.
+
+   **The rule is in-vault targets only.** A survey of the eight live vaults found converting map
+   rows adds 0 broken and 0 ambiguous links in the six standard vaults and cuts orphans (Scripts
+   7→3, CV 12→8, sql 17→13, Music 12→9, codebase-design 21→18, image-maze 15→13). Both Homeflix
+   maps carry 15 rows per map pointing at repository source paths *outside* the vault; those must
+   stay inline code, because `resolve_link()` cannot make them graph edges either way and literal
+   conversion would add 15 broken findings per checkout.
+
+   **Still open:** the scaffold is additive, so all eight live vaults keep their inline-code maps
+   and none of the orphan reductions above are realised until those files are migrated. That edits
+   eight external working trees.
+
+   "Summary lines" are dropped rather than deferred: W4 retired the argument for them, since the
+   winning read path never reads a summary column.
 5. **Scaffold shape changes** — see [Open decision](#open-decision--does-the-scaffolds-shape-change-too).
 
 ## Open risks

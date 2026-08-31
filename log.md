@@ -1374,3 +1374,8 @@ notifier a `VAULT_LIST` fallback for units with no `VAULT_ROOT`, and asserted th
 ## [2026-08-31] implement | make scaffold map targets graph-visible
 Generated map entries now use real Markdown links for in-vault targets, while upgrade notes flag
 existing inline-code maps; the map records why external source-tree references stay unlinked.
+
+## [2026-09-01] implement | record deferred-item state in the read-path plan
+Deferred 2's mechanism and Deferred 4's scaffold side landed; both measures still need steps that
+touch state outside this repo (enabling the batch timer, migrating eight live maps). Recorded the
+per-vault `--kill-after` finding and the in-vault-only map rule.
