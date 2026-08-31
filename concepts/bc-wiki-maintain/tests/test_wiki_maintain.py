@@ -11,6 +11,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import textwrap
+import time
 import unittest
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -423,6 +424,51 @@ class FailureNotificationTests(unittest.TestCase):
             self.assertIn("/tmp/example-vault", args)
             self.assertIn("detector failed: example reason", args)
 
+    def test_notifier_names_the_batch_list_when_the_unit_has_no_vault_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            args_file = directory / "notify-args"
+            self.write_command(
+                directory,
+                "systemctl",
+                """
+                case "$*" in
+                  *SyslogIdentifier*) printf '%s\\n' 'SyslogIdentifier=bc-wiki-maintain-all' ;;
+                  *Environment*) printf '%s\\n' 'Environment=AGENT_CONCEPTS=/tmp/concepts VAULT_LIST=/tmp/promotion-vaults.txt' ;;
+                  *) exit 1 ;;
+                esac
+                """,
+            )
+            self.write_command(
+                directory,
+                "journalctl",
+                "printf '%s\\n' 'bc-wiki-maintain-all: failing vaults:' '/tmp/vault-b'\n",
+            )
+            self.write_command(
+                directory,
+                "notify-send",
+                "printf '%s\\n' \"$@\" > \"$NOTIFY_ARGS_FILE\"\n",
+            )
+            env = os.environ.copy()
+            env.update({
+                "PATH": f"{directory}{os.pathsep}{env['PATH']}",
+                "NOTIFY_ARGS_FILE": str(args_file),
+            })
+            result = run(
+                "/usr/bin/bash",
+                str(NOTIFIER),
+                "bc-wiki-maintain-all.service",
+                cwd=ROOT,
+                env=env,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            args = args_file.read_text(encoding="utf-8")
+            # A batch unit has no single vault; saying so beats reading like a notifier fault.
+            self.assertIn("/tmp/promotion-vaults.txt", args)
+            self.assertNotIn("could not read VAULT_ROOT", args)
+            self.assertIn("/tmp/vault-b", args)
+
     def test_notifier_fails_when_notify_send_reports_failure(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             directory = Path(temp)
@@ -753,6 +799,10 @@ class PromotionAllRunnerTests(unittest.TestCase):
                 if [[ "${HANG_VAULT:-}" == "$VAULT_ROOT" ]]; then
                   sleep 30
                 fi
+                if [[ "${UNKILLABLE_VAULT:-}" == "$VAULT_ROOT" ]]; then
+                  trap '' TERM
+                  sleep 30
+                fi
                 if [[ "${FAIL_VAULT:-}" == "$VAULT_ROOT" ]]; then
                   printf 'stub failure for %s\n' "$VAULT_ROOT" >&2
                   exit 23
@@ -1033,6 +1083,44 @@ class PromotionAllRunnerTests(unittest.TestCase):
             self.assertNotIn(str(vaults[0]), failing)
             self.assertNotIn(str(vaults[2]), failing)
 
+    def test_vault_ignoring_sigterm_is_still_bounded_and_batch_continues(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            vaults = [root / name for name in ("first", "unkillable", "third")]
+            for vault in vaults:
+                vault.mkdir()
+            list_file = root / "promotion-vaults.txt"
+            list_file.write_text(
+                "\n".join(str(vault) for vault in vaults) + "\n", encoding="utf-8"
+            )
+            visits = root / "visits.tsv"
+            runner = self.write_promotion_runner(root, visits)
+
+            # Plain `timeout` sends SIGTERM and then waits forever, so a child that traps it
+            # is not bounded at all. Only --kill-after makes the per-vault cap real. The
+            # assertion has to be elapsed time: without --kill-after this still reports a
+            # timeout and still continues the batch, just 30s later, so the messages alone
+            # pass either way.
+            started = time.monotonic()
+            result = self.run_all(
+                list_file,
+                runner,
+                visits,
+                UNKILLABLE_VAULT=str(vaults[1]),
+                PROMOTION_TIMEOUT="1s",
+                PROMOTION_KILL_AFTER="1s",
+            )
+            elapsed = time.monotonic() - started
+
+            self.assertLess(elapsed, 15, f"unkillable child was not bounded: {elapsed:.1f}s")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(f"timed out after 1s for {vaults[1]}", result.stderr)
+            self.assertIn("may now have uncommitted changes", result.stderr)
+            self.assertEqual(
+                [row[0] for row in self.visited_rows(visits)],
+                [str(vault) for vault in vaults],
+            )
+
     def test_all_vault_service_has_distinct_failure_identity_and_write_list(self) -> None:
         service = (RUNNER_DIR / "bc-wiki-maintain-all.service").read_text(encoding="utf-8")
         self.assertIn("OnFailure=bc-wiki-notify@%n.service", service)
@@ -1043,8 +1131,13 @@ class PromotionAllRunnerTests(unittest.TestCase):
             service,
         )
         self.assertNotIn("wiki-lint-vaults.txt", service)
+        # The batch runs vaults serially under a 30m per-vault cap, so a TimeoutStartSec
+        # sized for one vault would kill the unit partway through the list.
+        self.assertIn("TimeoutStartSec=5h", service)
+        self.assertNotIn("VAULT_ROOT=", service)
         timer = (RUNNER_DIR / "bc-wiki-maintain-all.timer").read_text(encoding="utf-8")
         calendar = next(line for line in timer.splitlines() if line.startswith("OnCalendar="))
+        self.assertIn("02:30", calendar)
         self.assertNotIn("03:30", calendar)
         self.assertNotIn("04:15", calendar)
         self.assertIn("Unit=bc-wiki-maintain-all.service", timer)

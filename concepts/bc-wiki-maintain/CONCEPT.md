@@ -117,11 +117,13 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   that is a dated append, which is what a human had to do by hand after Homeflix prod dumped six
   staleness items into one open-question page. The pass never silently chooses a winner or
   rewrites the old sentence.
-- **Scheduled failures notify and fail closed.** Both systemd runner templates use
+- **Scheduled failures notify and fail closed.** All three systemd runner templates use
   `OnFailure=bc-wiki-notify@%n.service`; the copied `bc-wiki-notify@.service` passes the failed
   unit name to the runner-local `notify-failure.sh`. The notifier asks systemd for that unit's
   `VAULT_ROOT`, reads a short error from its user journal, and sends a critical `notify-send`
-  alert. The journal read is scoped by `SyslogIdentifier`, **not** by priority: systemd logs unit
+  alert. A list-driven unit has no single `VAULT_ROOT`, so the notifier falls back to naming its
+  `VAULT_LIST`; without that the alert reads like a notifier fault rather than a batch failure,
+  and the failing vault paths are in the journal reason the runner prints. The journal read is scoped by `SyslogIdentifier`, **not** by priority: systemd logs unit
   stderr at notice, so the obvious-looking `-p err..emerg` filter matches nothing and every alert
   degrades to "no error output found". Measured 2026-08-30 — `run-promotion.sh`'s `fail()` line
   lands at priority 5 and systemd's own failure line at 4. A regression test stubs `journalctl` so

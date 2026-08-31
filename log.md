@@ -1363,3 +1363,10 @@ Updated generated `docs/status.md` after recording the 2026-08-31 regression run
 One unit covering every vault let a hung agent consume the whole `TimeoutStartSec` budget, so the
 vaults after it never ran — an exposure the per-vault units never had. Each child now runs under
 `timeout` (default 30m, `PROMOTION_TIMEOUT`), reported as a normal per-vault failure.
+
+## [2026-08-31] implement | close review findings on the batch promotion runner
+Independent review found the per-vault `timeout` did not bound a child that ignores SIGTERM, and the
+regression test asserted the message rather than the bound, so it passed 30s late. Added
+`--kill-after`, classified exit 137 alongside 124, made the test assert elapsed time, gave the
+notifier a `VAULT_LIST` fallback for units with no `VAULT_ROOT`, and asserted the unit's
+`TimeoutStartSec` and schedule.

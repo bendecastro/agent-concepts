@@ -25,7 +25,12 @@ PROMOTION_RUNNER="${PROMOTION_RUNNER:-$AGENT_CONCEPTS/concepts/bc-wiki-maintain/
 # One unit covers every vault, so a hung agent run would consume the whole
 # TimeoutStartSec budget and the vaults after it would never run. Per-vault units
 # never had that exposure. Bounding each child keeps a hang to one vault.
+#
+# --kill-after is load-bearing, not defensive: plain `timeout` sends SIGTERM and then
+# waits forever, so a child that traps or ignores it is not bounded at all. Measured
+# against a SIGTERM-ignoring child, `timeout 1s` ran the full 60s.
 PROMOTION_TIMEOUT="${PROMOTION_TIMEOUT:-30m}"
+PROMOTION_KILL_AFTER="${PROMOTION_KILL_AFTER:-30s}"
 command -v timeout >/dev/null 2>&1 || fail 'timeout is not installed or not on PATH'
 
 declare -a vaults=()
@@ -59,12 +64,16 @@ for vault in "${vaults[@]}"; do
   fi
 
   # The assignment is exported only to this child; AGENT_CONCEPTS and PI_BIN are inherited.
-  if VAULT_ROOT="$vault" timeout "$PROMOTION_TIMEOUT" "$PROMOTION_RUNNER"; then
+  if VAULT_ROOT="$vault" timeout --kill-after="$PROMOTION_KILL_AFTER" "$PROMOTION_TIMEOUT" "$PROMOTION_RUNNER"; then
     printf 'bc-wiki-maintain-all: PASS: promotion completed for %s\n' "$vault"
   else
     status=$?
-    if ((status == 124)); then
+    # 124 is a child that honoured SIGTERM; 137 is one that had to be SIGKILLed.
+    if ((status == 124 || status == 137)); then
       printf 'bc-wiki-maintain-all: ERROR: promotion timed out after %s for %s\n' "$PROMOTION_TIMEOUT" "$vault" >&2
+      # A timeout can land mid-write, and run-promotion.sh refuses a dirty tree, so this
+      # vault fails closed every night until a human clears it. Say so where it is seen.
+      printf 'bc-wiki-maintain-all: %s may now have uncommitted changes; review and clear it before the next run\n' "$vault" >&2
     else
       printf 'bc-wiki-maintain-all: ERROR: promotion failed for %s (exit %s)\n' "$vault" "$status" >&2
     fi

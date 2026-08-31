@@ -37,6 +37,10 @@ if environment_output="$(systemctl --user show -p Environment "$failed_unit" 2>/
     else
       vault_display='unavailable (VAULT_ROOT is empty on the failed unit)'
     fi
+  elif [[ "$environment_value" =~ (^|[[:space:]])VAULT_LIST=([^[:space:]]+) ]]; then
+    # A list-driven unit has no single vault by design. Without this the notification
+    # reads like a notifier fault; the runner names the failing vaults in the journal.
+    vault_display="batch over ${BASH_REMATCH[2]} (see reason for failing vaults)"
   fi
 else
   vault_display='unavailable (could not inspect the failed unit environment)'

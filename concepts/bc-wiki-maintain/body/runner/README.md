@@ -115,10 +115,17 @@ per-vault safety check and commit rule. A missing directory or failed child is r
 not stop later vaults; the all-vault runner exits nonzero when any vault fails and its final
 summary lists each failing path on its own line.
 
-Each child runs under `timeout`, defaulting to 30 minutes and overridable with
-`PROMOTION_TIMEOUT`. One unit covers every vault, so an agent that hangs would otherwise consume
-the whole `TimeoutStartSec` budget and the vaults after it would never run — an exposure the
-one-vault units never had. A timed-out vault is reported as a failure and the batch continues.
+Each child runs under `timeout --kill-after`, defaulting to 30 minutes with a 30-second grace
+period, overridable with `PROMOTION_TIMEOUT` and `PROMOTION_KILL_AFTER`. One unit covers every
+vault, so an agent that hangs would otherwise consume the whole `TimeoutStartSec` budget and the
+vaults after it would never run — an exposure the one-vault units never had. `--kill-after` is
+load-bearing rather than defensive: plain `timeout` sends SIGTERM and then waits indefinitely, so
+a child that traps or ignores it is not bounded at all.
+
+A timed-out vault is reported as a failure and the batch continues, but **it is not self-healing**.
+The timeout can land mid-write, and `run-promotion.sh` refuses to start on a dirty tree, so that
+vault fails closed on every subsequent run until a human inspects it and either commits or resets
+the leftover changes. The runner says so on stderr when it times a vault out.
 
 Use a separate list from `wiki-lint-vaults.txt`. Lint only reads vaults, while promotion invokes
 an agent that writes and commits, so adding a vault to the lint list must not silently authorise a
@@ -126,9 +133,9 @@ scheduled write. The promotion list is machine-local and uses the same syntax as
 
 ```text
 # Vaults explicitly authorised for scheduled promotion
-~/Sync/Music/.bc-agent
-~/Sync/Scripts/.bc-agent
-~/path/to/project/.bc-agent
+~/path/to/project-a/.bc-agent
+~/path/to/project-b/.bc-agent
+/absolute/path/to/project-c/agent/wiki
 ```
 
 This list-driven timer is an **alternative** to the one-vault promotion timers, not an addition
