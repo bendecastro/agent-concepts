@@ -750,6 +750,9 @@ class PromotionAllRunnerTests(unittest.TestCase):
                 : "${PI_BIN:?PI_BIN is missing}"
                 : "${VISITS:?VISITS is missing}"
                 printf '%s\t%s\t%s\n' "$VAULT_ROOT" "$AGENT_CONCEPTS" "$PI_BIN" >> "$VISITS"
+                if [[ "${HANG_VAULT:-}" == "$VAULT_ROOT" ]]; then
+                  sleep 30
+                fi
                 if [[ "${FAIL_VAULT:-}" == "$VAULT_ROOT" ]]; then
                   printf 'stub failure for %s\n' "$VAULT_ROOT" >&2
                   exit 23
@@ -995,6 +998,40 @@ class PromotionAllRunnerTests(unittest.TestCase):
             self.assertIn("vault is not a directory", result.stderr)
             self.assertIn(str(not_directory), result.stdout)
             self.assertIn("failures=1", result.stdout)
+
+    def test_hung_vault_times_out_without_stopping_later_vaults(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            vaults = [root / name for name in ("first", "hangs", "third")]
+            for vault in vaults:
+                vault.mkdir()
+            list_file = root / "promotion-vaults.txt"
+            list_file.write_text(
+                "\n".join(str(vault) for vault in vaults) + "\n", encoding="utf-8"
+            )
+            visits = root / "visits.tsv"
+            runner = self.write_promotion_runner(root, visits)
+
+            result = self.run_all(
+                list_file,
+                runner,
+                visits,
+                HANG_VAULT=str(vaults[1]),
+                PROMOTION_TIMEOUT="1s",
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            # A hang must cost one vault, not the batch: per-vault units never had
+            # this exposure, so the list runner has to bound each child itself.
+            self.assertIn(f"timed out after 1s for {vaults[1]}", result.stderr)
+            self.assertEqual(
+                [row[0] for row in self.visited_rows(visits)],
+                [str(vault) for vault in vaults],
+            )
+            failing = result.stdout.split("failing vaults:", 1)[1]
+            self.assertIn(str(vaults[1]), failing)
+            self.assertNotIn(str(vaults[0]), failing)
+            self.assertNotIn(str(vaults[2]), failing)
 
     def test_all_vault_service_has_distinct_failure_identity_and_write_list(self) -> None:
         service = (RUNNER_DIR / "bc-wiki-maintain-all.service").read_text(encoding="utf-8")

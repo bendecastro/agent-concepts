@@ -1358,3 +1358,8 @@ The batch delegates unchanged per-vault safety gates and reports every failed va
 
 ## [2026-08-31] lint | refresh bc-wiki-maintain test status
 Updated generated `docs/status.md` after recording the 2026-08-31 regression run, then reran lint.
+
+## [2026-08-31] implement | bound each vault in the batch promotion runner
+One unit covering every vault let a hung agent consume the whole `TimeoutStartSec` budget, so the
+vaults after it never ran — an exposure the per-vault units never had. Each child now runs under
+`timeout` (default 30m, `PROMOTION_TIMEOUT`), reported as a normal per-vault failure.

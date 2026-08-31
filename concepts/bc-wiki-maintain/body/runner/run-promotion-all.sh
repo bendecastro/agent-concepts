@@ -22,6 +22,12 @@ PROMOTION_RUNNER="${PROMOTION_RUNNER:-$AGENT_CONCEPTS/concepts/bc-wiki-maintain/
 [[ -f "$PROMOTION_RUNNER" ]] || fail "promotion runner does not exist: $PROMOTION_RUNNER"
 [[ -r "$PROMOTION_RUNNER" ]] || fail "promotion runner is not readable: $PROMOTION_RUNNER"
 
+# One unit covers every vault, so a hung agent run would consume the whole
+# TimeoutStartSec budget and the vaults after it would never run. Per-vault units
+# never had that exposure. Bounding each child keeps a hang to one vault.
+PROMOTION_TIMEOUT="${PROMOTION_TIMEOUT:-30m}"
+command -v timeout >/dev/null 2>&1 || fail 'timeout is not installed or not on PATH'
+
 declare -a vaults=()
 while IFS= read -r line || [[ -n "$line" ]]; do
   # Accept files created on Windows and ignore surrounding whitespace around entries.
@@ -53,11 +59,15 @@ for vault in "${vaults[@]}"; do
   fi
 
   # The assignment is exported only to this child; AGENT_CONCEPTS and PI_BIN are inherited.
-  if VAULT_ROOT="$vault" "$PROMOTION_RUNNER"; then
+  if VAULT_ROOT="$vault" timeout "$PROMOTION_TIMEOUT" "$PROMOTION_RUNNER"; then
     printf 'bc-wiki-maintain-all: PASS: promotion completed for %s\n' "$vault"
   else
     status=$?
-    printf 'bc-wiki-maintain-all: ERROR: promotion failed for %s (exit %s)\n' "$vault" "$status" >&2
+    if ((status == 124)); then
+      printf 'bc-wiki-maintain-all: ERROR: promotion timed out after %s for %s\n' "$PROMOTION_TIMEOUT" "$vault" >&2
+    else
+      printf 'bc-wiki-maintain-all: ERROR: promotion failed for %s (exit %s)\n' "$vault" "$status" >&2
+    fi
     failures=$((failures + 1))
     failed_vaults+=("$vault")
   fi

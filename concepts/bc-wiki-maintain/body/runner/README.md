@@ -115,6 +115,11 @@ per-vault safety check and commit rule. A missing directory or failed child is r
 not stop later vaults; the all-vault runner exits nonzero when any vault fails and its final
 summary lists each failing path on its own line.
 
+Each child runs under `timeout`, defaulting to 30 minutes and overridable with
+`PROMOTION_TIMEOUT`. One unit covers every vault, so an agent that hangs would otherwise consume
+the whole `TimeoutStartSec` budget and the vaults after it would never run — an exposure the
+one-vault units never had. A timed-out vault is reported as a failure and the batch continues.
+
 Use a separate list from `wiki-lint-vaults.txt`. Lint only reads vaults, while promotion invokes
 an agent that writes and commits, so adding a vault to the lint list must not silently authorise a
 scheduled write. The promotion list is machine-local and uses the same syntax as the lint list:
