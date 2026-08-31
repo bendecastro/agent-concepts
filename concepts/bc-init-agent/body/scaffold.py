@@ -310,32 +310,35 @@ This human-facing map helps choose the smallest context set after the canonical 
 in `AGENTS.md`; it is orientation, not the lookup mechanism. Extend the sections as the
 project grows.
 
+Link only targets that resolve inside this vault; leave external source-tree references as
+inline code because they cannot participate in this graph.
+
 ## Always useful
 
-- `project/overview.md`
-- `references/commands.md`
-- `conventions/validation.md`
+- [project/overview.md](project/overview.md)
+- [references/commands.md](references/commands.md)
+- [conventions/validation.md](conventions/validation.md)
 
 ## Planning / workflow work
 
-- `conventions/planning-workflow.md`
-- `conventions/architecture-runway.md`
-- `references/agent-skills.md`
-- `conventions/git-and-commit-policy.md`
-- `conventions/validation.md`
-- `log.md`
+- [conventions/planning-workflow.md](conventions/planning-workflow.md)
+- [conventions/architecture-runway.md](conventions/architecture-runway.md)
+- [references/agent-skills.md](references/agent-skills.md)
+- [conventions/git-and-commit-policy.md](conventions/git-and-commit-policy.md)
+- [conventions/validation.md](conventions/validation.md)
+- [log.md](log.md)
 
 ## Research or PRD work
 
-- `conventions/planning-workflow.md`
-- `project/overview.md`
-- `research/README.md`
-- `templates/plan.md`
+- [conventions/planning-workflow.md](conventions/planning-workflow.md)
+- [project/overview.md](project/overview.md)
+- [research/README.md](research/README.md)
+- [templates/plan.md](templates/plan.md)
 
 ## File / layout work
 
-- `conventions/file-layout.md`
-- `references/paths.md`
+- [conventions/file-layout.md](conventions/file-layout.md)
+- [references/paths.md](references/paths.md)
 
 ## Decisions
 
@@ -936,6 +939,8 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
          "root AGENTS.md should make `.bc-agent/AGENTS.md` the first read and defer vault retrieval to its canonical search-first path"),
         (vault / "AGENTS.md", "<!-- BEGIN canonical vault read path -->",
          "`.bc-agent/AGENTS.md` should include the canonical search-first vault read path block from `bc-wiki-maintain`"),
+        (vault / "map.md", "- [project/overview.md](project/overview.md)",
+         "`.bc-agent/map.md` should use real Markdown links for in-vault targets so `bc-wiki-maintain` can validate its graph edges"),
     ]
     for path, needle, message in read_path_checks:
         if path.exists() and not _contains(path, needle):

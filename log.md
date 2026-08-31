@@ -1370,3 +1370,7 @@ regression test asserted the message rather than the bound, so it passed 30s lat
 `--kill-after`, classified exit 137 alongside 124, made the test assert elapsed time, gave the
 notifier a `VAULT_LIST` fallback for units with no `VAULT_ROOT`, and asserted the unit's
 `TimeoutStartSec` and schedule.
+
+## [2026-08-31] implement | make scaffold map targets graph-visible
+Generated map entries now use real Markdown links for in-vault targets, while upgrade notes flag
+existing inline-code maps; the map records why external source-tree references stay unlinked.

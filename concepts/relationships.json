@@ -11,6 +11,15 @@
       "reason": "Feature workers follow red-green-refactor."
     },
     {
+      "from": "bc-init-agent",
+      "to": "bc-wiki-maintain",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "generated map links",
+      "source": "concepts/bc-init-agent/CONCEPT.md#design-decisions",
+      "reason": "Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph."
+    },
+    {
       "from": "bc-plan-to-issues",
       "to": "grilling",
       "relation": "loads",
