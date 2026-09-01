@@ -11,12 +11,13 @@ scheduler failures observable.
 
 ## Failure notifications
 
-Both runner services set `OnFailure=bc-wiki-notify@%n.service`. When either service exits
-nonzero, systemd starts the `bc-wiki-notify@.service` template with the failed unit name as
-`%i`. The runner-local `notify-failure.sh` resolves that unit's `VAULT_ROOT`, reads a short
-error from its user journal, and sends a critical desktop notification with `notify-send`.
-If the vault or journal cannot be inspected, the message says so; if `notify-send` is missing
-or fails, the notifier exits nonzero instead of silently succeeding.
+All runner services set `OnFailure=bc-wiki-notify@%n.service`. When any service exits nonzero,
+systemd starts the `bc-wiki-notify@.service` template with the failed unit name as `%i`. The
+runner-local `notify-failure.sh` resolves that unit's `VAULT_ROOT` when it has one, or its
+`VAULT_LIST` for the list-driven service, reads a short error from its user journal, and sends a
+critical desktop notification with `notify-send`. If the vault/list or journal cannot be inspected,
+the message says so; if `notify-send` is missing or fails, the notifier exits nonzero instead of
+silently succeeding.
 
 A healthy no-op does not fire the notifier: the promotion runner exits 0 for
 `PROMOTION_REQUIRED=0` before invoking Pi, and the lint runner exits 0 when all detectors pass.
@@ -183,6 +184,225 @@ Disable the list-driven timer without deleting its copied units:
 ```bash
 systemctl --user disable --now bc-wiki-maintain-all.timer
 ```
+
+## Migrate from per-vault promotion timers to the batch timer
+
+This is a one-time machine-local migration. The batch timer is an alternative to the per-vault
+promotion timers, not an additional schedule. Keep `bc-wiki-lint.timer` enabled: it is
+read-only detection and is independent of promotion.
+
+### Why the old promotion timers must be disabled first
+
+The batch template runs at 02:30 with a 15-minute random delay and allows up to five hours for
+serial vault runs. The one-vault template runs at 03:30 with the same delay. Those windows overlap.
+Nothing mechanically prevents two agents from processing the same vault: `run-promotion.sh`'s
+clean-tree check is a time-of-check/time-of-use check, not a lock, and a PID lock is deliberately
+not part of this design. Disable every per-vault promotion timer before enabling the batch timer.
+
+### Ordered migration
+
+Set the checkout and unit/list locations first. These are placeholders; use the values appropriate
+for the machine where the templates will be installed.
+
+```bash
+export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"
+unit_dir="$HOME/.config/systemd/user"
+list_file="$HOME/.config/agent-concepts/wiki-promotion-vaults.txt"
+```
+
+1. **Enumerate before disabling.** Do not assume the four names from one installation. List every
+   installed timer whose unit name uses the promotion prefix:
+
+   ```bash
+   systemctl --user list-unit-files 'bc-wiki-maintain*.timer' --no-legend --no-pager
+   ```
+
+   One installation had `bc-wiki-maintain.timer`,
+   `bc-wiki-maintain-imagemaze.timer`, `bc-wiki-maintain-homeflix.timer`, and
+   `bc-wiki-maintain-homeflix-prod.timer`, alongside `bc-wiki-lint.timer`. That is an example,
+   not a portable inventory. The batch unit, if already present, is named
+   `bc-wiki-maintain-all.timer`; do not disable it as part of this step. Do not disable or pass
+   `bc-wiki-lint.timer` to the command below.
+
+2. **Disable the per-vault promotion timers.** The filter excludes the batch unit while retaining
+   the base unit and any slug-suffixed per-vault units found on this machine. It prints the selected
+   names before changing state:
+
+   ```bash
+   mapfile -t per_vault_timers < <(
+     systemctl --user list-unit-files 'bc-wiki-maintain*.timer' --no-legend --no-pager |
+       awk '$1 ~ /^bc-wiki-maintain(-[^.]*)?\.timer$/ && $1 != "bc-wiki-maintain-all.timer" { print $1 }'
+   )
+   ((${#per_vault_timers[@]} > 0)) || {
+     printf 'No per-vault promotion timers found; stop and inspect the inventory.\n' >&2
+     exit 1
+   }
+   printf 'Disabling per-vault promotion timers:\n'
+   printf '  %s\n' "${per_vault_timers[@]}"
+   systemctl --user disable --now "${per_vault_timers[@]}"
+   ```
+
+   Disabling a timer prevents its next trigger; it does not imply that an already-running service
+   has finished. Before enabling the batch, check for an active old promotion service and let it
+   finish or stop its corresponding service deliberately:
+
+   ```bash
+   systemctl --user list-units --type=service --state=running 'bc-wiki-maintain*.service' --no-legend --no-pager
+   ```
+
+   Leave `bc-wiki-lint.timer` untouched. Check it separately if it was already enabled:
+
+   ```bash
+   systemctl --user is-enabled bc-wiki-lint.timer
+   ```
+
+3. **Create the separate promotion list.** Use the machine-local lint list as a source of
+   candidate paths, but copy only the vaults you explicitly authorise for scheduled writes. Do not
+   use `cp` to clone the lint list: lint reads, while promotion invokes an agent that writes and
+   commits.
+
+   ```bash
+   mkdir -p "$(dirname "$list_file")"
+   $EDITOR "$HOME/.config/agent-concepts/wiki-lint-vaults.txt"
+   $EDITOR "$list_file"
+   ```
+
+   Put one approved vault root per line in `wiki-promotion-vaults.txt`; blank lines and `#`
+   comments are ignored, and `~`/`~/` entries are expanded by `run-promotion-all.sh`.
+
+4. **Install and verify the batch units.** Copy the batch service, timer, and the notifier it
+   references. Do not symlink the templates. Edit the copied service's `AGENT_CONCEPTS`,
+   `VAULT_LIST`, and `PI_BIN` values, and edit the notifier's `AGENT_CONCEPTS` value.
+
+   ```bash
+   install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain-all.service" \
+     "$unit_dir/bc-wiki-maintain-all.service"
+   install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain-all.timer" \
+     "$unit_dir/bc-wiki-maintain-all.timer"
+   install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-notify@.service" \
+     "$unit_dir/bc-wiki-notify@.service"
+   $EDITOR "$unit_dir/bc-wiki-maintain-all.service"
+   $EDITOR "$unit_dir/bc-wiki-notify@.service"
+   systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-all.service"
+   systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-all.timer"
+   systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"
+   ```
+
+5. **Enable the batch timer.** Only after the per-vault timers are disabled and the copied units
+   verify successfully:
+
+   ```bash
+   systemctl --user daemon-reload
+   systemctl --user enable --now bc-wiki-maintain-all.timer
+   ```
+
+6. **Confirm the resulting schedule and the untouched lint timer:**
+
+   ```bash
+   systemctl --user is-enabled bc-wiki-lint.timer
+   systemctl --user status --no-pager bc-wiki-maintain-all.timer
+   systemctl --user list-timers --all --no-pager
+   ```
+
+   The supplied batch timer is scheduled for 02:30 ±15 minutes and the supplied lint timer for
+   04:15 ±15 minutes. A local unit copy may differ; trust the verified unit files and the timer
+   listing on that machine.
+
+### First-run supervised check
+
+`run-promotion-all.sh` has no `--dry-run` flag. A first manual invocation is therefore a
+**supervised one-shot**, not a read-only preview: it may invoke Pi and create one dedicated commit
+per vault that has work. Set the same inputs as the copied service and run it before relying on the
+schedule:
+
+```bash
+export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"
+export VAULT_LIST="$HOME/.config/agent-concepts/wiki-promotion-vaults.txt"
+export PI_BIN="$HOME/.local/bin/pi"
+"$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/run-promotion-all.sh"
+```
+
+A healthy run prints one `=== wiki promotion: ... ===` header per list entry, continues through
+no-op or successful child runs, ends with `failures=0` and `failing vaults: (none)`, and exits 0.
+A failed or missing vault is named in its per-vault error, later entries still run, the final
+summary lists the failing paths, and the batch exits nonzero. A manual run does not trigger
+systemd's `OnFailure=` notifier; inspect stderr and the final summary directly.
+
+### Rollback to per-vault timers
+
+Keep the batch and per-vault schedules mutually exclusive. To roll back, disable the batch timer,
+restore or reinstall the copied one-vault service/timer pair for each desired vault using
+[the one-vault install recipe below](#install-after-review), verify those copies, then re-enable
+the per-vault timers:
+
+```bash
+systemctl --user disable --now bc-wiki-maintain-all.timer
+# Restore/reinstall the per-vault copies using the one-vault recipe above, then reload them:
+systemctl --user daemon-reload
+# Enumerate the restored per-vault copies:
+mapfile -t per_vault_timers < <(
+  systemctl --user list-unit-files 'bc-wiki-maintain*.timer' --no-legend --no-pager |
+    awk '$1 ~ /^bc-wiki-maintain(-[^.]*)?\.timer$/ && $1 != "bc-wiki-maintain-all.timer" { print $1 }'
+)
+((${#per_vault_timers[@]} > 0)) || {
+  printf 'No restored per-vault promotion timers found; stop and inspect the unit files.\n' >&2
+  exit 1
+}
+systemctl --user enable --now "${per_vault_timers[@]}"
+systemctl --user is-enabled bc-wiki-lint.timer
+```
+
+Leave `bc-wiki-maintain-all.service` and `.timer` installed but disabled if a later migration is
+likely, or remove those copied files only after the batch timer is disabled and the rollback is
+confirmed. Do not disable the lint timer during rollback.
+
+### Recover a vault that timed out
+
+The batch runner prints that a timed-out vault **may now have uncommitted changes**. The timeout can
+land mid-write; the next `run-promotion.sh` invocation refuses a dirty containing repository, so
+the same vault fails closed on every later run until a human inspects it and either commits or
+resets the leftover changes. The timeout's `--kill-after` bounds an uncooperative child, but it
+does not undo partial writes.
+
+Replace the example with the timed-out vault from the batch journal. These commands inspect the
+whole containing repository because the per-vault runner requires the whole worktree to be clean:
+
+```bash
+vault="$HOME/path/to/your/project/.bc-agent"  # replace with the timed-out lint-list entry
+repo_root="$(git -C "$vault" rev-parse --show-toplevel)"
+vault_prefix="$(git -C "$vault" rev-parse --show-prefix)"
+git -C "$repo_root" status --short --untracked-files=all
+git -C "$repo_root" diff -- "$vault_prefix"
+git -C "$repo_root" diff --cached -- "$vault_prefix"
+git -C "$repo_root" ls-files --others --exclude-standard -- "$vault_prefix"
+```
+
+If the changes are the intended additive Markdown promotion, review the diff and stage only the
+reviewed vault files. Confirm the staged path list before creating the recovery commit:
+
+```bash
+git -C "$repo_root" diff --check -- "$vault_prefix"
+git -C "$repo_root" add -- "$vault_prefix"
+git -C "$repo_root" diff --cached --name-status
+git -C "$repo_root" commit -m "wiki: recover timed-out promotion"
+git -C "$repo_root" status --short --untracked-files=all
+```
+
+If the partial changes are not wanted, restore tracked files and inspect untracked files before
+removing them. The `git clean` preview is mandatory: remove only files you confirm were left by the
+aborted promotion, never unrelated user work.
+
+```bash
+git -C "$repo_root" restore --source=HEAD --staged --worktree -- "$vault_prefix"
+git -C "$repo_root" clean -nd -- "$vault_prefix"
+# After reviewing the preview:
+git -C "$repo_root" clean -fd -- "$vault_prefix"
+git -C "$repo_root" status --short --untracked-files=all
+```
+
+The final status must be clean before the next scheduled run. If unrelated changes exist elsewhere
+in the containing repository, resolve those separately; the promotion runner will continue to
+refuse the vault until the complete worktree is clean.
 
 ## Install after review
 

@@ -1379,3 +1379,7 @@ existing inline-code maps; the map records why external source-tree references s
 Deferred 2's mechanism and Deferred 4's scaffold side landed; both measures still need steps that
 touch state outside this repo (enabling the batch timer, migrating eight live maps). Recorded the
 per-vault `--kill-after` finding and the in-vault-only map rule.
+
+## [2026-09-01] implement | document deferred vault migrations
+Added human-facing runbooks for the one-time per-vault-to-batch timer migration and existing
+live-vault map-link migration, including rollback, timeout recovery, and before/after verification.
