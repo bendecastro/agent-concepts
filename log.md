@@ -1383,3 +1383,6 @@ per-vault `--kill-after` finding and the in-vault-only map rule.
 ## [2026-09-01] implement | document deferred vault migrations
 Added human-facing runbooks for the one-time per-vault-to-batch timer migration and existing
 live-vault map-link migration, including rollback, timeout recovery, and before/after verification.
+
+## [2026-09-02] tune | treat child commit records as untrusted evidence
+Documented worktree `Commit:`/`Branch:` lines as last-pair candidates only, requiring Git, branch-ref, base/range, and tree/diff validation before integration. Extended bc-swarm check 6 with a nonexistent first SHA, corrected last pair, cleaned-ref acceptance, and existing-ref mismatch coverage.

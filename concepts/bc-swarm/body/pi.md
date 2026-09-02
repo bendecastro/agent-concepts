@@ -88,17 +88,30 @@ git -C "$REPO" apply --check "$PATCH"
 git -C "$REPO" apply "$PATCH"
 #    Verify the resulting diff/tree before any commit or report.
 
-# 5. If there is no usable patch, use the artifact's LAST own-line Commit:
-#    record and its Branch: record equal to EXPECTED_BRANCH. Require
-#    ^Commit: [0-9a-f]{40} <subject> (full lowercase SHA), then validate both
-#    the tip and BASE as commits before any integration:
-git -C "$REPO" cat-file -t "$TIP"
+# 5. If there is no usable patch, inspect only the LAST complete own-line
+#    Commit:/Branch: pair. Earlier records are untrusted evidence, not
+#    candidates. Bind TIP and RECORDED_BRANCH from that pair and
+#    EXPECTED_BRANCH/BASE from the exact child handoff; a none/none pair is
+#    only the no-commit case and cannot authorize integration.
+printf '%s\n' "$TIP" | grep -Eq '^[0-9a-f]{40}$'
+test "$RECORDED_BRANCH" = "$EXPECTED_BRANCH"
+#    Full format is not enough: Git must resolve the candidate as a commit.
+test "$(git -C "$REPO" cat-file -t "$TIP")" = commit
 git -C "$REPO" rev-parse --verify "${TIP}^{commit}"
+#    Successful cleanup may remove the expected local branch. If its ref
+#    remains, it must resolve to exactly the candidate tip; absence is allowed:
+if git -C "$REPO" show-ref --verify --quiet "refs/heads/$EXPECTED_BRANCH"; then
+  test "$(git -C "$REPO" rev-parse --verify "refs/heads/$EXPECTED_BRANCH^{commit}")" = "$TIP"
+fi
+#    Validate the handoff's expected base and inspect the complete linear range,
+#    not only TIP, before integration:
 git -C "$REPO" rev-parse --verify "${BASE}^{commit}"
-#    Inspect the complete linear range, not only TIP:
 git -C "$REPO" rev-list --parents --reverse "$BASE..$TIP"
 #    Require one ordered parent chain rooted at BASE; stop on non-linear or
-#    ambiguous history. If this succeeds, TIP is already integrated:
+#    ambiguous history. Inspect the candidate's resulting tree/diff:
+git -C "$REPO" diff --stat "$BASE" "$TIP"
+git -C "$REPO" diff "$BASE" "$TIP"
+#    If this succeeds, TIP is already integrated:
 git -C "$REPO" merge-base --is-ancestor "$TIP" HEAD
 #    If HEAD == BASE, use only:
 git -C "$REPO" merge --ff-only "$TIP"
@@ -110,7 +123,7 @@ git -C "$REPO" merge-base --is-ancestor "$BASE" HEAD
 
 # 6. Only when the handoff says cleanup was refused, inspect preserved state.
 git -C "$REPO" worktree list
-git -C "$REPO" branch --list "$BRANCH"
+git -C "$REPO" branch --list "$EXPECTED_BRANCH"
 # No patch plus no SHA does not license relaunch while this preserved state exists.
 
 # 7. Last resort: only after TIP passed the full-SHA and commit checks above,
@@ -121,14 +134,14 @@ git -C "$REPO" fsck --no-reflogs --lost-found | awk -v sha="$TIP" '$NF == sha'
 #    patch, recorded Git object, or preserved worktree/ref.
 ```
 
-`$PATCH`, `$TIP`, `$BASE`, and `$BRANCH` above come from the exact artifact and
-runtime handoff; they are not values inferred from a guessed `/tmp` name. A
-worktree artifact without valid own-line `Commit:`/`Branch:` records is not a
-usable deliverable (`none`/`none` is valid when no commit was made). A retained
-run can supply artifact and handoff paths, but cannot reopen a worktree whose
-cleanup already removed it. The `git fsck` line is valid only as an exact match
-against the already validated recorded SHA, never as a way to browse or choose
-among dangling commits.
+`$PATCH`, `$TIP`, `$BASE`, `$RECORDED_BRANCH`, and `$EXPECTED_BRANCH` above come
+from the exact artifact and runtime handoff; they are not values inferred from a
+guessed `/tmp` name. A worktree artifact without valid own-line
+`Commit:`/`Branch:` records is not a usable deliverable (`none`/`none` is valid
+when no commit was made). A retained run can supply artifact and handoff paths,
+but cannot reopen a worktree whose cleanup already removed it. The `git fsck`
+line is valid only as an exact match against the already validated recorded SHA,
+never as a way to browse or choose among dangling commits.
 
 `/tmp/pi-subagent-*` directories are launch receipts only. They hold the child's
 system prompt rather than its findings; listing them can confirm that a dispatch

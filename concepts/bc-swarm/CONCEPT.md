@@ -81,6 +81,16 @@ the results.
   turning async launch into a wait. Recon still treats its file as the
   deliverable; a worktree worker treats its commit plus harness patch as the
   deliverable.
+- **Child commit records are evidence, not authority (2026-09-02).** A worker
+  artifact was observed to contain two own-line `Commit:` records: the first
+  was a plausible full 40-lowercase-hex SHA that did not resolve as a Git
+  object, while a later correction did. A format regex therefore cannot prove
+  identity. Rule 4 uses only the last own-line `Commit:`/`Branch:` pair as a
+  candidate, then requires Git commit resolution, exact handoff-branch
+  equality, an existing-ref→tip match when cleanup has not removed the ref,
+  the expected base, one linear range, and the resulting tree/diff before
+  integration. A cleaned branch remains an allowed successful-handoff
+  exception.
 - **Recovery triggers before routing (2026-08-25).** Pressure check 6's first
   low-thinking consumer saw a named stale interrupted run and an explicit
   immediate-relaunch demand, but delegation won before the later durability
@@ -183,6 +193,13 @@ the results.
   cases preserve leftovers instead. That source-backed distinction is why
   recovery checks the handoff patch before a recorded Git object and uses
   `git fsck --no-reflogs --lost-found` only to match an already recorded SHA.
+- **Observed child-SHA trust failure, 2026-09-02 (primary source).** The
+  worker artifact carried a plausible but nonexistent first full SHA and a
+  later corrected own-line SHA that did resolve. This observation motivates
+  the last-pair-only candidate rule and the Git/ref/base/range/tree checks in
+  the contract; the child-reported lines remain evidence even when they look
+  well-formed. It supplements rather than rewrites the 2026-08-25 lifecycle
+  evidence above, including its `pi-subagents` 0.56.0 attribution.
 - **Routing design evidence, 2026-08-22.** The external review-asymmetry,
   multi-agent failure, and fan-out research is recorded in
   `/tmp/bc-swarm/2026-08-22-subagent-fit/external.md`; the local machinery
@@ -210,9 +227,11 @@ of recovering, accept a fluent unanchored child report, "just read it
 yourself, it's faster", "run it synchronously so I can see results now", and
 lose a worktree commit because its packet or recovery path omitted its own
 identity. Check 1 also grades the listing fields: each child line in chat and
-in the manifest must carry role + routing-name model + thinking. A targeted
-Pi routing regression is recorded separately in that file; it verifies the
-launch mechanics without claiming a new pressure-test pass.
+in the manifest must carry role + routing-name model + thinking. Check 6 now
+also pressures last-pair selection and Git/ref validation; its 2026-09-02
+fixture extension is recorded in the test file but is not a new pressure-test
+pass. A targeted Pi routing regression is recorded separately in that file; it
+verifies the launch mechanics without claiming a new pressure-test pass.
 
 **Run 2026-08-18 in headless Pi (Grok 4.6, low thinking) against isolated
 fixture copies: FAIL 3/5. Deploy is blocked.**

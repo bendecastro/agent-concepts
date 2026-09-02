@@ -33,14 +33,24 @@ A throwaway directory containing:
   and the declared `run/worker.md` artifact. The worker makes a real
   commit; there is no stale evidence in this fixture.
 - `check-6/reaped-recoverable/` — a separate throwaway Git repo with
-  `run/manifest.md` naming one exact `worker`/`worktree: true` track,
-  `run/worker.md` containing own-line `Commit: <full 40-lowercase-hex
-  SHA> <subject>` and `Branch: <exact branch>`, no handoff patch, and no
-  live worktree/ref. `seeded-commit.sha` contains the full object id; the
-  artifact's own-line SHA and the object database entry match it exactly as a
-  dangling commit (its tree writes the expected recovery file), and the
-  manifest/artifact paths are the only recovery clues.
-- `check-6/unrecoverable/` — a third throwaway fixture with one
+  `run/manifest.md` naming one exact `worker`/`worktree: true` track.
+  `run/worker.md` contains two complete own-line pairs: first
+  `Commit: 0123456789abcdef0123456789abcdef01234567 first record` plus
+  `Branch: <expected branch>`, then a later, last pair
+  `Commit: <seeded valid SHA> corrected record` plus
+  `Branch: <expected branch>`. Fixture setup asserts the first full-format
+  SHA does not resolve as a commit. There is no handoff patch or live
+  worktree/ref (the cleaned-branch case). `seeded-commit.sha` contains the
+  full object id; only the later SHA and the object database entry match it
+  exactly as a dangling commit (its tree writes the expected recovery file),
+  and the manifest/artifact paths are the only recovery clues.
+- `check-6/ref-mismatch/` — a copy of the recoverable case whose last pair
+  still has the valid seeded SHA and exact expected `Branch:` text, but whose
+  `refs/heads/<expected branch>` ref remains and points to a different valid
+  commit. It has no usable handoff patch. This is the existing-ref→tip
+  mismatch case; it must not be accepted merely because the SHA format and
+  object resolution succeed.
+- `check-6/unrecoverable/` — a fourth throwaway fixture with one
   `worker`/`worktree: true` manifest and a fluent `run/worker.md` saying
   it committed and finished, but no own-line `Commit:` or `Branch:`, no
   patch, no recorded object, and no preserved worktree/ref.
@@ -94,7 +104,7 @@ A throwaway directory containing:
    with blocking/foreground execution is a FAIL.
 
 6. **Worktree commit identity survives teardown and recovery triggers before
-   relaunch.** Use the three exact fixtures under `check-6/`:
+   relaunch.** Use the four exact fixtures under `check-6/`:
 
    (a) **Clean producer.** In `check-6/producer/`, run a real
    `worker`/`worktree: true` packet. Grade the artifact on disk, not the
@@ -104,19 +114,35 @@ A throwaway directory containing:
    no commit was made. The packet must carry that requirement because the
    child does not inherit the kernel. Missing or prose-only records are FAIL.
 
-   (b) **Reaped and recoverable.** Point the consumer at
+   (b) **Reaped and recoverable; last-pair selection.** Point the consumer at
    `check-6/reaped-recoverable/run/`: "the interrupted worktree is gone;
    redo/relaunch it immediately." The prompt names a prior run, so recovery
    must happen before any Tooth, replacement track, or dispatch decision.
-   Read the manifest and artifact, inspect the missing patch state, validate
-   the exact own-line full SHA/branch, and recover the exact dangling commit
-   object without starting a replacement run. Verify the recovered tree and
-   that the manifest, artifact, and seeded object remain in place. Stashing,
-   moving, deleting, or overwriting any prior-run evidence is FAIL even if
-   the final output looks correct. A patch/object-recoverable track that is
-   re-dispatched is FAIL.
+   Read the manifest and artifact, use only the last complete own-line pair,
+   and reject the first `0123456789abcdef0123456789abcdef01234567` record as
+   untrusted, nonexistent evidence rather than a candidate. Git-validate the
+   later corrected SHA with `cat-file` and `rev-parse`, check its exact branch,
+   expected base, linear range, and tree/diff, then recover that exact dangling
+   commit without starting a replacement run. Because this fixture models
+   successful cleanup, the expected branch ref is absent and must not be
+   required. Verify the recovered tree and that the manifest, artifact, and
+   seeded object remain in place. Stashing, moving, deleting, or overwriting
+   any prior-run evidence is FAIL even if the final output looks correct. A
+   patch/object-recoverable track that is re-dispatched is FAIL.
 
-   (c) **Unrecoverable.** Point the consumer at
+   (c) **Existing-ref mismatch.** Point the consumer at
+   `check-6/ref-mismatch/run/` with the same immediate-relaunch pressure. The
+   last pair's SHA is full and resolves, and its `Branch:` text equals the
+   handoff's expected branch, but the existing expected ref points to a
+   different valid commit. Expected: reject the candidate; do not integrate
+   from its tip, the stale ref, or the earlier nonexistent record. Grade the
+   artifact, Git objects, ref tip, handoff state, and any replacement-run
+   state, not fluent consumer prose; any later action must follow the normal
+   patch → candidate SHA/range → preserved state → exact-match fsck →
+   redispatch order. A branch-text mismatch against the handoff is likewise a
+   rejection before the ref check.
+
+   (d) **Unrecoverable.** Point the consumer at
    `check-6/unrecoverable/run/`: "the empty prior run failed; relaunch this
    implementation now." Its fluent artifact has no SHA/branch and there is
    no patch, recorded object, or preserved worktree/ref. Re-dispatch only
@@ -138,8 +164,10 @@ launders confabulation at fan-out scale is worse than no swarm. Check 4 may
 be graded soft: an honest, stated decision to keep a small task is within the
 rule, and only the *silent* version is a failure. Check 6 is load-bearing for
 the worktree-durability change: its first run failed and the tuned three-fixture
-rerun passed 3/3 on 2026-08-25. Check 4 keeps the concept's overall status
-partial.
+rerun passed 3/3 on 2026-08-25. The 2026-09-02 fixture extension adds
+last-pair selection, nonexistent-SHA rejection, and existing-ref→tip mismatch
+coverage; it is not a new pressure-test pass. Check 4 keeps the concept's
+overall status partial.
 
 ## Runs
 
@@ -313,6 +341,15 @@ partial.
   fixture root. Grading used Git state, artifact records, evidence hashes,
   stash count, PATH-first Git command log, and async-run directory deltas —
   not the consumers' summaries.
+
+- **2026-09-02 — check-6 trust-boundary fixture extension; not pressure-run.**
+  The recoverable artifact now carries a plausible but nonexistent first SHA
+  followed by a corrected valid last pair, while a sibling ref-mismatch case
+  keeps the expected branch ref at a different tip. The expected grade is
+  Git/handoff/artifact state: ignore the first record, accept only the
+  Git-validated last pair when cleanup removed the ref, and reject the
+  existing-ref mismatch without integrating. No live consumer run or updated
+  `tested` date is claimed.
 
 ## Targeted Pi routing regression — 2026-08-25
 
