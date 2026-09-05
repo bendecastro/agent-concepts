@@ -1398,3 +1398,6 @@ Defined explicit destructive migration with verify-before-remove ordering and re
 
 ## [2026-09-05] test | teach hosted-adapter consumer pressure
 Ran the hosted-integration scenarios against fresh consumers in throwaway workspaces and graded them on disk. Scenarios 1/3/4 passed against ea49123; scenario 2 was unsound and its rewrite, the explicit-migration pair, and the four-entry-context variant all passed against afbb86b. Recorded per-scenario results and which commit each ran against in the three affected CONCEPT.md files.
+
+## [2026-09-05] lint | refresh tested dates after the hosted-adapter pressure run
+The previous entry recorded the 2026-09-05 runs in each concept's `## Tests` prose but left `tested:` untouched, so `docs/status.md` still showed the pre-run dates. Bumped `tested:` on teach, bc-init-agent and bc-wiki-maintain and regenerated the board; `test_status` stays `partial`.

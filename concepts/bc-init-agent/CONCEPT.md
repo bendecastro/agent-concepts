@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-08-29
+tested: 2026-09-05
 deployed: 2026-06-21
 ---
 # Concept: bc-init-agent
