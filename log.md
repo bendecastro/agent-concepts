@@ -1392,3 +1392,6 @@ Added the approved `.bc-agent` learning/hybrid adapter and exact host path map, 
 
 ## [2026-09-05] test | teach host integration regressions
 Added deterministic scaffold/layout and hosted `due.py` regressions plus clean consumer pressure scenarios for hosted resume, standalone preservation, competing homes, and cross-skill upkeep. Consumer pressure scenarios remain pending a parent run.
+
+## [2026-09-05] implement | teach host-selection safety fixes
+Defined explicit destructive migration with verify-before-remove ordering and refusal with originals intact; fixed vault-context competing-home resolution, hosted search-first retrieval, and the learning evidence stub. Tightened adapter validation, generated-stub formats, scaffold preflight, glossary ownership, and authored migration pressure coverage; consumer pressure remains pending.

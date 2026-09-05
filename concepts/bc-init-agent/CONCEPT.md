@@ -43,7 +43,10 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
   evidence, and SRS state. Hybrid learning/knowledge overlays keep raw and compiled material in
   the mapped `sources/` and `concepts/` homes (entity/synthesis subtrees live below `concepts/`)
   rather than generating parallel `raw/` or `wiki/` trees. Existing standalone teach files remain
-  in place, and any competing homes are reported for a user decision rather than migrated.
+  in place, and any competing homes are reported for a user decision rather than migrated. A host
+  choice alone never migrates state; teach's separate explicit migration operation is destructive,
+  warns that originals will be deleted, verifies every destination first, and preserves originals
+  when verification fails.
 
 ## Provenance
 
@@ -66,10 +69,12 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 `tests/scenario.md` — verifies the scaffold produces the expected tree with substituted placeholders, existing files are left untouched, and the publish.yaml step is offer-then-confirm (never auto-push). 2026-08-21: script checks 1–7 **PASS** (tree, substitution, idempotent re-run, additive plug-in, dry-run/no-overwrite, slug validation, archetype overlays). Process checks 8–13 and the six adaptive-onboarding scenarios **BLOCKED** this run (pressure runners have no `subagent` tool). 2026-08-29: deterministic read-path/heading check 7a **PASS**. `tests/pressure-read-path.md` was run twice against fresh consumers — [results](tests/pressure-read-path-results-2026-08-29.md). Run 1 **FAILED 2 of 3**: all three resisted a superseded decoy, but the "index.md is right there" scenario opened `index.md` before it had read the vault `AGENTS.md`, so the generated discipline never bound — an ordering race in the repo-root file, not a fault in the canonical block. After the root gate was hardened (`0423ada`), run 2 **PASSED 3 of 3** on isolated per-scenario fixtures, with `index.md` absent from the failing scenario's report entirely. **The generated read-path discipline clears its test gate.** Frontmatter stays `partial` for the unrelated reason recorded above: process checks 8–13 remain BLOCKED and still need a naive consumer. Frontmatter stays `partial` until a naive consumer re-runs the process half. Note: CONCEPT Tests previously said "clobber guard refuses an existing vault"; current `scaffold.py` is additive.
 
 `tests/test_teach_adapter.py` is a deterministic regression for the real learning/hybrid
-scaffold, exact host map, old-marker upgrade note, competing standalone-home warning, and
-`due.py` against the hosted review path. `../teach/tests/pressure-host-integration.md` is the
-clean consumer pressure packet for hosted resume, standalone preservation, ambiguous homes,
-and cross-skill upkeep; it is authored but **not run** here, so the concept remains `partial`.
+scaffold, exact host map, explicit-migration verify/refusal contract, vault-context resolution,
+old-marker upgrade note, mission/evidence stubs, parent-collision preflight, competing standalone-
+home warning, and `due.py` against the hosted review path. `../teach/tests/pressure-host-integration.md`
+is the clean consumer pressure packet for hosted resume, standalone preservation, explicit
+migration, competing homes, and cross-skill upkeep; it is authored but **not run** here, so the
+concept remains `partial`.
 
 ## Deploy targets
 

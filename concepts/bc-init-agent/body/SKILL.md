@@ -39,9 +39,12 @@ Archetypes:
   `references/teach-resources.md`, glossary → the existing Glossary section of
   `project/overview.md`, and catalog/history → shared `index.md` / `log.md`.
   Lessons and session artifacts reuse existing `sessions/`; no `learning/sessions/`
-  directory is created. The adapter points at teach; it does not copy pedagogy,
-  auto-run initialization, or migrate standalone files. `questions/` is for open
-  questions only, not a second review queue or evidence store.
+  directory is created. When the marker is valid, teach owns the Glossary section of
+  `project/overview.md`; planning and maintenance skills leave it alone. The adapter points
+  at teach; it does not copy pedagogy, auto-run initialization, or migrate standalone files.
+  A host choice alone never migrates state; teach's separate explicit migration operation is
+  destructive and verifies every destination before deleting standalone originals. `questions/`
+  is for open questions only, not a second review queue or evidence store.
 - **knowledge** — LLM-maintained knowledge graph: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
 - **hybrid** — code execution plus one or more of ops/learning/knowledge when the folder clearly needs more than one durable mode. If learning is included, use the same explicit teach adapter and shared `sessions/`, `sources/`, `concepts/`, `index.md`, and `log.md` paths; do not add a parallel learning state tree.
 

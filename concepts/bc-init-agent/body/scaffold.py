@@ -34,6 +34,7 @@ DATE = "__DATE__"
 
 # --- explicit teach host adapter (learning/hybrid overlays) -------------------
 # This is a pointer and storage map, not a second copy of teach's pedagogy.
+TEACH_ADAPTER_MARKER = "<!-- teach-host-adapter: v1 -->"
 TEACH_ADAPTER = """<!-- teach-host-adapter: v1 -->
 # Teach Skill Host Adapter
 
@@ -48,10 +49,14 @@ Read the canonical teach instructions and formats from
 Do not invoke `bc-init-agent` from `teach`, move standalone files, or create a second
 learning/knowledge home. If a standalone teach workspace and this host both contain
 state, stop and ask the user which home to use; preserve the standalone home by default.
+A valid adapter has this exact first line and the complete hosted path table below; a
+prefix-only or altered-map file is incomplete and is not a host contract.
 
 ## Hosted teach path map
 
-All paths below are relative to `.bc-agent/`:
+When invoked from the project root, `<teach-root>` is `.bc-agent`; when invoked from inside
+that vault, `<teach-root>` is the current `.bc-agent` directory. All paths below are relative
+to `<teach-root>`:
 
 | Teach surface | Hosted path | Owner |
 |---|---|---|
@@ -66,12 +71,93 @@ All paths below are relative to `.bc-agent/`:
 | Glossary | the existing Glossary section of `project/overview.md` | `teach` |
 | Catalog and history | shared `index.md` and `log.md` | `bc-init-agent` host schema; `teach` updates teach entries |
 
+With a valid marker, host search-first retrieval is for knowledge pages and learning records:
+use the host's canonical search path, never the index as a lookup. `teach` may directly read
+mapped known state (mission, review queue, and notes) plus shared `index.md`/recent `log.md`
+for session orientation and bookkeeping; those are not knowledge lookups. When this marker is
+valid, `teach` owns the Glossary section of `project/overview.md`; planning and maintenance
+skills must leave that section alone, while non-glossary host sections remain available to
+host maintenance.
+
+## Explicit destructive migration — only on a user request
+
+Choosing the host for reading or writing is not migration. Only perform this operation when
+the user explicitly asks to **consolidate** or **migrate** the standalone teach workspace into
+this host, never because a marker was discovered or as part of another action. This operation
+is destructive: it copies/moves content into the host and then **deletes the standalone
+originals**. Tell the user plainly that the originals will be deleted before doing it.
+
+Use a copy-then-verify sequence. Inventory every existing standalone item, prepare its mapped
+host destination, and preflight every destination for collisions and writability before any
+write. Verify that every destination is complete before removing any original; for directories,
+verify every content-bearing file, not merely the directory. Content-bearing records, sources,
+knowledge pages, and session artifacts must arrive byte-identical (compare bytes or hashes).
+The mission, notes, queue, catalog/history, glossary, and resource catalog may be reformatted
+to their host formats, but verify every source item, row, entry, or glossary term is represented.
+Do not overwrite unrelated host content or proceed through a destination conflict.
+
+If any destination is missing, incomplete, conflicting, or unwritable, stop and report the
+failure with **all standalone originals intact**; delete nothing. Only after every mapped
+destination passes verification may the corresponding standalone files and directories be
+removed. Choosing the host without an explicit migration request leaves every standalone file
+untouched.
+
+| Standalone source | Hosted destination (relative to `<teach-root>`) | Verification |
+|---|---|---|
+| `MISSION.md` | `learning/plan.md` | mission content represented in the host mission format |
+| `REVIEW.md` | `learning/review.md` | every review item and scheduling value represented |
+| `learning-records/*` | `learning/records/` | each record arrives byte-identical |
+| `lessons/*` | existing `sessions/` | each lesson/session artifact arrives byte-identical |
+| `NOTES.md` | `learning/notes.md` | every note represented |
+| `sources/*` | existing `sources/` | each source arrives byte-identical |
+| `wiki/*` | existing `concepts/` | each knowledge page arrives byte-identical |
+| `RESOURCES.md` | `references/teach-resources.md` | every catalog entry represented |
+| `GLOSSARY.md` | Glossary section of `project/overview.md` | every term and definition represented |
+| `index.md` | shared `index.md` | every teach catalog entry represented without replacing host orientation |
+| `log.md` | shared `log.md` | every teach history entry represented without replacing host history |
+
 The host's `AGENTS.md`, `index.md`, and `log.md` remain shared orientation/catalog
 surfaces. `bc-wiki-maintain` may search host context and promote ordinary host evidence,
-but it must not fabricate learning evidence, edit teach-owned records, or advance the
-review queue. Raw sources remain immutable. Existing host files are authoritative in
-place; no live migration or copied pedagogy is implied by this marker.
+but it must not fabricate learning evidence, edit teach-owned records or Glossary terms, or
+advance the review queue. Raw sources remain immutable. Existing host files are authoritative
+in place; this marker alone implies no migration or copied pedagogy.
 """
+
+
+def _teach_adapter_map_rows(text: str) -> tuple[tuple[str, str, str], ...] | None:
+    """Return the hosted map rows from a marker, or None when its table is malformed."""
+    lines = text.splitlines()
+    try:
+        heading = lines.index("## Hosted teach path map")
+    except ValueError:
+        return None
+
+    rows: list[tuple[str, str, str]] = []
+    table_started = False
+    for line in lines[heading + 1:]:
+        if not table_started:
+            if line.startswith("| Teach surface | Hosted path | Owner |"):
+                table_started = True
+            continue
+        if not line.startswith("|"):
+            break
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if cells == ["---", "---", "---"]:
+            continue
+        if len(cells) != 3:
+            return None
+        rows.append((cells[0], cells[1], cells[2]))
+
+    return tuple(rows) if table_started else None
+
+
+def is_valid_teach_adapter(text: str) -> bool:
+    """Use one structural rule for scaffold upgrade notes and host selection."""
+    return (
+        text.startswith(TEACH_ADAPTER_MARKER + "\n")
+        and _teach_adapter_map_rows(text) == _teach_adapter_map_rows(TEACH_ADAPTER)
+        and bool(_teach_adapter_map_rows(text))
+    )
 
 
 # --- root AGENTS.md (project root, points agents at the vault) ----------------
@@ -279,8 +365,13 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 - `log.md` — append-only journal. `index.md` — catalog. `map.md` — context picker.
 - When `references/teach-skill.md` exists, read it before using `teach`: it is the
   explicit adapter for the host's learning paths. `teach` owns the mapped pedagogy,
-  evidence, and review state; this vault owns host schema/orientation. Do not create
-  a second `learning/sessions/` directory or migrate a standalone teach workspace.
+  evidence, review state, and the Glossary section of `project/overview.md`; this vault
+  owns host schema/orientation. Host search-first is for knowledge and learning-record
+  retrieval. Teach may directly read mapped known mission/review/notes state and the shared
+  catalog/recent history for session bookkeeping; those are not hub lookups. Do not create
+  a second `learning/sessions/` directory or migrate a standalone teach workspace. A host
+  choice alone never migrates it; destructive migration is teach's separate, explicit-request
+  operation and deletes originals only after destination verification.
 - Long research → `.bc-agent/research/`; scratch → `.bc-agent/scratch/`.
 
 ## Maintenance discipline
@@ -415,8 +506,10 @@ OVERVIEW = """# Project Overview
 ## Glossary
 
 The project's shared vocabulary — canonical names for the domain concepts, no implementation
-detail. `grill-me` / `bc-plan-to-issues` (via `domain-modeling`) maintain this as the
-project's `CONTEXT.md`-equivalent. Keep it a pure glossary.
+detail. When `references/teach-skill.md` is a valid adapter, `teach` owns this Glossary section
+and `grill-me`, `bc-plan-to-issues`, and maintenance leave it unchanged. Without that adapter,
+`grill-me` / `bc-plan-to-issues` (via `domain-modeling`) maintain this as the project's
+`CONTEXT.md`-equivalent. Keep it a pure glossary.
 
 <!-- Term — one-line canonical definition. -->
 
@@ -453,8 +546,10 @@ first. If they clearly ask for a concrete edit/fix, proceed normally.
 
 ## Canonical repo-local planning surfaces
 
-- **Glossary / domain facts:** the glossary section of `project/overview.md` (or a dedicated
-  `project/glossary.md` if it grows). This is this project's `CONTEXT.md`-equivalent.
+- **Glossary / domain facts:** the Glossary section of `project/overview.md` (or a dedicated
+  `project/glossary.md` if it grows). Without a valid teach adapter, this is this project's
+  `CONTEXT.md`-equivalent and `grill-me` / `bc-plan-to-issues` maintain it. With the adapter,
+  `teach` owns the Glossary section; planning and maintenance skills leave that section alone.
 - **ADRs:** numbered files under `decisions/` using `templates/adr.md`.
 - **Plans / actual PRDs:** durable planning artifacts under `project/`, linked from `index.md`. Only call it a PRD when the PRD drafting/publishing step actually happened; exploratory notes stay under `research/` or as plans.
 - **Research / evidence:** exploratory reports, architecture-review HTML summaries, and investigation writeups under `research/` (or temp storage if intentionally throwaway), with durable conclusions summarized back to `project/` / `decisions/`.
@@ -846,9 +941,12 @@ queue to `learning/review.md`, records to `learning/records/`, notes to
 `learning/notes.md`, raw sources to `sources/`, compiled knowledge to `concepts/`,
 resources to `references/teach-resources.md`, the glossary to the existing Glossary
 section of `project/overview.md`, and catalog/history to the shared `index.md`/`log.md`.
-Lessons and session artifacts use the existing `sessions/` directory; never create
-`learning/sessions/`. The adapter does not copy teach pedagogy or migrate standalone
-state.
+When the adapter is valid, teach owns that Glossary section; planning and maintenance
+skills leave it alone. Lessons and session artifacts use the existing `sessions/`
+directory; never create `learning/sessions/`. The adapter does not copy teach pedagogy
+or migrate standalone state. A host choice alone never migrates it; teach's separate
+explicit migration operation is destructive and verifies destinations before deleting
+standalone originals.
 
 - `learning/` — host learning paths and the teach-owned mission/review/records/notes.
 - `sources/` — immutable raw source material.
@@ -900,13 +998,13 @@ def archetype_files(archetype: str) -> dict[str, str]:
         }
     if archetype == "learning":
         return common | {
-            "learning/plan.md": "# Learning Plan\n\nThis is the hosted mission surface for `teach`; the skill owns its pedagogy and keeps the mission concrete. Use `<agent-concepts>/concepts/teach/body/MISSION-FORMAT.md` for the format.\n\n## Goal\n\nTODO.\n\n## Current level\n\nTODO.\n\n## Path\n\nTODO.\n\n## Review cadence\n\nThe hosted review queue lives at `learning/review.md`; do not create a second `REVIEW.md`.\n",
+            "learning/plan.md": "# Mission: TODO\n\nThis is the hosted mission surface for `teach`; the skill owns its pedagogy and keeps the mission concrete. Use `<agent-concepts>/concepts/teach/body/MISSION-FORMAT.md` for the format.\n\n## Why\n\nTODO.\n\n## Success looks like\n\n- TODO.\n\n## Constraints\n\n- TODO.\n\n## Out of scope\n\n- TODO.\n\nThe hosted review queue lives at `learning/review.md`; do not create a second `REVIEW.md`.\n",
             "learning/review.md": "# Review Queue\n\nThe `teach` skill owns this spaced-repetition queue. Use `<agent-concepts>/concepts/teach/body/REVIEW-FORMAT.md` and its `due.py` script; keep review state here rather than in `questions/` or a root `REVIEW.md`.\n",
             "learning/notes.md": "# Teach Notes\n\nThe `teach` skill owns learner preferences and session notes here. This is the hosted counterpart of standalone `NOTES.md`; do not create a duplicate root notes file.\n",
             "learning/records/.gitkeep": "",
             "sources/README.md": "# Sources\n\nImmutable raw source material for the hosted `teach` knowledge layer. The `teach` skill owns ingestion and citations; preserve source files once saved.\n",
             "concepts/README.md": "# Concepts\n\nCompiled knowledge pages for the hosted `teach` knowledge layer. Cite the existing `sources/` material; do not create a parallel `wiki/` for this learning workspace.\n",
-            "questions/README.md": "# Questions\n\nOpen questions and misconception notes. Teach review prompts and scheduling belong in `learning/review.md`, and evidence belongs in `learning/records/`.\n",
+            "questions/README.md": "# Questions\n\nOpen questions only. Teach review prompts and scheduling belong in `learning/review.md`; all learning evidence belongs in `learning/records/`.\n",
             "sessions/README.md": "# Sessions\n\nThe existing shared directory for dated tutoring/session notes and lesson artifacts from `teach`. Do not create `learning/sessions/`.\n",
             "references/teach-skill.md": TEACH_ADAPTER,
             "references/teach-resources.md": "# Teach Resources\n\nThe hosted resource catalog for `teach`. Use `<agent-concepts>/concepts/teach/body/RESOURCES-FORMAT.md`; raw material belongs in the existing `sources/` directory.\n",
@@ -1014,11 +1112,17 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
 
     if archetype in {"learning", "hybrid"}:
         adapter = vault / "references" / "teach-skill.md"
-        if adapter.exists() and not _contains(adapter, "<!-- teach-host-adapter: v1 -->"):
-            notes.append(
-                "existing references/teach-skill.md is not the explicit v1 teach adapter; "
-                "merge the generated path map by hand after checking existing state"
-            )
+        if adapter.exists():
+            try:
+                adapter_text = adapter.read_text(encoding="utf-8")
+            except OSError:
+                adapter_text = ""
+            if not is_valid_teach_adapter(adapter_text):
+                notes.append(
+                    "existing references/teach-skill.md is not the explicit v1 teach adapter "
+                    "(exact first line plus the complete hosted path map); merge the generated "
+                    "path map by hand after checking existing state"
+                )
         standalone_paths = (
             root / "MISSION.md",
             root / "REVIEW.md",
@@ -1061,6 +1165,27 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
     return notes
 
 
+def _preflight_targets(root: Path, planned: list[tuple[Path, str, bool]]) -> bool:
+    """Reject path-type collisions before the additive scaffold writes anything."""
+    for destination, _content, _is_root in planned:
+        try:
+            relative = destination.relative_to(root)
+        except ValueError:
+            print(f"ERROR: scaffold target is outside root: {destination}")
+            return False
+
+        parent = root
+        for component in relative.parts[:-1]:
+            parent /= component
+            if parent.exists() and not parent.is_dir():
+                print(f"ERROR: cannot create {destination}: parent is not a directory: {parent}")
+                return False
+        if destination.exists() and not destination.is_file():
+            print(f"ERROR: scaffold target is not a regular file: {destination}")
+            return False
+    return True
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         description="Idempotent: creates only missing files; never deletes, and never "
@@ -1089,8 +1214,11 @@ def main() -> int:
     created: list[Path] = []
     overwritten: list[Path] = []
     skipped: list[Path] = []  # existed, left untouched
+    planned = targets(root, slug, args.date, args.archetype)
+    if not _preflight_targets(root, planned):
+        return 1
 
-    for dest, content, is_root in targets(root, slug, args.date, args.archetype):
+    for dest, content, is_root in planned:
         exists = dest.exists()
         may_overwrite = (args.force_root if is_root else args.force)
         if exists and not may_overwrite:

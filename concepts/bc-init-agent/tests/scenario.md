@@ -18,11 +18,13 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
     `systemctl`. Generated trees must not claim a promotion timer is already
     installed.
 7c. **Teach host adapter is explicit and thin.** `test_teach_adapter.py` runs the real
-    scaffold for `learning` and `hybrid`, checks the v1 marker and exact approved paths,
-    confirms `sessions/` is reused instead of `learning/sessions/`, confirms no standalone
-    root state is generated, verifies old markers are left untouched with a bounded upgrade
-    note, preserves pre-existing standalone bytes while reporting competing homes, and runs
-    `due.py` against the generated hosted review path. The consumer lifecycle/pressure packet
+    scaffold for `learning` and `hybrid`, parses the exact approved map, checks the v1 marker
+    and vault-context resolution contract, confirms `sessions/` is reused instead of
+    `learning/sessions/`, confirms no standalone root state is generated, verifies incomplete
+    and altered markers are left untouched with a bounded upgrade note, checks the canonical
+    mission/evidence stubs and pre-write collision guard, preserves pre-existing standalone
+    bytes while reporting competing homes, and runs `due.py` against the generated hosted
+    review path. The consumer lifecycle/pressure packet
     is [../../teach/tests/pressure-host-integration.md](../../teach/tests/pressure-host-integration.md)
     and is authored for a later run, not claimed here.
 
@@ -45,7 +47,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 13. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, timer offer outcome, and the next steps (`/bc-plan-to-issues` → `/bc-drain-issues`); commits the scaffold staging only the new files.
 
 ## Pass criteria
-Script checks 1–7 plus 7a and 7b pass on inspection of the generated tree; process checks 8–13 hold in the subagent transcript.
+Script checks 1–7 plus 7a, 7b, and 7c pass on inspection of the generated tree; process checks 8–13 hold in the subagent transcript.
 
 ## Run result — 2026-06-21 — **PASS**
 

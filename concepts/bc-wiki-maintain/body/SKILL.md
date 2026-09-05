@@ -20,9 +20,11 @@ find the last dedicated promotion commit and the filesystem to find the current 
 
 ## Teach adapter boundary
 
-When the target vault contains the explicit `references/teach-skill.md` marker beginning
-`<!-- teach-host-adapter: v1 -->`, read its path map before classifying candidates. The
-standalone `teach` skill remains the authority for the mapped learning state: mission
+When the target vault contains a structurally valid explicit `references/teach-skill.md` marker,
+read its path map before classifying candidates. Valid means the first line is exactly
+`<!-- teach-host-adapter: v1 -->` and the complete `## Hosted teach path map` table matches the
+approved map in that adapter; a prefix-only, missing-row, or altered-map file is not a contract.
+The standalone `teach` skill remains the authority for the mapped learning state: mission
 (`learning/plan.md`), review queue (`learning/review.md`), learning records
 (`learning/records/`), session/lesson artifacts (`sessions/`), notes (`learning/notes.md`),
 raw sources (`sources/`), compiled concepts (`concepts/`), the teach resource catalog
@@ -30,10 +32,12 @@ raw sources (`sources/`), compiled concepts (`concepts/`), the teach resource ca
 
 This maintenance pass may search those pages as context, and may promote ordinary non-teach
 host evidence elsewhere, but it must never fabricate demonstrated learning, create or rewrite
-a learning record, alter a review prompt/date/interval, advance the review queue, or turn a
-session-log claim into evidence. If log evidence appears to target a teach-owned path, classify
-it as `skip` with a reason and leave the edit to `teach`; raw source files remain immutable.
-Do not infer this boundary from directory names alone when the explicit marker is absent.
+a learning record, alter a review prompt/date/interval, advance the review queue, turn a
+session-log claim into evidence, or edit the teach-owned Glossary section. It may edit
+non-glossary sections of `project/overview.md` when ordinary host evidence supports that edit.
+If log evidence appears to target a teach-owned path, classify it as `skip` with a reason and
+leave the edit to `teach`; raw source files remain immutable. Do not infer this boundary from
+directory names alone when the explicit marker is absent.
 
 <!-- Adapted from prompting-agents: scope discipline. -->
 **Implement EXACTLY and ONLY what the log evidence supports.** No extra pages, cleanup, or

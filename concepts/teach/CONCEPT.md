@@ -19,7 +19,10 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
   marker opts an existing initializer vault into teach's mapped paths: host schema/orientation
   stays with `bc-init-agent`, while teach owns mission, review, evidence, knowledge, glossary,
   resources, notes, and session artifacts. Standalone files remain unchanged and win by default;
-  competing homes require a user decision, never an automatic migration.
+  competing homes require a user decision. Choosing the host does not migrate standalone state;
+  only a separate explicit request to consolidate or migrate permits the destructive operation,
+  which verifies every mapped destination before deleting originals and leaves them intact on any
+  failure.
 
 ## Provenance
 
@@ -39,7 +42,7 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 
 Pi retest 2026-08-21 (Grok 4.6 medium, `/tmp/pt-teach-pi`): **MIXED**. Attacks 2 and 3 held (LR-0005 stayed `self-reported`; HashMap vs BTreeMap cited std docs and filed `wiki/hashmap-vs-btreemap.md`). Attack 1 incomplete: consumer read the swarm run dir, never asked the review questions in conversation (answers were injected on the next turn), did not offer the open skill-change path, and did not teach `Result`/`?` after grading. Frontmatter stays `partial` until a clean Pi consumer holds Attack 1 without harness contamination.
 
-`tests/pressure-host-integration.md` adds clean consumer scenarios for initialize → hosted teach → resume, standalone preservation, competing homes, and the cross-skill maintenance boundary. These scenarios are authored for a parent consumer/review run and were **not run here**; the deterministic scaffold/layout regression is separate evidence and does not clear the pressure gate.
+`tests/pressure-host-integration.md` adds clean consumer scenarios for initialize → hosted teach → resume, standalone preservation, explicit destructive migration, competing homes, and the cross-skill maintenance boundary. These scenarios are authored for a parent consumer/review run and were **not run here**; the deterministic scaffold/layout/contract regression is separate evidence and does not clear the pressure gate.
 
 ## Deploy targets
 

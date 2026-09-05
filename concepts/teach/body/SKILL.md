@@ -18,28 +18,35 @@ per workspace.
 
 ### Hosted .bc-agent adapter
 
-Before reading or writing any teaching state, resolve `<teach-root>`:
+Before reading or writing any teaching state, resolve `<teach-root>` and both candidate homes:
 
-1. From the current directory, first check for standalone state (`MISSION.md`, `REVIEW.md`,
-   `GLOSSARY.md`, `RESOURCES.md`, `NOTES.md`, `learning-records/`, or `lessons/`).
-   If any is present, do not select an ancestor host automatically: preserve this standalone
-   home and report any marker as a competing home. Otherwise inspect the nearest ancestor
-   containing the explicit marker `.bc-agent/references/teach-skill.md`. If the current
-   directory is the `.bc-agent` vault, the marker is `references/teach-skill.md`. Read that
-   marker before using host paths. A valid marker begins `<!-- teach-host-adapter: v1 -->`;
-   it is the opt-in adapter for an existing initializer host, not an instruction to run
-   `bc-init-agent`.
-2. With a valid marker, use the marked `.bc-agent` directory as `<teach-root>` — this is
-   `.bc-agent` when invoked from the project root and the current vault when invoked from
-   vault context. Resolve every mapped path below relative to `<teach-root>`.
-3. Without a valid marker, use the current directory as `<teach-root>` and keep the
-   standalone paths below authoritative. Do not treat an arbitrary `.bc-agent` directory
-   as a host and do not auto-run initialization.
-4. If standalone teach state and a valid host marker compete, stop before writing, name both
-   homes to the user, and ask which one to use. The standalone layout is preserved and wins
-   by default; never migrate, copy, or silently displace it. An incomplete marker is not a
-   host contract: report the missing adapter and remain standalone until the user explicitly
-   chooses and repairs the host.
+1. Resolve the marker and its invocation context before selecting a home. If the current
+   directory is `.bc-agent` or one of its descendants, locate that owning `.bc-agent` directory
+   and its marker at `references/teach-skill.md`; its marker-owning project root is the parent of
+   `.bc-agent`. Otherwise inspect the current directory and nearest ancestors for the explicit
+   marker at `.bc-agent/references/teach-skill.md`; the directory containing that `.bc-agent` is
+   the marker-owning project root. A valid marker is structurally complete only when its first
+   line is exactly `<!-- teach-host-adapter: v1 -->` and its complete `## Hosted teach path map`
+   table exactly matches the approved map below. A prefix-only, missing-row, or altered-map file
+   is incomplete and is not a host contract. Read a valid marker before using host paths; it is
+   the opt-in adapter for an existing initializer host, not an instruction to run `bc-init-agent`.
+2. Check standalone state (`MISSION.md`, `REVIEW.md`, `GLOSSARY.md`, `RESOURCES.md`, `NOTES.md`,
+   `learning-records/`, or `lessons/`) in the current directory first. When a marker candidate is
+   found, also inspect its marker-owning project root for those same paths. This second check is
+   required when invoked from `<project>/.bc-agent`, where root standalone state would otherwise be
+   missed. If any is present, preserve that standalone home and report it as a competing home.
+3. With a valid marker and no competing standalone state, use the marked `.bc-agent` directory as
+   `<teach-root>` — `.bc-agent` when invoked from the project root and the current vault when
+   invoked from vault context. Resolve every mapped path below relative to `<teach-root>`.
+4. Without a valid marker, use the current directory as `<teach-root>` and keep the standalone
+   paths below authoritative. Do not treat an arbitrary `.bc-agent` directory as a host and do
+   not auto-run initialization.
+5. If standalone teach state and a valid host marker compete, stop before writing, name both homes
+   to the user, and ask which one to use. Choosing the host for reading or writing is not approval
+   to migrate: leave every standalone file untouched unless the user separately and explicitly
+   requests consolidation or migration. Choosing standalone continues to use the original paths.
+   An incomplete marker is not a host contract: report the missing adapter and remain standalone
+   until the user explicitly chooses and repairs the host.
 
 The host's schema and orientation remain owned by `bc-init-agent`; `teach` owns the mapped
 pedagogy, evidence, glossary content, source/knowledge content, and spaced-repetition state.
@@ -48,26 +55,70 @@ teach body.
 
 ### Hosted path map
 
-With a valid adapter, these logical teach surfaces use the existing host paths:
+With a valid adapter, these logical teach surfaces use the existing host paths. All paths below
+are relative to `<teach-root>`:
 
-| Teach surface | Hosted path, relative to `<teach-root>` |
-|---|---|
-| Mission | `learning/plan.md` (no separate hosted `MISSION.md`) |
-| Review queue | `learning/review.md` |
-| Learning records | `learning/records/` |
-| Lessons and session artifacts | existing `sessions/` (never `learning/sessions/`) |
-| Notes | `learning/notes.md` |
-| Raw sources | existing `sources/` |
-| Compiled knowledge / wiki concepts | existing `concepts/` |
-| Resource catalog | `references/teach-resources.md` |
-| Glossary | existing Glossary section of `project/overview.md` |
-| Catalog and history | shared `index.md` and `log.md` |
+| Teach surface | Hosted path | Owner |
+|---|---|---|
+| Mission | `learning/plan.md` (no hosted `MISSION.md`) | `teach` |
+| Review queue | `learning/review.md` | `teach` |
+| Learning records | `learning/records/` | `teach` |
+| Lessons and session artifacts | existing `sessions/` (never `learning/sessions/`) | `teach` |
+| Notes | `learning/notes.md` | `teach` |
+| Raw sources | existing `sources/` | `teach` |
+| Compiled knowledge / wiki concepts | existing `concepts/` | `teach` |
+| Resource catalog | `references/teach-resources.md` | `teach` |
+| Glossary | the existing Glossary section of `project/overview.md` | `teach` |
+| Catalog and history | shared `index.md` and `log.md` | `bc-init-agent` host schema; `teach` updates teach entries |
 
 Do not create duplicate root `MISSION.md`, `REVIEW.md`, `GLOSSARY.md`, `RESOURCES.md`, or
 `NOTES.md` files in a hosted workspace. Do not create `learning/sessions/`; lessons and
 session artifacts use the existing `sessions/` directory. The host `index.md` and `log.md`
 are shared catalog/history surfaces and must receive teach entries without replacing host
 orientation or unrelated project history.
+
+### Explicit destructive migration — only on a user request
+
+Choosing the host for reading or writing is not migration. Only perform this operation when
+the user explicitly asks to **consolidate** or **migrate** the standalone teach workspace into
+the host, never because a marker was discovered or as part of another action. This operation
+is destructive: it copies/moves content into the host and then **deletes the standalone
+originals**. Tell the user plainly that the originals will be deleted before doing it.
+
+Use a copy-then-verify sequence. Inventory every existing standalone item, prepare its mapped
+host destination, and preflight every destination for collisions and writability before any
+write. Verify that every destination is complete before removing any original; for directories,
+verify every content-bearing file, not merely the directory. Content-bearing records, sources,
+knowledge pages, and session artifacts must arrive byte-identical (compare bytes or hashes).
+The mission, notes, queue, catalog/history, glossary, and resource catalog may be reformatted
+to their host formats, but verify every source item, row, entry, or glossary term is represented.
+Do not overwrite unrelated host content or proceed through a destination conflict.
+
+If any destination is missing, incomplete, conflicting, or unwritable, stop and report the
+failure with **all standalone originals intact**; delete nothing. Only after every mapped
+destination passes verification may the corresponding standalone files and directories be
+removed. Choosing the host without an explicit migration request leaves every standalone file
+untouched.
+
+| Standalone source | Hosted destination (relative to `<teach-root>`) | Verification |
+|---|---|---|
+| `MISSION.md` | `learning/plan.md` | mission content represented in the host mission format |
+| `REVIEW.md` | `learning/review.md` | every review item and scheduling value represented |
+| `learning-records/*` | `learning/records/` | each record arrives byte-identical |
+| `lessons/*` | existing `sessions/` | each lesson/session artifact arrives byte-identical |
+| `NOTES.md` | `learning/notes.md` | every note represented |
+| `sources/*` | existing `sources/` | each source arrives byte-identical |
+| `wiki/*` | existing `concepts/` | each knowledge page arrives byte-identical |
+| `RESOURCES.md` | `references/teach-resources.md` | every catalog entry represented |
+| `GLOSSARY.md` | Glossary section of `project/overview.md` | every term and definition represented |
+| `index.md` | shared `index.md` | every teach catalog entry represented without replacing host orientation |
+| `log.md` | shared `log.md` | every teach history entry represented without replacing host history |
+
+When the adapter is valid, `teach` owns the Glossary section of `project/overview.md`; planning
+and maintenance skills must leave that section alone. Non-glossary host sections remain available
+to their existing owners. The host search path is for knowledge and learning-record retrieval;
+direct reads of known mission, review queue, and notes state remain correct. Use the host's
+canonical search path rather than `index.md` to locate knowledge pages or learning records.
 
 ### Standalone path map
 
@@ -97,10 +148,12 @@ Create directories lazily, only when first written to, in whichever path home th
 
 Every session starts the same way, before any new material:
 
-1. Read the resolved mission, notes, `index.md`, and the last few `log.md` entries under
-   `<teach-root>`. In hosted mode these are `learning/plan.md`, `learning/notes.md`, and
-   the shared host catalog/history. Open knowledge pages and learning records only as the
-   index points you to them — do not skim everything.
+1. Read the resolved mission, notes, and last few `log.md` entries under `<teach-root>`.
+   In hosted mode these are `learning/plan.md`, `learning/notes.md`, and the shared host history;
+   read the shared `index.md` only for broad orientation. The known review queue is read directly
+   by the next step. For hosted knowledge pages and learning records, use the host's canonical
+   search path and open the returned paths — never use `index.md` as a lookup. Standalone mode
+   keeps its existing direct `index.md`-guided path.
 2. **Review first.** Run `python3 <this skill's directory>/scripts/due.py <resolved review queue>`
    — in hosted mode the queue is `learning/review.md`; standalone remains `REVIEW.md`. It
    does the date math and prints what's due with next-interval suggestions. Quiz the user on

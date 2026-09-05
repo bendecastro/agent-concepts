@@ -184,11 +184,14 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 `tests/pressure-promotion.md` defines the promotion-gate pressure scenarios. The teach-owned
 adapter boundary is covered by `../teach/tests/pressure-host-integration.md`; its cross-skill
 scenario is authored but not yet run after this contract change, so frontmatter remains `partial`.
-`tests/pressure-read-path.md` defines the five read-path rationalisation attacks: index shortcut,
+The valid-marker rule also protects the boundary: the first line and complete hosted path map must
+match, and maintenance leaves the teach-owned Glossary section untouched while retaining access
+to non-glossary host sections. `tests/pressure-read-path.md` defines the five read-path
+rationalisation attacks: index shortcut,
 empty-result-as-absence, whole-question query, hub-page result, and missing-qmd fallback. The
 latest discipline-enforcing promotion pressure is the 2026-08-30 **PASS 5/5** record below;
 the pre-existing promotion checks still pass, but frontmatter is now `partial` because the
-new teach-boundary gate has not yet had its consumer pressure run. `tested: 2026-08-30` remains
+new teach-boundary gate has not yet had its consumer pressure run. `tested: 2026-08-31` remains
 the date of the last run that covered the prior contract.
 
 **2026-08-22 — PASS 4/4** (Pi/Luna max consumers). Four fresh `worker` agents ran the pass against
