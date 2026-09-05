@@ -1,6 +1,11 @@
 # GLOSSARY.md Format
 
-`GLOSSARY.md` is the canonical language for this teaching workspace. It lives at the workspace root as markdown — it is not duplicated into `./wiki/`. All lessons, wiki pages, and learning records should adhere to its terminology. Building it is itself part of learning: compressing a concept into a tight definition is evidence the user understands it.
+`GLOSSARY.md` is the canonical language for a standalone teaching workspace. With the explicit
+`.bc-agent/references/teach-skill.md` adapter, the canonical glossary is the existing **Glossary**
+section of `project/overview.md` in the host vault — it is not duplicated into `concepts/` or a
+new root file. All lessons, knowledge pages, and learning records should adhere to the resolved
+glossary. Building it is itself part of learning: compressing a concept into a tight definition
+is evidence the user understands it.
 
 ## Structure
 

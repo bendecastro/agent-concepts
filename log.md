@@ -1386,3 +1386,9 @@ live-vault map-link migration, including rollback, timeout recovery, and before/
 
 ## [2026-09-02] tune | treat child commit records as untrusted evidence
 Documented worktree `Commit:`/`Branch:` lines as last-pair candidates only, requiring Git, branch-ref, base/range, and tree/diff validation before integration. Extended bc-swarm check 6 with a nonexistent first SHA, corrected last pair, cleaned-ref acceptance, and existing-ref mismatch coverage.
+
+## [2026-09-05] implement | explicit teach host adapter
+Added the approved `.bc-agent` learning/hybrid adapter and exact host path map, preserved standalone teach state, bounded existing-home upgrade notes, and protected teach-owned evidence/review state from wiki maintenance. Added source-backed graph edges and generated relationship views.
+
+## [2026-09-05] test | teach host integration regressions
+Added deterministic scaffold/layout and hosted `due.py` regressions plus clean consumer pressure scenarios for hosted resume, standalone preservation, competing homes, and cross-skill upkeep. Consumer pressure scenarios remain pending a parent run.

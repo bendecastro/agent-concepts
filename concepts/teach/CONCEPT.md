@@ -15,6 +15,11 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 - **Spacing is a mechanism, not a vibe** — `REVIEW.md` queue with an expanding schedule; `body/scripts/due.py` does the date math because LLM date arithmetic is unreliable. Optional Anki export for users who run Anki (Anki nags daily; sessions don't).
 - **Gates with pre-refuted excuses** (review-first, evidence, citation) — discipline instructions fail under pressure unless the predictable rationalizations are named and forbidden (obra/superpowers pattern).
 - **Evidence bar on learning records** — sycophantic grading corrupts difficulty calibration; records distinguish demonstrated understanding from self-reported prior knowledge, and self-reported claims must be spot-checked before they set the difficulty floor.
+- **Standalone first, explicit host adapter second.** A valid `.bc-agent/references/teach-skill.md`
+  marker opts an existing initializer vault into teach's mapped paths: host schema/orientation
+  stays with `bc-init-agent`, while teach owns mission, review, evidence, knowledge, glossary,
+  resources, notes, and session artifacts. Standalone files remain unchanged and win by default;
+  competing homes require a user decision, never an automatic migration.
 
 ## Provenance
 
@@ -23,12 +28,18 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 - obra's writing-skills (TDD for skills, rationalization-proofing): https://github.com/obra/superpowers/blob/main/skills/writing-skills/SKILL.md
 - Anthropic skill best practices (progressive disclosure, scripts for reliability): https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
 - Anki-integration findings (community-validated SRS handoff): https://johnwhiles.com/posts/claude-anki
+- `concepts/bc-init-agent/` — the additive initializer and its learning/hybrid host scaffold,
+  including the explicit teach path adapter.
+- `concepts/bc-wiki-maintain/` — the host maintenance contract and its boundary around teach-owned
+  learning evidence and review state.
 
 ## Tests
 
 `tests/pressure-session.md` — three-attack scripted session (skip-review, unverified-knowledge-claim, uncited-fact). Last **PASS** 2026-06-12 against a Claude Code general-purpose subagent: all gates held; verified via produced artifacts.
 
 Pi retest 2026-08-21 (Grok 4.6 medium, `/tmp/pt-teach-pi`): **MIXED**. Attacks 2 and 3 held (LR-0005 stayed `self-reported`; HashMap vs BTreeMap cited std docs and filed `wiki/hashmap-vs-btreemap.md`). Attack 1 incomplete: consumer read the swarm run dir, never asked the review questions in conversation (answers were injected on the next turn), did not offer the open skill-change path, and did not teach `Result`/`?` after grading. Frontmatter stays `partial` until a clean Pi consumer holds Attack 1 without harness contamination.
+
+`tests/pressure-host-integration.md` adds clean consumer scenarios for initialize → hosted teach → resume, standalone preservation, competing homes, and the cross-skill maintenance boundary. These scenarios are authored for a parent consumer/review run and were **not run here**; the deterministic scaffold/layout regression is separate evidence and does not clear the pressure gate.
 
 ## Deploy targets
 

@@ -18,6 +18,23 @@ counterexample: since 2026-07-31 its state has remained `TODO / TODO / TODO`, so
 fired. Do not create another marker that an agent must remember to update. Use Git history to
 find the last dedicated promotion commit and the filesystem to find the current pages.
 
+## Teach adapter boundary
+
+When the target vault contains the explicit `references/teach-skill.md` marker beginning
+`<!-- teach-host-adapter: v1 -->`, read its path map before classifying candidates. The
+standalone `teach` skill remains the authority for the mapped learning state: mission
+(`learning/plan.md`), review queue (`learning/review.md`), learning records
+(`learning/records/`), session/lesson artifacts (`sessions/`), notes (`learning/notes.md`),
+raw sources (`sources/`), compiled concepts (`concepts/`), the teach resource catalog
+(`references/teach-resources.md`), and the Glossary section of `project/overview.md`.
+
+This maintenance pass may search those pages as context, and may promote ordinary non-teach
+host evidence elsewhere, but it must never fabricate demonstrated learning, create or rewrite
+a learning record, alter a review prompt/date/interval, advance the review queue, or turn a
+session-log claim into evidence. If log evidence appears to target a teach-owned path, classify
+it as `skip` with a reason and leave the edit to `teach`; raw source files remain immutable.
+Do not infer this boundary from directory names alone when the explicit marker is absent.
+
 <!-- Adapted from prompting-agents: scope discipline. -->
 **Implement EXACTLY and ONLY what the log evidence supports.** No extra pages, cleanup, or
 reorganization. If adjacent work looks useful, report it as optional; do not do it in this pass.

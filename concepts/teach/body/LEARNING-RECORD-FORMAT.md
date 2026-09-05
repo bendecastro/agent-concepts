@@ -1,6 +1,6 @@
 # Learning Record Format
 
-Learning records live in `./learning-records/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc. Create the directory lazily — only when the first record is written.
+Learning records live in `./learning-records/` in a standalone workspace and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc. With the explicit `.bc-agent/references/teach-skill.md` adapter, use `learning/records/` in the host vault instead — never create a second records directory. Create the resolved directory lazily, only when the first record is written.
 
 They are the teaching equivalent of ADRs: they capture demonstrated understanding, disclosed prior knowledge, and corrected misconceptions. They are the input to the zone of proximal development, so their integrity matters more than their volume.
 
@@ -43,12 +43,12 @@ Write a `demonstrated` record only when the user has *demonstrated* understandin
 1. The user demonstrated genuine understanding of something non-trivial (per the evidence bar above) — `Status: demonstrated`.
 2. The user disclosed prior knowledge — `Status: self-reported`; include claimed depth and what to spot-check before relying on it.
 3. A misconception appeared — `Status: misconception`; high-value because it predicts future stumbling blocks. Mark a correction separately only after the corrected understanding is demonstrated.
-4. The mission shifted in response to learning — update `MISSION.md` and cross-reference it here.
+4. The mission shifted in response to learning — update the resolved mission (`MISSION.md` standalone or `learning/plan.md` hosted) and cross-reference it here.
 
 ### What does _not_ qualify
 
 - Material merely covered. Coverage is not learning; wait for evidence.
-- Term definitions already captured in `GLOSSARY.md`.
+- Term definitions already captured in the resolved glossary (`GLOSSARY.md` standalone or the Glossary section of `project/overview.md` hosted).
 - Session activity logs. Records are decision-grade insights, not a journal.
 
 ## Supersession
@@ -57,4 +57,4 @@ When a later record contradicts an earlier one, mark the old record `Status: sup
 
 ## Index
 
-Every record gets a one-line entry (`LR-0001 — title — demonstrated`) in the workspace `index.md` under `## Learning records`, updated when the record is written or superseded. Sessions read the index and open only relevant records.
+Every record gets a one-line entry (`LR-0001 — title — demonstrated`) in the resolved shared/standalone `index.md` under `## Learning records`, updated when the record is written or superseded. Sessions read the index and open only relevant records.

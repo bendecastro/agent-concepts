@@ -1,8 +1,14 @@
 # RESOURCES.md Format
 
-`RESOURCES.md` is the curated catalog of trusted sources for this topic. It is the annotation layer over `./sources/` — the directory of actual ingested material (clipped articles, papers, transcripts), which is immutable once saved. Factual claims in the wiki cite these sources, not parametric guesses. Wisdom comes from the communities listed here.
+`RESOURCES.md` is the curated catalog of trusted sources for a standalone teaching workspace. With
+the explicit `.bc-agent/references/teach-skill.md` adapter, use the host's
+`references/teach-resources.md` instead — one catalog, no duplicate root file. It is the
+annotation layer over the existing `./sources/` directory of actual ingested material (clipped
+articles, papers, transcripts), which is immutable once saved. Factual claims in the knowledge
+pages cite these sources, not parametric guesses. Wisdom comes from the communities listed here.
 
-When a source is ingested, save the material itself to `./sources/` (web pages rot; local copies don't) and note its filename in the annotation here.
+When a source is ingested, save the material itself to `./sources/` (web pages rot; local copies
+don't) and note its filename in the resolved catalog.
 
 ## Structure
 
@@ -14,7 +20,7 @@ When a source is ingested, save the material itself to `./sources/` (web pages r
 - [Book: _The Science and Practice of Strength Training_ — Zatsiorsky & Kraemer](https://example.com)
   Vetted: foundational academic text, widely cited. Use for: periodisation, recovery, intensity zones.
 - [Article: "How Much Should I Train?" — Greg Nuckols (Stronger By Science)](https://example.com)
-  Vetted: evidence review with primary citations; author is a recognised practitioner. Use for: weekly volume targets. Ingested: `sources/nuckols-volume.md` → [summary](wiki/source-nuckols-volume.md).
+  Vetted: evidence review with primary citations; author is a recognised practitioner. Use for: weekly volume targets. Ingested: `sources/nuckols-volume.md` → [summary](wiki/source-nuckols-volume.md) standalone, or the corresponding page in `concepts/` hosted.
 
 ## Wisdom (Communities)
 
@@ -43,5 +49,5 @@ Record the vetting outcome in the annotation (`Vetted: ...`). If you cannot vet 
 
 - **Annotate every entry.** A bare link is useless in three months: one line on what it covers and when to reach for it.
 - **Group by Knowledge / Wisdom.** A resource may appear in only one group.
-- **Prune ruthlessly.** A resource that turned out wrong, shallow, or off-mission gets removed, not buried. Five sharp sources beat thirty mediocre ones.
+- **Prune ruthlessly.** A resource that turned out wrong, shallow, or off-mission gets removed, not buried. In hosted mode, edit only the teach-owned `references/teach-resources.md` catalog; do not rewrite host orientation pages. Five sharp sources beat thirty mediocre ones.
 - **Record community preferences.** If the user opts out of communities, note it here so future sessions stop proposing them.

@@ -10,13 +10,21 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 4. **Additive plug-in.** In a root that already has a hand-written `AGENTS.md` and some pre-existing `.bc-agent/` pages, the script creates only the missing files and leaves the existing ones **byte-for-byte unchanged** (the existing root `AGENTS.md` is preserved and flagged for a manual pointer-merge). Nothing is deleted. If a newly added scaffold file needs pointers from preserved files, the script prints upgrade notes rather than overwriting them.
 5. **No overwrite without force; dry-run writes nothing.** Default never overwrites an existing file; `--dry-run` reports intended writes but creates 0 files; `--force`/`--force-root` are the only paths that replace existing content (and still delete nothing). Existing `.obsidian/*` files are preserved byte-for-byte on rerun.
 6. **Slug validation.** A slug with spaces or uppercase is rejected (exit 1).
-7. **Archetype overlays.** `--archetype ops` creates components/findings/open-questions/plans seed files; `--archetype learning` creates learning/sources/concepts/questions/sessions + teach reference; `--archetype knowledge` creates raw + compiled wiki seed files; `--archetype hybrid` creates all overlay families. Default `code` preserves the original base tree without extra archetype folders. Code/hybrid scaffolds include `conventions/architecture-runway.md` with a computed Git-history planning-surface signal, not a hand-maintained counter.
+7. **Archetype overlays.** `--archetype ops` creates components/findings/open-questions/plans seed files; `--archetype learning` creates the mapped learning paths plus sources/concepts/questions/sessions and teach adapter; `--archetype knowledge` independently creates raw + compiled wiki seed files; `--archetype hybrid` creates ops + learning overlays and keeps knowledge entities/syntheses under the mapped `concepts/` home without parallel `raw/` or `wiki/` trees. Default `code` preserves the original base tree without extra archetype folders. Code/hybrid scaffolds include `conventions/architecture-runway.md` with a computed Git-history planning-surface signal, not a hand-maintained counter.
 7a. **Generated read-path and heading contract.** In a fresh throwaway Git repo, run `scaffold.py --root <tmp> --slug demo-proj --date 2026-08-29` and assert that root `AGENTS.md` lists `.bc-agent/AGENTS.md` as read 1, vault `AGENTS.md` contains the marker-delimited canonical search block (including the empty-result and hub-page rules), and `decisions/adr-0001-local-project-agent-wiki.md` plus `tasks/active.md` describe search before page lookup. Assert `index.md` says `## Orientation`, HOME/MAP call themselves human-facing orientation, and both generated date-bearing pages use `## [2026-08-29]`; any `index.md` occurrence in the generated tree must be orientation guidance rather than an instruction to load it for lookup.
 7b. **Timer offer is skill-only.** `body/SKILL.md` contains the step title
     `Offer rolling wiki maintenance` and the sentence `Never copy, enable, or
     start units without confirmation.` `body/scaffold.py` contains no
     `systemctl`. Generated trees must not claim a promotion timer is already
     installed.
+7c. **Teach host adapter is explicit and thin.** `test_teach_adapter.py` runs the real
+    scaffold for `learning` and `hybrid`, checks the v1 marker and exact approved paths,
+    confirms `sessions/` is reused instead of `learning/sessions/`, confirms no standalone
+    root state is generated, verifies old markers are left untouched with a bounded upgrade
+    note, preserves pre-existing standalone bytes while reporting competing homes, and runs
+    `due.py` against the generated hosted review path. The consumer lifecycle/pressure packet
+    is [../../teach/tests/pressure-host-integration.md](../../teach/tests/pressure-host-integration.md)
+    and is authored for a later run, not claimed here.
 
 ## Skill process checks
 

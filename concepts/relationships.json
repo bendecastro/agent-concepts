@@ -20,6 +20,33 @@
       "reason": "Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph."
     },
     {
+      "from": "bc-init-agent",
+      "to": "teach",
+      "relation": "adapts",
+      "required": true,
+      "when": "learning or hybrid scaffold",
+      "source": "concepts/bc-init-agent/body/SKILL.md#learning-archetype-adapter",
+      "reason": "The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state."
+    },
+    {
+      "from": "bc-wiki-maintain",
+      "to": "teach",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "teach adapter marker present",
+      "source": "concepts/bc-wiki-maintain/body/SKILL.md#teach-adapter-boundary",
+      "reason": "Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue."
+    },
+    {
+      "from": "teach",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "valid teach-host-adapter marker",
+      "source": "concepts/teach/body/SKILL.md#hosted-bc-agent-adapter",
+      "reason": "Hosted teach mode relies on the initializer's explicit vault marker and host schema while remaining standalone by default."
+    },
+    {
       "from": "bc-plan-to-issues",
       "to": "grilling",
       "relation": "loads",

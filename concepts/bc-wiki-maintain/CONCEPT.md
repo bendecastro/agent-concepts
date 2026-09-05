@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial
 tested: 2026-08-31
 deployed: 2026-08-23
 ---
@@ -143,6 +143,10 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   operations. The pilot is one writer against a small vault; staged whole-graph semantic
   verification from Perplexity Brain is intentionally deferred until concurrency or scale makes
   that machinery worthwhile.
+- **Teach adapter ownership boundary.** When the explicit `teach-skill.md` marker is present, this
+  pass may search teach-owned pages as context but never fabricate learning evidence, edit
+  learning records, or advance the review queue. Teach owns mapped pedagogy/evidence/SRS state;
+  maintenance promotes only ordinary host context and classifies teach-state candidates for teach.
 
 ## Provenance
 
@@ -158,6 +162,8 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 - `concepts/qmd/` — the global search overlay whose collection coverage the detector reports.
 - `concepts/prompting-agents/body/SKILL.md` — adapted scope-discipline, gate, evidence, and
   verification instruction blocks used in the body.
+- `concepts/teach/` — the hosted learning owner and explicit adapter path map whose evidence and
+  review state this maintenance pass must not fabricate or advance.
 - `tests/retrieval-results.md` (commit `166437c3c0919862a41379bfc1f4dd253cf7db62`) — the
   pre-registered image-maze comparison that exposed the sentence-versus-keyword query-shape
   failure: 17/20 full-sentence misses versus 5/20 keyword misses, with Wilson intervals recorded
@@ -175,11 +181,15 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 
 ## Tests
 
-`tests/pressure-promotion.md` defines the promotion-gate pressure scenarios.
+`tests/pressure-promotion.md` defines the promotion-gate pressure scenarios. The teach-owned
+adapter boundary is covered by `../teach/tests/pressure-host-integration.md`; its cross-skill
+scenario is authored but not yet run after this contract change, so frontmatter remains `partial`.
 `tests/pressure-read-path.md` defines the five read-path rationalisation attacks: index shortcut,
 empty-result-as-absence, whole-question query, hub-page result, and missing-qmd fallback. The
 latest discipline-enforcing promotion pressure is the 2026-08-30 **PASS 5/5** record below;
-frontmatter `test_status: pass` / `tested: 2026-08-30` matches that run.
+the pre-existing promotion checks still pass, but frontmatter is now `partial` because the
+new teach-boundary gate has not yet had its consumer pressure run. `tested: 2026-08-30` remains
+the date of the last run that covered the prior contract.
 
 **2026-08-22 — PASS 4/4** (Pi/Luna max consumers). Four fresh `worker` agents ran the pass against
 four isolated copies of a seeded fixture vault (`git init`, one baseline commit), each handed one

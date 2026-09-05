@@ -1,6 +1,10 @@
 # MISSION.md Format
 
-`MISSION.md` lives at the workspace root. It captures the _reason_ the user is learning this topic. Every teaching decision — what to teach next, which resources to surface, which exercises to design — should trace back to this document.
+`MISSION.md` lives at the standalone workspace root. It captures the _reason_ the user is learning this topic. Every teaching decision — what to teach next, which resources to surface, which exercises to design — should trace back to this document.
+
+When the explicit `.bc-agent/references/teach-skill.md` adapter is active, the same mission
+lives at `learning/plan.md` under the host vault. Do not create a hosted `MISSION.md` or copy
+this state; resolve the path from the adapter and keep the standalone format unchanged.
 
 ## Template
 
@@ -27,4 +31,4 @@
 - **Concrete over abstract.** "Run a half marathon by October" beats "get fitter."
 - **Push back on vagueness.** If the user cannot articulate why, interview them before writing anything. A bad mission is worse than no mission.
 - **Revise when reality shifts.** When the goal moves, update this file and write a learning record capturing why — don't leave a stale mission steering future sessions.
-- **Keep it short.** If `MISSION.md` runs past a screen, it has stopped being a compass and started being a plan.
+- **Keep it short.** If the resolved mission file runs past a screen, it has stopped being a compass and started being a plan.

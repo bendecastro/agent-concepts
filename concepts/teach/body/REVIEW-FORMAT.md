@@ -1,6 +1,10 @@
 # REVIEW.md Format
 
-`REVIEW.md` is the spaced-repetition queue. It is what turns "spacing" from a stated principle into a mechanism. It lives at the workspace root and is checked at the start of every session, before new material.
+`REVIEW.md` is the standalone spaced-repetition queue. It is what turns "spacing" from a stated principle into a mechanism. It lives at the standalone workspace root and is checked at the start of every session, before new material.
+
+With the explicit `.bc-agent/references/teach-skill.md` adapter, the queue lives at
+`learning/review.md` in the host vault. Do not create a hosted `REVIEW.md`; the queue has one
+authoritative home selected by the adapter.
 
 ## Template
 
@@ -19,7 +23,7 @@
 
 ## Computing what's due
 
-Never do the date arithmetic in your head. Run `python3 <skill dir>/scripts/due.py REVIEW.md` — it prints the due items and the exact next due date for each outcome (recalled / hard / failed). Copy those dates into the table.
+Never do the date arithmetic in your head. Run `python3 <skill dir>/scripts/due.py <resolved review queue>` — `REVIEW.md` standalone or `learning/review.md` hosted. It prints the due items and the exact next due date for each outcome (recalled / hard / failed). Copy those dates into the resolved table.
 
 ## Scheduling
 
@@ -41,4 +45,4 @@ Convert all dates to absolute dates (the agent knows today's date; the file must
 
 ## Anki users
 
-`REVIEW.md` only schedules reviews when a session happens; Anki nags daily on its own. If the user uses Anki (ask once, record the answer in `NOTES.md`), offer to export review items as cards instead — via AnkiConnect if their Anki is running, otherwise a genanki-generated `.apkg`. Anki then owns scheduling: keep `REVIEW.md` only as the export ledger (which items have been exported), and skip the in-session review ritual for exported items.
+The resolved review queue only schedules reviews when a session happens; Anki nags daily on its own. If the user uses Anki (ask once, record the answer in the resolved notes file), offer to export review items as cards instead — via AnkiConnect if their Anki is running, otherwise a genanki-generated `.apkg`. Anki then owns scheduling: keep the resolved queue only as the export ledger (which items have been exported), and skip the in-session review ritual for exported items.

@@ -32,6 +32,48 @@ SLUG = "__SLUG__"
 DATE = "__DATE__"
 
 
+# --- explicit teach host adapter (learning/hybrid overlays) -------------------
+# This is a pointer and storage map, not a second copy of teach's pedagogy.
+TEACH_ADAPTER = """<!-- teach-host-adapter: v1 -->
+# Teach Skill Host Adapter
+
+This file is the explicit opt-in marker for the standalone `teach` skill to use this
+existing `.bc-agent` vault. It is a thin adapter, not a copy of teach's instructions,
+a generic configuration framework, or a migration command. `bc-init-agent` owns the
+host schema and orientation; `teach` owns the mapped pedagogy, evidence, and spaced
+review state.
+
+Read the canonical teach instructions and formats from
+`<agent-concepts>/concepts/teach/body/`. Resolve those paths against this vault root.
+Do not invoke `bc-init-agent` from `teach`, move standalone files, or create a second
+learning/knowledge home. If a standalone teach workspace and this host both contain
+state, stop and ask the user which home to use; preserve the standalone home by default.
+
+## Hosted teach path map
+
+All paths below are relative to `.bc-agent/`:
+
+| Teach surface | Hosted path | Owner |
+|---|---|---|
+| Mission | `learning/plan.md` (no hosted `MISSION.md`) | `teach` |
+| Review queue | `learning/review.md` | `teach` |
+| Learning records | `learning/records/` | `teach` |
+| Lessons and session artifacts | existing `sessions/` (never `learning/sessions/`) | `teach` |
+| Notes | `learning/notes.md` | `teach` |
+| Raw sources | existing `sources/` | `teach` |
+| Compiled knowledge / wiki concepts | existing `concepts/` | `teach` |
+| Resource catalog | `references/teach-resources.md` | `teach` |
+| Glossary | the existing Glossary section of `project/overview.md` | `teach` |
+| Catalog and history | shared `index.md` and `log.md` | `bc-init-agent` host schema; `teach` updates teach entries |
+
+The host's `AGENTS.md`, `index.md`, and `log.md` remain shared orientation/catalog
+surfaces. `bc-wiki-maintain` may search host context and promote ordinary host evidence,
+but it must not fabricate learning evidence, edit teach-owned records, or advance the
+review queue. Raw sources remain immutable. Existing host files are authoritative in
+place; no live migration or copied pedagogy is implied by this marker.
+"""
+
+
 # --- root AGENTS.md (project root, points agents at the vault) ----------------
 ROOT_AGENTS = """# Agent instructions for __SLUG__
 
@@ -235,6 +277,10 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 - `decisions/` — ADRs (numbered, with `## Status`).
 - `tasks/` — `active.md`, `parking-lot.md`, `completed.md`.
 - `log.md` — append-only journal. `index.md` — catalog. `map.md` — context picker.
+- When `references/teach-skill.md` exists, read it before using `teach`: it is the
+  explicit adapter for the host's learning paths. `teach` owns the mapped pedagogy,
+  evidence, and review state; this vault owns host schema/orientation. Do not create
+  a second `learning/sessions/` directory or migrate a standalone teach workspace.
 - Long research → `.bc-agent/research/`; scratch → `.bc-agent/scratch/`.
 
 ## Maintenance discipline
@@ -794,13 +840,21 @@ Use this archetype when the workspace tracks a real system, service, host, workf
 
 Use this archetype when bc agents are helping the human learn a subject over time.
 
-- `learning/` — goals, syllabus, progress, and review cadence.
-- `sources/` — source material and provenance.
-- `concepts/` — distilled concepts in the learner's words.
-- `questions/` — open questions, misconceptions, and review prompts.
-- `sessions/` — dated tutoring/session notes.
+The generated `references/teach-skill.md` is an explicit, thin adapter for the
+standalone `teach` skill. It maps teach's mission to `learning/plan.md`, its review
+queue to `learning/review.md`, records to `learning/records/`, notes to
+`learning/notes.md`, raw sources to `sources/`, compiled knowledge to `concepts/`,
+resources to `references/teach-resources.md`, the glossary to the existing Glossary
+section of `project/overview.md`, and catalog/history to the shared `index.md`/`log.md`.
+Lessons and session artifacts use the existing `sessions/` directory; never create
+`learning/sessions/`. The adapter does not copy teach pedagogy or migrate standalone
+state.
 
-Use the `teach` skill for multi-session tutoring and spaced review; keep durable learning state here.
+- `learning/` — host learning paths and the teach-owned mission/review/records/notes.
+- `sources/` — immutable raw source material.
+- `concepts/` — compiled knowledge pages.
+- `questions/` — open questions only; teach review prompts belong in `learning/review.md`.
+- `sessions/` — dated tutoring/session notes and lesson artifacts.
 """,
     "knowledge": """# Knowledge Graph Wiki
 
@@ -821,8 +875,12 @@ Use this archetype when the repo needs both execution scaffolding and another du
 Start with the normal `.bc-agent` project workflow, then promote material into the relevant folders:
 
 - `components/` / `findings/` / `open-questions/` for operations-style system work.
-- `learning/` / `sources/` / `concepts/` / `sessions/` for teaching and study.
-- `raw/` / `wiki/` for knowledge-graph ingest and synthesis.
+- `learning/` / `sources/` / `concepts/` / `sessions/` for teaching and study. When the
+  teach adapter is present, use its exact mapping and keep `sessions/` shared; do not
+  create `learning/sessions/` or a second review/knowledge home.
+- In hybrid learning/knowledge work, immutable raw material stays in the existing `sources/`
+  and compiled source/entity/concept/synthesis pages stay under the existing `concepts/` tree;
+  do not add a parallel `raw/` or `wiki/` tree.
 """,
 }
 
@@ -842,12 +900,16 @@ def archetype_files(archetype: str) -> dict[str, str]:
         }
     if archetype == "learning":
         return common | {
-            "learning/plan.md": "# Learning Plan\n\n## Goal\n\nTODO.\n\n## Current level\n\nTODO.\n\n## Path\n\nTODO.\n\n## Review cadence\n\nUse the `teach` skill for spaced review and durable learning records.\n",
-            "sources/README.md": "# Sources\n\nLearning material with provenance and status.\n",
-            "concepts/README.md": "# Concepts\n\nDistilled explanations, examples, and connections in the learner's words.\n",
-            "questions/README.md": "# Questions\n\nOpen questions, misconceptions, quiz prompts, and review items.\n",
-            "sessions/README.md": "# Sessions\n\nDated tutoring/session notes and next review prompts.\n",
-            "references/teach-skill.md": "# Teach Skill\n\nUse `teach` for multi-session tutoring. Keep project-local learning artifacts in this vault, not in the global personal wiki unless the human asks.\n",
+            "learning/plan.md": "# Learning Plan\n\nThis is the hosted mission surface for `teach`; the skill owns its pedagogy and keeps the mission concrete. Use `<agent-concepts>/concepts/teach/body/MISSION-FORMAT.md` for the format.\n\n## Goal\n\nTODO.\n\n## Current level\n\nTODO.\n\n## Path\n\nTODO.\n\n## Review cadence\n\nThe hosted review queue lives at `learning/review.md`; do not create a second `REVIEW.md`.\n",
+            "learning/review.md": "# Review Queue\n\nThe `teach` skill owns this spaced-repetition queue. Use `<agent-concepts>/concepts/teach/body/REVIEW-FORMAT.md` and its `due.py` script; keep review state here rather than in `questions/` or a root `REVIEW.md`.\n",
+            "learning/notes.md": "# Teach Notes\n\nThe `teach` skill owns learner preferences and session notes here. This is the hosted counterpart of standalone `NOTES.md`; do not create a duplicate root notes file.\n",
+            "learning/records/.gitkeep": "",
+            "sources/README.md": "# Sources\n\nImmutable raw source material for the hosted `teach` knowledge layer. The `teach` skill owns ingestion and citations; preserve source files once saved.\n",
+            "concepts/README.md": "# Concepts\n\nCompiled knowledge pages for the hosted `teach` knowledge layer. Cite the existing `sources/` material; do not create a parallel `wiki/` for this learning workspace.\n",
+            "questions/README.md": "# Questions\n\nOpen questions and misconception notes. Teach review prompts and scheduling belong in `learning/review.md`, and evidence belongs in `learning/records/`.\n",
+            "sessions/README.md": "# Sessions\n\nThe existing shared directory for dated tutoring/session notes and lesson artifacts from `teach`. Do not create `learning/sessions/`.\n",
+            "references/teach-skill.md": TEACH_ADAPTER,
+            "references/teach-resources.md": "# Teach Resources\n\nThe hosted resource catalog for `teach`. Use `<agent-concepts>/concepts/teach/body/RESOURCES-FORMAT.md`; raw material belongs in the existing `sources/` directory.\n",
             "templates/learning-session.md": "# YYYY-MM-DD — Session\n\n## Goal\n\nTODO.\n\n## What changed\n\nTODO.\n\n## Misconceptions / review items\n\nTODO.\n\n## Next\n\nTODO.\n",
         }
     if archetype == "knowledge":
@@ -862,8 +924,12 @@ def archetype_files(archetype: str) -> dict[str, str]:
         }
     if archetype == "hybrid":
         files: dict[str, str] = dict(common)
-        for name in ("ops", "learning", "knowledge"):
+        for name in ("ops", "learning"):
             files |= {path: text for path, text in archetype_files(name).items() if path != "archetype.md"}
+        files |= {
+            "concepts/entities/README.md": "# Entities\n\nPeople, projects, tools, organizations, services, and libraries compiled from the existing immutable `sources/` directory.\n",
+            "concepts/syntheses/README.md": "# Syntheses\n\nCross-source summaries, maps, contradictions, and evidence gaps compiled under the existing `concepts/` knowledge home.\n",
+        }
         return files
     return {}
 
@@ -945,6 +1011,28 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
     for path, needle, message in read_path_checks:
         if path.exists() and not _contains(path, needle):
             notes.append(message)
+
+    if archetype in {"learning", "hybrid"}:
+        adapter = vault / "references" / "teach-skill.md"
+        if adapter.exists() and not _contains(adapter, "<!-- teach-host-adapter: v1 -->"):
+            notes.append(
+                "existing references/teach-skill.md is not the explicit v1 teach adapter; "
+                "merge the generated path map by hand after checking existing state"
+            )
+        standalone_paths = (
+            root / "MISSION.md",
+            root / "REVIEW.md",
+            root / "GLOSSARY.md",
+            root / "RESOURCES.md",
+            root / "NOTES.md",
+            root / "learning-records",
+            root / "lessons",
+        )
+        if any(path.exists() for path in standalone_paths):
+            notes.append(
+                "standalone teach state exists outside .bc-agent; do not migrate or copy it "
+                "automatically — preserve it and ask the user before choosing between competing homes"
+            )
 
     # These existing upgrade hints depend on the code/hybrid architecture
     # overlay and remain scoped to those archetypes.

@@ -11,6 +11,12 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.
   Source: [CONCEPT.md](CONCEPT.md#design-decisions)
 
+- adapts `teach` — required, when learning or hybrid scaffold.
+  The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
+  Source: [body/SKILL.md](body/SKILL.md#learning-archetype-adapter)
+
 ## Incoming
 
-None.
+- incoming from [teach](../teach/RELATIONSHIPS.md): depends on this concept's contract — required, when valid teach-host-adapter marker.
+  Hosted teach mode relies on the initializer's explicit vault marker and host schema while remaining standalone by default.
+  Source: [teach/body/SKILL.md](../teach/body/SKILL.md#hosted-bc-agent-adapter)

@@ -7,7 +7,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-None.
+- depends on `teach`'s contract — required, when teach adapter marker present.
+  Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue.
+  Source: [body/SKILL.md](body/SKILL.md#teach-adapter-boundary)
 
 ## Incoming
 

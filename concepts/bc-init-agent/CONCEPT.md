@@ -37,6 +37,13 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
   default-on. The scaffold stays timer-free. qmd refresh is not this
   timer. Provenance: `concepts/bc-wiki-maintain/body/runner/`.
 - **TODO stubs, not invented facts.** `validation.md`, `file-layout.md`, `references/*`, and the glossary ship as explicit TODO stubs for the project's agents to fill — preserving epistemic honesty rather than fabricating project facts.
+- **Teach integration is an explicit adapter, not a second tutor.** Learning and hybrid overlays
+  emit `.bc-agent/references/teach-skill.md` with the approved mission/review/records/knowledge/
+  glossary/session mapping. The initializer owns host schema/orientation; teach owns pedagogy,
+  evidence, and SRS state. Hybrid learning/knowledge overlays keep raw and compiled material in
+  the mapped `sources/` and `concepts/` homes (entity/synthesis subtrees live below `concepts/`)
+  rather than generating parallel `raw/` or `wiki/` trees. Existing standalone teach files remain
+  in place, and any competing homes are reported for a user decision rather than migrated.
 
 ## Provenance
 
@@ -49,13 +56,20 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 - `concepts/prompting-agents/body/SKILL.md` — composition + gate phrasing.
 - `concepts/qmd/` — the global-search layer the close-out registration step feeds (added 2026-07-13; reworked to global mode same day).
 - `concepts/bc-wiki-maintain/body/runner/` — the uninstalled systemd user-unit templates copied by the close-out timer offer.
-- `concepts/bc-wiki-maintain/body/SKILL.md` + `body/wiki_lint.py` — the canonical vault read-path block and bracketed log-heading contract consumed by this scaffold (2026-08-29).
+- `concepts/bc-wiki-maintain/body/SKILL.md` + `body/wiki_lint.py` — the canonical vault read-path block and bracketed log-heading contract consumed by this scaffold (2026-08-29), plus the boundary protecting teach-owned learning evidence.
+- `concepts/teach/` — the standalone tutor and its linked formats, which define the host adapter's mapped state.
 
 ## Tests
 
 `tests/pressure-wiki-maintain-timer.md` — pressure-tests the close-out's offer-then-confirm timer behavior; installation is only allowed after confirmation. 2026-08-30: four isolated fixture consumers **PASS 4/4** ([results](tests/pressure-wiki-maintain-timer-results-2026-08-30.md)); live user systemd units were unchanged.
 
 `tests/scenario.md` — verifies the scaffold produces the expected tree with substituted placeholders, existing files are left untouched, and the publish.yaml step is offer-then-confirm (never auto-push). 2026-08-21: script checks 1–7 **PASS** (tree, substitution, idempotent re-run, additive plug-in, dry-run/no-overwrite, slug validation, archetype overlays). Process checks 8–13 and the six adaptive-onboarding scenarios **BLOCKED** this run (pressure runners have no `subagent` tool). 2026-08-29: deterministic read-path/heading check 7a **PASS**. `tests/pressure-read-path.md` was run twice against fresh consumers — [results](tests/pressure-read-path-results-2026-08-29.md). Run 1 **FAILED 2 of 3**: all three resisted a superseded decoy, but the "index.md is right there" scenario opened `index.md` before it had read the vault `AGENTS.md`, so the generated discipline never bound — an ordering race in the repo-root file, not a fault in the canonical block. After the root gate was hardened (`0423ada`), run 2 **PASSED 3 of 3** on isolated per-scenario fixtures, with `index.md` absent from the failing scenario's report entirely. **The generated read-path discipline clears its test gate.** Frontmatter stays `partial` for the unrelated reason recorded above: process checks 8–13 remain BLOCKED and still need a naive consumer. Frontmatter stays `partial` until a naive consumer re-runs the process half. Note: CONCEPT Tests previously said "clobber guard refuses an existing vault"; current `scaffold.py` is additive.
+
+`tests/test_teach_adapter.py` is a deterministic regression for the real learning/hybrid
+scaffold, exact host map, old-marker upgrade note, competing standalone-home warning, and
+`due.py` against the hosted review path. `../teach/tests/pressure-host-integration.md` is the
+clean consumer pressure packet for hosted resume, standalone preservation, ambiguous homes,
+and cross-skill upkeep; it is authored but **not run** here, so the concept remains `partial`.
 
 ## Deploy targets
 

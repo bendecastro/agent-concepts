@@ -28,9 +28,22 @@ Modes:
 Archetypes:
 - **code** — default project execution wiki: PRDs/plans, architecture reviews, ADRs, validation, commands, tasks, architecture-runway nudge tracking, `/bc-plan-to-issues` → `/bc-drain-issues`.
 - **ops** — operational/system wiki like the Music wiki: `components/`, `findings/`, `decisions/`, `open-questions/`, executable plans; evidence before plan.
-- **learning** — bc agents helping the human learn: `learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, plus an explicit link to the `teach` skill.
+
+### Learning archetype adapter
+
+- **learning** — bc agents helping the human learn. The generated
+  `.bc-agent/references/teach-skill.md` is an explicit thin adapter for the existing
+  standalone `teach` skill: mission → `learning/plan.md`, review queue →
+  `learning/review.md`, records → `learning/records/`, notes → `learning/notes.md`,
+  raw sources → `sources/`, compiled knowledge → `concepts/`, resources →
+  `references/teach-resources.md`, glossary → the existing Glossary section of
+  `project/overview.md`, and catalog/history → shared `index.md` / `log.md`.
+  Lessons and session artifacts reuse existing `sessions/`; no `learning/sessions/`
+  directory is created. The adapter points at teach; it does not copy pedagogy,
+  auto-run initialization, or migrate standalone files. `questions/` is for open
+  questions only, not a second review queue or evidence store.
 - **knowledge** — LLM-maintained knowledge graph: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
-- **hybrid** — code execution plus one or more of ops/learning/knowledge when the folder clearly needs more than one durable mode.
+- **hybrid** — code execution plus one or more of ops/learning/knowledge when the folder clearly needs more than one durable mode. If learning is included, use the same explicit teach adapter and shared `sessions/`, `sources/`, `concepts/`, `index.md`, and `log.md` paths; do not add a parallel learning state tree.
 
 ## Process
 
@@ -65,7 +78,7 @@ Archetypes:
    ```
    python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>" --archetype "<code|ops|learning|knowledge|hybrid>"
    ```
-   It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `architecture-runway.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo. It also seeds minimal stable Obsidian metadata (`.obsidian/app.json`, `core-plugins.json`, `appearance.json`) but deliberately avoids noisy/user-specific state such as `workspace.json`, `graph.json`, and community plugin config. The scaffold includes `references/agent-skills.md`, a repo-local map of `/bc-plan-to-issues`, `/bc-drain-issues`, `/improve-codebase-architecture`, `codebase-docs`, and their supporting skills; the skill bodies remain canonical in the shared agent-concepts workspace and are not copied into the repo.
+   It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `architecture-runway.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo. It also seeds minimal stable Obsidian metadata (`.obsidian/app.json`, `core-plugins.json`, `appearance.json`) but deliberately avoids noisy/user-specific state such as `workspace.json`, `graph.json`, and community plugin config. The scaffold includes `references/agent-skills.md`, a repo-local map of `/bc-plan-to-issues`, `/bc-drain-issues`, `/improve-codebase-architecture`, `codebase-docs`, and their supporting skills; the skill bodies remain canonical in the shared agent-concepts workspace and are not copied into the repo. For `learning` and `hybrid`, it also emits the explicit `references/teach-skill.md` path adapter and the mapped host stubs (`learning/plan.md`, `learning/review.md`, `learning/records/`, `learning/notes.md`, `references/teach-resources.md`) while reusing existing `sources/`, `concepts/`, `sessions/`, `project/overview.md`, `index.md`, and `log.md`; it never invokes teach or migrates standalone state.
 
 7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, `index.md`, or `references/agent-skills.md`).
 
