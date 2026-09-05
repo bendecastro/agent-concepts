@@ -1395,3 +1395,6 @@ Added deterministic scaffold/layout and hosted `due.py` regressions plus clean c
 
 ## [2026-09-05] implement | teach host-selection safety fixes
 Defined explicit destructive migration with verify-before-remove ordering and refusal with originals intact; fixed vault-context competing-home resolution, hosted search-first retrieval, and the learning evidence stub. Tightened adapter validation, generated-stub formats, scaffold preflight, glossary ownership, and authored migration pressure coverage; consumer pressure remains pending.
+
+## [2026-09-05] test | teach hosted-adapter consumer pressure
+Ran the hosted-integration scenarios against fresh consumers in throwaway workspaces and graded them on disk. Scenarios 1/3/4 passed against ea49123; scenario 2 was unsound and its rewrite, the explicit-migration pair, and the four-entry-context variant all passed against afbb86b. Recorded per-scenario results and which commit each ran against in the three affected CONCEPT.md files.

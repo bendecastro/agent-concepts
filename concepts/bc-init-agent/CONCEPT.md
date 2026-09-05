@@ -73,8 +73,13 @@ scaffold, exact host map, explicit-migration verify/refusal contract, vault-cont
 old-marker upgrade note, mission/evidence stubs, parent-collision preflight, competing standalone-
 home warning, and `due.py` against the hosted review path. `../teach/tests/pressure-host-integration.md`
 is the clean consumer pressure packet for hosted resume, standalone preservation, explicit
-migration, competing homes, and cross-skill upkeep; it is authored but **not run** here, so the
-concept remains `partial`.
+migration, competing homes, and cross-skill upkeep. It ran 2026-09-05 against fresh consumers and
+the generated learning scaffold held: initialize → hosted teach → resume produced no duplicate root
+homes and no `learning/sessions/`; the generated adapter drove correct host resolution from both
+the project root and vault context; an old unmarked `references/teach-skill.md` was correctly
+rejected as not-a-host-contract. Per-scenario results and the commits they ran against are
+recorded in `../teach/CONCEPT.md`. The concept remains `partial` for the unrelated reason above
+(process checks 8–13 still need a naive consumer).
 
 ## Deploy targets
 

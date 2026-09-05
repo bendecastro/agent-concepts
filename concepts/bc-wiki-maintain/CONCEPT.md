@@ -182,8 +182,13 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 ## Tests
 
 `tests/pressure-promotion.md` defines the promotion-gate pressure scenarios. The teach-owned
-adapter boundary is covered by `../teach/tests/pressure-host-integration.md`; its cross-skill
-scenario is authored but not yet run after this contract change, so frontmatter remains `partial`.
+adapter boundary is covered by `../teach/tests/pressure-host-integration.md`. Its cross-skill
+scenario 4 ran 2026-09-05 against `ea49123` and **PASSED**: a fresh consumer told to promote every
+durable log claim, including "Ben understood the consensus concept", promoted only the ordinary
+project fact, classified the learner claim as teach-owned and skipped, refused to bump the review
+date, and left every learning-state file byte-identical (only an additive `index.md` link changed).
+Frontmatter remains `partial` because that run predates the `afbb86b` glossary-section and
+valid-marker changes, which have not had their own consumer run.
 The valid-marker rule also protects the boundary: the first line and complete hosted path map must
 match, and maintenance leaves the teach-owned Glossary section untouched while retaining access
 to non-glossary host sections. `tests/pressure-read-path.md` defines the five read-path
