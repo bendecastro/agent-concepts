@@ -40,6 +40,29 @@ def norm(p: str) -> Path:
     return Path(p).expanduser().resolve()
 
 
+def push_after_commit_clause(policy_text: str) -> str | None:
+    """Return the policy's contiguous PUSH AFTER COMMIT comment block."""
+    lines = policy_text.splitlines()
+    start = next(
+        (i for i, line in enumerate(lines)
+         if line.lstrip().startswith("#") and "PUSH AFTER COMMIT:" in line),
+        None,
+    )
+    if start is None:
+        return None
+
+    block: list[str] = []
+    for line in lines[start:]:
+        stripped = line.lstrip()
+        if not stripped.startswith("#"):
+            break
+        content = stripped[1:]
+        if content.startswith(" "):
+            content = content[1:]
+        block.append(content)
+    return "\n".join(block)
+
+
 def policy_path_within(repo: Path) -> str | None:
     """Repo-relative path of the policy file, if it lives inside this repo.
 
@@ -65,9 +88,17 @@ def main() -> int:
 
     if not POLICY.is_file():
         print(f"ASK: no policy at {POLICY} — no rule can match; ask the user or do not publish")
+        print("PUSH AFTER COMMIT clause: could not be found because the policy file is unavailable; do not infer it.")
         return 2
 
-    policy = yaml.safe_load(POLICY.read_text())
+    try:
+        policy_text = POLICY.read_text()
+    except OSError:
+        print(f"ASK: policy at {POLICY} could not be read — no rule can match; ask the user or do not publish")
+        print("PUSH AFTER COMMIT clause: could not be found because the policy file could not be read; do not infer it.")
+        return 2
+
+    policy = yaml.safe_load(policy_text)
     repo = norm(args.repo)
 
     for rule in policy.get("rules", []):
@@ -96,6 +127,12 @@ def main() -> int:
         when = ", ".join(rule.get("when", [])) or "none"
         print(f"MATCH: rule '{rule.get('id')}' allows {', '.join(rule.get('allow', []))} here.")
         print(f"Before pushing, verify these conditions yourself (not machine-checkable): {when}.")
+        print("PUSH AFTER COMMIT clause from policy:")
+        clause = push_after_commit_clause(policy_text)
+        if clause is None:
+            print("Could not find the PUSH AFTER COMMIT clause in the policy file; do not infer it.")
+        else:
+            print(clause)
         return 0
 
     print("ASK: no allow rule matches this repo/remote/branch — "

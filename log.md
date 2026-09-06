@@ -3,6 +3,8 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-09-06] implement | stop publish-rule restatement rot
+Softened the policy-decided publishing headline, made publish-check.py quote the runtime policy clause, and generalized AGENTS.md to point to external authority instead of copying its decisions.
 ## [2026-09-06] implement | untested review result + tdd blocked cycle + squash-merge -D
 Absorbed two restated ideas from https://github.com/michaelshimeles/skills (no root LICENSE): `untested` as a recorded review result in `code-review` and `bc-drain-issues` review-contract; a TDD stop-and-report when the test cannot run (`untested` as a TDD result rejected); `git branch -D` after squash/rebase-merge in `finishing-development-branch`.
 
