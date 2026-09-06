@@ -64,6 +64,8 @@ Ask: "What should the public interface look like? Which behaviors matter most to
 ### 2. Tracer bullet
 Write ONE test that confirms ONE thing. **RED:** test fails (watch it fail for the right reason). **GREEN:** minimal code to pass. This proves the path works end-to-end.
 
+If the test cannot be executed at all — no runner, missing fixture, unbuildable environment — you do not have a RED. Stop and report the blocker. Never proceed to GREEN against a test you have not watched fail. Why: GREEN without a watched fail is a green bar you invented.
+
 ### 3. Incremental loop
 For each remaining behavior: **RED** (next test fails) → **GREEN** (minimal code to pass). One test at a time; only enough code to pass the current test; don't anticipate future tests; keep tests on observable behavior.
 
@@ -90,3 +92,4 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 | "Call-count proves the payment path ran" | Assert the observable result (status, receipt, boundary fake state). |
 | "Mocking CartService is just faster CI" | Keep the real collaborator; mock only external boundaries. |
 | "Quick extract while this test is red" | GREEN first, then extract. |
+| "Can't run it; treating that as red enough" | Stop and report the blocker. A test you have not watched fail is not a RED. |

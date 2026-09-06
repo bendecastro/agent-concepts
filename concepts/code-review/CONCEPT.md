@@ -32,6 +32,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 - [bun-in-rust-zig-port-writeup.md](https://bun.com/blog/bun-in-rust) — Bun's Zig→Rust rewrite (Jarred Sumner, 2026-07-08): split-context adversarial review at fleet scale; adopted the reviewer context-isolation rule, rejected the assume-wrong stance (see design decisions). (ingested 2026-07-16)
 - [unclebob/negative-test-experiment](https://github.com/unclebob/negative-test-experiment) — eight independent builds of the same product across four testing disciplines, crossed with a forced complexity cap. The measured basis for "Complexity scores are not a quality bar": the cap raised coverage on every run, design on none, readability on none. Ingested from the source below; see [`docs/research/raw/ingested/unclebob-quality-tools/`](../../docs/research/raw/ingested/unclebob-quality-tools/SOURCE.md). (2026-08-20)
 - `concepts/codebase-docs/` — source-tree placement / current-state / same-change rules the Standards pointer loads (2026-08-18).
+- [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as a first-class result so a check that could not run is recorded with a reason rather than omitted. Restated in this workspace's voice; the upstream repo has no root LICENSE and that skill carries no licence file. (2026-09-06)
 
 ## Tests
 

@@ -17,6 +17,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - **Pressure-refusal gates (2026-07-16).** Horizontal-slice, call-count, mock-internal, and refactor-while-red each get an explicit refuse-under-pressure clause after the 2026-06-21 FAIL (agent named the anti-pattern and still committed it).
 - **Composes `codebase-design`.** Planning step reaches for the deep-module vocabulary and testability checks rather than restating them.
 - **Progressive disclosure.** Lean `SKILL.md`; `tests.md` / `mocking.md` / `refactoring.md` loaded only when that depth is needed. (Upstream's `refactoring.md` was recovered as a summary; reconstructed faithfully — see provenance.)
+- **`untested` as a TDD result state considered and rejected (2026-09-06).** A review findings table needs a third state because a skipped check and an inapplicable one look identical. A TDD cycle does not: its states are exhaustive (the test exists and fails, or exists and passes). A third "result" would become a sanctioned route past RED and would defeat "watch it fail for the right reason." The blocked case — no runner, missing fixture, unbuildable environment — is a stop-and-report, not a result value.
 
 ## Provenance
 
@@ -24,6 +25,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) — workshop's TDD execution step (agent writes failing test, then code, then commits).
 - [obra/superpowers `skills/test-driven-development/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/test-driven-development/) — strict red/green/refactor wording, “watched it fail” iron law, rationalization table, and testing anti-patterns; absorbed as reinforcement rather than a duplicate concept.
 - [obra/superpowers `skills/writing-skills/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/writing-skills/) — applies the same TDD loop to process documentation; informs workspace test-gate practice.
+- [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — prompted the blocked-cycle clause (a test that cannot be executed is not a RED). The upstream `untested` result was considered for this skill and rejected (see design decisions). Restated; upstream has no root LICENSE. (2026-09-06)
 
 ## Tests
 

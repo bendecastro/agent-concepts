@@ -18,6 +18,7 @@ User-invoked completion workflow for choosing what to do with a finished develop
 
 - [obra/superpowers `skills/finishing-a-development-branch/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/finishing-a-development-branch/SKILL.md) — structured completion options, environment detection, cleanup rules, discard confirmation.
 - `~/.config/agent-concepts/publish.yaml` and repo `AGENTS.md` — local publish/default-deny and git-discipline constraints adapted into the body.
+- [michaelshimeles/skills `new-feature`](https://github.com/michaelshimeles/skills) — after a squash- or rebase-merge, delete with `git branch -D` because `-d` refuses when the original commits are not ancestors. Restated, not copied. (2026-09-06)
 
 ## Tests
 

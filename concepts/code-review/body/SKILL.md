@@ -41,6 +41,10 @@ Classify findings as **Critical**, **Important**, or **Minor** and include a pre
 
 Present findings under `## Spec` and `## Standards`. Do not merge or rerank them: code may meet the spec while violating standards, or vice versa. Critical and Important findings block landing; Minors are recorded but may be consciously deferred.
 
+### Untested is a result
+
+A check you could not run — missing runner, expired auth, unbuildable environment — is recorded `untested` with the reason, never omitted. Why: in a findings table a skipped check and an inapplicable one look identical to the reader, so silent omission reads as coverage. This is a result state, not a severity: Critical/Important/Minor still classify defects you observed. Missing evidence needed to assess the change remains blocking.
+
 ### Findings are not obligations
 
 A reviewer prompted to find gaps will report some even when the work is sound — producing findings is what it was asked to do. Chasing every finding causes over-engineering: extra abstraction layers, defensive code for impossible states, tests for cases that can't happen. So reviewers flag only gaps that affect correctness or the stated requirements (everything else is a labelled judgment call, per the Standards rules above), and fixers treat anything below Critical/Important as optional — pushing back with evidence beats padding the code. This matters most in AFK runs, where nobody is watching a remediation spiral.

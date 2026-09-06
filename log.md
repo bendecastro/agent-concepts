@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-09-06] implement | untested review result + tdd blocked cycle + squash-merge -D
+Absorbed two restated ideas from https://github.com/michaelshimeles/skills (no root LICENSE): `untested` as a recorded review result in `code-review` and `bc-drain-issues` review-contract; a TDD stop-and-report when the test cannot run (`untested` as a TDD result rejected); `git branch -D` after squash/rebase-merge in `finishing-development-branch`.
+
 ## [2026-08-30] test | bc-init-agent wiki-maintain timer offer
 Pressure 4/4 on offer-then-confirm; scaffold remains timer-free.
 

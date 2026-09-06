@@ -65,3 +65,5 @@ Only remove a worktree if all are true:
 - No unrelated user changes are present.
 
 Never force-push. Never delete unmerged work without explicit confirmation.
+
+When deleting a merged branch, use `git branch -D`, not `-d`. After a squash-merge or rebase-merge the original commits are not ancestors of the target, so `-d` refuses even though the work is merged. Why: an agent that reads that refusal as "not merged" either stops or reaches for something more destructive.

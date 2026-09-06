@@ -72,6 +72,8 @@ A tier-1 combined reviewer adds `"axis": "spec | standards"` to each finding and
 
 `approved` requires an empty `findings` array. `changes_requested` requires at least one Critical or Important finding; Minor findings may accompany that material finding but never determine the verdict. Omit minor-only observations from this gate rather than making approval ambiguous. Findings must be actionable and evidence-backed; missing evidence is not itself proof of a defect unless the contract requires that evidence.
 
+A named check the axis could not run is recorded, not omitted: put the word `untested` and the reason in that finding's `evidence`. Same word as `code-review`. Why: silent omission reads as coverage.
+
 ## Standing approval and selective re-review
 
 An approval is a durable record bound to the exact diff it examined, not a one-time event:
