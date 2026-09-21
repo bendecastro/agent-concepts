@@ -14,8 +14,9 @@ The policy is deliberately read from outside the repository, and there is no
 in-repo fallback: a private authorization file living inside a public checkout
 is one `git add -f` away from being published. See policies/publish.example.yaml.
 
-Exit codes: 0 = rule matches (verify `when` conditions yourself, then push),
-2 = no rule matches (ask the user; if asking is impossible, do not publish).
+Exit codes: 0 = rule matches, or the repo has no remote so publishing cannot
+apply (verify `when` conditions yourself before any push), 2 = no rule matches
+(ask the user; if asking is impossible, do not publish).
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -38,6 +40,26 @@ POLICY = CONFIG_HOME / "agent-concepts" / "publish.yaml"
 
 def norm(p: str) -> Path:
     return Path(p).expanduser().resolve()
+
+
+def configured_remotes(repo: Path) -> list[str] | None:
+    """Remote names for repo, or None when git cannot answer.
+
+    Asks git rather than trusting --remote: a wrong flag value must not be able
+    to make a repo that does have a remote look unpublishable.
+    """
+    try:
+        done = subprocess.run(
+            ["git", "-C", str(repo), "remote"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            timeout=15,
+            check=True,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return done.stdout.split()
 
 
 def push_after_commit_clause(policy_text: str) -> str | None:
@@ -100,6 +122,12 @@ def main() -> int:
 
     policy = yaml.safe_load(policy_text)
     repo = norm(args.repo)
+
+    if configured_remotes(repo) == []:
+        print("N/A: repo has no git remote — there is nothing to publish to, so no "
+              "publish authorization is needed or granted. Leave the commits local.")
+        print("If a remote is added later, this check applies again and denies by default.")
+        return 0
 
     for rule in policy.get("rules", []):
         scope = rule.get("scope", {})

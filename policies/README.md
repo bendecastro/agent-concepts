@@ -70,3 +70,10 @@ python3 scripts/publish-check.py \
 
 Exit `0` means a rule matches the repo, remote and branch — the agent must still verify the
 `when` conditions itself, since those are judgment calls no script can see. Exit `2` means ask.
+
+A repo with no git remote reports `N/A` and exits `0`: there is nowhere to push, so no
+authorization is needed or granted, and the commits stay local. The script asks git for the
+remote list rather than trusting `--remote`, so a wrong flag cannot make a repo that does have a
+remote look unpublishable. Adding a remote later puts the repo back under the normal rules, which
+deny by default. Pass any placeholder for `--remote` in this case, since
+`git remote get-url origin` fails when no remote exists.
