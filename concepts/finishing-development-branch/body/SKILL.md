@@ -57,13 +57,15 @@ Do not add a hidden default. Ask the user to pick.
 
 ## Cleanup rules
 
+After a successful local merge, prune the owned worktree without asking. Keep is only for work that is not yet integrated. If you arrive and the unique work is already on the base branch, prune rather than offering Keep.
+
 Only remove a worktree if all are true:
 
 - It was created for this task or is under a known project-local worktree directory.
-- The chosen option is merge-local or confirmed discard.
-- Merge/discard completed successfully.
+- The chosen option is merge-local or confirmed discard, or the unique work is already on the base branch.
+- Merge/discard completed successfully, or integration is already proven.
 - No unrelated user changes are present.
 
-Never force-push. Never delete unmerged work without explicit confirmation.
+Never force-push. Never delete unmerged work without explicit confirmation. Integrated owned worktrees do not need a second confirmation.
 
 When deleting a merged branch, use `git branch -D`, not `-d`. After a squash-merge or rebase-merge the original commits are not ancestors of the target, so `-d` refuses even though the work is merged. Why: an agent that reads that refusal as "not merged" either stops or reaches for something more destructive.

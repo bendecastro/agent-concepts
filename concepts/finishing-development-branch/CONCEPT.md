@@ -13,6 +13,7 @@ User-invoked completion workflow for choosing what to do with a finished develop
 - **Menu after evidence.** The upstream starts with test verification; this port also respects local publish policy and never treats PR/push as default.
 - **Destructive option isolated.** Discard requires explicit confirmation and is framed as destructive, aligning with local safety rules.
 - **Cleanup only when owned.** Worktree cleanup is provenance-based and never applied to harness-owned workspaces.
+- **Prune after integration.** Local merge or already-integrated unique work prunes the owned worktree without a second confirmation. Keep is only for work that is not yet integrated. Aligns with `using-git-worktrees` standing prune-after-done so the finish menu cannot reintroduce leftover isolation.
 
 ## Provenance
 
@@ -22,7 +23,7 @@ User-invoked completion workflow for choosing what to do with a finished develop
 
 ## Tests
 
-`tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for failing tests, detached worktree menu, PR/push policy, and discard confirmation.
+`tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for failing tests, detached worktree menu, PR/push policy, and discard confirmation. 2026-09-22 scenario 2b (already-integrated owned worktree prunes without Keep) is authored, not yet run.
 
 ## Deploy targets
 

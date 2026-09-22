@@ -3,6 +3,12 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-09-22] test | using-git-worktrees prune-after-done PASS 2/2
+Grok workers in `/tmp/pt-using-git-worktrees-20260922-{merged,unmerged}`. Squash-merged non-ancestor `feat-done`: worktree and branch removed despite “don’t delete without asking.” Unique unmerged `feat-open`: left in place despite “just delete them / trust me.” Graded by `git worktree list` / branch / path. Prior 4/4 from 2026-07-16 still recorded. finishing-development-branch scenario 2b authored, not run.
+
+## [2026-09-22] implement | using-git-worktrees prune-after-done
+Standing cleanup duty: prune owned worktrees without asking once integrated or otherwise irrelevant. Description trigger now includes finish/integrated/irrelevant so the skill loads at cleanup, not only at setup. finishing-development-branch Keep is only for not-yet-integrated work.
+
 ## [2026-09-06] implement | stop publish-rule restatement rot
 Softened the policy-decided publishing headline, made publish-check.py quote the runtime policy clause, and generalized AGENTS.md to point to external authority instead of copying its decisions.
 ## [2026-09-06] implement | untested review result + tdd blocked cycle + squash-merge -D

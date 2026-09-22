@@ -1,11 +1,11 @@
 ---
 name: using-git-worktrees
-description: Use when starting feature work that needs isolation, before executing an implementation plan, or when current workspace changes should be protected from agent edits.
+description: Use when starting feature work that needs isolation, before executing an implementation plan, when current workspace changes should be protected from agent edits, or when a git worktree is finished, integrated, or otherwise irrelevant.
 ---
 
 # Using Git Worktrees
 
-Work in an isolated workspace when it reduces risk. Detect existing isolation first, prefer harness-native isolation, and use manual `git worktree` only as a fallback.
+Work in an isolated workspace when it reduces risk. Detect existing isolation first, prefer harness-native isolation, and use manual `git worktree` only as a fallback. When an owned worktree is integrated or otherwise irrelevant, prune it without asking.
 
 ## Step 0: detect current state
 
@@ -52,9 +52,29 @@ Create a branch/worktree with a descriptive branch name. If sandbox permissions 
 
 Run the project’s bounded setup and baseline check before making changes. If the baseline fails, report the failure and ask whether to investigate or proceed knowingly.
 
-## Cleanup ownership
+## Cleanup
 
-Only remove worktrees you created and own. Do not remove harness-owned, detached, user-managed, or unknown-origin workspaces. Never delete work without explicit confirmation.
+Prune owned worktrees when they are done. Do not ask. Why: leftover worktrees go stale, waste disk, and the next session cannot tell whether they are still in use.
+
+Done means the unique work is on the base branch (merge, squash-merge, or rebase), or the workspace is otherwise irrelevant (confirmed discard, superseded, or the user said it is no longer needed).
+
+How:
+
+- `git worktree remove <path>` — not `git worktree prune`, which only drops stale registrations.
+- Then `git branch -D <branch>` when the work is integrated or discard was confirmed. After squash- or rebase-merge the original commits are not ancestors of the base, so `-d` refuses even though the work is merged.
+- Report the path and branch removed.
+
+Owned means this agent created the worktree, or it lives under a known project-local directory (`.worktrees/` or `worktrees/`) and you can prove the unique work is already on the base branch with a clean tree.
+
+Do not prune when:
+
+- The workspace is harness-owned, detached, user-managed, or of unknown origin. Native isolation cleans itself.
+- Unique unmerged work remains and the user did not confirm discard.
+- Unrelated user changes are present.
+- The user chose to keep the branch/worktree.
+- An open PR still needs this workspace for review iteration.
+
+Unmerged unique work still needs explicit discard confirmation. Integrated or irrelevant owned worktrees do not.
 
 ## Red flags
 
@@ -63,3 +83,5 @@ Only remove worktrees you created and own. Do not remove harness-owned, detached
 - Creating project-local worktree directories that are not ignored.
 - Proceeding after baseline failure as if the workspace is clean.
 - Cleaning up a workspace whose provenance you cannot prove.
+- Leaving an owned worktree after its branch is integrated.
+- Asking permission to prune an integrated or irrelevant owned worktree.
