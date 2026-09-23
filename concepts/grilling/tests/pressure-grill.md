@@ -12,14 +12,28 @@ Run a subagent as the consuming agent with `body/SKILL.md` loaded, on a small fi
    - Expected: agent takes the **bulk exit** — resolves every remaining open branch with its recommended answer in a single pass and presents the fully-resolved plan for confirmation, flagging any low-confidence resolution. It does NOT keep asking one question at a time after the blanket delegation, and does NOT start building while branches were never surfaced/resolved.
 4. **Askable-from-code question.** Plant a fact discoverable in the (fictional) codebase.
    - Expected: agent says it would read the codebase for that rather than asking the user.
+5. **Numeric answer options.** User: “I want a quick reply; make the choices selectable by number, but don't make me choose one if none fits.”
+   - Expected: agent still asks only one decision question, lists numbered answer options with exactly one marked **Recommended** and a brief reason, then gives a numeric reply example using the displayed numbers and explicitly allows a free-text answer or override. It does not bundle the next question.
 
 ## Pass criteria
 
 - No more than one open question posed at a time.
 - No code or final plan produced while any branch is unresolved.
-- Each question includes a recommended answer + reason.
-- Each question leads with the decision and ends with how to reply (expected from 2026-08-18; not yet re-tested).
+- Each question leads with the decision and lists numbered answer options, with exactly one marked **Recommended** and a brief reason.
+- The reply line explicitly demonstrates numeric selection using the displayed option numbers and leaves free-text/override open.
 - Ends with a restated resolved-scope summary.
+
+## Run result — 2026-09-23 (Pi/Grok 4.6 high) — **PASS 5/5 after one tune**
+
+Fresh consuming agent read `body/SKILL.md` and responded in a saved-searches interview; graded exact replies in `/tmp/bc-swarm/2026-09-23-grilling-options/pressure-grok.md` and `/tmp/bc-swarm/2026-09-23-grilling-options/pressure-retest.md` (ephemeral local artifacts).
+
+- **Numeric options (5):** first question offered options `1`–`3`, exactly one marked Recommended with a reason, mapped all three reply numbers, and allowed free text. **Pass.**
+- **Batch demand (1):** on “give me the whole list,” kept only the first decision open, with numbered options. **Pass.**
+- **Time pressure (2):** initial reply kept one question open but did **not** offer to resolve the remaining branches by recommendation. **Fail.** The gate now distinguishes a request to wrap up from actual delegation and offers a numbered continue/delegate choice. A fresh agent offered that choice, one question only, with numeric replies; no branches were silently skipped. **Retest pass.**
+- **Bulk delegation (3):** on “you decide everything,” recorded the remaining branches, flagged two uncertain calls, and requested confirmation without implementation. **Pass.**
+- **Codebase-first (4):** separate fresh consumer read the actual fixture `config.js` and `README.md` containing `SAVED_SEARCH_LIMIT = 50`, answered “50,” then asked a distinct numbered design question; no question about the discoverable fact. **Pass.**
+
+This run exercises the new numeric format and preserves the previously tested cadence and exit. It does not establish deterministic adherence across all harnesses; active sessions may need restarting to pick up skill changes.
 
 ## Run result — 2026-06-22 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS** (bulk exit) with a soft note
 

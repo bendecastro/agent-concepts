@@ -1415,3 +1415,9 @@ The previous entry recorded the 2026-09-05 runs in each concept's `## Tests` pro
 
 ## [2026-09-23] implement | agent-kernel: one-token questions + Goal/Next recap
 User-grilled rule: single questions number their options, batches use numbered questions with lettered options (`1a 2b`), independent questions batch while grilling/brainstorming keep one-at-a-time; every non-trivial reply ends with `Goal:` (~5 words) and `Next:` (one line). Scenario 10 passed on Luna max and Grok 4.6 high after two tunes (serialized batches; recap dropped after a question). Deployed to all five harness deltas; supersedes Pi/OpenCode "suggest next steps only when natural".
+
+## [2026-09-23] implement | numbered grilling answer options
+Required numbered answer options, one marked recommendation with a brief reason, a numeric reply example and free-text override; the one-question gate and bulk-delegation exit are unchanged. Added matching pressure expectations; the bc-plan-to-issues consumer contract is unaffected, and the new format awaits a live pressure run.
+
+## [2026-09-23] test | grilling numeric answer format
+Fresh Grok 4.6 high consumer passed numeric options, batch resistance, bulk delegation, and codebase-first. Time pressure initially failed to offer the recommendation-based bulk exit; tuned the gate to offer a numbered continue/delegate choice and reran it successfully. Five pressure checks pass; Pi, Claude, and shared-bus symlinks already point to the canonical skill body.
