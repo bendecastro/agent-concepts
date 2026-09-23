@@ -22,7 +22,7 @@ tested. See the concept's `## Tests` section for what is missing.
 
 | concept | kind | tested | deployed |
 |---|---|---|---|
-| [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-08-12 | 2026-08-20 |
+| [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-09-23 | 2026-09-23 |
 | [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-08-24 | 2026-07-25 |
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-21 |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-08-25 | 2026-08-18 |

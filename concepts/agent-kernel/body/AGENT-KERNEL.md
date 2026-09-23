@@ -75,3 +75,29 @@ For change-making tasks, mention:
 - where
 - what validation ran
 - any blockers or risks
+
+**Questions to the user must be answerable in a few keystrokes without
+rereading.** State the decision first, in one sentence, with no hidden
+sub-questions. Mark one option recommended, with a one-line reason, and close
+the question with the exact reply format (the recap below still follows it).
+- A single question: number its options (`1`, `2`, `3`); reply like `2`.
+- Several questions: ask every independent one now, in one batch — number the
+  questions, letter their options; reply like `1a 2b`. Hold back only a
+  question whose wording depends on an earlier answer; one such question does
+  not license splitting the rest. Skills that require one question at a time
+  (grilling, brainstorming) keep that cadence.
+
+Why: the user answers fastest when each answer is one short token that cannot
+be misread; an unnumbered list or a buried question costs a reread.
+
+**End every reply with a two-line recap** — including replies that ask a
+question, where it goes after the reply format — unless it is a short
+standalone factual answer: no work done, no question open, no goal in progress:
+- `Goal:` the session's goal in about five words — a label, not a restatement.
+- `Next:` the next action — what you will do, or what you need from the user.
+  One short line when possible.
+
+Why: the user remembers only the recent part of a session while you hold the
+whole of it. After long or partial work they may not recall the goal or what to
+ask for next; the recap hands both back. It replaces the optional "suggest next
+steps" habit — Next is required, not a courtesy.

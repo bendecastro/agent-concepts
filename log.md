@@ -1412,3 +1412,6 @@ Ran the hosted-integration scenarios against fresh consumers in throwaway worksp
 
 ## [2026-09-05] lint | refresh tested dates after the hosted-adapter pressure run
 The previous entry recorded the 2026-09-05 runs in each concept's `## Tests` prose but left `tested:` untouched, so `docs/status.md` still showed the pre-run dates. Bumped `tested:` on teach, bc-init-agent and bc-wiki-maintain and regenerated the board; `test_status` stays `partial`.
+
+## [2026-09-23] implement | agent-kernel: one-token questions + Goal/Next recap
+User-grilled rule: single questions number their options, batches use numbered questions with lettered options (`1a 2b`), independent questions batch while grilling/brainstorming keep one-at-a-time; every non-trivial reply ends with `Goal:` (~5 words) and `Next:` (one line). Scenario 10 passed on Luna max and Grok 4.6 high after two tunes (serialized batches; recap dropped after a question). Deployed to all five harness deltas; supersedes Pi/OpenCode "suggest next steps only when natural".
