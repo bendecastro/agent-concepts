@@ -1421,3 +1421,6 @@ Required numbered answer options, one marked recommendation with a brief reason,
 
 ## [2026-09-23] test | grilling numeric answer format
 Fresh Grok 4.6 high consumer passed numeric options, batch resistance, bulk delegation, and codebase-first. Time pressure initially failed to offer the recommendation-based bulk exit; tuned the gate to offer a numbered continue/delegate choice and reran it successfully. Five pressure checks pass; Pi, Claude, and shared-bus symlinks already point to the canonical skill body.
+
+## [2026-09-23] implement | recap labels become finish flag and footsteps
+User chose `🏁` for the goal and `👣` for the next action instead of written labels; meaning and exception unchanged. Fresh Luna max consumer passed question, partial-work, and standalone-fact replies (3/3); refreshed five harness deltas from the canonical agent-kernel.

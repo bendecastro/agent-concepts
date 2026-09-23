@@ -93,11 +93,11 @@ be misread; an unnumbered list or a buried question costs a reread.
 **End every reply with a two-line recap** — including replies that ask a
 question, where it goes after the reply format — unless it is a short
 standalone factual answer: no work done, no question open, no goal in progress:
-- `Goal:` the session's goal in about five words — a label, not a restatement.
-- `Next:` the next action — what you will do, or what you need from the user.
-  One short line when possible.
+- `🏁` followed by the session's goal in about five words — a label, not a restatement.
+- `👣` followed by the next action — what you will do, or what you need from the user.
+  One short line when possible. Use the emoji as the line labels, not `Goal:` or `Next:`.
 
 Why: the user remembers only the recent part of a session while you hold the
 whole of it. After long or partial work they may not recall the goal or what to
 ask for next; the recap hands both back. It replaces the optional "suggest next
-steps" habit — Next is required, not a courtesy.
+steps" habit — the next-action line is required, not a courtesy.
