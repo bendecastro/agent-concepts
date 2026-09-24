@@ -139,6 +139,7 @@ Research reports and source evidence live under [docs/research/](docs/research/R
 
 ### Raw sources
 
+- [typesafe-aiskills Agent skills for building with TypeSafe's System One API.md](https://github.com/typesafe-ai/skills) — TypeSafe skill repository README clipping. Ingested as an upstream-managed global skill, not a vendored concept; current API details remain in the live [TypeSafe docs](https://docs.typesafe.ai/) (2026-09-24).
 - [Agent skill file.md](https://herdr.dev/docs/agent-skill/) — Herdr agent-skill documentation clipping. Ingested → herdr reference concept with the linked upstream `SKILL.md` vendored verbatim (2026-07-22).
 - [karpathy-llm-wiki.md](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — Karpathy's LLM Wiki gist. Ingested → teach (2026-06-12).
 - pocock-teach-skill-original.md (see [CITATIONS.md](docs/research/raw/ingested/CITATIONS.md)) — Matt Pocock's original teach skill. Ingested → teach (2026-06-12).

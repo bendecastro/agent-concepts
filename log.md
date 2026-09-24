@@ -1424,3 +1424,6 @@ Fresh Grok 4.6 high consumer passed numeric options, batch resistance, bulk dele
 
 ## [2026-09-23] implement | recap labels become finish flag and footsteps
 User chose `🏁` for the goal and `👣` for the next action instead of written labels; meaning and exception unchanged. Fresh Luna max consumer passed question, partial-work, and standalone-fact replies (3/3); refreshed five harness deltas from the canonical agent-kernel.
+
+## [2026-09-24] ingest | TypeSafe upstream skill
+Filed the Obsidian README clipping in the canonical ingested-source folder and indexed it. Chose the upstream-maintained global skill channel instead of a vendored concept: TypeSafe's skill points to its live API docs, and local adaptation adds no user-specific behavior.
