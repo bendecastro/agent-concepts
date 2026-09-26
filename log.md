@@ -1439,3 +1439,6 @@ Read-only swarm comparison of both repos against canon; user chose three ideas (
 
 ## [2026-09-26] implement | bc-swarm compaction failure mode
 Added the observed failure to `pi.md`: three broad Luna scouts aborted at ~175k-token compaction while under their tool budget; narrower replacements finished. Guidance: size scout scope under one context window, do not resume a child that died at compaction.
+
+## [2026-09-26] implement | prompting-agents untrusted input block; portability check scope
+Added "Untrusted input and privileged actions" to prompting-agents (prompt is not the security boundary, least agency, reader/actor split, memory hygiene), sourced to the ECC security guide. portability-check.py now exempts docs/research/ evidence; two maintained files switched to ~/ paths.

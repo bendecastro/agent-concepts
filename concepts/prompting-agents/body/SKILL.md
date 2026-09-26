@@ -59,6 +59,29 @@ For the file an agent reads every session — AGENTS.md, CLAUDE.md, a system pro
   and test edits by observing whether behavior actually shifts.
 ```
 
+## Untrusted input and privileged actions
+
+For instructions whose agent reads content it does not control and can also act. Prompt text lowers how often an agent obeys injected instructions; it does not stop it. (ECC security guide.)
+
+```
+- The prompt is not the security boundary. For actions that are hard to reverse or
+  leak data (shell outside the workspace, network calls carrying data, secret reads,
+  publishing, dispatching workflows), point to a control the harness enforces:
+  approval prompts, scoped tools and credentials, sandboxes, a deterministic gate
+  such as a policy-check script. Name the boundary and its enforcer; do not rely
+  on a sentence the model can be talked out of.
+- Give the agent only the room the task needs. A reviewer does not need write
+  access; a reader of arbitrary web pages does not need secrets.
+- When a high-risk workflow must read hostile content (arbitrary web pages, email,
+  third-party repos) and also hold powerful tools, split it: a restricted reader
+  extracts source-linked facts, and the acting agent receives only those facts and
+  still treats them as data. Skip the split for ordinary research; it costs a stage
+  and loses nuance.
+- Durable memory is a persistence surface for injected text. A workflow that writes
+  memory should promote entries deliberately, keep project and global memory
+  separate, never store secrets, and never auto-save summaries of untrusted content.
+```
+
 ## Agent-ready work shaping
 
 For coding-agent workflows that span planning through execution, shape work so an agent can pick it up independently without losing human control:
