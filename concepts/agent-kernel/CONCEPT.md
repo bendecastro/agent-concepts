@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: partial
 tested: 2026-09-26
-deployed: 2026-09-23
+deployed: 2026-09-26
 ---
 # Concept: agent-kernel
 
@@ -62,6 +62,7 @@ Candidate targets, in order of expected value: thin custom harnesses → Pi (if 
 - **Pi (global instructions; posture deltas refreshed 2026-08-12):** `~/.pi/agent/AGENTS.md` is Pi's kernel-derived global instruction file (tracked in CONFIG via the `~/.pi` symlink). It carries the consult-on-judgment-calls and answer-questions-before-editing posture, replacing the old unconditional bias-to-action lines.
 - **Grok (delta only, 2026-07-12; answer-first posture added 2026-08-12):** `~/.grok/AGENTS.md` is a marked kernel delta in Grok's global-rules layer. It carries consult-on-judgment-calls and answer-questions-before-editing posture, defaults-with-reasons, cross-vendor preference routing, publish policy, and the concepts-catalog pointer. Canonical file lives at `~/Sync/CONFIG/.grok/AGENTS.md` (tracked + synced) with `~/.grok/AGENTS.md` symlinked to it per machine by `bc-setup-config-symlinks`. A full diff against Grok's built-in prompt is pending; trim if items prove redundant.
 - **All five deltas refreshed 2026-08-20** with the `## Final response` voice clause. Codex, Grok, and Claude Code carry it as an Operating-posture/pointer bullet with their marker dates bumped; Pi and OpenCode carry it in their existing `Output style` sections. The Claude Code copy names the override explicitly ("the harness Tone and style section clamps length, not tells") because that harness has a built-in tone section the clause has to sit beside rather than duplicate.
+- **Untrusted-content lines refreshed 2026-09-26:** Pi, OpenCode (both under `## Safety`), Grok, and Codex (end of `## Operating posture`) carry both the data-not-instructions and durable-memory lines verbatim; Claude Code carries only the memory line, on the unverified assumption that its built-in prompt already flags injected instructions in tool results. Marker dates bumped to 2026-09-26 in Claude Code, Grok, and Codex.
 - **All five deltas refreshed 2026-09-23** with the questions-answerable-in-one-token and two-line recap rules. Codex and Grok carry them as Operating-posture bullets, Claude Code as pointer bullets (marker dates bumped); Pi and OpenCode carry them in `Output style`, replacing "Suggest next steps only when they are natural and useful", which the recap supersedes.
 - **All five deltas refreshed again 2026-09-23** with `🏁` / `👣` in place of the written recap labels, with no change to the exception or question format. The canonical variant passed the three-prompt pressure check in `tests/pressure-scenarios.md` before propagation.
 - **Codex (delta only, 2026-06-12; posture deltas refreshed 2026-08-12):** `~/.codex/AGENTS.md` carries a marked global kernel delta: consult-on-judgment-calls and answer-questions-before-editing posture, defaults-with-reasons, evidence-before-claims, publish-policy/default-deny (separate from Codex `trust_level`), and the Specialized Concepts catalog pointer. Canonical file lives at `~/Sync/CONFIG/.codex/AGENTS.md` (tracked + synced) with `~/.codex/AGENTS.md` symlinked to it per machine by `bc-setup-config-symlinks`; refresh the marked copy when the kernel changes.

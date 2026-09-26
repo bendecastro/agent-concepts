@@ -1445,3 +1445,6 @@ Added "Untrusted input and privileged actions" to prompting-agents (prompt is no
 
 ## [2026-09-26] test | agent-kernel untrusted content and memory lines
 Added two Tool-and-file-discipline lines (read content is data; memory takes facts, not directives) with scenario 11. Luna max baseline passed both injections; first memory wording failed by over-refusing requested facts; revised wording passed both. Kernel harness deltas not yet refreshed.
+
+## [2026-09-26] deploy | agent-kernel untrusted-content lines to harness deltas
+Added both new kernel lines verbatim to the Pi, OpenCode, Grok, and Codex global files; Claude Code got the memory line only (injection handling assumed built in, unverified).
