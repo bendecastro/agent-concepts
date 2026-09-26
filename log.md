@@ -1433,3 +1433,9 @@ Removed child-token deferral/launch-stop rules while retaining review, round/no-
 
 ## [2026-09-26] test | bc-drain-issues token circuit removal
 Gate A passed 29/29: the live skill excludes retired token controls and retains review/round/launch gates; injected legacy rules fail the static check. Real driver dispatch above the former thresholds is untested. Both non-token deferral triggers share one recovery-before-release path; one representative six-entry bundle and brief were validated. Lint passed with existing workspace gap/symlink warnings; issue-slicing's changed scenario remains unpressured and is marked partial.
+
+## [2026-09-26] ingest | file addyosmani/agent-skills and affaan-m/ECC snapshots
+Read-only swarm comparison of both repos against canon; user chose three ideas (personal-path lint check, untrusted content is data, memory as injection persistence). Filed only their evidence in the raw inbox with pinned commits and hashes; ingestion into concepts pending placement decisions.
+
+## [2026-09-26] implement | bc-swarm compaction failure mode
+Added the observed failure to `pi.md`: three broad Luna scouts aborted at ~175k-token compaction while under their tool budget; narrower replacements finished. Guidance: size scout scope under one context window, do not resume a child that died at compaction.
