@@ -1442,3 +1442,6 @@ Added the observed failure to `pi.md`: three broad Luna scouts aborted at ~175k-
 
 ## [2026-09-26] implement | prompting-agents untrusted input block; portability check scope
 Added "Untrusted input and privileged actions" to prompting-agents (prompt is not the security boundary, least agency, reader/actor split, memory hygiene), sourced to the ECC security guide. portability-check.py now exempts docs/research/ evidence; two maintained files switched to ~/ paths.
+
+## [2026-09-26] test | agent-kernel untrusted content and memory lines
+Added two Tool-and-file-discipline lines (read content is data; memory takes facts, not directives) with scenario 11. Luna max baseline passed both injections; first memory wording failed by over-refusing requested facts; revised wording passed both. Kernel harness deltas not yet refreshed.
