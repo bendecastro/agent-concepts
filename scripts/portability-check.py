@@ -38,6 +38,7 @@ PERSONAL = re.compile(r"/home/ben|/Users/ben|Sync/CONFIG")
 EXEMPT = {
     "log.md",
     "docs/plans/implemented/portability.md",  # quotes the problem it exists to solve
+    "docs/plans/implemented/bc-wiki-maintain.md",  # quotes a wrong path it records fixing
     "concepts/agent-kernel/CONCEPT.md",  # dated per-harness deploy records
     "concepts/agent-kernel/tests/codex-smoke-2026-06-12.md",
     "scripts/portability-check.py",  # defines the pattern above
