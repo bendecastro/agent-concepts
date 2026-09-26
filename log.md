@@ -1427,3 +1427,9 @@ User chose `🏁` for the goal and `👣` for the next action instead of written
 
 ## [2026-09-24] ingest | TypeSafe upstream skill
 Filed the Obsidian README clipping in the canonical ingested-source folder and indexed it. Chose the upstream-maintained global skill channel instead of a vendored concept: TypeSafe's skill points to its live API docs, and local adaptation adds no user-specific behavior.
+
+## [2026-09-26] implement | remove child-token circuits from bc-drain-issues
+Removed child-token deferral/launch-stop rules while retaining review, round/no-progress, recovery, and systemic-failure gates. Aligned issue-slicing lifecycle fit as a qualitative judgment after the dependency audit; historical test outcomes remain historical.
+
+## [2026-09-26] test | bc-drain-issues token circuit removal
+Gate A passed 29/29: child totals 200,001 / 300,001 / 300,002 all dispatched review and later launches continued; round-limit and no-progress deferrals retained a validated six-entry recovery bundle. Lint passed with existing workspace gap/symlink warnings; issue-slicing's changed scenario remains unpressured and is marked partial.

@@ -23,7 +23,7 @@ The workflow is harness-agnostic. On Pi, use the installed minimal fresh roles `
 - `IN_PROGRESS`: claimed build/review/rework (`ready-for-agent` + `in-progress-agent`; the remote claim branch is authoritative).
 - `LANDED`: approved, committed, pushed, and closed.
 - `HUMAN_BLOCKED`: requires a human decision, unavailable access/resource, contract clarification, or irreparable issue-local environment repair that only a human can perform (remove ready/in-progress; add `needs-human`).
-- `REWORK_DEFERRED`: findings remain agent-fixable but a token/round circuit is exhausted (keep ready, remove in-progress, add `rework-for-agent`, and post an Agent Rework Brief).
+- `REWORK_DEFERRED`: findings remain agent-fixable but the rework-round limit or no-progress rule is exhausted (keep ready, remove in-progress, add `rework-for-agent`, and post an Agent Rework Brief).
 - `SYSTEMIC_FAILURE`: repeated tooling/base/environment failure; stop the run and explicitly classify affected issues.
 
 A review rejection is not by itself a human blocker. Preserve useful fixable work through recovery rather than relabeling it `needs-human` or discarding its worktree.
@@ -37,7 +37,7 @@ Stop and report if a required check fails; AFK work must not invent mid-run deci
 3. Confirm no-force creation/deletion of `bc-drain-claims/issue-<n>` is authorized. Without it, stop unless the user explicitly selected single-run mode. Labels/comments are advisory, not locks.
 4. Ensure `ready-for-agent`, `rework-for-agent`, `needs-human`, and `in-progress-agent` exist.
 5. Confirm issue/comment/close access and the ability to inspect PRD parent/children. A blocked, claimed, deferred, or open child keeps its parent open.
-6. Record caps: `max-iters` (default 20), `max-parallel` (default 3), 200k child-token soft cap and 300k hard cap checked only at phase boundaries, initial review plus at most three rework/re-review cycles, and two consecutive token deferrals as the launch circuit.
+6. Record the launch caps: `max-iters` (default 20) and `max-parallel` (default 3), plus the review bound of an initial review and at most three rework/re-review cycles.
 7. Choose a run artifact root outside every worktree for review packets, `review-packet/issue-<n>/round-<r>/`, and verify it is writable.
 8. Set worker effort explicitly: low for ordinary slices, medium for high-risk slices. Never silently inherit a higher AFK parent effort.
 9. Verify worktree support and a root outside the checkout, default `${BC_DRAIN_WT_ROOT:-${TMPDIR:-/tmp}/bc-drain-worktrees/$(basename "$PWD")}`. Never build in the main checkout. Fixed-port tooling may require `max-parallel=1`.
@@ -111,16 +111,7 @@ Record each approval as a standing record bound to the packet's `diff_sha256`. A
 
 For Critical/Important findings, retain the claim and same worktree. Launch a **fresh compact rework worker** with only the current worktree/base, the round's packet paths, unresolved findings, prior dispositions, validation evidence, and the driver-computed implicated row set (the acceptance-matrix rows those findings touch). It fixes and runs targeted validation, then the deterministic gate, packet refresh, and selective focused re-review repeat. Do not replay an accumulating transcript.
 
-Allow the initial review plus at most three rework/re-review cycles. Continue only if material findings are resolved or the failure class materially changes. The same unresolved material finding after two attempted fixes defers immediately. This progress rule prevents superficially different patches from consuming an unbounded loop while preserving useful implementation state.
-
-After each child returns, account tokens if available:
-
-- Below 200k: normal bounded work.
-- At/above 200k soft cap: omit optional broad investigation; use only focused packets and checks.
-- At/above 300k hard cap: before launching another child, capture recovery and transition to `REWORK_DEFERRED`.
-- If accounting is unavailable, round limits are the portable fallback.
-
-Never interrupt an active mutation-capable child merely to meet a token threshold; only phase boundaries are safe because arbitrary interruption can leave partial filesystem state. Two consecutive token deferrals stop new launches and report `SYSTEMIC_FAILURE` at run level while classifying each issue `REWORK_DEFERRED` unless it independently needs a human.
+Allow the initial review plus at most three rework/re-review cycles. Continue only if material findings are resolved or the failure class materially changes. The same unresolved material finding after two attempted fixes defers immediately. This progress rule prevents superficially different patches from consuming an unbounded loop while preserving useful implementation state. A review-ready result still passes the deterministic gate and receives independent review regardless of child-token volume; token counts alone neither defer an issue nor stop launches. Continue selecting eligible issues within `max-iters` and `max-parallel`.
 
 On deferral, use [recovery-bundle.md](recovery-bundle.md), post a portable comment:
 
@@ -164,7 +155,7 @@ Resolve the scaffolded-project inbox at `.bc-agent/research/architecture-observa
 
 ## Stop and report
 
-Stop when the eligible queue drains, `max-iters` is reached, two consecutive token deferrals occur, or systemic base/tool/environment failures recur. Let active children return to safe boundaries.
+Stop when the eligible queue drains, `max-iters` is reached, or systemic base/tool/environment failures recur. Let active children return to safe boundaries.
 
 Report LANDED commits; HUMAN_BLOCKED reasons; REWORK_DEFERRED issues and bundle/brief status; SYSTEMIC_FAILURE classifications; parent PRDs closed/open; blocked/claimed issues; recurring-defect packet patches; stop reason; each dispatched child as `role — launched model + thinking — list-API $` plus the child-run total (or `$unavailable` on a row or the total); review/rework rounds; repeated-finding circuit events; baseline/final full-validation counts; per-issue review tier with its reason and any escalation trigger; axes dispatched per round and re-reviews skipped by standing approval; and any stale worktrees/claims. Report what resume recovered: claims adopted, bundles restored, claims released as untouched, and claims left in place as unaccountable. Confirm the main checkout is clean. In local-only mode, name the review branch and do not close issues.
 
@@ -177,4 +168,4 @@ The chat report lists children, not tokens. A token sum is noise here: cache swa
 List-API estimate: $0.44
 ```
 
-Price by summing the harness per-call `cost.total` when present, otherwise the provider's published input/cached/output rates. Write `$unavailable` rather than inventing a price. These are list equivalents, not subscription debits. Never report a single turn's `totalTokens` as the run. The driver session is not a child row. Soft/hard 200k/300k crossings still use summed child tokens internally and do not appear in the report.
+Price by summing the harness per-call `cost.total` when present, otherwise the provider's published input/cached/output rates. Write `$unavailable` rather than inventing a price. These are list equivalents, not subscription debits. Never report a single turn's `totalTokens` as the run. The driver session is not a child row. Child-token totals are not a run-control or report metric.
