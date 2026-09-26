@@ -43,6 +43,11 @@ EXEMPT = {
     "scripts/portability-check.py",  # defines the pattern above
 }
 
+# Recorded research evidence: council transcripts, measurements, and immutable
+# raw sources quote the paths they observed. Rewriting them would falsify the
+# evidence, so the whole tree is exempt; maintained plans and concepts are not.
+EXEMPT_PREFIXES = ("docs/research/",)
+
 failures: list[str] = []
 notes: list[str] = []
 
@@ -109,7 +114,7 @@ def main() -> int:
         offenders = []
         for p in tracked:
             rel = str(p.relative_to(clone))
-            if rel in EXEMPT or rel.startswith(".git"):
+            if rel in EXEMPT or rel.startswith((".git", *EXEMPT_PREFIXES)):
                 continue
             try:
                 text = p.read_text()

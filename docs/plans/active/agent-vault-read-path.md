@@ -263,8 +263,8 @@ survive contact:
 workspace, so the files on disk are right. The running environment is not, and re-measurement the
 same day showed the earlier "blocker closed" claim was too strong:
 
-- `systemctl --user show-environment` reports `AGENT_CONCEPTS=/home/ben/Sync/agents`, and
-  `ls -ld /home/ben/Sync/agents` returns *No such file or directory*.
+- `systemctl --user show-environment` reports `AGENT_CONCEPTS=~/Sync/agents` (expanded), and
+  `ls -ld ~/Sync/agents` returns *No such file or directory*.
 - The stale value sits in the **systemd user manager**, so it is inherited by every newly spawned
   session, not only by processes started before the fix. Verified up one live tree:
   `herdr` → `zsh` → `pi` all carry it.

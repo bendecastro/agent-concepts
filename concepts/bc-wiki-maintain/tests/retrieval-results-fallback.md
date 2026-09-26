@@ -1,6 +1,6 @@
 # Retrieval fallback benchmark — direct BM25 and shell count ranking
 
-Run date: 2026-08-28. Target vault: `/home/ben/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent`. The target vault was read-only; no qmd mutation command was run.
+Run date: 2026-08-28. Target vault: `~/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent`. The target vault was read-only; no qmd mutation command was run.
 
 ## Result
 
