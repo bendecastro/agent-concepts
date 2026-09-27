@@ -10,8 +10,8 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 
 ## Design decisions
 
-- **Extracted from `to-issues` (refactor 2026-06-20).** Same motivation as `prd-drafting`: split the reusable slicing behavior out of the user-invoked `to-issues` so `bc-plan-to-issues` can inline a model-invoked discipline instead of calling another user-invoked orchestrator (composition boundary; see `prompting-agents`).
-- **The issue template lives here, not in the orchestrator** — one home, no drift between `to-issues` and `bc-plan-to-issues`.
+- **Extracted from the then-named `to-issues` (refactor 2026-06-20; renamed `to-tickets` 2026-07-11).** Same motivation as `prd-drafting`: split reusable slicing behavior out of the user-invoked publication orchestrator so `bc-plan-to-issues` can inline a model-invoked discipline instead of calling another user-invoked orchestrator (composition boundary; see `prompting-agents`).
+- **The issue template lives here, not in the orchestrator** — one home, no drift between `to-tickets` and `bc-plan-to-issues`.
 - **Vertical slices, not horizontal.** Each slice cuts end-to-end through every layer and is independently demoable — the tracer bullet. Horizontal slices are the named anti-pattern, shared with `tdd`.
 - **Prefactor first.** "Make the change easy, then make the easy change" — prefactoring is its own first slice.
 - **Wide refactors expand–contract.** A mechanical change whose blast radius prevents independently green vertical slices expands the new form beside the old, migrates callers in bounded green batches, then contracts only after every batch lands.
@@ -30,7 +30,7 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 
 ## Tests
 
-`tests/scenario.md` — verifies vertical (not horizontal) slicing, fresh-context and qualitative drain-lifecycle sizing, the expand–contract exception, the quiz-before-finalize gate, the no-publish / no-touch-parent boundary, and dependency-ordered handback. The 2026-08-17 direct pressure pass exercised the former token-threshold policy; current qualitative-sizing expectations were updated 2026-09-26 and remain untested. Prior pressure also ran transitively via `to-issues` and `bc-plan-to-issues`.
+`tests/scenario.md` — verifies vertical (not horizontal) slicing, fresh-context and qualitative drain-lifecycle sizing, the expand–contract exception, the quiz-before-finalize gate, the no-publish / no-touch-parent boundary, and dependency-ordered handback. The 2026-08-17 direct pressure pass exercised the former token-threshold policy; current qualitative-sizing expectations were updated 2026-09-26 and remain untested. Prior pressure also ran transitively via `to-tickets` (then named `to-issues`) and `bc-plan-to-issues`.
 
 ## Deploy targets
 

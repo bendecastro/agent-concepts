@@ -166,26 +166,6 @@ class RelationshipFixtures(unittest.TestCase):
         errors = self.errors(root)
         self.assertTrue(any("missing" in error and "concept" in error for error in errors))
 
-    def test_deployment_aliases_are_rejected_as_noncanonical_names(self) -> None:
-        for alias in ("implement", "to-issues", "to-prd"):
-            with self.subTest(alias=alias):
-                root = self.workspace()
-                # ``from`` is a reserved keyword in Python, so construct this one directly.
-                self.write_graph(
-                    root,
-                    {
-                        "schema": 1,
-                        "edges": [
-                            {
-                                **self.edge(),
-                                "from": alias,
-                            }
-                        ],
-                    },
-                )
-                errors = self.errors(root)
-                self.assertTrue(any(alias in error and "canonical" in error for error in errors))
-
     def test_absolute_and_parent_sources_are_rejected(self) -> None:
         for source in ("/tmp/source.md", "../source.md"):
             with self.subTest(source=source):

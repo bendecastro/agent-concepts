@@ -1,6 +1,6 @@
 ---
 name: to-spec
-description: Turn the current conversation into a spec and publish it as a GitHub issue — no interview, just synthesis of what you've already discussed. `/to-prd` remains a compatibility alias.
+description: Turn the current conversation into a spec and publish it as a GitHub issue — no interview, just synthesis of what you've already discussed.
 disable-model-invocation: true
 ---
 
@@ -12,7 +12,7 @@ Draft a spec (the project’s PRD format) from the current conversation and code
 
 ## Process
 
-1. **Draft.** Run `/prd-drafting`: synthesize (do NOT interview), sketch and confirm the test seams, and write the PRD to the standard template. If scope is still too vague to synthesize, run `/grill-me` first rather than interviewing here.
+1. **Draft.** Run `/prd-drafting`: synthesize (do NOT interview), sketch and confirm the test seams, and write the PRD to the standard template. If scope is still too vague to synthesize, resolve it with `/grilling` + `/domain-modeling` first rather than interviewing here.
 
 2. **Publish** the produced PRD as a GitHub parent issue:
    ```

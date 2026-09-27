@@ -345,7 +345,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 ## Plans & the live layer
 
 - A multi-step effort gets a **plan page** under `project/` from `templates/plan.md`.
-- For `grill-me`/`bc-plan-to-issues` → `bc-drain-issues` work, apply
+- For `grilling` + `domain-modeling` or `bc-plan-to-issues` → `bc-drain-issues` work, apply
   `conventions/planning-workflow.md`: it maps generic `CONTEXT.md`/`docs/adr/` persistence
   into this vault's pages.
 - Use `references/agent-skills.md` as the local map of required loop skills and where their
@@ -507,9 +507,9 @@ OVERVIEW = """# Project Overview
 
 The project's shared vocabulary — canonical names for the domain concepts, no implementation
 detail. When `references/teach-skill.md` is a valid adapter, `teach` owns this Glossary section
-and `grill-me`, `bc-plan-to-issues`, and maintenance leave it unchanged. Without that adapter,
-`grill-me` / `bc-plan-to-issues` (via `domain-modeling`) maintain this as the project's
-`CONTEXT.md`-equivalent. Keep it a pure glossary.
+and `bc-plan-to-issues` and maintenance leave it unchanged. Without that adapter,
+`domain-modeling` (paired with `grilling` directly or used through `bc-plan-to-issues`) maintains
+this as the project's `CONTEXT.md`-equivalent. Keep it a pure glossary.
 
 <!-- Term — one-line canonical definition. -->
 
@@ -548,7 +548,7 @@ first. If they clearly ask for a concrete edit/fix, proceed normally.
 
 - **Glossary / domain facts:** the Glossary section of `project/overview.md` (or a dedicated
   `project/glossary.md` if it grows). Without a valid teach adapter, this is this project's
-  `CONTEXT.md`-equivalent and `grill-me` / `bc-plan-to-issues` maintain it. With the adapter,
+  `CONTEXT.md`-equivalent and `domain-modeling` / `bc-plan-to-issues` maintain it. With the adapter,
   `teach` owns the Glossary section; planning and maintenance skills leave that section alone.
 - **ADRs:** numbered files under `decisions/` using `templates/adr.md`.
 - **Plans / actual PRDs:** durable planning artifacts under `project/`, linked from `index.md`. Only call it a PRD when the PRD drafting/publishing step actually happened; exploratory notes stay under `research/` or as plans.

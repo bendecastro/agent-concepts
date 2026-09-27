@@ -10,8 +10,8 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 ## Design decisions
 
-- **Exists to remove sequencing burden** (user's request). The four planning behaviors already existed as separate skills; the user didn't want to remember the order (`grill-me` → `to-prd` → `to-issues`). This collapses the front into one invocation.
-- **Composes model-invoked disciplines only — option (c) refactor.** Rather than calling the user-invoked `grill-me`/`to-prd`/`to-issues` (which would break the no-orchestrator-calls-orchestrator boundary it shares with `grilling`/`grill-me`), it inlines `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`. The drafting/slicing disciplines were extracted from `to-prd`/`to-issues` specifically to make this clean (see those concepts). No behavior is duplicated.
+- **Exists to remove sequencing burden** (user's request). The planning behaviors once sat behind separate wrappers; the user didn't want to remember the former sequence (`grill-me` → `to-prd` → `to-issues`). This collapses the front into one invocation. The stateful `grill-me` wrapper was removed 2026-09-27; use `grilling` + `domain-modeling` directly for a standalone interview and domain capture.
+- **Composes model-invoked disciplines only — option (c) refactor.** Rather than calling single-step user-invoked wrappers (which would break the no-orchestrator-calls-orchestrator boundary), it inlines `grilling`, `domain-modeling`, `prd-drafting`, and `issue-slicing`. The drafting/slicing disciplines were extracted from their publication orchestrators specifically to make this clean (see those concepts). No behavior is duplicated.
 - **Owns publication itself.** The disciplines don't publish; this orchestrator runs the two `gh issue create` steps (parent PRD issue, then slices in dependency order). Keeps publishing in one place for the pipeline run.
 - **Publishes a PRD parent issue, but not as drainable work.** Resolved open question from the plan: yes, publish the PRD as a parent issue and reference it as `## Parent` from each slice, for parent/child traceability. The parent is a coordination artifact and is not labeled `ready-for-agent`; only implementation slices enter the drain queue.
 - **Two human gates, then AFK.** The grill (step 1) and the slicing quiz (step 5) are interactive; everything after is autonomous. The body states this explicitly so unresolved scope is closed before `/bc-drain-issues` runs, where a vague issue becomes a parked issue.
@@ -25,14 +25,14 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 - `docs/plans/implemented/bc-grill-to-ship-loop.md` — the grilled-out build plan this concept implements (decisions locked 2026-06-20).
 - [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) — the workshop's plan→execute lifecycle (grill → PRD → tracer-bullet issues) this fuses into one command.
-- `concepts/grill-me/`, `concepts/to-spec/`, `concepts/to-tickets/` — the single-step orchestrators it supersedes for the combined flow (kept standalone for individual use).
+- `concepts/to-spec/` and `concepts/to-tickets/` — the publication orchestrators that remain available for individual phases; the former `grill-me` wrapper was removed 2026-09-27.
 - `concepts/triage/`, `concepts/prototype/`, `concepts/improve-codebase-architecture/` — optional intake/evidence/runway skills integrated around the planning front.
 - `concepts/prompting-agents/body/SKILL.md` — composition boundary and gate phrasing.
 - [fission-ai-openspec-readme.md](https://github.com/Fission-AI/OpenSpec/) — OpenSpec README; source of the living-specs (archive-merge) idea adapted into step 5 and the per-change folder adapted into steps 3/4/7 (2026-07-12).
 
 ## Tests
 
-`tests/pressure-plan-to-issues.md` — verifies the pipeline runs in order, the grilling one-question gate holds, docs are captured inline (not batched), the slicing quiz is not skipped, it composes disciplines (does not invoke `grill-me`/`to-prd`/`to-issues`), living specs + change folder, and slices publish blockers-first with real `#NN` and a `## Parent` ref. Discipline-enforcing → must hold before deploy. **Run 2026-06-21 in Pi: FAIL**. **Run 2026-07-16 in Grok: PASS** (10/10; prior failure modes cleared).
+`tests/pressure-plan-to-issues.md` — verifies the pipeline runs in order, the grilling one-question gate holds, docs are captured inline (not batched), the slicing quiz is not skipped, it composes disciplines rather than nested publication orchestrators, living specs + change folder, and slices publish blockers-first with real `#NN` and a `## Parent` ref. Discipline-enforcing → must hold before deploy. **Run 2026-06-21 in Pi: FAIL**. **Run 2026-07-16 in Grok: PASS** (10/10; prior failure modes cleared).
 
 ## Deploy targets
 

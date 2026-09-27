@@ -10,8 +10,8 @@ User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbab
 
 ## Design decisions
 
-- **Thin wrapper over `issue-slicing` (refactor 2026-06-20).** The slicing behavior — vertical tracer-bullet slices, prefactor-first, the quiz-before-finalize gate, the template, no-touch-parent — was extracted into the model-invoked `issue-slicing` discipline so `bc-plan-to-issues` can reuse it without orchestrator-calls-orchestrator. `to-tickets` is now: run `/issue-slicing` → publish in dependency order. `/to-issues` remains a deployment alias for compatibility. Behavior preserved, relocated.
-- **GitHub tracker baked in** (user's decision), same rationale as `to-prd`: `gh` + `ready-for-agent`, no `setup-matt-pocock-skills` indirection. Publishing happens in dependency order so real issue numbers can fill "Blocked by".
+- **Thin wrapper over `issue-slicing` (refactor 2026-06-20).** The slicing behavior — vertical tracer-bullet slices, prefactor-first, the quiz-before-finalize gate, the template, no-touch-parent — was extracted into the model-invoked `issue-slicing` discipline so `bc-plan-to-issues` can reuse it without orchestrator-calls-orchestrator. `to-tickets` is now: run `/issue-slicing` → publish in dependency order. The former `/to-issues` compatibility alias was removed 2026-09-27. Behavior preserved, relocated.
+- **GitHub tracker baked in** (user's decision), same rationale as `to-spec`: `gh` + `ready-for-agent`, no `setup-matt-pocock-skills` indirection. Publishing happens in dependency order so real issue numbers can fill "Blocked by".
 - **Quiz before publish lives in the discipline.** The user approves the breakdown (granularity + dependency graph) inside `issue-slicing` before any issues are created; this orchestrator only publishes already-approved slices.
 
 ## Provenance
@@ -27,6 +27,6 @@ User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbab
 
 ## Deploy targets
 
-- Canonical deploy: `to-tickets`; compatibility alias: `to-issues` → `to-tickets`.
+- Canonical deploy: `to-tickets`; the former `to-issues` compatibility alias was removed 2026-09-27.
 - Claude Code: `~/.claude/skills/to-tickets` → relative symlink to `body/`.
 - Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

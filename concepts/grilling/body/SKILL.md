@@ -5,7 +5,7 @@ description: Interview the user relentlessly about a plan or design until every 
 
 # Grilling
 
-The reusable interview loop behind `/grill-me`. Interview the user relentlessly about every aspect of the plan until you reach a *genuinely shared* understanding — not polite agreement that papers over open decisions.
+The reusable interview discipline for a plan or design. Interview the user relentlessly about every aspect until you reach a *genuinely shared* understanding — not polite agreement that papers over open decisions. Pair with `domain-modeling` when resolved vocabulary and decisions should persist.
 
 Walk down each branch of the design tree, resolving dependencies between decisions one at a time. For every question, put the **decision first**, then list the plausible answers as numbered options. Put your recommended answer first, mark exactly one option **Recommended**, and give it a brief reason; number the alternatives too. End with an explicit numeric reply example that maps the displayed choices, such as: “Reply `1` for the recommendation, `2` for the alternative, or describe another answer in your own words.” Include each displayed number when there are more than two options. This keeps replies quick without ruling out an override. Why: the reader is a busy owner deciding now, not reading a brief — a buried question wastes the turn. Keep a term they already use; do not invent a simpler synonym, and do not load `plain-language` for this utterance.
 

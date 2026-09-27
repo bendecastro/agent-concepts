@@ -18,7 +18,7 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
    ▼                                                                        │
   ready-for-agent issue queue  ◄──────────────────────────────────────────┘
    │
-   ▼   /bc-drain-issues (/implement) ── autonomous execution (AFK) ──┐
+   ▼   /bc-drain-issues ── autonomous execution (AFK) ──┐
    │     loop: claim next unblocked issue (remote claim branch)       │
    │       └► fresh worker: tdd OR diagnosing-bugs ─► validate        │
    │            └► deterministic gate ─► tiered review                │
@@ -51,19 +51,19 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 
 **Planning — `/bc-plan-to-issues`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`CONTEXT.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. Two human gates: the grill and the slicing quiz. Composes model-invoked disciplines only (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never the user-invoked single-step orchestrators.
 
-**Execution — `/bc-drain-issues` / `/implement`** (AFK, run after planning/triage). A preflight-gated driver loop atomically claims each unblocked issue, dispatches a **fresh worker** to build it test-first (or run `diagnosing-bugs` for bugs), runs a deterministic pre-review gate, then applies tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards) before trunk-based landing (commit → push `master` → close with a validation comment). Material findings receive bounded same-worktree rework/re-review for up to three cycles. Terminal outcomes stay distinct: `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable issue-local environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; and `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. Preflight is the only planned human gate; these outcomes are reported rather than collapsed into one parking state.
+**Execution — `/bc-drain-issues`** (AFK, run after planning/triage). A preflight-gated driver loop atomically claims each unblocked issue, dispatches a **fresh worker** to build it test-first (or run `diagnosing-bugs` for bugs), runs a deterministic pre-review gate, then applies tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards) before trunk-based landing (commit → push `master` → close with a validation comment). Material findings receive bounded same-worktree rework/re-review for up to three cycles. Terminal outcomes stay distinct: `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable issue-local environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; and `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. Preflight is the only planned human gate; these outcomes are reported rather than collapsed into one parking state.
 
 ## Composition map
 
 | Layer | Skills |
 |---|---|
 | User-invoked setup | `bc-init-agent` (scaffolds the per-repo workspace) |
-| User-invoked orchestrators (loop) | `bc-plan-to-issues`, `bc-drain-issues` (also `/implement`) |
+| User-invoked orchestrators (loop) | `bc-plan-to-issues`, `bc-drain-issues` |
 | User-invoked intake / exploration | `triage`, `prototype`, `improve-codebase-architecture` |
-| User-invoked single-step (standalone) | `grill-me`, `to-spec`, `to-tickets` (`to-prd`/`to-issues` aliases) |
+| User-invoked single-step (standalone) | `to-spec`, `to-tickets` |
 | Model-invoked disciplines | `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `research`, `tdd`, `diagnosing-bugs`, `codebase-design`, `bc-autoresearch-loop`, `code-review` |
 
-The single-step orchestrators (`grill-me`/`to-spec`/`to-tickets`) still exist for using one phase at a time; the loop orchestrators inline the *disciplines* beneath them so nothing is duplicated and no orchestrator calls another orchestrator.
+`to-spec` and `to-tickets` remain for one-phase-at-a-time publication. For a standalone interview and domain capture, use `grilling` + `domain-modeling` directly. The loop orchestrators inline the *disciplines* beneath them so nothing is duplicated and no orchestrator calls another orchestrator.
 
 ## Safety posture (execution)
 - **Push is authorization-gated.** `bc-drain-issues` preflight runs `scripts/publish-check.py`; a repo with no allow rule in `~/.config/agent-concepts/publish.yaml` **blocks** the AFK push (abort, or opt-in commit-only-local). The loop never edits the policy to authorize itself.

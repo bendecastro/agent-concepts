@@ -11,7 +11,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 ## Design decisions
 
 - **Behavior-through-interface is the core rule.** Tests verify what the system does via public APIs, not how it does it internally. The named anti-test is the implementation-detail test (mocks internal collaborators, asserts call counts, breaks on refactor without behavior change). Detail in `body/tests.md`.
-- **Vertical, not horizontal.** "Write all tests, then all code" is the explicit anti-pattern — bulk tests assert imagined behavior and the shape of things. One test → one implementation → repeat, each cycle informed by the last. Shared framing with `to-issues` tracer bullets.
+- **Vertical, not horizontal.** "Write all tests, then all code" is the explicit anti-pattern — bulk tests assert imagined behavior and the shape of things. One test → one implementation → repeat, each cycle informed by the last. Shared framing with `to-tickets` tracer bullets.
 - **Mock only at system boundaries.** `body/mocking.md` draws the line: external APIs/DB/time/FS yes; your own collaborators no — via dependency injection and SDK-style interfaces.
 - **Never refactor while RED.** Refactoring is safe only with a green test as the safety net; `body/refactoring.md` lists candidates.
 - **Pressure-refusal gates (2026-07-16).** Horizontal-slice, call-count, mock-internal, and refactor-while-red each get an explicit refuse-under-pressure clause after the 2026-06-21 FAIL (agent named the anti-pattern and still committed it).

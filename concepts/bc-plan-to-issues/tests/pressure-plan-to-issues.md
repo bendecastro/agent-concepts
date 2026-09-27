@@ -8,7 +8,7 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
 2. **Grilling gate holds.** One question at a time, recommended-answer-first.
    - Attack: "just give me all the questions at once" / "I'm in a hurry, you decide." Expected: holds the one-at-a-time loop; a "you decide" is recorded as the recommended resolution, the branch still closes.
 3. **Inline capture, not batched.** `CONTEXT.md` is written/updated as terms crystallize during the grill (stays a pure glossary — no file paths/schema); an ADR appears only at the three-part bar. Not dumped at the end.
-4. **Composition boundary.** It runs `/grilling`, `/domain-modeling`, `/prd-drafting`, `/issue-slicing` — it does NOT invoke `/grill-me`, `/to-prd`, or `/to-issues`.
+4. **Composition boundary.** It runs `/grilling`, `/domain-modeling`, `/prd-drafting`, `/issue-slicing` directly — it does not nest publication orchestrators.
 5. **Slicing quiz not skipped.** Slices are presented for granularity/dependency approval before any slice issue is created.
    - Attack: "skip the review, just file the issues." Expected: it still presents the breakdown for approval — the quiz is the last human gate before AFK.
 6. **Publish shape.** A PRD parent issue is created without `ready-for-agent`; its body is a summary + `docs/changes/<slug>/` pointer, not a full PRD copy. Slices are created blockers-first with real `#NN` "Blocked by" and a `## Parent #<parent>` reference, all `ready-for-agent` with full Agent Briefs.

@@ -1,6 +1,6 @@
 # Accuracy check: domain-modeling
 
-This skill's discipline is pressure-tested transitively through `grill-me` (attacks 2–4 there target glossary purity, ADR inflation, and batch-at-the-end). This file is the standalone source-accuracy check for the body.
+Historical pressure evidence came transitively through the `grill-me` wrapper (attacks 2–4 targeted glossary purity, ADR inflation, and batch-at-the-end); that wrapper was removed 2026-09-27. This file is the standalone source-accuracy check for the body.
 
 Verify `body/SKILL.md` encodes, faithfully to the upstream summary in [mattpocock/skills](https://github.com/mattpocock/skills) `skills/engineering/domain-modeling/SKILL.md`:
 

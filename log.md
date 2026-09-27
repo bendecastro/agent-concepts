@@ -1451,3 +1451,6 @@ Added both new kernel lines verbatim to the Pi, OpenCode, Grok, and Codex global
 
 ## [2026-09-27] implement | remove last30days
 User stopped using it: uninstalled the upstream package from `~/.agents/skills`, removed its skill symlinks and the private reference concept. Updated herdr's cross-references; private raw snapshot kept as evidence.
+
+## [2026-09-27] implement | skill prune
+Removed the `grill-me` concept and its stale deploy links; standalone grilling now points to `grilling` + `domain-modeling`. Retired the `/to-prd`, `/to-issues`, and `/implement` compatibility aliases and their deployed symlinks, plus the requested Claude-only `skill-writer` and `playwright-cli` installs; canonical skills and `notebooklm` remain.

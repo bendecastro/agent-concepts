@@ -5,9 +5,9 @@ description: Draft a PRD from the current conversation and codebase — synthesi
 
 # Drafting a PRD
 
-Produce a PRD from what's already been discussed plus the codebase. This is the reusable **writing discipline** — it does NOT publish anywhere. The caller decides where the PRD lands: `/to-prd` publishes it as a GitHub issue; `/bc-plan-to-issues` carries it straight into slicing; a human might paste it into a wiki.
+Produce a PRD from what's already been discussed plus the codebase. This is the reusable **writing discipline** — it does NOT publish anywhere. The caller decides where the PRD lands: `/to-spec` publishes it as a GitHub issue; `/bc-plan-to-issues` carries it straight into slicing; a human might paste it into a wiki.
 
-**Do NOT interview the user** — synthesize what you already know. (If the scope is still vague, that's a sign to run `/grill-me` first, not to start interviewing here.)
+**Do NOT interview the user** — synthesize what you already know. (If the scope is still vague, resolve it with `/grilling` + `/domain-modeling` first, not by interviewing here.)
 
 ## Process
 

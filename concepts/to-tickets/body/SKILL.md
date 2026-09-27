@@ -1,6 +1,6 @@
 ---
 name: to-tickets
-description: Break a plan, spec, or PRD into independently-grabbable GitHub tickets using tracer-bullet vertical slices. `/to-issues` remains a compatibility alias.
+description: Break a plan, spec, or PRD into independently-grabbable GitHub tickets using tracer-bullet vertical slices.
 disable-model-invocation: true
 ---
 

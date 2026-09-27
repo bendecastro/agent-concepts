@@ -6,7 +6,7 @@ deployed: yes
 ---
 # Concept: codebase-design
 
-Model-invoked **reference vocabulary** for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Shared language the other engineering skills (`tdd`, `to-prd`) reach for so terminology stays consistent across the suite.
+Model-invoked **reference vocabulary** for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Shared language the other engineering skills (`tdd`, `to-spec`) reach for so terminology stays consistent across the suite.
 
 ## Design decisions
 

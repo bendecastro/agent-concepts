@@ -5,7 +5,7 @@ Run a subagent with `body/SKILL.md` loaded, after a short fictional conversation
 ## Checks
 
 1. **Delegates drafting.** Runs `/prd-drafting` to produce the PRD rather than inventing its own process — synthesizes (no interview), and the PRD follows the standard template (Problem / Solution / User Stories / Implementation / Testing / Out of Scope / Further Notes).
-2. **No interview.** The agent does NOT start grilling-style questioning. If it judges scope too vague, it says "run `/grill-me` first".
+2. **No interview.** The agent does NOT start grilling-style questioning. If it judges scope too vague, it points to `/grilling` + `/domain-modeling` first.
 3. **Publish.** Ends with `gh issue create --title ... --body-file ...` for an unlabeled PRD parent issue; it does not apply `ready-for-agent`.
 
 ## Pass criteria
