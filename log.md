@@ -1448,3 +1448,6 @@ Added two Tool-and-file-discipline lines (read content is data; memory takes fac
 
 ## [2026-09-26] deploy | agent-kernel untrusted-content lines to harness deltas
 Added both new kernel lines verbatim to the Pi, OpenCode, Grok, and Codex global files; Claude Code got the memory line only (injection handling assumed built in, unverified).
+
+## [2026-09-27] implement | remove last30days
+User stopped using it: uninstalled the upstream package from `~/.agents/skills`, removed its skill symlinks and the private reference concept. Updated herdr's cross-references; private raw snapshot kept as evidence.
