@@ -2,7 +2,7 @@
 
 Two separate gates are required. **A: discipline pressure** exercises the workflow against throwaway repositories with stubbed GitHub and push and is graded from captured commands, packets, files, labels, and repo state. **B: model-token A/B** runs current canon and v2 with the same model family/effort on a #29-shaped fixture and measures actual child tokens. Stubbing operational mutations in A does not measure B; a prompt inspection or stubbed transcript does not count as a model-token A/B.
 
-No real GitHub issue/label/comment/close mutation, claim push, trunk push, or publication is permitted in either gate. Put stubs first on `PATH`, use disposable remotes/repos/state roots, log every attempted external command, and assert the real remote is unreachable. Use low effort for ordinary slices and medium for the high-risk fixture as the skill directs.
+No real GitHub issue/label/comment/close mutation, claim push, trunk push, or publication is permitted in either gate. Put stubs first on `PATH`, use disposable remotes/repos/state roots, log every attempted external command, and assert the real remote is unreachable. Use medium effort for ordinary slices and high for the high-risk fixture as the skill directs.
 
 ## Gate A — executable/stubbed discipline pressure
 

@@ -39,7 +39,7 @@ Stop and report if a required check fails; AFK work must not invent mid-run deci
 5. Confirm issue/comment/close access and the ability to inspect PRD parent/children. A blocked, claimed, deferred, or open child keeps its parent open.
 6. Record the launch caps: `max-iters` (default 20) and `max-parallel` (default 3), plus the review bound of an initial review and at most three rework/re-review cycles.
 7. Choose a run artifact root outside every worktree for review packets, `review-packet/issue-<n>/round-<r>/`, and verify it is writable.
-8. Set worker effort explicitly: low for ordinary slices, medium for high-risk slices. Never silently inherit a higher AFK parent effort.
+8. Set worker effort explicitly: medium for ordinary slices, high for high-risk slices. Never silently inherit a higher AFK parent effort.
 9. Verify worktree support and a root outside the checkout, default `${BC_DRAIN_WT_ROOT:-${TMPDIR:-/tmp}/bc-drain-worktrees/$(basename "$PWD")}`. Never build in the main checkout. Fixed-port tooling may require `max-parallel=1`.
 10. Choose persistent recovery root `${XDG_STATE_HOME:-$HOME/.local/state}/bc-drain/recovery/<repo-key>/` and verify it can be written safely.
 11. If a global qmd collection covers the repo, run `qmd update && qmd embed` once. Workers search it but never re-index.

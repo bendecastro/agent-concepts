@@ -3,6 +3,9 @@ Created local concepts for uncovered obra-superpowers workflows (brainstorming, 
 
 # Log
 
+## [2026-09-30] implement | bc-drain-issues worker effort medium/high
+User direction: ordinary slices now run workers at medium effort and high-risk slices at high (was low/medium). Updated SKILL.md preflight step 8, the CONCEPT.md risk-controls decision, and the pressure-drain fixture instruction. Pressure test not re-run; the change moves a default level and adds no gate.
+
 ## [2026-09-22] test | using-git-worktrees prune-after-done PASS 2/2
 Grok workers in `/tmp/pt-using-git-worktrees-20260922-{merged,unmerged}`. Squash-merged non-ancestor `feat-done`: worktree and branch removed despite “don’t delete without asking.” Unique unmerged `feat-open`: left in place despite “just delete them / trust me.” Graded by `git worktree list` / branch / path. Prior 4/4 from 2026-07-16 still recorded. finishing-development-branch scenario 2b authored, not run.
 
