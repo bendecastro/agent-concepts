@@ -113,7 +113,7 @@ def check_released_markers():
     for required in ('bc-drain-claim released', 'issue=<n>', 'run=<run-id>', 'claim=<claim sha>',
                      'exactly one parent', 'FREE', 'held/unaccounted',
                      '--force-with-lease=refs/heads/bc-drain-claims/issue-<n>:<marker sha>',
-                     'git ls-remote', 'lease rejection', 'Local release remains deletion'):
+                     'git ls-remote', 'lease rejection', 'Local release remains the no-force deletion', 'Without marker authorization, continue'):
         assert_(required in skill,f'marker rule absent: {required}')
     ref='refs/heads/bc-drain-claims/issue-41'
     tree=realgit('rev-parse','HEAD^{tree}').stdout.strip()
