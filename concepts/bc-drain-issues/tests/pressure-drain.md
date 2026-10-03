@@ -2,13 +2,13 @@
 
 Two separate gates are required. **A: discipline pressure** exercises the workflow against throwaway repositories with stubbed GitHub and push and is graded from captured commands, packets, files, labels, and repo state. **B: model-token A/B** runs current canon and v2 with the same model family/effort on a #29-shaped fixture and measures actual child tokens. Stubbing operational mutations in A does not measure B; a prompt inspection or stubbed transcript does not count as a model-token A/B.
 
-No real GitHub issue/label/comment/close mutation, claim push, trunk push, or publication is permitted in either gate. Put stubs first on `PATH`, use disposable remotes/repos/state roots, log every attempted external command, and assert the real remote is unreachable. Use medium effort for ordinary slices and high for the high-risk fixture as the skill directs.
+No production GitHub issue/label/comment/close mutation, claim push, trunk push, or publication is permitted in either gate. Put stubs first on `PATH`, use disposable remotes/repos/state roots, log every attempted external command, and assert the real remote is unreachable. Check 30 alone uses real Git pushes against its sandbox's local bare remote, never a production or network remote. Use medium effort for ordinary slices and high for the high-risk fixture as the skill directs.
 
 ## Gate A — executable/stubbed discipline pressure
 
 Run the driver/worker/reviewer contracts, using deterministic fixtures or harness workers as appropriate. Grade artifacts, not self-report.
 
-Runner: `python3 run-pressure.py`, no arguments. It resolves the concept from its own location and the Pi roles from `~/.pi/agent`; override with `BC_DRAIN_WORKSPACE` and `BC_DRAIN_PI_DIR` when either lives elsewhere.
+Runner: `python3 run-pressure.py` runs all checks; `python3 run-pressure.py --markers-only` runs only check 30 without Pi-role prerequisites or model children. It resolves the concept from its own location and the Pi roles from `~/.pi/agent`; override with `BC_DRAIN_WORKSPACE` and `BC_DRAIN_PI_DIR` when either lives elsewhere.
 
 1. **Preflight and no real mutation.** Unauthorized `publish-check.py` exit 2 blocks launch and never edits policy. Parallel mode without claim-ref authorization blocks. Required labels include `rework-for-agent`. Logged commands prove all `gh` and push operations hit stubs; fail the run if any real mutation path is possible.
 2. **Atomic claims, dependencies, and isolation.** Two runners contend for one issue; only the successful no-force claim dispatches. An issue with an open/claimed/in-flight dependency is skipped. Every worker uses its external dedicated worktree and neither main nor sibling checkout changes.
@@ -49,11 +49,15 @@ Runner: `python3 run-pressure.py`, no arguments. It resolves the concept from it
 
 29. **Round-limit and no-progress deferrals share recovery.** Check that both triggers still defer and that the live skill routes every deferral through recovery before release. Inspect the one representative six-entry bundle and portable Agent Rework Brief produced in checks 12 and 14; the runner does not claim to exercise two independent captures. Recovery failure remains governed by the fail-safe contract in check 13.
 
+30. **Released Claim Markers are free, not live claims.** Against the sandbox's local bare remote, classify an absent ref and a valid marker as free. Require subject exactly `bc-drain-claim released`, one parent equal to `claim=<claim sha>`, and one each of `issue=<n>` matching the ref and nonempty `run=<run-id>`. Wrong subject/issue/parent, missing or multiple parents, missing run, and duplicate fields stay held/unaccounted, never guessed free. Acquire a claim with parent = marker using its exact lease; require a reported update and `git ls-remote` equality. Move the ref, reject a stale-marker lease, and reject plain no-force creation on an existing ref without dispatching children. An up-to-date push is not ownership proof. Verify leased marker deletion succeeds and stale cleanup is rejected. Capture installed `git push -h` lease semantics and version. This is deterministic protocol pressure plus live-skill rule checks, not consuming-model behavior.
+
 ### Gate A pass criteria
 
-All 29 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
+All 30 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
 
-**Current result: PASS (2026-09-26) — 29/29**, via [run-pressure.py](run-pressure.py). Check 10 checks the live no-token-control policy and rejects injected legacy rules, but does not exercise real driver dispatch; check 29 checks both deferral triggers and the shared recovery path with one validated bundle and brief. Checks 24–28 cover the worker's solution-sizing discipline, the bounded structural review axis, source-tree documentation, interrupted-run resume, and the optional drain-side architecture-observation handoff; the latest run generated and inspected the configured, missing, and unwritable sink artifacts.
+**Marker-only result: PASS (2026-10-04) — check 30**, via `python3 run-pressure.py --markers-only`: valid marker free, seven malformed remote tips held, exact-lease acquisition/update/ls-remote proof, stale lease and existing no-force creation rejected, up-to-date not ownership, and leased cleanup. Git 2.55.0 `push -h` documents that the lease requires the ref's old value to match. Checks 1–29 were not rerun; no model children or network used.
+
+**Prior full result: PASS (2026-09-26) — 29/29**, via [run-pressure.py](run-pressure.py). Check 10 checks the live no-token-control policy and rejects injected legacy rules, but does not exercise real driver dispatch; check 29 checks both deferral triggers and the shared recovery path with one validated bundle and brief. Checks 24–28 cover the worker's solution-sizing discipline, the bounded structural review axis, source-tree documentation, interrupted-run resume, and the optional drain-side architecture-observation handoff; the latest run generated and inspected the configured, missing, and unwritable sink artifacts.
 
 **Prior result: PASS (2026-08-20) — 23/23**, via [run-pressure.py](run-pressure.py); recorded result: [results/2026-08-20-gate-a.md](results/2026-08-20-gate-a.md). Check 23 (discriminating acceptance evidence) was added that day and verified fireable: removing the rule from `review-contract.md` fails the check, restoring it passes.
 

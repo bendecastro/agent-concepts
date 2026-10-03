@@ -11,7 +11,10 @@ CONCEPT=WORKSPACE/'concepts/bc-drain-issues'
 PI_DIR=Path(os.environ.get('BC_DRAIN_PI_DIR') or Path.home()/'.pi'/'agent').expanduser()
 if not (CONCEPT/'body/SKILL.md').is_file():
     raise SystemExit(f'concept body not found under {CONCEPT}\nset BC_DRAIN_WORKSPACE to the agents workspace root')
-if not (PI_DIR/'agents').is_dir():
+MARKERS_ONLY=sys.argv[1:]==['--markers-only']
+if sys.argv[1:] and not MARKERS_ONLY:
+    raise SystemExit('usage: run-pressure.py [--markers-only]')
+if not MARKERS_ONLY and not (PI_DIR/'agents').is_dir():
     raise SystemExit(f'Pi role directory not found at {PI_DIR/"agents"}\nset BC_DRAIN_PI_DIR to the Pi agent directory (the one containing agents/ and extensions/)')
 ROOT=Path(tempfile.mkdtemp(prefix='bc-drain-v2-gate-a-'))
 REAL_GIT=shutil.which('git')
@@ -103,6 +106,109 @@ realgit('add','.'); realgit('commit','-m','fixture base')
 BASE=realgit('rev-parse','HEAD').stdout.strip()
 # populate bare remote without invoking push at all
 realgit('--git-dir',str(REMOTE),'fetch',str(REPO),f'{BASE}:refs/heads/master',cwd=ROOT)
+
+# Released-marker pressure uses real Git only against the disposable local remote.
+def check_released_markers():
+    skill=(CONCEPT/'body/SKILL.md').read_text()
+    for required in ('bc-drain-claim released', 'issue=<n>', 'run=<run-id>', 'claim=<claim sha>',
+                     'exactly one parent', 'FREE', 'held/unaccounted',
+                     '--force-with-lease=refs/heads/bc-drain-claims/issue-<n>:<marker sha>',
+                     'git ls-remote', 'lease rejection', 'Local release remains deletion'):
+        assert_(required in skill,f'marker rule absent: {required}')
+    ref='refs/heads/bc-drain-claims/issue-41'
+    tree=realgit('rev-parse','HEAD^{tree}').stdout.strip()
+    def commit(message,*parents):
+        args=['commit-tree',tree]
+        for parent in parents:args+=['-p',parent]
+        return realgit(*args,'-m',message).stdout.strip()
+    def tip():
+        output=realgit('ls-remote','origin',ref).stdout.splitlines()
+        assert_(len(output)<=1,'ambiguous claim ref')
+        return output[0].split()[0] if output else None
+    def classify(oid,issue):
+        if oid is None:return 'FREE'
+        record=realgit('show','-s','--format=%s%n%P%n%b',oid).stdout.splitlines()
+        subject,parents=record[:2]
+        body=[line for line in record[2:] if line]
+        fields={key:[line[len(key)+1:] for line in body if line.startswith(key+'=')]
+                for key in ('issue','run','claim')}
+        parent=parents.split()
+        valid=(subject=='bc-drain-claim released' and len(parent)==1
+               and fields['issue']==[str(issue)] and len(fields['run'])==1 and bool(fields['run'][0])
+               and fields['claim']==parent)
+        return 'FREE' if valid else 'HELD'
+    def push(oid,expected=None):
+        args=['push','--porcelain']
+        if expected is not None:args+=[f'--force-with-lease={ref}:{expected}']
+        result=realgit(*args,'origin',f'{oid}:{ref}',check=False)
+        text(f'30/push-{oid}-{expected or "no-force"}.log',result.stdout+result.stderr)
+        return result
+    def reported_update(result,oid):
+        return result.returncode==0 and any(
+            line.split('\t')[0] in ('*',' ','+') and line.split('\t')[1]==f'{oid}:{ref}'
+            for line in result.stdout.splitlines() if len(line.split('\t'))==3)
+    claim=commit('bc-drain claim issue #41 run marker-pressure')
+    assert_(classify(tip(),41)=='FREE','absent ref not free')
+    created=push(claim)
+    assert_(reported_update(created,claim) and tip()==claim,'no-force creation ownership proof failed')
+    message=f'bc-drain-claim released\n\nissue=41\nrun=marker-pressure\nclaim={claim}'
+    marker=commit(message,claim)
+    released=push(marker,claim)
+    assert_(reported_update(released,marker) and tip()==marker,'fixture marker release failed')
+    assert_(classify(tip(),41)=='FREE','valid remote marker not free')
+    malformed={
+        'wrong-subject':commit(message.replace('bc-drain-claim released','bc-drain-claim released?'),claim),
+        'wrong-issue':commit(message.replace('issue=41','issue=42'),claim),
+        'wrong-parent':commit(message,BASE),
+        'no-parent':commit(message),
+        'two-parents':commit(message,claim,BASE),
+        'missing-run':commit(message.replace('run=marker-pressure\n',''),claim),
+        'duplicate-issue':commit(message+'\nissue=41',claim),
+    }
+    malformed_states={}
+    for name,oid in malformed.items():
+        # Inject corrupt fixtures into the local bare ref, not via the acquire path.
+        realgit('--git-dir',str(REMOTE),'fetch',str(REPO),oid,cwd=ROOT)
+        realgit('--git-dir',str(REMOTE),'update-ref',ref,oid,cwd=ROOT)
+        malformed_states[name]=classify(tip(),41)
+    realgit('--git-dir',str(REMOTE),'update-ref',ref,marker,cwd=ROOT)
+    assert_(all(state=='HELD' for state in malformed_states.values()),'malformed marker classified free')
+    assert_(classify(claim,41)=='HELD','ordinary claim classified free')
+    acquired=commit('bc-drain claim issue #41 run winner',marker)
+    won=push(acquired,marker)
+    assert_(reported_update(won,acquired) and tip()==acquired,'correct lease did not prove ownership')
+    assert_(realgit('show','-s','--format=%P',acquired).stdout.strip()==marker,'acquire parent not marker')
+    stale=push(commit('bc-drain claim issue #41 run stale',marker),marker)
+    assert_(stale.returncode!=0 and not reported_update(stale,acquired) and tip()==acquired,'stale lease stole claim')
+    noforce=push(commit('bc-drain claim issue #41 run create-contender'))
+    assert_(noforce.returncode!=0 and tip()==acquired,'no-force create overwrote existing ref')
+    uptodate=push(acquired,acquired)
+    assert_(uptodate.returncode==0 and not reported_update(uptodate,acquired),'up-to-date push proved ownership')
+    cleanup_marker=commit(f'bc-drain-claim released\n\nissue=41\nrun=winner\nclaim={acquired}',acquired)
+    assert_(reported_update(push(cleanup_marker,acquired),cleanup_marker),'cleanup fixture release failed')
+    delete=realgit('push','--porcelain',f'--force-with-lease={ref}:{marker}','origin',f':{ref}',check=False)
+    assert_(delete.returncode!=0 and tip()==cleanup_marker,'stale cleanup lease deleted moved marker')
+    delete=realgit('push','--porcelain',f'--force-with-lease={ref}:{cleanup_marker}','origin',f':{ref}')
+    assert_(tip() is None,'leased marker cleanup failed')
+    help_result=realgit('push','-h',check=False)
+    help_text=help_result.stdout+help_result.stderr
+    assert_('force-with-lease' in help_text and 'require old value of ref to be at this value' in help_text,'installed Git lease help unavailable')
+    text('30/git-push-help.txt',realgit('--version').stdout+help_text)
+    dump('30/released-markers.json',{'ref':ref,'remote':str(REMOTE),'absent':'FREE','marker_sha':marker,
+         'marker_tip':'FREE','malformed':malformed_states,'held_claim':'HELD','acquired_sha':acquired,
+         'correct_lease_push_rc':won.returncode,'reported_update':True,'ls_remote_equals_new_sha':True,
+         'stale_lease_push_rc':stale.returncode,'no_force_existing_push_rc':noforce.returncode,
+         'up_to_date_not_ownership':True,'stale_cleanup_rejected':True,'leased_marker_cleanup':True,
+         'models_launched':0,'network_used':False,
+         'limitation':'Deterministic protocol simulation plus live-skill rule checks, not consuming-model pressure.'})
+
+check_released_markers()
+if MARKERS_ONLY:
+    dump('checks.json',{'30':{'status':'PASS','artifact':str(ART/'30')}})
+    dump('summary.json',{'sandbox':str(ROOT),'checks':1,'all_checks_pass':True,'models_launched':0,
+                         'network_used':False,'candidate_source':str(CONCEPT)})
+    print(f'PASS Gate A check 30 (released markers); no model children or network\n{ROOT}')
+    raise SystemExit(0)
 
 # Preflight blocking and labels.
 policy_path=WORKSPACE/'policies/publish.yaml'
@@ -333,7 +439,7 @@ main_after=realgit('status','--porcelain',cwd=REPO).stdout;sib_after=realgit('st
 assert_(main_before==main_after=='' and sib_before==sib_after=='','isolation changed')
 cmdlog=CMDLOG.read_text();assert_('STUB git push' in cmdlog and 'STUB gh ' in cmdlog and 'STUB publish-check' in cmdlog,'stubs not logged')
 assert_(str(REMOTE) in str(preflight) and REMOTE.is_dir(),'remote')
-no_real={'path_first':str(STUB),'all_logged_push_lines':[x for x in cmdlog.splitlines() if 'git push' in x],'all_gh_lines':[x for x in cmdlog.splitlines() if 'gh ' in x],'publish_lines':[x for x in cmdlog.splitlines() if 'publish-check' in x],'remote_is_disposable_bare':True,'remote_path':str(REMOTE),'remote_outside_sandbox':False,'network_commands':[],'assertion':'PASS: every push/gh/publish attempt resolved to PATH-first stubs; remote is local disposable bare; no network used'};dump('00/no-real-mutation.json',no_real)
+no_real={'path_first':str(STUB),'all_logged_push_lines':[x for x in cmdlog.splitlines() if 'git push' in x],'all_gh_lines':[x for x in cmdlog.splitlines() if 'gh ' in x],'publish_lines':[x for x in cmdlog.splitlines() if 'publish-check' in x],'remote_is_disposable_bare':True,'remote_path':str(REMOTE),'remote_outside_sandbox':False,'network_commands':[],'assertion':'PASS: external push/gh/publish attempts resolved to PATH-first stubs; check 30 real Git pushes target only the local disposable bare remote; no network used'};dump('00/no-real-mutation.json',no_real)
 
 # --- v3 review economy: materialized packet, standing approvals, tiers, reproduction budget ---
 contract=(CONCEPT/'body/review-contract.md').read_text()
@@ -916,9 +1022,10 @@ brief_complete=all(field in brief_text for field in ('## Agent Rework Brief','Ba
 assert_(recovery_valid and brief_complete,'representative deferral bundle or brief failed validation')
 dump('29/shared-deferral-recovery.json',{'triggers':['three rework/re-review cycles','same material finding after two attempted fixes'],'shared_path':'On deferral','single_bundle':str(REC),'bundle_entries':recovery_entries,'validated_bundle':recovery_valid,'portable_brief_complete':brief_complete,'captured_tree_oid':treeoid,'round_trip_tree_oid':rest_oid})
 
-checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,30)}
+checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,31)}
 ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'live skill excludes the three retired token controls and retains review/round/launch gates; injected legacy controls are rejected; no real dispatch exercised',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'child-run list-API costs in the end-report; no token totals; additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture',26:'stale owning page, change-narration, and invented docs tree are material; an undocumented surface and an accurate page are not; remedy is the owning hunk, not a docs rewrite',27:'remote claims are the resume index; adopt/restore/release/report-and-skip dispositions hold; no standing approval crosses a run boundary and an adopted worktree re-runs the gate plus both axes; an unaccountable claim is reported, never released or deleted',28:'candidate counts 101=2 and ordinary/shape-only/deferred=0; report counts 101=1 and ordinary/shape-only/deferred=0; exact evidence/friction-only fields persist only to the declared sink after landing via a header-preserving newest-first prepend whose new heading/index precedes the older entry, while the explicit handoff returns the observation and leaves review/rework dispatches, packet, tier, approvals, landing, post-landing labels, and closed issue state unchanged'}
 ev[29]='both textual deferral triggers share recovery-before-release; one validated six-entry bundle and portable brief from checks 12/14, not two distinct captures'
+ev[30]='real local bare remote: absent/valid marker free; malformed markers held; correct lease update and ls-remote ownership proof; stale lease and existing no-force create rejected; up-to-date not ownership; leased marker cleanup; installed Git push help'
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
 summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'checks':len(checks),'all_checks_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}

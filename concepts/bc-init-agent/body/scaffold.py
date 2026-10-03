@@ -599,9 +599,7 @@ lands it **trunk-based**, then moves on.
 - **Validation gate.** The per-issue agent reads THIS repo's `conventions/validation.md` +
   `references/commands.md` for what "validated" means — not a generic test command. Criteria
   met **and** that validation clean = eligible to land.
-- **Claim before work.** Concurrent drain runners must first create the remote
-  `bc-drain-claims/issue-<n>` branch. If the claim push fails, another runner has the issue;
-  skip it and try the next.
+- **Claim before work.** Follow `/bc-drain-issues`' authorized claim protocol: no-force create-if-absent or lease-guarded reuse of a Released Claim Marker; skip a lost race before dispatch.
 - **Trunk-based, not PRs.** Each slice commits → pushes `master` → closes its issue with a
   sha + validation comment. Dependent slices then see prior work immediately.
 - **Parking.** A slice that can't complete cleanly is parked: comment on the issue, swap

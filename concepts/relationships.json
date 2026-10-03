@@ -12,6 +12,15 @@
     },
     {
       "from": "bc-init-agent",
+      "to": "bc-drain-issues",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "generated execution guidance",
+      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "reason": "Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol."
+    },
+    {
+      "from": "bc-init-agent",
       "to": "bc-wiki-maintain",
       "relation": "depends_on_contract",
       "required": true,

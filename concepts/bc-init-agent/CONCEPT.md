@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-09-05
+tested: 2026-10-04
 deployed: 2026-06-21
 ---
 # Concept: bc-init-agent
@@ -21,6 +21,7 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 - **Additive idempotency (never destructive).** The script creates only the files that are missing and leaves every existing file untouched; re-running changes nothing, and it **never deletes** (only `mkdir` + `write_text`, gated on non-existence). This makes it safe to re-run and safe to plug into an existing project — an existing root `AGENTS.md` or any pre-existing vault page is preserved verbatim (the existing root `AGENTS.md` is flagged for a manual pointer-merge). Overwriting is opt-in only: `--force` for vault files, `--force-root` for the root `AGENTS.md`; `--dry-run` previews. When an existing instruction file needs a pointer to a newly added scaffold file, the script prints upgrade notes for the running agent to merge by hand instead of overwriting. Chosen over the original "refuse if the vault exists" guard because that blocked the realistic case (dropping the workspace into a repo that already has some of these files).
 - **publish.yaml: offer-then-confirm (user's choice).** The skill drafts a repo-specific allow rule following the existing publish-policy schema and offers to append it to `~/.config/agent-concepts/publish.yaml` after the user confirms; it never pushes that change (self-amendment immunity). This closes the loop with `bc-drain-issues`, whose preflight needs the repo authorized for AFK push and claim-branch coordination.
 - **Triage-ready memory.** The scaffold now creates `.bc-agent/out-of-scope/.gitkeep` so the `triage` skill has a predictable place for durable rejected enhancement concepts without mixing them into `.bc-agent/` methodology docs.
+- **Claim protocol pointer (2026-10-04).** The generated claim-before-work bullet delegates no-force absent-ref creation and lease-guarded Released Claim Marker reuse to `bc-drain-issues`; it does not assume all acquisitions create new refs. Map-link and teach-adapter relationships are unaffected because this changes only the planning-workflow template's execution guidance.
 - **Loop skill map, no vendoring.** The scaffold creates `.bc-agent/references/agent-skills.md` naming the required loop skills (`bc-plan-to-issues`, `bc-drain-issues`, `improve-codebase-architecture`, plus their supporting disciplines) and pointing to their canonical bodies in the shared agent-concepts workspace. This makes project agents aware of the loop without copying skill code into every repo.
 - **Source-tree docs pointer (2026-08-18).** Root `AGENTS.md` and `references/agent-skills.md` point README / existing `docs/` / JSDoc at `codebase-docs` and keep that skill off the vault. The ADR template gained `## Alternatives considered` so a written decision records what lost. Existing code/hybrid vaults get upgrade notes; the scaffold stays additive.
 - **Generated vault read/write contract (2026-08-29).** New root instructions send agents to the vault `AGENTS.md` first, where the canonical search-first block from `bc-wiki-maintain` defines bounded retrieval, empty-result handling, and hub-page handling. Human-facing `index.md`, `home.md`, and `map.md` remain orientation pages, while generated log headings use detector-compatible `## [YYYY-MM-DD]` syntax. The read-path upgrade hint applies to every archetype; the existing architecture-overlay hints remain code/hybrid-only. This generator therefore depends on `bc-wiki-maintain`'s reader and heading detector while staying additive for existing files.
@@ -50,6 +51,7 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 
 ## Provenance
 
+- [bc-drain-issues claim protocol](../bc-drain-issues/body/SKILL.md#select-classify-and-claim) — generated claim-before-work guidance delegates the authorized absent-ref and released-marker acquisition paths (2026-10-04).
 - Existing user-maintained project execution wiki pattern (sampled from the image-maze `.bc-agent/` vault, 2026-06-20 and 2026-06-26) — code-project execution structure, schema, templates, PRD/plan/ADR/reference conventions, and agent-maintained wiki model. Not vendored; reproduced as generalized templates in `body/scaffold.py`.
 - Existing user-maintained operations wiki pattern (sampled from `~/Sync/Music/.ai/wiki`, 2026-06-26) — components, findings, decisions, open questions, plans, evidence-before-plan maintenance rules.
 - Existing user-maintained knowledge-graph pattern (sampled from `~/Sync/Wiki`, 2026-06-26) — immutable raw sources, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, index/log compounding pattern.
@@ -63,6 +65,8 @@ User-invoked adaptive initializer that first inspects a folder/repo, grills only
 - `concepts/teach/` — the standalone tutor and its linked formats, which define the host adapter's mapped state.
 
 ## Tests
+
+2026-10-04: all **15 deterministic scaffold tests PASS** via `python3 -m unittest discover -s concepts/bc-init-agent/tests -p 'test_*.py' -v` after the claim-protocol pointer change. No expected-output fixture contains the old claim bullet; no model pressure was run, and `test_status: partial` retains existing gaps.
 
 `tests/pressure-wiki-maintain-timer.md` — pressure-tests the close-out's offer-then-confirm timer behavior; installation is only allowed after confirmation. 2026-08-30: four isolated fixture consumers **PASS 4/4** ([results](tests/pressure-wiki-maintain-timer-results-2026-08-30.md)); live user systemd units were unchanged.
 

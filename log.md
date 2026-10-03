@@ -1457,3 +1457,10 @@ User stopped using it: uninstalled the upstream package from `~/.agents/skills`,
 
 ## [2026-09-27] implement | skill prune
 Removed the `grill-me` concept and its stale deploy links; standalone grilling now points to `grilling` + `domain-modeling`. Retired the `/to-prd`, `/to-issues`, and `/implement` compatibility aliases and their deployed symlinks, plus the requested Claude-only `skill-writer` and `playwright-cli` installs; canonical skills and `notebooklm` remain.
+
+## [2026-10-04] implement | bc-drain-issues Released Claim Markers
+Adopted image-maze ADR-0041's marker format: validated tips are free, acquisition uses an exact marker lease plus push/remote ownership proof, and local deletion remains default with leased marker cleanup. Malformed tips stay held; authorization and no-force absent-ref creation remain gated. Supervisor-approved follow-up replaces only bc-init-agent's contradictory claim bullet with a canonical protocol pointer and records the relationship.
+
+## [2026-10-04] test | released-marker protocol and scaffold regression
+Marker-only Gate A check 30 passed against a disposable local bare remote, including malformed tips, stale leases, no-force rejection, and cleanup; installed Git 2.55.0 push help confirms lease semantics. All 15 deterministic scaffold tests passed. No models, network, deploy, or production pushes ran; checks 1–29 were not rerun and both concepts retain partial status.
+Regenerated relationship/status views; workspace lint passes with existing partial-test and worktree-external deploy-symlink warnings.

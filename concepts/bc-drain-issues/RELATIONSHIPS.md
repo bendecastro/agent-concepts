@@ -13,6 +13,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when generated execution guidance.
+  Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
+  Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
+
 - incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): hands off to this concept — optional.
   Close-out recommends draining the published queue; the user decides.
   Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md#pipeline)

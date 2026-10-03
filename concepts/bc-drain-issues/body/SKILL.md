@@ -34,7 +34,7 @@ Stop and report if a required check fails; AFK work must not invent mid-run deci
 
 1. Confirm the target repo is clean, on `master`, and capture its remote and base SHA.
 2. Run `python3 "$AGENT_CONCEPTS/scripts/publish-check.py" --repo "$PWD" --remote "<remote-url>" --branch master`. Exit 0 authorizes the configured operations. Exit 2 aborts unless the user pre-agreed to commit-only-local mode. Never edit the policy to authorize this run.
-3. Confirm no-force creation/deletion of `bc-drain-claims/issue-<n>` is authorized. Without it, stop unless the user explicitly selected single-run mode. Labels/comments are advisory, not locks.
+3. Confirm no-force creation/deletion of `bc-drain-claims/issue-<n>` is authorized. For marker reuse, also confirm authorization for lease-guarded fast-forward acquisition from a valid marker; optional marker cleanup requires lease-guarded deletion authorization. Both leases must name the exact inspected marker SHA. This never authorizes force-updating a non-marker tip. Without the required authorization, stop unless the user explicitly selected single-run mode. Labels/comments are advisory, not locks.
 4. Ensure `ready-for-agent`, `rework-for-agent`, `needs-human`, and `in-progress-agent` exist.
 5. Confirm issue/comment/close access and the ability to inspect PRD parent/children. A blocked, claimed, deferred, or open child keeps its parent open.
 6. Record the launch caps: `max-iters` (default 20) and `max-parallel` (default 3), plus the review bound of an initial review and at most three rework/re-review cycles.
@@ -49,7 +49,12 @@ Stop and report if a required check fails; AFK work must not invent mid-run deci
 
 A drain dies between phases more easily than it fails: a killed pane, a lost harness session, a restarted machine. Claims, worktrees, and uncommitted diffs all outlive it. Recover before relaunching — dispatching a fresh drain over live state pays again for work already on disk and can strand a reviewed diff that nobody is left to land.
 
-After preflight and before the loop, list `refs/heads/bc-drain-claims/*` on the remote, then the worktree and recovery roots. The remote claims are the authoritative index of what a previous run owned, and they are authoritative precisely because they are the one record that does not live in a context that just proved it can vanish. For each claim:
+After preflight and before the loop, list `refs/heads/bc-drain-claims/*` on the remote, then the worktree and recovery roots. The remote claims are the authoritative index of what a previous run owned, and they are authoritative precisely because they are the one record that does not live in a context that just proved it can vanish. For each ref, inspect its observed tip commit before recovery. A **Released Claim Marker** has subject exactly `bc-drain-claim released`, body lines `issue=<n>`, `run=<run-id>`, `claim=<claim sha>`, and exactly one parent: the released claim commit. Require one of each body field, a nonempty run ID, `issue` matching the ref's issue number, and `claim` equal to that parent SHA. An absent ref or a valid marker tip is **FREE**, not a live claim. Why: cloud runs release by fast-forwarding to this marker because they cannot delete refs.
+
+- **Valid marker tip** — treat the ref as free; acquire through the marker path below before adopting/restoring any surviving local work.
+- **Marker-looking but malformed, or unreadable tip** — held/unaccounted: leave it, report it, and skip. Never infer release from the subject alone or guess through missing/mismatched fields or parents.
+
+For remaining held claims:
 
 - **Worktree present with an uncommitted diff** — adopt it. Re-derive the packet, re-run the deterministic pre-review gate, and take full fresh review on every axis. No standing approval survives a run whose reviewer records are gone; an approval is a record, and an unreadable record is not one.
 - **Valid recovery bundle** — restore through [recovery-bundle.md](recovery-bundle.md) exactly as for a `rework-for-agent` candidate.
@@ -60,7 +65,7 @@ State the run artifact root and the recovery root in the run's opening report, n
 
 ## Select, classify, and claim
 
-List oldest open candidates and parse dependencies from issue bodies and comments, including dependency headings and inline `blocked by` / `depends on` / `requires` / `after` / `prerequisite` references. Select only when every dependency is closed and neither claimed nor in flight. Skip `needs-human`, live claims, in-flight issues, and unresolved dependencies.
+List oldest open candidates and parse dependencies from issue bodies and comments, including dependency headings and inline `blocked by` / `depends on` / `requires` / `after` / `prerequisite` references. Select only when every dependency is closed and neither claimed nor in flight. Skip `needs-human`, live claims (not valid marker refs), in-flight issues, and unresolved dependencies.
 
 Prioritize `rework-for-agent` candidates with a valid local recovery bundle. Otherwise prefer a concrete latest `## Agent Brief`; vague or decision-incomplete work becomes `HUMAN_BLOCKED`, not guessed work.
 
@@ -68,7 +73,12 @@ Classify risk cheaply in the driver before claim: **high-risk** means compatibil
 
 Record a **review tier** with its classification reason at the same time. High-risk slices are tier 2 (two independent axes). Ordinary slices start at tier 1 (one combined reviewer) and escalate permanently on a pre-review gate rejection or any Critical finding; see [review-contract.md](review-contract.md). Tier is recorded before dispatch and reported per issue so the cheap path stays auditable; it never lowers mid-issue.
 
-Atomically claim by creating a claim commit from the main checkout's tree with `git commit-tree` and pushing it without force to `refs/heads/bc-drain-claims/issue-<n>`. Only the successful creator owns the issue; losers skip it without spending child tokens. Then add `in-progress-agent`, leave a run-id breadcrumb, fetch `origin/master`, and create `bc-drain-work/issue-<n>` in the external worktree root.
+Atomically claim from the main checkout's tree with `git commit-tree`:
+
+- **Absent ref** — create a parentless claim commit and push it without force to `refs/heads/bc-drain-claims/issue-<n>` (unchanged create-if-absent path).
+- **Valid marker tip** — create the claim commit with parent = marker, then push with `--force-with-lease=refs/heads/bc-drain-claims/issue-<n>:<marker sha>`. Keep it fast-forward; never use plain force or replace a held/malformed tip. Why: the exact lease makes marker reuse a compare-and-swap, so a concurrent claimant cannot be overwritten.
+
+Only a push reporting an update of this exact ref to the new claim SHA **and** `git ls-remote` equality with that SHA proves ownership; a successful but up-to-date push is not ownership proof. A lease rejection is a lost race: skip without spending child tokens, as on a failed no-force creation. Without both proofs, do not dispatch. Then add `in-progress-agent`, leave a run-id breadcrumb, fetch `origin/master`, and create `bc-drain-work/issue-<n>` in the external worktree root.
 
 For recovered work, follow [recovery-bundle.md](recovery-bundle.md) only after the claim succeeds. A matching base may restore directly; a changed base requires full diff inspection, validation, and full fresh review.
 
@@ -140,6 +150,8 @@ Only after verifying that **every axis holds a standing approval whose `diff_sha
 A rebase that changes the reviewed diff changes its hash, so no standing approval covers it: update the base, validate, and obtain fresh focused approval on both axes before push. The driver owns commit/push/close so implementation and rework workers cannot bypass the independent gate.
 
 For `HUMAN_BLOCKED`, post a comment the human who will unblock can act on: the decision or missing access first, the options and what happens if they pick each, then the exact evidence. Leave SHAs, paths, and commands untouched. Do not load `plain-language`. Then remove ready/in-progress and add `needs-human`. For `SYSTEMIC_FAILURE`, stop new launches, let active children reach a safe boundary, preserve/classify each issue, and report stale resources rather than guessing or destructive cleanup.
+
+Local release remains deletion of an accounted-for claim after the terminal-state checks below; guard deletion with a lease on its owned tip SHA. A valid marker ref may also be deleted as optional cleanup with `--force-with-lease=refs/heads/bc-drain-claims/issue-<n>:<marker sha>`. A moved tip rejects cleanup; leave it alone. Markers left in place are harmless. Why: cleanup must not delete a claim acquired since inspection.
 
 Release terminal worktrees/branches/claims only when their state is safely landed, blocked without useful local work, or validated in recovery. Never reset/clean the main checkout or another issue's worktree. Close a parent PRD only when every child is completed and none is open, blocked, deferred, claimed, or in flight.
 

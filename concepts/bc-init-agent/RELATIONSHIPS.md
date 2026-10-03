@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- depends on `bc-drain-issues`'s contract — required, when generated execution guidance.
+  Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
+  Source: [body/scaffold.py](body/scaffold.py)
+
 - depends on `bc-wiki-maintain`'s contract — required, when generated map links.
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.
   Source: [CONCEPT.md](CONCEPT.md#design-decisions)
