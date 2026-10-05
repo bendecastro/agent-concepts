@@ -1464,3 +1464,9 @@ Adopted image-maze ADR-0041's marker format: validated tips are free, acquisitio
 ## [2026-10-04] test | released-marker protocol and scaffold regression
 Marker-only Gate A check 30 passed against a disposable local bare remote, including malformed tips, stale leases, no-force rejection, and cleanup; installed Git 2.55.0 push help confirms lease semantics. All 15 deterministic scaffold tests passed. No models, network, deploy, or production pushes ran; checks 1–29 were not rerun and both concepts retain partial status.
 Regenerated relationship/status views; workspace lint passes with existing partial-test and worktree-external deploy-symlink warnings.
+
+## [2026-10-04] implement | owner/cloud drain isolation (image-maze #351)
+Exclude `automated` from fresh/deferred/rework/restart paths before claim/label mutation; report active cloud claims without release/reuse/relabel, and preserve existing local bundles. Marker/CAS, non-automated attended landing, review, and initializer claim-protocol delegation are unchanged; provenance and all relationship impacts recorded in the concept.
+
+## [2026-10-04] test | automated isolation contract
+Full deterministic Gate A passes 31/31 after the expected RED; four source-named lane-isolation contract/order checks reject six guard mutations. Scaffold, relationship, and wiki suites pass 15/38/56 tests; status board regenerated unchanged and lint passes with existing warnings. Consuming-model pressure remains pending; no models/network/deploy/production writes ran.
