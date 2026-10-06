@@ -151,7 +151,7 @@ Only after verifying that **every axis holds a standing approval whose `diff_sha
 4. runs publish authorization again as required;
 5. pushes `HEAD:master`;
 6. closes the issue with commit and validation evidence;
-7. releases worktree, local branch, claim, and labels; then evaluates PRD closeout.
+7. releases worktree, local branch, and claim, and removes both `in-progress-agent` and `ready-for-agent` from the closed issue (closing does not clear labels); then evaluates PRD closeout.
 
 A rebase that changes the reviewed diff changes its hash, so no standing approval covers it: update the base, validate, and obtain fresh focused approval on both axes before push. The driver owns commit/push/close so implementation and rework workers cannot bypass the independent gate.
 
