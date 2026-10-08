@@ -65,7 +65,7 @@ Runner: `python3 run-pressure.py` runs all checks; `python3 run-pressure.py --ma
 
 All 31 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
 
-**Current full result: PASS (2026-10-08) — 31/31**, including check 31's six source-named contract/order scenarios and 18 `lane_mutations` plus the provenance-after-marker-inspection ordering tripwire (19 rejected mutations). Record: [results/2026-10-08-gate-a-cloud-claim-provenance.md](results/2026-10-08-gate-a-cloud-claim-provenance.md). These are deterministic static checks, not a consuming-model command ledger. Check 31's live pressure scenarios above remain **PENDING**; no models/network or deployment ran.
+**Current full result: PASS (2026-10-08) — 31/31**, including check 31's six source-named contract/order scenarios and 19 `lane_mutations` plus the provenance-after-marker-inspection ordering tripwire (20 rejected mutations; prior 18 plus `cloud-never-release-rebroadened` for the round-4 never-release rebinding). Record: [results/2026-10-08-gate-a-cloud-claim-provenance.md](results/2026-10-08-gate-a-cloud-claim-provenance.md). These are deterministic static checks, not a consuming-model command ledger. Check 31's live pressure scenarios above remain **PENDING**; no models/network or deployment ran.
 
 **Prior check-31 result: PASS (2026-10-04) — 31/31**, including check 31's four source-named contract/order scenarios and six rejected guard-removal/reordering mutations. Record: [results/2026-10-04-gate-a-automated-isolation.md](results/2026-10-04-gate-a-automated-isolation.md). These are deterministic static checks, not a consuming-model command ledger.
 
