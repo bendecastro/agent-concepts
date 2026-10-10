@@ -1473,3 +1473,6 @@ Full deterministic Gate A passes 31/31 after the expected RED; four source-named
 
 ## [2026-10-10] implement | agent-kernel sync-safety advice
 Added a four-line generic rule for symlink-aware replication checks, volatile-state advice, approval before ignore edits, sync-overwrite diagnosis, and shared-data/dependency-lockfile preservation. Recorded the credential-overwrite incident as provenance and authored scenario 12; rule unpressured and undeployed, historical partial status retained. No global instructions changed; parent owns pressure testing before deployment.
+
+## [2026-10-10] tune | agent-kernel sync-safety rule
+Scenario 12 round 1: Luna max covered only the symptom file and edited `.stignore` under an explicit request the old wording forbade. Ask-before-editing now yields to explicit requests; added survey-the-whole-synced-directory; scenario split into (A)/(B). Round 2 pending.
