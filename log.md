@@ -1470,3 +1470,6 @@ Exclude `automated` from fresh/deferred/rework/restart paths before claim/label 
 
 ## [2026-10-04] test | automated isolation contract
 Full deterministic Gate A passes 31/31 after the expected RED; four source-named lane-isolation contract/order checks reject six guard mutations. Scaffold, relationship, and wiki suites pass 15/38/56 tests; status board regenerated unchanged and lint passes with existing warnings. Consuming-model pressure remains pending; no models/network/deploy/production writes ran.
+
+## [2026-10-10] implement | agent-kernel sync-safety advice
+Added a four-line generic rule for symlink-aware replication checks, volatile-state advice, approval before ignore edits, sync-overwrite diagnosis, and shared-data/dependency-lockfile preservation. Recorded the credential-overwrite incident as provenance and authored scenario 12; rule unpressured and undeployed, historical partial status retained. No global instructions changed; parent owns pressure testing before deployment.

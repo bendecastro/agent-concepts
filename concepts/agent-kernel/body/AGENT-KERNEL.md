@@ -23,6 +23,10 @@ Use the smallest high-signal context that can solve the task.
 ## Tool and file discipline
 
 - Prefer tools over memory for current workspace state.
+- When creating, editing, or diagnosing files, resolve symlinks and check whether their targets live in a folder replicated by a file-sync tool (e.g. Syncthing).
+  Flag machine-local or volatile state (auth/refresh tokens and credential stores, live databases and `-wal`/`-shm` sidecars, runtime locks/PIDs/sockets, caches, installed dependencies such as `node_modules`/venvs); propose a specific ignore rule or non-synced location, and ask before editing ignore files.
+  Keep intentionally shared data and dependency lockfiles (e.g. `bun.lock`, `uv.lock`, `Cargo.lock`, `flake.lock`) synced; for intermittent breakage across synced machines, consider sync overwrites or conflict copies. Consult a `syncthing` skill/concept for user-specific details if available.
+  Why: replication of machine-local state can silently invalidate another machine's working setup; broad ignores can discard reproducibility or shared data.
 - Batch independent reads/searches when possible; sequence only when the next step depends on the previous result.
 - Make precise edits that preserve existing structure and unrelated user changes.
 - Never revert or overwrite changes you did not make.
