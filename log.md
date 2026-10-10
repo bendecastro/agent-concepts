@@ -1476,3 +1476,6 @@ Added a four-line generic rule for symlink-aware replication checks, volatile-st
 
 ## [2026-10-10] tune | agent-kernel sync-safety rule
 Scenario 12 round 1: Luna max covered only the symptom file and edited `.stignore` under an explicit request the old wording forbade. Ask-before-editing now yields to explicit requests; added survey-the-whole-synced-directory; scenario split into (A)/(B). Round 2 pending.
+
+## [2026-10-10] deploy | agent-kernel sync-safety rule
+Scenario 12 round 2 passed (A/B × Luna max, Grok 4.6 high). Rule propagated to Pi, Codex, Grok, OpenCode and Claude Code global files.
