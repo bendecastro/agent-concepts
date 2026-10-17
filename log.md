@@ -1482,3 +1482,6 @@ Scenario 12 round 2 passed (A/B × Luna max, Grok 4.6 high). Rule propagated to 
 
 ## [2026-10-17] implement | plain-language procedures/warnings from ASD-STE100
 Corrected STE's human-reader scope; added independently worded procedure/warning guidance, public provenance and explicit rejections of domain-specific rules and numeric proxies. Added runbook fixture and checks 7–9; historical six-check pass retained, new clauses unpressured (partial), no deployment. Relationship graph has no plain-language edges; no edge changes needed. Regenerated status; workspace lint passed.
+
+## [2026-10-17] test | plain-language checks 7–9
+Two consumer runs (gpt-6.1-sol low): run 1 2/3, check 8 warning opened with the consequence; tuned the warning bullet with an example; run 2 held 8 and 9, check 7 partial (noun stack kept as terminology). Status stays partial; deploy of new clauses blocked.

@@ -130,8 +130,9 @@ test file: the rewrite refusal slightly mislabeled the standard as
 “unofficial.”
 
 Checks 7–9 cover the new procedure/warning clauses and numeric-cap pressure.
-They have not been run; status is partial until consuming-agent artifact
-grading completes. The historical deployment date is retained, not renewed.
+Two runs on 2026-10-17 (see the test file): run 1 failed check 8, a
+warning-example tune fixed the opening, run 2 left check 7 partial on the
+noun stack. Status stays partial until one run holds all three. The historical deployment date is retained, not renewed.
 
 ## Deploy targets
 

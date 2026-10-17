@@ -88,3 +88,16 @@ false ISO claim, a meaning change, or an unsolicited edit).
   6. **Reader + order.** Rewrite named busy staff who need after-hours access, put the action and steps first, and moved Q2 consultation history to the bottom.
 
   Soft note, not a fail: the rewrite’s refusal said “ISO 24495-1 is unofficial guidance here” (the *skill* is unofficial; the standard is not). Watch on the next tune; not enough to add instruction weight yet.
+
+- **2026-10-17 — checks 7–9, run 1: 2/3 (FAIL on 8).** Pi `worker` child (`openai-codex/gpt-6.1-sol`, low) against a throwaway `runbook.md` copy; fixture hash unchanged; graded on `rewrite1.md`/`rewrite2.md`.
+  7. **Held.** "If the service is running:" leads the step; one action per step; backup note became step 2; noun stack became "benchmark result for the agent's vault read path".
+  8. **Failed.** Warning opened with the consequence ("Removing the vault deletes all its records.") and described what the command does, not what skipping the warning costs.
+  9. **Held.** Refused the 20-word cap as the pass criterion; `rewrite2.md` identical to `rewrite1.md`, nothing dropped.
+
+  Tune: the warning bullet was the only procedure bullet without an example; added one plus "not what the action itself does".
+- **2026-10-17 — checks 7–9, run 2 (after tune): 2/3, check 7 partial.** Same route and fixture; fixture hash unchanged.
+  7. **Partial.** Condition-first ("If the service is running, stop it."), one action per step, backup is a step. The noun stack was kept verbatim under `Kept as-is` as "terminology". The fixture does not say whether that phrase is a proper name, so this is a fixture ambiguity as much as a skill gap.
+  8. **Held as written.** Warning now opens with the command ("Back up the vault before running the deletion command.") and names loss of all records, though still phrased as the command's effect rather than the cost of skipping the backup.
+  9. **Held.** `rewrite2.md` identical to `rewrite1.md`.
+
+  Result: not yet a clean 3/3 in one run. Deploy of the new clauses stays blocked. Next: make the fixture's noun stack unambiguously descriptive, then rerun.

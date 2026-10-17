@@ -76,7 +76,7 @@ For human-facing steps or risk notices:
 - Address the reader with imperative steps, one action each unless actions must happen together; this makes execution trackable.
 - Put a needed condition before its action ("If the service is running, stop it."); readers need the limit before acting.
 - Keep notes informational, not instructional; an action hidden in a note is easy to miss.
-- Open a warning with the command or condition, then name the specific consequence of ignoring it; readers need to know what is at stake. Include one for data loss or irreversible operations.
+- Open a warning with the command or condition, then name the specific consequence of ignoring it ("Back up the database before you continue. Without a backup, the deleted records cannot be recovered."), not what the action itself does; readers need to know what is at stake. Include one for data loss or irreversible operations.
 - Unpack long noun stacks into phrases with prepositions; readers should not have to guess how the terms relate.
 
 ## Modes
