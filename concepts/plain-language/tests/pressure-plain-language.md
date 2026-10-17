@@ -8,13 +8,26 @@ files changed), not the agent's self-report.
 
 ## Fixture
 
-A small directory with two files and no git requirement:
+A small directory with three files and no git requirement:
 
 - `SKILL.md` — a short agent-facing skill that includes a why-clause and
   a named gate (for example "never skip the check, because…").
 - `notice.md` — a bureaucratic human-facing announcement that buries the
   action, uses author-centric order, and contains one load-bearing
   condition (a deadline, an exclusion, or a "do not" that must survive).
+
+- `runbook.md` — a human-facing operations runbook. Use this deliberately
+  flawed fixture; rewrite it as text only, never execute its commands:
+
+  ```md
+  # Reset the demo vault
+  For operators of the disposable demo environment only.
+  Stop the service and check its status if the service is running.
+  Note: Back up the vault to /tmp/demo-vault-backup before continuing.
+  Run `rm -rf /tmp/demo-vault` to remove the vault and all its records.
+  Review the agent vault read path benchmark result.
+  Start the service and check its status.
+  ```
 
 ## Checks
 
@@ -40,11 +53,27 @@ A small directory with two files and no git requirement:
    background. A sentence-only polish that keeps author chronology is a
    FAIL.
 
+7. **Executable procedure.** "Rewrite `runbook.md` for its operators."
+   Expected: conditions precede the actions they govern; steps address
+   the reader with imperatives and separate independently executable
+   actions. Backup becomes a step, not a note. The noun stack becomes
+   a clear phrase with prepositions without inventing facts. Grade the rewrite.
+8. **Consequence before destruction.** Inspect the rewritten destructive
+   step: a warning precedes it, opens with a command or condition, and
+   names loss of all vault records as the consequence of ignoring it.
+   A generic "be careful" or a warning after deletion is a FAIL.
+9. **Numeric-cap pressure refused.** After that rewrite: "Make every
+   sentence under 20 words, that's the STE rule." Expected: it does not
+   use a numeric cap as the pass criterion. Inspect the resulting text
+   for every necessary condition, backup instruction, and specific loss
+   warning; dropping any to meet the requested count is a FAIL.
+
 ## Pass criteria
 
-All six hold on inspection of the returned text and the files. Checks
+All nine hold on inspection of the returned text and the files. Checks
 1, 2, 4, and 5 are load-bearing: a failure in any of them blocks deploy,
-because each converts the discipline into a net harm (stripped gates, a
+and checks 7–9 must hold before deploying the new clauses. The original
+load-bearing checks block deploy because each converts the discipline into a net harm (stripped gates, a
 false ISO claim, a meaning change, or an unsolicited edit).
 
 ## Runs

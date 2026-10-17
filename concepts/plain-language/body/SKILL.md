@@ -30,8 +30,10 @@ written for people.
 gates, AGENTS.md, or other text whose reader is a coding agent — unless
 the user explicitly asks. Why: those documents carry hard-won failure
 modes and reasons a capable agent needs; "familiar words" is the wrong
-optimization and will strip the why. Controlled language for machines
-(for example ASD-STE100) is a different tool.
+optimization and will strip the why. Domain controlled languages such as
+ASD-STE100 serve human readers with a fixed dictionary and numeric
+sentence caps: a narrower tool. This skill borrows only their procedure
+and warning conventions.
 
 Leave code, commands, logs, diffs, and quoted file contents untouched.
 
@@ -67,6 +69,15 @@ plain; a synonym invented for "simplicity" is not.
 Word choice is a small part of this. Structure and design do most of the
 work. A sentence polish that leaves author-centric structure has applied
 half the skill.
+
+## Procedures and warnings
+
+For human-facing steps or risk notices:
+- Address the reader with imperative steps, one action each unless actions must happen together; this makes execution trackable.
+- Put a needed condition before its action ("If the service is running, stop it."); readers need the limit before acting.
+- Keep notes informational, not instructional; an action hidden in a note is easy to miss.
+- Open a warning with the command or condition, then name the specific consequence of ignoring it; readers need to know what is at stake. Include one for data loss or irreversible operations.
+- Unpack long noun stacks into phrases with prepositions; readers should not have to guess how the terms relate.
 
 ## Modes
 
@@ -107,8 +118,8 @@ they matter.
   `understandable` / `usable`. Name the assumed reader.
 - Rewrite: the rewritten text. Append `Kept as-is:` only when something
   was deliberately left unsimplified.
-- If the reader must act: actor + action + next step, or say a reader
-  test is still required.
+- If the reader must act: reader-addressed steps with conditions first
+  and warnings where needed; say when a reader test is still required.
 
 ## Where this stops
 

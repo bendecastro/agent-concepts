@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial
 tested: 2026-08-18
 deployed: 2026-08-18
 ---
@@ -21,7 +21,7 @@ claim ISO conformance.
 - **Human-facing only.** This workspace already writes a different
   audience in skill bodies, kernels, and gates. IPLF itself distinguishes
   plain language (human readers) from controlled languages (restricted
-  grammar for machines or zero-ambiguity manuals). Applying reader-outcome
+  grammar for particular purposes, including human-facing technical manuals). Applying reader-outcome
   "familiar words" to agent instructions would strip the why those
   documents exist. The inversion is the load-bearing rule.
 - **Not always-on, not in the kernel.** Chat already has answer-first and
@@ -65,6 +65,23 @@ claim ISO conformance.
   stripping deep-module vocabulary or evidence. Issue-slicing quizzes,
   teach HTML, PRDs, and Agent Briefs were considered and left unwired.
 
+- **Selective STE adoption (2026-10-17).** ASD-STE100 serves human readers,
+  notably non-native maintenance technicians, not machines. Adopt only
+  general procedure and warning conventions: reader-addressed actions,
+  conditions before actions, informational notes, consequence-specific
+  warnings, and unpacked noun stacks. These support safe use without
+  turning general documentation into a domain controlled language.
+  Reject the 20/25-word caps: they contradict principles, not numeric
+  proxies. Reject the approved dictionary: its licence bars reproduction
+  and it is the wrong tool for general docs. Semicolon, -ing, and spelling
+  rules are too domain-specific. The AI white paper offers generic
+  governance, nothing new for this skill. All guidance here is independently
+  worded from public summaries; no specification text or dictionary is copied.
+- **Relationship impact.** No incoming or outgoing edges for this concept
+  exist in `concepts/relationships.json`, and no generated relationship
+  view exists. This change adds no loads or handoffs; the existing
+  composition boundaries and thin speaker clauses remain unchanged.
+
 ## Provenance
 
 - [ISO 24495-1:2023 catalog](https://www.iso.org/standard/78907.html) —
@@ -91,6 +108,14 @@ claim ISO conformance.
 - `concepts/prompting-agents/body/SKILL.md` — altitude, explain-the-why,
   gates only for rationalization.
 
+- [Simplified Technical English overview](https://en.wikipedia.org/wiki/Simplified_Technical_English)
+  — public, non-exhaustive account of the approach; general principles only.
+- [ASD-STE100 FAQ](https://www.asd-ste100.org/STE_faq.html)
+  — public context for condition-first writing and imperative procedures.
+- [ASD-STE100 downloads](https://www.asd-ste100.org/STE_downloads.html)
+  — specification is request-gated; copyright bars reproduction in whole
+  or in part. Not vendored, quoted, or closely paraphrased here.
+
 ## Tests
 
 `tests/pressure-plain-language.md` — discipline-enforcing, so the test
@@ -103,6 +128,10 @@ fixture copies: PASS 6/6.** All four load-bearing checks held (inversion,
 no stamp, condition survival, review-does-not-rewrite). Soft note in the
 test file: the rewrite refusal slightly mislabeled the standard as
 “unofficial.”
+
+Checks 7–9 cover the new procedure/warning clauses and numeric-cap pressure.
+They have not been run; status is partial until consuming-agent artifact
+grading completes. The historical deployment date is retained, not renewed.
 
 ## Deploy targets
 

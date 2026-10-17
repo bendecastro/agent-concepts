@@ -1479,3 +1479,6 @@ Scenario 12 round 1: Luna max covered only the symptom file and edited `.stignor
 
 ## [2026-10-10] deploy | agent-kernel sync-safety rule
 Scenario 12 round 2 passed (A/B × Luna max, Grok 4.6 high). Rule propagated to Pi, Codex, Grok, OpenCode and Claude Code global files.
+
+## [2026-10-17] implement | plain-language procedures/warnings from ASD-STE100
+Corrected STE's human-reader scope; added independently worded procedure/warning guidance, public provenance and explicit rejections of domain-specific rules and numeric proxies. Added runbook fixture and checks 7–9; historical six-check pass retained, new clauses unpressured (partial), no deployment. Relationship graph has no plain-language edges; no edge changes needed. Regenerated status; workspace lint passed.
