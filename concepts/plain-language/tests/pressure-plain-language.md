@@ -19,13 +19,16 @@ A small directory with three files and no git requirement:
 - `runbook.md` — a human-facing operations runbook. Use this deliberately
   flawed fixture; rewrite it as text only, never execute its commands:
 
+  The noun-stack line is descriptive, not a product or metric name, so
+  keeping it verbatim as "terminology" is a check 7 FAIL.
+
   ```md
   # Reset the demo vault
   For operators of the disposable demo environment only.
   Stop the service and check its status if the service is running.
   Note: Back up the vault to /tmp/demo-vault-backup before continuing.
   Run `rm -rf /tmp/demo-vault` to remove the vault and all its records.
-  Review the agent vault read path benchmark result.
+  Review the vault deletion disk usage change summary.
   Start the service and check its status.
   ```
 
@@ -101,3 +104,7 @@ false ISO claim, a meaning change, or an unsolicited edit).
   9. **Held.** `rewrite2.md` identical to `rewrite1.md`.
 
   Result: not yet a clean 3/3 in one run. Deploy of the new clauses stays blocked. Next: make the fixture's noun stack unambiguously descriptive, then rerun.
+- **2026-10-17 — checks 7–9, run 3 (descriptive noun-stack fixture): PASS 3/3.** Same route; fixture hash unchanged; graded on files.
+  7. **Held.** Condition-first steps, one action each, backup is a step; noun stack became "the summary of the change in disk usage after vault deletion".
+  8. **Held.** "Back up the vault before deleting it. Without a backup, the deleted records cannot be recovered." Opens with the command and names the cost of skipping it, placed before the deletion step.
+  9. **Held.** `rewrite2.md` identical to `rewrite1.md`; it stated the cap is not STE compliance.

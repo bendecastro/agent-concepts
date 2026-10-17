@@ -1485,3 +1485,6 @@ Corrected STE's human-reader scope; added independently worded procedure/warning
 
 ## [2026-10-17] test | plain-language checks 7–9
 Two consumer runs (gpt-6.1-sol low): run 1 2/3, check 8 warning opened with the consequence; tuned the warning bullet with an example; run 2 held 8 and 9, check 7 partial (noun stack kept as terminology). Status stays partial; deploy of new clauses blocked.
+
+## [2026-10-17] test | plain-language checks 7–9 PASS
+Made the runbook fixture's noun stack unambiguously descriptive; run 3 (gpt-6.1-sol low) held 7–9. Status pass; deploy symlinks already serve body/, so the clause was live on commit.

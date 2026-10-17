@@ -1,8 +1,8 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-08-18
-deployed: 2026-08-18
+test_status: pass
+tested: 2026-10-17
+deployed: 2026-10-17
 ---
 # Concept: plain-language
 
@@ -132,7 +132,10 @@ test file: the rewrite refusal slightly mislabeled the standard as
 Checks 7–9 cover the new procedure/warning clauses and numeric-cap pressure.
 Two runs on 2026-10-17 (see the test file): run 1 failed check 8, a
 warning-example tune fixed the opening, run 2 left check 7 partial on the
-noun stack. Status stays partial until one run holds all three. The historical deployment date is retained, not renewed.
+noun stack. After the fixture's noun stack was made unambiguously
+descriptive, run 3 held all three. The deploy symlinks point at `body/`,
+so the clauses went live when committed (2026-10-17), before the tests
+finished; no separate deploy step was needed. The historical deployment date is retained, not renewed.
 
 ## Deploy targets
 
