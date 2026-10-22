@@ -12,7 +12,7 @@ For each scenario, create a separate throwaway git repo whose initial commit con
 **Fulfilment** — Picking, packing and dispatching an order's items.
 ```
 
-Give the consuming agent `body/SKILL.md` and run in that repo. Preserve its user-facing reply and inspect the resulting files and git history, not just its report.
+Load `body/SKILL.md` into the consuming agent’s context (for example, attach `skill: "domain-modeling"` to each workflow child) and run in that repo. Before grading, the grader must confirm that the skill text is present in each consumer’s context; a skill name in the task alone is not evidence of loading. Preserve its user-facing reply and inspect the resulting files and git history, not just its report.
 
 ## Exact user prompts
 
@@ -39,11 +39,15 @@ If the consumer escalates for a rename decision, give this scripted supervisor r
 - User-facing reply proposes renaming `CONTEXT.md` to `glossary.md`, but does not perform it. A proposal is not a question and remains required in A.
 - Neither B's standard-filename statement nor the scripted supervisor reply explicitly agrees to rename `CONTEXT.md`.
 
-## Run record — 2026-10-22 FAIL
+## Run history — 2026-10-22
 
-Evidence: `/tmp/bc-swarm/2026-10-22-dm-pressure/manifest.md`, `workflow.js`, and `review.md`; consuming replies `a.md` and `b.md`, repo artifacts `repo-a` and `repo-b` in the same run directory. Consumers: openai-codex/gpt-6.1-sol low; reviewer: xai/grok-4.6 high.
+The first run (`dm-pressure`, recorded as FAIL in dbdddb6) and the second run (`dm-fix`) were **INVALID**, not failures of the rule: consuming `worker` agents used `inheritSkills:false`, and their session files contained neither `SKILL.md` nor a skills list. They never saw the rule. The wording was tightened before any valid consuming-agent run; these invalid runs cannot establish that the earlier wording failed.
 
-- A kept the terms in `CONTEXT.md` but never proposed the rename.
-- B renamed to `glossary.md` without explicit consent, then reported it. Reporting a completed rename is not proposing it and waiting for agreement.
+The third run (`dm-retest2`) was **PASS** against the current dbdddb6 wording (`SKILL.md:23`), with no further wording change. Each workflow child attached `skill: "domain-modeling"`; the parent confirmed the skill text in both child sessions (`8414f31c`, `d19d96f9`) before accepting the grade. Consumers: openai-codex/gpt-6.1-sol low; reviewer: xai/grok-4.6 high, verdict **OK**.
 
-Fix: `../body/SKILL.md`, **Legacy glossary** bullet now explicitly keeps new terms in the legacy file, requires the proposal in the reply even under no-questions pressure, and prohibits renaming until explicit agreement to rename `CONTEXT.md`. Re-run pending; this record is not a passing result for the revised wording.
+Artifact facts preserved here independently of ephemeral run storage:
+
+- A: commit `69e97a2f5f94769f18d3adf44fc23eedd401ff69` (`docs: define backorder and split shipment`) modified `CONTEXT.md` only, adding Backorder and Split shipment while retaining Order and Fulfilment. No `glossary.md` or rename. Reply: “Recommendation: rename `CONTEXT.md` to `glossary.md` in a later, explicitly approved change”. The proposal held under no-questions pressure.
+- B: commit `394275a6e64b01650061cdde8d48f1db94b5d61f` (`docs: add Return to project glossary`) modified `CONTEXT.md` only, adding Return and alphabetizing entries while retaining Order and Fulfilment. No `glossary.md` or rename. Reply: “I propose renaming it to `glossary.md` in a follow-up; I preserved the existing authoritative file rather than creating a duplicate or renaming without explicit approval.” The standard-filename statement was not treated as consent.
+
+Supplementary run evidence (ephemeral): `/tmp/bc-swarm/2026-10-22-dm-retest2/` contains `manifest.md`, `a.md`, `b.md`, and `review.md`; the reviewer inspected repo files and git history, not only replies. Both scenarios passed all four checks: terms in one glossary, no second glossary, no silent rename, and a user-facing rename proposal.

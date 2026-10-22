@@ -14,8 +14,8 @@ Verify `body/SKILL.md` encodes, faithfully to the upstream summary in [mattpococ
 
 ## Filename migration checks (2026-10-22)
 
-- [ ] Legacy-only repository: read the existing glossary and propose a rename; do not silently rename or create a second glossary, even under time pressure.
+- [x] Legacy-only repository: read the existing glossary and propose a rename; do not silently rename or create a second glossary, even under time pressure.
 - [ ] Canonical-only repository: use lowercase `glossary.md`; multi-context systems use root `glossary-map.md` and bounded-context `glossary.md`.
 - [ ] Vault adapter still uses `project/overview.md` or `project/glossary.md`; generic naming does not move vault content.
 
-The owner decision and parent defaults, not upstream, authorize these filename additions. The [legacy-glossary pressure scenarios](pressure-legacy-glossary.md) failed on 2026-10-22; the proposal/explicit-consent wording fix awaits a re-run. No deploy is authorized by this check.
+The owner decision and parent defaults, not upstream, authorize these filename additions. The [legacy-glossary pressure scenarios](pressure-legacy-glossary.md) passed both legacy-only cases on 2026-10-22 against dbdddb6 wording, with skill text confirmed in both consumers’ contexts. The first two runs were invalid (skill not loaded), not rule failures. This run does not cover canonical-only or vault-adapter fixtures. No deploy is authorized by this check.

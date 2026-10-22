@@ -1495,3 +1495,7 @@ Initializer tests pass 16/16 and drain deterministic Gate A passes 31/31; local 
 
 ## [2026-10-22] implement | legacy glossary proposal and consent fix
 Legacy pressure failed: no-questions pressure suppressed the proposal, and citing the standard filename was mistaken for rename consent. Applied the approved wording, preserved both exact scenarios and supervisor reply, and recorded incoming relationship impact; partial status retained pending re-run. No deploy scripts or push.
+
+## [2026-10-22] test | correct legacy glossary pressure record
+Correction to the preceding legacy glossary proposal/consent entry: the first two runs were invalid, not rule failures, because worker consumers had inheritSkills:false and no skill text or skills list in context. Wording was tightened before any valid run.
+The third run attached domain-modeling per child and confirmed skill text in both contexts: PASS 2/2 against dbdddb6 wording, reviewer xai/grok-4.6 high verdict OK. Both commits modified CONTEXT.md only and both replies proposed a rename without performing it. Updated test records, catalog and generated status; no skill-body edit, deploy or push.

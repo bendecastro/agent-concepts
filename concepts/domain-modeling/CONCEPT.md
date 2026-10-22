@@ -1,6 +1,6 @@
 ---
 test_kind: accuracy
-test_status: partial
+test_status: pass
 tested: 2026-10-22
 deployed: yes
 ---
@@ -30,7 +30,7 @@ Model-invoked discipline for actively building and sharpening a project's domain
 
 `tests/accuracy-check.md` — checks the body faithfully encodes the three disciplines (challenge / stress-test / cross-reference), the pure-glossary rule, the multi-context `glossary-map.md` layout, the ADR three-part bar, and the 2026-08-18 alternatives / supersede clauses. Accuracy-checked 2026-08-21 **PASS** (including the 2026-08-18 ADR alternatives/supersede clauses, flagged in CONCEPT.md as not-upstream). Historical discipline pressure evidence came transitively through the `grill-me` wrapper, removed 2026-09-27.
 
-2026-10-22: local accuracy review confirms canonical filenames, bounded-context layout, single-home legacy guidance, and unchanged ADR rules. Legacy pressure run **FAIL** (2026-10-22): scenario A omitted the rename proposal under “no questions”; scenario B renamed without explicit consent when the owner cited the standard filename. [Reusable scenarios](tests/pressure-legacy-glossary.md) preserve the prompts and evidence pointers. The wording fix requires new terms in `CONTEXT.md`, a user-facing proposal even when questions are forbidden, and explicit agreement to rename `CONTEXT.md` before renaming. Re-run pending; `test_status: partial` retained. No deploy scripts run.
+2026-10-22: local accuracy review confirms canonical filenames, bounded-context layout, single-home legacy guidance, and unchanged ADR rules. The first two legacy pressure runs were **INVALID** because consumers had `inheritSkills:false` and no skill text or skills list in context; neither establishes a failure of the earlier wording. The wording was tightened before any valid run. The third run against dbdddb6 wording **PASS** in both scenarios, with per-child skill attachment and confirmed skill text in both contexts. Both commits changed only `CONTEXT.md`, created no `glossary.md`, performed no rename, and both replies proposed a rename pending approval. [Reusable scenarios and artifact facts](tests/pressure-legacy-glossary.md) preserve the history and setup requirement. Reviewer: xai/grok-4.6 high, verdict OK. No deploy scripts run.
 
 Relationship impact: no outgoing edges. Incoming `bc-init-agent`, `diagnosing-bugs`, `handoff`, `improve-codebase-architecture`, `issue-slicing`, `prd-drafting`, `tdd`, and `triage` already delegate legacy discovery to this rule; `bc-plan-to-issues` loads it for inline capture. Their body pointers remain valid and inherit this clarified proposal/consent contract without restating it; no relationship edges change.
 
