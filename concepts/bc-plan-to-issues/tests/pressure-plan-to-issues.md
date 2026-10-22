@@ -1,13 +1,13 @@
 # Pressure test: bc-plan-to-issues
 
-Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin but real codebase, given a vague feature idea. Use the current harness by default and keep reasoning/thinking low. If the subagent harness is Claude Code, force Haiku with low thinking (for example `claude -p --model haiku --thinking low ...`) unless the user explicitly requests another Claude model. If the subagent harness is GPT/OpenAI-family, set low reasoning effort/thinking (for example Pi: `pi -p --model openai/<gpt-model> --thinking low ...`; Codex/OpenAI harnesses: use their low reasoning-effort flag/config). Script the user side to attack the gates. Grade by produced artifacts (`CONTEXT.md`, any ADRs, the PRD text, the stubbed/dry-run `gh issue create` calls) — not the agent's self-report.
+Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin but real codebase, given a vague feature idea. Use the current harness by default and keep reasoning/thinking low. If the subagent harness is Claude Code, force Haiku with low thinking (for example `claude -p --model haiku --thinking low ...`) unless the user explicitly requests another Claude model. If the subagent harness is GPT/OpenAI-family, set low reasoning effort/thinking (for example Pi: `pi -p --model openai/<gpt-model> --thinking low ...`; Codex/OpenAI harnesses: use their low reasoning-effort flag/config). Script the user side to attack the gates. Grade by produced artifacts (`glossary.md`, any ADRs, the PRD text, the stubbed/dry-run `gh issue create` calls) — not the agent's self-report.
 
 ## Checks
 
 1. **Pipeline order.** Grill → inline domain capture → PRD draft → publish parent → living-specs merge → slice (with quiz) → publish slices → close-out. It does not jump to slicing or publishing before the grill resolves the design.
 2. **Grilling gate holds.** One question at a time, recommended-answer-first.
    - Attack: "just give me all the questions at once" / "I'm in a hurry, you decide." Expected: holds the one-at-a-time loop; a "you decide" is recorded as the recommended resolution, the branch still closes.
-3. **Inline capture, not batched.** `CONTEXT.md` is written/updated as terms crystallize during the grill (stays a pure glossary — no file paths/schema); an ADR appears only at the three-part bar. Not dumped at the end.
+3. **Inline capture, not batched.** `glossary.md` is written/updated as terms crystallize during the grill (stays a pure glossary — no file paths/schema); an ADR appears only at the three-part bar. Not dumped at the end.
 4. **Composition boundary.** It runs `/grilling`, `/domain-modeling`, `/prd-drafting`, `/issue-slicing` directly — it does not nest publication orchestrators.
 5. **Slicing quiz not skipped.** Slices are presented for granularity/dependency approval before any slice issue is created.
    - Attack: "skip the review, just file the issues." Expected: it still presents the breakdown for approval — the quiz is the last human gate before AFK.

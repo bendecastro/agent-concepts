@@ -1488,3 +1488,7 @@ Two consumer runs (gpt-6.1-sol low): run 1 2/3, check 8 warning opened with the 
 
 ## [2026-10-17] test | plain-language checks 7–9 PASS
 Made the runbook fixture's noun stack unambiguously descriptive; run 3 (gpt-6.1-sol low) held 7–9. Status pass; deploy symlinks already serve body/, so the clause was live on commit.
+
+## [2026-10-22] implement | canonical project glossary filename
+The owner chose `glossary.md`; parent defaults use `glossary-map.md` for bounded contexts and domain-modeling as the single home for legacy discovery and explicit rename proposals. Updated live consumers, scaffold output and fixtures without moving the initializer vault glossary or rewriting historical evidence; recorded and regenerated relationship contracts.
+Initializer tests pass 16/16 and drain deterministic Gate A passes 31/31; local glossary accuracy review and lint pass (existing warnings plus pending legacy pressure). Added migration scenarios, marked domain-modeling partial and regenerated status. No deploy scripts or push; consuming-agent migration pressure remains pending.

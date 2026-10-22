@@ -94,6 +94,78 @@
       "required": false,
       "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
       "reason": "Close-out recommends draining the published queue; the user decides."
+    },
+    {
+      "from": "triage",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "glossary discovery in legacy projects",
+      "source": "concepts/triage/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+    },
+    {
+      "from": "handoff",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "glossary discovery in legacy projects",
+      "source": "concepts/handoff/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+    },
+    {
+      "from": "prd-drafting",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "glossary discovery in legacy projects",
+      "source": "concepts/prd-drafting/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+    },
+    {
+      "from": "tdd",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "glossary discovery in legacy projects",
+      "source": "concepts/tdd/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+    },
+    {
+      "from": "diagnosing-bugs",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "glossary discovery in legacy projects",
+      "source": "concepts/diagnosing-bugs/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+    },
+    {
+      "from": "issue-slicing",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "glossary discovery in legacy projects",
+      "source": "concepts/issue-slicing/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+    },
+    {
+      "from": "improve-codebase-architecture",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "glossary discovery in legacy projects",
+      "source": "concepts/improve-codebase-architecture/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+    },
+    {
+      "from": "bc-init-agent",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "glossary discovery in legacy projects",
+      "source": "concepts/bc-init-agent/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
     }
   ]
 }

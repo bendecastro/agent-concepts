@@ -7,7 +7,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-None.
+- depends on `domain-modeling`'s contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
 

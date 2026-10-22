@@ -39,7 +39,7 @@ Include external PRs only if the repo says PRs are a request surface. Let the us
 
 ## Triage one issue or PR
 
-1. **Gather context.** Read the full issue/PR body, comments, labels, author, dates, and PR diff if applicable. Read `.bc-agent/project/overview.md` or `CONTEXT.md`, relevant ADRs, and prior triage notes.
+1. **Gather context.** Read the full issue/PR body, comments, labels, author, dates, and PR diff if applicable. Read `.bc-agent/project/overview.md` or `glossary.md`, relevant ADRs, and prior triage notes.
 2. **Check redundancy and prior rejection.** Search the codebase by domain concept for an existing implementation. Read `.bc-agent/out-of-scope/*.md` if present; surface any similar rejected concept. If qmd is installed and a global collection covers this repo's vault (`qmd collection list`), `qmd query` the issue's domain terms too — it surfaces prior ADRs and rejections that exact-name greps miss.
 3. **Verify the claim.** For a bug, reproduce or fail honestly. For a PR, check whether the diff does what it claims and run the relevant validation if bounded. A confirmed claim makes a stronger agent brief.
 4. **Recommend.** Tell the maintainer: category, state, what you verified, and why. Wait for direction unless the user explicitly asked for autonomous triage.
@@ -64,3 +64,5 @@ A `ready-for-agent` issue is drainable only when the latest Agent Brief has:
 - Concrete acceptance criteria.
 - Explicit out-of-scope boundaries.
 - Blockers stated as `Blocked by #NN` when applicable.
+
+For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

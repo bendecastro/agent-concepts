@@ -15,6 +15,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.
   Source: [CONCEPT.md](CONCEPT.md#design-decisions)
 
+- depends on `domain-modeling`'s contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - adapts `teach` — required, when learning or hybrid scaffold.
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [body/SKILL.md](body/SKILL.md#learning-archetype-adapter)

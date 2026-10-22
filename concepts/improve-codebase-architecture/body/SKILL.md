@@ -9,7 +9,7 @@ argument-hint: "[area/folder/problem]"
 
 Surface architectural friction and propose **deepening opportunities**: refactors that turn shallow modules into deeper, more testable, more agent-navigable modules. This is a planning/review tool, not an implementation sprint.
 
-Use `codebase-design` vocabulary exactly: **module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**. Use domain names from `.bc-agent/project/overview.md` or `CONTEXT.md`; respect ADRs.
+Use `codebase-design` vocabulary exactly: **module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**. Use domain names from `.bc-agent/project/overview.md` or `glossary.md`; respect ADRs.
 
 ## 1. Explore
 
@@ -69,3 +69,5 @@ If the user rejects a candidate for a load-bearing reason, offer to record an AD
 - Before `/bc-plan-to-issues`: use this when the next feature needs an architectural runway before slicing.
 - After `diagnosing-bugs`: use this when a bug fix reveals no correct regression-test seam.
 - Output should become a plan/ADR/issue set via `/bc-plan-to-issues`; this skill itself does not create GitHub issues or edit production code.
+
+For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

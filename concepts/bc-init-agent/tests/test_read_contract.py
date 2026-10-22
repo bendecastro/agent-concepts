@@ -27,6 +27,17 @@ def canonical_block_from_skill() -> str:
 
 
 class GeneratedReadContractTests(unittest.TestCase):
+    def test_glossary_filename_preserves_vault_adapter(self) -> None:
+        for archetype in ("code", "learning", "hybrid"):
+            with self.subTest(archetype=archetype):
+                files = SCAFFOLD.vault_files(archetype)
+                text = "\n".join(files.values())
+                self.assertNotIn("CONTEXT.md", text)
+                self.assertIn("glossary.md", text)
+                self.assertIn("project/overview.md", text)
+                self.assertNotIn("glossary.md", files)
+                self.assertIn("conventions/planning-workflow.md", files)
+
     def test_scaffold_and_skill_use_the_same_canonical_block(self) -> None:
         self.assertEqual(SCAFFOLD.CANONICAL_VAULT_READ_PATH.rstrip("\n"), canonical_block_from_skill())
         self.assertIn(SCAFFOLD.CANONICAL_VAULT_READ_PATH, SCAFFOLD.VAULT_AGENTS)

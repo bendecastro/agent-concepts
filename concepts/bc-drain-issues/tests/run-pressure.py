@@ -309,7 +309,7 @@ for name in role_names:
  rt=rp.read_text()
  for required in ('systemPromptMode: replace','inheritProjectContext: false','inheritSkills: false','defaultContext: fresh','defaultProgress: false'):
   assert_(required in rt,f'{name} missing {required}')
- assert_('CONTEXT.md' not in rt and 'load all skills' not in rt.lower(),f'{name} inherits generic context')
+ assert_('glossary.md' not in rt and 'load all skills' not in rt.lower(),f'{name} inherits generic context')
  role_audit[name]={'path':str(rp),'minimal':True,'replace_system_prompt':True,'inherit_project_context':False,'inherit_skills':False,'generic_plan_progress_reads':False}
 skill_text=(CONCEPT/'body/SKILL.md').read_text()
 assert_('four assistant turns and 12 tool calls' in skill_text,'read-only cap absent from SKILL')

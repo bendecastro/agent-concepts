@@ -1,20 +1,22 @@
 ---
 test_kind: accuracy
-test_status: pass
-tested: 2026-08-21
+test_status: partial
+tested: 2026-10-22
 deployed: yes
 ---
 # Concept: domain-modeling
 
-Model-invoked discipline for actively building and sharpening a project's domain model: challenge vague/conflicting terms into canonical names, stress-test with edge cases, cross-check claims against code, and persist the result into `CONTEXT.md` (a pure glossary) and — at a high bar — ADRs. Pair it with `grilling` for an interview that captures decisions as they resolve; the former stateful `grill-me` wrapper was removed 2026-09-27.
+Model-invoked discipline for actively building and sharpening a project's domain model: challenge vague/conflicting terms into canonical names, stress-test with edge cases, cross-check claims against code, and persist the result into `glossary.md` (a pure glossary) and — at a high bar — ADRs. Pair it with `grilling` for an interview that captures decisions as they resolve; the former stateful `grill-me` wrapper was removed 2026-09-27.
 
 ## Design decisions
 
-- **Glossary stays pure.** `CONTEXT.md` holds concepts and canonical names only — no file paths, schema, or specs. Mixing implementation in is the failure mode that makes the glossary rot and stop being a shared *language*; it's enforced as a rule with a refuted excuse in the pressure tests.
+- **Glossary stays pure.** `glossary.md` holds concepts and canonical names only — no file paths, schema, or specs. Mixing implementation in is the failure mode that makes the glossary rot and stop being a shared *language*; it's enforced as a rule with a refuted excuse in the pressure tests.
 - **ADR three-part bar.** An ADR is written only when the decision is costly to reverse AND would puzzle a future reader AND reflects a real trade-off. Without the bar, agents emit trivial ADRs that bury the load-bearing ones.
 - **Inline, not batched.** Capture the moment a term crystallizes; batching to session end loses early decisions. This is the persistence discipline formerly provided by the `grill-me` wrapper (removed 2026-09-27).
 - **Body is an adaptation, not a copy.** The upstream `domain-modeling/SKILL.md` was only recoverable as a faithful summary (see provenance); this body is reconstructed from that summary plus the catalog description, re-voiced to match this workspace.
 - **Alternatives and supersede, not a notes-every-change gate (2026-08-18).** From DeepSeek Agent Notes, grilled and cut to two ideas: when an ADR *is* written, record genuine alternatives and why they lost; never rewrite an accepted ADR into a different decision — supersede and cross-link. The three-part bar is unchanged. Why: the code reconstructs the winner; only the record can carry what was given up, and a silent rewrite hides the reversal.
+
+- **Glossary filename (2026-10-22).** The owner renamed the canonical root file to `glossary.md` because it says what it is. Parent-chosen defaults: lowercase `glossary-map.md` points to bounded-context `glossary.md` files; legacy discovery and explicit rename proposals live only in this concept. Consumers refer here rather than copying the rule. The initializer vault adapter remains unchanged. Incoming planning capture and all vocabulary consumers are updated together; ADR, issue handoff, TDD, teach and vault-maintenance contracts are unaffected because only the generic glossary filename/discovery changes.
 
 ## Provenance
 
@@ -22,9 +24,13 @@ Model-invoked discipline for actively building and sharpening a project's domain
 - [skillsskillsproductivityteach at main.md](https://github.com/mattpocock/skills/tree/main) — catalog #2 "shared language" failure mode and the `CONTEXT.md` before/after example (materialization cascade).
 - [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) `.agents/notes/README.md` at commit `99f6f02` — alternatives-mandatory and supersede-don't-rewrite; the required-every-change gate was inspected and rejected. See `docs/research/raw/ingested/deepseek-harness/SOURCE.md`.
 
+- Owner decision, 2026-10-22: canonical glossary filename; parent-chosen layout and legacy defaults (subject to owner revision before integration).
+
 ## Tests
 
-`tests/accuracy-check.md` — checks the body faithfully encodes the three disciplines (challenge / stress-test / cross-reference), the pure-glossary rule, the multi-context `CONTEXT-MAP.md` layout, the ADR three-part bar, and the 2026-08-18 alternatives / supersede clauses. Accuracy-checked 2026-08-21 **PASS** (including the 2026-08-18 ADR alternatives/supersede clauses, flagged in CONCEPT.md as not-upstream). Historical discipline pressure evidence came transitively through the `grill-me` wrapper, removed 2026-09-27.
+`tests/accuracy-check.md` — checks the body faithfully encodes the three disciplines (challenge / stress-test / cross-reference), the pure-glossary rule, the multi-context `glossary-map.md` layout, the ADR three-part bar, and the 2026-08-18 alternatives / supersede clauses. Accuracy-checked 2026-08-21 **PASS** (including the 2026-08-18 ADR alternatives/supersede clauses, flagged in CONCEPT.md as not-upstream). Historical discipline pressure evidence came transitively through the `grill-me` wrapper, removed 2026-09-27.
+
+2026-10-22: local accuracy review confirms canonical filenames, bounded-context layout, single-home legacy guidance, and unchanged ADR rules. New legacy pressure scenario authored; consuming-agent run pending. No deploy scripts run.
 
 ## Deploy targets
 

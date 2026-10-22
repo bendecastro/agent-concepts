@@ -131,7 +131,7 @@ is told not to restate what earlier ones already covered. What costs
 relayed. What costs only **re-orientation** ("where was I?") stays here
 and expires on pickup.
 
-This workspace already has those homes: ADRs and `CONTEXT.md` from
+This workspace already has those homes: ADRs and `glossary.md` from
 `domain-modeling`, `.bc-agent/out-of-scope/`, a `docs/changes/<slug>/`
 folder, `docs/specs/`. Do **not** invent a new store — `domain-modeling`
 owns the bar for when a decision earns an ADR.

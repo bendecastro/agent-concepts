@@ -1,6 +1,6 @@
 ---
 name: domain-modeling
-description: Actively build and sharpen a project's domain model — challenge terms against the glossary, stress-test with edge cases, and update CONTEXT.md and ADRs inline. Use when terminology is vague or a hard design decision needs recording.
+description: Actively build and sharpen a project's domain model — challenge terms against the glossary, stress-test with edge cases, and update glossary.md and ADRs inline. Use when terminology is vague or a hard design decision needs recording.
 ---
 
 # Domain Modeling
@@ -17,8 +17,10 @@ Don't accept abstract relationships at face value. Invent concrete edge cases to
 When stated domain logic contradicts how the code actually behaves, flag the contradiction and resolve it — don't paper over it.
 
 ## Capture decisions immediately — don't batch
-- **`CONTEXT.md`** (repo root) is a **pure glossary**: canonical terms and their meanings, stripped of implementation detail, file paths, or specs. Update it the moment a term crystallizes, not at the end.
-- **Multi-context systems:** put a `CONTEXT-MAP.md` at the root pointing to a `CONTEXT.md` inside each bounded context (e.g. `src/ordering/CONTEXT.md`).
+- **`glossary.md`** (repo root) is a **pure glossary**: canonical terms and their meanings, stripped of implementation detail, file paths, or specs. Update it the moment a term crystallizes, not at the end.
+- **Multi-context systems:** put a `glossary-map.md` at the root pointing to a `glossary.md` inside each bounded context (e.g. `src/ordering/glossary.md`).
+
+- **Legacy glossary:** when a repo has `CONTEXT.md` and no `glossary.md`, read `CONTEXT.md` as the glossary and propose renaming it to `glossary.md`. Never rename it silently or keep both files: one vocabulary needs one authoritative home.
 
 ## ADRs — a deliberately high bar
 Write an Architecture Decision Record under `docs/adr/` only when **all three** hold:

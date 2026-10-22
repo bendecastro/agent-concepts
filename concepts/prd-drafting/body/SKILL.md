@@ -11,7 +11,7 @@ Produce a PRD from what's already been discussed plus the codebase. This is the 
 
 ## Process
 
-1. **Explore the repo** to understand current state (if you haven't already). Use the project's `CONTEXT.md` glossary vocabulary throughout the PRD, and respect any ADRs in the area you're touching.
+1. **Explore the repo** to understand current state (if you haven't already). Use the project's `glossary.md` glossary vocabulary throughout the PRD, and respect any ADRs in the area you're touching.
 
 2. **Sketch the seams** at which you'll test the feature. Prefer existing seams to new ones; use the highest seam possible; the fewer seams the better — the ideal is one. If new seams are needed, propose them at the highest point you can. Check with the user that these seams match their expectations before writing the PRD. (Run `/codebase-design` if you need the deep-module / seam vocabulary.)
 
@@ -39,3 +39,5 @@ What's explicitly out of scope for this PRD.
 ## Further Notes
 Anything else worth recording.
 </prd-template>
+
+For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

@@ -14,8 +14,8 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 
 1. **Grill.** Run `/grilling`: interview one question at a time, recommended-answer-first, down every branch of the decision tree. Answer from the codebase anything you can answer yourself rather than asking. If the grill exposes a question that cannot be resolved by conversation or code reading (state model feel, UI direction, architectural runway), pause and recommend the matching pre-planning tool: `/prototype` for throwaway evidence, `/improve-codebase-architecture` for deep-module runway, or `/triage` if the input is an existing issue backlog item that needs a drain-ready Agent Brief.
 
-2. **Capture inline — don't batch.** As terms and decisions crystallize *during* the grill, run `/domain-modeling`: canonical names → `CONTEXT.md` (a pure glossary, no implementation detail); a decision that is costly to reverse AND would surprise a future reader AND reflects a real trade-off → an ADR under `docs/adr/`. Capture the moment it crystallizes, not at the end.
-   - **Guard:** if the current directory isn't a project where `CONTEXT.md`/ADRs belong (empty/scratch dir, unrelated files), confirm with the user before creating docs, or grill without persisting.
+2. **Capture inline — don't batch.** As terms and decisions crystallize *during* the grill, run `/domain-modeling`: canonical names → `glossary.md` (a pure glossary, no implementation detail); a decision that is costly to reverse AND would surprise a future reader AND reflects a real trade-off → an ADR under `docs/adr/`. Capture the moment it crystallizes, not at the end.
+   - **Guard:** if the current directory isn't a project where `glossary.md`/ADRs belong (empty/scratch dir, unrelated files), confirm with the user before creating docs, or grill without persisting.
 
 3. **Open the change folder and draft the PRD.** Create `docs/changes/<change-slug>/` (dash-case, named for the feature) — the single physical home for this change's planning artifacts; without it they scatter across tracker bodies, comments, and temp files. Run `/prd-drafting`: synthesize from the grill + codebase (no re-interview), sketch and confirm the test seams, write the PRD to the standard template as `docs/changes/<change-slug>/prd.md`. If pre-planning evidence exists that's worth keeping (a `/prototype` verdict, an architecture-review excerpt), file it in the folder too — these otherwise die as temp files. (Step 2's guard applies here as well: confirm before creating docs in a directory that isn't a real project.)
 
@@ -28,7 +28,7 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 5. **Fold requirements into the living specs.** Update `docs/specs/<area>.md` (create the file/dir if missing; dash-case area names, one file per capability). This is the durable, normative record of *what the system is required to do* — PRDs and issues go stale by design once their work drains, so the specs are what future grills and agents read instead of re-deriving requirements from code. Merge the PRD's resolved requirements into the relevant spec file(s):
    - Write requirements as current truth ("The system SHALL …") with their key scenarios; rewrite superseded requirements rather than appending contradictions.
    - Tag each new or changed requirement `(pending #<parent>)` so unimplemented spec text is detectable; whoever touches the spec after the queue drains drops the tag.
-   - Stay at requirements level: design rationale belongs in ADRs, implementation approach in the PRD, vocabulary in `CONTEXT.md`.
+   - Stay at requirements level: design rationale belongs in ADRs, implementation approach in the PRD, vocabulary in `glossary.md`.
    - **Guard:** same as step 2 — if this isn't a project where such docs belong, confirm before creating them.
 
 6. **Slice.** Run `/issue-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), and **quiz the user on granularity and dependencies until they approve**. This quiz is the **last human gate before autonomous execution** — do not skip it.
@@ -39,7 +39,7 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
    ```
    Then write `docs/changes/<change-slug>/tasks.md`: the approved breakdown in dependency order, each entry with slice title, its real issue `#NN`, blocked-by references, and user stories covered. It's the map of the change, written once the real numbers exist — **not** a status board: completion state lives only in the tracker (duplicated state drifts; whoever wants status runs `gh issue list`).
 
-8. **Close out.** Restate the resolved scope; point at the change folder (`docs/changes/<change-slug>/`), the `CONTEXT.md`/ADRs/`docs/specs/` files written, the parent issue, and the slice issue numbers. Then recommend the handoff: **"Run `/bc-drain-issues` to execute this queue autonomously."**
+8. **Close out.** Restate the resolved scope; point at the change folder (`docs/changes/<change-slug>/`), the `glossary.md`/ADRs/`docs/specs/` files written, the parent issue, and the slice issue numbers. Then recommend the handoff: **"Run `/bc-drain-issues` to execute this queue autonomously."**
 
 ## Guard rails
 - This is **planning, not building** — do not write implementation code here. Code is the executor's job, one slice at a time.
@@ -47,3 +47,5 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 - If the source is an existing GitHub issue, run `/triage` first when it lacks an Agent Brief, has conflicting labels, or may be already implemented / out of scope.
 - If planning depends on uncertain state logic, UI direction, or architecture shape, use `/prototype` or `/improve-codebase-architecture` before final PRD/slice publication; capture the verdict in the PRD rather than sending throwaway work to the drain.
 - Keep research/evidence distinct from actual PRDs: exploratory notes and reports can feed the PRD (and may be filed in the change folder as evidence), but only `docs/changes/<change-slug>/prd.md` is the PRD artifact — the parent issue just points at it.
+
+For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

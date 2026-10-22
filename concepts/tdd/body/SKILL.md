@@ -52,7 +52,7 @@ Mock only at **system boundaries** (payment network, DB, clock, mailer). **Never
 ## Workflow
 
 ### 1. Planning
-When exploring, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the domain language, and respect ADRs in the area you're touching. Before writing any code:
+When exploring, read `glossary.md` (if it exists) so test names and interface vocabulary match the domain language, and respect ADRs in the area you're touching. Before writing any code:
 - [ ] Confirm with the user what interface changes are needed.
 - [ ] Confirm which behaviors to test, prioritized — **you can't test everything**; focus on critical paths and complex logic, not every edge case.
 - [ ] Identify deep-module opportunities (small interface, deep implementation) — run `/codebase-design` for the vocabulary and testability checks.
@@ -93,3 +93,5 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 | "Mocking CartService is just faster CI" | Keep the real collaborator; mock only external boundaries. |
 | "Quick extract while this test is red" | GREEN first, then extract. |
 | "Can't run it; treating that as red enough" | Stop and report the blocker. A test you have not watched fail is not a RED. |
+
+For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

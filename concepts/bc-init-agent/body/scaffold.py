@@ -5,7 +5,7 @@ Creates a generalized project-local Markdown/Obsidian wiki schema at `.bc-agent/
 (no per-project nesting), with TODO stubs (validation, file-layout, paths) that the
 project's first agents fill in. This follows the user's broader agent-maintained
 wiki pattern: durable local context, explicit provenance, live task state, decisions,
-and executable plans. NO root CONTEXT.md — the glossary lives in the vault
+and executable plans. NO root glossary.md — the glossary lives in the vault
 (project/overview.md), ADRs in decisions/, plans/PRDs in project/, and
 conventions/planning-workflow.md is the adapter that redirects planning persistence
 into the vault.
@@ -346,7 +346,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 
 - A multi-step effort gets a **plan page** under `project/` from `templates/plan.md`.
 - For `grilling` + `domain-modeling` or `bc-plan-to-issues` → `bc-drain-issues` work, apply
-  `conventions/planning-workflow.md`: it maps generic `CONTEXT.md`/`docs/adr/` persistence
+  `conventions/planning-workflow.md`: it maps generic `glossary.md`/`docs/adr/` persistence
   into this vault's pages.
 - Use `references/agent-skills.md` as the local map of required loop skills and where their
   canonical bodies live in the shared agent-concepts workspace.
@@ -509,7 +509,7 @@ The project's shared vocabulary — canonical names for the domain concepts, no 
 detail. When `references/teach-skill.md` is a valid adapter, `teach` owns this Glossary section
 and `bc-plan-to-issues` and maintenance leave it unchanged. Without that adapter,
 `domain-modeling` (paired with `grilling` directly or used through `bc-plan-to-issues`) maintains
-this as the project's `CONTEXT.md`-equivalent. Keep it a pure glossary.
+this as the project's `glossary.md`-equivalent. Keep it a pure glossary.
 
 <!-- Term — one-line canonical definition. -->
 
@@ -534,7 +534,7 @@ Date: __DATE__
 
 This project is wired for the full loop. Use the `bc-` orchestrators with this repo-local
 adapter so planning persistence lands in `.bc-agent/` instead of generic
-`CONTEXT.md` / `docs/adr/` files. See `$AGENT_CONCEPTS/docs/pipeline.md` for the loop.
+`glossary.md` / `docs/adr/` files. See `$AGENT_CONCEPTS/docs/pipeline.md` for the loop.
 
 ## Planning intent trigger
 
@@ -548,7 +548,7 @@ first. If they clearly ask for a concrete edit/fix, proceed normally.
 
 - **Glossary / domain facts:** the Glossary section of `project/overview.md` (or a dedicated
   `project/glossary.md` if it grows). Without a valid teach adapter, this is this project's
-  `CONTEXT.md`-equivalent and `domain-modeling` / `bc-plan-to-issues` maintain it. With the adapter,
+  `glossary.md`-equivalent and `domain-modeling` / `bc-plan-to-issues` maintain it. With the adapter,
   `teach` owns the Glossary section; planning and maintenance skills leave that section alone.
 - **ADRs:** numbered files under `decisions/` using `templates/adr.md`.
 - **Plans / actual PRDs:** durable planning artifacts under `project/`, linked from `index.md`. Only call it a PRD when the PRD drafting/publishing step actually happened; exploratory notes stay under `research/` or as plans.
@@ -576,7 +576,7 @@ first. If they clearly ask for a concrete edit/fix, proceed normally.
 ## Planning — `/bc-plan-to-issues`
 
 One command runs grill → domain capture → PRD → slices. When the underlying skills would
-persist to generic `CONTEXT.md` / `docs/adr/`, persist here instead:
+persist to generic `glossary.md` / `docs/adr/`, persist here instead:
 
 - Canonical terminology → the glossary in `project/overview.md`.
 - Costly + surprising + trade-off decision → `decisions/adr-NNNN-<slug>.md` (`templates/adr.md`).

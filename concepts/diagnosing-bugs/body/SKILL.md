@@ -7,7 +7,7 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 A discipline for hard bugs and performance regressions. It complements `tdd`: first build a tight red-capable feedback loop for the bug, then fix and regression-test it.
 
-Read `.bc-agent/project/overview.md` or `CONTEXT.md` and relevant ADRs before editing so hypotheses use project vocabulary.
+Read `.bc-agent/project/overview.md` or `glossary.md` and relevant ADRs before editing so hypotheses use project vocabulary.
 
 ## Phase 1 — Build a feedback loop
 
@@ -77,3 +77,5 @@ For bug issues, the issue's Agent Brief/acceptance criteria replaces the interac
 No red-capable loop can be honest without a symptom to catch. Speculative green is a lie.
 
 If a red-capable loop *can* be built from the issue + repo (clear AC, failing test path, or reliable repro), proceed through the phases as usual; still finish Phase 6 cleanup.
+
+For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

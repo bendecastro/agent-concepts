@@ -106,7 +106,7 @@ user's word.
   observation is real — a handoff is consumed once, so across a relay the
   settled conclusions decay and a later session rederives them. Their fix
   is a flow that proposes creating a ledger file. For this workspace that
-  would invent a fifth durable store next to ADRs, `CONTEXT.md`,
+  would invent a fifth durable store next to ADRs, `glossary.md`,
   `.bc-agent/out-of-scope/`, `docs/changes/<slug>/` and `docs/specs/`,
   and `domain-modeling` already owns the bar for when a decision earns an
   ADR. The section is a pointer list to stores that already exist,

@@ -11,6 +11,38 @@ None.
 
 ## Incoming
 
+- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md)
+
 - incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): loads this concept — required.
   Step 2 captures terms and decisions inline during the grill.
   Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md#pipeline)
+
+- incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [diagnosing-bugs/body/SKILL.md](../diagnosing-bugs/body/SKILL.md)
+
+- incoming from [handoff](../handoff/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [handoff/body/SKILL.md](../handoff/body/SKILL.md)
+
+- incoming from [improve-codebase-architecture](../improve-codebase-architecture/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [improve-codebase-architecture/body/SKILL.md](../improve-codebase-architecture/body/SKILL.md)
+
+- incoming from [issue-slicing](../issue-slicing/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [issue-slicing/body/SKILL.md](../issue-slicing/body/SKILL.md)
+
+- incoming from [prd-drafting](../prd-drafting/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [prd-drafting/body/SKILL.md](../prd-drafting/body/SKILL.md)
+
+- incoming from [tdd](../tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [tdd/body/SKILL.md](../tdd/body/SKILL.md)
+
+- incoming from [triage](../triage/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [triage/body/SKILL.md](../triage/body/SKILL.md)

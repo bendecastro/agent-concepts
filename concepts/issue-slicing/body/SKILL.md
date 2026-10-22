@@ -13,7 +13,7 @@ Break a plan into independently-grabbable units using **vertical slices (tracer 
 Work from whatever is already in the conversation. If the caller passes an issue reference (number, URL, or path), fetch it (`gh issue view <n> --comments`) and read the full body and comments.
 
 ### 2. Explore the codebase (optional)
-If you haven't already, explore the code. Slice titles and descriptions should use the project's `CONTEXT.md` glossary vocabulary, and respect ADRs in the area you're touching. Look for **prefactoring** opportunities: "Make the change easy, then make the easy change."
+If you haven't already, explore the code. Slice titles and descriptions should use the project's `glossary.md` glossary vocabulary, and respect ADRs in the area you're touching. Look for **prefactoring** opportunities: "Make the change easy, then make the easy change."
 
 ### 3. Draft vertical slices
 Break the plan into tracer-bullet slices. Each slice is a thin vertical slice that cuts through **all** integration layers end-to-end — NOT a horizontal slice of one layer.
@@ -48,3 +48,5 @@ A concise description of this vertical slice — the end-to-end behavior, not la
 ## Blocked by
 - `#NN` (the blocking issue/slice), or "None — can start immediately".
 </issue-template>
+
+For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

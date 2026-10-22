@@ -13,7 +13,7 @@ The scaffold creates a repo-root `AGENTS.md` that points agents at the vault, a 
 
 The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is only the wiki's **display name** in titles (defaults to the repo directory name); it doesn't affect the path.
 
-**Project-local wiki model:** no root `CONTEXT.md` — the glossary lives in the vault (`project/overview.md`), ADRs in `decisions/`, plans and actual PRDs in `project/`, exploratory research in `research/`. The adapter tells `grilling`/`domain-modeling` to persist there and tells agents to ask whether to enter `/bc-plan-to-issues` when the human appears to be planning codebase work.
+**Project-local wiki model:** no root `glossary.md` — the glossary lives in the vault (`project/overview.md`), ADRs in `decisions/`, plans and actual PRDs in `project/`, exploratory research in `research/`. The adapter tells `grilling`/`domain-modeling` to persist there and tells agents to ask whether to enter `/bc-plan-to-issues` when the human appears to be planning codebase work.
 
 ## Operating modes and wiki archetypes
 
@@ -53,7 +53,7 @@ Archetypes:
 1. **Locate the project.** Find the repo root (`git rev-parse --show-toplevel`). If not a git repo, inspect the current folder and ask whether to initialize git here, use this folder directly, or choose another root. Pick the slug: the argument, else the repo directory name in kebab-case. Confirm with the user if root/slug is ambiguous.
 
 2. **Recon before grilling.** Inspect the environment before asking questions. Keep it bounded; do not crawl huge dependency/build output directories. Check at least:
-   - Git state: repo root, branch, dirty status, remotes, existing `AGENTS.md`, existing `.bc-agent/`, `CONTEXT.md`, docs/plans/ADRs.
+   - Git state: repo root, branch, dirty status, remotes, existing `AGENTS.md`, existing `.bc-agent/`, `glossary.md`, docs/plans/ADRs. For legacy glossary discovery, follow `domain-modeling`’s legacy glossary rule.
    - GitHub readiness: whether `gh` exists/auths and whether `gh repo view` works when an origin exists.
    - Project shape: empty/near-empty vs active vs old/messy; package/build/deploy markers (`package.json`, lockfiles, `pyproject.toml`, `Cargo.toml`, `go.mod`, Docker/Compose, CI, infra, scripts, Makefile/justfile, README).
    - Existing knowledge to seed: README, docs, issue templates, architecture notes, validation commands, deployment notes, old plans/specs.
