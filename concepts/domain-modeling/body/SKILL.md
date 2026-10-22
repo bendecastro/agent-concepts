@@ -20,7 +20,7 @@ When stated domain logic contradicts how the code actually behaves, flag the con
 - **`glossary.md`** (repo root) is a **pure glossary**: canonical terms and their meanings, stripped of implementation detail, file paths, or specs. Update it the moment a term crystallizes, not at the end.
 - **Multi-context systems:** put a `glossary-map.md` at the root pointing to a `glossary.md` inside each bounded context (e.g. `src/ordering/glossary.md`).
 
-- **Legacy glossary:** when a repo has `CONTEXT.md` and no `glossary.md`, read `CONTEXT.md` as the glossary and propose renaming it to `glossary.md`. Never rename it silently or keep both files: one vocabulary needs one authoritative home.
+- **Legacy glossary:** when a repo has `CONTEXT.md` and no `glossary.md`, read `CONTEXT.md` as the glossary, put new terms there, and always propose renaming it to `glossary.md` in the user-facing reply (a proposal is not a question; required even when the user forbade questions). Do not rename until the user explicitly agrees to rename `CONTEXT.md`; saying the standard file is `glossary.md` is not agreement. Never keep both files: one vocabulary needs one authoritative home.
 
 ## ADRs — a deliberately high bar
 Write an Architecture Decision Record under `docs/adr/` only when **all three** hold:

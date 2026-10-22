@@ -1492,3 +1492,6 @@ Made the runbook fixture's noun stack unambiguously descriptive; run 3 (gpt-6.1-
 ## [2026-10-22] implement | canonical project glossary filename
 The owner chose `glossary.md`; parent defaults use `glossary-map.md` for bounded contexts and domain-modeling as the single home for legacy discovery and explicit rename proposals. Updated live consumers, scaffold output and fixtures without moving the initializer vault glossary or rewriting historical evidence; recorded and regenerated relationship contracts.
 Initializer tests pass 16/16 and drain deterministic Gate A passes 31/31; local glossary accuracy review and lint pass (existing warnings plus pending legacy pressure). Added migration scenarios, marked domain-modeling partial and regenerated status. No deploy scripts or push; consuming-agent migration pressure remains pending.
+
+## [2026-10-22] implement | legacy glossary proposal and consent fix
+Legacy pressure failed: no-questions pressure suppressed the proposal, and citing the standard filename was mistaken for rename consent. Applied the approved wording, preserved both exact scenarios and supervisor reply, and recorded incoming relationship impact; partial status retained pending re-run. No deploy scripts or push.

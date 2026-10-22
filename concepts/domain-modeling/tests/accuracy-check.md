@@ -18,4 +18,4 @@ Verify `body/SKILL.md` encodes, faithfully to the upstream summary in [mattpococ
 - [ ] Canonical-only repository: use lowercase `glossary.md`; multi-context systems use root `glossary-map.md` and bounded-context `glossary.md`.
 - [ ] Vault adapter still uses `project/overview.md` or `project/glossary.md`; generic naming does not move vault content.
 
-The owner decision and parent defaults, not upstream, authorize these filename additions. Consuming-agent pressure for the new legacy rule remains pending; no deploy is authorized by this check.
+The owner decision and parent defaults, not upstream, authorize these filename additions. The [legacy-glossary pressure scenarios](pressure-legacy-glossary.md) failed on 2026-10-22; the proposal/explicit-consent wording fix awaits a re-run. No deploy is authorized by this check.
