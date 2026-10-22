@@ -16,7 +16,7 @@ Model-invoked discipline for actively building and sharpening a project's domain
 - **Body is an adaptation, not a copy.** The upstream `domain-modeling/SKILL.md` was only recoverable as a faithful summary (see provenance); this body is reconstructed from that summary plus the catalog description, re-voiced to match this workspace.
 - **Alternatives and supersede, not a notes-every-change gate (2026-08-18).** From DeepSeek Agent Notes, grilled and cut to two ideas: when an ADR *is* written, record genuine alternatives and why they lost; never rewrite an accepted ADR into a different decision — supersede and cross-link. The three-part bar is unchanged. Why: the code reconstructs the winner; only the record can carry what was given up, and a silent rewrite hides the reversal.
 
-- **Glossary filename (2026-10-22).** The owner renamed the canonical root file to `glossary.md` because it says what it is. Parent-chosen defaults: lowercase `glossary-map.md` points to bounded-context `glossary.md` files; legacy discovery and explicit rename proposals live only in this concept. Consumers refer here rather than copying the rule. The initializer vault adapter remains unchanged. Incoming planning capture and all vocabulary consumers are updated together; ADR, issue handoff, TDD, teach and vault-maintenance contracts are unaffected because only the generic glossary filename/discovery changes.
+- **Glossary filename (2026-10-22).** The owner renamed the canonical root file to `glossary.md` because it says what it is. Owner-confirmed defaults (2026-10-22): lowercase `glossary-map.md` points to bounded-context `glossary.md` files; legacy discovery and explicit rename proposals live only in this concept. Consumers refer here rather than copying the rule. The initializer vault adapter remains unchanged. Incoming planning capture and all vocabulary consumers are updated together; ADR, issue handoff, TDD, teach and vault-maintenance contracts are unaffected because only the generic glossary filename/discovery changes.
 
 ## Provenance
 
@@ -24,7 +24,7 @@ Model-invoked discipline for actively building and sharpening a project's domain
 - [skillsskillsproductivityteach at main.md](https://github.com/mattpocock/skills/tree/main) — catalog #2 "shared language" failure mode and the `CONTEXT.md` before/after example (materialization cascade).
 - [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) `.agents/notes/README.md` at commit `99f6f02` — alternatives-mandatory and supersede-don't-rewrite; the required-every-change gate was inspected and rejected. See `docs/research/raw/ingested/deepseek-harness/SOURCE.md`.
 
-- Owner decision, 2026-10-22: canonical glossary filename; parent-chosen layout and legacy defaults (subject to owner revision before integration).
+- Owner decision, 2026-10-22: canonical glossary filename; layout and legacy defaults owner-confirmed the same day.
 
 ## Tests
 
