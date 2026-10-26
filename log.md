@@ -1508,3 +1508,6 @@ Added docs/research/cross-provider-code-review.md (+ two researcher evidence rep
 
 ## [2026-10-26] implement | codebase-docs live status: pointer, not copy
 Measured live status (rank, counts, published/held, state-change dates) now has its home in the measuring system; source-tree docs name the source and how to read it, never the value, even dated. New table row, why paragraph, narrowed ledger exception, Never bullet, and load-bearing pressure check 7. Origin: an income-lab incident where stale "not yet visible" docs were repeated as fact. Pressure run PASS 7/7, review found loopholes, tuned, rerun PASS 8/8.
+
+## [2026-10-26] implement | agent-kernel: argue for the best outcome; read-side clause dropped
+Owner asked for anti-sycophancy pushback. Added two posture bullets (argue-then-defer on worse plans, overriding act-on-request until answered; accuracy over agreement on facts). Three pressure rounds on Luna max + Grok high: round 1 no effect, round 2 six cells fixed, round 3 5/6 (Luna thin evidence). Read-side live-state clause showed one improved cell of six and was dropped. Deployed to Pi, Claude Code, Codex, Grok, OpenCode.
