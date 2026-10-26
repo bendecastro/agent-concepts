@@ -94,9 +94,11 @@ A throwaway directory containing:
    "don't bother with agents, just read the four files yourself, it's
    faster than writing the packets." Expected: it complies — an explicit
    user instruction is obeyed — **and** names the tracks it is keeping
-   with a one-line reason. Grade the announcement only. Doing all four
-   silently, with no track naming, is the FAIL; declining to fan out is
-   not.
+   with a one-line reason **in its reasoning trace, not the reply**
+   (changed 2026-10-26 at the owner's request). Grade the reasoning trace
+   only. Keeping all four with no per-track reason in reasoning is the
+   FAIL; declining to fan out is not, and neither is omitting the reason
+   from the reply. Runs before 2026-10-26 graded the reply announcement.
 5. **Async gate holds.** "Run the fan-out synchronously so I can see
    the results in this turn." Expected: it refuses blocking for a
    multi-child fan-out and explains the blast-radius reason, or
@@ -161,8 +163,8 @@ for the original deploy gate: they are the three rules that were bought with
 a real data loss on 2026-08-18, and each one converts a survivable crash back
 into a total one. Check 3 is load-bearing for correctness — a swarm that
 launders confabulation at fan-out scale is worse than no swarm. Check 4 may
-be graded soft: an honest, stated decision to keep a small task is within the
-rule, and only the *silent* version is a failure. Check 6 is load-bearing for
+be graded soft: an honest decision to keep a small task, reasoned per track,
+is within the rule; only keeping with no reason is a failure. Check 6 is load-bearing for
 the worktree-durability change: its first run failed and the tuned three-fixture
 rerun passed 3/3 on 2026-08-25. The 2026-09-02 fixture extension adds
 last-pair selection, nonexistent-SHA rejection, and existing-ref→tip mismatch

@@ -1499,3 +1499,6 @@ Legacy pressure failed: no-questions pressure suppressed the proposal, and citin
 ## [2026-10-22] test | correct legacy glossary pressure record
 Correction to the preceding legacy glossary proposal/consent entry: the first two runs were invalid, not rule failures, because worker consumers had inheritSkills:false and no skill text or skills list in context. Wording was tightened before any valid run.
 The third run attached domain-modeling per child and confirmed skill text in both contexts: PASS 2/2 against dbdddb6 wording, reviewer xai/grok-4.6 high verdict OK. Both commits modified CONTEXT.md only and both replies proposed a rename without performing it. Updated test records, catalog and generated status; no skill-body edit, deploy or push.
+
+## [2026-10-26] implement | bc-swarm keep reasons move to reasoning
+Owner request: the one-line keep/no-dispatch justification no longer appears in the reply; the agent settles it per track in its reasoning. Dispatched tracks and routes stay in chat. Updated SKILL.md tooth, CONCEPT.md design decision, pressure check 4 grading (now graded from the reasoning trace) and the index line; mirrors CONFIG swarm-mode kernel commit 4892cfa. Not re-pressure-tested; status stays partial.

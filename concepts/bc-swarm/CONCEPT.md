@@ -32,9 +32,13 @@ the results.
 - **Aggression gets a tooth, not a floor.** A numeric minimum ("always
   spawn 3+") manufactures busywork and shallow children; "consider
   delegating" has no teeth and agents route around it. The chosen tooth is
-  naming the independent tracks out loud before dispatch, with a one-line
+  naming the independent tracks before dispatch, with a one-line
   justification when fewer than two were found. It forces the consideration
-  without mandating fake parallelism.
+  without mandating fake parallelism. Since 2026-10-26 the keep/no-dispatch
+  justification stays in the agent's reasoning, not the reply: the owner
+  found reading it at the top of every swarm-mode reply annoying. Dispatched
+  tracks and their routes stay visible in chat. Cost: a silent keep is now
+  only gradable from the reasoning trace, not the transcript.
 - **The tooth names role and effective route, not parent/child.** The
   user wants to see the fleet's cost and capability at the same decision
   point, and finds parent/child labels redundant once the role is named
