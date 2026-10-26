@@ -17,11 +17,11 @@ Where a different family still clearly earns its place: **grading and evaluation
 
 ## Evidence
 
-Numbers marked ✔ were checked against the source text by the synthesizing session; the rest come from the researcher reports in [evidence/](cross-provider-code-review/evidence/) and are unverified.
+Numbers marked ✔ were checked against fetched source text (Song and Zhang by targeted text search, the others also by an independent reviewer); the rest come from the researcher reports in [evidence/](cross-provider-code-review/evidence/) and are unverified.
 
 ### Why the assumption was plausible
 
-- **Self-preference survives a fresh session.** The judge studies already judge in a new prompt with no generation history and still find bias: GPT-4 recognized its own summaries 73.5% of the time and preferred them (Panickssery, Bowman, Feng, NeurIPS 2024, <https://arxiv.org/abs/2404.13076>); Wataoka et al. (ICLR 2025, <https://arxiv.org/abs/2410.21819>) attribute it to low-perplexity familiarity rather than explicit self-recognition. Neither is code.
+- **Self-preference survives a fresh session.** The judge studies already judge in a new prompt with no generation history and still find bias: GPT-4 identified its own summaries with 73.5% accuracy and, as a separate correlated measure, preferred them (Panickssery, Bowman, Feng, NeurIPS 2024, <https://arxiv.org/abs/2404.13076>); Wataoka et al. (ICLR 2025, <https://arxiv.org/abs/2410.21819>) attribute it to low-perplexity familiarity rather than explicit self-recognition. Neither is code.
 - **Errors are correlated, more so within a provider.** Kim et al., *Correlated Errors in Large Language Models* (ICML 2025, <https://arxiv.org/abs/2506.07962>): same developer, architecture, and size all raise error agreement.
 
 ### Why it does not hold up as a requirement
@@ -47,7 +47,7 @@ Numbers marked ✔ were checked against the source text by the synthesizing sess
 
 ### Owner's local benchmarks
 
-No local run compares same-provider vs cross-provider reviewers on the same unchanged code. What exists cuts against a provider rule: in the 2026-09-30 routing cohort the best reviewer was an OpenAI model (the builder's provider), 94% vs 79% for xAI; in the 2026-09-28 review benchmark, Meta and xAI reviewers missed the same two bugs in every run.
+No local run compares same-provider vs cross-provider reviewers on the same unchanged code. What exists cuts against a provider rule: in the 2026-09-30 routing cohort the best reviewer was OpenAI Sol at 94% vs xAI Grok at 79%, on a mixed-author fixture set (not a paired builder-provider test); in the 2026-09-28 review benchmark, Meta and xAI reviewers missed the same two bugs in every run.
 
 ## Limits
 
@@ -57,7 +57,7 @@ No local run compares same-provider vs cross-provider reviewers on the same unch
 
 ## Applied
 
-Global agent instructions now require fresh context, withheld builder reasoning, reviewer capability ≥ builder, and executed checks for must-fix findings where feasible; cross-provider is a preference for the second review of high-risk work. Benchmark admission keeps its cross-family gate because it is grading, not review.
+Global agent instructions now require fresh context, withheld builder reasoning, no worker-only model upgrades, and executed checks for must-fix findings where feasible; cross-provider is a preference for the second review of high-risk work. Benchmark admission keeps its cross-family gate because it is grading, not review.
 
 ## Evidence files
 
