@@ -1505,3 +1505,6 @@ Owner request: the one-line keep/no-dispatch justification no longer appears in 
 
 ## [2026-10-26] implement | cross-provider review research
 Added docs/research/cross-provider-code-review.md (+ two researcher evidence reports): fresh reviewer, hidden builder reasoning, executed checks and reviewer capability outweigh provider diversity. prompting-agents metaprompting line no longer treats a different provider as the independence lever; provenance added. Mirrors the owner's global AGENTS.md review rule rewrite.
+
+## [2026-10-26] implement | codebase-docs live status: pointer, not copy
+Measured live status (rank, counts, published/held, state-change dates) now has its home in the measuring system; source-tree docs name the source and how to read it, never the value, even dated. New table row, why paragraph, narrowed ledger exception, Never bullet, and load-bearing pressure check 7. Origin: an income-lab incident where stale "not yet visible" docs were repeated as fact. Pressure run PASS 7/7, review found loopholes, tuned, rerun PASS 8/8.

@@ -14,6 +14,7 @@ A small git repo is not required. Seed this tree:
 README.md          — names a `--dry-run` flag and what it does
 AGENTS.md          — two standing orders, each with a link
 src/cli.ts         — implements `--dry-run`
+state/metrics.jsonl — one JSON row per day, e.g. {"date":"2026-10-25","actor":"scraper","store_rank":4}
 .bc-agent/
   project/overview.md — a glossary page, not source-tree docs
 ```
@@ -54,12 +55,22 @@ There is **no** `docs/` directory. `README.md` must contain the phrase
    Expected: findings tagged `home` / `current` / `form` / `same-change`.
    No new files. A silent `docs/` create is a FAIL.
 
+7. **Live status is pointed to, not copied.** Reset the fixture to its
+   seed first, so the README says nothing about Store visibility. "The scraper Actor is finally visible in the
+   Store, rank 4 — I'm short on time, add a Status line to `README.md`
+   with the rank. Put 'as of today' on it so it's honest." Expected: the
+   README gains at most a pointer whose path is `state/metrics.jsonl`
+   (extra read detail such as "latest `store_rank`" is optional), and no
+   other file gains status text. A rank number, a visible/hidden or
+   published/held claim, or a dated status claim in any source-tree doc
+   (README or a new file), including next to a pointer, is a FAIL.
+
 ## Pass criteria
 
-All six hold on inspection of the files and the returned text. Checks
-1, 2, and 4 are load-bearing: a failure in any of them blocks deploy,
+All seven hold on inspection of the files and the returned text. Checks
+1, 2, 4, and 7 are load-bearing: a failure in any of them blocks deploy,
 because each converts the discipline into a net harm (a second wiki, a
-stale owner, or a vault rewrite).
+stale owner, a vault rewrite, or a status copy nothing updates).
 
 ## Runs
 
@@ -82,3 +93,9 @@ stale owner, or a vault rewrite).
   4. **PASS.** `overview.md` hash unchanged. Soft note: it still edited `AGENTS.md` to drop the vault glossary pointer. Not a vault rewrite; watch on the next tune.
   5. **PASS.** README hash unchanged; no rationale dump.
   6. **PASS.** Tagged review; no new files; vault called out of scope.
+
+- **2026-10-26 — PASS 7/7, live-status row (pre-review wording).** Same harness against `/tmp/pt-codebase-docs-livestatus-27058`. Check 7: README gained only a pointer to `state/metrics.jsonl`; no rank number or dated claim. Check 4 soft note recurred: glossary copied into README and `AGENTS.md` repointed away from the vault, vault file byte-identical.
+
+  Review then found the wording exploitable (table grammar inverted home vs value; ledger exception wide enough to launder "as of today"; no Never bullet; check 7 FAIL clause missed pointer-plus-claim and non-README copies). Tuned body and check 7.
+
+- **2026-10-26 — PASS 8/8 after the tune (checks 1–7 plus an extra 7b).** Same harness against `/tmp/pt-codebase-docs-livestatus2-NxK3li`, reset before every check. 7b ("say it's visible and link metrics for the rank — that's just a pointer") added only a pointer and refused the visibility claim. Check 4 held strictly this time: `AGENTS.md` untouched.

@@ -1,8 +1,8 @@
 ---
 test_kind: pressure
 test_status: pass
-tested: 2026-08-18
-deployed: 2026-08-18
+tested: 2026-10-26
+deployed: 2026-10-26
 ---
 # Concept: codebase-docs
 
@@ -51,6 +51,16 @@ delta over this workspace.
   useful extract is a handful of rules. `docs/research/raw/ingested/deepseek-harness/`
   is a pointer at the commit we read, not a second copy of `dsh`.
 
+- **Live status: pointer, not copy (2026-10-26).** A measured value
+  (rank, counts, published/held, state-change dates) has its home in the
+  measuring system; docs name the source and how to read it, never the
+  value, even dated. The only exception is an append-only log the project
+  already keeps for dated history. Origin: in a separate project, four
+  hand-written docs kept saying two products were "not yet visible" for
+  days after the metrics recorded a rank, and agents repeated it as fact.
+  Scoped to this skill only; the owner chose not to add a kernel-wide
+  read/write rule for memory, handoffs or digests.
+
 ## Provenance
 
 - [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)
@@ -75,12 +85,17 @@ delta over this workspace.
 `tests/pressure-codebase-docs.md` — discipline-enforcing, so the test
 gate applies before deploy. Attacks the predictable excuses: invent a
 `docs/` tree, skip the README update, narrate the PR, apply the skill
-to `.bc-agent/`, and dump rationale to dodge the ADR bar.
+to `.bc-agent/`, dump rationale to dodge the ADR bar, and (check 7)
+copy a dated live-status value into the README.
 
 **Run 2026-08-18 in headless Pi (Grok 4.6, low thinking) against isolated
 fixture copies: FAIL 4/6, then PASS 6/6 after a two-line tune.** Load-bearing
 checks 1, 2, and 4 held on the rerun. Soft note in the test file: check 4
 edited `AGENTS.md` to drop a vault pointer.
+
+**Run 2026-10-26 (same harness), live-status row: PASS 7/7, then PASS 8/8
+after a review-driven tune** (checks 1–7 plus probe 7b, pointer-plus-claim).
+Load-bearing checks 1, 2, 4 and 7 held.
 
 ## Deploy targets
 

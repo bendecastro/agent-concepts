@@ -42,7 +42,9 @@ the vault.
 
 ## One home per fact
 
-Each fact has one home: the page whose job it is. Elsewhere, link there.
+Each fact has one home: the page or measuring system whose job it is.
+Elsewhere, link there. For live status, the link names the source and how
+to read it: a path, or a command and host when it lives outside git.
 
 | Job | Home | Does not belong there |
 |---|---|---|
@@ -51,11 +53,20 @@ Each fact has one home: the page whose job it is. Elsewhere, link there.
 | Cross-module map (only if the page already exists) | `docs/architecture.md` or equivalent | Type catalogs, per-package detail, rationale |
 | Costly, puzzling, trade-off decision | An ADR, and only when `domain-modeling`'s three-part bar holds | Everyday implementation notes |
 | How-to with verify steps | An existing cookbook / contributor page | Design rationale |
+| Live status a system measures: rank, counts, published/held, when a state changed | The system that measures it (its state file, metrics log, or API) | A copy in source-tree docs: the value, or a claim like "visible" / "hidden", even dated "as of" |
 
 A document's subject and tree position fix its detail: describe this
 subject; name children by purpose; link to the owner for lower-level
 detail. Why: a README that also retells architecture and the last three
 PRs becomes a second, worse source of truth.
+
+Why live status never gets a copy: the measuring system keeps updating and
+nothing updates the prose. A docs page that said "not yet visible" kept
+saying it for days after the metrics showed a rank, and agents that read
+the docs first repeated it as fact. Only an append-only log that the
+project already keeps for dated history may hold such a value; correct a
+bad entry there by appending a superseding note. A dated sentence in a
+README or docs page is still a copy. Do not invent a ledger to hold one.
 
 **Do not create a `docs/` tree** because this skill fired, because the
 README feels crowded, or because the user said "just make `docs/foo.md`"
@@ -78,9 +89,10 @@ the fact the next reader came for.
 
 ## Write the current state
 
-Name the live mechanism. Do not write "previously," "now," "no longer,"
-"this PR," "this commit," or "rejected in review" in durable source-tree
-docs. Put the change story in the commit, the PR, or an ADR.
+"Current state" means current behavior, not current status — see the
+live-status row above. Name the live mechanism. Do not write
+"previously," "now," "no longer," "this PR," "this commit," or
+"rejected in review" in durable source-tree docs. Put the change story in the commit, the PR, or an ADR.
 
 A reader at HEAD, with no session or PR, must be able to resolve every
 reference and verify every claim. If they cannot, restate the surviving
@@ -119,6 +131,10 @@ when they matter.
 - **Never dump rationale into a README** to avoid the ADR bar. Why:
   `domain-modeling` keeps ADRs rare so the load-bearing ones stay
   visible; a README is not the overflow tank.
+- **Never copy a live measured value or status claim** into source-tree
+  docs, even dated "as of" or because you are short on time. Why: the
+  measuring system keeps updating and nothing updates the prose. Name
+  the source instead.
 - **Never treat this skill as a note-every-change gate.** Why: that
   default was considered from DeepSeek's Agent Notes and rejected.
 
