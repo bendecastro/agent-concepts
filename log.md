@@ -1502,3 +1502,6 @@ The third run attached domain-modeling per child and confirmed skill text in bot
 
 ## [2026-10-26] implement | bc-swarm keep reasons move to reasoning
 Owner request: the one-line keep/no-dispatch justification no longer appears in the reply; the agent settles it per track in its reasoning. Dispatched tracks and routes stay in chat. Updated SKILL.md tooth, CONCEPT.md design decision, pressure check 4 grading (now graded from the reasoning trace) and the index line; mirrors CONFIG swarm-mode kernel commit 4892cfa. Not re-pressure-tested; status stays partial.
+
+## [2026-10-26] implement | cross-provider review research
+Added docs/research/cross-provider-code-review.md (+ two researcher evidence reports): fresh reviewer, hidden builder reasoning, executed checks and reviewer capability outweigh provider diversity. prompting-agents metaprompting line no longer treats a different provider as the independence lever; provenance added. Mirrors the owner's global AGENTS.md review rule rewrite.

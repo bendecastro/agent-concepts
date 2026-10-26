@@ -258,7 +258,7 @@ Start with the instrument the symptom suggests — stalling and complaints point
 
 Reaching for emphasis (ALWAYS, MUST, bold) is the reflex when the mechanism hasn't been found — and it is what an agent proposes about its own instructions for the same reason.
 
-**Adopt only what recurs, simplified to its general form** — and mind which kind of recurrence you have. A suggestion repeated inside one session is an echo of the last answer; independent runs (fresh context, ideally a different provider) make agreement mean something. The same check failing twice is already evidence. The general form is the whole point: "MUST write `ceiling:` in the code, NEVER only in chat" fixes one skill; "mark it where the next reader will meet it" fixes the class.
+**Adopt only what recurs, simplified to its general form** — and mind which kind of recurrence you have. A suggestion repeated inside one session is an echo of the last answer; independent runs (fresh context, without the earlier run's reasoning) make agreement mean something; a different provider decorrelates further but does not make runs independent on its own. The same check failing twice is already evidence. The general form is the whole point: "MUST write `ceiling:` in the code, NEVER only in chat" fixes one skill; "mark it where the next reader will meet it" fixes the class.
 
 **Prefer replacing over appending, and ask what to delete.** A tune that only ever adds is a bloat generator: every added line dilutes the ones already there, and the rule you are fixing may be failing *because* of what surrounds it. Not every finding has to become instruction weight — some belong in the concept's test notes.
 
