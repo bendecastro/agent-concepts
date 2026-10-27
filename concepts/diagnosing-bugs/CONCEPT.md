@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial
 tested: 2026-07-16
 deployed: 2026-06-21
 ---
@@ -32,3 +32,7 @@ Model-invoked debugging discipline for hard bugs and performance regressions: bu
 - Claude Code: `~/.claude/skills/diagnosing-bugs` → relative symlink to `body/` (deployed 2026-06-21).
 - Pi: `~/.agents/skills/diagnosing-bugs` and `~/.pi/agent/skills/diagnosing-bugs` → relative symlinks to `body/` (deployed 2026-06-21).
 - Other harnesses: manual bootstrap until tested.
+
+## Storage safety contract
+
+2026-10-27 owner-approved Btrfs ENOSPC prevention update: consume the kernel Storage safety contract; tooling/threshold authority is `~/Sync/Scripts/docs/disk-management/storage-prevention.md`. New storage pressure scenarios are authored, not run; historical test/deploy dates above do not certify this revision. See [shared scenarios](../agent-kernel/tests/storage-safety.md).

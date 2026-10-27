@@ -106,3 +106,7 @@ Canonical body includes `SKILL.md`, `execute-issue.md`, `review-contract.md`, an
 - Shared/Pi: `~/.agents/skills/bc-drain-issues` and `~/.pi/agent/skills/bc-drain-issues` → relative symlinks to `body/` (v2 deployed 2026-07-25).
 - Pi runtime roles: `~/.pi/agent/agents/bc-drain-{auditor,worker,reviewer}.md`; compact tool descriptions at `~/.pi/agent/extensions/subagent/config.json` (deployed 2026-07-25; restart Pi to reload the extension config and advertised agents).
 - Other harnesses: use equivalent fresh minimal roles manually until tested; record in `../../docs/harnesses.md`.
+
+## Storage safety contract
+
+2026-10-27 owner-approved Btrfs ENOSPC prevention update: consume the kernel Storage safety contract; tooling/threshold authority is `~/Sync/Scripts/docs/disk-management/storage-prevention.md`. New storage pressure scenarios are authored, not run; historical test/deploy dates above do not certify this revision. See [shared scenarios](../agent-kernel/tests/storage-safety.md).

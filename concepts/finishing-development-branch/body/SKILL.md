@@ -7,9 +7,11 @@ description: Use when implementation is complete and the user needs options for 
 
 Finish work by verifying first, then presenting clear options. Do not publish, merge, or discard by implication.
 
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) for guarded checks, shared full-suite evidence and recorded cleanup proof. Why: completion is not a reason to duplicate suites or delete unproven work.
+
 ## 1. Verify before offering completion
 
-Run the relevant project checks fresh and read the output. If checks fail, stop and report failures; do not offer merge/PR options until the user chooses to proceed despite them.
+Inspect recorded checks for the exact tree, or run missing relevant checks under kernel Storage safety, and read the output. If checks fail, stop and report failures; do not offer merge/PR options until the user chooses to proceed despite them.
 
 Also inspect:
 
@@ -50,7 +52,7 @@ Do not add a hidden default. Ask the user to pick.
 
 ## 4. Execute safely
 
-- Merge locally: update base, merge, run verification on merged result before cleanup.
+- Merge locally: update base, merge, verify the merged tree before cleanup (reuse recorded same-tree evidence; do not duplicate the full landing suite).
 - PR/push: check publish policy or ask; preserve worktree for review iteration.
 - Keep: report branch/path and stop.
 - Discard: require typed confirmation after listing branch, commits, and path. Never discard unrelated user changes.
@@ -68,4 +70,4 @@ Only remove a worktree if all are true:
 
 Never force-push. Never delete unmerged work without explicit confirmation. Integrated owned worktrees do not need a second confirmation.
 
-When deleting a merged branch, use `git branch -D`, not `-d`. After a squash-merge or rebase-merge the original commits are not ancestors of the target, so `-d` refuses even though the work is merged. Why: an agent that reads that refusal as "not merged" either stops or reaches for something more destructive.
+For integrated work, record the kernel ancestry/patch-equivalence proof in the manifest, remove the clean inactive owned worktree with `git worktree remove` (no `--force`), then use `git branch -d`. Use `-D` only after patch-equivalence proof; squash/rebase alone is not proof. Keep dirty, active, unmerged or unclear work. Explicit discard remains a separately confirmed destructive action, not integration proof.

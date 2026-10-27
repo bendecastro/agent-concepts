@@ -9,6 +9,8 @@ Improve code along a measurable axis (speed, output size, memory, allocations, A
 
 **The core idea:** the *check* owns truth; you propose *bounded* changes; a change survives only if it proves **both** that correctness still holds **and** that the chosen metric improved enough to justify it. Anything else gets reverted.
 
+Use targeted correctness checks and guarded pytest under [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety); health-check and share the full landing run rather than running a suite each iteration. Why: repeated experiments multiply temporary storage.
+
 ## Before you touch code
 
 1. **Name one metric.** A single, objective, reproducible number (median wall-time on a fixed input, output bytes, peak RSS, allocation count, request count, …). **If you cannot name an objective metric, STOP — do not optimize blind.** Say so and return; "looks cleaner/faster" is not a metric.

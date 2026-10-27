@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
+  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - loads `tdd` — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [body/execute-issue.md](body/execute-issue.md#build-loop)

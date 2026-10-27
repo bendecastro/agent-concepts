@@ -26,6 +26,8 @@ For metric-bearing work only, load and follow `bc-autoresearch-loop` after GREEN
 
 When the change alters behavior that a README, an existing `docs/` page, an architecture page, or contract-stating JSDoc already describes, update that owning page in the same diff and follow the repo-available `codebase-docs` for placement. Do not invent a new `docs/` tree, do not restate a contract that already has a home, and do not narrate this issue in a documentation page — the acceptance matrix records what the slice did, and a docs page that narrates a change is stale the moment the next one lands. A repository that keeps no documentation for this surface needs none written to satisfy this rule.
 
+Follow [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety): run pytest through `bc-pytest` (or the selected interpreter with `"$HOME/Sync/Scripts/bin/utils/bc-pytest"`), never custom `--basetemp`. Why: worker test roots must be owned and bounded.
+
 Preserve the driver's baseline cache. Run targeted tests/checks while editing and record commands, outcomes, failing IDs, and concise baseline deltas. Do not run the full project suite; final landing validation belongs to the driver.
 
 ## Review-ready gate

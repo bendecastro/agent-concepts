@@ -7,6 +7,8 @@ description: Use when there are two or more independent investigations, reviews,
 
 Dispatch one fresh agent per independent problem domain. Parallelism is useful only when the domains do not depend on each other and agents will not edit or rely on the same mutable state.
 
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before dispatch/isolation; pass guarded pytest and targeted-test limits in packets and record integration/cleanup proof. Why: parallel checks multiply disk use.
+
 ## Use when
 
 - Multiple test files or subsystems fail for apparently different reasons.
@@ -50,7 +52,7 @@ Parallel agents do not make the combined result true. The parent must:
 
 - Compare outputs for contradictions.
 - Check whether two agents edited the same files or made incompatible assumptions.
-- Re-run the relevant full verification after integration.
+- Run relevant full verification once for the integrated change, or inspect recorded results for that exact tree; reviewers reuse that evidence.
 - Escalate if an agent reports uncertainty rather than papering it over.
 
 ## Red flags

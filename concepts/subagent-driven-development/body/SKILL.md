@@ -7,6 +7,8 @@ description: Use when executing a written implementation plan in the current ses
 
 A controller executes a plan by giving each task to a fresh implementer agent, then running spec-compliance and code-quality review before moving on.
 
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) at preflight and completion; include guarded pytest, targeted tests and shared full-suite evidence in every implementer/reviewer packet. Why: fresh agents cannot infer shared storage ownership.
+
 ## Use when
 
 - A written plan exists with reasonably independent tasks.

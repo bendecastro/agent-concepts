@@ -9,6 +9,8 @@ A discipline for hard bugs and performance regressions. It complements `tdd`: fi
 
 Read `.bc-agent/project/overview.md` or `glossary.md` and relevant ADRs before editing so hypotheses use project vocabulary.
 
+Use targeted guarded pytest under [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety), including health preflight before full suites. For Btrfs storage incidents use `bc-storage-health`, not `df`. Why: free bytes alone cannot diagnose metadata starvation.
+
 ## Phase 1 — Build a feedback loop
 
 This is the skill. If you have a tight pass/fail signal that catches **this exact bug**, the rest is mechanical. If you don't, staring at code only creates vibes.

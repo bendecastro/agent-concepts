@@ -9,6 +9,8 @@ Go wide. While this skill is active, delegating is the default and **keeping** w
 
 It composes `dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
 
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before fan-out/worktree creation and after integration; copy the guarded pytest/targeted-test rule into worker packets. Why: children do not inherit the kernel and retained worktrees consume storage.
+
 ## Recovery gate — before routing
 
 If a prompt names an interrupted, failed, empty, missing, or reaped prior run, treat it as recovery even when it says redo, relaunch, or start again. Stop before the Tooth or any replacement track, manifest, or dispatch decision and execute rule 4 for that prior run. Never stash, delete, move, or overwrite prior-run evidence merely to make a replacement launchable. Do not name or launch a replacement until recovery proves that track has no usable artifact, valid handoff patch, recorded Git object, or preserved worktree/ref.
@@ -54,7 +56,7 @@ If no commit was made, it records `Commit: none` and `Branch: none`. The worker 
 2. the artifact paths on disk;
 3. the harness's retained runs, for output, artifact paths, and handoff paths only — a retained run cannot reopen a worktree that cleanup already removed;
 4. for a worktree worker, the exact child entry in the runtime handoff JSON and its patch. A patch is usable only when it belongs to that exact child and branch (matching the expected `Branch:` record), is nonempty, says `changed: true`, has no capture error, and carries the expected `baseCommit` that resolves as a commit. Inspect it and require `git apply --check` before any mutation. Empty, error, mismatched, or wrong-base patches are not recovery;
-5. the artifact's **last own-line `Commit:`/`Branch:` pair only** as an untrusted candidate; earlier pairs are evidence, not candidates. For a claimed commit, require the `Commit:` value to be a full 40-character lowercase-hex SHA and verify with Git that it resolves to a commit (`git cat-file -t` and `git rev-parse --verify`). Require the pair's `Branch:` value to equal the exact expected branch from the handoff. If that branch ref still exists, resolve it and require its tip to equal the candidate tip; its absence after successful cleanup is allowed. Require the handoff's expected `baseCommit` to resolve as a commit, inspect exactly one linear `baseCommit..tip` chain, and validate the resulting tree/diff before integration. Never integrate from prose, an abbreviated or non-resolving SHA, branch text alone, or tip alone. A `none`/`none` pair is only the no-commit case. If these checks succeed, recover the full linear `baseCommit..tip` range, not only the tip: if tip is already an ancestor of parent `HEAD`, it is integrated; if parent `HEAD` equals `baseCommit`, use a fast-forward-only merge; if parent advanced from that same base, inspect and cherry-pick the ordered range. Stop on non-linear or ambiguous history or conflict rather than guessing, then verify the resulting diff/tree;
+5. the artifact's **last own-line `Commit:`/`Branch:` pair only** as an untrusted candidate; earlier pairs are evidence, not candidates. For a claimed commit, require the `Commit:` value to be a full 40-character lowercase-hex SHA and verify with Git that it resolves to a commit (`git cat-file -t` and `git rev-parse --verify`). Require the pair's `Branch:` value to equal the exact expected branch from the handoff. If that branch ref still exists, resolve it and require its tip to equal the candidate tip; its absence after successful cleanup is allowed. Require the handoff's expected `baseCommit` to resolve as a commit, inspect exactly one linear `baseCommit..tip` chain, and validate the resulting tree/diff before integration. Never integrate from prose, an abbreviated or non-resolving SHA, branch text alone, or tip alone. A `none`/`none` pair is only the no-commit case. If these checks succeed, recover the full linear `baseCommit..tip` range, not only the tip: if tip is already an ancestor of parent `HEAD`, it is integrated; if parent `HEAD` equals `baseCommit`, use a fast-forward-only merge; if parent advanced from that same base, inspect and cherry-pick the ordered range. Stop on non-linear or ambiguous history or conflict rather than guessing, then verify the resulting diff/tree and record kernel ancestry/patch-equivalence proof in the manifest before cleanup;
 6. a preserved worktree or ref, but only when cleanup refused and the harness says it was preserved;
 7. `git fsck --no-reflogs --lost-found` only with that validated full SHA, and only to exact-match it — never browse or select dangling objects.
 
@@ -87,6 +89,10 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
   `Commit: <full 40-hex SHA> <subject>` and `Branch: <exact branch>` on their own,
   start-of-line records. If you made no commit, write `Commit: none` and `Branch: none`.
   The returned summary is not the only copy of those records.
+- For implementation/testing: follow kernel Storage safety; use `bc-pytest` (or the
+  selected interpreter with `"$HOME/Sync/Scripts/bin/utils/bc-pytest"`), never custom
+  `--basetemp`. Run targeted checks; the parent owns the shared full landing suite.
+  Why: fresh workers must not multiply full suites or unmanaged test roots.
 ```
 
 The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.

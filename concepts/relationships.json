@@ -166,6 +166,114 @@
       "when": "glossary discovery in legacy projects",
       "source": "concepts/bc-init-agent/body/SKILL.md",
       "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+    },
+    {
+      "from": "bc-swarm",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/bc-swarm/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "using-git-worktrees",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/using-git-worktrees/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "subagent-driven-development",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/subagent-driven-development/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "dispatching-parallel-agents",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/dispatching-parallel-agents/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "executing-plans",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/executing-plans/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "finishing-development-branch",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/finishing-development-branch/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "tdd",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/tdd/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "bc-autoresearch-loop",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/bc-autoresearch-loop/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "diagnosing-bugs",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/diagnosing-bugs/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "code-review",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/code-review/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "writing-plans",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/writing-plans/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "bc-drain-issues",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "test, fan-out or worktree lifecycle",
+      "source": "concepts/bc-drain-issues/body/SKILL.md",
+      "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
     }
   ]
 }

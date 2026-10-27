@@ -7,6 +7,8 @@ description: Review a diff or completed change for independent Spec fidelity and
 
 Code review is technical evaluation, not emotional performance. Verify feedback against the codebase; request reviews with enough context for an independent reviewer to judge the diff.
 
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before parallel review; reuse recorded checks for the exact tree, with only targeted guarded pytest repros for findings. Why: reviewers should assess evidence, not duplicate full suites.
+
 ## Two-axis diff review
 
 For a branch, work-in-progress diff, PR, or completed task, review two independent axes:

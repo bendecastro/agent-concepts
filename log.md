@@ -1511,3 +1511,6 @@ Measured live status (rank, counts, published/held, state-change dates) now has 
 
 ## [2026-10-26] implement | agent-kernel: argue for the best outcome; read-side clause dropped
 Owner asked for anti-sycophancy pushback. Added two posture bullets (argue-then-defer on worse plans, overriding act-on-request until answered; accuracy over agreement on facts). Three pressure rounds on Luna max + Grok high: round 1 no effect, round 2 six cells fixed, round 3 5/6 (Luna thin evidence). Read-side live-state clause showed one improved cell of six and was dropped. Deployed to Pi, Claude Code, Codex, Grok, OpenCode.
+
+## [2026-10-27] implement | shared storage safety
+Added kernel-owned guarded pytest, targeted/shared full-suite evidence, Btrfs health preflight and proven integration cleanup; aligned test, review, planning, swarm and worktree consumers and relationship metadata. Thresholds stay in Scripts. Storage pressure scenarios authored but not run (parent must run consuming-agent checks); no harness delta deployment or push.

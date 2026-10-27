@@ -42,9 +42,18 @@ Use the smallest high-signal context that can solve the task.
 
 Evidence before claims. A completion claim you have not verified this turn is a guess presented as fact.
 
-- For testable claims, identify the command or bounded check that would meaningfully validate it, run it fresh, and read the output before claiming success.
-- If no meaningful bounded check exists, or verification cannot be run, say so plainly and name the next best check; never substitute "should", "probably", or a previous run for evidence.
+- For testable claims, identify the command or bounded check that would meaningfully validate it, run it fresh (or inspect recorded results for the same tree under Storage safety), and read the output before claiming success.
+- If no meaningful bounded check exists, or verification cannot be run, say so plainly and name the next best check; never substitute "should", "probably", or an unverified previous run for evidence.
 - Treat subagent, tool, and handed-off agent output the same way: confirm against artifacts, not self-report. This covers substantive factual claims, not just success reports — before repeating another agent's claim as fact, check it against the source or label it unverified. Why: relaying a confident claim in your own voice converts someone else's guess into something the user reasonably trusts.
+
+## Storage safety
+
+- Run pytest through `bc-pytest`; for uv/venv use the selected interpreter: `uv run python "$HOME/Sync/Scripts/bin/utils/bc-pytest" ...` or `.venv/bin/python "$HOME/Sync/Scripts/bin/utils/bc-pytest" ...`. Never supply custom `--basetemp`, including in `PYTEST_ADDOPTS` or project addopts. Why: the guarded runner owns temporary/cache storage and retention; raw pytest bypasses it.
+- Use targeted tests while working. Run a full suite once per base where the workflow requires a baseline, and once per change being landed; record commands/results with the exact tree identity. Reviewers inspect and reuse recorded results for that same tree instead of rerunning the suite; use targeted repros for findings. Why: parallel duplicate full suites consume storage without adding evidence.
+- Before a full suite, creating a worktree, or launching two or more workers, run `bc-storage-health`; stop and report on critical (including unknown health), or if the check cannot run. On Btrfs judge free space with this tool, not `df`. Why: filesystem free bytes can hide metadata allocation exhaustion.
+- After integrating a worker result, prove its tip is an ancestor of `HEAD` (`git merge-base --is-ancestor <tip> HEAD`), or prove every worker commit is patch-equivalent in `HEAD` (`git cherry HEAD <tip>` succeeds and prints only `-` lines, no `+`; empty output alone is not proof without ancestry). Record the tip, landed HEAD and proof in the run manifest before cleanup. Remove the clean, inactive, owned worktree with `git worktree remove <path>` (never `--force`), then `git branch -d <branch>`; use `-D` only after the patch-equivalence proof. Keep anything dirty, unmerged, active, or unclear, including squash results that cannot pass either proof. If pi-subagents already removed the worktree after patch capture, there is nothing to remove. Why: integration without recorded cleanup leaks worktrees; deletion without proof loses work.
+
+Tool behavior, retention and health thresholds live in `~/Sync/Scripts/docs/disk-management/storage-prevention.md`; consult it rather than copying numbers here.
 
 ## Git discipline
 

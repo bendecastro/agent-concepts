@@ -7,6 +7,8 @@ description: Use when starting feature work that needs isolation, before executi
 
 Work in an isolated workspace when it reduces risk. Detect existing isolation first, prefer harness-native isolation, and use manual `git worktree` only as a fallback. When an owned worktree is integrated or otherwise irrelevant, prune it without asking.
 
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety): health-check before either creation path, reuse the once-per-base baseline, and record integration proof before cleanup. Why: native isolation still consumes disk.
+
 ## Step 0: detect current state
 
 Run targeted git checks:
@@ -50,18 +52,18 @@ Create a branch/worktree with a descriptive branch name. If sandbox permissions 
 
 ## Step 3: baseline
 
-Run the project’s bounded setup and baseline check before making changes. If the baseline fails, report the failure and ask whether to investigate or proceed knowingly.
+Run the project’s bounded setup and baseline check before making changes; reuse recorded full-suite baseline evidence for the same base. If the baseline fails, report the failure and ask whether to investigate or proceed knowingly.
 
 ## Cleanup
 
 Prune owned worktrees when they are done. Do not ask. Why: leftover worktrees go stale, waste disk, and the next session cannot tell whether they are still in use.
 
-Done means the unique work is on the base branch (merge, squash-merge, or rebase), or the workspace is otherwise irrelevant (confirmed discard, superseded, or the user said it is no longer needed).
+Done means integration passes the kernel ancestry/patch-equivalence proof recorded in the manifest, or discard was explicitly confirmed. Superseded or squash-merged without that proof is unclear: keep it.
 
 How:
 
 - `git worktree remove <path>` — not `git worktree prune`, which only drops stale registrations.
-- Then `git branch -D <branch>` when the work is integrated or discard was confirmed. After squash- or rebase-merge the original commits are not ancestors of the base, so `-d` refuses even though the work is merged.
+- Then `git branch -d <branch>`; `-D` requires the kernel patch-equivalence proof, not a squash/rebase label. Explicit discard is a separate destructive workflow; do not force deletion here.
 - Report the path and branch removed.
 
 Owned means this agent created the worktree, or it lives under a known project-local directory (`.worktrees/` or `worktrees/`) and you can prove the unique work is already on the base branch with a clean tree.

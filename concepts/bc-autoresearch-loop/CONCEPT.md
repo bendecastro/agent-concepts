@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial
 tested: 2026-06-21
 deployed: 2026-06-21
 ---
@@ -31,3 +31,7 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 - Claude Code: `~/.claude/skills/bc-autoresearch-loop` → relative symlink to `body/` (deployed 2026-06-21).
 - Pi: `~/.agents/skills/bc-autoresearch-loop` and `~/.pi/agent/skills/bc-autoresearch-loop` → relative symlinks to `body/` (deployed 2026-06-21).
 - Other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+
+## Storage safety contract
+
+2026-10-27 owner-approved Btrfs ENOSPC prevention update: consume the kernel Storage safety contract; tooling/threshold authority is `~/Sync/Scripts/docs/disk-management/storage-prevention.md`. New storage pressure scenarios are authored, not run; historical test/deploy dates above do not certify this revision. See [shared scenarios](../agent-kernel/tests/storage-safety.md).

@@ -12,6 +12,8 @@ ${TMPDIR:-/tmp}/bc-swarm/<YYYY-MM-DD>-<slug>/
 
 ## Fan-out
 
+Run `bc-storage-health` before multi-worker launch or managed worktree creation; stop/report on critical or unavailable health per [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety). Why: harness-managed isolation still allocates storage.
+
 ```js
 subagent({
   async: true,
@@ -57,6 +59,8 @@ it in the runtime handoff JSON, then removes the temporary worktree and its
 refused because the child was dirty/divergent, capture was missing, or a retained
 child still needs its managed CWD. Do not infer retention from a successful
 handoff, and do not treat a cleaned worktree as resumable.
+
+After parent integration, record kernel ancestry/patch-equivalence proof in the manifest. If the harness already removed the worktree, record that there is nothing to remove; otherwise apply kernel safe cleanup only to clean inactive owned state. Why: patch capture is not integration proof, and preserved exceptions may hold useful work.
 
 ## Recovery, in order
 

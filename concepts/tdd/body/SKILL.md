@@ -5,6 +5,8 @@ description: Test-driven development with a red-green-refactor loop. Use when th
 
 # Test-Driven Development
 
+Use targeted RED/GREEN checks through guarded pytest under [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety); health-check before a full suite, not each cycle. Why: fast feedback does not require repeated full suites.
+
 ## Philosophy
 
 **Core principle:** tests verify behavior through *public interfaces*, not implementation details. The code inside can change entirely; the tests shouldn't.

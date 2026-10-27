@@ -2,6 +2,8 @@
 
 ## Concepts
 
+Storage safety (2026-10-27): kernel and test/fan-out/worktree consumers updated; new pressure scenarios pending, historical deployment is not certification. See [scenario matrix](concepts/agent-kernel/tests/storage-safety.md).
+
 Test and deploy state lives in each `CONCEPT.md`'s frontmatter, not here. Read
 [docs/status.md](docs/status.md) for what needs testing or deploying, or run
 `python3 scripts/lint.py --status` for the same board in the terminal. The

@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
+  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - depends on `domain-modeling`'s contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
