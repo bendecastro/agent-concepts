@@ -16,6 +16,7 @@ This orchestrator composes **model-invoked disciplines only** (`grilling`, `doma
 
 2. **Capture inline — don't batch.** As terms and decisions crystallize *during* the grill, run `/domain-modeling`: canonical names → `glossary.md` (a pure glossary, no implementation detail); a decision that is costly to reverse AND would surprise a future reader AND reflects a real trade-off → an ADR under `docs/adr/`. Capture the moment it crystallizes, not at the end.
    - **Guard:** if the current directory isn't a project where `glossary.md`/ADRs belong (empty/scratch dir, unrelated files), confirm with the user before creating docs, or grill without persisting.
+   Apply `naming-things` when choosing domain or public code names during the grill.
 
 3. **Open the change folder and draft the PRD.** Create `docs/changes/<change-slug>/` (dash-case, named for the feature) — the single physical home for this change's planning artifacts; without it they scatter across tracker bodies, comments, and temp files. Run `/prd-drafting`: synthesize from the grill + codebase (no re-interview), sketch and confirm the test seams, write the PRD to the standard template as `docs/changes/<change-slug>/prd.md`. If pre-planning evidence exists that's worth keeping (a `/prototype` verdict, an architecture-review excerpt), file it in the folder too — these otherwise die as temp files. (Step 2's guard applies here as well: confirm before creating docs in a directory that isn't a real project.)
 

@@ -23,6 +23,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Step 6 slices the PRD and runs the last human gate.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
+- loads `naming-things` — required, when choosing domain or public code names.
+  Apply shared naming criteria without changing the surrounding workflow gates.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - loads `prd-drafting` — required.
   Step 3 synthesizes the PRD from the grill and the codebase.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)

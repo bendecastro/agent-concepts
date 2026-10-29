@@ -274,6 +274,51 @@
       "when": "test, fan-out or worktree lifecycle",
       "source": "concepts/bc-drain-issues/body/SKILL.md",
       "reason": "Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup."
+    },
+    {
+      "from": "brainstorming",
+      "to": "naming-things",
+      "relation": "loads",
+      "required": true,
+      "when": "choosing domain or public code names",
+      "source": "concepts/brainstorming/body/SKILL.md",
+      "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "naming-things",
+      "relation": "loads",
+      "required": true,
+      "when": "choosing domain or public code names",
+      "source": "concepts/bc-plan-to-issues/body/SKILL.md",
+      "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
+    },
+    {
+      "from": "writing-plans",
+      "to": "naming-things",
+      "relation": "loads",
+      "required": true,
+      "when": "choosing domain or public code names",
+      "source": "concepts/writing-plans/body/SKILL.md",
+      "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
+    },
+    {
+      "from": "bc-init-agent",
+      "to": "naming-things",
+      "relation": "loads",
+      "required": true,
+      "when": "choosing domain or public code names",
+      "source": "concepts/bc-init-agent/body/SKILL.md",
+      "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
+    },
+    {
+      "from": "naming-things",
+      "to": "domain-modeling",
+      "relation": "hands_off",
+      "required": true,
+      "when": "glossary persistence, conflicts or ADR decisions",
+      "source": "concepts/naming-things/body/SKILL.md",
+      "reason": "Domain-modeling owns glossary purity, discovery, reconciliation and ADR rules; naming-things supplies criteria and conceptual persistence categories only."
     }
   ]
 }

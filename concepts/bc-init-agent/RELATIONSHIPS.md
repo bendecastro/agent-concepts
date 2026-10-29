@@ -19,6 +19,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- loads `naming-things` — required, when choosing domain or public code names.
+  Apply shared naming criteria without changing the surrounding workflow gates.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - adapts `teach` — required, when learning or hybrid scaffold.
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [body/SKILL.md](body/SKILL.md#learning-archetype-adapter)

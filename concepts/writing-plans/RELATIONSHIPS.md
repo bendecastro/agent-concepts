@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- loads `naming-things` — required, when choosing domain or public code names.
+  Apply shared naming criteria without changing the surrounding workflow gates.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 ## Incoming
 
 None.

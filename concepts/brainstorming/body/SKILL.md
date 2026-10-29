@@ -20,6 +20,7 @@ Do not use to block clearly specified small edits, bug fixes with a tight repro,
 3. Ask clarifying questions one at a time. Prefer multiple choice when useful.
 4. Propose 2–3 approaches with tradeoffs and a recommendation.
 5. Present the design in appropriately sized sections: architecture, components, data flow/state, edge cases/errors, testing.
+   Apply `naming-things` when choosing domain or public code names in the design.
 6. Get user approval or revisions.
 7. Save the approved design/spec if the project expects durable planning docs.
 8. Self-review the spec/design for placeholders, contradictions, ambiguity, and over-broad scope.

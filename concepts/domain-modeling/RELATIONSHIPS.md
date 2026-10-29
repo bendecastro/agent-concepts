@@ -35,6 +35,10 @@ None.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [issue-slicing/body/SKILL.md](../issue-slicing/body/SKILL.md)
 
+- incoming from [naming-things](../naming-things/RELATIONSHIPS.md): hands off to this concept — required, when glossary persistence, conflicts or ADR decisions.
+  Domain-modeling owns glossary purity, discovery, reconciliation and ADR rules; naming-things supplies criteria and conceptual persistence categories only.
+  Source: [naming-things/body/SKILL.md](../naming-things/body/SKILL.md)
+
 - incoming from [prd-drafting](../prd-drafting/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [prd-drafting/body/SKILL.md](../prd-drafting/body/SKILL.md)

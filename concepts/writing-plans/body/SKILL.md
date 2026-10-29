@@ -33,6 +33,7 @@ Use the project’s stated plan location. If none exists, suggest `docs/plans/YY
 ## Before tasks: file map
 
 Map planned files before decomposing tasks:
+Apply `naming-things` when choosing domain or public code names in the file map and tasks.
 
 - Create: exact paths and responsibilities.
 - Modify: exact paths, relevant functions/sections if known.

@@ -2,6 +2,8 @@
 
 ## Concepts
 
+- [naming-things](concepts/naming-things/CONCEPT.md) — model-invoked advisory naming criteria for domain/public code names; glossary handoff to domain-modeling, progressive audit/rename recipe. Pressure scenarios authored, not run; not deployed.
+
 Storage safety (2026-10-27): kernel and test/fan-out/worktree consumers updated; new pressure scenarios pending, historical deployment is not certification. See [scenario matrix](concepts/agent-kernel/tests/storage-safety.md).
 
 Test and deploy state lives in each `CONCEPT.md`'s frontmatter, not here. Read

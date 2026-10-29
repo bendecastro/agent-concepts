@@ -1514,3 +1514,7 @@ Owner asked for anti-sycophancy pushback. Added two posture bullets (argue-then-
 
 ## [2026-10-27] implement | shared storage safety
 Added kernel-owned guarded pytest, targeted/shared full-suite evidence, Btrfs health preflight and proven integration cleanup; aligned test, review, planning, swarm and worktree consumers and relationship metadata. Thresholds stay in Scripts. Storage pressure scenarios authored but not run (parent must run consuming-agent checks); no harness delta deployment or push.
+
+## [2026-10-29] implement | naming-things
+Added advisory naming criteria, glossary handoff and an audit/compatibility rename recipe, with four one-line planning/init pointers and relationship metadata. Saved in entries use conceptual categories only to preserve domain-modeling glossary purity.
+Pressure scenarios authored but not run; no deploy or push.
