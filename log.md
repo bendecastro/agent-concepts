@@ -1518,3 +1518,6 @@ Added kernel-owned guarded pytest, targeted/shared full-suite evidence, Btrfs he
 ## [2026-10-29] implement | naming-things
 Added advisory naming criteria, glossary handoff and an audit/compatibility rename recipe, with four one-line planning/init pointers and relationship metadata. Saved in entries use conceptual categories only to preserve domain-modeling glossary purity.
 Pressure scenarios authored but not run; no deploy or push.
+
+## [2026-10-29] implement | naming-things review corrections
+Deferred init glossary persistence until plan approval, classified domain-modeling as a load, aligned the planner's composition descriptions and removed the negative scenario's extra prohibition. Regenerated relationships/status; lint passed with existing known-gap and local symlink warnings. Pressure scenarios remain unrun; no deploy or push.

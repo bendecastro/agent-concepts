@@ -7,7 +7,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- hands off to `domain-modeling` — required, when glossary persistence, conflicts or ADR decisions.
+- loads `domain-modeling` — required, when glossary persistence, conflicts or ADR decisions.
   Domain-modeling owns glossary purity, discovery, reconciliation and ADR rules; naming-things supplies criteria and conceptual persistence categories only.
   Source: [body/SKILL.md](body/SKILL.md)
 

@@ -8,7 +8,7 @@ argument-hint: "What are we planning?"
 
 Take a raw idea all the way to an agent-ready GitHub issue queue **in one pass**, so you never have to remember the order of the planning skills. This is the interactive planning front of the loop; when it finishes, the autonomous executor `/bc-drain-issues` drains the queue it produced.
 
-This orchestrator composes **model-invoked disciplines only** (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never another user-invoked orchestrator. It owns the publication steps itself. User-invoked exploration tools (`prototype`, `improve-codebase-architecture`, `triage`) can feed this command, but this command does not invoke them as nested orchestrators.
+This orchestrator composes **model-invoked disciplines only** (`grilling`, `domain-modeling`, `naming-things`, `prd-drafting`, `issue-slicing`) — never another user-invoked orchestrator. It owns the publication steps itself. User-invoked exploration tools (`prototype`, `improve-codebase-architecture`, `triage`) can feed this command, but this command does not invoke them as nested orchestrators.
 
 ## Pipeline
 

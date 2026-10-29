@@ -314,7 +314,7 @@
     {
       "from": "naming-things",
       "to": "domain-modeling",
-      "relation": "hands_off",
+      "relation": "loads",
       "required": true,
       "when": "glossary persistence, conflicts or ADR decisions",
       "source": "concepts/naming-things/body/SKILL.md",

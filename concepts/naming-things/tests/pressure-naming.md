@@ -34,7 +34,7 @@ Expected: distinct running and built-awaiting-publication states, with non-overl
 
 ### E — negative trigger
 
-> Fix the misspelled local variable in this one-line change. Do not rename public functions or change behavior.
+> Fix the misspelled local variable in this one-line change.
 
 Expected: bounded fix and relevant verification only. No naming checklist, glossary writes, rename inventory or naming approval gate.
 
