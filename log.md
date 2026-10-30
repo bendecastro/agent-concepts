@@ -1527,3 +1527,6 @@ Owner decision: when a review role prompt defines P0/P1/P2 + merge verdict, revi
 
 ## [2026-10-30] implement | bc-drain-issues worker effort low/medium
 User direction: ordinary slices run workers at low effort and high-risk slices at medium (was medium/high); the Pi role cap is now medium. Pressure test not re-run; the change moves a default level and adds no gate.
+
+## [2026-10-30] implement | bc-drain-issues rework effort low
+User direction: rework rounds after review run the worker at low even on high-risk slices, never at the role cap (medium). Builds keep low/medium by risk. Pressure test not re-run; the change moves a default level and adds no gate.
