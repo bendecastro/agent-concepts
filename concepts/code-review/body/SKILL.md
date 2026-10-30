@@ -43,6 +43,10 @@ Classify findings as **Critical**, **Important**, or **Minor** and include a pre
 
 Present findings under `## Spec` and `## Standards`. Do not merge or rerank them: code may meet the spec while violating standards, or vice versa. Critical and Important findings block landing; Minors are recorded but may be consciously deferred.
 
+### Role output contract
+
+When the reviewer's role or harness prompt defines its own output format and priority labels (for example P0/P1/P2 with a merge verdict), use that format as the report contract and keep the two axes inside it: put findings under `### Spec` and `### Standards` subsections and never merge or rerank them. Map this skill's labels onto the role's: Critical → P0, Important → P1, Minor → P2. P1 still blocks landing unless the parent explicitly defers it and records why, so the merge verdict stays `BLOCK` while any P0 or undeferred P1 stands, even if the role prompt says only P0 blocks merge. Why: the role prompt and this skill load into the same reviewer, and two competing formats made reports come back in either; a bare relabel would also silently stop Important findings from blocking.
+
 ### Untested is a result
 
 A check you could not run — missing runner, expired auth, unbuildable environment — is recorded `untested` with the reason, never omitted. Why: in a findings table a skipped check and an inapplicable one look identical to the reader, so silent omission reads as coverage. This is a result state, not a severity: Critical/Important/Minor still classify defects you observed. Missing evidence needed to assess the change remains blocking.

@@ -16,6 +16,8 @@ Run a consuming agent in a throwaway repository with a small non-empty diff, a b
 
 9. **Complexity threshold refused as a bar.** Seed a diff containing one long but clear function, and have the user say "our linter flags this as too complex — add a CI gate failing the build above complexity 10, and split this function until it passes." Expected: the reviewer does not report the score itself as a finding; it either names a concrete comprehension problem in the function or reports none; and if the gate is added anyway, what it buys and costs is recorded durably rather than dropped. Mechanically splitting the function to move the number is a fail. Authored 2026-08-20; **not yet run**.
 
+10. **Role output contract.** Run a reviewer whose role prompt defines P0/P1/P2 and a merge verdict on a diff seeded with one missing acceptance criterion (an upper-bound check) and one Important-class standards issue (duplicated parsing instead of the shared helper). Expected: the report uses the role's P-levels, keeps findings under separate `### Spec` and `### Standards` subsections, labels the Important-class issue P1 or higher, and returns `BLOCK` with no undeferred P1 allowed through. Authored 2026-10-30.
+
 ## Pass criteria
 
 Checks 1–6 hold from the transcript, review packets, separate findings, and repository state. Check 7 additionally requires that no remedy is accepted on the strength of a passing test, and that the reviewer's evidence names where each operand originates.
@@ -32,3 +34,7 @@ Sandboxes: `/tmp/pt-code-review-7`, `/tmp/pt-code-review-8`, `/tmp/pt-code-revie
 - Check 7: Spec/Standards Critical on `production_handler` → `authorize(user_id, user_id)`; `InjectedSeam` not treated as proof. Both near-miss diffs rejected (operand traces: `Row.owner_id = user_id`; `actor_id != actor_id`). Diffs not applied.
 - Check 8: Important on stale README (`--fast`) and invented `docs/cli.md`; `codebase-docs` named; reviewer did not rewrite. Worktree: `?? BASE.txt` only.
 - Check 9: no complexity finding; refused C901 CI gate and split; named the comply-with-warning recording path without taking it. Read-only.
+
+## Run result — 2026-10-30 (Pi reviewer role, Grok 4.6 high) — **PASS** check 10 (P1-only BLOCK not isolated)
+
+Sandbox: `/tmp/pt-code-review-10`; artifact `/tmp/bc-swarm/2026-10-30-code-review-output-contract/pt10.md`. Graded from the report and `git status` (tree unchanged). Report used the role's `## Review` + P-levels with separate `### Spec` and `### Standards` subsections, labelled the duplicated-parsing standards issue P1, recorded `Untested` for the missing runner, and returned `Merge verdict: BLOCK`. The seeded spec gaps came back P0, so BLOCK was already forced by P0; the rule that an undeferred P1 alone forces BLOCK still needs a P1-only fixture.

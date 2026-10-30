@@ -1521,3 +1521,6 @@ Pressure scenarios authored but not run; no deploy or push.
 
 ## [2026-10-29] implement | naming-things review corrections
 Deferred init glossary persistence until plan approval, classified domain-modeling as a load, aligned the planner's composition descriptions and removed the negative scenario's extra prohibition. Regenerated relationships/status; lint passed with existing known-gap and local symlink warnings. Pressure scenarios remain unrun; no deploy or push.
+
+## [2026-10-30] implement | code-review role output contract
+Owner decision: when a review role prompt defines P0/P1/P2 + merge verdict, reviewers use it, keep Spec/Standards as subsections, and map Critical→P0, Important→P1, Minor→P2; an undeferred P1 still forces BLOCK. Fixed in the skill because the Pi `reviewer` prompt ships in the pi-subagents npm package. Check 10 added and run: PASS on format/subsections/mapping (Pi reviewer, Grok 4.6 high); P1-only BLOCK not isolated.

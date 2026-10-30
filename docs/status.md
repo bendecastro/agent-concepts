@@ -30,7 +30,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-10-04 | 2026-06-21 |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-08-25 | 2026-08-18 |
 | [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-09-05 | 2026-08-23 |
-| [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-08-21 | yes |
+| [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-10-30 | yes |
 | [diagnosing-bugs](../concepts/diagnosing-bugs/CONCEPT.md) | pressure | 2026-07-16 | 2026-06-21 |
 | [dispatching-parallel-agents](../concepts/dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [executing-plans](../concepts/executing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
