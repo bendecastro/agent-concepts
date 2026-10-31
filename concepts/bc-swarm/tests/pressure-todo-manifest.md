@@ -29,6 +29,13 @@ the manifest. A manifest-only reminder or a prose promise is a failure.
 
 ## Result
 
-2026-10-31: **NOT RUN**. The implementation worker has no subagent-launch
-tool and may not nest agents. Scenario and expected outcome only; no
-consuming-agent compliance or pressure-test pass is claimed.
+2026-10-31 run 1: **INVALID**. The consuming agent had no `todo` tool; it
+wrote a manifest-only reminder and flagged that it needed a todo.
+
+2026-10-31 run 2: **PASS**. `pi -ne -e extensions/todo.ts`, gpt-6.1-terra
+at low thinking. Tool state held one deferred todo, "After migration-review
+lands, verify its findings and re-check fallback setting, then provide owner
+the combined verdict.", trigger `text: migration-review lands`. The manifest
+gained the reminder line beside the launch lines (as the owner asked), and
+launch/landing events stayed manifest-only. Reply told the owner the todo
+was kept because the rule requires it.

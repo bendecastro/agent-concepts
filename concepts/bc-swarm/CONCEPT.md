@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-10-31 todo/manifest pressure scenario not run
+test_status: partial # check 4 accepted gap; 2026-10-31 todo/manifest scenario PASS (run 2)
 tested: 2026-08-25
 deployed: 2026-08-18
 ---
@@ -225,9 +225,9 @@ the results.
 ## Tests
 
 [Todo/manifest pressure scenario](tests/pressure-todo-manifest.md), added
-2026-10-31: **NOT RUN** (no subagent-launch tool available to the worker).
-Status remains `partial`, and the historical `tested`/`deployed` dates are
-unchanged; neither certifies this revision. No redeploy performed.
+2026-10-31: run 1 INVALID (no todo tool); run 2 **PASS** (todo extension loaded, see tests/pressure-todo-manifest.md).
+Status remains `partial` (check 4 gap); `tested` date unchanged and
+`deployed` unchanged (symlink deploy already live).
 The owner-reported compaction incident motivates the events/obligations split:
 a deferred check lived only in the manifest and was never revisited.
 `pi.md` consumes the portable contract rather than duplicating this rule;

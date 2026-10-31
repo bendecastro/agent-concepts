@@ -1534,3 +1534,6 @@ User direction: rework rounds after review run the worker at low even on high-ri
 ## [2026-10-31] implement | bc-swarm manifest events and todo obligations
 Added a short durability rule separating event history from open obligations, including deferred-check triggers and the compaction failure rationale. Added a consuming-agent pressure scenario; NOT RUN because the worker has no child-launch tool, so partial status and historical test/deploy dates remain unchanged; no redeploy.
 Checked pi.md (portable contract consumed, no duplicate needed) and external injected swarm context (upstream alignment needed). No relationship edge changed: session todo is a tool, kernel storage unaffected, no incoming edges.
+
+## [2026-10-31] test | bc-swarm todo/manifest pressure scenario
+Run 1 invalid (consuming agent had no todo tool; manifest-only reminder, flagged). Run 2 PASS with `pi -ne -e extensions/todo.ts`, gpt-6.1-terra low: one deferred todo with trigger `migration-review lands`, manifest kept events plus the owner-requested reminder. Overall status stays partial for the existing check-4 gap.
