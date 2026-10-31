@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial
+test_status: partial # 2026-10-31 todo/manifest pressure scenario not run
 tested: 2026-08-25
 deployed: 2026-08-18
 ---
@@ -223,6 +223,18 @@ the results.
   reproduction cases, not ordinary launch instructions.
 
 ## Tests
+
+[Todo/manifest pressure scenario](tests/pressure-todo-manifest.md), added
+2026-10-31: **NOT RUN** (no subagent-launch tool available to the worker).
+Status remains `partial`, and the historical `tested`/`deployed` dates are
+unchanged; neither certifies this revision. No redeploy performed.
+The owner-reported compaction incident motivates the events/obligations split:
+a deferred check lived only in the manifest and was never revisited.
+`pi.md` consumes the portable contract rather than duplicating this rule;
+the external injected swarm-mode durability context needs matching upstream
+wording, not an edit outside this repository. The session `todo` tool adds no
+concept edge; the existing outgoing kernel storage contract is unaffected,
+and there are no incoming relationships.
 
 `tests/pressure-bc-swarm.md` — discipline-enforcing, so the test gate
 applies before deploy. Six checks attack the predictable excuses: skip the

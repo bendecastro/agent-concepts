@@ -1530,3 +1530,7 @@ User direction: ordinary slices run workers at low effort and high-risk slices a
 
 ## [2026-10-30] implement | bc-drain-issues rework effort low
 User direction: rework rounds after review run the worker at low even on high-risk slices, never at the role cap (medium). Builds keep low/medium by risk. Pressure test not re-run; the change moves a default level and adds no gate.
+
+## [2026-10-31] implement | bc-swarm manifest events and todo obligations
+Added a short durability rule separating event history from open obligations, including deferred-check triggers and the compaction failure rationale. Added a consuming-agent pressure scenario; NOT RUN because the worker has no child-launch tool, so partial status and historical test/deploy dates remain unchanged; no redeploy.
+Checked pi.md (portable contract consumed, no duplicate needed) and external injected swarm context (upstream alignment needed). No relationship edge changed: session todo is a tool, kernel storage unaffected, no incoming edges.
