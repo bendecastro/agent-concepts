@@ -1,6 +1,6 @@
 ---
 test_kind: accuracy
-test_status: pass
+test_status: partial
 tested: 2026-08-21
 deployed: yes
 ---
@@ -9,6 +9,8 @@ deployed: yes
 A reference library of proven instruction blocks for authoring agent instructions — concept bodies, AGENTS.md files, system prompts, per-agent configs. Exists so workspace authors adapt eval-tested phrasings instead of inventing instruction language from scratch.
 
 ## Design decisions
+
+- **Cloudflare adaptation (2026-11-02).** Loading is not authorization separates broad automatic discovery from explicit authorization for costly workflows, using security-audit as the in-workspace example. The new authoring check is not yet run; historical accuracy results do not certify it.
 
 - **Reference type, not discipline type** — it constrains how concepts are *written*, not how an agent behaves at runtime, so the test gate's pressure-scenario requirement doesn't apply. Its test is accuracy: blocks must stay faithful to their sources (see tests/).
 - **Agent-agnostic rewrites, not verbatim copies** — OpenAI's blocks reference their tool names (`multi_tool_use.parallel`, `apply_patch`); blocks here are rewritten to the underlying behavior so they apply to any agent. Harness-specific plumbing (apply_patch grammars, `phase` fields, compaction API) deliberately excluded — that's API integration, not prompting.
@@ -19,6 +21,8 @@ A reference library of proven instruction blocks for authoring agent instruction
 - **Agent-ready work is shaped before execution** — ambiguous requirements should be grilled into durable planning context, then sliced into independently testable vertical tracer bullets with fast feedback loops and documented project runways.
 
 ## Provenance
+
+- [Cloudflare security-audit-skill MIT snapshot](../../docs/research/raw/ingested/cloudflare-security-audit-skill/SOURCE.md) — operating-mode gate and demonstrated-impact/no-severity-for-unconfirmed rules, adapted selectively (2026-11-02).
 
 - [openai-gpt-5-2-prompting-guide.md](https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide) — verbosity clamps, scope discipline, long-context re-grounding, ambiguity/hallucination handling, user-update specs, tool-usage rules, research-agent appendix. https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide
 - [openai-codex-prompting-guide.md](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide) — autonomy/persistence, loop-breaker, plan closure and promise discipline, final-message style, dirty-worktree etiquette, frontend anti-slop, custom-tool naming guidance, metaprompting. https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide
@@ -39,6 +43,8 @@ A reference library of proven instruction blocks for authoring agent instruction
 Per the workspace Spirit (AGENTS.md): this library guides rather than constrains. The "choose the altitude" section is load-bearing — constraining blocks are tools for specific, costly failure modes, not a default posture, and every hard rule carries its why so a more capable future agent can generalize or supersede it correctly.
 
 ## Tests
+
+2026-11-02 additions are authored, **not run**; `partial` preserves prior test dates without certifying this revision.
 
 `tests/accuracy-check.md` — verify each block traces to the live URL in Provenance (not a local clipping) and hasn't drifted in meaning during agent-agnostic rewriting. Unfetchable URLs are BLOCKED, not FAIL. Local-only expansions (2026-08-17 metaprompting) are checked against this file. Live-URL run 2026-08-21 **PASS** (Boonstra/Kaggle technique repertoire BLOCKED).
 

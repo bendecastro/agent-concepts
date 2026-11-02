@@ -37,6 +37,18 @@ When designing a skill suite rather than a single prompt, keep workflows small a
   monolithic process frameworks. The user keeps control while the agent gains discipline.
 ```
 
+### Loading is not authorization
+
+Adapt this mode gate when a broad auto-trigger description can load a costly workflow:
+
+```
+Loading this skill defaults to guidance, not authorization for its heavy or irreversible
+workflow. Run that workflow (fan-out, file creation, external actions) only on an explicit
+request for it. If the request is ambiguous, ask one focused question before starting.
+```
+
+Why: broad descriptions auto-trigger on ordinary questions; loading must not silently authorize costly workflows. From Cloudflare’s security-audit-skill; see [security-audit](../../security-audit/body/SKILL.md#choose-the-mode-before-acting) for the in-workspace example. An explicit workflow request does not bypass its action-specific safety controls.
+
 ## Standing instruction files (always-loaded context)
 
 For the file an agent reads every session — AGENTS.md, CLAUDE.md, a system prompt. These fail by growing: every line is always loaded, and a bloated file causes the agent to ignore the rules that matter because they're lost in noise. (Claude Code best practices.)

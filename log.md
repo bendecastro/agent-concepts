@@ -1553,3 +1553,7 @@ Replaced the preview/bytearray planted bug (c) with a Unicode-normalization hand
 
 ## [2026-11-02] implement | security-audit fixture (c) grading
 Answer key now accepts confirmed-with-complete-source-trace or needs_validation for the NFKC handle bug; auditor-side stdlib checks on auditor-supplied input are explicitly ungated, target-code execution still needs both gates.
+
+## [2026-11-02] implement | code-review evidence rules and prompting-agents loading-is-not-authorization
+Adapted Cloudflare evidence calibration and an explicit costly-workflow mode gate; preserved the drain's strict machine output contract with an explicit exception for its existing untested channel.
+Authored new artifact-graded scenarios, not run; marked revisions partial while retaining historical dates. No deployment.

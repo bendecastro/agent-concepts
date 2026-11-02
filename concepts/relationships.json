@@ -344,6 +344,15 @@
       "required": true,
       "source": "concepts/security-audit/CONCEPT.md#design-decisions",
       "reason": "Adapts fresh-context reviewer isolation and findings-are-not-obligations calibration, not the two-axis diff workflow."
+    },
+    {
+      "from": "prompting-agents",
+      "to": "security-audit",
+      "relation": "depends_on_contract",
+      "required": false,
+      "when": "authoring broad-trigger skills with costly workflows",
+      "source": "concepts/prompting-agents/body/SKILL.md#loading-is-not-authorization",
+      "reason": "Points to the guidance-default and explicit-audit mode gate as an in-workspace example."
     }
   ]
 }

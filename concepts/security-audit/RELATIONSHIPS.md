@@ -17,4 +17,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-None.
+- incoming from [prompting-agents](../prompting-agents/RELATIONSHIPS.md): depends on this concept's contract — optional, when authoring broad-trigger skills with costly workflows.
+  Points to the guidance-default and explicit-audit mode gate as an in-workspace example.
+  Source: [prompting-agents/body/SKILL.md](../prompting-agents/body/SKILL.md#loading-is-not-authorization)

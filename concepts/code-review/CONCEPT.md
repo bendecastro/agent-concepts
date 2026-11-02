@@ -10,6 +10,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Design decisions
 
+- **Cloudflare adaptation (2026-11-02).** Evidence caps severity; human-facing unresolved hypotheses are questions without severity. Machine-gated reports retain their existing untested channel and schema, still subject to the impact ceiling and anti-overclaiming rules. No refuting verifier or coverage ledger is added.
+
 - **Two independent axes.** Fixed-diff review separates Spec fidelity from Standards quality, using parallel read-only reviewers and separate reports so one pass cannot mask the other.
 - **One concept, two moments.** Requesting and receiving review are separated sections in the body but share one discipline: reviewers supply evidence, implementers verify before changing code.
 - **Technical over performative.** The body preserves the upstream ban on social over-agreement because it protects judgment: feedback is not accepted or rejected until checked against codebase reality.
@@ -24,6 +26,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Provenance
 
+- [Cloudflare security-audit-skill MIT snapshot](../../docs/research/raw/ingested/cloudflare-security-audit-skill/SOURCE.md) — operating-mode gate and demonstrated-impact/no-severity-for-unconfirmed rules, adapted selectively (2026-11-02).
+
 - [obra/superpowers `skills/requesting-code-review/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/requesting-code-review/SKILL.md) — review-request workflow and severity expectations.
 - [obra/superpowers `skills/requesting-code-review/code-reviewer.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/requesting-code-review/code-reviewer.md) — reviewer prompt template adapted into the review packet/checklist.
 - [obra/superpowers `skills/receiving-code-review/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/receiving-code-review/SKILL.md) — feedback reception, YAGNI check, pushback rules, GitHub thread detail.
@@ -36,6 +40,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as a first-class result so a check that could not run is recorded with a reason rather than omitted. Restated in this workspace's voice; the upstream repo has no root LICENSE and that skill carries no licence file. (2026-09-06)
 
 ## Tests
+
+2026-11-02 additions are authored, **not run**; `partial` preserves prior test dates without certifying this revision.
 
 `tests/scenario.md` — pressure scenarios for independent Spec/Standards review, fixed-point validation, blind implementation, performative agreement, unclear feedback, and reviewer overreach. Checks 1–6 pressure-tested 2026-07-16 **PASS** (Grok). Checks 7–9 pressure-tested 2026-08-21 **PASS** (Pi/Grok 4.6 medium; naive consumers; graded from `/tmp/pt-code-review-{7,8,9}` and `/tmp/bc-swarm/2026-08-21-gap-close/cr{7,8,9}.md`).
 

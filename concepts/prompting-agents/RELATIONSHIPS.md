@@ -7,7 +7,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-None.
+- depends on `security-audit`'s contract — optional, when authoring broad-trigger skills with costly workflows.
+  Points to the guidance-default and explicit-audit mode gate as an in-workspace example.
+  Source: [body/SKILL.md](body/SKILL.md#loading-is-not-authorization)
 
 ## Incoming
 
