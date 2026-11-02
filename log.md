@@ -1550,3 +1550,6 @@ Stdlib validator: guarded unit run passed (11 tests, 36 subtests). Four pressure
 
 ## [2026-11-02] implement | security-audit review fixes
 Replaced the preview/bytearray planted bug (c) with a Unicode-normalization handle bug settled by a bounded normalize oracle; made the validator command portable; moved the Cloudflare raw source to ingested/ with link updates.
+
+## [2026-11-02] implement | security-audit fixture (c) grading
+Answer key now accepts confirmed-with-complete-source-trace or needs_validation for the NFKC handle bug; auditor-side stdlib checks on auditor-supplied input are explicitly ungated, target-code execution still needs both gates.

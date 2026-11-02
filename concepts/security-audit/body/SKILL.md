@@ -51,6 +51,8 @@ named “sandbox” is insufficient: verify enforcement, read-only source/tools,
 no host secrets, empty allowlisted environment and bounded resources/time. No
 network fetches, deployed probes, real credentials or shared-state tests.
 Without both controls, a candidate needing execution stays `needs_validation`.
+A harmless standard-library or language check on auditor-supplied input is not
+running target-controlled code and needs no gate.
 See [validation and reporting](VALIDATION-AND-REPORTING.md) for evidence handling.
 
 ## Full audit: one bounded pass
