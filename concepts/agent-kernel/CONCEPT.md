@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: partial
 tested: 2026-10-26
-deployed: 2026-10-26
+deployed: 2026-11-02
 ---
 # Concept: agent-kernel
 
@@ -75,6 +75,7 @@ Candidate targets, in order of expected value: thin custom harnesses → Pi (if 
 - **All five deltas refreshed again 2026-09-23** with `🏁` / `👣` in place of the written recap labels, with no change to the exception or question format. The canonical variant passed the three-prompt pressure check in `tests/pressure-scenarios.md` before propagation.
 - **Argue/facts bullets deployed 2026-10-26** to all five: Codex, Grok, OpenCode in operating posture/core behavior; Pi in `## Core behavior` with the facts bullet replacing the old `Output style` sycophancy paragraph; Claude Code as marked OVERRIDE pointer bullets. Each copy's act-on-request line gained "unless the argue-for-the-best-outcome bullet applies"; marker dates bumped to 2026-10-26 where present.
 - **Codex (delta only, 2026-06-12; posture deltas refreshed 2026-08-12):** `~/.codex/AGENTS.md` carries a marked global kernel delta: consult-on-judgment-calls and answer-questions-before-editing posture, defaults-with-reasons, evidence-before-claims, publish-policy/default-deny (separate from Codex `trust_level`), and the Specialized Concepts catalog pointer. Canonical file lives at `~/Sync/CONFIG/.codex/AGENTS.md` (tracked + synced) with `~/.codex/AGENTS.md` symlinked to it per machine by `bc-setup-config-symlinks`; refresh the marked copy when the kernel changes.
+- **Muse Code (delta only, 2026-11-02):** user-scope standing rules at `~/.config/muse/AGENTS.md`, a **regular-file copy** of `~/Sync/CONFIG/muse/AGENTS.md` (Muse refuses a symlink as the rules path). `bc-setup-config-symlinks` copies that one file and never dir-links `~/.config/muse` (auth/settings live there). Delta matches Codex/Grok posture, recap, untrusted-content, storage safety, publish-check, and catalog pointer. **Git discipline is omitted:** bundled `git` already forbids unsolicited commits; the delta points at that skill and only adds publish-check for when the user does ask. Corpus skills are not part of this deploy — Muse already scans `~/.agents/skills/`. Do not `/rules import` or `muse skills import` for this kernel. Live recap/`git` clash pressure run pending.
 
 ## Storage safety provenance and impact
 

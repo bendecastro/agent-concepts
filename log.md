@@ -1560,3 +1560,6 @@ Authored new artifact-graded scenarios, not run; marked revisions partial while 
 
 ## [2026-11-02] test | code-review Check 11 revised after review
 Replaced the fixed-literal injection fixture with a source-grounded path-traversal question (`CACHE_DIR`/`name` caller unseen) and split Check 11 into a consumer packet and a grader key; recorded the old-fixture run as INVALID for the question criterion. Revised check NOT RUN.
+
+## [2026-11-02] deploy | Muse Code kernel delta + shared-bus docs
+Muse already lists corpus skills from `~/.agents/skills/` (no extra deploy target; do not `muse skills import`/`install`). Added a Codex/Grok-style kernel delta as a regular-file copy `~/Sync/CONFIG/muse/AGENTS.md` → `~/.config/muse/AGENTS.md` (Git discipline omitted: bundled `git` forbids unsolicited commits). Documented in harnesses.md, bootstrap.md, AGENTS.md, deploy-local-skills.py. Live recap pressure run pending.
