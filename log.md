@@ -1557,3 +1557,6 @@ Answer key now accepts confirmed-with-complete-source-trace or needs_validation 
 ## [2026-11-02] implement | code-review evidence rules and prompting-agents loading-is-not-authorization
 Adapted Cloudflare evidence calibration and an explicit costly-workflow mode gate; preserved the drain's strict machine output contract with an explicit exception for its existing untested channel.
 Authored new artifact-graded scenarios, not run; marked revisions partial while retaining historical dates. No deployment.
+
+## [2026-11-02] test | code-review Check 11 revised after review
+Replaced the fixed-literal injection fixture with a source-grounded path-traversal question (`CACHE_DIR`/`name` caller unseen) and split Check 11 into a consumer packet and a grader key; recorded the old-fixture run as INVALID for the question criterion. Revised check NOT RUN.
