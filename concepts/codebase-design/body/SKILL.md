@@ -28,6 +28,18 @@ A **deep module** = small interface + lots of implementation. A **shallow module
 - **The interface is the test surface.** Callers and tests cross the same seam. If you want to test *past* the interface, the module is probably the wrong shape.
 - **One adapter means a hypothetical seam. Two adapters means a real one.** Don't introduce a seam unless something actually varies across it.
 
+## Friction signals
+
+Signs a module is too shallow or its seam is in the wrong place. Use them when building as well as when reviewing: if a change you are making produces one, reconsider the shape before adding to it.
+
+- Understanding one concept requires bouncing across many files.
+- A module's interface is almost as complex as its implementation.
+- Helpers were extracted for testability, but real bugs hide in how they are called (low locality).
+- Tight coupling leaks across seams.
+- Behaviour is hard to test through a public interface.
+
+Confirm a signal with the deletion test before acting on it: complexity that would concentrate if the module were deleted is a deepening signal; complexity that would merely move is not.
+
 ## Designing for testability
 
 Good interfaces make testing natural:

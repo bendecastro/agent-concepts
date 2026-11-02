@@ -1537,3 +1537,6 @@ Checked pi.md (portable contract consumed, no duplicate needed) and external inj
 
 ## [2026-10-31] test | bc-swarm todo/manifest pressure scenario
 Run 1 invalid (consuming agent had no todo tool; manifest-only reminder, flagged). Run 2 PASS with `pi -ne -e extensions/todo.ts`, gpt-6.1-terra low: one deferred todo with trigger `migration-review lands`, manifest kept events plus the owner-requested reminder. Overall status stays partial for the existing check-4 gap.
+
+## [2026-11-01] implement | codebase-design friction signals
+Moved the five friction signals from `improve-codebase-architecture` into `codebase-design` § Friction signals so builder subagent roles that load `codebase-design` get them; the architecture skill now points there (new `depends_on_contract` edge).

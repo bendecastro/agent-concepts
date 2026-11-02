@@ -14,9 +14,12 @@ Model-invoked **reference vocabulary** for designing deep modules: a lot of beha
 - **Reference concept → accuracy check, not pressure test.** Per AGENTS.md, concepts with no runtime gate need only an accuracy check, not a scripted pressure scenario.
 - **Expansion files not ported.** Upstream has `DEEPENING.md` (dependency categories, replace-don't-layer testing) and `DESIGN-IT-TWICE.md` (parallel sub-agents design the interface several ways, then compare). Left out for now to keep the body a single self-contained glossary; the "Going deeper" pointers were dropped rather than left as broken links. Port them later if the deep-dive is wanted — they're summarized in the raw capture.
 
+- **Friction signals moved here from `improve-codebase-architecture` (2026-11-01).** The five signs of a shallow module or misplaced seam lived only in the user-invoked architecture review, so builder roles that load this skill (`worker`, `routine-worker`, reviewers, `oracle`) built without them. They now have one home here, and the architecture skill points to it. This is a local addition to the upstream body, not a port.
+
 ## Provenance
 
 - [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — verbatim `codebase-design/SKILL.md` (glossary, principles, testability, rejected framings); `DEEPENING.md`/`DESIGN-IT-TWICE.md` noted but not captured in full. https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md
+- Friction-signal list: upstream `improve-codebase-architecture/SKILL.md` Explore step (filed in `pocock-engineering-extensions/`), moved here from the local `improve-codebase-architecture` body.
 - Underlying sources: John Ousterhout, *A Philosophy of Software Design* (deep modules); Michael Feathers (seams).
 
 ## Tests

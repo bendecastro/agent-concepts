@@ -8,6 +8,7 @@ Reference vocabulary — no runtime gate, so an accuracy check suffices (per AGE
 - [x] Four principles present: depth-is-a-property-of-the-interface; the deletion test; the interface-is-the-test-surface; one-adapter-hypothetical / two-adapters-real.
 - [x] Three testability rules: accept-don't-create dependencies; return-results-not-side-effects; small surface area.
 - [x] Rejected framings present: depth-as-line-ratio (Ousterhout); "interface" as the TS keyword; "boundary" as DDD bounded context.
+- [x] Friction signals section lists the five signs from the upstream `improve-codebase-architecture` Explore step and ties them to the deletion test; CONCEPT.md records it as a local addition (checked 2026-11-01 against the removed lines in the architecture skill).
 - [x] No invented terms beyond the source. Omissions (DEEPENING.md, DESIGN-IT-TWICE.md) are documented in CONCEPT.md, not silent.
 
 ## Run result — 2026-08-21 — **PASS**

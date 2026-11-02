@@ -22,15 +22,7 @@ Before organic exploration or presenting inbox candidates, read the bounded fall
 
 Then, before organic exploration, read only entries eligible under the producer's canonical lowercase `status: open` marker from that inbox alongside the project glossary and ADRs. A capitalized `Status` is eligible only when project instructions explicitly declare it as a syntax alias for the canonical lowercase field. Preserve the inbox's current order (newest first). If project instructions declare an eligible-entry read bound `N`, read exactly the `N` newest eligible entries when at least `N` exist, otherwise read all eligible entries. With no declared bound, read exactly the 10 newest canonical lowercase `status: open` entries when at least 10 exist, otherwise read all available canonical lowercase `status: open` entries. Do not scan older history beyond that set. These bounds are for context economy, not correctness authority: unread older entries are not thereby resolved or irrelevant. Treat each non-suppressed eligible inbox entry actually processed as a hypothesis, not a decision, and verify its named **module**, **interface**/**seam**, deletion-test consequence, and every concrete evidence link declared in the observation and used in verification against the current code/tree. Do not present stale, closed/rejected, shape-only, or contradicted entries as candidates. For each non-suppressed eligible inbox entry actually processed, emit exactly one candidate/discard row: either a candidate card whose `source` exactly carries the entry's source value (the observation identity) and whose evidence carries every concrete evidence link declared in the observation and used in verification, or an explicit discard reason. A missing or unverified link invalidates a candidate card: discard it with an explicit reason rather than silently omitting the link. Shape-only, stale, closed/rejected, and contradicted entries must be discarded and cannot seed cards. Never copy an old recommendation into a decision.
 
-Then explore organically for friction:
-
-- Understanding one concept requires bouncing across many files.
-- A module's interface is almost as complex as its implementation.
-- Helpers were extracted for testability but real bugs hide in how they are called (low locality).
-- Tight coupling leaks across seams.
-- Behavior is hard to test through a public interface.
-
-Apply the deletion test: would deleting the suspected module concentrate complexity or merely move it? Concentration is a deepening signal.
+Then explore organically for the friction signals in `codebase-design` § Friction signals, confirming each with its deletion test: would deleting the suspected module concentrate complexity or merely move it? Concentration is a deepening signal.
 
 ## 2. Present candidates as a visual report
 

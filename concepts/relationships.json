@@ -319,6 +319,15 @@
       "when": "glossary persistence, conflicts or ADR decisions",
       "source": "concepts/naming-things/body/SKILL.md",
       "reason": "Domain-modeling owns glossary purity, discovery, reconciliation and ADR rules; naming-things supplies criteria and conceptual persistence categories only."
+    },
+    {
+      "from": "improve-codebase-architecture",
+      "to": "codebase-design",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "organic exploration",
+      "source": "concepts/improve-codebase-architecture/body/SKILL.md#1-explore",
+      "reason": "The friction-signal list and deletion test have one home in codebase-design, so builder roles that load it get the same signals the review uses."
     }
   ]
 }
