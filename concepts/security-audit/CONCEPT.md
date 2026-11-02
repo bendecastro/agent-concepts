@@ -64,7 +64,7 @@ silently authorize files, execution or a full audit.
 
 ## Provenance
 
-- Immutable [Cloudflare snapshot](../../docs/research/raw/cloudflare-security-audit-skill/SOURCE.md),
+- Immutable [Cloudflare snapshot](../../docs/research/raw/ingested/cloudflare-security-audit-skill/SOURCE.md),
   upstream [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill)
   at [`c1c8a8c1471069fb0e188eeaff69b8e8db6564a8`](https://github.com/cloudflare/security-audit-skill/tree/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8).
   Adapted SKILL, RECONNAISSANCE, HUNTING, ATTACK-CLASSES,
@@ -85,7 +85,7 @@ Behavioral pressure tests **not yet run**. [Scenarios](tests/scenarios.md) cover
 severity pressure, skipping independent verification, unsandboxed execution and
 ambiguous guidance with no files. Parent runs them later; no fixture code executed.
 
-Validator command: `python3 "$HOME/Sync/Scripts/bin/utils/bc-pytest" -q concepts/security-audit/tests`.
+Validator command: `bc-pytest -q concepts/security-audit/tests` (fallback: `python3 -m pytest -q concepts/security-audit/tests`).
 Result: **11 passed, 36 subtests passed in 0.02s**. Unit success does not change the
 pressure-test status above.
 
