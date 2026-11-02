@@ -26,6 +26,12 @@ If a reviewer discovers a different root cause, treat it as a new candidate need
 its own fresh reviewer. The coordinator checks the returned record against source
 and updates the ledger without upgrading its impact or verdict.
 
+Shortcut rationalizations that fail the run: "the repo is tiny, so a chat answer
+covers it" — size never waives the reviewer, records, or validator; "the trace is
+complete, so review adds nothing" — completeness is the reviewer's call, not the
+hunter's; "artifacts weren't explicitly asked for" — a full-audit trigger already
+requests them, and a blocked Output gate means pausing, not chatting.
+
 ## Bounded execution and evidence
 
 Both run-specific approval and sandbox enforcement are prerequisites, not implied
