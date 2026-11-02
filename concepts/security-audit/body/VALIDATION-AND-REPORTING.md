@@ -35,6 +35,19 @@ memory, process, output-size and time bounds. Never install/fetch dependencies.
 Use dummy principals/resources and the smallest observation that settles the
 boundary. Do not escalate a crash or continue to persistence, outage or exploitation.
 
+When approval arrives without a sandbox, keep the source verdicts, record the
+missing-confinement blocker, and offer the owner three choices: set up an
+enforced sandbox (such as bwrap or podman) and rerun; the owner runs the
+bounded command themselves and pastes the output; or leave the candidate as is.
+
+These rationalizations do not waive confinement — approval is one gate, not a
+waiver of the other:
+- "owner approved" → approval without confinement is still one gate missing.
+- "it's tiny/harmless" → judged from the code you are about to trust, not before it.
+- "no dependencies" → dependency-free code still runs arbitrary top-level code on the host.
+- "it's just a fixture" → fixture status still writes to the host (e.g. `__pycache__`).
+- "rule is too strict here" → the strictness is the control; intent does not confine.
+
 Record exact input, command, sandbox controls, safe allowlisted variables and minimum
 result; never dump the environment or credentials. Scratch and its contents become
 hostile after execution. Do not bulk-copy scratch, follow its links or open special
