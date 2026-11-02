@@ -2,6 +2,8 @@
 
 ## Concepts
 
+- [security-audit](concepts/security-audit/CONCEPT.md) — guidance by default; explicit source-focused audit with invariant hunting, fresh refutation, evidence-capped verdicts and repo-local ignored reports. Validator unit tests pass; pressure scenarios authored, not run; not deployed.
+
 - [naming-things](concepts/naming-things/CONCEPT.md) — model-invoked advisory naming criteria for domain/public code names; glossary handoff to domain-modeling, progressive audit/rename recipe. Pressure scenarios authored, not run; not deployed.
 
 Storage safety (2026-10-27): kernel and test/fan-out/worktree consumers updated; new pressure scenarios pending, historical deployment is not certification. See [scenario matrix](concepts/agent-kernel/tests/storage-safety.md).

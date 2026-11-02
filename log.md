@@ -1543,3 +1543,7 @@ Moved the five friction signals from `improve-codebase-architecture` into `codeb
 
 ## [2026-11-02] ingest | cloudflare/security-audit-skill snapshot filed
 Filed the whole MIT repo at `c1c8a8c` in the raw inbox with SOURCE.md and hashes. Owner-resolved plan (grill, 8 decisions): medium-port `security-audit` concept, evidence rules into `code-review`, guidance-by-default pattern into `prompting-agents`.
+
+## [2026-11-02] implement | security-audit concept
+Medium port of Cloudflare's MIT snapshot: guidance default, one source-focused hunting pass, fresh refutation, impact-capped verdicts, coverage ledger and four boundary-selected companions. Repo-local ignored outputs and approval-plus-sandbox execution gates replace upstream defaults.
+Stdlib validator: guarded unit run passed (11 tests, 36 subtests). Four pressure scenarios and planted fixture authored, NOT RUN; not deployed. Raw evidence unchanged; status and relationships regenerated.

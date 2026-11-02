@@ -328,6 +328,22 @@
       "when": "organic exploration",
       "source": "concepts/improve-codebase-architecture/body/SKILL.md#1-explore",
       "reason": "The friction-signal list and deletion test have one home in codebase-design, so builder roles that load it get the same signals the review uses."
+    },
+    {
+      "from": "security-audit",
+      "to": "prompting-agents",
+      "relation": "adapts",
+      "required": true,
+      "source": "concepts/security-audit/CONCEPT.md#design-decisions",
+      "reason": "Adapts scope, ambiguity, evidence and enforced privileged-action phrasing for guidance versus explicit audit mode."
+    },
+    {
+      "from": "security-audit",
+      "to": "code-review",
+      "relation": "adapts",
+      "required": true,
+      "source": "concepts/security-audit/CONCEPT.md#design-decisions",
+      "reason": "Adapts fresh-context reviewer isolation and findings-are-not-obligations calibration, not the two-axis diff workflow."
     }
   ]
 }
