@@ -1540,3 +1540,6 @@ Run 1 invalid (consuming agent had no todo tool; manifest-only reminder, flagged
 
 ## [2026-11-01] implement | codebase-design friction signals
 Moved the five friction signals from `improve-codebase-architecture` into `codebase-design` § Friction signals so builder subagent roles that load `codebase-design` get them; the architecture skill now points there (new `depends_on_contract` edge).
+
+## [2026-11-02] ingest | cloudflare/security-audit-skill snapshot filed
+Filed the whole MIT repo at `c1c8a8c` in the raw inbox with SOURCE.md and hashes. Owner-resolved plan (grill, 8 decisions): medium-port `security-audit` concept, evidence rules into `code-review`, guidance-by-default pattern into `prompting-agents`.
