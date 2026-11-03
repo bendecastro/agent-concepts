@@ -4,7 +4,7 @@ Machine-local copied kernel deltas: lint warns on drift using optional private `
 
 ## Concepts
 
-- [security-audit](concepts/security-audit/CONCEPT.md) — guidance by default; explicit source-focused audit with invariant hunting, fresh refutation, evidence-capped verdicts and repo-local ignored reports. Validator unit tests pass; pressure scenarios authored, not run; not deployed.
+- [security-audit](concepts/security-audit/CONCEPT.md) — guidance by default; explicit source-focused audit with invariant hunting, fresh refutation, evidence-capped verdicts and repo-local ignored reports. Validator unit tests pass; 4 pressure scenarios pass (2026-11-03); deployed to shared bus + Pi + Claude.
 
 - [naming-things](concepts/naming-things/CONCEPT.md) — model-invoked advisory naming criteria for domain/public code names; glossary handoff to domain-modeling, progressive audit/rename recipe. Pressure scenarios authored, not run; not deployed.
 

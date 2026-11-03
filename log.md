@@ -1566,3 +1566,6 @@ Muse already lists corpus skills from `~/.agents/skills/` (no extra deploy targe
 
 ## [2026-11-03] lint | warn on copied kernel-delta drift (Muse)
 Added generic, warning-only byte comparison from optional private kernel-copies.json, with isolated fixture tests and portable configuration docs.
+
+## [2026-11-03] deploy | security-audit
+All 4 pressure scenarios pass on e530e5d (headless Pi, Grok 4.6 high, isolated scratch repos, graded from artifacts) after tuning the execution gate (approval ≠ sandbox waiver) and mode/label gate (explicit audit needs the full workflow; guidance carries no verdict labels). Deployed via deploy-local-skills.py (shared bus + Pi + Claude; Muse reads the bus); naming-things skipped (untested).

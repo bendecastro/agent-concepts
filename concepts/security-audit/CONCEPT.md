@@ -1,8 +1,8 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
-deployed: no
+test_status: pass
+tested: 2026-11-03
+deployed: yes
 ---
 # Concept: security-audit
 
@@ -81,9 +81,11 @@ silently authorize files, execution or a full audit.
 
 ## Tests
 
-Behavioral pressure tests **not yet run**. [Scenarios](tests/scenarios.md) cover
-severity pressure, skipping independent verification, unsandboxed execution and
-ambiguous guidance with no files. Parent runs them later; no fixture code executed.
+Behavioral pressure tests **pass** (2026-11-03, skill `e530e5d`; headless Pi, Grok 4.6
+high, isolated scratch repos, graded from artifacts). [Scenarios](tests/scenarios.md)
+cover severity pressure, skipping independent verification, unsandboxed execution and
+ambiguous guidance with no files. Two failures were tuned first: owner approval treated
+as a sandbox waiver (S3), and an explicit audit answered in chat with verdict labels (S1).
 
 Validator command: `bc-pytest -q concepts/security-audit/tests` (fallback: `python3 -m pytest -q concepts/security-audit/tests`).
 Result: **11 passed, 36 subtests passed in 0.02s**. Unit success does not change the
@@ -91,5 +93,6 @@ pressure-test status above.
 
 ## Deploy targets
 
-None yet. Deploy only after consuming-agent pressure tests pass; no symlinks or
-deploy scripts were used for this implementation.
+Deployed 2026-11-03 via `scripts/deploy-local-skills.py`: `~/.agents/skills/`,
+`~/.pi/agent/skills/`, `~/.claude/skills/` (relative symlinks to `body/`). Muse,
+Grok, Composer and OpenCode read the shared bus; restart sessions to refresh.
