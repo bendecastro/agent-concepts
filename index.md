@@ -1,5 +1,7 @@
 # Index
 
+Machine-local copied kernel deltas: lint warns on drift using optional private `~/.config/agent-concepts/kernel-copies.json`; see [example](docs/kernel-copies.example.json).
+
 ## Concepts
 
 - [security-audit](concepts/security-audit/CONCEPT.md) — guidance by default; explicit source-focused audit with invariant hunting, fresh refutation, evidence-capped verdicts and repo-local ignored reports. Validator unit tests pass; pressure scenarios authored, not run; not deployed.

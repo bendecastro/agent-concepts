@@ -9,6 +9,7 @@ leaves judgment calls to the agent/user.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import sys
@@ -538,6 +539,44 @@ def lint_deploy_symlinks(issues: list[Issue]) -> None:
                     issues.append(Issue("WARN", f"deploy symlink for local concept points outside concepts/: {link} -> {raw}"))
 
 
+def lint_kernel_copies(issues: list[Issue]) -> None:
+    """Check optional machine-local copies without making them repo errors."""
+    home = Path.home()
+    config = home / ".config/agent-concepts/kernel-copies.json"
+
+    def display(path: Path) -> str:
+        return str(Path("~") / path.relative_to(home)) if path.is_relative_to(home) else str(path)
+
+    try:
+        data = json.loads(config.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return
+    except (OSError, ValueError) as exc:
+        issues.append(Issue("WARN", f"kernel copies: cannot read {display(config)}: {exc}"))
+        return
+    if not isinstance(data, dict) or not isinstance(data.get("copies"), list):
+        issues.append(Issue("WARN", f"kernel copies: {display(config)} must contain a copies list"))
+        return
+    for entry in data["copies"]:
+        if not isinstance(entry, dict) or not all(
+            isinstance(entry.get(key), str) and entry[key] for key in ("name", "source", "runtime")
+        ):
+            issues.append(Issue("WARN", f"kernel copies: invalid entry in {display(config)}"))
+            continue
+        source = Path(entry["source"]).expanduser()
+        runtime = Path(entry["runtime"]).expanduser()
+        label = f"kernel copy {entry['name']}: {display(source)} -> {display(runtime)}"
+        try:
+            differs = source.read_bytes() != runtime.read_bytes()
+        except OSError as exc:
+            issues.append(Issue("WARN", f"{label}: missing or unreadable file ({exc.strerror}); "
+                                "re-copy source to runtime (bc-setup-config-symlinks or equivalent)"))
+            continue
+        if differs:
+            issues.append(Issue("WARN", f"{label}: bytes differ; re-copy source to runtime "
+                                "(bc-setup-config-symlinks or equivalent)"))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Lint the agents workspace")
     parser.add_argument("--strict", action="store_true", help="treat warnings as failures")
@@ -585,6 +624,7 @@ def main() -> int:
     lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)
+    lint_kernel_copies(issues)
 
     if not issues:
         print("agents lint: ok")

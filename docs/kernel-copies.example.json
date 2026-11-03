@@ -1,0 +1,9 @@
+{
+  "copies": [
+    {
+      "name": "muse",
+      "source": "~/config-source/muse/AGENTS.md",
+      "runtime": "~/.config/muse/AGENTS.md"
+    }
+  ]
+}

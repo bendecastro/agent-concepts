@@ -1563,3 +1563,6 @@ Replaced the fixed-literal injection fixture with a source-grounded path-travers
 
 ## [2026-11-02] deploy | Muse Code kernel delta + shared-bus docs
 Muse already lists corpus skills from `~/.agents/skills/` (no extra deploy target; do not `muse skills import`/`install`). Added a Codex/Grok-style kernel delta as a regular-file copy `~/Sync/CONFIG/muse/AGENTS.md` → `~/.config/muse/AGENTS.md` (Git discipline omitted: bundled `git` forbids unsolicited commits). Documented in harnesses.md, bootstrap.md, AGENTS.md, deploy-local-skills.py. Live recap pressure run pending.
+
+## [2026-11-03] lint | warn on copied kernel-delta drift (Muse)
+Added generic, warning-only byte comparison from optional private kernel-copies.json, with isolated fixture tests and portable configuration docs.
