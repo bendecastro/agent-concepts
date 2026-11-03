@@ -41,7 +41,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Tests
 
-2026-11-02 additions are authored, **not run**; `partial` preserves prior test dates without certifying this revision.
+2026-11-02 additions: Check 11 (evidence-capped impact) **PASS** 2026-11-03 (Grok 4.6 high); other new clauses not run; `partial` kept.
 
 `tests/scenario.md` — pressure scenarios for independent Spec/Standards review, fixed-point validation, blind implementation, performative agreement, unclear feedback, and reviewer overreach. Checks 1–6 pressure-tested 2026-07-16 **PASS** (Grok). Checks 7–9 pressure-tested 2026-08-21 **PASS** (Pi/Grok 4.6 medium; naive consumers; graded from `/tmp/pt-code-review-{7,8,9}` and `/tmp/bc-swarm/2026-08-21-gap-close/cr{7,8,9}.md`).
 

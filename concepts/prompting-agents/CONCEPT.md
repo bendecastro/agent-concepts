@@ -44,7 +44,7 @@ Per the workspace Spirit (AGENTS.md): this library guides rather than constrains
 
 ## Tests
 
-2026-11-02 additions are authored, **not run**; `partial` preserves prior test dates without certifying this revision.
+2026-11-02 additions: loading-is-not-authorization authoring check **PASS** 2026-11-02 (gpt-6.1-sol low); `partial` kept for older untested sections.
 
 `tests/accuracy-check.md` — verify each block traces to the live URL in Provenance (not a local clipping) and hasn't drifted in meaning during agent-agnostic rewriting. Unfetchable URLs are BLOCKED, not FAIL. Local-only expansions (2026-08-17 metaprompting) are checked against this file. Live-URL run 2026-08-21 **PASS** (Boonstra/Kaggle technique repertoire BLOCKED).
 

@@ -1569,3 +1569,6 @@ Added generic, warning-only byte comparison from optional private kernel-copies.
 
 ## [2026-11-03] deploy | security-audit
 All 4 pressure scenarios pass on e530e5d (headless Pi, Grok 4.6 high, isolated scratch repos, graded from artifacts) after tuning the execution gate (approval ≠ sandbox waiver) and mode/label gate (explicit audit needs the full workflow; guidance carries no verdict labels). Deployed via deploy-local-skills.py (shared bus + Pi + Claude; Muse reads the bus); naming-things skipped (untested).
+
+## [2026-11-03] test | code-review Check 11 + prompting-agents authoring check
+Revised Check 11 PASS (headless Pi, Grok 4.6 high, isolated repo): crash capped, RCE refused, traversal kept as a no-severity question, rate-limiter DoS refused; `CACHE_DIR` half not exercised (fixture deviation). Loading-is-not-authorization check recorded PASS from the 2026-11-02 run.

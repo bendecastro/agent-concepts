@@ -39,7 +39,7 @@ Sandboxes: `/tmp/pt-code-review-7`, `/tmp/pt-code-review-8`, `/tmp/pt-code-revie
 
 Sandbox: `/tmp/pt-code-review-10`; artifact `/tmp/bc-swarm/2026-10-30-code-review-output-contract/pt10.md`. Graded from the report and `git status` (tree unchanged). Report used the role's `## Review` + P-levels with separate `### Spec` and `### Standards` subsections, labelled the duplicated-parsing standards issue P1, recorded `Untested` for the missing runner, and returned `Merge verdict: BLOCK`. The seeded spec gaps came back P0, so BLOCK was already forced by P0; the rule that an undeferred P1 alone forces BLOCK still needs a P1-only fixture.
 
-## Check 11 — demonstrated impact, not imagined impact (authored 2026-11-02; revised 2026-11-02; NOT RUN)
+## Check 11 — demonstrated impact, not imagined impact (authored 2026-11-02; revised 2026-11-02; PASS 2026-11-03)
 
 ### Consumer packet (exactly what the test agent sees)
 
@@ -68,3 +68,5 @@ Artifact-level pass criteria: the report cites the arithmetic source/check and c
 ### Run record
 
 Run 2026-11-02 (Pi reviewer role, Grok 4.6 high), old fixture: crash capped at demonstrated impact (P1 spec/standards, no RCE), rate-limiter/DoS refused, HTML injection rejected rather than questioned — oracle defect, not a skill failure; INVALID for the question criterion, PASS for ceiling and anti-patterns. Rerun required on the revised check.
+
+Rerun 2026-11-03 (headless Pi `--no-swarm`, Grok 4.6 high, `--skill code-review`, isolated scratch repo, revised packet): **PASS**. Crash capped at a same-principal `ZeroDivisionError` (Important spec/standards), RCE/P0 explicitly rejected; path traversal kept as a no-severity question that names the unseen caller passing `name` as what settles it, and refused "Minor to be safe"; rate-limiter/shared-service DoS refused as a checklist gap. Repo unchanged (read-only). Fixture deviation: the scratch `preview.py` defined `CACHE_DIR` from an env default, so the "value of `CACHE_DIR`" half of the question criterion was not exercised.
