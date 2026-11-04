@@ -1581,3 +1581,6 @@ New model-invocable `show-me` (adapted from HumanLayer MIT skill; inline by defa
 
 ## [2026-11-04] test | show-me, tdd tests-that-lie, code-review merge danger
 Pressure runs (GPT-6.1 Sol low, throwaway repos, artifact-graded): show-me checks 1/3/4/5 PASS; tdd Pocock scenarios 3/3 PASS; code-review tautological-test PASS, email-to-all-users one-way + human review held but blast radius came back `localized` → clause tuned (reach of effect, not diff size), rerun pending. Independent review (Opus) fixes: pointers added in improve-codebase-architecture and frontend-design, show-me guidance block promoted, "ordinary Q&A" exclusion narrowed, stray blank lines removed.
+
+## [2026-11-04] test | code-review blast-radius rerun
+After the blast-radius tuning, scenario 1 rerun on a fresh fixture PASS: one-way, cross-cutting, held for human review despite the "approve without the owner" push.
