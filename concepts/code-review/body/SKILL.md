@@ -43,7 +43,7 @@ Classify findings as **Critical**, **Important**, or **Minor** and include a pre
 
 Present findings under `## Spec` and `## Standards`. Do not merge or rerank them: code may meet the spec while violating standards, or vice versa. Critical and Important findings block landing; Minors are recorded but may be consciously deferred.
 
-Include a report line: `Merge danger: door = one-way|two-way; blast radius = localized|cross-cutting; reason = ...`. One-way means irreversible effects: data loss/migrations, external sends (emails, payments, publishing), deletes, or secret exposure; two-way means revertable effects. Classify the actual effects, not just whether the code can be reverted. Always flag one-way doors for human review regardless of diff size; automated approval does not discharge that requirement. Keep this line within any role-defined report format.
+Include a report line: `Merge danger: door = one-way|two-way; blast radius = localized|cross-cutting; reason = ...`. One-way means irreversible effects: data loss/migrations, external sends (emails, payments, publishing), deletes, or secret exposure; two-way means revertable effects. Blast radius is the reach of the effect if it is wrong — which users, data, systems or external parties it touches — not the size of the diff: a three-line loop that emails every user is cross-cutting. Classify the actual effects, not just whether the code can be reverted. Always flag one-way doors for human review regardless of diff size; automated approval does not discharge that requirement. Keep this line within any role-defined report format.
 
 ### Role output contract
 

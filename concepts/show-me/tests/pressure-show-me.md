@@ -37,4 +37,12 @@ pages, or stolen lesson/report contracts each block deployment independently.
 
 ## Runs
 
-Not run. These are scenarios, not evidence that consuming agents held the gates.
+2026-11-04 (worker, GPT-6.1 Sol low, body preloaded with codebase-docs and plain-language; throwaway pipeline repo; graded from replies, diffs and git status):
+
+- Check 3 **PASS** — inline call tree cited to `pipeline/*.py` functions; no files written (status clean, file list unchanged).
+- Check 4 **PASS** — under "use every form", gave four relevant views and explicitly declined a component tree and diffs as inventing structure.
+- Check 1 **PASS** — extended the existing README owner (no new docs tree); call tree cites files/functions; no invented components; no HTML.
+- Check 5 **PASS** — one HTML file, not opened ("I can open it if you'd like"), left uncommitted.
+- Checks 2 and 6 and the discovery half of check 1 (loading from the description alone) **not run**.
+
+Reviewer finding fixed afterwards: the general guidance block moved above "Inline by default"; the description's "ordinary Q&A" exclusion narrowed to factual Q&A.

@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
+test_status: partial
+tested: 2026-11-04
 deployed: no
 ---
 # Concept: show-me
@@ -25,7 +25,7 @@ including inside a comprehensive how-it-works document.
 - **Current-state, source-grounded docs.** Cite code behind the boxes and choose
   a form the destination renders. Defer placement to codebase-docs and prose to
   plain-language/unslop; architecture reports, lessons, and UI retain their owners.
-- **Existing contracts preserved.** The four consumer pointers only clarify visual
+- **Existing contracts preserved.** The six consumer pointers (plain-language, unslop, codebase-docs, teach, improve-codebase-architecture, frontend-design) only clarify visual
   ownership. Teach's host adapter, state, cadence and after-lesson artifact contract
   are unchanged, so its existing incoming/outgoing relationships are unaffected.
 
@@ -44,7 +44,7 @@ including inside a comprehensive how-it-works document.
 
 ## Tests
 
-`tests/pressure-show-me.md` defines artifact-graded checks. Not run; the pressure
+`tests/pressure-show-me.md` defines artifact-graded checks. Checks 1, 3, 4, 5 PASS 2026-11-04 (see the file); the pressure
 test gate applies before deployment.
 
 ## Deploy targets

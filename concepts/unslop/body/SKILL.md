@@ -260,7 +260,6 @@ skill ignored.
 
 - Visual form of how-it-works explanations → `show-me`; this skill owns the
   words around the visual.
-
 - Reader outcomes — can this reader find, understand and act on it →
   `plain-language`. That skill owns filler, hedging, dense sentences,
   active voice, and adverbs. Text can be perfectly plain and still

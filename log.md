@@ -1578,3 +1578,6 @@ Filed `docs/research/raw/pocock-pr-bottleneck-talk/` (research notes, links; tra
 
 ## [2026-11-04] implement | show-me concept; tdd tests-that-lie; code-review merge danger
 New model-invocable `show-me` (adapted from HumanLayer MIT skill; inline by default, HTML only on request, pointers from plain-language/unslop/codebase-docs/teach). `tdd` names tautological / structure-sensitive / cannot-fail tests with a per-test "which regression turns this red" self-check; `code-review` Standards applies them and reports a merge-danger line (one-way/two-way door, blast radius). Evidence: Pocock talk notes plus a sampled audit of agent-written tests in an owner repo. Scenarios authored, not run.
+
+## [2026-11-04] test | show-me, tdd tests-that-lie, code-review merge danger
+Pressure runs (GPT-6.1 Sol low, throwaway repos, artifact-graded): show-me checks 1/3/4/5 PASS; tdd Pocock scenarios 3/3 PASS; code-review tautological-test PASS, email-to-all-users one-way + human review held but blast radius came back `localized` → clause tuned (reach of effect, not diff size), rerun pending. Independent review (Opus) fixes: pointers added in improve-codebase-architecture and frontend-design, show-me guidance block promoted, "ordinary Q&A" exclusion narrowed, stray blank lines removed.

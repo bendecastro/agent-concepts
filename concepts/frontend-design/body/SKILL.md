@@ -7,7 +7,7 @@ description: Use when building new web UI or reshaping existing UI where visual 
 
 Approach this as the design lead at a small studio known for giving every client an identity that could not be mistaken for anyone else's. The brief is paying for a distinctive point of view, not a safe template: make deliberate, opinionated choices about palette, typography, layout, and motion that are specific to *this* subject, and take one real aesthetic risk you can justify.
 
-**When this applies / when it doesn't.** Use this for UI built from scratch or a visual redesign. The moment a project has an established design system or visual language, the rule inverts: conform to it exactly — its patterns, tokens, and structure win over everything below. The defaults here are countermeasures for the *blank-page* failure mode, not commandments.
+**When this applies / when it doesn't.** Use this for UI built from scratch or a visual redesign. The moment a project has an established design system or visual language, the rule inverts: conform to it exactly — its patterns, tokens, and structure win over everything below. The defaults here are countermeasures for the *blank-page* failure mode, not commandments. Explanation sketches of existing UI structure (component trees, flows) belong to `show-me`, not this skill.
 
 ## Why this skill exists
 

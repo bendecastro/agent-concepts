@@ -62,4 +62,6 @@ If the user rejects a candidate for a load-bearing reason, offer to record an AD
 - After `diagnosing-bugs`: use this when a bug fix reveals no correct regression-test seam.
 - Output should become a plan/ADR/issue set via `/bc-plan-to-issues`; this skill itself does not create GitHub issues or edit production code.
 
+Inline how-it-works visuals outside this report → `show-me`; this report keeps its own format.
+
 For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

@@ -4,7 +4,7 @@ description: >
   Explain how a system, pipeline, module, or code path works using the smallest
   useful visual. Use when writing how-it-works docs, sketching control/data flow,
   or answering show me / diagram requests. HTML is only on explicit request.
-  Not for ordinary Q&A, code-review findings, UI redesign, architecture-review
+  Not for narrow factual Q&A (what a flag or value is, where a file lives), code-review findings, UI redesign, architecture-review
   reports, or teaching-session HTML.
 ---
 
@@ -125,6 +125,12 @@ function expandSkill(command: string): string {
   a diagram, infographic, or short slide deck. Use real labels and data; support
   desktop and mobile. This is an opt-in artifact, not the default answer.
 
+## Guidance
+
+Place each visual next to the short text it supports. Keep only the calls, files, props, states, and boundaries needed to answer the user's current question or the options to resolve the current discussion point.
+
+You may use one of these, you may use several, it is unlikely you will use all of them. Use your judgement and don't overwhelm the user.
+
 ## Inline by default
 
 Place visuals in the answer or the document already being written. Loading this
@@ -145,12 +151,6 @@ GitHub or Obsidian Markdown); use text when renderer support is uncertain.
 Follow `codebase-docs` for placement and one home per fact, rather than creating
 another explainer page. A diagram is not a substitute for the words a reader
 needs to understand the mechanism and its limits.
-
-### guidance
-
-Place each visual next to the short text it supports. Keep only the calls, files, props, states, and boundaries needed to answer the user's current question or the options to resolve the current discussion point.
-
-You may use one of these, you may use several, it is unlikely you will use all of them. Use your judgement and don't overwhelm the user.
 
 ## Where this stops
 
