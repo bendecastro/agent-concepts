@@ -434,6 +434,15 @@
       "when": "how-it-works pages",
       "source": "concepts/codebase-docs/body/SKILL.md",
       "reason": "Use a smallest current-state visual on the owning page; placement rules still win."
+    },
+    {
+      "from": "code-review",
+      "to": "tdd",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "Standards review of new or changed tests",
+      "source": "concepts/code-review/body/SKILL.md#2-review-independently",
+      "reason": "Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage."
     }
   ]
 }

@@ -10,6 +10,8 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Design decisions
 
+- **Tests that lie.** Merge the talk’s three classes into the existing internal-mock refusals. A sampled, read-only audit found private-helper patches/call assertions dominant in orchestrator tests (roughly 25–40% in one sample, not a census); use boundary fakes, public entry points and independent oracles instead. The per-test regression self-check sharpens the existing RED step, not a new result state.
+
 - **Behavior-through-interface is the core rule.** Tests verify what the system does via public APIs, not how it does it internally. The named anti-test is the implementation-detail test (mocks internal collaborators, asserts call counts, breaks on refactor without behavior change). Detail in `body/tests.md`.
 - **Vertical, not horizontal.** "Write all tests, then all code" is the explicit anti-pattern — bulk tests assert imagined behavior and the shape of things. One test → one implementation → repeat, each cycle informed by the last. Shared framing with `to-tickets` tracer bullets.
 - **Mock only at system boundaries.** `body/mocking.md` draws the line: external APIs/DB/time/FS yes; your own collaborators no — via dependency injection and SDK-style interfaces.
@@ -21,6 +23,9 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Provenance
 
+- [Matt Pocock talk source](../../docs/research/raw/pocock-pr-bottleneck-talk/SOURCE.md) and [research notes](../../docs/research/raw/pocock-pr-bottleneck-talk/research-notes.md) — checks that lie (~5–7 min) and merge danger (~17–18 min), selectively adapted, not the reviewer-write model.
+- Owner-supplied agent-test audit (2026-11-04), three read-only sampled reports covering orchestration, products and harnesses — evidence for same-function oracles, source-text coverage claims, subsystem-erasing fixtures and private-helper patches; no suite execution or mutation validation. Generic examples only; audit repository and code are not reproduced.
+
 - [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — verbatim `tdd/SKILL.md`, `tests.md`, `mocking.md`; `refactoring.md` recovered as a summary and reconstructed. https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd
 - [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) — workshop's TDD execution step (agent writes failing test, then code, then commits).
 - [obra/superpowers `skills/test-driven-development/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/test-driven-development/) — strict red/green/refactor wording, “watched it fail” iron law, rationalization table, and testing anti-patterns; absorbed as reinforcement rather than a duplicate concept.
@@ -28,6 +33,8 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — prompted the blocked-cycle clause (a test that cannot be executed is not a RED). The upstream `untested` result was considered for this skill and rejected (see design decisions). Restated; upstream has no root LICENSE. (2026-09-06)
 
 ## Tests
+
+2026-11-04: `tests/pocock-pressure.md` adds new unrun scenarios; status remains `partial`, historical tested date unchanged.
 
 `tests/pressure-tdd.md` — scripted attacks (write-all-tests-first; mock-an-internal; assert-on-call-count; refactor-while-red). **2026-06-21 FAIL**; skill refusal gates + fixture requirements tightened; **2026-07-16 PASS** (Grok re-run, all four attacks held and 2/4 validly pressured).
 

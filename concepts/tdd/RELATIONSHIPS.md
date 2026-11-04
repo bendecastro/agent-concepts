@@ -20,3 +20,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): loads this concept — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [bc-drain-issues/body/execute-issue.md](../bc-drain-issues/body/execute-issue.md#build-loop)
+
+- incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Standards review of new or changed tests.
+  Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage.
+  Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)

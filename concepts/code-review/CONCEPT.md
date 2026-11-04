@@ -10,6 +10,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Design decisions
 
+- **Lie detection and merge danger.** Standards consumes tdd’s definitions rather than duplicating them; reports classify reversibility and blast radius independently of diff size. One-way effects require human review. Declined the talk’s reviewer-commits-fixes proposal: local review stays independent and read-only; fixes route to a patcher.
+
 - **Cloudflare adaptation (2026-11-02).** Evidence caps severity; human-facing unresolved hypotheses are questions without severity. Machine-gated reports retain their existing untested channel and schema, still subject to the impact ceiling and anti-overclaiming rules. No refuting verifier or coverage ledger is added.
 
 - **Two independent axes.** Fixed-diff review separates Spec fidelity from Standards quality, using parallel read-only reviewers and separate reports so one pass cannot mask the other.
@@ -26,6 +28,9 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Provenance
 
+- [Matt Pocock talk source](../../docs/research/raw/pocock-pr-bottleneck-talk/SOURCE.md) and [research notes](../../docs/research/raw/pocock-pr-bottleneck-talk/research-notes.md) — checks that lie (~5–7 min) and merge danger (~17–18 min), selectively adapted, not the reviewer-write model.
+- Owner-supplied agent-test audit (2026-11-04), three read-only sampled reports covering orchestration, products and harnesses — evidence for same-function oracles, source-text coverage claims, subsystem-erasing fixtures and private-helper patches; no suite execution or mutation validation. Generic examples only; audit repository and code are not reproduced.
+
 - [Cloudflare security-audit-skill MIT snapshot](../../docs/research/raw/ingested/cloudflare-security-audit-skill/SOURCE.md) — operating-mode gate and demonstrated-impact/no-severity-for-unconfirmed rules, adapted selectively (2026-11-02).
 
 - [obra/superpowers `skills/requesting-code-review/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/requesting-code-review/SKILL.md) — review-request workflow and severity expectations.
@@ -40,6 +45,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as a first-class result so a check that could not run is recorded with a reason rather than omitted. Restated in this workspace's voice; the upstream repo has no root LICENSE and that skill carries no licence file. (2026-09-06)
 
 ## Tests
+
+2026-11-04: `tests/pocock-pressure.md` adds new unrun scenarios; status remains `partial`, historical tested date unchanged.
 
 2026-11-02 additions: Check 11 (evidence-capped impact) **PASS** 2026-11-03 (Grok 4.6 high); other new clauses not run; `partial` kept.
 

@@ -35,13 +35,15 @@ Reviewers receive the diff, the spec/acceptance criteria, and the standards sour
 
 **Spec reviewer:** report missing/partial requirements, behavior not requested, and apparently implemented behavior that is wrong. Cite the requirement and diff hunk for each finding.
 
-**Standards reviewer:** apply repository standards first. When no project rule settles it, flag material smells as labelled judgment calls—not hard violations: mysterious names, duplicated logic, feature envy, data clumps, primitive obsession, repeated conditionals, shotgun surgery, divergent change, speculative generality, message chains, and needless middle-men. Check observable tests, error handling, integration, portability/security, migrations, compatibility, and docs when relevant. When the diff touches a README, an existing `docs/` page, an architecture page, or JSDoc that states a contract, load `codebase-docs` and flag a stale owner, a change-narration paragraph, or a newly invented `docs/` tree. Do not turn the review into a docs rewrite. Tooling-enforced style is not a review finding.
+**Standards reviewer:** apply repository standards first. When no project rule settles it, flag material smells as labelled judgment calls—not hard violations: mysterious names, duplicated logic, feature envy, data clumps, primitive obsession, repeated conditionals, shotgun surgery, divergent change, speculative generality, message chains, and needless middle-men. Review new or changed tests against [tdd’s tests-that-lie definitions](../../tdd/body/SKILL.md#tests-that-lie); flag tautologies, structure-sensitive coverage claims, erased failure modes, and internal-mock assertions rather than trusting green CI. Check observable tests, error handling, integration, portability/security, migrations, compatibility, and docs when relevant. When the diff touches a README, an existing `docs/` page, an architecture page, or JSDoc that states a contract, load `codebase-docs` and flag a stale owner, a change-narration paragraph, or a newly invented `docs/` tree. Do not turn the review into a docs rewrite. Tooling-enforced style is not a review finding.
 
 Classify findings as **Critical**, **Important**, or **Minor** and include a precise file/hunk, why it matters, and evidence. If either axis lacks the evidence needed to assess the change, that is blocking—not an excuse to guess.
 
 ### 3. Keep reports separate
 
 Present findings under `## Spec` and `## Standards`. Do not merge or rerank them: code may meet the spec while violating standards, or vice versa. Critical and Important findings block landing; Minors are recorded but may be consciously deferred.
+
+Include a report line: `Merge danger: door = one-way|two-way; blast radius = localized|cross-cutting; reason = ...`. One-way means irreversible effects: data loss/migrations, external sends (emails, payments, publishing), deletes, or secret exposure; two-way means revertable effects. Classify the actual effects, not just whether the code can be reverted. Always flag one-way doors for human review regardless of diff size; automated approval does not discharge that requirement. Keep this line within any role-defined report format.
 
 ### Role output contract
 

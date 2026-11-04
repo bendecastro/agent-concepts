@@ -28,6 +28,21 @@ Each test responds to what you learned from the previous cycle.
 
 **Pressure refusal (horizontal slice).** If the user says any of: "write all the tests up front", "batch the tests then implement", "just RED everything first then GREEN" — **refuse the batch**. Name the anti-pattern, then run one vertical cycle. Knowing the rule and still writing a bulk-test commit is a fail. A commit message that *names* the anti-pattern does not excuse committing it.
 
+## Tests that lie
+
+A green test is useful only if a plausible behavioral regression can turn it red. Reject these substitutes for behavioral coverage:
+
+- **Tautological:** `assert MAX_RETRIES == 3`, or `assert normalize(x) == normalize(x)` — the expected value repeats implementation rather than supplying an independent oracle.
+- **Structure-sensitive:** `assert "send_receipt(" in source`, source/docs/config text scans, private names, line numbers or string positions instead of executing behavior. Privacy scans and other repository invariants are legitimate **lints**, not behavioral coverage; label them accordingly. Text assertions on a public text-transformer's output can test real behavior.
+- **Cannot-fail:** an error-path test whose HTTP fake always succeeds; an autouse fixture that replaces the subsystem it claims to test; `assert result is not None` when a specific outcome matters, or no assertion/check at all. A fixture that rejects live network access is useful hygiene, not permission to erase the behavior under test.
+- **Implementation-coupled:** monkeypatching the module's own private helpers (`service._retry = fake`) or asserting internal call counts. See the refusal rules below; a green wiring test does not cover the replaced collaborator.
+
+**Self-check for every new test:** name the plausible regression that turns it red, and confirm the existing RED run actually failed for that reason.
+
+**Positive shape:** fake at the system boundary, drive the public entry point, use an independent oracle. For example, let a fake HTTP transport raise a timeout, call public `submit_order(...)` with real retry logic, and assert the specified failure result and no recorded charge—not an expected result computed by `submit_order` itself.
+
+If asked to pin a constant, grep source, or stub away the claimed failure, decline that substitute and test the observable contract instead. Why: those tests can stay green while the behavior breaks.
+
 ## Anti-pattern: implementation-coupled assertions
 
 Do **not** add tests whose primary assertion is:
@@ -76,7 +91,9 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 
 ## Checklist per cycle
 ```
-[ ] Test describes behavior, not implementation
+[ ] Test describes behavior, not implementation; source/config scans are labelled lints
+[ ] Plausible regression named; RED failed for that reason
+[ ] Independent oracle; fixtures preserve the claimed failure mode
 [ ] Test uses public interface only
 [ ] Test would survive an internal refactor
 [ ] No call-count / mock-invocation assertions on internals
@@ -89,6 +106,8 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 
 | Excuse under pressure | Required response |
 |----------------------|-------------------|
+| "Just pin MAX_RETRIES / grep the call" | Exercise retry behavior through the public entry point; label legitimate repository scans as lints. |
+| "Stub success so the error test passes" | Make the boundary fake produce the error; keep real error handling and assert its outcome. |
 | "Faster to write all tests first" | One vertical cycle; refuse the batch. |
 | "I named the anti-pattern, so it's fine" | Naming it is not refusing it. Don't commit the horizontal slice. |
 | "Call-count proves the payment path ran" | Assert the observable result (status, receipt, boundary fake state). |
