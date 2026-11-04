@@ -1575,3 +1575,6 @@ Revised Check 11 PASS (headless Pi, Grok 4.6 high, isolated repo): crash capped,
 
 ## [2026-11-04] ingest | file Pocock PR-bottleneck talk notes + HumanLayer show-me snapshot
 Filed `docs/research/raw/pocock-pr-bottleneck-talk/` (research notes, links; transcript not redistributed) and `docs/research/raw/humanlayer-show-me/` (MIT snapshot at `4d69d20`) in the inbox, ahead of a `show-me` concept and `tdd`/`code-review` changes.
+
+## [2026-11-04] implement | show-me concept; tdd tests-that-lie; code-review merge danger
+New model-invocable `show-me` (adapted from HumanLayer MIT skill; inline by default, HTML only on request, pointers from plain-language/unslop/codebase-docs/teach). `tdd` names tautological / structure-sensitive / cannot-fail tests with a per-test "which regression turns this red" self-check; `code-review` Standards applies them and reports a merge-danger line (one-way/two-way door, blast radius). Evidence: Pocock talk notes plus a sampled audit of agent-written tests in an owner repo. Scenarios authored, not run.
