@@ -1593,3 +1593,6 @@ The bulk deploy had linked untested `naming-things` live alongside `show-me` (li
 
 ## [2026-11-04] test | show-me description-only discovery and boundaries
 Fresh headless Pi (Opus default), skill advertised only: doc request loaded show-me; typo/flag/lesson/architecture/UI requests did not; unslop kept visual blocks byte-identical. Gap: "How does this pipeline work?" answered well inline but did not load the skill.
+
+## [2026-11-04] test | show-me description kept
+Owner chose not to widen the description to catch plain "how does X work?" questions; gap recorded in the test file.

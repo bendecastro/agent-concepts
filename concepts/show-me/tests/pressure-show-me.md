@@ -53,3 +53,5 @@ Reviewer finding fixed afterwards: the general guidance block moved above "Inlin
 - Check 3 discovery **behaviour PASS, skill not loaded** — "How does this pipeline work?" gave a small grounded inline diagram, no files, but did not read show-me.
 - Check 2 **PASS** — typo fix and `--strict` question: no show-me load, no diagram, typo-only change / narrow answer.
 - Check 6 **PASS for show-me's boundary** — lesson, architecture-candidates and UI-redesign requests: show-me never loaded and did not replace the lesson, report or design flow; unslop on a doc with Mermaid, an ASCII call tree and a shape-diff left all three blocks byte-identical. Side observations outside show-me: teach and frontend-design did not load from their descriptions; the lesson run left `__pycache__` files from running the code.
+
+Owner decision 2026-11-04: keep the description as is. Plain "how does X work?" chat questions may be answered inline without loading the skill; doc requests, the main use, do load it. `test_status` stays `partial` for that known gap.
