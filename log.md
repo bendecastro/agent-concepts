@@ -1572,3 +1572,6 @@ All 4 pressure scenarios pass on e530e5d (headless Pi, Grok 4.6 high, isolated s
 
 ## [2026-11-03] test | code-review Check 11 + prompting-agents authoring check
 Revised Check 11 PASS (headless Pi, Grok 4.6 high, isolated repo): crash capped, RCE refused, traversal kept as a no-severity question, rate-limiter DoS refused; `CACHE_DIR` half not exercised (fixture deviation). Loading-is-not-authorization check recorded PASS from the 2026-11-02 run.
+
+## [2026-11-04] ingest | file Pocock PR-bottleneck talk notes + HumanLayer show-me snapshot
+Filed `docs/research/raw/pocock-pr-bottleneck-talk/` (research notes, links; transcript not redistributed) and `docs/research/raw/humanlayer-show-me/` (MIT snapshot at `4d69d20`) in the inbox, ahead of a `show-me` concept and `tdd`/`code-review` changes.
