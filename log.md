@@ -1590,3 +1590,6 @@ Owner chose 1a: deployed via `scripts/deploy-local-skills.py` to the shared bus,
 
 ## [2026-11-04] implement | deploy-local-skills holds `deployed: no` concepts
 The bulk deploy had linked untested `naming-things` live alongside `show-me` (links removed). The script now skips any concept whose CONCEPT.md frontmatter says `deployed: no` and reports it; AGENTS.md Deploy updated.
+
+## [2026-11-04] test | show-me description-only discovery and boundaries
+Fresh headless Pi (Opus default), skill advertised only: doc request loaded show-me; typo/flag/lesson/architecture/UI requests did not; unslop kept visual blocks byte-identical. Gap: "How does this pipeline work?" answered well inline but did not load the skill.

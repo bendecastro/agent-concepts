@@ -46,3 +46,10 @@ pages, or stolen lesson/report contracts each block deployment independently.
 - Checks 2 and 6 and the discovery half of check 1 (loading from the description alone) **not run**.
 
 Reviewer finding fixed afterwards: the general guidance block moved above "Inline by default"; the description's "ordinary Q&A" exclusion narrowed to factual Q&A.
+
+2026-11-04 discovery run (fresh headless `pi -p --no-session`, default model claude-opus-5-5, skill only advertised, never named; one run per scenario; graded from session JSONL tool calls, replies, git status and hashes; records in the parent's run dir):
+
+- Check 1 discovery **PASS** — "comprehensive doc" loaded show-me (and codebase-docs) from the description alone; README extended with three code-grounded visuals; no HTML, no new docs tree.
+- Check 3 discovery **behaviour PASS, skill not loaded** — "How does this pipeline work?" gave a small grounded inline diagram, no files, but did not read show-me.
+- Check 2 **PASS** — typo fix and `--strict` question: no show-me load, no diagram, typo-only change / narrow answer.
+- Check 6 **PASS for show-me's boundary** — lesson, architecture-candidates and UI-redesign requests: show-me never loaded and did not replace the lesson, report or design flow; unslop on a doc with Mermaid, an ASCII call tree and a shape-diff left all three blocks byte-identical. Side observations outside show-me: teach and frontend-design did not load from their descriptions; the lesson run left `__pycache__` files from running the code.
