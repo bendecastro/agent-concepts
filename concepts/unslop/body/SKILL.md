@@ -46,7 +46,8 @@ why-clauses, and every one of those reads as a tell. Unslopping them
 strips the reasons a capable agent needs and leaves bare imperatives.
 See **Never**, below: this one holds even when the user insists.
 
-Leave code, commands, logs, diffs, and quoted file contents untouched.
+Leave code, commands, logs, diffs, quoted file contents, Mermaid fences, ASCII
+trees, and shape-diffs untouched.
 
 ## Modes
 
@@ -256,6 +257,9 @@ word list applied across registers fires on good prose and gets the whole
 skill ignored.
 
 ## Where this stops
+
+- Visual form of how-it-works explanations → `show-me`; this skill owns the
+  words around the visual.
 
 - Reader outcomes — can this reader find, understand and act on it →
   `plain-language`. That skill owns filler, hedging, dense sentences,

@@ -20,3 +20,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when teach adapter marker present.
   Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue.
   Source: [bc-wiki-maintain/body/SKILL.md](../bc-wiki-maintain/body/SKILL.md#teach-adapter-boundary)
+
+- incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when teaching sessions.
+  Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts.
+  Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)

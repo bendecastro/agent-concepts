@@ -16,3 +16,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [security-audit](../security-audit/RELATIONSHIPS.md): adapts this concept — required.
   Adapts scope, ambiguity, evidence and enforced privileged-action phrasing for guidance versus explicit audit mode.
   Source: [security-audit/CONCEPT.md](../security-audit/CONCEPT.md#design-decisions)
+
+- incoming from [show-me](../show-me/RELATIONSHIPS.md): adapts this concept — required, when authoring the skill.
+  Adapts loading-is-not-authorization, scope discipline and examples-over-rules.
+  Source: [show-me/CONCEPT.md](../show-me/CONCEPT.md#design-decisions)

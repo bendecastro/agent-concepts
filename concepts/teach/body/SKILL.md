@@ -195,6 +195,9 @@ For *acquiring* knowledge, difficulty is the enemy — it eats working memory. F
 
 ### Lessons (the default)
 
+A smallest inline `show-me` visual is fine mid-lesson; do not write or open HTML
+mid-lesson, and the after-lesson artifact remains owned by this skill.
+
 The primary unit of teaching is an **in-conversation lesson**, not a generated file. The agent grading free-form answers in real time is a tighter feedback loop than any static quiz. A lesson:
 
 1. Teaches one tightly-scoped thing tied to the mission, sized to a single tangible win, inside the user's zone of proximal development.

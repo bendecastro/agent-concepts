@@ -353,6 +353,87 @@
       "when": "authoring broad-trigger skills with costly workflows",
       "source": "concepts/prompting-agents/body/SKILL.md#loading-is-not-authorization",
       "reason": "Points to the guidance-default and explicit-audit mode gate as an in-workspace example."
+    },
+    {
+      "from": "show-me",
+      "to": "prompting-agents",
+      "relation": "adapts",
+      "required": true,
+      "when": "authoring the skill",
+      "source": "concepts/show-me/CONCEPT.md#design-decisions",
+      "reason": "Adapts loading-is-not-authorization, scope discipline and examples-over-rules."
+    },
+    {
+      "from": "show-me",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "any invocation",
+      "source": "concepts/show-me/body/SKILL.md",
+      "reason": "Informational questions do not authorize edits; final-response rules remain kernel-owned."
+    },
+    {
+      "from": "show-me",
+      "to": "plain-language",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "words around visuals",
+      "source": "concepts/show-me/body/SKILL.md",
+      "reason": "Reader-outcome prose stays with plain-language, not visual-form selection."
+    },
+    {
+      "from": "show-me",
+      "to": "codebase-docs",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "durable source-tree docs",
+      "source": "concepts/show-me/body/SKILL.md",
+      "reason": "Placement, current-state maintenance and one home per fact remain doc contracts."
+    },
+    {
+      "from": "show-me",
+      "to": "unslop",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "shipped wrapping prose",
+      "source": "concepts/show-me/body/SKILL.md",
+      "reason": "Shipped prose is unslopped without rewriting code-shaped visuals."
+    },
+    {
+      "from": "show-me",
+      "to": "improve-codebase-architecture",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "architecture-review reports",
+      "source": "concepts/show-me/body/SKILL.md",
+      "reason": "Architecture-review report artifacts retain their own contract."
+    },
+    {
+      "from": "show-me",
+      "to": "teach",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "teaching sessions",
+      "source": "concepts/show-me/body/SKILL.md",
+      "reason": "Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts."
+    },
+    {
+      "from": "show-me",
+      "to": "frontend-design",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "UI redesign",
+      "source": "concepts/show-me/body/SKILL.md",
+      "reason": "Product UI design is not an explanation sketch."
+    },
+    {
+      "from": "codebase-docs",
+      "to": "show-me",
+      "relation": "loads",
+      "required": false,
+      "when": "how-it-works pages",
+      "source": "concepts/codebase-docs/body/SKILL.md",
+      "reason": "Use a smallest current-state visual on the owning page; placement rules still win."
     }
   ]
 }

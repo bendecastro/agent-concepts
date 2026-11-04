@@ -20,6 +20,9 @@ This skill owns **placement** and **truthful maintainer writing**. It does
 not own reader-outcome prose (`plain-language`), agent-instruction authoring
 (`prompting-agents`), or whether a decision earns an ADR (`domain-modeling`).
 
+For how-it-works pages, load `show-me` for the smallest current-state visual on
+the owning page; placement and one-home rules here still win.
+
 ## When this applies
 
 Use it on **source-tree** maintainer docs: README, an existing `docs/` tree,

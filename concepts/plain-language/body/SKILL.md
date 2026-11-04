@@ -7,7 +7,7 @@ description: >
   people. Triggers: plain language, ISO 24495, make this clearer, de-jargon,
   rewrite for readers, too dense, bureaucratic, readers will not get this.
   Review first; rewrite only when asked. Not for agent-facing skills,
-  AGENTS.md, gates, kernels, or code.
+  AGENTS.md, gates, kernels, code, or choosing explanation visuals.
 ---
 
 # Plain Language
@@ -122,6 +122,9 @@ they matter.
   and warnings where needed; say when a reader test is still required.
 
 ## Where this stops
+
+- Visual form of how-it-works explanations → `show-me`; this skill owns the
+  words around the visual.
 
 - Agent-instruction authoring → `prompting-agents`.
 - Visual UI beyond the words → `frontend-design`.

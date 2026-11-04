@@ -43,6 +43,10 @@ None.
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [finishing-development-branch/body/SKILL.md](../finishing-development-branch/body/SKILL.md)
 
+- incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when any invocation.
+  Informational questions do not authorize edits; final-response rules remain kernel-owned.
+  Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)
+
 - incoming from [subagent-driven-development](../subagent-driven-development/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [subagent-driven-development/body/SKILL.md](../subagent-driven-development/body/SKILL.md)

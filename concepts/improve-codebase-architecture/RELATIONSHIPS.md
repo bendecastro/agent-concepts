@@ -17,4 +17,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-None.
+- incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture-review reports.
+  Architecture-review report artifacts retain their own contract.
+  Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)
