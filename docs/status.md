@@ -38,7 +38,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [issue-slicing](../concepts/issue-slicing/CONCEPT.md) | pressure | 2026-08-17 | yes |
 | [prompting-agents](../concepts/prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
 | [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
-| [show-me](../concepts/show-me/CONCEPT.md) | pressure | 2026-11-04 | no |
+| [show-me](../concepts/show-me/CONCEPT.md) | pressure | 2026-11-04 | yes |
 | [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [tdd](../concepts/tdd/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [teach](../concepts/teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |

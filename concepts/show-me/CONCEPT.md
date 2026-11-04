@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: partial
 tested: 2026-11-04
-deployed: no
+deployed: yes
 ---
 # Concept: show-me
 
@@ -49,5 +49,6 @@ test gate applies before deployment.
 
 ## Deploy targets
 
-Planned, not deployed: shared bus (`~/.agents/skills/`), Pi and Claude Code via
-`scripts/deploy-local-skills.py`. The parent owns deployment and bookkeeping.
+Deployed 2026-11-04 (owner choice: deploy before the trigger checks) via
+`scripts/deploy-local-skills.py`: shared bus (`~/.agents/skills/`), Pi and Claude Code.
+Checks 2 and 6 and description-only discovery remain unrun.
