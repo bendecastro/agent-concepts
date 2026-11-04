@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Deploy the workspace's concepts as local harness-discoverable skills.
 
-For each concepts/<name>/body/SKILL.md, create/update relative symlinks:
+For each concepts/<name>/body/SKILL.md, except concepts whose CONCEPT.md
+frontmatter says `deployed: no`, create/update relative symlinks:
   ~/.agents/skills/<name>     -> <this repo>/concepts/<name>/body
   ~/.pi/agent/skills/<name>   -> <this repo>/concepts/<name>/body
   ~/.claude/skills/<name>     -> <this repo>/concepts/<name>/body
@@ -94,6 +95,28 @@ def link_dir(link: Path, target: Path, *, force: bool, dry_run: bool) -> str:
     return action
 
 
+def marked_undeployed(body: Path) -> bool:
+    """True when the concept's status frontmatter says `deployed: no`.
+
+    The frontmatter is the record of what is live; deploying a concept marked
+    `deployed: no` puts an untested skill in front of every agent. Flip the field
+    to `yes` in the same change that deploys it.
+    """
+    concept = body.parent / "CONCEPT.md"
+    if not concept.is_file():
+        return False
+    lines = concept.read_text(encoding="utf-8").splitlines()
+    if not lines or lines[0].strip() != "---":
+        return False
+    for line in lines[1:]:
+        if line.strip() == "---":
+            break
+        key, _, value = line.partition(":")
+        if key.strip() == "deployed":
+            return value.strip() == "no"
+    return False
+
+
 def discover() -> tuple[list[tuple[str, Path]], list[str], list[str]]:
     """Concepts to deploy, plus the private names and any that shadowed a public one."""
     canonical = {
@@ -132,6 +155,10 @@ def main() -> int:
     skills, private, shadowed = discover()
     if not skills:
         raise SystemExit(f"No concept skills found under {CONCEPTS}")
+    held = sorted({name for name, body in skills if marked_undeployed(body)})
+    if held:
+        skills = [(name, body) for name, body in skills if name not in held]
+        print(f"Holding {len(held)} concept(s) marked `deployed: no`: {', '.join(held)}")
     if private:
         print(f"Including {len(private)} private concept(s) from {PRIVATE_CONCEPTS}: "
               f"{', '.join(private)}")

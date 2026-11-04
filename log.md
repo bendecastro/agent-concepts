@@ -1587,3 +1587,6 @@ After the blast-radius tuning, scenario 1 rerun on a fresh fixture PASS: one-way
 
 ## [2026-11-04] deploy | show-me
 Owner chose 1a: deployed via `scripts/deploy-local-skills.py` to the shared bus, Pi and Claude Code before the trigger-boundary checks (2, 6, description-only discovery), which remain pending.
+
+## [2026-11-04] implement | deploy-local-skills holds `deployed: no` concepts
+The bulk deploy had linked untested `naming-things` live alongside `show-me` (links removed). The script now skips any concept whose CONCEPT.md frontmatter says `deployed: no` and reports it; AGENTS.md Deploy updated.
