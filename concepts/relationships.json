@@ -133,6 +133,15 @@
     },
     {
       "from": "tdd",
+      "to": "diagnosing-bugs",
+      "relation": "hands_off",
+      "required": true,
+      "when": "bugs without a tight repro",
+      "source": "concepts/tdd/body/SKILL.md",
+      "reason": "Diagnosis belongs to diagnosing-bugs before the regression-test RED/GREEN cycle."
+    },
+    {
+      "from": "tdd",
       "to": "domain-modeling",
       "relation": "depends_on_contract",
       "required": true,

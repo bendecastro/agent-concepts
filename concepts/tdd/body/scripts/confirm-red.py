@@ -69,14 +69,26 @@ def main():
             raise ValueError('submodules are unsupported')
         with tempfile.TemporaryDirectory(prefix='confirm-red-') as temp:
             target = Path(temp)
-            # An isolated index bypasses export-ignore/subst without changing Git state.
-            env = dict(os.environ, GIT_INDEX_FILE=str(target / 'index'))
-            subprocess.run(['git', '-C', str(root), 'read-tree', base], env=env, check=True,
+            # A private Git directory excludes info/attributes; the empty work tree
+            # makes attribute lookup fall back to the base index, not the caller.
+            private_git = target / 'git'
+            tree = target / 'tree'
+            tree.mkdir()
+            subprocess.run(['git', 'init', '--bare', '--template=', '-q', str(private_git)], check=True,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            subprocess.run(['git', '-C', str(root), 'checkout-index', '-a',
-                            '--prefix=' + str(target / 'tree') + os.sep],
+            objects = (root / os.fsdecode(git(root, 'rev-parse', '--git-path', 'objects')).strip()).resolve()
+            config = (root / os.fsdecode(git(root, 'rev-parse', '--git-path', 'config')).strip()).resolve()
+            env = dict(os.environ, GIT_DIR=str(private_git), GIT_WORK_TREE=str(tree),
+                       GIT_INDEX_FILE=str(target / 'index'), GIT_OBJECT_DIRECTORY=str(objects),
+                       GIT_ATTR_NOSYSTEM='1')
+            env.pop('GIT_COMMON_DIR', None)
+            checkout = ['git', '-c', 'include.path=' + str(config),
+                        '-c', 'core.bare=false', '-c', 'core.attributesFile=' + os.devnull]
+            subprocess.run(checkout + ['read-tree', base], env=env, check=True,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            subprocess.run(checkout + ['checkout-index', '-a', '--prefix=' + str(tree) + os.sep],
                            env=env, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            target = target / 'tree'
+            target = tree
             for name in names:
                 source, dest = root / name, target / name
                 # Do not follow old-tree symlinks when overlaying current tests.

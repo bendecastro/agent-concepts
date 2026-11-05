@@ -17,4 +17,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-None.
+- incoming from [tdd](../tdd/RELATIONSHIPS.md): hands off to this concept — required, when bugs without a tight repro.
+  Diagnosis belongs to diagnosing-bugs before the regression-test RED/GREEN cycle.
+  Source: [tdd/body/SKILL.md](../tdd/body/SKILL.md)

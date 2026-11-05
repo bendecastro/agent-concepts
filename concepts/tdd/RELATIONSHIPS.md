@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- hands off to `diagnosing-bugs` — required, when bugs without a tight repro.
+  Diagnosis belongs to diagnosing-bugs before the regression-test RED/GREEN cycle.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - depends on `domain-modeling`'s contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)

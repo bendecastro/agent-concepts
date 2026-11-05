@@ -275,3 +275,36 @@ def test_submodule_is_explicit_infrastructure_error(repo):
     result = run(repo)
     assert result.returncode == 2, result.stdout + result.stderr
     assert 'submodules are unsupported' in result.stderr
+
+
+@pytest.mark.parametrize('attribute_source', ['working', 'info', 'global'])
+@pytest.mark.parametrize('expected,exit_code', [(1, 1), (2, 0)])
+def test_current_attributes_cannot_change_baseline(repo, tmp_path, expected, exit_code, attribute_source):
+    import os
+    git(repo, 'config', 'filter.review.smudge', 'sed s/return\\ 1/return\\ 2/g')
+    if attribute_source == 'working':
+        attributes = repo / '.gitattributes'
+    elif attribute_source == 'info':
+        attributes = repo / '.git/info/attributes'
+    else:
+        attributes = repo / 'external-attributes'
+        git(repo, 'config', 'core.attributesFile', str(attributes))
+    attributes.write_text('calc.py filter=review\n')
+    (repo / 'test_calc.py').write_text(f'from calc import value\nassert value() == {expected}  # changed assertion\n')
+    temps = tmp_path / 'temps'
+    temps.mkdir()
+    status = git(repo, 'status', '--porcelain')
+    before = {str(p.relative_to(repo)): p.read_bytes()
+              for p in repo.rglob('*') if p.is_file()}
+    refs = git(repo, 'show-ref')
+    result = command(repo, sys.executable, 'test_calc.py',
+                     env=dict(os.environ, TMPDIR=str(temps)))
+    assert result.returncode == exit_code, result.stdout + result.stderr
+    assert ('Confirmed red' in result.stdout) == (exit_code == 0)
+    if exit_code == 0:
+        assert 'AssertionError' in result.stdout
+    assert {str(p.relative_to(repo)): p.read_bytes()
+            for p in repo.rglob('*') if p.is_file()} == before
+    assert git(repo, 'show-ref') == refs
+    assert git(repo, 'status', '--porcelain') == status
+    assert list(temps.iterdir()) == []
