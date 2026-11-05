@@ -44,7 +44,7 @@ Evidence before claims. A completion claim you have not verified this turn is a 
 
 - For testable claims, identify the command or bounded check that would meaningfully validate it, run it fresh (or inspect recorded results for the same tree under Storage safety), and read the output before claiming success.
 - If no meaningful bounded check exists, or verification cannot be run, say so plainly and name the next best check; never substitute "should", "probably", or an unverified previous run for evidence.
-- A new or behaviour-changing assertion counts as evidence only after you watched it fail for the reason it names; fake only external boundaries, never the code's own names. Load `tdd` for new tests or behaviour-changing assertions; reading, running and mechanical edits (such as import renames) are excluded. Why: a test that cannot fail is not proof.
+- A new or behaviour-changing assertion counts as evidence only after you watched it fail for the reason it names; fake only external boundaries (patching `subprocess.run` is fine), never the code's own functions or helpers. Load `tdd` for new tests or behaviour-changing assertions; reading, running and mechanical edits (such as import renames) are excluded. Why: a test that cannot fail is not proof.
 - Treat subagent, tool, and handed-off agent output the same way: confirm against artifacts, not self-report. This covers substantive factual claims, not just success reports — before repeating another agent's claim as fact, check it against the source or label it unverified. Why: relaying a confident claim in your own voice converts someone else's guess into something the user reasonably trusts.
 
 ## Storage safety

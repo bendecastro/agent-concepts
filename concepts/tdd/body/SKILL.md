@@ -72,7 +72,9 @@ result = orders.submit_order(order, payment_client=DecliningPaymentClient())
 assert result.status == "declined"
 ```
 
-**Seam rule:** if inline subprocess/network/clock/filesystem calls leave tests able only to patch the module's own names, add a keyword boundary parameter with the real default (behavior unchanged), e.g. `runner=subprocess.run`. If that design change is out of scope, report it rather than writing the coupled test.
+**Patching a standard-library boundary is allowed:** `monkeypatch.setattr(subprocess, 'run', fake)` or `patch('tags.subprocess.run')` replaces the external call, not your code, even when reached through the module under test. What is forbidden is replacing the module's own functions, helpers or classes (`tags._parse`, `sync._revision`).
+
+**Seam rule:** prefer an injected boundary when tests would otherwise need several patches, or when the only way to fake the boundary is to patch the module's own names: add a keyword boundary parameter with the real default (behavior unchanged), e.g. `runner=subprocess.run`. If that design change is out of scope, report it rather than writing the coupled test.
 
 **Pressure refusal (mock internal).** User: "Mock the `CartService` so the test is faster." → decline; keep the real object (or a boundary fake only if CartService *is* the external system, which it isn't when you own it).
 
