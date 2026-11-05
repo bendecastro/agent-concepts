@@ -1,0 +1,6 @@
+{
+  "consumer_model": "provider/model-id",
+  "thinking": "max",
+  "reason": "Why this model: a weaker model the owner may have to rely on, so a concept that holds on it holds anywhere.",
+  "if_unavailable": "Ask the owner which model to use instead. Do not substitute silently."
+}
