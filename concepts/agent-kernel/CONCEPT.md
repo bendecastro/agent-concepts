@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-10-26
+tested: 2026-11-05
 deployed: 2026-11-02
 ---
 # Concept: agent-kernel
@@ -53,6 +53,8 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 `tests/pressure-scenarios.md` — compact checks for the kernel's main failure modes: over-planning, scope creep, context dumping, unverified completion, dirty-worktree damage, unsafe publishing, off-vault stalls, missing concept loads, and informational questions triggering edits. Scenario 9's answer-first boundary passed a full two-turn Pi pressure run on 2026-08-12 after two failed phrasings were strengthened.
 
+Scenario 15 (test evidence, 2026-11-05) in `tests/pressure-scenarios.md`: kernel-only, tdd hidden by `bwrap`; with the kernel the consumer watched RED before fixing 2/2 vs 0/2 without.
+
 `tests/codex-smoke-2026-06-12.md` — bounded Codex validation: confirms the global delta file is present and loaded in this session, exercises the objective publish-policy allow/deny/self-amendment checks, and records a child Codex run passing scenario 5's repo-instruction no-push variant; full baseline/off-vault/policy-allow matrix still pending.
 
 ## Deploy policy
@@ -76,6 +78,7 @@ Candidate targets, in order of expected value: thin custom harnesses → Pi (if 
 - **All five deltas refreshed 2026-09-23** with the questions-answerable-in-one-token and two-line recap rules. Codex and Grok carry them as Operating-posture bullets, Claude Code as pointer bullets (marker dates bumped); Pi and OpenCode carry them in `Output style`, replacing "Suggest next steps only when they are natural and useful", which the recap supersedes.
 - **All five deltas refreshed again 2026-09-23** with `🏁` / `👣` in place of the written recap labels, with no change to the exception or question format. The canonical variant passed the three-prompt pressure check in `tests/pressure-scenarios.md` before propagation.
 - **Argue/facts bullets deployed 2026-10-26** to all five: Codex, Grok, OpenCode in operating posture/core behavior; Pi in `## Core behavior` with the facts bullet replacing the old `Output style` sycophancy paragraph; Claude Code as marked OVERRIDE pointer bullets. Each copy's act-on-request line gained "unless the argue-for-the-best-outcome bullet applies"; marker dates bumped to 2026-10-26 where present.
+- **Test-evidence line deployed 2026-11-05** to all six: Pi, Codex, Grok, OpenCode and Muse carry the canonical line verbatim just before the subagent-output verification bullet (CONFIG `e36a14d`; Muse runtime copy refreshed); `~/.claude/CLAUDE.md` carries a pointer-style bullet. Scenario 15 PASS on watched-fail before deploy.
 - **Codex (delta only, 2026-06-12; posture deltas refreshed 2026-08-12):** `~/.codex/AGENTS.md` carries a marked global kernel delta: consult-on-judgment-calls and answer-questions-before-editing posture, defaults-with-reasons, evidence-before-claims, publish-policy/default-deny (separate from Codex `trust_level`), and the Specialized Concepts catalog pointer. Canonical file lives at `~/Sync/CONFIG/.codex/AGENTS.md` (tracked + synced) with `~/.codex/AGENTS.md` symlinked to it per machine by `bc-setup-config-symlinks`; refresh the marked copy when the kernel changes.
 - **Muse Code (delta only, 2026-11-02):** user-scope standing rules at `~/.config/muse/AGENTS.md`, a **regular-file copy** of `~/Sync/CONFIG/muse/AGENTS.md` (Muse refuses a symlink as the rules path). `bc-setup-config-symlinks` copies that one file and never dir-links `~/.config/muse` (auth/settings live there). Delta matches Codex/Grok posture, recap, untrusted-content, storage safety, publish-check, and catalog pointer. **Git discipline is omitted:** bundled `git` already forbids unsolicited commits; the delta points at that skill and only adds publish-check for when the user does ask. Corpus skills are not part of this deploy — Muse already scans `~/.agents/skills/`. Do not `/rules import` or `muse skills import` for this kernel. Live recap/`git` clash pressure run pending.
 

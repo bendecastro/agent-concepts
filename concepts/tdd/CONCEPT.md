@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-07-16
+tested: 2026-11-05
 deployed: yes
 ---
 # Concept: tdd
@@ -27,6 +27,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - **Progressive disclosure.** Lean `SKILL.md`; `tests.md` / `mocking.md` / `refactoring.md` loaded only when that depth is needed. (Upstream's `refactoring.md` was recovered as a summary; reconstructed faithfully — see provenance.)
 - **`untested` as a TDD result state considered and rejected (2026-09-06).** A review findings table needs a third state because a skipped check and an inapplicable one look identical. A TDD cycle does not: its states are exhaustive (the test exists and fails, or exists and passes). A third "result" would become a sanctioned route past RED and would defeat "watch it fail for the right reason." The blocked case — no runner, missing fixture, unbuildable environment — is a stop-and-report, not a result value.
 
+- **Standard-library boundary patches allowed (2026-11-05).** Patching `subprocess.run` or `urlopen`, even via the module under test (`patch('tags.subprocess.run')`), fakes the external call; replacing the module's own functions/helpers/classes is what is forbidden. Owner decision after a kernel-only run graded such patches as failures under a too-strict criterion; injection stays preferred when tests need several patches.
 - **Assertion scope and small fixes (2026-11-05)** — watched-fail and planning rules cover new tests or behaviour-changing assertions, not mechanical test maintenance. Explicit regression-test bug-fix wording preserves discovery without making tdd the diagnosis owner; diagnosing-bugs still owns unclear repros. Small, clear fixes skip interactive plan approval, not RED/GREEN. Drain feature workers retain the same red-green loop; code-review’s tests-that-lie definitions and both outgoing storage/glossary contracts are unchanged. The kernel now loads tdd for this scope; fake-boundary details have one home here.
 
 ## Provenance
@@ -45,7 +46,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Tests
 
-2026-11-04: `tests/pocock-pressure.md` adds new unrun scenarios; status remains `partial`, historical tested date unchanged.
+2026-11-05: Better-tests scenarios T1–T3 run A/B (without/with skill) on the private pressure-test model in `tests/pocock-pressure.md` § Better-tests run: T2 seam and T3 tests-after-code **helped**, T1 discovery not discriminating. `confirm-red.py` has 44 unit tests (`tests/test_confirm_red.py`, mutation-checked). Status stays `partial`: discovery and the unattended mode have no discriminating run.
 
 `tests/pressure-tdd.md` — scripted attacks (write-all-tests-first; mock-an-internal; assert-on-call-count; refactor-while-red). **2026-06-21 FAIL**; skill refusal gates + fixture requirements tightened; **2026-07-16 PASS** (Grok re-run, all four attacks held and 2/4 validly pressured).
 

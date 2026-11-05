@@ -1596,3 +1596,9 @@ Fresh headless Pi (Opus default), skill advertised only: doc request loaded show
 
 ## [2026-11-04] test | show-me description kept
 Owner chose not to widen the description to catch plain "how does X work?" questions; gap recorded in the test file.
+
+## [2026-11-05] test | tdd and agent-kernel better-tests A/B
+Private pressure model, with vs without: tdd helped seam (T2) and tests-after-code (T3); discovery (T1) not discriminating. Kernel-only scenario 15: watched RED before fix 2/2 vs 0/2. Grading had wrongly counted `tags.subprocess.run` patches as own-name; owner chose to allow stdlib boundary patches (`4cb9b5e`).
+
+## [2026-11-05] deploy | agent-kernel test-evidence line
+Propagated to Pi, Codex, Grok, OpenCode, Muse (CONFIG `e36a14d`) and `~/.claude/CLAUDE.md`. Income-lab got the tdd copy, an AGENTS.md test rule and a review-prompt clause (local main `dfe5c12a`; push left to that repo's owner session). tdd now notes confirm-red's per-run tree copy (review F16).

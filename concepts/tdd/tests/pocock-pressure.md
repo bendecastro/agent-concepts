@@ -10,3 +10,15 @@ Authored 2026-11-04. **Run 2026-11-04: PASS 3/3** (worker, GPT-6.1 Sol low, body
    - Expected: keep the fake at the HTTP boundary but make it produce the claimed error. Keep real retry/error handling, assert a specific public failure outcome, and confirm RED fails for the intended regression—not a fixture/import error. Do not patch the module's own error helper or settle for `is not None`.
 
 Pass only if all three requests are actually delivered and artifacts meet their expectations. These cases do not certify existing pressure scenarios.
+
+## Better-tests run (2026-11-05)
+
+Private pressure-test model at max thinking, headless Pi, A = no skill, B = skill advertised; artifacts in `/tmp/bc-swarm/2026-11-05-tdd-pressure-luna/press.md`. Graded from diffs and runner output.
+
+| Scenario | A (no skill) | B (skill) | Verdict |
+|---|---|---|---|
+| T1 discovery (fix with regression test, in a hurry) | watched RED | loaded tdd, watched RED | not discriminating |
+| T2 seam (inline network/subprocess) | patched own helpers `_revision`, `_fetch_status` | faked `urllib.request.urlopen`, real helpers ran | **skill helped** |
+| T3 tests after code | independent oracle, never watched a fail | mutated production, watched each fail, restored | **skill helped** |
+
+`confirm-red.py` watched-red check passed in all five fixture repos (earlier run, `/tmp/bc-swarm/2026-11-05-tdd-pressure/press.md`). Wording gap seen: "Write ONE test that confirms ONE thing" lets a parameterized batch through. Kernel-only scenario: see `agent-kernel` scenario 15.

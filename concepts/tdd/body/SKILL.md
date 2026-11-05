@@ -101,7 +101,7 @@ Ask: "What should the public interface look like? Which behaviors matter most to
 **Unattended mode:** when no user can answer (delegated child or headless job), do not stop for confirmation/approval. Record the behavior list and interface decision in your output or commit message, then proceed; keep the other planning checks.
 
 ### 2. Tracer bullet
-Write ONE test that confirms ONE thing. **RED:** test fails (watch it fail for the right reason). **GREEN:** minimal code to pass. This proves the path works end-to-end. [confirm-red.py](scripts/confirm-red.py) can run current changed tests against old code in a disposable tree: `python3 "$AGENT_CONCEPTS/concepts/tdd/body/scripts/confirm-red.py" --base HEAD -- <test command...>` (use guarded pytest where applicable; see `--help` for environment limits). Inspect the failure reason, not just its exit status.
+Write ONE test that confirms ONE thing. **RED:** test fails (watch it fail for the right reason). **GREEN:** minimal code to pass. This proves the path works end-to-end. [confirm-red.py](scripts/confirm-red.py) can run current changed tests against old code in a disposable tree (a full tracked-tree copy under `$TMPDIR` per run — run `bc-storage-health` first on a large repo): `python3 "$AGENT_CONCEPTS/concepts/tdd/body/scripts/confirm-red.py" --base HEAD -- <test command...>` (use guarded pytest where applicable; see `--help` for environment limits). Inspect the failure reason, not just its exit status.
 
 If the test cannot be executed at all — no runner, missing fixture, unbuildable environment — you do not have a RED. Stop and report the blocker. Never proceed to GREEN against a test you have not watched fail. Why: GREEN without a watched fail is a green bar you invented.
 
