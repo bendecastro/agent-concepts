@@ -7,7 +7,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-None.
+- loads `tdd` — required, when new tests or behaviour-changing assertions.
+  Test evidence requires a watched behavioural fail; mechanical test edits are excluded.
+  Source: [body/AGENT-KERNEL.md](body/AGENT-KERNEL.md#verification)
 
 ## Incoming
 

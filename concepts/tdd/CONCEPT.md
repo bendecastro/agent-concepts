@@ -27,6 +27,8 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - **Progressive disclosure.** Lean `SKILL.md`; `tests.md` / `mocking.md` / `refactoring.md` loaded only when that depth is needed. (Upstream's `refactoring.md` was recovered as a summary; reconstructed faithfully — see provenance.)
 - **`untested` as a TDD result state considered and rejected (2026-09-06).** A review findings table needs a third state because a skipped check and an inapplicable one look identical. A TDD cycle does not: its states are exhaustive (the test exists and fails, or exists and passes). A third "result" would become a sanctioned route past RED and would defeat "watch it fail for the right reason." The blocked case — no runner, missing fixture, unbuildable environment — is a stop-and-report, not a result value.
 
+- **Assertion scope and small fixes (2026-11-05)** — watched-fail and planning rules cover new tests or behaviour-changing assertions, not mechanical test maintenance. Explicit regression-test bug-fix wording preserves discovery without making tdd the diagnosis owner; diagnosing-bugs still owns unclear repros. Small, clear fixes skip interactive plan approval, not RED/GREEN. Drain feature workers retain the same red-green loop; code-review’s tests-that-lie definitions and both outgoing storage/glossary contracts are unchanged. The kernel now loads tdd for this scope; fake-boundary details have one home here.
+
 ## Provenance
 
 - Owner-repo test-quality audit (2026-11-05): read-only, all ~2,400 tests in one repo; process causes traced to opt-in description, approval step in unattended jobs, inline boundaries; repository and code not reproduced.

@@ -1,11 +1,13 @@
 ---
 name: tdd
-description: Use whenever writing, changing, or fixing tests, fixing a bug, or building a feature with tests, even as a side part of a larger task; also for test-first, red-green-refactor, or integration-test requests.
+description: Use when writing new tests or behaviour-changing assertions, including a bug fix that adds a regression test or tests added as a side part of a feature; also for test-first, red-green-refactor, or new integration-test requests. Excludes reading, running or mechanically updating tests.
 ---
 
 # Test-Driven Development
 
 Use targeted RED/GREEN checks through guarded pytest under [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety); health-check before a full suite, not each cycle. Why: fast feedback does not require repeated full suites.
+
+These rules apply to new tests and behaviour-changing assertions, including regression tests added during bug fixes or feature work. Reading, running or mechanical test edits (such as import renames) do not require a watched fail or a new plan. For bugs without a tight repro, `diagnosing-bugs` owns diagnosis; this concept owns the regression-test RED/GREEN cycle once the behaviour is identified.
 
 ## Philosophy
 
@@ -37,7 +39,7 @@ A green test is useful only if a plausible behavioral regression can turn it red
 - **Cannot-fail:** an error-path test whose HTTP fake always succeeds; an autouse fixture that replaces the subsystem it claims to test; `assert result is not None` when a specific outcome matters, or no assertion/check at all. A fixture that rejects live network access is useful hygiene, not permission to erase the behavior under test.
 - **Implementation-coupled:** monkeypatching the module's own private helpers (`service._retry = fake`) or asserting internal call counts. See the refusal rules below; a green wiring test does not cover the replaced collaborator.
 
-**Self-check for every new test:** name the plausible regression that turns it red, and confirm the existing RED run actually failed for that reason.
+**Self-check for every new test or behaviour-changing assertion:** name the plausible regression that turns it red, and confirm the existing RED run actually failed for that reason.
 
 **Positive shape:** fake at the system boundary, drive the public entry point, use an independent oracle. For example, let a fake HTTP transport raise a timeout, call public `submit_order(...)` with real retry logic, and assert the specified failure result and no recorded charge—not an expected result computed by `submit_order` itself.
 
@@ -83,7 +85,7 @@ assert result.status == "declined"
 ## Workflow
 
 ### 1. Planning
-When exploring, read `glossary.md` (if it exists) so test names and interface vocabulary match the domain language, and respect ADRs in the area you're touching. Before writing any code:
+When exploring, read `glossary.md` (if it exists) so test names and interface vocabulary match the domain language, and respect ADRs in the area you're touching. For work in scope, before writing code:
 - [ ] Confirm with the user what interface changes are needed.
 - [ ] Confirm which behaviors to test, prioritized — **you can't test everything**; focus on critical paths and complex logic, not every edge case.
 - [ ] Identify deep-module opportunities (small interface, deep implementation) — run `/codebase-design` for the vocabulary and testability checks.
@@ -92,10 +94,12 @@ When exploring, read `glossary.md` (if it exists) so test names and interface vo
 
 Ask: "What should the public interface look like? Which behaviors matter most to test?"
 
+**Small bug fixes:** when the requested behaviour and unchanged interface are clear, state the regression to test and proceed without interactive plan approval; still watch RED before the fix and GREEN after it. Ask if behaviour or interface needs a decision.
+
 **Unattended mode:** when no user can answer (delegated child or headless job), do not stop for confirmation/approval. Record the behavior list and interface decision in your output or commit message, then proceed; keep the other planning checks.
 
 ### 2. Tracer bullet
-Write ONE test that confirms ONE thing. **RED:** test fails (watch it fail for the right reason). **GREEN:** minimal code to pass. This proves the path works end-to-end. [confirm-red.py](scripts/confirm-red.py) can run current changed tests against archived old code: `python3 "$AGENT_CONCEPTS/concepts/tdd/body/scripts/confirm-red.py" --base HEAD -- <test command...>` (use guarded pytest where applicable; see `--help` for environment limits). Inspect the failure reason, not just its exit status.
+Write ONE test that confirms ONE thing. **RED:** test fails (watch it fail for the right reason). **GREEN:** minimal code to pass. This proves the path works end-to-end. [confirm-red.py](scripts/confirm-red.py) can run current changed tests against old code in a disposable tree: `python3 "$AGENT_CONCEPTS/concepts/tdd/body/scripts/confirm-red.py" --base HEAD -- <test command...>` (use guarded pytest where applicable; see `--help` for environment limits). Inspect the failure reason, not just its exit status.
 
 If the test cannot be executed at all — no runner, missing fixture, unbuildable environment — you do not have a RED. Stop and report the blocker. Never proceed to GREEN against a test you have not watched fail. Why: GREEN without a watched fail is a green bar you invented.
 

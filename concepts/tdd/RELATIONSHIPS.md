@@ -17,6 +17,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [agent-kernel](../agent-kernel/RELATIONSHIPS.md): loads this concept — required, when new tests or behaviour-changing assertions.
+  Test evidence requires a watched behavioural fail; mechanical test edits are excluded.
+  Source: [agent-kernel/body/AGENT-KERNEL.md](../agent-kernel/body/AGENT-KERNEL.md#verification)
+
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): loads this concept — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [bc-drain-issues/body/execute-issue.md](../bc-drain-issues/body/execute-issue.md#build-loop)

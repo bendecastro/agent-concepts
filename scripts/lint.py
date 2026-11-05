@@ -588,31 +588,50 @@ def lint_skill_copies(issues: list[Issue]) -> None:
     except (OSError, ValueError) as exc:
         issues.append(Issue("WARN", f"skill copies: cannot read {display(config)}: {exc}"))
         return
+    def valid_repo(repo):
+        if isinstance(repo, str):
+            return bool(repo)
+        return (isinstance(repo, dict) and isinstance(repo.get("path"), str)
+                and bool(repo["path"]) and isinstance(repo.get("intentional", []), list)
+                and all(isinstance(name, str) and name for name in repo.get("intentional", [])))
+
     if (not isinstance(data, dict) or not isinstance(data.get("repos"), list)
-            or not all(isinstance(repo, str) and repo for repo in data["repos"])):
-        issues.append(Issue("WARN", f"skill copies: {display(config)} must contain a repos list of paths"))
+            or not all(valid_repo(repo) for repo in data["repos"])):
+        issues.append(Issue("WARN", f"skill copies: {display(config)} must contain a repos list "
+                            "of paths or {path, intentional: [names]} entries"))
         return
+
+    def debris(name):
+        return (name == ".DS_Store" or
+                (name.startswith(".syncthing.") and name.endswith(".tmp")) or
+                ".sync-conflict-" in name)
 
     def files(root: Path) -> dict[Path, bytes]:
         result = {}
         def onerror(exc: OSError) -> None:
             raise exc
         for directory, dirs, names in os.walk(root, onerror=onerror):
-            dirs[:] = [name for name in dirs if name != "__pycache__"]
+            dirs[:] = [name for name in dirs if name != "__pycache__" and not debris(name)]
             for name in names:
-                if not name.endswith(".pyc"):
+                if not name.endswith(".pyc") and not debris(name):
                     path = Path(directory) / name
                     result[path.relative_to(root)] = path.read_bytes()
         return result
 
     for repo in data["repos"]:
-        skills = Path(repo).expanduser() / ".agents/skills"
+        intentional = repo.get("intentional", []) if isinstance(repo, dict) else []
+        path = repo["path"] if isinstance(repo, dict) else repo
+        skills = Path(path).expanduser() / ".agents/skills"
         if not skills.is_dir():
             issues.append(Issue("WARN", f"skill copies: missing directory {display(skills)}"))
             continue
         try:
             for copy in sorted(skills.iterdir()):
-                canon = ROOT / "concepts" / copy.name / "body"
+                if copy.name in intentional:
+                    continue
+                canon = Path.home() / ".config/agent-concepts/concepts" / copy.name / "body"
+                if not canon.is_dir():
+                    canon = ROOT / "concepts" / copy.name / "body"
                 if copy.is_symlink() or not copy.is_dir() or not canon.is_dir():
                     continue
                 local_files, canonical_files = files(copy), files(canon)
@@ -620,8 +639,8 @@ def lint_skill_copies(issues: list[Issue]) -> None:
                             for path in local_files.keys() | canonical_files.keys())
                 if count:
                     issues.append(Issue("WARN", f"skill copy {copy.name}: {display(copy)} differs from "
-                                        f"concepts/{copy.name}/body ({count} files differ/missing/extra); "
-                                        "refresh it from canon if the copy is not an intentional adaptation"))
+                                        f"{display(canon)} ({count} files differ/missing/extra); "
+                                        "refresh it from canon or list it as intentional in skill-copies.json"))
         except OSError as exc:
             issues.append(Issue("WARN", f"skill copies: cannot inspect {display(skills)}: {exc}"))
 

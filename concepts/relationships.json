@@ -2,6 +2,15 @@
   "schema": 1,
   "edges": [
     {
+      "from": "agent-kernel",
+      "to": "tdd",
+      "relation": "loads",
+      "required": true,
+      "when": "new tests or behaviour-changing assertions",
+      "source": "concepts/agent-kernel/body/AGENT-KERNEL.md#verification",
+      "reason": "Test evidence requires a watched behavioural fail; mechanical test edits are excluded."
+    },
+    {
       "from": "bc-drain-issues",
       "to": "tdd",
       "relation": "loads",
