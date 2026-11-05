@@ -1,6 +1,6 @@
 ---
 name: tdd
-description: Test-driven development with a red-green-refactor loop. Use when the user wants to build a feature or fix a bug test-first, mentions "red-green-refactor", or wants integration tests.
+description: Use whenever writing, changing, or fixing tests, fixing a bug, or building a feature with tests, even as a side part of a larger task; also for test-first, red-green-refactor, or integration-test requests.
 ---
 
 # Test-Driven Development
@@ -58,6 +58,20 @@ Those couple the suite to *how* the system is wired. When asked for a call-count
 
 Mock only at **system boundaries** (payment network, DB, clock, mailer). **Never** mock your own modules/classes/collaborators (e.g. `CartService` inside checkout) "to make the test faster." Use the real collaborator, or redesign the seam. See [mocking.md](mocking.md).
 
+In Python, refuse `monkeypatch.setattr(orders, '_charge', fake)` when `orders` is the module under test. Inject the external boundary instead, keeping the real `_charge` logic:
+
+```python
+# Production: _charge uses the supplied payment-network boundary.
+def submit_order(order, *, payment_client=real_payment_client):
+    return _charge(order, payment_client=payment_client)
+
+# Test: a boundary fake declines; real order/charge handling still runs.
+result = orders.submit_order(order, payment_client=DecliningPaymentClient())
+assert result.status == "declined"
+```
+
+**Seam rule:** if inline subprocess/network/clock/filesystem calls leave tests able only to patch the module's own names, add a keyword boundary parameter with the real default (behavior unchanged), e.g. `runner=subprocess.run`. If that design change is out of scope, report it rather than writing the coupled test.
+
 **Pressure refusal (mock internal).** User: "Mock the `CartService` so the test is faster." → decline; keep the real object (or a boundary fake only if CartService *is* the external system, which it isn't when you own it).
 
 ## Anti-pattern: refactor while RED
@@ -78,10 +92,14 @@ When exploring, read `glossary.md` (if it exists) so test names and interface vo
 
 Ask: "What should the public interface look like? Which behaviors matter most to test?"
 
+**Unattended mode:** when no user can answer (delegated child or headless job), do not stop for confirmation/approval. Record the behavior list and interface decision in your output or commit message, then proceed; keep the other planning checks.
+
 ### 2. Tracer bullet
-Write ONE test that confirms ONE thing. **RED:** test fails (watch it fail for the right reason). **GREEN:** minimal code to pass. This proves the path works end-to-end.
+Write ONE test that confirms ONE thing. **RED:** test fails (watch it fail for the right reason). **GREEN:** minimal code to pass. This proves the path works end-to-end. [confirm-red.py](scripts/confirm-red.py) can run current changed tests against archived old code: `python3 "$AGENT_CONCEPTS/concepts/tdd/body/scripts/confirm-red.py" --base HEAD -- <test command...>` (use guarded pytest where applicable; see `--help` for environment limits). Inspect the failure reason, not just its exit status.
 
 If the test cannot be executed at all — no runner, missing fixture, unbuildable environment — you do not have a RED. Stop and report the blocker. Never proceed to GREEN against a test you have not watched fail. Why: GREEN without a watched fail is a green bar you invented.
+
+**Tests written after the code:** coverage, regression and characterisation tests for existing code still need a watched fail. Revert the fix or make a minimal mutation that breaks the named covered behavior, watch the test go red for that reason, restore, then watch green. Record both runs. Use a disposable copy for mutations; do not disturb unrelated working-tree changes. A missing-symbol/collection failure alone does not prove behavior is covered.
 
 ### 3. Incremental loop
 For each remaining behavior: **RED** (next test fails) → **GREEN** (minimal code to pass). One test at a time; only enough code to pass the current test; don't anticipate future tests; keep tests on observable behavior.
@@ -92,7 +110,7 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 ## Checklist per cycle
 ```
 [ ] Test describes behavior, not implementation; source/config scans are labelled lints
-[ ] Plausible regression named; RED failed for that reason
+[ ] Plausible regression named; RED failed for that reason (confirm-red.py or behavioral mutation); both RED/GREEN runs recorded
 [ ] Independent oracle; fixtures preserve the claimed failure mode
 [ ] Test uses public interface only
 [ ] Test would survive an internal refactor

@@ -10,6 +10,12 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Design decisions
 
+- **Broad invocation.** Test edits, bug fixes and features with tests trigger the discipline even when tests are incidental; opt-in test-first wording missed ordinary work.
+- **Unattended planning.** Delegated/headless agents record behavior priorities and interface decisions rather than waiting for unavailable approval; interactive approval remains unchanged.
+- **Tests after code still need RED.** Coverage/regression/characterisation additions require a watched behavioral failure and restored green, recording both runs.
+- **Inject inline boundaries.** A keyword boundary parameter with the real default preserves behavior while exercising owned helpers; out-of-scope seam changes are reported, not replaced with internal patches.
+- **Confirm old-code RED.** The stdlib archive-and-overlay CLI isolates current changed tests from current production code without touching the user's Git state. Missing-symbol failures warn rather than claim behavioral sufficiency; unchanged production requires a manual mutation.
+
 - **Tests that lie.** Merge the talk’s three classes into the existing internal-mock refusals. A sampled, read-only audit found private-helper patches/call assertions dominant in orchestrator tests (roughly 25–40% in one sample, not a census); use boundary fakes, public entry points and independent oracles instead. The per-test regression self-check sharpens the existing RED step, not a new result state.
 
 - **Behavior-through-interface is the core rule.** Tests verify what the system does via public APIs, not how it does it internally. The named anti-test is the implementation-detail test (mocks internal collaborators, asserts call counts, breaks on refactor without behavior change). Detail in `body/tests.md`.
@@ -22,6 +28,9 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - **`untested` as a TDD result state considered and rejected (2026-09-06).** A review findings table needs a third state because a skipped check and an inapplicable one look identical. A TDD cycle does not: its states are exhaustive (the test exists and fails, or exists and passes). A third "result" would become a sanctioned route past RED and would defeat "watch it fail for the right reason." The blocked case — no runner, missing fixture, unbuildable environment — is a stop-and-report, not a result value.
 
 ## Provenance
+
+- Owner-repo test-quality audit (2026-11-05): read-only, all ~2,400 tests in one repo; process causes traced to opt-in description, approval step in unattended jobs, inline boundaries; repository and code not reproduced.
+- Confirm-RED idea sources: https://alex.kirk.at/2023/10/09/new-unit-tests-need-to-fail-running-the-old-code/ and https://dontcodethisathome.com/proving-a-generated-test-can-fail-mutation-testing-as-a-sufficiency-gate-for-an-ai-coding-agent .
 
 - [Matt Pocock talk source](../../docs/research/raw/pocock-pr-bottleneck-talk/SOURCE.md) and [research notes](../../docs/research/raw/pocock-pr-bottleneck-talk/research-notes.md) — checks that lie (~5–7 min) and merge danger (~17–18 min), selectively adapted, not the reviewer-write model.
 - Owner-supplied agent-test audit (2026-11-04), three read-only sampled reports covering orchestration, products and harnesses — evidence for same-function oracles, source-text coverage claims, subsystem-erasing fixtures and private-helper patches; no suite execution or mutation validation. Generic examples only; audit repository and code are not reproduced.
