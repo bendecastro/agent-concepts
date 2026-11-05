@@ -539,13 +539,14 @@ def lint_deploy_symlinks(issues: list[Issue]) -> None:
                     issues.append(Issue("WARN", f"deploy symlink for local concept points outside concepts/: {link} -> {raw}"))
 
 
+def display(path: Path) -> str:
+    home = Path.home()
+    return str(Path("~") / path.relative_to(home)) if path.is_relative_to(home) else str(path)
+
+
 def lint_kernel_copies(issues: list[Issue]) -> None:
     """Check optional machine-local copies without making them repo errors."""
-    home = Path.home()
-    config = home / ".config/agent-concepts/kernel-copies.json"
-
-    def display(path: Path) -> str:
-        return str(Path("~") / path.relative_to(home)) if path.is_relative_to(home) else str(path)
+    config = Path.home() / ".config/agent-concepts/kernel-copies.json"
 
     try:
         data = json.loads(config.read_text(encoding="utf-8"))
@@ -575,6 +576,54 @@ def lint_kernel_copies(issues: list[Issue]) -> None:
         if differs:
             issues.append(Issue("WARN", f"{label}: bytes differ; re-copy source to runtime "
                                 "(bc-setup-config-symlinks or equivalent)"))
+
+
+def lint_skill_copies(issues: list[Issue]) -> None:
+    """Warn when configured project-local skill copies differ from canon."""
+    config = Path.home() / ".config/agent-concepts/skill-copies.json"
+    try:
+        data = json.loads(config.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return
+    except (OSError, ValueError) as exc:
+        issues.append(Issue("WARN", f"skill copies: cannot read {display(config)}: {exc}"))
+        return
+    if (not isinstance(data, dict) or not isinstance(data.get("repos"), list)
+            or not all(isinstance(repo, str) and repo for repo in data["repos"])):
+        issues.append(Issue("WARN", f"skill copies: {display(config)} must contain a repos list of paths"))
+        return
+
+    def files(root: Path) -> dict[Path, bytes]:
+        result = {}
+        def onerror(exc: OSError) -> None:
+            raise exc
+        for directory, dirs, names in os.walk(root, onerror=onerror):
+            dirs[:] = [name for name in dirs if name != "__pycache__"]
+            for name in names:
+                if not name.endswith(".pyc"):
+                    path = Path(directory) / name
+                    result[path.relative_to(root)] = path.read_bytes()
+        return result
+
+    for repo in data["repos"]:
+        skills = Path(repo).expanduser() / ".agents/skills"
+        if not skills.is_dir():
+            issues.append(Issue("WARN", f"skill copies: missing directory {display(skills)}"))
+            continue
+        try:
+            for copy in sorted(skills.iterdir()):
+                canon = ROOT / "concepts" / copy.name / "body"
+                if copy.is_symlink() or not copy.is_dir() or not canon.is_dir():
+                    continue
+                local_files, canonical_files = files(copy), files(canon)
+                count = sum(local_files.get(path) != canonical_files.get(path)
+                            for path in local_files.keys() | canonical_files.keys())
+                if count:
+                    issues.append(Issue("WARN", f"skill copy {copy.name}: {display(copy)} differs from "
+                                        f"concepts/{copy.name}/body ({count} files differ/missing/extra); "
+                                        "refresh it from canon if the copy is not an intentional adaptation"))
+        except OSError as exc:
+            issues.append(Issue("WARN", f"skill copies: cannot inspect {display(skills)}: {exc}"))
 
 
 def main() -> int:
@@ -625,6 +674,7 @@ def main() -> int:
     lint_policies(issues)
     lint_deploy_symlinks(issues)
     lint_kernel_copies(issues)
+    lint_skill_copies(issues)
 
     if not issues:
         print("agents lint: ok")
