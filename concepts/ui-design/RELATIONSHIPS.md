@@ -7,7 +7,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-None.
+- hands off to `show-me` — required, when explanation diagrams.
+  Explanation diagrams belong to show-me, not product UI design.
+  Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
 

@@ -22,6 +22,9 @@ A cross-surface UI design skill for any visible change, from a single control to
 - The rewrite has not passed pressure testing and is held from deployment. Scenarios compare runs without and with the skill on the configured pressure model; previous results do not establish this new contract.
 - The prompting-agents quick-reference block remains a concise companion; show-me hands product UI work here, while explanation diagrams stay with show-me.
 
+- Deliberately dropped Linear-specific restraint, a universal hard-rules list and fixed section sequence: host, task and brief govern these choices. Dropped a fixed motion quota because Anthropic recommends one orchestrated motion while OpenAI suggests 2–3; use context and reduced-motion needs instead. Dropped the CSS specificity note as general implementation advice, not a design contract.
+- show-me’s incoming UI-design handoff remains intact: this change refines capture and design checks without changing its routing.
+
 ## Provenance
 
 - [Anthropic design skill](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md) — subject grounding, thesis and anti-cliché critique.
@@ -31,6 +34,7 @@ A cross-surface UI design skill for any visible change, from a single control to
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [Nielsen's heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/), [Norman on signifiers](https://jnd.org/signifiers-not-affordances/), [Fluent layout](https://fluent2.microsoft.design/layout) — accessibility, usability and perceptual principles; individual checks cite their sources.
 - [WebGen-Agent](https://arxiv.org/html/2509.22644), [MLLM as UI Judge](https://arxiv.org/html/2510.08783), [ArtifactsBench](https://arxiv.org/html/2507.04952) — visual feedback and judge limitations, not proof of any universal score threshold.
 - [Shelfmark brief](../../docs/research/front-end-design/brief.md), [visual hill-climb handoff](../../docs/research/front-end-design/theo-ui-hill-climb-handoff.md) — concrete failure modes and capture-loop evidence.
+- [Principles research](../../docs/research/front-end-design/principles-research.md) and [Agent Skills research](../../docs/research/front-end-design/agent-skills-research.md) — research behind the ranking and trigger.
 - [prompting-agents](../prompting-agents/body/SKILL.md) — instruction altitude and anti-slop block.
 
 ## Tests

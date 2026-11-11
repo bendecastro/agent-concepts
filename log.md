@@ -1605,3 +1605,6 @@ Propagated to Pi, Codex, Grok, OpenCode, Muse (CONFIG `e36a14d`) and `~/.claude/
 
 ## [2026-11-11] implement | ui-design replaces frontend-design
 Broadened UI design to all surfaces, with ranked principles and scaled capture evidence; held deployment pending pressure tests.
+
+## [2026-11-11] implement | ui-design review fixes
+Restored historical research and strengthened screenshot checks, host capture, design guidance and discriminating scenarios; deployment remains held.

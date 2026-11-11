@@ -44,3 +44,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [codebase-docs](../codebase-docs/RELATIONSHIPS.md): loads this concept — optional, when how-it-works pages.
   Use a smallest current-state visual on the owning page; placement rules still win.
   Source: [codebase-docs/body/SKILL.md](../codebase-docs/body/SKILL.md)
+
+- incoming from [ui-design](../ui-design/RELATIONSHIPS.md): hands off to this concept — required, when explanation diagrams.
+  Explanation diagrams belong to show-me, not product UI design.
+  Source: [ui-design/body/SKILL.md](../ui-design/body/SKILL.md)

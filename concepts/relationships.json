@@ -461,6 +461,15 @@
       "when": "Standards review of new or changed tests",
       "source": "concepts/code-review/body/SKILL.md#2-review-independently",
       "reason": "Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage."
+    },
+    {
+      "from": "ui-design",
+      "to": "show-me",
+      "relation": "hands_off",
+      "required": true,
+      "when": "explanation diagrams",
+      "source": "concepts/ui-design/body/SKILL.md",
+      "reason": "Explanation diagrams belong to show-me, not product UI design."
     }
   ]
 }

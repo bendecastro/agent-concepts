@@ -1,10 +1,12 @@
+> Replaced by [`ui-design`](../../../concepts/ui-design/CONCEPT.md) on 2026-11-11; this document describes `frontend-design` at 171e5b1.
+
 # Front-end UI design skill: brief from a real session
 
 Handoff brief for an agent improving how coding agents design and restyle UI. It records what went wrong and what worked in one long session in the Shelfmark repo (a Chromium MV3 bookmark manager written in Svelte), so the next skill is built on observed failures rather than guesses.
 
 ## Starting point
 
-- An existing concept already covers aesthetics: [`concepts/ui-design`](../../../concepts/ui-design/CONCEPT.md) (body: `SKILL.md` plus `archetypes.md`). It is aimed at *blank-page* work (landing pages, distinctive art direction) and tells the agent to conform to an existing design system when one exists. Its "Verify visually" section is three sentences and points to `playwright-cli`.
+- An existing concept already covers aesthetics: concepts/frontend-design (`171e5b1:concepts/frontend-design/CONCEPT.md`) (body: `SKILL.md` plus `archetypes.md`). It is aimed at *blank-page* work (landing pages, distinctive art direction) and tells the agent to conform to an existing design system when one exists. Its "Verify visually" section is three sentences and points to `playwright-cli`.
 - Shelfmark now has a project convention born in this session: `.bc-agent/conventions/ui-design.md` in the Shelfmark repo (screenshot critique loop with a checklist). Treat it as a seed, not the final form.
 - Open question for the owner: extend `frontend-design`, or add a separate concept for *incremental UI work inside an existing app* (the common case here). The failures below are almost all of the second kind.
 

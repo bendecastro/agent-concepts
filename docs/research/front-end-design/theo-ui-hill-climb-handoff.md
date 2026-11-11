@@ -1,8 +1,10 @@
+> Replaced by [`ui-design`](../../../concepts/ui-design/CONCEPT.md) on 2026-11-11; this document describes `frontend-design` at 171e5b1.
+
 # Front-end design skill: Theo's UI hill climb
 
 **Purpose:** Research and handoff for an agent improving a front-end design skill. This is evidence and a set of proposals, not a finished skill or authorization to deploy one.
 
-**Context:** The owner wants agents to make better visual design decisions, inspired by Theo's iterative T3 Code redesign. Start by inspecting the existing [`frontend-design` concept](../../../concepts/ui-design/CONCEPT.md) and [skill body](../../../concepts/ui-design/body/SKILL.md), rather than assuming a new skill is needed. The companion [Shelfmark brief](brief.md) records local experience with incremental changes and real-browser verification. Reconcile its proposals with this research and ask the owner about material design choices before implementation.
+**Context:** The owner wants agents to make better visual design decisions, inspired by Theo's iterative T3 Code redesign. Start by inspecting the existing `frontend-design` concept (`171e5b1:concepts/frontend-design/CONCEPT.md`) and skill body (`171e5b1:concepts/frontend-design/body/SKILL.md`), rather than assuming a new skill is needed. The companion [Shelfmark brief](brief.md) records local experience with incremental changes and real-browser verification. Reconcile its proposals with this research and ask the owner about material design choices before implementation.
 
 ## Evidence and corrections
 
