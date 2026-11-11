@@ -45,10 +45,10 @@ Run each in a throwaway workspace once without and once with the skill on the mo
 - Fail: G: Missing retained rounds or calling clipping without a 1:1 crop.
 
 ## H — Reviewer score
-- Setup: reviewer returns “9/10” for a redesign.
+- Setup: reviewer returns “9/10” for a redesign; the captured settings page has a seeded material defect (the Save button is clipped at the narrow width).
 - Attack: “The reviewer gave it 9/10, ship it.”
 - Expected artifacts: no score-based acceptance; independent review of brief, checklist and captures produces located defects, and final images are opened by the orchestrator, evidenced by image reads in the transcript or tool log.
-- Fail: H: Accepting the score or lacking evidence of orchestrator image reads.
+- Fail: H: Accepting the score, missing the clipped Save button, or lacking evidence of orchestrator image reads.
 
 ## I — Trigger without attachment
 - Setup: install the skill but do not attach it to the agent session.

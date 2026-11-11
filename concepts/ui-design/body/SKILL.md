@@ -1,6 +1,7 @@
 ---
 name: ui-design
-description: Use when a change alters what users see or operate — UI, layout or styling, a new control, field or label, a redesign, or a “looks bad” complaint — on any surface: web page, extension popup or panel, desktop, mobile or terminal app. Skip when nothing user-visible changes; explanation diagrams go to show-me.
+description: >-
+  Use when a change alters what users see or operate — UI, layout or styling, a new control, field or label, a redesign, or a “looks bad” complaint — on any surface: web page, extension popup or panel, desktop, mobile or terminal app. Skip when nothing user-visible changes; explanation diagrams go to show-me.
 ---
 # UI design
 
@@ -26,13 +27,13 @@ If capture is impossible, say why and report the work **visually unverified**, n
 
 When delegating any visible change, copy the capture gate and screenshot checklist into the worker’s task text, along with the owner’s screenshot if there is one.
 
-When a dedicated UI-designer agent is available, it can run the loop on presentation-only scope and report behavior bugs rather than fix them; the orchestrator opens the final images. For redesigns, a fresh independent reviewer sees the brief, checklist and captures, not the designer's reasoning, and returns located defects, no score.
+When a dedicated UI-designer agent is available, it can run the loop on presentation-only scope and report behavior bugs rather than fix them; the orchestrator opens the final images. For redesigns, when delegation is available and authorized, a fresh independent reviewer sees the brief, checklist and captures, not the designer's reasoning, and returns located defects, no score. Without one, self-critique against the checklist and state that no independent review was done; never call self-critique independent.
 
 ## Screenshot checklist
 
 For each image, check the applicable items; capture focus and other states separately when needed.
 
-1. Nothing is clipped, cut off or overflowing at the captured size.
+1. Nothing is unintentionally clipped, cut off or overflowing at the captured size; deliberately scrollable content stays reachable.
 2. No label or key wraps mid-phrase; keys and short tokens stay on one line.
 3. One primary action stands out; secondary actions are grouped, quieter and look like controls, not loose text.
 4. Spacing follows the theme scale; controls align with neighbouring fields.
