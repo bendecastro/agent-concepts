@@ -161,7 +161,7 @@ needs to understand the mechanism and its limits.
 - Architecture-review reports → `improve-codebase-architecture`, not this skill.
 - Lessons and their after-lesson HTML → `teach`; inline visuals are fine, but
   do not write or open HTML mid-lesson.
-- Product UI or visual redesign → `frontend-design`.
+- Product UI or visual redesign → `ui-design`.
 
 Adapted from HumanLayer / Dex Horthy's MIT `show-me` skill.
 Copyright (c) 2026 HumanLayer; [MIT notice](../../../docs/research/raw/humanlayer-show-me/LICENSE).

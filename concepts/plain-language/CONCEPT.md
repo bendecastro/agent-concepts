@@ -53,7 +53,7 @@ claim ISO conformance.
   documents. CAN-ASC-3.1:2025 is a free Canadian accessibility standard
   that is ISO-aware and conformity-assessable; it is out of scope until
   that audience is in play.
-- **Composes, does not merge.** `frontend-design` still owns visual UI;
+- **Composes, does not merge.** `ui-design` still owns visual UI;
   `prompting-agents` still owns agent-instruction authoring; `research`
   still owns evidence. This skill may make the human-facing words in
   those artifacts scannable.

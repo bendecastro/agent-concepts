@@ -126,7 +126,7 @@ they matter.
 - Visual form of how-it-works explanations → `show-me`; this skill owns the
   words around the visual.
 - Agent-instruction authoring → `prompting-agents`.
-- Visual UI beyond the words → `frontend-design`.
+- Visual UI beyond the words → `ui-design`.
 - Evidence and citations → `research`. This skill can make a human-facing
   note scannable; it does not change what counts as a source.
 - Live grill questions, the architecture-review HTML report, and a drain

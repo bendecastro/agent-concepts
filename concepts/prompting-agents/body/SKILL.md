@@ -232,7 +232,7 @@ Naming custom tools: make names and parameters semantically exact (`semantic_sea
 - No destructive commands (reset --hard, checkout --) without explicit approval.
 ```
 
-## Frontend anti-slop
+## UI anti-slop
 
 For agents producing UI from scratch (skip when a design system exists — then the rule is the opposite: conform to it):
 
@@ -240,7 +240,8 @@ For agents producing UI from scratch (skip when a design system exists — then 
 - Avoid safe, average-looking layouts: no default font stacks, no purple-on-white
   defaults, no flat single-color backgrounds, no interchangeable boilerplate.
 - Choose a clear visual direction; define tokens/CSS variables; use a few meaningful
-  animations rather than generic micro-motion. Verify desktop and mobile.
+  animations rather than generic micro-motion. Verify in the actual host at
+  sizes appropriate to the surface; screenshots do not prove behavior.
 ```
 
 ## Technique repertoire

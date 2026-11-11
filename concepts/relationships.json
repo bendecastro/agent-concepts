@@ -437,7 +437,7 @@
     },
     {
       "from": "show-me",
-      "to": "frontend-design",
+      "to": "ui-design",
       "relation": "depends_on_contract",
       "required": true,
       "when": "UI redesign",

@@ -15,10 +15,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Placement, current-state maintenance and one home per fact remain doc contracts.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `frontend-design`'s contract — required, when UI redesign.
-  Product UI design is not an explanation sketch.
-  Source: [body/SKILL.md](body/SKILL.md)
-
 - depends on `improve-codebase-architecture`'s contract — required, when architecture-review reports.
   Architecture-review report artifacts retain their own contract.
   Source: [body/SKILL.md](body/SKILL.md)
@@ -33,6 +29,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 - depends on `teach`'s contract — required, when teaching sessions.
   Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts.
+  Source: [body/SKILL.md](body/SKILL.md)
+
+- depends on `ui-design`'s contract — required, when UI redesign.
+  Product UI design is not an explanation sketch.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `unslop`'s contract — required, when shipped wrapping prose.

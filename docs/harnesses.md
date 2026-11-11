@@ -65,3 +65,5 @@ Use `~` rather than hardcoded home paths; this directory syncs across machines.
 
 Copied kernel-delta drift (including Muse) is WARN-only in lint when pairs are configured in private `~/.config/agent-concepts/kernel-copies.json`; see [example](kernel-copies.example.json).
 Project skill-copy drift is also WARN-only when repositories are configured in private `~/.config/agent-concepts/skill-copies.json`; see [example](skill-copies.example.json) for plain paths and per-repo `intentional` skill-name allowlists. Comparisons prefer private overrides over public canon and ignore OS/Syncthing debris.
+
+UI design deploy targets and current status: [ui-design](../concepts/ui-design/CONCEPT.md).

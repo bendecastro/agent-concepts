@@ -1602,3 +1602,6 @@ Private pressure model, with vs without: tdd helped seam (T2) and tests-after-co
 
 ## [2026-11-05] deploy | agent-kernel test-evidence line
 Propagated to Pi, Codex, Grok, OpenCode, Muse (CONFIG `e36a14d`) and `~/.claude/CLAUDE.md`. Income-lab got the tdd copy, an AGENTS.md test rule and a review-prompt clause (local main `dfe5c12a`; push left to that repo's owner session). tdd now notes confirm-red's per-run tree copy (review F16).
+
+## [2026-11-11] implement | ui-design replaces frontend-design
+Broadened UI design to all surfaces, with ranked principles and scaled capture evidence; held deployment pending pressure tests.

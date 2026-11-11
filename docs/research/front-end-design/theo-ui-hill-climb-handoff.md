@@ -2,7 +2,7 @@
 
 **Purpose:** Research and handoff for an agent improving a front-end design skill. This is evidence and a set of proposals, not a finished skill or authorization to deploy one.
 
-**Context:** The owner wants agents to make better visual design decisions, inspired by Theo's iterative T3 Code redesign. Start by inspecting the existing [`frontend-design` concept](../../../concepts/frontend-design/CONCEPT.md) and [skill body](../../../concepts/frontend-design/body/SKILL.md), rather than assuming a new skill is needed. The companion [Shelfmark brief](brief.md) records local experience with incremental changes and real-browser verification. Reconcile its proposals with this research and ask the owner about material design choices before implementation.
+**Context:** The owner wants agents to make better visual design decisions, inspired by Theo's iterative T3 Code redesign. Start by inspecting the existing [`frontend-design` concept](../../../concepts/ui-design/CONCEPT.md) and [skill body](../../../concepts/ui-design/body/SKILL.md), rather than assuming a new skill is needed. The companion [Shelfmark brief](brief.md) records local experience with incremental changes and real-browser verification. Reconcile its proposals with this research and ask the owner about material design choices before implementation.
 
 ## Evidence and corrections
 
