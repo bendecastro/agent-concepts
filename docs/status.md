@@ -2,7 +2,7 @@
 
 # Status
 
-45 concepts. 0 need testing, 2 not deployed, 20 deployed with a known gap.
+45 concepts. 0 need testing, 1 not deployed, 21 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -11,14 +11,13 @@ Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page wi
 
 Nothing. Every deployed concept has a recorded run.
 
-## Not deployed (2)
+## Not deployed (1)
 
 | concept | kind | test status | tested |
 |---|---|---|---|
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | not-run | never |
-| [ui-design](../concepts/ui-design/CONCEPT.md) | pressure | not-run | never |
 
-## Deployed with a known gap (20)
+## Deployed with a known gap (21)
 
 Passing overall, but each names a check that was never run or a target never
 tested. See the concept's `## Tests` section for what is missing.
@@ -43,6 +42,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [tdd](../concepts/tdd/CONCEPT.md) | pressure | 2026-11-05 | yes |
 | [teach](../concepts/teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
+| [ui-design](../concepts/ui-design/CONCEPT.md) | pressure | 2026-11-11 | yes |
 | [using-git-worktrees](../concepts/using-git-worktrees/CONCEPT.md) | pressure | 2026-09-22 | yes |
 | [writing-plans](../concepts/writing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
 

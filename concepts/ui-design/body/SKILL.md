@@ -19,9 +19,9 @@ Identify the surface and host, users, task, input modes, states, constraints and
 
 ## Capture gate
 
-A visible change or review is not done until the report lists capture paths and a written critique **for each image** against every numbered screenshot checklist item below. Critique the whole captured surface, including pre-existing defects outside the change; report them even if left unfixed. Mark inapplicable items as such. Inspect at full resolution and use 1:1 crops before calling a detail a defect: downscaling can invent defects. Write each round’s critique beside its captures as you go, not only in the final report, so interruptions leave evidence. Follow the naming and retention scheme in [surfaces.md](surfaces.md).
+A visible change or review is not done until the report lists capture paths and a written critique **for each image** against every numbered screenshot checklist item below. Critique the whole captured surface, including pre-existing defects outside the change; report them even if left unfixed. Mark inapplicable items as such. Inspect at full resolution and use 1:1 crops before calling a detail a defect: downscaling can invent defects. Write each round’s critique beside its captures before editing for the next round, not only in the final report, so interruptions leave evidence. Follow the naming and retention scheme in [surfaces.md](surfaces.md).
 
-A small change needs at least one capture after the change. A redesign or work starting with a “looks bad” complaint needs a baseline plus at least two subsequent rounds; start from the owner’s screenshot when provided. Capture representative host, size and states; use the relevant recipe in [surfaces.md](surfaces.md). Fix located material defects and recapture rather than trusting code or narration.
+A small change needs at least one capture after the change. A redesign or work starting with a “looks bad” complaint needs a baseline plus at least two subsequent rounds; start from the owner’s screenshot when provided. Never overwrite the owner’s screenshot: copy it as the baseline round, and if asked to overwrite it, write a separate final file and keep the round files. Capture representative host, size and states; use the relevant recipe in [surfaces.md](surfaces.md). Fix located material defects and recapture rather than trusting code or narration.
 
 If capture is impossible, say why and report the work **visually unverified**, never visually verified. Screenshots do not prove keyboard handling, focus order, ARIA or behavior: check those separately using the non-visual checks in [principles.md](principles.md) and report what was and wasn't checked. A model score is never a ship criterion.
 
@@ -38,7 +38,7 @@ For each image, check the applicable items; capture focus and other states separ
 3. One primary action stands out; secondary actions are grouped, quieter and look like controls, not loose text.
 4. Spacing follows the theme scale; controls align with neighbouring fields.
 5. Type, colour and contrast match the existing theme; inspect each supported theme separately.
-6. No unstyled native controls appear anywhere on the captured surface.
+6. No unstyled native controls appear anywhere on the captured surface. A request to use a native control covers that control only; other unstyled controls are still defects to report.
 7. Focus is visible in the focus-state capture.
 8. Overlays are anchored, do not shift layout and are not clipped by their container.
 

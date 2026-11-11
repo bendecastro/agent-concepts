@@ -1,8 +1,8 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
-deployed: no
+test_status: partial
+tested: 2026-11-11
+deployed: yes
 ---
 # Concept: ui-design
 
@@ -19,7 +19,7 @@ A cross-surface UI design skill for any visible change, from a single control to
 - Capture in the actual host when it controls sizing. Screenshots cannot prove behavior, keyboard, focus or semantics; check those separately. Model scores are not acceptance criteria.
 - Capture recipes are tool-agnostic, not dependent on unavailable skills. Modern Web Guidance remains a web-only pointer; Material Design is an optional system, not a universal default. Stack and harness remain neutral.
 - A dedicated designer may work presentation-only, report behavioral bugs, and hand captures to the orchestrator; redesign review is independent and blind to designer reasoning, with located defects rather than scores.
-- The rewrite has not passed pressure testing and is held from deployment. Scenarios compare runs without and with the skill on the configured pressure model; previous results do not establish this new contract.
+- Pressure-tested in two rounds on 2026-11-11, without and with the skill on the configured pressure model; results from the previous `frontend-design` contract do not carry over.
 - The prompting-agents quick-reference block remains a concise companion; show-me hands product UI work here, while explanation diagrams stay with show-me.
 
 - Deliberately dropped Linear-specific restraint, a universal hard-rules list and fixed section sequence: host, task and brief govern these choices. Dropped a fixed motion quota because Anthropic recommends one orchestrated motion while OpenAI suggests 2–3; use context and reduced-motion needs instead. Dropped the CSS specificity note as general implementation advice, not a design contract.
@@ -46,8 +46,8 @@ A cross-surface UI design skill for any visible change, from a single control to
 
 ## Tests
 
-[Pressure scenarios](tests/scenario.md) cover the new contract; no run has been performed for this rewrite.
+[Pressure scenarios](tests/scenario.md) cover the new contract. [Results](tests/results/README.md), 2026-11-11: the skill made the difference in A, C, H and I; B and G held with it but lacked a clean baseline; E and F did not discriminate. Known gap: D (extension popup in its real host) failed in both variants, and three edits made after the last round are untested.
 
 ## Deploy targets
 
-When pressure-tested and approved: relative symlinks for the shared bus `~/.agents/skills/ui-design`, Pi `~/.pi/agent/skills/ui-design`, and Claude Code `~/.claude/skills/ui-design`. Not deployed; bulk deployment holds this concept.
+Deployed 2026-11-11 by `scripts/deploy-local-skills.py`: relative symlinks for the shared bus `~/.agents/skills/ui-design`, Pi `~/.pi/agent/skills/ui-design`, and Claude Code `~/.claude/skills/ui-design`.

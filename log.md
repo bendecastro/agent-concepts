@@ -1611,3 +1611,9 @@ Restored historical research and strengthened screenshot checks, host capture, d
 
 ## [2026-11-11] implement | ui-design pressure-test gap fixes
 Strengthened whole-surface critique, durable evidence and capture naming; clarified wrapping, review triggers and non-interactive defaults. Pressure testing and deployment remain pending.
+
+## [2026-11-11] test | ui-design pressure rounds 1 and 2
+Ran scenarios without and with the skill; it made the difference in A, C, H and I, with D unresolved and baselines partly contaminated. Results stored in `concepts/ui-design/tests/results/`; three small gap fixes followed and are untested.
+
+## [2026-11-11] deploy | ui-design
+Deployed to the shared bus, Pi and Claude Code; removed the dangling `frontend-design` links.
