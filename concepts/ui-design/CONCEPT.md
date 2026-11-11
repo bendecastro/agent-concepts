@@ -25,6 +25,13 @@ A cross-surface UI design skill for any visible change, from a single control to
 - Deliberately dropped Linear-specific restraint, a universal hard-rules list and fixed section sequence: host, task and brief govern these choices. Dropped a fixed motion quota because Anthropic recommends one orchestrated motion while OpenAI suggests 2–3; use context and reduced-motion needs instead. Dropped the CSS specificity note as general implementation advice, not a design contract.
 - show-me’s incoming UI-design handoff remains intact: this change refines capture and design checks without changing its routing.
 
+- 2026-11-11: Require item-by-item critique of the whole captured surface, including unchanged defects; A-with missed the existing select (grade ABC).
+- 2026-11-11: Persist the new-work plan and each round’s critique alongside captures as work proceeds; B-with and C-with timed out without written evidence (grade ABC).
+- 2026-11-11: Use working-directory capture files with round and state identifiers and unique suffixes; grading found shared external capture locations and overwrite risk (grades ABC, GHI).
+- 2026-11-11: Treat a short label or key wrapping despite room as a defect at any break; grading found a word-boundary wrap missed (grade GHI).
+- 2026-11-11: Trigger on UI review, acceptance and shipping verdicts as well as changes; grading found review-only requests did not load the skill (grades DEF, GHI).
+- 2026-11-11: In non-interactive runs take the recommended option and report the assumption when nobody can answer; grading found headless runs stalled on questions (grade GHI).
+
 ## Provenance
 
 - [Anthropic design skill](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md) — subject grounding, thesis and anti-cliché critique.

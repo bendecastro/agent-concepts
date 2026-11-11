@@ -1608,3 +1608,6 @@ Broadened UI design to all surfaces, with ranked principles and scaled capture e
 
 ## [2026-11-11] implement | ui-design review fixes
 Restored historical research and strengthened screenshot checks, host capture, design guidance and discriminating scenarios; deployment remains held.
+
+## [2026-11-11] implement | ui-design pressure-test gap fixes
+Strengthened whole-surface critique, durable evidence and capture naming; clarified wrapping, review triggers and non-interactive defaults. Pressure testing and deployment remain pending.

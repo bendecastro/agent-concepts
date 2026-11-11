@@ -1,6 +1,6 @@
 # New work: direction before decoration
 
-Frame the subject, audience, task and surface before choosing a style. Write a proportional thesis and token plan before building:
+Frame the subject, audience, task and surface before choosing a style. Before building, write a proportional thesis and token plan to `captures/new-work.md` in the working directory, beside the captures, so it survives an interrupted run:
 
 - **Visual thesis:** mood, material and energy.
 - **Content plan:** section sequence and each section’s job.
