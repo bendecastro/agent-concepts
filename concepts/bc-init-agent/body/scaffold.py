@@ -1152,7 +1152,7 @@ _BASE_ROWS = (
     ("requirements", "docs/PRD.md", "product-level spec, created on first need; a feature's requirements live in its work item"),
     ("architecture", "ARCHITECTURE.md", "created on first need"),
     ("project-skills", ".agents/skills/", "created on first need; one `local-<name>/` folder per skill, with a README naming shared copies and how to refresh them"),
-    ("project-agents", "", "not yet decided; ask the owner before creating project-specific agents"),
+    ("project-agents", ".agents/agents/", "created on first need; one `local-<name>.md` file per agent, beside `.agents/skills/`"),
 )
 _OPS_ROWS = (
     ("components", "docs/components/", "verified state of real systems, hosts, tools and services"),

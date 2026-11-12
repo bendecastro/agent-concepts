@@ -190,7 +190,7 @@ def test_missing_role_path_is_a_warning_unless_created_on_first_need_or_undecide
     _code, report = lint(root)
     roles = findings(report, "role-path")
     # requirements, architecture and project-skills are "created on first need";
-    # project-agents has no decided path.
+    # project-agents is created on first need too.
     assert [entry["path"] for entry in roles] == ["docs/decisions", "glossary.md"]
     assert {entry["severity"] for entry in roles} == {"warning"}
     assert "decisions" in roles[0]["problem"]

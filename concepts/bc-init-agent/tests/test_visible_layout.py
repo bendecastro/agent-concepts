@@ -33,9 +33,12 @@ def test_code_and_ops_layout_table_marks_optional_destinations(tmp_path):
         root.mkdir()
         subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(root), '--slug', 'demo', '--archetype', archetype], check=True)
         rows = (root / '.bc-agent/AGENTS.md').read_text().splitlines()
-        for role in ('requirements', 'architecture', 'project-skills'):
+        for role in ('requirements', 'architecture', 'project-skills', 'project-agents'):
             assert 'created on first need' in next(row for row in rows if row.startswith(f'| {role} |'))
-        assert 'not yet decided' in next(row for row in rows if row.startswith('| project-agents |'))
+        agents_row = next(row for row in rows if row.startswith('| project-agents |'))
+        assert agents_row == ('| project-agents | `.agents/agents/` | created on first need; one `local-<name>.md` '
+                              'file per agent, beside `.agents/skills/` |')
+        assert 'ask the owner' not in (root / '.bc-agent/AGENTS.md').read_text()
 
 
 def test_code_and_ops_runway_uses_visible_work_and_research(tmp_path):
@@ -180,7 +183,7 @@ CODE_ROLES = {
     'requirements': 'docs/PRD.md',
     'architecture': 'ARCHITECTURE.md',
     'project-skills': '.agents/skills/',
-    'project-agents': '',
+    'project-agents': '.agents/agents/',
 }
 
 
@@ -199,7 +202,7 @@ def test_where_things_go_roles_resolve_in_scaffolded_tree(tmp_path, archetype):
         assert 'open-questions' not in roles
     if archetype == 'hybrid':
         assert roles['teach-workspace'] == '.bc-agent/references/teach-skill.md'
-    assert roles['project-agents'] == ''
+    assert roles['project-agents'] == '.agents/agents/'
     notes = {row.split('|')[1].strip(): row for row in text.splitlines() if row.startswith('| ')}
     for role, path in roles.items():
         if path and 'created on first need' not in notes[role]:

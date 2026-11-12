@@ -67,9 +67,9 @@ A 2026-11-12 trial on clones of one code and one ops project (not the projects t
 wikilinks to moved files; a rerun on a fresh clone of that ops project rewrote 108 wikilinks in 27
 files, none ambiguous, all resolving, and left 32 wikilinks from moved files to files that stay.
 
-### Search and promotion after migration (owner decision 2026-11-12)
+### Search, promotion and project agents after migration (owner decisions 2026-11-12)
 
-A project already migrated to the visible layout needs two follow-ups, done by hand on the machine
+A project already migrated to the visible layout needs these follow-ups, done by hand on the machine
 that holds the synced qmd collections file:
 
 - **Register for search.** Print the entries from the project's own table and compare them with
@@ -85,6 +85,11 @@ that holds the synced qmd collections file:
   migration moved (`/decisions`, `/research`, `/project`, `/components`, ...), since their files
   now live in `<slug>-project`. Otherwise append both blocks. Then run the setup command (see the
   `qmd` concept). `wiki_lint.py "<repo>/.bc-agent"` then reports `qmd registration: registered`.
+- **Project agents row.** Edit the one table row in `.bc-agent/AGENTS.md` from
+  `` | project-agents | — | not yet decided; ask the owner before creating project-specific agents | ``
+  to
+  `` | project-agents | `.agents/agents/` | created on first need; one `local-<name>.md` file per agent, beside `.agents/skills/` | ``.
+  Nothing else changes; the folder is created when the first agent is.
 - **Promotion: nothing to do.** Promotion is retired for the visible layout, and the runner exits
   0 with "promotion is not applicable" for such a project. A per-project promotion timer or a
   `wiki-promotion-vaults.txt` entry for it can be removed at leisure; leaving it costs one no-op

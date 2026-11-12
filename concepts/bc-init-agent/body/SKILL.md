@@ -14,6 +14,8 @@ Adaptively initialize project-local agent context.
   `docs/decisions/` and `docs/research/`, the vocabulary in root `glossary.md`; `.bc-agent/` holds
   agent mechanics only (instructions, map, log, conventions, references, templates). Why: people
   browse the repository, not a hidden folder, so knowledge kept out of sight goes stale.
+  Project-specific skills and agents go to `.agents/skills/local-<name>/` and
+  `.agents/agents/local-<name>.md`, created on first need.
 - **The "Where things go" table in `.bc-agent/AGENTS.md` is the single home for these paths.**
   When you or another skill need a location, look the role up there instead of assuming it. Why:
   a project with a justified exception then changes one table, not every skill.

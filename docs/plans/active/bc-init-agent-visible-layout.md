@@ -54,6 +54,7 @@ docs/
   map.md  log.md
   conventions/  references/  templates/
 .agents/skills/local-<name>/   project skills, created on first need
+.agents/agents/local-<name>.md  project agents, created on first need
 ```
 
 1. **Knowledge is visible; `.bc-agent/` holds agent mechanics only** (Q1).
@@ -104,7 +105,7 @@ docs/
 19. **Project skills and agents use the standard discovered folders** (Q21): `.agents/skills/`
     with a `local-` prefix and a README recording which entries are copies of shared concepts
     and how to refresh them. Named in the layout table, created on first need. Open check:
-    which project folder `pi-subagents` discovers agent definitions in.
+    which project folder `pi-subagents` discovers agent definitions in. Closed by decision 36.
 
 ### Other concepts
 
@@ -186,6 +187,10 @@ docs/
     lint stops demanding promotion, and the runner exits 0 with "not applicable". Why: promotion
     existed to move log entries into vault pages; in the visible layout agents write decisions and
     research straight to the role folders, and `log.md` is a plain journal.
+36. **Project agents live in `.agents/agents/` (owner, 2026-11-12).** The `project-agents` row
+    changes from undecided (`—`) to `.agents/agents/`, created on first need, one
+    `local-<name>.md` file per agent beside `.agents/skills/`. Why: one `.agents/` folder holds
+    both kinds of project extension, with the same `local-` prefix.
 
 ## Affected concepts
 
