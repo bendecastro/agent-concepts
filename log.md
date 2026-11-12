@@ -1650,3 +1650,6 @@ Four scenarios against the generated work-item rules and the migrate section; tw
 
 ## [2026-11-12] implement | bc-init-agent migrate rewrites wikilinks
 Per plan decision 32, `--migrate --apply` now turns a wikilink naming a moved file into a relative Markdown link (labels, heading anchors, path forms, embeds); ambiguous names and wikilinks from moved files to files that stay are left and reported. Test-first in `test_migrate.py`; trial on a fresh clone of one ops project: 108 rewrites, all resolving. Not deployed.
+
+## [2026-11-12] fix | bc-init-agent migrate accepts earlier vaults with a "Where things go" bullet list
+Earlier scaffolds wrote a `## Where things go` heading over a bullet list of vault folders, so the migrate mode refused two real projects as "already migrated". It now refuses only when the heading holds a parseable role table. `bc-wiki-maintain` lint already fell back to vault for these.

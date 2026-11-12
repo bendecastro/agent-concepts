@@ -167,6 +167,18 @@ def test_refuses_when_table_already_exists(tmp_path):
     assert "Where things go" in result.stdout
 
 
+def test_earlier_vault_heading_with_a_bullet_list_is_not_a_table(tmp_path):
+    """Earlier scaffolds wrote a `## Where things go` bullet list of vault folders."""
+    root = _vault_repo(tmp_path)
+    m = _module()
+    (root / ".bc-agent/AGENTS.md").write_text(
+        "# x\n\n" + m.WHERE_THINGS_GO_HEADING + "\n\n- `tasks/` — task lists.\n- `decisions/` — ADRs.\n")
+    _commit_all(root, "earlier heading")
+    result = _migrate(root)
+    assert result.returncode == 0, result.stdout
+    assert "MOVE" in result.stdout
+
+
 @pytest.mark.parametrize("archetype", ["learning", "knowledge"])
 def test_refuses_learning_and_knowledge(tmp_path, archetype):
     root = _vault_repo(tmp_path)

@@ -2084,6 +2084,15 @@ def plan_migration(root: Path, slug: str, date: str, archetype: str) -> Migratio
     return plan
 
 
+def _has_layout_table(text: str) -> bool:
+    """True for a parseable role table; earlier vaults used the same heading for a bullet list."""
+    try:
+        parse_where_things_go(text)
+    except ValueError:
+        return False
+    return True
+
+
 def _migrate_refusal(root: Path, archetype: str) -> str | None:
     if archetype not in VISIBLE_ARCHETYPES:
         return (f"migrate mode is for code, ops and hybrid; the {archetype} archetype keeps the "
@@ -2099,7 +2108,7 @@ def _migrate_refusal(root: Path, archetype: str) -> str | None:
     if dirty:
         return "the working tree has uncommitted changes:\n" + "\n".join(f"  {line}" for line in dirty)
     agents = root / ".bc-agent" / "AGENTS.md"
-    if agents.is_file() and _WHERE_THINGS_GO_LINE.search(agents.read_text(errors="ignore")):
+    if agents.is_file() and _has_layout_table(agents.read_text(errors="ignore")):
         return f"{agents} already has a {WHERE_THINGS_GO_HEADING!r} table; the project is already migrated"
     return None
 
