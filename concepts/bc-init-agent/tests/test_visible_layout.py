@@ -6,32 +6,6 @@ import sys
 SCAFFOLD = Path(__file__).resolve().parents[1] / "body/scaffold.py"
 
 
-def test_code_scaffold_creates_visible_work_layout(tmp_path):
-    subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(tmp_path), '--slug', 'demo'], check=True)
-    assert (tmp_path / 'glossary.md').is_file()
-    assert (tmp_path / 'work/0-ideas.md').is_file()
-    for stage in ('1-planned', '2-active', '3-done', '4-dropped'):
-        assert (tmp_path / 'work' / stage).is_dir()
-    for path in ('docs/decisions', 'docs/research'):
-        assert (tmp_path / path).is_dir()
-    assert {p.name for p in (tmp_path / '.bc-agent').iterdir()} == {
-        'AGENTS.md', 'map.md', 'log.md', 'conventions', 'references', 'templates'}
-
-
-def test_where_things_go_table_has_stable_role_paths(tmp_path):
-    import importlib.util
-    spec = importlib.util.spec_from_file_location('scaffold', SCAFFOLD)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    for archetype in ('code', 'ops', 'hybrid'):
-        root = tmp_path / archetype
-        root.mkdir()
-        subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(root), '--slug', 'demo', '--archetype', archetype], check=True)
-        roles = module.parse_where_things_go((root / '.bc-agent/AGENTS.md').read_text())
-        assert set(roles) >= {'work-planned', 'work-active', 'work-done', 'work-dropped', 'ideas', 'decisions', 'research', 'glossary', 'requirements', 'architecture', 'project-skills', 'project-agents'}
-        assert roles['work-planned'] == 'work/1-planned/'
-
-
 def test_code_and_ops_generated_text_has_no_retired_paths(tmp_path):
     retired = ('tasks/active.md', 'tasks/completed.md', 'parking-lot',
                'project/overview.md', '.bc-agent/decisions', '.bc-agent/research',
@@ -41,7 +15,7 @@ def test_code_and_ops_generated_text_has_no_retired_paths(tmp_path):
         root.mkdir()
         subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(root), '--slug', 'demo', '--archetype', archetype], check=True)
         for path in root.rglob('*.md'):
-            text = path.read_text().lower()
+            text = path.read_text().replace(_module().DEFAULT_PATH_RULE, '').lower()
             assert not any(term in text for term in retired), str(path)
 
 
@@ -99,6 +73,17 @@ def _run(root, archetype, *extra, script=SCAFFOLD):
         [sys.executable, str(script), '--root', str(root), '--slug', 'demo',
          '--date', '2026-01-02', '--archetype', archetype, *extra],
         check=True, capture_output=True, text=True).stdout
+
+
+def _base_scaffold(tmp_path):
+    shown = subprocess.run(
+        ['git', 'show', f'{BASE_COMMIT}:concepts/bc-init-agent/body/scaffold.py'],
+        cwd=SCAFFOLD.parent, capture_output=True)
+    if shown.returncode != 0:
+        pytest.skip(f'base commit {BASE_COMMIT} is not available (shallow clone or export)')
+    base = tmp_path / 'base_scaffold.py'
+    base.write_bytes(shown.stdout)
+    return base
 
 
 def _scaffold(tmp_path, archetype):
@@ -173,10 +158,7 @@ def test_visible_scaffold_generates_exact_file_list(tmp_path, archetype, expecte
 
 @pytest.mark.parametrize('archetype', ['learning', 'knowledge'])
 def test_vault_archetypes_output_is_byte_identical_to_base(tmp_path, archetype):
-    base = tmp_path / 'base_scaffold.py'
-    base.write_bytes(subprocess.run(
-        ['git', 'show', f'{BASE_COMMIT}:concepts/bc-init-agent/body/scaffold.py'],
-        cwd=SCAFFOLD.parent, check=True, capture_output=True).stdout)
+    base = _base_scaffold(tmp_path)
     old, new = tmp_path / 'old', tmp_path / 'new'
     old.mkdir()
     new.mkdir()
@@ -269,31 +251,272 @@ def test_dry_run_creates_nothing(tmp_path, archetype):
     assert list(tmp_path.iterdir()) == []
 
 
-def test_old_layout_files_survive_code_scaffold(tmp_path):
-    old = {
-        '.bc-agent/tasks/active.md': '# Active\n\n- my task\n',
-        '.bc-agent/project/overview.md': '# Overview\n\nmine\n',
-        '.bc-agent/index.md': '# Index\n\ncustom\n',
-        '.bc-agent/AGENTS.md': '# Custom vault instructions\n\nkeep me\n',
-    }
-    for rel, text in old.items():
-        (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
-        (tmp_path / rel).write_text(text)
-    out = _run(tmp_path, 'code')
-    for rel, text in old.items():
-        assert (tmp_path / rel).read_text() == text
-    assert 'earlier-layout paths exist under .bc-agent' in out
-
-
 def test_hybrid_generated_text_has_no_retired_paths(tmp_path):
     retired = ('tasks/active.md', 'tasks/completed.md', 'parking-lot', '.bc-agent/decisions',
                '.bc-agent/research', 'out-of-scope', 'scratch/', 'home.md')
     root = _scaffold(tmp_path, 'hybrid')
+    rule = _module().DEFAULT_PATH_RULE
     found = [(str(p.relative_to(root)), term) for p in root.rglob('*.md')
-             for term in retired if term in p.read_text().lower()]
+             for term in retired if term in p.read_text().replace(rule, '').lower()]
     assert found == []
 
 
-def test_parse_where_things_go_rejects_text_without_table():
+def _raw(root, archetype, *extra, script=SCAFFOLD):
+    return subprocess.run(
+        [sys.executable, str(script), '--root', str(root), '--slug', 'demo',
+         '--date', '2026-01-02', '--archetype', archetype, *extra],
+        capture_output=True, text=True)
+
+
+def _write(root, files):
+    for rel, text in files.items():
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_text(text)
+
+
+# --- earlier-layout projects ---------------------------------------------------
+
+EARLIER_LAYOUT = {
+    'code': {'.bc-agent/tasks/active.md': '# Active\n\n- my task\n',
+             '.bc-agent/project/overview.md': '# Overview\n\nmine\n',
+             '.bc-agent/index.md': '# Index\n\ncustom\n',
+             '.bc-agent/AGENTS.md': '# Custom vault instructions\n\nkeep me\n'},
+    'ops': {'.bc-agent/components/README.md': '# Components\n\nweb host\n',
+            '.bc-agent/findings/README.md': '# Findings\n',
+            '.bc-agent/open-questions/README.md': '# Open questions\n',
+            '.bc-agent/plans/README.md': '# Plans\n'},
+    'hybrid': {'.bc-agent/decisions/adr-0001.md': '# ADR\n'},
+}
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_earlier_layout_is_refused_before_any_write(tmp_path, archetype):
+    _write(tmp_path, EARLIER_LAYOUT[archetype])
+    before = _snapshot(tmp_path)
+    result = _raw(tmp_path, archetype)
+    assert result.returncode != 0
+    assert _snapshot(tmp_path) == before
+    for rel in EARLIER_LAYOUT[archetype]:
+        if rel != '.bc-agent/AGENTS.md':
+            assert rel.split('/')[1] in result.stdout
+    assert 'nothing was written' in result.stdout
+    assert 'separate, explicit step' in result.stdout
+    assert '--allow-earlier-layout' in result.stdout
+
+
+@pytest.mark.parametrize('rel', [
+    '.bc-agent/tasks/active.md', '.bc-agent/decisions/x.md', '.bc-agent/research/README.md',
+    '.bc-agent/scratch/.gitkeep', '.bc-agent/out-of-scope/.gitkeep', '.bc-agent/home.md',
+    '.bc-agent/components/README.md', '.bc-agent/findings/README.md',
+    '.bc-agent/open-questions/README.md', '.bc-agent/plans/README.md',
+    '.bc-agent/conventions/planning-workflow.md', '.bc-agent/templates/plan.md'])
+def test_each_earlier_layout_path_is_detected(tmp_path, rel):
+    _write(tmp_path, {rel: 'old\n'})
+    result = _raw(tmp_path, 'ops')
+    assert result.returncode != 0
+    assert rel.removeprefix('.bc-agent/').split('/')[0] in result.stdout or rel.removeprefix('.bc-agent/') in result.stdout
+
+
+def test_hybrid_does_not_count_its_own_teach_paths(tmp_path):
+    _write(tmp_path, {'.bc-agent/project/overview.md': '# Teach\n', '.bc-agent/index.md': '# Catalog\n'})
+    assert _raw(tmp_path, 'hybrid').returncode == 0
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_allow_earlier_layout_creates_missing_files_beside_old_ones(tmp_path, archetype):
+    _write(tmp_path, EARLIER_LAYOUT[archetype])
+    out = _run(tmp_path, archetype, '--allow-earlier-layout')
+    for rel, text in EARLIER_LAYOUT[archetype].items():
+        assert (tmp_path / rel).read_text() == text
+    assert (tmp_path / 'work/0-ideas.md').is_file()
+    assert 'earlier-layout paths exist under .bc-agent' in out
+
+
+# --- --force scope -------------------------------------------------------------
+
+def test_force_never_overwrites_project_files_outside_bc_agent(tmp_path):
+    root = _scaffold(tmp_path, 'ops')
+    mine = {'glossary.md': 'my terms\n', 'work/0-ideas.md': 'my ideas\n',
+            'docs/components/README.md': 'my hosts\n', 'docs/open-questions/README.md': 'mine\n',
+            'AGENTS.md': 'my root\n', '.bc-agent/log.md': 'old log\n'}
+    _write(root, mine)
+    _run(root, 'ops', '--force')
+    for rel, text in mine.items():
+        if rel == '.bc-agent/log.md':
+            assert (root / rel).read_text() != text
+        else:
+            assert (root / rel).read_text() == text, rel
+
+
+# --- generated text --------------------------------------------------------------
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_stage_folders_keep_gitkeep_permanently(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/conventions/file-layout.md').read_text()
+    assert 'keep their `.gitkeep`' in text
+    assert 'remove it' not in text
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_codebase_docs_scope_excludes_table_records(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    root_agents = ' '.join((root / 'AGENTS.md').read_text().split())
+    assert 'follow `codebase-docs`' in root_agents
+    assert 'does not apply to the paths named in the "Where things go" table' in root_agents
+    skills = ' '.join((root / '.bc-agent/references/agent-skills.md').read_text().split())
+    assert 'not the paths named in the "Where things go" table' in skills
+    assert 'not this vault' not in skills
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_agents_redirects_skill_default_paths_to_table(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/AGENTS.md').read_text()
+    rule = _module().DEFAULT_PATH_RULE
+    assert rule in text
+    for example in ('`docs/adr/`', '`.bc-agent/project/overview.md`', '`.bc-agent/out-of-scope/`'):
+        assert example in rule
+    assert 'Why:' in rule
+    assert text.index(rule) < text.index('## Work items')
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_next_number_counts_month_folders(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/AGENTS.md').read_text()
+    assert 'including the month folders under `3-done/`, plus one' in ' '.join(text.split())
+
+
+@pytest.mark.parametrize('archetype', ['code', 'ops'])
+def test_code_and_ops_skill_map_has_no_vault_wording(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/references/agent-skills.md').read_text()
+    assert 'vault' not in text.lower()
+    assert 'index' not in text.lower()
+    assert 'code/hybrid' not in text
+    assert 'architecture-runway.md' in text
+
+
+@pytest.mark.parametrize('archetype', ['ops', 'hybrid'])
+def test_ops_templates_are_linked_and_used(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    map_text = (root / '.bc-agent/map.md').read_text()
+    for name in ('component', 'finding', 'open-question'):
+        assert f'[templates/{name}.md](templates/{name}.md)' in map_text
+    agents = (root / '.bc-agent/AGENTS.md').read_text()
+    assert 'under `docs/components/` from [templates/component.md](templates/component.md)' in agents
+    assert 'under `docs/research/` from [templates/finding.md](templates/finding.md)' in agents
+
+
+def test_code_map_and_agents_do_not_mention_ops_templates(tmp_path):
+    root = _scaffold(tmp_path, 'code')
+    assert 'templates/component.md' not in (root / '.bc-agent/map.md').read_text()
+    assert 'docs/components/' not in (root / '.bc-agent/AGENTS.md').read_text()
+
+
+def test_hybrid_points_orientation_at_table_and_links_teach_pages(tmp_path):
+    root = _scaffold(tmp_path, 'hybrid')
+    agents = (root / '.bc-agent/AGENTS.md').read_text()
+    assert 'Project orientation is the "Where things go" table above, not `index.md`' in ' '.join(agents.split())
+    map_text = (root / '.bc-agent/map.md').read_text()
+    assert '[references/teach-skill.md](references/teach-skill.md)' in map_text
+    assert '[index.md](index.md)' in map_text
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_visible_log_seed_names_visible_layout(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/log.md').read_text()
+    assert 'vault' not in text
+    assert '`work/`' in text
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_existing_root_agents_note_names_where_things_go(tmp_path, archetype):
+    _write(tmp_path, {'AGENTS.md': '# mine\n'})
+    out = _run(tmp_path, archetype)
+    assert 'search-first' not in out
+    assert '"Where things go" table' in out
+
+
+# --- upgrade notes ----------------------------------------------------------------
+
+def test_map_note_ignores_inline_code_for_paths_outside_bc_agent(tmp_path):
+    module = _module()
+    root = _scaffold(tmp_path, 'code')
+    (root / '.bc-agent/map.md').write_text('# Map\n\n- `work/` — work items\n- [log.md](log.md)\n')
+    assert not any('map.md' in note for note in module.upgrade_notes(root, 'code'))
+    (root / '.bc-agent/map.md').write_text('# Map\n\n- `log.md`\n')
+    assert any('map.md' in note for note in module.upgrade_notes(root, 'code'))
+
+
+def test_table_note_uses_the_parser(tmp_path):
+    module = _module()
+    root = _scaffold(tmp_path, 'code')
+    agents = root / '.bc-agent/AGENTS.md'
+    agents.write_text('# A\n\n## Where things go\n| Role | Path | Notes |\n| --- | --- | --- |\n| glossary | `glossary.md` | x |\n')
+    assert not any('Where things go' in note for note in module.upgrade_notes(root, 'code'))
+    agents.write_text('# A\n\n## Where things go\n\nnothing here\n')
+    assert any('Where things go' in note for note in module.upgrade_notes(root, 'code'))
+    agents.write_text('# A\n')
+    assert any('Where things go' in note for note in module.upgrade_notes(root, 'code'))
+
+
+# --- parser contract ----------------------------------------------------------------
+
+TABLE_HEAD = '| Role | Path | Notes |\n| :--- | --- | --- |\n'
+
+
+@pytest.mark.parametrize('row, expected', [
+    ('| decisions | `docs/decisions/` | x |', 'docs/decisions/'),
+    ('| decisions | decisions/ | x |', 'decisions/'),
+    ('| decisions |  decisions/  | x | extra |', 'decisions/'),
+    ('| project-agents | — | x |', ''),
+    ('| project-agents | - | x |', ''),
+    ('| project-agents |  | x |', ''),
+])
+def test_parse_where_things_go_path_cells(row, expected):
+    text = f'# A\n\n## Where things go\n\n{TABLE_HEAD}{row}\n'
+    assert _module().parse_where_things_go(text) == {row.split('|')[1].strip(): expected}
+
+
+@pytest.mark.parametrize('heading', ['## Where things go  ', '## Where things go\r'])
+def test_parse_where_things_go_tolerates_trailing_space_and_crlf(heading):
+    text = f'# A\n\n{heading}\n\n{TABLE_HEAD}| glossary | `glossary.md` | x |\n'.replace('\n', '\r\n' if heading.endswith('\r') else '\n')
+    text = text.replace('\r\r', '\r')
+    assert _module().parse_where_things_go(text) == {'glossary': 'glossary.md'}
+
+
+@pytest.mark.parametrize('text', [
+    '# Agents\n\n## Something else\n\n| a | b |\n',
+    '# Agents\n\n### Where things go\n\n| Role | Path |\n| --- | --- |\n| glossary | `g.md` |\n',
+    '# Agents\n\nSee ## Where things go below\n',
+])
+def test_parse_where_things_go_rejects_missing_heading(text):
     with pytest.raises(ValueError):
-        _module().parse_where_things_go('# Agents\n\n## Something else\n\n| a | b |\n')
+        _module().parse_where_things_go(text)
+
+
+def test_parse_where_things_go_rejects_heading_without_rows():
+    with pytest.raises(ValueError):
+        _module().parse_where_things_go(f'# A\n\n## Where things go\n\n{TABLE_HEAD}\n## Next\n')
+
+
+def test_parse_where_things_go_rejects_duplicate_role():
+    text = f'# A\n\n## Where things go\n\n{TABLE_HEAD}| glossary | `a.md` | x |\n| glossary | `b.md` | y |\n'
+    with pytest.raises(ValueError):
+        _module().parse_where_things_go(text)
+
+
+# --- learning and knowledge unchanged ------------------------------------------------
+
+@pytest.mark.parametrize('archetype', ['learning', 'knowledge'])
+def test_vault_archetypes_printed_output_matches_base(tmp_path, archetype):
+    base = _base_scaffold(tmp_path)
+    outputs = []
+    for script in (base, SCAFFOLD):
+        root = tmp_path / 'root'
+        if root.exists():
+            subprocess.run(['rm', '-rf', str(root)], check=True)
+        root.mkdir()
+        _write(root, {'AGENTS.md': '# mine\n', '.bc-agent/map.md': '# Map\n\n- `log.md`\n'})
+        runs = [_raw(root, archetype, script=script), _raw(root, archetype, script=script),
+                _raw(root, archetype, '--force', script=script)]
+        outputs.append([(r.returncode, r.stdout, r.stderr) for r in runs])
+    assert outputs[1] == outputs[0]

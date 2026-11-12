@@ -7,11 +7,17 @@ vault and reports a manual upgrade note for an existing one, but it does not rew
 ## Visible layout
 
 Running the current scaffold with `--archetype code`, `ops` or `hybrid` on a project that already
-has the earlier vault layout moves nothing and deletes nothing. It creates the missing visible-layout
-files, leaves every existing file byte-identical (including a custom `.bc-agent/AGENTS.md`), and prints
-an upgrade note naming the earlier-layout paths it found under `.bc-agent/` (`tasks`, `decisions`,
-`research`, `scratch`, `out-of-scope`, `home.md`, and for code and ops also `project` and `index.md`).
-It also notes when `.bc-agent/AGENTS.md` has no "Where things go" table.
+has the earlier vault layout writes nothing: it names the earlier-layout paths it found under
+`.bc-agent/` and exits non-zero. The paths it looks for are `tasks`, `decisions`, `research`,
+`scratch`, `out-of-scope`, `home.md`, `components`, `findings`, `open-questions`, `plans`,
+`conventions/planning-workflow.md` and `templates/plan.md`, and for code and ops also `project` and
+`index.md` (hybrid generates those two for its teach workspace). Why: creating the visible homes
+beside the old ones would leave two glossaries, two decision homes and two status mechanisms.
+
+`--allow-earlier-layout` restores the additive behaviour: the scaffold creates the missing
+visible-layout files, leaves every existing file byte-identical (including a custom
+`.bc-agent/AGENTS.md`), and prints the same paths as an upgrade note. It also notes when
+`.bc-agent/AGENTS.md` has no "Where things go" table.
 
 Moving existing projects to the visible layout is a later work package of
 [the visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md): planned moves are

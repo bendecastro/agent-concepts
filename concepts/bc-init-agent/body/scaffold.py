@@ -1,31 +1,33 @@
 #!/usr/bin/env python3
-"""Scaffold a project-local .bc-agent wiki + root AGENTS.md for the grill→issues→drain workflow.
+"""Scaffold a project's agent workspace + root AGENTS.md for the grill→issues→drain workflow.
 
-Creates a generalized project-local Markdown/Obsidian wiki schema at `.bc-agent/`
-(no per-project nesting), with TODO stubs (validation, file-layout, paths) that the
-project's first agents fill in. This follows the user's broader agent-maintained
-wiki pattern: durable local context, explicit provenance, live task state, decisions,
-and executable plans. NO root glossary.md — the glossary lives in the vault
-(project/overview.md), ADRs in decisions/, plans/PRDs in project/, and
-conventions/planning-workflow.md is the adapter that redirects planning persistence
-into the vault.
+Code, ops and hybrid (the visible layout) get work items in `work/`, decisions and
+research in `docs/`, a root `glossary.md`, and agent mechanics only in `.bc-agent/`,
+whose "Where things go" table names every path. Learning and knowledge keep the
+`.bc-agent/` Markdown/Obsidian vault: the glossary lives in project/overview.md, ADRs
+in decisions/, and conventions/planning-workflow.md redirects planning persistence
+into the vault. TODO stubs (validation, file-layout) are filled by the first agents.
 
 Idempotent and additive: creates only the files that are missing and leaves every
 existing file untouched, so it is safe to re-run and safe to plug into a project
 that already has files (including a hand-written root AGENTS.md). It NEVER deletes
 anything. Existing files are overwritten only when explicitly forced: --force for
-vault files, --force-root for the root AGENTS.md. --dry-run reports without writing.
+files under .bc-agent/, --force-root for the root AGENTS.md; nothing else is ever
+overwritten. A visible-layout run on a project with earlier-layout paths under
+.bc-agent/ writes nothing unless --allow-earlier-layout is given. --dry-run reports
+without writing.
 
 Usage:
   scaffold.py --root <repo-root> --slug <project-name> [--date YYYY-MM-DD]
               [--archetype code|ops|learning|knowledge|hybrid]
-              [--force] [--force-root] [--dry-run]
+              [--force] [--force-root] [--allow-earlier-layout] [--dry-run]
 """
 
 from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import re
 from pathlib import Path
 
 SLUG = "__SLUG__"
@@ -1129,23 +1131,38 @@ def where_things_go_table(archetype: str) -> str:
     return "\n".join(lines)
 
 
+_WHERE_THINGS_GO_LINE = re.compile(r"^" + re.escape(WHERE_THINGS_GO_HEADING) + r"[ \t]*\r?$", re.M)
+_UNDECIDED_PATH_CELLS = {"", "—", "-"}
+
+
 def parse_where_things_go(text: str) -> dict[str, str]:
     """Map each role key of a "Where things go" table to its path.
 
-    Paths are relative to the project root. A role with no decided path maps to
-    an empty string. Raises ValueError when the heading is missing.
+    Paths are relative to the project root. A backticked path is unwrapped; a plain
+    path is returned stripped; only `—`, `-` or an empty cell means "no decided path"
+    and maps to an empty string. Raises ValueError when the heading line is missing,
+    when the section has no table rows, or when a role appears twice.
     """
-    if WHERE_THINGS_GO_HEADING + "\n" not in text:
+    match = _WHERE_THINGS_GO_LINE.search(text)
+    if not match:
         raise ValueError(f"no {WHERE_THINGS_GO_HEADING!r} section")
-    section = text.split(WHERE_THINGS_GO_HEADING + "\n", 1)[1].split("\n## ", 1)[0]
+    section = re.split(r"^## ", text[match.end():], maxsplit=1, flags=re.M)[0]
     result: dict[str, str] = {}
     for line in section.splitlines():
+        line = line.strip()
         if not line.startswith("|"):
             continue
-        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        cells = [cell.strip() for cell in line.strip("|").split("|")]
         if len(cells) < 2 or cells[0] == "Role" or set(cells[0]) <= {"-", ":", " "}:
             continue
-        result[cells[0]] = cells[1].split("`")[1] if cells[1].count("`") >= 2 else ""
+        role, path = cells[0], cells[1]
+        if role in result:
+            raise ValueError(f"role {role!r} appears twice in {WHERE_THINGS_GO_HEADING!r}")
+        if path.count("`") >= 2:
+            path = path.split("`")[1].strip()
+        result[role] = "" if path in _UNDECIDED_PATH_CELLS else path
+    if not result:
+        raise ValueError(f"{WHERE_THINGS_GO_HEADING!r} section has no table rows")
     return result
 
 
@@ -1172,7 +1189,8 @@ architectural runway, check `.bc-agent/conventions/architecture-runway.md` and o
 ## Scope rules
 
 - Project knowledge goes where the table says, in the same commit as the work it describes.
-- Source-tree README files, `docs/` pages and JSDoc follow `codebase-docs`.
+- Source-tree README files, other `docs/` pages and JSDoc follow `codebase-docs`. It does
+  not apply to the paths named in the "Where things go" table: those are records.
 - Keep personal, cross-project and machine-global knowledge out of this repository.
 - No secrets or `.env` values anywhere in tracked files.
 
@@ -1194,6 +1212,8 @@ assuming a path, so change a path here when the project keeps something elsewher
 
 __TABLE__
 
+__DEFAULT_PATH_RULE__
+
 ## Work items
 
 A work item is one feature or plan. Template: [templates/work-item.md](templates/work-item.md).
@@ -1208,8 +1228,8 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
 - **Dropped work and rejected requests go to `work/4-dropped/`**, with the reason under
   `## Outcome`. Why: a recorded "no, because" stops the same idea being re-argued.
 - **Names are `<3-digit number>-<slug>`**, for example `012-search-ranking`. The next number
-  is the highest number in any stage folder plus one. Why: a short number is easy to cite
-  and survives a rename of the slug.
+  is the highest number in any stage folder, including the month folders under `3-done/`,
+  plus one. Why: a short number is easy to cite and survives a rename of the slug.
 - **Only the main checkout creates numbered items.** Working in a git worktree, add a line
   to `work/0-ideas.md` instead. Why: two worktrees cannot see each other's numbers and
   would pick the same one.
@@ -1232,7 +1252,7 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
 | Finish or drop an item | Fill `## Outcome`, then `git mv` it to its done month folder or to `4-dropped/`. |
 | Make an architectural or hard-to-reverse choice | Add a numbered record under `docs/decisions/` from [templates/adr.md](templates/adr.md). |
 | Investigate something at length | Write it up in a dated folder under `docs/research/`. |
-| Sharpen domain vocabulary | Update `glossary.md`. |
+__OPS_KEEP_CURRENT__| Sharpen domain vocabulary | Update `glossary.md`. |
 | Learn a recurring command | Add it to [references/commands.md](references/commands.md). |
 | Learn a durable fact with no better home | Append one to three lines to [log.md](log.md). |
 | Find a page that is wrong | Fix it in the same commit. Never leave a stale claim. |
@@ -1259,6 +1279,8 @@ bookkeeping. Do not create a second `learning/sessions/` directory or migrate a 
 teach workspace.
 
 The read path below applies to teach knowledge pages and learning records under `.bc-agent/`.
+Project orientation is the "Where things go" table above, not `index.md`; `index.md`
+catalogs only the teach workspace.
 
 """
 
@@ -1285,7 +1307,7 @@ Choose the smallest set of pages for the task. Link only targets that resolve in
 
 - [templates/adr.md](templates/adr.md)
 - [conventions/file-layout.md](conventions/file-layout.md)
-
+__OPS_MAP__
 ## Outside this folder
 
 Work items are in `work/` (ideas in `work/0-ideas.md`), decision records in
@@ -1303,7 +1325,8 @@ Where project knowledge and work items go: the "Where things go" table in
 ## Agent guidance
 
 - Confirm source/build relationships before editing generated-looking files.
-- An empty folder is kept in git by a `.gitkeep` file; remove it once the folder has content.
+- The four `work/` stage folders keep their `.gitkeep` file permanently. Why: git drops an
+  empty folder, and every stage must stay visible even when it holds no items.
 """
 
 WORK_ITEM = """# <title>
@@ -1370,6 +1393,59 @@ _None captured yet._
 """
 
 
+DEFAULT_PATH_RULE = """When a skill names a default path for one of these roles (for example `docs/adr/`,
+`.bc-agent/project/overview.md` or `.bc-agent/out-of-scope/`), use this table's path for that
+role instead. Why: shared skills are written for several layouts, and this table is the
+project's own answer."""
+
+VISIBLE_OPS_KEEP_CURRENT = """| Check the state of a real system | Update its page under `docs/components/` from [templates/component.md](templates/component.md). |
+| Record a finding | Write it under `docs/research/` from [templates/finding.md](templates/finding.md). |
+"""
+
+VISIBLE_OPS_MAP = """
+## Operations
+
+- [templates/component.md](templates/component.md)
+- [templates/finding.md](templates/finding.md)
+- [templates/open-question.md](templates/open-question.md)
+"""
+
+VISIBLE_TEACH_MAP = """
+## Hosted teach workspace
+
+- [references/teach-skill.md](references/teach-skill.md)
+- [index.md](index.md)
+"""
+
+
+def _guarded(text: str, replacements: tuple[tuple[str, str], ...], name: str) -> str:
+    for old, new in replacements:
+        if old not in text:
+            raise RuntimeError(f"{name} text changed; update replacement {old!r}")
+        text = text.replace(old, new)
+    return text
+
+
+def _visible_log() -> str:
+    return _guarded(LOG, (
+        ("""- Scaffolded the project agent workspace (root `AGENTS.md` + `.bc-agent/` vault) with
+  `bc-init-agent`. Ready for the grill → issues → drain workflow. Validation/file-layout
+  stubs still TODO.""", """- Scaffolded the project agent workspace with `bc-init-agent`: root `AGENTS.md`,
+  `glossary.md`, `work/`, `docs/` and the `.bc-agent/` mechanics. Ready for the
+  grill → issues → drain workflow. Validation/file-layout stubs still TODO."""),
+    ), "LOG")
+
+
+def _visible_agent_skills() -> str:
+    return _guarded(AGENT_SKILLS, (
+        ("`codebase-docs` — README / existing `docs/` / JSDoc only; not this vault.",
+         "`codebase-docs` — README files, other `docs/` pages and JSDoc; not `.bc-agent/` and not the paths named in the \"Where things go\" table in `.bc-agent/AGENTS.md`, which are records."),
+        ("- Wiki maintenance: `/bc-wiki-maintain` — compute vault health, find index/search drift, and promote durable log entries without silently resolving contradictions.\n",
+         ""),
+        ("In code/hybrid wikis, run", "Run"),
+    ), "AGENT_SKILLS")
+
+
 def _visible_runway() -> str:
     replacements = (
         ("For code/hybrid wikis, this page", "This page"),
@@ -1377,28 +1453,29 @@ def _visible_runway() -> str:
         ("-- .bc-agent/project .bc-agent/tasks", "-- docs work"),
         ("normal project\nwiki location", "dated folder under\n`docs/research/`"),
     )
-    text = ARCHITECTURE_RUNWAY
-    for old, new in replacements:
-        if old not in text:
-            raise RuntimeError(f"architecture runway text changed; update replacement {old!r}")
-        text = text.replace(old, new)
-    return text
+    return _guarded(ARCHITECTURE_RUNWAY, replacements, "architecture runway")
 
 
 def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tuple[Path, str, bool]]:
     """Scaffold targets for archetypes that use the visible layout."""
-    agents = VISIBLE_AGENTS.replace("__TABLE__", where_things_go_table(archetype))
+    has_ops = archetype in {"ops", "hybrid"}
+    agents = (VISIBLE_AGENTS.replace("__TABLE__", where_things_go_table(archetype))
+              .replace("__DEFAULT_PATH_RULE__", DEFAULT_PATH_RULE)
+              .replace("__OPS_KEEP_CURRENT__", VISIBLE_OPS_KEEP_CURRENT if has_ops else ""))
+    map_text = VISIBLE_MAP.replace("__OPS_MAP__", VISIBLE_OPS_MAP if has_ops else "")
+    if archetype == "hybrid":
+        map_text += VISIBLE_TEACH_MAP
     vault_files_: dict[str, str] = {
         "AGENTS.md": agents,
-        "map.md": VISIBLE_MAP,
-        "log.md": LOG,
+        "map.md": map_text,
+        "log.md": _visible_log(),
         "conventions/validation.md": VALIDATION,
         "conventions/file-layout.md": VISIBLE_FILE_LAYOUT,
         "conventions/architecture-runway.md": _visible_runway(),
         "conventions/git-and-commit-policy.md": GIT_POLICY,
         "references/commands.md": ref_stub(
             "Commands", "Recurring project commands. **TODO:** fill as discovered.\n\n_None yet._"),
-        "references/agent-skills.md": AGENT_SKILLS,
+        "references/agent-skills.md": _visible_agent_skills(),
         "templates/adr.md": TPL_ADR + "\n<!-- Save as `docs/decisions/NNNN-<slug>.md`. -->\n",
         "templates/work-item.md": WORK_ITEM,
     }
@@ -1409,7 +1486,7 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         "docs/decisions/.gitkeep": "",
         "docs/research/.gitkeep": "",
     }
-    if archetype in {"ops", "hybrid"}:
+    if has_ops:
         ops = archetype_files("ops")
         root_files["docs/components/README.md"] = ops["components/README.md"]
         root_files["docs/open-questions/README.md"] = ops["open-questions/README.md"].replace(
@@ -1486,25 +1563,61 @@ def _teach_notes(root: Path) -> list[str]:
     return notes
 
 
+EARLIER_LAYOUT_PATHS = (
+    "tasks", "decisions", "research", "scratch", "out-of-scope", "home.md",
+    "components", "findings", "open-questions", "plans",
+    "conventions/planning-workflow.md", "templates/plan.md", "project", "index.md",
+)
+
+
+def earlier_layout_paths(root: Path, archetype: str) -> list[str]:
+    """Paths under .bc-agent/ that belong to the earlier vault layout.
+
+    Hybrid legitimately generates `project/` and `index.md` for its teach workspace,
+    so those are not counted for hybrid.
+    """
+    own = {"project", "index.md"} if archetype == "hybrid" else set()
+    vault = root / ".bc-agent"
+    return sorted(name for name in EARLIER_LAYOUT_PATHS
+                  if name not in own and (vault / name).exists())
+
+
+def _inside_vault_map_bullet(root: Path, line: str) -> bool:
+    """True for an inline-code map bullet that names a page inside .bc-agent/.
+
+    A bullet naming an existing path outside the vault (relative to the repository
+    root, as the map tells agents to write it) is not a missing link.
+    """
+    if not line.startswith("- `"):
+        return False
+    target = line[3:].split("`", 1)[0]
+    if not target or target.startswith("../"):
+        return False
+    return (root / ".bc-agent" / target).exists() or not (root / target).exists()
+
+
 def upgrade_notes(root: Path, archetype: str) -> list[str]:
     """Manual merge hints for existing files that were intentionally left untouched."""
     vault = root / ".bc-agent"
     notes: list[str] = []
     if archetype in VISIBLE_ARCHETYPES:
         map_path = vault / "map.md"
-        if map_path.exists() and "- `" in map_path.read_text(errors="ignore"):
+        if map_path.exists() and any(
+                _inside_vault_map_bullet(root, line)
+                for line in map_path.read_text(errors="ignore").splitlines()):
             notes.append("`.bc-agent/map.md` should use real Markdown links for in-vault targets")
-        legacy = [name for name in ("tasks", "decisions", "research", "scratch", "out-of-scope", "home.md")
-                  if (vault / name).exists()]
-        if archetype != "hybrid":
-            legacy += [name for name in ("project", "index.md") if (vault / name).exists()]
+        legacy = earlier_layout_paths(root, archetype)
         if legacy:
             notes.append(
-                "earlier-layout paths exist under .bc-agent (" + ", ".join(sorted(legacy)) + "); "
+                "earlier-layout paths exist under .bc-agent (" + ", ".join(legacy) + "); "
                 "they were left in place and nothing was moved — migrating them to the visible "
                 "layout is a separate, explicit step (see MIGRATIONS.md)")
         agents_path = vault / "AGENTS.md"
-        if agents_path.exists() and not _contains(agents_path, WHERE_THINGS_GO_HEADING + "\n\n"):
+        try:
+            has_table = agents_path.exists() and bool(parse_where_things_go(agents_path.read_text(errors="ignore")))
+        except ValueError:
+            has_table = False
+        if agents_path.exists() and not has_table:
             notes.append("`.bc-agent/AGENTS.md` has no \"Where things go\" table; skills cannot look paths up until it is added")
         if archetype == "hybrid":
             notes.extend(_teach_notes(root))
@@ -1585,9 +1698,13 @@ def main() -> int:
     ap.add_argument("--archetype", choices=["code", "ops", "learning", "knowledge", "hybrid"], default="code",
                     help="optional wiki archetype layered on top of the base project scaffold")
     ap.add_argument("--force", action="store_true",
-                    help="overwrite existing VAULT files (still never deletes; never touches root AGENTS.md)")
+                    help="overwrite existing files under .bc-agent/ (never files outside it, never "
+                         "deletes; root AGENTS.md needs --force-root)")
     ap.add_argument("--force-root", action="store_true",
                     help="also overwrite an existing root AGENTS.md")
+    ap.add_argument("--allow-earlier-layout", action="store_true",
+                    help="code/ops/hybrid: create missing visible-layout files even when earlier-layout "
+                         "paths exist under .bc-agent/ (they stay untouched)")
     ap.add_argument("--dry-run", action="store_true", help="report what would happen; write nothing")
     args = ap.parse_args()
 
@@ -1600,6 +1717,17 @@ def main() -> int:
         print(f"ERROR: slug must be lower-case kebab with no spaces: {slug!r}")
         return 1
 
+    if args.archetype in VISIBLE_ARCHETYPES and not args.allow_earlier_layout:
+        legacy = earlier_layout_paths(root, args.archetype)
+        if legacy:
+            print("ERROR: earlier-layout paths exist under .bc-agent (" + ", ".join(legacy) + "); "
+                  "nothing was written.")
+            print("Migrating them to the visible layout is a separate, explicit step (see MIGRATIONS.md). "
+                  "Re-run with --allow-earlier-layout to create the missing visible-layout files beside "
+                  "them, leaving every existing file untouched.")
+            return 1
+
+    vault = root / ".bc-agent"
     created: list[Path] = []
     overwritten: list[Path] = []
     skipped: list[Path] = []  # existed, left untouched
@@ -1609,7 +1737,7 @@ def main() -> int:
 
     for dest, content, is_root in planned:
         exists = dest.exists()
-        may_overwrite = (args.force_root if is_root else args.force)
+        may_overwrite = args.force_root if is_root else (args.force and vault in dest.parents)
         if exists and not may_overwrite:
             skipped.append(dest)
             continue
@@ -1649,8 +1777,12 @@ def main() -> int:
         # Most relevant when plugging into an existing project: flag the un-pointed root AGENTS.
         root_agents = root / "AGENTS.md"
         if root_agents in skipped:
-            print(f"\nNOTE: existing {root_agents} was left as-is. Merge the 'read .bc-agent first' "
-                  f"pointer into it by hand (see `.bc-agent/AGENTS.md` and its canonical search-first block).")
+            if args.archetype in VISIBLE_ARCHETYPES:
+                print(f"\nNOTE: existing {root_agents} was left as-is. Merge the 'read .bc-agent first' "
+                      f"pointer into it by hand (see `.bc-agent/AGENTS.md` and its \"Where things go\" table).")
+            else:
+                print(f"\nNOTE: existing {root_agents} was left as-is. Merge the 'read .bc-agent first' "
+                      f"pointer into it by hand (see `.bc-agent/AGENTS.md` and its canonical search-first block).")
 
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
           "read .bc-agent/references/agent-skills.md for the loop skill map; "
