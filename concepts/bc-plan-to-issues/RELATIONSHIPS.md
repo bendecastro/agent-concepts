@@ -15,6 +15,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
   Source: [CONCEPT.md](CONCEPT.md)
 
+- depends on `domain-modeling`'s contract — required, when visible-layout hybrid project.
+  The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; planning points to it.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - loads `domain-modeling` — required.
   Step 2 captures terms and decisions inline during the grill.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
@@ -34,6 +38,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - loads `prd-drafting` — required.
   Step 3 synthesizes the PRD from the grill and the codebase.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
+
+- depends on `teach`'s contract — required, when visible-layout hybrid project.
+  In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under domain-modeling's shared-glossary rule.
+  Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
 

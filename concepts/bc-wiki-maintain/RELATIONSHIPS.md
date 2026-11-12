@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ.
   Source: [CONCEPT.md](CONCEPT.md)
 
+- depends on `domain-modeling`'s contract — required, when visible-layout hybrid project.
+  The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; maintenance points to it.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - depends on `teach`'s contract — required, when teach adapter marker present.
   Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue.
   Source: [body/SKILL.md](body/SKILL.md#teach-adapter-boundary)

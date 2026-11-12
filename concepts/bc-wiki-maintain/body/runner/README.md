@@ -479,6 +479,10 @@ passes. If any unpromoted heading is non-standard, the detector keeps promotion 
 `PROMOTION_RANGE=invalid`; the wrapper fails closed instead of guessing a range. It may emit a
 human-readable report around the contract lines. Missing, duplicate, or malformed results fail closed.
 `PROMOTION_REQUIRED=0` exits before Pi is checked or invoked.
+When the report contains the line `Layout: visible` (a `bc-init-agent` visible-layout project),
+the wrapper exits non-zero before any model call or write: its vault-only commit check cannot
+cover that layout's root-level knowledge paths yet. Run promotion there manually; the lint timer
+works unchanged.
 The parent integration must preserve this contract when wiring the detection script.
 
 Before detection, and again before promotion, the wrapper requires a clean Git

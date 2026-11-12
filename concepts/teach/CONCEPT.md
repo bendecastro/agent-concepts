@@ -71,6 +71,8 @@ Against `afbb86b` (post-hardening):
 
 Scenarios 1 and 4 have not been re-run against `afbb86b`, which changed hosted retrieval wording, marker validation, and the maintenance glossary-section rule; their evidence is against the earlier commit. Frontmatter stays `partial`, since `pressure-session.md` Attack 1 also remains open from 2026-08-21.
 
+2026-11-12 (W3 review): step 2's standalone probe now matches names by exact case, so a hybrid host's shared root `glossary.md` is not standalone state on a case-insensitive filesystem; `bc-init-agent`'s scaffold check does the same (`tests/test_visible_layout.py`). Not pressure-tested.
+
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; pressure-tested in Claude Code).

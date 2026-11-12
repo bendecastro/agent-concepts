@@ -140,6 +140,12 @@ docs/
     shared: it adds and refines the terms the learner needs and does not remove or redefine
     project terms without asking. Hybrid no longer generates `.bc-agent/project/overview.md`;
     the learning archetype keeps teach's Glossary section there.
+26. **Decision 10 refined in the W3 review (2026-11-12), pending the owner's confirmation.** A
+    large item's folder holds `plan.md`, whose `## Steps` are the slices, and
+    `requirements.md`, plus any evidence worth keeping; there are no separate slice files.
+    Why: the steps already are the slice map, so a second copy would drift. The review found
+    the generated `AGENTS.md` (slice files) and `bc-plan-to-issues` (two files) disagreeing;
+    both now say two files. This was made during the review, not by the owner.
 
 ## Affected concepts
 

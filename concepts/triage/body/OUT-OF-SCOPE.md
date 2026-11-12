@@ -23,7 +23,7 @@ Prior requests:
 - #42 — "Add dark mode support"
 ```
 
-Create numbered items only from the main checkout. Why: two git worktrees cannot see each other's numbers and would pick the same one. In a worktree, add a one-line note to the ideas file instead and tell the maintainer the rejection still needs recording.
+Create numbered items only from the main checkout. Why: two git worktrees cannot see each other's numbers and would pick the same one. In a worktree, add a one-line note to the ideas file instead, tell the maintainer the rejection still needs recording, and do not close the issue until the item exists. Why: closed with only an ideas line, the reason could be lost.
 
 ## Without a table
 

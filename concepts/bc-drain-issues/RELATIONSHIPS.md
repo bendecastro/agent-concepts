@@ -15,6 +15,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules.
   Source: [CONCEPT.md](CONCEPT.md)
 
+- depends on `improve-codebase-architecture`'s contract — required, when architecture observation after landing.
+  Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
+  Source: [CONCEPT.md](CONCEPT.md)
+
 - loads `tdd` — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [body/execute-issue.md](body/execute-issue.md#build-loop)

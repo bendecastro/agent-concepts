@@ -20,6 +20,8 @@ User-invoked adaptive initializer. Code, ops and hybrid scaffold the visible lay
 - **`--force` stays inside `.bc-agent/`.** Root `glossary.md`, `work/` and `docs/` hold the project's own content and are never overwritten; root `AGENTS.md` needs `--force-root`.
 - **Generated text redirects skill defaults to the table.** `.bc-agent/AGENTS.md` tells agents to use the table's path when a shared skill names its own default (for example `docs/adr/`), and root `AGENTS.md` keeps `codebase-docs` off the table's record paths. Why: shared skills are written for several layouts, and until the consumer skills read the table (W3) this rule is the only redirect.
 
+- **W3 review fixes (2026-11-12).** A large work item's folder holds `plan.md` (its `## Steps` are the slices) and `requirements.md`, plus any evidence; no separate slice files, because the steps already are the slice map (decision 10 refined in review, pending the owner's confirmation; recorded in the plan). The visible runway page keeps the default `docs/research` and `docs work` in its snippet and tells the agent to substitute the table's research and work paths when the project changed them. The map upgrade note fires only for an inline-code bullet whose target is an existing file inside `.bc-agent/`, so a bullet naming a project file created on first need (for example `docs/PRD.md`) is not flagged. Standalone teach state is matched by exact directory-entry name, so a hybrid project's shared root `glossary.md` is not mistaken for `GLOSSARY.md` on a case-insensitive filesystem. Provenance: the W2/W3 review of [the visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md).
+
 ## Interface: the "Where things go" table
 
 Later work packages and other skills read project paths through this contract, not by assuming them.
@@ -82,6 +84,8 @@ Later work packages and other skills read project paths through this contract, n
 - `concepts/teach/` — the standalone tutor and its linked formats, which define the host adapter's mapped state.
 
 ## Tests
+
+2026-11-12 (W3 review fixes): `tests/test_visible_layout.py` adds the runway substitution sentence, an inline-code map bullet for an outside path created on first need (not flagged), and a hybrid root `glossary.md` under a simulated case-insensitive `Path.exists` (not standalone teach state). Each was seen to fail first. `tests/test_map_links.py`'s inline-code fixture now creates the in-vault page it names, since only existing in-vault files are flagged.
 
 2026-11-12 (owner decisions A and B): `tests/test_visible_layout.py` pins the ops/hybrid file lists without `docs/open-questions/`, the open-question template or hybrid `project/overview.md`, the absent `open-questions` role, the open-question rule in every visible archetype, the shared-glossary table rows and hybrid section, and `.bc-agent/project` refused for hybrid. `tests/test_teach_adapter.py` pins the hybrid map, both Glossary variants in teach's SKILL, and an altered hybrid Glossary row reported invalid. Each new assertion was seen to fail first. `bc-pytest concepts/bc-init-agent/tests concepts/teach`: 107 passed.
 

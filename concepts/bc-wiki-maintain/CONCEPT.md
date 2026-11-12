@@ -21,8 +21,14 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   health for the vault root (`map.md` included), and checks the work folders through the
   table's paths: duplicate numbers across all stages, items outside a `YYYY-MM` done folder,
   `Status:` lines and missing or placeholder `## Outcome` in done/dropped items are errors
-  (exit 1, like broken links); bad item names, folder items without `plan.md`, and table paths
-  that do not exist (unless "created on first need" or undecided) are warnings. A hybrid
+  (exit 1, like broken links); a `Status:` line in any Markdown file of a folder item counts,
+  not only its `plan.md`. Item numbers have three or more digits, start at 001 and compare as
+  integers (so `007` and `0007` collide); two roles edited to one path are counted once. The
+  layout heading is found outside code fences, so a vault that quotes the protocol stays a vault.
+  `README.md` in a stage or month folder documents the folder and is not an item. Bad item
+  names, folder items without `plan.md`, other non-Markdown files directly in a stage or month
+  folder, and table paths that do not exist (unless "created on first need" or undecided) are
+  warnings. A hybrid
   project's teach `index.md` is checked only for teach-owned folders, because it catalogs
   those and not agent mechanics. Promotion routes durable entries to the table's roles
   (glossary, decisions, research; conflicts to the ideas role) and never recreates a vault
@@ -33,10 +39,15 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   `Path(__file__).resolve()` would work for today's symlink deploys but breaks when a skill body
   is deployed as a copy without its sibling concept, and the detector must stay a standalone
   stdlib script.
+- **Shared glossary and visible read path (W3 review, 2026-11-12).** In a hybrid project the body
+  points to `domain-modeling`'s shared-glossary rule instead of restating it, and the read-path
+  and stale-page instructions name the visible-layout equivalents (`.bc-agent/AGENTS.md` for
+  orientation, the `ideas` role for a leftover-sentence note).
 - **Unattended promotion stays vault-only for now.** The wrapper commits only paths inside the
   vault root, while a visible-layout project's knowledge roles live at the repository root. So
   visible-layout projects may use the lint timer but not the promotion timer; promotion there is
-  manual. A later package must decide whether the wrapper may write the table's role paths and
+  manual, and `run-promotion.sh` fails closed (non-zero, before any model call) when the
+  detector reports `Layout: visible`, so a misconfigured timer cannot write there. A later package must decide whether the wrapper may write the table's role paths and
   how its additive-only check covers them, and whether qmd should register the project root (or
   its `docs/`) rather than `.bc-agent/`, plus where a qmd exclusion is recorded once
   `project/overview.md` no longer exists.

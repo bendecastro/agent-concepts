@@ -17,6 +17,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md#learning-archetype-adapter)
 
+- incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
+  In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under domain-modeling's shared-glossary rule.
+  Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md)
+
 - incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when teach adapter marker present.
   Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue.
   Source: [bc-wiki-maintain/body/SKILL.md](../bc-wiki-maintain/body/SKILL.md#teach-adapter-boundary)
@@ -28,3 +32,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when teaching sessions.
   Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts.
   Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)
+
+- incoming from [triage](../triage/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
+  In a visible-layout hybrid project the root glossary.md is shared with teach; triage edits it under domain-modeling's shared-glossary rule.
+  Source: [triage/body/SKILL.md](../triage/body/SKILL.md)

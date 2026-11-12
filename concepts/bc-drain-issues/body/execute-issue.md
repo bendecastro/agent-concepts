@@ -30,7 +30,7 @@ Follow [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-s
 
 Preserve the driver's baseline cache. Run targeted tests/checks while editing and record commands, outcomes, failing IDs, and concise baseline deltas. Do not run the full project suite; final landing validation belongs to the driver.
 
-If you notice follow-up work outside this issue, never create a numbered work item: you run in a git worktree, and two worktrees cannot see each other's numbers, so they would pick the same one. When the project has a "Where things go" table in `.bc-agent/AGENTS.md`, add one line describing it to the project's ideas file (resolve the role in that table) as part of your diff; without a table, list it as a fixable concern in your handoff instead.
+If you notice follow-up work or an observation outside this issue, list each one as a one-line follow-up in your handoff, and leave the work folders and the ideas file untouched. Why: you run in a git worktree, so you cannot see other worktrees' item numbers and would pick a taken one; the line is outside this issue's scope, so the scope gate and the reviewers would reject it; and parallel workers appending to one ideas file conflict at rebase. When the project has a "Where things go" table, the driver appends your follow-ups to its ideas file after landing.
 
 ## Review-ready gate
 
@@ -46,7 +46,7 @@ Return:
 
 `READY_FOR_REVIEW #<n> <base-sha> <targeted-validation-summary>`
 
-Include a compact changed-file list, criterion-to-evidence mapping, commands/results, baseline delta, and any fixable concern. Do not include a long implementation narrative.
+Include a compact changed-file list, criterion-to-evidence mapping, commands/results, baseline delta, any fixable concern, and any one-line follow-ups. Do not include a long implementation narrative.
 
 ## Rework assignment
 

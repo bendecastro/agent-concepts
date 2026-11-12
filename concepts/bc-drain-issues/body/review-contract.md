@@ -32,7 +32,7 @@ Tier 1 escalates permanently to tier 2 when the deterministic pre-review gate re
 
 ## Independent scopes
 
-**Spec** checks requirement and acceptance-matrix fidelity, missing/wrong observable behavior, compatibility preservation, externally visible semantics, and scope creep. It does not perform a general style walkthrough.
+**Spec** checks requirement and acceptance-matrix fidelity, missing/wrong observable behavior, compatibility preservation, externally visible semantics, and scope creep. A worker diff that edits the ideas file or the work folders is scope creep: follow-ups belong in the handoff, and the driver records them after landing. It does not perform a general style walkthrough.
 
 **Standards** checks binding repository rules and material integration, correctness, test quality, portability, security, maintainability, and documentation risks. It does not re-grade product intent except where a standards defect makes the stated behavior unsafe or false. For material claims about external platforms, it checks available primary documentation/help rather than trusting repository prose or syntactic string tests alone.
 

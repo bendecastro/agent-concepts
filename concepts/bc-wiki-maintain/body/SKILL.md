@@ -59,9 +59,8 @@ directory names alone when the explicit marker is absent.
 
 In a visible-layout hybrid project the glossary is the shared root glossary (the table's
 `glossary` role, `glossary.md` by default), not a section of `project/overview.md`. `teach`
-adds learner terms to it. Do not remove or redefine project terms, nor terms `teach` added,
-without asking the owner; both the project and the learner rely on those names meaning one
-thing. A hosted teach workspace keeps its own `index.md` in the vault root: it catalogs only
+adds learner terms to it; follow the shared-glossary rule in `domain-modeling` (ask before
+removing or redefining a term you did not add this session). A hosted teach workspace keeps its own `index.md` in the vault root: it catalogs only
 teach's folders, so leave it to `teach` and never extend it to agent-mechanics pages.
 
 <!-- Adapted from prompting-agents: scope discipline. -->
@@ -93,7 +92,7 @@ Treat returned paths as leads, open the relevant page, and verify the answer in 
 output is not evidence that the vault lacks the answer: reformulate once with a different 2–4
 keyword set. If the top results are `index.md`, `map.md`, or `log.md`, the query is too generic;
 add a distinguishing term rather than opening a hub as the answer. Do not grep `index.md` rows
-for lookup. Read `index.md` for broad project orientation only — it is a curated human-facing
+for lookup. Read `index.md` (a vault; visible layout: `.bc-agent/AGENTS.md`) for broad project orientation only — it is a curated human-facing
 surface, not the retrieval mechanism.
 
 For a deliberate **cross-vault** lookup, use qmd with every collection named explicitly and the
@@ -298,7 +297,7 @@ Two different disagreements exist. Only the first is a contradiction.
 - **Stale page vs newer dated log** is the promotion job: the log has later verified state
   and a project page still describes the earlier snapshot. Append a dated section with the
   newer observation; do not rewrite the old sentence. Optionally note the leftover sentence
-  in `open-questions/` if it would mislead a cold reader. Classify `promote`.
+  in `open-questions/` (visible layout: the `ideas` role) if it would mislead a cold reader. Classify `promote`.
 
 A conflict stops that item, not the pass. Do not pick a winner, rewrite either source, or
 turn a conflict into an accepted ADR. The scheduled agent must not silently decide that a

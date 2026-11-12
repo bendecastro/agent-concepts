@@ -22,14 +22,14 @@ When the project has no such table, use the paths this skill used before:
 **The plan is a work item** when the table exists. The fallback change folder is used only without a table; creating `docs/changes/`, `docs/specs/` or `docs/adr/` in a project with a table would scatter the plan outside the folders that show its status.
 
 - **Small plan** (one slice, or no issues): one file `NNN-slug.md` in work-planned, from `.bc-agent/templates/work-item.md`. Put the feature's requirements in a `## Requirements` section above `## Steps`.
-- **Large plan** (more than one slice): a folder `NNN-slug/` in work-planned holding exactly two files, plus any evidence worth keeping:
+- **Large plan** (more than one slice): a folder `NNN-slug/` in work-planned holding two files, plus any evidence worth keeping:
   - `plan.md` — the work-item template; its `Issue:` line holds the parent issue, and its `## Steps` list the slices in dependency order, one checkbox each with title, issue `#NN`, blocked-by and user stories covered;
   - `requirements.md` — the PRD.
   Why two files: the steps already are the slice map, so a separate slices file would be a second copy that drifts.
 
-Number items only from the main checkout: the next number is the highest across all stage folders plus one. In a git worktree, add one line for the plan to the ideas file and tell the user to create the item from the main checkout. Why: two worktrees cannot see each other's numbers and would pick the same one. Never write a `Status:` line; the item stays in work-planned, and the agent that starts the work moves it.
+Number items only from the main checkout: the next number is the highest across all stage folders plus one. In a git worktree, stop after step 2, add one line for the plan to the ideas file, and resume from step 3 in the main checkout; tell the user so. Why: two worktrees cannot see each other's numbers and would pick the same one. Never write a `Status:` line; the item stays in work-planned, and the agent that starts the work moves it.
 
-In a hybrid project the glossary is shared with `teach`. Add or sharpen project terms there, but ask before removing or redefining a term `teach` added for the learner. Why: those terms anchor the learner's lessons, and silently changing one breaks what they were taught.
+In a hybrid project the glossary is shared with `teach`: follow the shared-glossary rule in `domain-modeling` (ask before removing or redefining a term you did not add this session).
 
 ## Pipeline
 

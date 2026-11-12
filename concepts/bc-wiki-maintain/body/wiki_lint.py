@@ -331,14 +331,23 @@ def parse_where_things_go(text: str) -> dict[str, str]:
 
 def layout_table(vault: Path) -> dict[str, str] | None:
     """Return the role table when VAULT is the `.bc-agent/` of a visible-layout project."""
+    # Locate the heading outside code fences, so a vault AGENTS.md that quotes the
+    # visible protocol in a fence stays a vault. The copied parser itself stays
+    # verbatim (the drift test compares it), so it is handed the text from that line.
+    raw = text(vault / "AGENTS.md").splitlines(keepends=True)
+    masked = without_code("".join(raw)).splitlines(keepends=True)
+    start = next((index for index, line in enumerate(masked) if _WHERE_THINGS_GO_LINE.match(line)), None)
+    if start is None:
+        return None
     try:
-        return parse_where_things_go(text(vault / "AGENTS.md"))
+        return parse_where_things_go("".join(raw[start:]))
     except ValueError:
         return None
 
 
 WORK_STAGE_ROLES = ("work-planned", "work-active", "work-done", "work-dropped")
-WORK_ITEM_NAME_RE = re.compile(r"^(\d{3})-[A-Za-z0-9][A-Za-z0-9._-]*$")
+# Three or more digits, never all zeros: numbering starts at 001 and continues past 999.
+WORK_ITEM_NAME_RE = re.compile(r"^(?!0+-)(\d{3,})-[A-Za-z0-9][A-Za-z0-9._-]*$")
 MONTH_FOLDER_RE = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 STATUS_LINE_RE = re.compile(r"^[ \t]*(?:[-*][ \t]+)?\**Status\**[ \t]*:", re.M | re.I)
 
@@ -347,19 +356,38 @@ def finding(severity: str, check: str, path: Path, project: Path, problem: str, 
     return {"severity": severity, "check": check, "path": rel(path, project), "problem": problem, "fix": fix}
 
 
+def folder_entries(folder: Path, project: Path, found: list[dict]) -> list[Path]:
+    """Candidate items directly in a stage or month folder.
+
+    `README.md` documents the folder and is not an item. Any other non-Markdown file is
+    reported as a warning and not scanned, since it can be neither an item nor read as one.
+    """
+    entries: list[Path] = []
+    for entry in sorted(folder.iterdir()):
+        if entry.name.startswith(".") or entry.name == "README.md":
+            continue
+        if entry.is_file() and entry.suffix != ".md":
+            found.append(finding("warning", "non-markdown", entry, project,
+                                 "non-Markdown file sits directly in a work stage folder.",
+                                 "move it into the folder item it belongs to, or out of the work folders"))
+            continue
+        entries.append(entry)
+    return entries
+
+
 def stage_items(stage: Path, done: bool, project: Path, found: list[dict]) -> list[Path]:
     """Items in one stage folder; in the done folder, items sit inside month folders."""
-    entries = sorted(entry for entry in stage.iterdir() if not entry.name.startswith(".")) if stage.is_dir() else []
+    entries = folder_entries(stage, project, found) if stage.is_dir() else []
     if not done:
         return entries
     items: list[Path] = []
     for entry in entries:
         if entry.is_dir() and MONTH_FOLDER_RE.match(entry.name):
-            items.extend(sorted(child for child in entry.iterdir() if not child.name.startswith(".")))
+            items.extend(folder_entries(entry, project, found))
         elif entry.is_dir() and not WORK_ITEM_NAME_RE.match(entry.name):
             found.append(finding("error", "done-month-folder", entry, project,
                                  "month folder name is not YYYY-MM.", "rename it to the item's finishing month, e.g. 2026-03"))
-            items.extend(sorted(child for child in entry.iterdir() if not child.name.startswith(".")))
+            items.extend(folder_entries(entry, project, found))
         else:
             found.append(finding("error", "done-month-folder", entry, project,
                                  "item sits directly in the done folder.", "git mv it into a <year>-<month>/ folder"))
@@ -383,26 +411,31 @@ def outcome_filled(content: str) -> bool:
     return any(line.strip() and not re.fullmatch(r"<[^>]*>", line.strip()) for line in section.splitlines())
 
 
-def item_name_number(item: Path) -> str | None:
+def item_name_number(item: Path) -> int | None:
     name = item.name if item.is_dir() else item.stem if item.suffix == ".md" else ""
     match = WORK_ITEM_NAME_RE.match(name)
-    return match.group(1) if match else None
+    return int(match.group(1)) if match else None
 
 
 def work_findings(project: Path, table: dict[str, str], agents_text: str) -> list[dict]:
     """Check the work folders named by the table; errors break the layout's rules."""
     found: list[dict] = []
-    numbered: dict[str, list[Path]] = {}
+    numbered: dict[int, list[Path]] = {}
+    seen_stages: set[Path] = set()
     for role in WORK_STAGE_ROLES:
         if not table.get(role):
             continue
+        stage = (project / table[role]).resolve()
+        if stage in seen_stages:
+            continue  # two roles hand-edited to one path: count its items once
+        seen_stages.add(stage)
         for item in stage_items(project / table[role], role == "work-done", project, found):
             number = item_name_number(item)
             if number is not None:
                 numbered.setdefault(number, []).append(item)
             if number is None:
                 found.append(finding("warning", "item-name", item, project,
-                                     "item name is not <3-digit number>-<slug>.",
+                                     "item name is not <number of three or more digits, from 001>-<slug>.",
                                      "git mv it to NNN-slug.md (or NNN-slug/) using the next free number"))
             body = item / "plan.md" if item.is_dir() else item
             if item.is_dir() and not body.is_file():
@@ -410,10 +443,11 @@ def work_findings(project: Path, table: dict[str, str], agents_text: str) -> lis
                                      "folder item has no plan.md.",
                                      "add plan.md from the work-item template"))
             content = without_code(text(body)) if body.is_file() else ""
-            if STATUS_LINE_RE.search(content):
-                found.append(finding("error", "status-line", body, project,
-                                     "item has a Status: line; the folder is the status.",
-                                     "delete the Status: line"))
+            for page in sorted(item.rglob("*.md")) if item.is_dir() else [item]:
+                if STATUS_LINE_RE.search(without_code(text(page))):
+                    found.append(finding("error", "status-line", page, project,
+                                         "item has a Status: line; the folder is the status.",
+                                         "delete the Status: line"))
             if role in {"work-done", "work-dropped"} and not outcome_filled(content):
                 found.append(finding("error", "missing-outcome", body, project,
                                      "finished or dropped item has no filled ## Outcome section.",
@@ -428,7 +462,7 @@ def work_findings(project: Path, table: dict[str, str], agents_text: str) -> lis
         if len(items) > 1:
             for item in items:
                 found.append(finding("error", "duplicate-number", item, project,
-                                     f"number {number} is used by {len(items)} items.",
+                                     f"number {number:03d} is used by {len(items)} items.",
                                      "renumber the later item to the highest number in any stage plus one"))
     return found
 

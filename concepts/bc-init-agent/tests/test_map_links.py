@@ -89,7 +89,8 @@ class GeneratedMapLinkTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             vault = root / ".bc-agent"
-            vault.mkdir()
+            (vault / "project").mkdir(parents=True)
+            (vault / "project/overview.md").write_text("# Overview\n", encoding="utf-8")
             (vault / "map.md").write_text(
                 "# Context Map\n\n- `project/overview.md`\n", encoding="utf-8"
             )

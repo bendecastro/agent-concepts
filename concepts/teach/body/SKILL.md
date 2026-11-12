@@ -35,6 +35,9 @@ Before reading or writing any teaching state, resolve `<teach-root>` and both ca
    found, also inspect its marker-owning project root for those same paths. This second check is
    required when invoked from `<project>/.bc-agent`, where root standalone state would otherwise be
    missed. If any is present, preserve that standalone home and report it as a competing home.
+   Match names by exact case from a directory listing: in a host whose adapter maps the Glossary
+   to the root `glossary.md`, that file is the shared project glossary, not standalone state,
+   even where a case-insensitive filesystem also answers to `GLOSSARY.md`.
 3. With a valid marker and no competing standalone state, use the marked `.bc-agent` directory as
    `<teach-root>` — `.bc-agent` when invoked from the project root and the current vault when
    invoked from vault context. Resolve every mapped path below relative to `<teach-root>`.

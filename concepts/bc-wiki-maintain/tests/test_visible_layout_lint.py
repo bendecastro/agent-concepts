@@ -202,3 +202,64 @@ def test_broken_link_in_map_still_fails_a_visible_layout_project(tmp_path):
     code, report = lint(root)
     assert report["broken_links"] == [{"page": "map.md", "link": "[gone](references/gone.md)"}]
     assert code == 1
+
+
+def test_where_things_go_heading_inside_a_code_fence_does_not_switch_a_vault_to_visible(tmp_path):
+    root = scaffold(tmp_path / "p", "learning")
+    agents = root / ".bc-agent/AGENTS.md"
+    quoted = "\n```markdown\n## Where things go\n\n| Role | Path | Notes |\n|---|---|---|\n| ideas | `work/0-ideas.md` | |\n```\n"
+    # Placed before the vault's own (bulleted) "Where things go" section, so a raw-text
+    # search would find the fenced table first.
+    original = agents.read_text()
+    agents.write_text(original.replace("## Where things go", quoted.strip() + "\n\n## Where things go", 1), encoding="utf-8")
+    write(root / ".bc-agent/project/stray.md", "# Stray\n")
+    _code, report = lint(root)
+    assert report["layout"] == "vault"
+    assert "project/stray.md" in report["missing_index"]
+
+
+def test_status_line_in_any_markdown_file_of_a_folder_item_is_an_error(tmp_path):
+    root = scaffold(tmp_path / "p")
+    write(root / "work/1-planned/002-folder/plan.md", "# Folder\n\nWhy: x\n")
+    write(root / "work/1-planned/002-folder/requirements.md", "# Req\n\nStatus: draft\n")
+    write(root / "work/1-planned/002-folder/evidence/run.md", "# Run\n\n- Status: green\n")
+    _code, report = lint(root)
+    assert [entry["path"] for entry in findings(report, "status-line")] == [
+        "work/1-planned/002-folder/evidence/run.md", "work/1-planned/002-folder/requirements.md"]
+
+
+def test_readme_is_folder_documentation_and_other_non_markdown_is_a_warning(tmp_path):
+    root = scaffold(tmp_path / "p")
+    for folder in ("work/3-done", "work/3-done/2026-03", "work/4-dropped", "work/1-planned"):
+        write(root / folder / "README.md", "# About this folder\n\nStatus: explains the stage\n")
+    image = root / "work/4-dropped/diagram.png"
+    image.write_bytes(b"\x89PNG\r\nStatus: binary\n")
+    write(root / "work/3-done/2026-03/003-ok.md")
+    commit_all(root)
+    code, report = lint(root)
+    assert [(entry["check"], entry["path"], entry["severity"]) for entry in report["work_findings"]] == [
+        ("non-markdown", "work/4-dropped/diagram.png", "warning")]
+    assert code == 0
+
+
+def test_item_numbers_compare_as_integers_and_zero_is_not_a_number(tmp_path):
+    root = scaffold(tmp_path / "p")
+    write(root / "work/1-planned/1000-big.md")
+    write(root / "work/3-done/2026-03/1000-also.md")
+    write(root / "work/2-active/007-a.md")
+    write(root / "work/2-active/0007-b.md")
+    write(root / "work/1-planned/000-zero.md")
+    _code, report = lint(root)
+    assert [entry["path"] for entry in findings(report, "duplicate-number")] == [
+        "work/2-active/0007-b.md", "work/2-active/007-a.md",
+        "work/1-planned/1000-big.md", "work/3-done/2026-03/1000-also.md"]
+    assert [entry["path"] for entry in findings(report, "item-name")] == ["work/1-planned/000-zero.md"]
+
+
+def test_two_roles_with_the_same_path_do_not_count_items_twice(tmp_path):
+    root = scaffold(tmp_path / "p")
+    agents = root / ".bc-agent/AGENTS.md"
+    agents.write_text(agents.read_text().replace("`work/2-active/`", "`work/1-planned/`"), encoding="utf-8")
+    write(root / "work/1-planned/007-a.md")
+    _code, report = lint(root)
+    assert findings(report, "duplicate-number") == []

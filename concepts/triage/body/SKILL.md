@@ -26,7 +26,7 @@ This skill names project files by role: the **glossary**, the **decisions** fold
 
 When the table exists, the work-item rules in the same `.bc-agent/AGENTS.md` govern how an item is named, numbered and moved. A project with the table has no `.bc-agent/out-of-scope/`; writing there would recreate a folder the project retired, so a rejection goes to work-dropped.
 
-In a hybrid project the glossary is shared with `teach`. Add or sharpen project terms there, but ask before removing or redefining a term `teach` added for the learner. Why: those terms anchor the learner's lessons, and silently changing one breaks what they were taught.
+In a hybrid project the glossary is shared with `teach`: follow the shared-glossary rule in `domain-modeling` (ask before removing or redefining a term you did not add this session).
 
 ## States
 
@@ -62,7 +62,7 @@ Include external PRs only if the repo says PRs are a request surface. Let the us
    - `ready-for-human`: post the same structure, plus why it cannot be delegated.
    - `needs-info`: post triage notes with established facts and specific questions.
    - `wontfix` already implemented: close with a pointer to the existing behavior; do **not** record it in work-dropped. Why: that folder holds decisions not to build something, and an implemented feature recorded there would later read as a rejection.
-   - `wontfix` rejected enhancement: record it in the work-dropped folder with the reason, using [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md), then comment and close. The reason is the point of the record: without it the next request for the same thing gets argued again from nothing.
+   - `wontfix` rejected enhancement: record it in the work-dropped folder with the reason, using [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md), then comment and close; in a worktree, do not close the issue until the item exists. The reason is the point of the record: without it the next request for the same thing gets argued again from nothing.
 
 ## Quick override
 

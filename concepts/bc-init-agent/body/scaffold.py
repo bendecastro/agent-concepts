@@ -1263,9 +1263,10 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
 - **Only the main checkout creates numbered items.** Working in a git worktree, add a line
   to `work/0-ideas.md` instead. Why: two worktrees cannot see each other's numbers and
   would pick the same one.
-- **A small item is one file; a large one is a folder** `NNN-slug/` holding `plan.md`, its
-  requirements and its slices. The folder moves as a whole. Why: everything about a feature
-  stays in one place through its whole life.
+- **A small item is one file; a large one is a folder** `NNN-slug/` holding `plan.md` (its
+  `## Steps` are the slices) and `requirements.md`, plus any evidence worth keeping. The folder
+  moves as a whole. Why: everything about a feature stays in one place through its whole
+  life, and the steps already are the slice map, so separate slice files would drift.
 - **Several items may be active at once.**
 - **GitHub issues are optional.** When one exists, record its number on the item's `Issue:`
   line. Why: the folders are the source of truth; an issue is a pointer to them.
@@ -1470,6 +1471,11 @@ def _visible_runway() -> str:
         ("-- .bc-agent |", "-- docs/research |"),
         ("-- .bc-agent/project .bc-agent/tasks", "-- docs work"),
         ("normal project\nwiki location", "dated folder under\n`docs/research/`"),
+        ("\n\nThe `review_tip` lookup is deliberately",
+         "\n\nThe snippet uses the default paths. If this project's \"Where things go\" table in\n"
+         "`.bc-agent/AGENTS.md` names other paths, substitute the research and work paths from the\n"
+         "\"Where things go\" table for `docs/research` and `docs work` before running it; otherwise\n"
+         "the count misses the project's real planning surfaces.\n\nThe `review_tip` lookup is deliberately"),
     )
     return _guarded(ARCHITECTURE_RUNWAY, replacements, "architecture runway")
 
@@ -1562,16 +1568,17 @@ def _teach_notes(root: Path) -> list[str]:
                 "(exact first line plus the complete hosted path map); merge the generated "
                 "path map by hand after checking existing state"
             )
-    standalone_paths = (
-        root / "MISSION.md",
-        root / "REVIEW.md",
-        root / "GLOSSARY.md",
-        root / "RESOURCES.md",
-        root / "NOTES.md",
-        root / "learning-records",
-        root / "lessons",
-    )
-    if any(path.exists() for path in standalone_paths):
+    standalone_names = {
+        "MISSION.md", "REVIEW.md", "GLOSSARY.md", "RESOURCES.md", "NOTES.md",
+        "learning-records", "lessons",
+    }
+    # Compare exact directory entry names: on a case-insensitive filesystem a hybrid
+    # project's shared root `glossary.md` would otherwise answer to `GLOSSARY.md`.
+    try:
+        root_names = {entry.name for entry in root.iterdir()}
+    except OSError:
+        root_names = set()
+    if standalone_names & root_names:
         notes.append(
             "standalone teach state exists outside .bc-agent; do not migrate or copy it "
             "automatically — preserve it and ask the user before choosing between competing homes"
@@ -1599,17 +1606,18 @@ def earlier_layout_paths(root: Path, archetype: str) -> list[str]:
 
 
 def _inside_vault_map_bullet(root: Path, line: str) -> bool:
-    """True for an inline-code map bullet that names a page inside .bc-agent/.
+    """True for an inline-code map bullet whose target is an existing file inside .bc-agent/.
 
-    A bullet naming an existing path outside the vault (relative to the repository
-    root, as the map tells agents to write it) is not a missing link.
+    A bullet naming a path outside the vault (relative to the repository root, as the
+    map tells agents to write it) is not a missing link, even before that path exists:
+    some project files are created on first need.
     """
     if not line.startswith("- `"):
         return False
     target = line[3:].split("`", 1)[0]
     if not target or target.startswith("../"):
         return False
-    return (root / ".bc-agent" / target).exists() or not (root / target).exists()
+    return (root / ".bc-agent" / target).is_file()
 
 
 def upgrade_notes(root: Path, archetype: str) -> list[str]:

@@ -552,3 +552,37 @@ def test_vault_archetypes_printed_output_matches_base(tmp_path, archetype):
                 _raw(root, archetype, '--force', script=script)]
         outputs.append([(r.returncode, r.stdout, r.stderr) for r in runs])
     assert outputs[1] == outputs[0]
+
+
+def test_runway_tells_agent_to_substitute_table_paths(tmp_path):
+    text = (_scaffold(tmp_path, 'code') / '.bc-agent/conventions/architecture-runway.md').read_text()
+    assert 'substitute the research and work paths from the "Where things go" table' in ' '.join(text.split())
+
+
+def test_map_note_ignores_inline_code_for_outside_paths_created_on_first_need(tmp_path):
+    module = _module()
+    root = _scaffold(tmp_path, 'code')
+    (root / '.bc-agent/map.md').write_text('# Map\n\n- `docs/PRD.md` — created on first need\n')
+    assert not any('map.md' in note for note in module.upgrade_notes(root, 'code'))
+
+
+def test_hybrid_root_glossary_is_not_standalone_teach_state_on_case_insensitive_fs(tmp_path):
+    module = _module()
+    root = _scaffold(tmp_path, 'hybrid')
+    real_exists = Path.exists
+
+    def case_insensitive_exists(path, *args, **kwargs):
+        # Simulate a case-insensitive filesystem: GLOSSARY.md answers for glossary.md.
+        parent = path.parent
+        if real_exists(parent) and parent.is_dir():
+            return any(entry.name.lower() == path.name.lower() for entry in parent.iterdir())
+        return real_exists(path, *args, **kwargs)
+
+    from unittest import mock
+    with mock.patch.object(Path, 'exists', case_insensitive_exists):
+        notes = module._teach_notes(root)
+    assert not any('standalone teach state' in note for note in notes), notes
+    (root / 'GLOSSARY.md').write_text('# Teach glossary\n')
+    names = {entry.name for entry in root.iterdir()}
+    if 'glossary.md' in names and 'GLOSSARY.md' in names:  # only a case-sensitive filesystem holds both
+        assert any('standalone teach state' in note for note in module._teach_notes(root))

@@ -42,15 +42,15 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-wiki-maintain/CONCEPT.md](../bc-wiki-maintain/CONCEPT.md)
 
 - incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Resolves glossary, decisions and ideas in the scaffolded table, with its earlier paths as fallback.
   Source: [diagnosing-bugs/CONCEPT.md](../diagnosing-bugs/CONCEPT.md)
 
 - incoming from [domain-modeling](../domain-modeling/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Resolves glossary and decisions in the scaffolded table, with its earlier paths as fallback.
   Source: [domain-modeling/CONCEPT.md](../domain-modeling/CONCEPT.md)
 
 - incoming from [handoff](../handoff/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Resolves work-active, decisions, research, glossary, ideas and work-dropped in the scaffolded table, with its earlier paths as fallback.
   Source: [handoff/CONCEPT.md](../handoff/CONCEPT.md)
 
 - incoming from [improve-codebase-architecture](../improve-codebase-architecture/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
@@ -58,7 +58,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [improve-codebase-architecture/CONCEPT.md](../improve-codebase-architecture/CONCEPT.md)
 
 - incoming from [prototype](../prototype/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Resolves research, decisions and requirements in the scaffolded table, with its earlier paths as fallback.
   Source: [prototype/CONCEPT.md](../prototype/CONCEPT.md)
 
 - incoming from [teach](../teach/RELATIONSHIPS.md): depends on this concept's contract — required, when valid teach-host-adapter marker.

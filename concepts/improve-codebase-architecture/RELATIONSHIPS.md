@@ -21,6 +21,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture observation after landing.
+  Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
+  Source: [bc-drain-issues/CONCEPT.md](../bc-drain-issues/CONCEPT.md)
+
+- incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when bug fixed without a correct test seam.
+  Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
+  Source: [diagnosing-bugs/body/SKILL.md](../diagnosing-bugs/body/SKILL.md)
+
 - incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture-review reports.
   Architecture-review report artifacts retain their own contract.
   Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)

@@ -64,6 +64,13 @@ if [[ -n "$detection_output" ]]; then
   printf '%s\n' "$detection_output"
 fi
 
+# Promotion writes only inside the vault root, but a visible-layout project keeps its
+# knowledge roles at the repository root, so a pass there could not land where the
+# skill routes it. Stop before any model call or write until the wrapper supports it.
+if printf '%s\n' "$detection_output" | grep -Eq '^Layout:[[:space:]]*visible[[:space:]]*$'; then
+  fail 'promotion is not yet supported for visible-layout projects; run it manually (the lint timer is unaffected)'
+fi
+
 required_lines="$(printf '%s\n' "$detection_output" | grep -Ec '^PROMOTION_REQUIRED=' || true)"
 range_lines="$(printf '%s\n' "$detection_output" | grep -Ec '^PROMOTION_RANGE=' || true)"
 [[ "$required_lines" == 1 && "$range_lines" == 1 ]] \

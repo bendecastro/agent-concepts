@@ -15,6 +15,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `domain-modeling`'s contract — required, when visible-layout hybrid project.
+  The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; triage points to it.
+  Source: [body/SKILL.md](body/SKILL.md)
+
+- depends on `teach`'s contract — required, when visible-layout hybrid project.
+  In a visible-layout hybrid project the root glossary.md is shared with teach; triage edits it under domain-modeling's shared-glossary rule.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 ## Incoming
 
 None.

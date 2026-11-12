@@ -8,7 +8,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Outgoing
 
 - depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
-  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Resolves glossary and decisions in the scaffolded table, with its earlier paths as fallback.
   Source: [CONCEPT.md](CONCEPT.md)
 
 - depends on `teach`'s contract — required, when visible-layout hybrid project.
@@ -21,9 +21,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md)
 
+- incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
+  The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; planning points to it.
+  Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md)
+
 - incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): loads this concept — required.
   Step 2 captures terms and decisions inline during the grill.
   Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md#pipeline)
+
+- incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
+  The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; maintenance points to it.
+  Source: [bc-wiki-maintain/body/SKILL.md](../bc-wiki-maintain/body/SKILL.md)
 
 - incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
@@ -55,4 +63,8 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 - incoming from [triage](../triage/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [triage/body/SKILL.md](../triage/body/SKILL.md)
+
+- incoming from [triage](../triage/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
+  The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; triage points to it.
   Source: [triage/body/SKILL.md](../triage/body/SKILL.md)

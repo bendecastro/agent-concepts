@@ -523,7 +523,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/diagnosing-bugs/CONCEPT.md",
-      "reason": "Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback."
+      "reason": "Resolves glossary, decisions and ideas in the scaffolded table, with its earlier paths as fallback."
     },
     {
       "from": "prototype",
@@ -532,7 +532,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/prototype/CONCEPT.md",
-      "reason": "Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback."
+      "reason": "Resolves research, decisions and requirements in the scaffolded table, with its earlier paths as fallback."
     },
     {
       "from": "handoff",
@@ -541,7 +541,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/handoff/CONCEPT.md",
-      "reason": "Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback."
+      "reason": "Resolves work-active, decisions, research, glossary, ideas and work-dropped in the scaffolded table, with its earlier paths as fallback."
     },
     {
       "from": "domain-modeling",
@@ -550,7 +550,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/domain-modeling/CONCEPT.md",
-      "reason": "Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback."
+      "reason": "Resolves glossary and decisions in the scaffolded table, with its earlier paths as fallback."
     },
     {
       "from": "domain-modeling",
@@ -560,6 +560,69 @@
       "when": "visible-layout hybrid project",
       "source": "concepts/domain-modeling/body/SKILL.md",
       "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; domain-modeling asks before removing or redefining terms it did not add."
+    },
+    {
+      "from": "bc-drain-issues",
+      "to": "improve-codebase-architecture",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "architecture observation after landing",
+      "source": "concepts/bc-drain-issues/CONCEPT.md",
+      "reason": "Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates."
+    },
+    {
+      "from": "diagnosing-bugs",
+      "to": "improve-codebase-architecture",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "bug fixed without a correct test seam",
+      "source": "concepts/diagnosing-bugs/body/SKILL.md",
+      "reason": "Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates."
+    },
+    {
+      "from": "triage",
+      "to": "teach",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "visible-layout hybrid project",
+      "source": "concepts/triage/body/SKILL.md",
+      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; triage edits it under domain-modeling's shared-glossary rule."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "teach",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "visible-layout hybrid project",
+      "source": "concepts/bc-plan-to-issues/body/SKILL.md",
+      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under domain-modeling's shared-glossary rule."
+    },
+    {
+      "from": "triage",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "visible-layout hybrid project",
+      "source": "concepts/triage/body/SKILL.md",
+      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; triage points to it."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "visible-layout hybrid project",
+      "source": "concepts/bc-plan-to-issues/body/SKILL.md",
+      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; planning points to it."
+    },
+    {
+      "from": "bc-wiki-maintain",
+      "to": "domain-modeling",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "visible-layout hybrid project",
+      "source": "concepts/bc-wiki-maintain/body/SKILL.md",
+      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; maintenance points to it."
     }
   ]
 }

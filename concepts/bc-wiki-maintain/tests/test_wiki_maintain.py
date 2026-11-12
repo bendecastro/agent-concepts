@@ -779,6 +779,28 @@ class PromotionRunnerTests(unittest.TestCase):
             self.assertEqual(git(repo, "rev-parse", "HEAD"), base)
 
 
+    def test_visible_layout_project_fails_before_agent(self) -> None:
+        temp, repo, vault = make_repo("## [2026-08-10] first\n")
+        with temp:
+            detector = repo.parent / "detector.py"
+            marker = repo / "agent-ran"
+            detector.write_text(
+                "#!/usr/bin/env python3\nprint('Layout: visible')\nprint('PROMOTION_REQUIRED=1')\n"
+                "print('PROMOTION_RANGE=2026-08-10..2026-08-10')\nprint('PROMOTION_HEADING\\t## [2026-08-10] first')\n",
+                encoding="utf-8",
+            )
+            detector.chmod(0o755)
+            pi = self.write_pi(repo, f"touch {marker}\n")
+            env = runner_env(repo, vault, pi, DETECTION_SCRIPT=str(detector))
+            base = git(repo, "rev-parse", "HEAD")
+            result = run("bash", str(RUNNER), cwd=repo, env=env, check=False)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("promotion is not yet supported for visible-layout projects", result.stderr)
+            self.assertFalse(marker.exists())
+            self.assertEqual(git(repo, "rev-parse", "HEAD"), base)
+            self.assertEqual(git(repo, "status", "--porcelain"), "")
+
+
 class PromotionAllRunnerTests(unittest.TestCase):
     def write_promotion_runner(self, directory: Path, visits: Path) -> Path:
         runner = directory / "promotion-runner.sh"
