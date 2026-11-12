@@ -1264,8 +1264,8 @@ The read path below applies to teach knowledge pages and learning records under 
 
 VISIBLE_MAP = """# Context Map
 
-Choose the smallest set of pages for the task. Link only targets that resolve inside
-`.bc-agent/`; name files outside it in inline code, relative to the repository root.
+Choose the smallest set of pages for the task. Link only targets that resolve inside this vault
+(`.bc-agent/`); name files outside it in inline code, relative to the repository root.
 
 ## Always useful
 
@@ -1290,7 +1290,7 @@ Choose the smallest set of pages for the task. Link only targets that resolve in
 
 Work items are in `work/` (ideas in `work/0-ideas.md`), decision records in
 `docs/decisions/`, investigations in `docs/research/`, and vocabulary in `glossary.md`.
-The "Where things go" table in [AGENTS.md](AGENTS.md) is the full list.
+The "Where things go" table in `AGENTS.md` is the full list.
 """
 
 VISIBLE_FILE_LAYOUT = """# File Layout
