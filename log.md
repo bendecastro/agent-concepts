@@ -1653,3 +1653,6 @@ Per plan decision 32, `--migrate --apply` now turns a wikilink naming a moved fi
 
 ## [2026-11-12] fix | bc-init-agent migrate accepts earlier vaults with a "Where things go" bullet list
 Earlier scaffolds wrote a `## Where things go` heading over a bullet list of vault folders, so the migrate mode refused two real projects as "already migrated". It now refuses only when the heading holds a parseable role table. `bc-wiki-maintain` lint already fell back to vault for these.
+
+## [2026-11-12] test | dependent skills under pressure in a visible-layout project
+Six skills run on Terra low with a request that names the earlier path. `triage`, `domain-modeling`, `diagnosing-bugs`, `bc-plan-to-issues` and `improve-codebase-architecture` used the table roles. `prototype` did not hold across three rounds (scratch folder, both places, scratch folder) despite two wording changes; the wording stays, unverified, and a lint backstop is proposed. `bc-drain-issues` and `handoff` not covered. Results: `concepts/bc-init-agent/tests/pressure-dependent-skills-results-2026-11-12.md`.
