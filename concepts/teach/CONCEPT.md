@@ -31,7 +31,7 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
   and planning skills keep using the same file. The two maps differ only in that row; any other
   map is incomplete. Why: one project vocabulary instead of a second, teach-only glossary.
   Provenance: owner decision 2026-11-12 in
-  [the bc-init-agent visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md).
+  [the bc-init-agent visible-layout plan](../../docs/plans/implemented/bc-init-agent-visible-layout.md).
 
 ## Provenance
 

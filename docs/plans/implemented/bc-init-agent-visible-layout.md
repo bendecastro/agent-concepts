@@ -1,7 +1,7 @@
 # bc-init-agent visible layout — work folders the owner can browse
 
 Date: 2026-11-12
-Status: active
+Status: implemented
 Verification: none yet. Design agreed with the owner in a 22-question interview on 2026-11-12;
 no code has changed.
 

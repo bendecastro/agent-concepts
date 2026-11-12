@@ -123,7 +123,7 @@ Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
 
 - [bc-drain-issues-v3-review-economy.md](docs/plans/active/bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.
 - [bc-drain-issues-gate-b-deterministic-trace.md](docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md) — deterministic two-rework Gate B trace and exact-hash approval verification.
-- [bc-init-agent-visible-layout.md](docs/plans/active/bc-init-agent-visible-layout.md) — scaffold redesign agreed with the owner: visible `work/` lifecycle folders, knowledge under `docs/`, a per-project layout table that dependent concepts read; W1 scaffold implemented and unit-tested (not pressure-tested); dependent consumers and migration remain.
+- [bc-init-agent-visible-layout.md](docs/plans/implemented/bc-init-agent-visible-layout.md) — scaffold redesign agreed with the owner: visible `work/` lifecycle folders, knowledge under `docs/`, a per-project layout table that dependent concepts read; W1 scaffold implemented and unit-tested (not pressure-tested); dependent consumers and migration remain.
 - [agent-vault-read-path.md](docs/plans/active/agent-vault-read-path.md) — cheap vault traversal across `bc-init-agent` and `bc-wiki-maintain`. The benchmark resolved it against the plan's own design: ranked search over the vault (stdlib BM25, no stored artifact) beat both the generated catalog it proposed and the `index.md` it meant to replace, so W1 is dropped and the first move is now a keyword search in all eight live vaults.
 
 ### Implemented

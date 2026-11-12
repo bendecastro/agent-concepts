@@ -1622,7 +1622,7 @@ Deployed to the shared bus, Pi and Claude Code; removed the dangling `frontend-d
 The owner asked not to be consulted about deleting a worker branch whose content landed through a conflict-resolved cherry-pick. Storage safety now accepts a recorded resolved-pick proof for `-D` and says not to ask; using-git-worktrees and finishing-development-branch follow. New test variant (i) is unexecuted.
 
 ## [2026-11-12] implement | bc-init-agent visible layout plan
-Recorded the design agreed in a 22-question owner interview as `docs/plans/active/bc-init-agent-visible-layout.md`: status by folder under a root `work/`, knowledge in the open, one layout table per project. Plan only; no concept changed.
+Recorded the design agreed in a 22-question owner interview as `docs/plans/implemented/bc-init-agent-visible-layout.md`: status by folder under a root `work/`, knowledge in the open, one layout table per project. Plan only; no concept changed.
 
 ## [2026-11-12] implement | bc-init-agent visible layout (W1)
 Code, ops and hybrid now scaffold `work/` lifecycle folders, `docs/decisions/` and `docs/research/`, root `glossary.md` and a "Where things go" table (`parse_where_things_go`) in `.bc-agent/AGENTS.md`; learning/knowledge output is byte-identical to before. Sixteen new deterministic test functions, SKILL/CONCEPT/MIGRATIONS/scenario updated; not pressure-tested, not redeployed, and consumer concepts (W2+) still assume the vault.
@@ -1659,3 +1659,6 @@ Six skills run on Terra low with a request that names the earlier path. `triage`
 
 ## [2026-11-12] implement | bc-init-agent close-out: lint backstop, prototype, search, project agents
 Owner decisions 33–36 in the visible-layout plan: `wiki_lint.py` reports any non-mechanics entry under a visible project's `.bc-agent/` (optional `agent-extras` row); `prototype` follows a place the user names and recommends the research role; visible projects register two qmd collections printed by `wiki_lint.py --qmd-entry` and promotion is "not applicable" (runner exits 0); `project-agents` row is `.agents/agents/`. Deterministic tests only; not pressure-tested, not deployed.
+
+## [2026-11-12] plan | bc-init-agent visible layout implemented
+Close-out decisions 33-36 landed (`93f9694`). The five migrated projects are registered for search (two collections each), their `project-agents` row points at `.agents/agents/`, and the lint reports no stray `.bc-agent/` content in any of them. Plan moved to `docs/plans/implemented/`. Not covered: `bc-drain-issues` and `handoff` under pressure in a visible-layout project.

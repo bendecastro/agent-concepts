@@ -212,7 +212,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 
 ## Provenance
 
-- `docs/plans/active/bc-init-agent-visible-layout.md` ("Resolved decisions") and the
+- `docs/plans/implemented/bc-init-agent-visible-layout.md` ("Resolved decisions") and the
   `bc-init-agent` "Where things go" table contract — the visible layout this detector and
   promotion routing now recognize.
 - Perplexity Brain distillation captured in the run artifact `brain.md` — separate capture from

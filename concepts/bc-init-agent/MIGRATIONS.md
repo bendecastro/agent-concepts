@@ -26,7 +26,7 @@ visible-layout files, leaves every existing file byte-identical (including a cus
 ### Migrate mode
 
 `scaffold.py --migrate` moves one project to the visible layout (work package W4 of
-[the visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md)). The agent
+[the visible-layout plan](../../docs/plans/implemented/bc-init-agent-visible-layout.md)). The agent
 procedure, including the rule for each judgment class, is in the skill body under
 "Migrate an existing project"; this section records what the script does and does not do.
 
