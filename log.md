@@ -1656,3 +1656,6 @@ Earlier scaffolds wrote a `## Where things go` heading over a bullet list of vau
 
 ## [2026-11-12] test | dependent skills under pressure in a visible-layout project
 Six skills run on Terra low with a request that names the earlier path. `triage`, `domain-modeling`, `diagnosing-bugs`, `bc-plan-to-issues` and `improve-codebase-architecture` used the table roles. `prototype` did not hold across three rounds (scratch folder, both places, scratch folder) despite two wording changes; the wording stays, unverified, and a lint backstop is proposed. `bc-drain-issues` and `handoff` not covered. Results: `concepts/bc-init-agent/tests/pressure-dependent-skills-results-2026-11-12.md`.
+
+## [2026-11-12] implement | bc-init-agent close-out: lint backstop, prototype, search, project agents
+Owner decisions 33–36 in the visible-layout plan: `wiki_lint.py` reports any non-mechanics entry under a visible project's `.bc-agent/` (optional `agent-extras` row); `prototype` follows a place the user names and recommends the research role; visible projects register two qmd collections printed by `wiki_lint.py --qmd-entry` and promotion is "not applicable" (runner exits 0); `project-agents` row is `.agents/agents/`. Deterministic tests only; not pressure-tested, not deployed.
