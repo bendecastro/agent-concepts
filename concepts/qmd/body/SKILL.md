@@ -60,5 +60,5 @@ commands:
   setup is `qmd pull && qmd embed` (~2GB one-time model download, Node ≥ 22).
 
 > This workspace's own setup keeps `qmd-collections.yml` in a synced repo and applies it with a
-> wrapper script, registering new `.bc-agent` vaults by default at init. That is one
+> wrapper script, registering new projects by default at init. That is one
 > implementation of the rule above, not a requirement.

@@ -27,8 +27,19 @@ detector rather than guessing from folder names, because both layouts use `.bc-a
   the project chose to keep that knowledge visible, and a recreated vault page becomes a
   second, unread copy. Wherever this skill names a destination by role (glossary, decisions,
   research, ideas), take the path from that table; one table per project means a project
-  with a justified exception changes one place. In a vault, use the vault path named beside
-  the role below.
+  with a justified exception changes one place.
+
+**Promotion does not apply to the visible layout.** Promotion existed to move log entries into
+vault pages; in the visible layout agents write decisions and research straight to the table's
+role folders, and `log.md` is a plain journal. So for a visible-layout project the detector
+prints `Promotion: not applicable` and no `PROMOTION_` lines, the runner exits 0 with a
+not-applicable message, and this skill is the lint only: run step 2, report its findings and
+stop. Everything below about classifying and promoting log headings applies to a vault.
+
+The detector's `qmd registration` line checks the visible layout's two search collections: one
+rooted at the repository whose pattern covers the table's knowledge roles, and one rooted at
+`.bc-agent/` (qmd skips hidden path parts, so the first cannot index it).
+`wiki_lint.py <vault-root> --qmd-entry <slug>` prints both entries for the collections file.
 
 The root-cause rule is load-bearing: **triggers must be computed (from Git and the filesystem),
 never recorded in hand-maintained counters or markers.** The architecture-runway tracker is the
@@ -158,8 +169,7 @@ whole or grep its rows to locate a page.
 
 ### 1. Establish the boundary before writing
 
-- Resolve `<vault-root>` and confirm it contains the target vault's `log.md`, plus `index.md`
-  in a vault (a visible-layout project has no vault catalog).
+- Resolve `<vault-root>` and confirm it contains the target vault's `log.md` and `index.md`.
 - Run `git -C "<vault-root>" status --short` before touching anything. If it is not clean,
   **stop**. Do not stash, reset, or fold the promotion into someone else's working changes.
 - Identify the repository root with Git; the dedicated commit belongs to that repository.
@@ -220,17 +230,14 @@ gate, not a wiki page. Its verdicts are carried into the promotion commit body, 
 
 For each `promote`, choose the smallest existing page or a new page by meaning:
 
-- verified discovery, scan result, or durable observation → vault: `findings/`; visible
-  layout: the `research` role (a dated investigation folder);
-- a costly or irreversible choice with a real alternative → the next numbered record in the
-  `decisions` role (vault: `decisions/`; inspect existing numbering first);
-- a domain term or its canonical name → the `glossary` role (vault: the Glossary section of
-  `project/overview.md`), subject to the teach boundary above;
+- verified discovery, scan result, or durable observation → `findings/`;
+- a costly or irreversible choice with a real alternative → the next numbered record in
+  `decisions/` (inspect existing numbering first);
+- a domain term or its canonical name → the Glossary section of `project/overview.md`,
+  subject to the teach boundary above;
 - stable command, path, external reference, or gotcha → `references/` in the vault root;
 - durable workflow rule or operating convention → `conventions/` in the vault root;
-- unresolved uncertainty or mutually exclusive claims → vault: `open-questions/`; visible
-  layout: one line in the `ideas` role, because that layout keeps open questions in `work/`
-  and an unattended pass must not create numbered work items.
+- unresolved uncertainty or mutually exclusive claims → `open-questions/`.
 
 Do not invent frontmatter: the directory supplies the page kind and Git supplies dates
 (`git log -1 --format=%cs -- <path>`). Name appended sections after the fact, not after the
@@ -275,8 +282,7 @@ thin-write failure this gate exists to prevent, entered through the front door. 
 
 Only in a direct manual invocation, where a human asked for the commit, do you create it
 yourself — after running the same checks the wrapper would, including classification coverage.
-Then stage only this pass's verified files (vault files, plus role paths it wrote in a
-visible-layout project), commit once with the exact detector-provided subject and the verdict
+Then stage only this pass's verified vault files, commit once with the exact detector-provided subject and the verdict
 summary as the body, and confirm with `git show --stat --oneline HEAD`
 and a clean `git status --short`.
 
@@ -291,15 +297,14 @@ Two different disagreements exist. Only the first is a contradiction.
 - **Mutually exclusive claims** cannot both be true: a research spike says an acceptance bar
   was "formally lowered" while the ADR addendum and `tasks/active.md` say it was not. Write
   both mutually exclusive source pages **and** the exact originating `log.md` heading/date
-  into `open-questions/` (one resolvable question per page or heading, not a batch dump); in
-  a visible-layout project, into one line per question in the `ideas` role.
+  into `open-questions/` (one resolvable question per page or heading, not a batch dump).
   The next reader needs that log provenance; a date on the open-question heading is not a
   source citation. Do not promote either claim as current truth, and classify that heading
   `conflict`. Continue the rest of the pass.
 - **Stale page vs newer dated log** is the promotion job: the log has later verified state
   and a project page still describes the earlier snapshot. Append a dated section with the
   newer observation; do not rewrite the old sentence. Optionally note the leftover sentence
-  in `open-questions/` (visible layout: the `ideas` role) if it would mislead a cold reader. Classify `promote`.
+  in `open-questions/` if it would mislead a cold reader. Classify `promote`.
 
 A conflict stops that item, not the pass. Do not pick a winner, rewrite either source, or
 turn a conflict into an accepted ADR. The scheduled agent must not silently decide that a
@@ -336,7 +341,7 @@ an open question is a safe stop, not a reason to guess. Keep the run scoped to t
 vault; do not modify qmd registry policy, other repositories, or the personal wiki from this
 skill.
 
-The wrapper commits only paths inside the vault root and fails the run on anything else. In a
-visible-layout project the glossary, decisions, research and ideas roles live outside the
-vault root, so do not enrol such a project in the unattended promotion timer: run promotion
-manually there. The lint-only timer is safe for it, because the detector is read-only.
+The wrapper commits only paths inside the vault root and fails the run on anything else. For a
+visible-layout project there is nothing to promote: the wrapper prints that promotion is not
+applicable and exits 0, so a scheduled run over many vaults is not marked failed. Do not enrol
+such a project in the promotion timer; the lint-only timer applies to it.

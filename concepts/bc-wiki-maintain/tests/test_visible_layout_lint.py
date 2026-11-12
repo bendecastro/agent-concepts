@@ -69,8 +69,9 @@ def test_fresh_code_scaffold_is_visible_layout_with_no_vault_demands(tmp_path):
     output = lint_text(root)
     for vault_page in ("index.md", "tasks/active.md", "project/overview.md"):
         assert vault_page not in output
-    # Exit 1 here only reflects the not-a-git-repo promotion range, as for a vault.
-    assert report["unpromoted_log"]["note"] == "unknown: not a git repository"
+    # No promotion demand in the visible layout, so a fresh scaffold outside git exits clean.
+    assert report["unpromoted_log"] is None
+    assert code == 0
 
 
 def test_where_things_go_parser_copy_matches_bc_init_agent():
@@ -326,3 +327,121 @@ def test_vault_layout_keeps_its_folders_without_agent_mechanics_findings(tmp_pat
     _code, report = lint(root)
     assert report["layout"] == "vault"
     assert report["work_findings"] == []
+
+
+# --- search registration and promotion in the visible layout (owner, 2026-11-12) ---
+
+CODE_PATTERN = ("{glossary.md,docs/decisions/**/*.md,docs/research/**/*.md,docs/PRD.md,ARCHITECTURE.md,"
+                "work/0-ideas.md,work/1-planned/**/*.md,work/2-active/**/*.md,work/3-done/**/*.md,"
+                "work/4-dropped/**/*.md}")
+
+
+def test_knowledge_pattern_is_read_from_the_table(tmp_path):
+    linter = load("wiki_lint_pattern", LINTER)
+    code = linter.layout_table(scaffold(tmp_path / "code") / ".bc-agent")
+    assert linter.knowledge_pattern(code) == CODE_PATTERN
+    ops = linter.layout_table(scaffold(tmp_path / "ops", "ops") / ".bc-agent")
+    assert "docs/components/**/*.md" in linter.knowledge_pattern(ops)
+    hybrid = linter.layout_table(scaffold(tmp_path / "hybrid", "hybrid") / ".bc-agent")
+    assert ".bc-agent" not in linter.knowledge_pattern(hybrid)
+    code["decisions"] = "records/decisions/"
+    assert "records/decisions/**/*.md" in linter.knowledge_pattern(code)
+
+
+def qmd_lint(root: Path, registry: str, machine: str | None) -> dict:
+    linter = load("wiki_lint_qmd", LINTER)
+    (root.parent / "registry.yml").write_text(registry, encoding="utf-8")
+    machine_path = root.parent / "index.yml"
+    if machine is not None:
+        machine_path.write_text(machine, encoding="utf-8")
+    return linter.lint(root / ".bc-agent", 90, qmd_registry=root.parent / "registry.yml",
+                       qmd_machine_index=machine_path)["qmd"]
+
+
+def qmd_entry(root: Path) -> str:
+    result = subprocess.run([sys.executable, str(LINTER), str(root / ".bc-agent"), "--qmd-entry", "demo"],
+                            capture_output=True, text=True, check=True)
+    return result.stdout
+
+
+def test_qmd_entry_prints_two_collections_that_the_lint_counts_as_registered(tmp_path):
+    root = scaffold(tmp_path / "p")
+    entry = qmd_entry(root)
+    assert entry.startswith("  demo:\n")
+    shown = "~/" + root.resolve().relative_to(Path.home().resolve()).as_posix() \
+        if root.resolve().is_relative_to(Path.home().resolve()) else root.resolve().as_posix()
+    assert f"    path: {shown}/.bc-agent\n" in entry
+    assert "  demo-project:\n" in entry
+    assert f"    path: {shown}\n" in entry
+    assert f'    pattern: "{CODE_PATTERN}"\n' in entry
+    assert '      "/docs/decisions": "Decision records — binding unless superseded"\n' in entry
+    registry = "collections:\n" + entry
+    machine = ("collections:\n  demo:\n    path: " + str(root.resolve() / ".bc-agent") + "\n    pattern: \"**/*.md\"\n"
+               "  demo-project:\n    path: " + str(root.resolve()) + f"\n    pattern: \"{CODE_PATTERN}\"\n")
+    status = qmd_lint(root, registry, machine)
+    assert status["registered"] is True, status["reason"]
+
+
+def test_visible_project_with_only_a_bc_agent_collection_is_unregistered(tmp_path):
+    root = scaffold(tmp_path / "p")
+    registry = f"collections:\n  demo:\n    path: {root / '.bc-agent'}\n    pattern: \"**/*.md\"\n"
+    status = qmd_lint(root, registry, None)
+    assert status["registered"] is False and status["unindexed"] is False
+    assert "no collection rooted at" in status["reason"]
+    assert "--qmd-entry" in status["reason"]
+
+
+def test_visible_knowledge_collection_with_a_stale_pattern_is_unregistered(tmp_path):
+    root = scaffold(tmp_path / "p")
+    registry = (f"collections:\n  demo:\n    path: {root / '.bc-agent'}\n"
+                f"  demo-project:\n    path: {root}\n    pattern: \"**/*.md\"\n")
+    status = qmd_lint(root, registry, None)
+    assert status["registered"] is False
+    assert "pattern" in status["reason"] and CODE_PATTERN in status["reason"]
+
+
+def test_visible_project_missing_from_the_machine_index_is_unindexed(tmp_path):
+    root = scaffold(tmp_path / "p")
+    status = qmd_lint(root, "collections:\n" + qmd_entry(root), "collections:\n")
+    assert status["unindexed"] is True and status["registered"] is False
+
+
+def test_visible_project_exclusion_is_recorded_in_bc_agent_agents_md(tmp_path):
+    root = scaffold(tmp_path / "p")
+    with (root / ".bc-agent/AGENTS.md").open("a", encoding="utf-8") as handle:
+        handle.write("\nThis project is excluded from the global qmd index: client data.\n")
+    status = qmd_lint(root, "collections:\n", None)
+    assert status["intentional_exclusion"] is True
+
+
+def test_qmd_entry_refuses_a_vault_layout(tmp_path):
+    root = scaffold(tmp_path / "p", "learning")
+    result = subprocess.run([sys.executable, str(LINTER), str(root / ".bc-agent"), "--qmd-entry", "demo"],
+                            capture_output=True, text=True, check=False)
+    assert result.returncode == 2
+    assert "visible-layout" in result.stderr
+
+
+def test_visible_layout_has_no_promotion_demand(tmp_path):
+    root = scaffold(tmp_path / "p")
+    commit_all(root)
+    with (root / ".bc-agent/log.md").open("a", encoding="utf-8") as handle:
+        handle.write("\n## [2026-11-12] note | something\nA journal line.\n")
+    code, report = lint(root)
+    assert report["unpromoted_log"] is None
+    assert report["promotion_required"] is False
+    assert code == 0
+    output = lint_text(root)
+    assert "PROMOTION_" not in output
+    assert "Unpromoted log entries" not in output
+    assert "Promotion: not applicable" in output
+
+
+def test_verify_classify_refuses_a_visible_layout(tmp_path):
+    root = scaffold(tmp_path / "p")
+    rows = tmp_path / "rows.jsonl"
+    rows.write_text("", encoding="utf-8")
+    result = subprocess.run([sys.executable, str(LINTER), str(root / ".bc-agent"), "--verify-classify", str(rows)],
+                            capture_output=True, text=True, check=False)
+    assert result.returncode == 1
+    assert "not applicable" in result.stderr

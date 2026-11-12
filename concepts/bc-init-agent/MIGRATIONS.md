@@ -67,6 +67,29 @@ A 2026-11-12 trial on clones of one code and one ops project (not the projects t
 wikilinks to moved files; a rerun on a fresh clone of that ops project rewrote 108 wikilinks in 27
 files, none ambiguous, all resolving, and left 32 wikilinks from moved files to files that stay.
 
+### Search and promotion after migration (owner decision 2026-11-12)
+
+A project already migrated to the visible layout needs two follow-ups, done by hand on the machine
+that holds the synced qmd collections file:
+
+- **Register for search.** Print the entries from the project's own table and compare them with
+  the collections file:
+
+  ```bash
+  python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_lint.py" "<repo>/.bc-agent" --qmd-entry <slug>
+  ```
+
+  If the project already has a `<slug>` collection rooted at `.bc-agent/`, keep it (the setup
+  command will not re-point an existing name at a new path) and append only the printed
+  `<slug>-project` block; drop stale contexts from the old entry that name vault folders the
+  migration moved (`/decisions`, `/research`, `/project`, `/components`, ...), since their files
+  now live in `<slug>-project`. Otherwise append both blocks. Then run the setup command (see the
+  `qmd` concept). `wiki_lint.py "<repo>/.bc-agent"` then reports `qmd registration: registered`.
+- **Promotion: nothing to do.** Promotion is retired for the visible layout, and the runner exits
+  0 with "promotion is not applicable" for such a project. A per-project promotion timer or a
+  `wiki-promotion-vaults.txt` entry for it can be removed at leisure; leaving it costs one no-op
+  run per night. Keep the lint-list entry.
+
 ## Migrate existing `map.md` files to graph-visible links
 
 ### Why this is a separate migration

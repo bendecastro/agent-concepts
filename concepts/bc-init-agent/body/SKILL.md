@@ -101,9 +101,54 @@ Archetypes:
 
 Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip both for code, ops and hybrid. Why: qmd registration and `bc-wiki-maintain` expect a vault with an index, which visible-layout projects no longer have; a later work package of the visible-layout plan revisits them.
 
-9. **Register the vault for global search (default yes, opt-out).** New vaults are searchable by default: append an entry for `.bc-agent/` to the qmd collections file (collection name = the slug; copy an existing entry's shape, contexts stating each directory's *authority level*), then apply it with the setup command — see the `qmd` concept. Skip this step if qmd is not installed. Ask only if the user wants this vault **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos. Append to the synced YAML even when qmd isn't installed on this machine, so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `qmd` skill).
+9. **Register the project for global search (default yes, opt-out).** New projects are searchable by default; append to the qmd collections file and apply it with the setup command — see the `qmd` concept. Ask only if the user wants this project **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos — and then record a line containing "excluded from the global qmd index" and the reason in `.bc-agent/AGENTS.md` (learning/knowledge: `project/overview.md`), which `bc-wiki-maintain`'s lint reads. Skip the setup command if qmd is not installed, but append to the synced YAML anyway so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `qmd` skill).
+   - **Code, ops and hybrid:** two collections, printed from the project's own table by
+     `python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_lint.py" "<repo-root>/.bc-agent" --qmd-entry <slug>`.
+     Append its output under `collections:` unchanged. `<slug>` is rooted at `.bc-agent/` (agent
+     mechanics); `<slug>-project` is rooted at the repository with a pattern listing only the
+     table's glossary, decisions, research, requirements, architecture, components, ideas and
+     work paths. Why two: qmd skips every hidden path part, so a collection rooted at the
+     repository cannot index `.bc-agent/`; and a pattern built from the table keeps source,
+     media and vendored folders out. For a code project `demo` at `~/Projects/demo` the output is:
 
-10. **Offer rolling wiki maintenance (offer-then-confirm).** Capture into
+     ```yaml
+       demo:
+         path: ~/Projects/demo/.bc-agent
+         pattern: "**/*.md"
+         ignore: []
+         contexts:
+           "/": "Agent mechanics for demo: session protocol and Where things go table, map, journal log"
+           "/conventions": "Validation, git, layout and workflow norms — follow these"
+           "/references": "Recurring commands, paths, gotchas"
+
+       demo-project:
+         path: ~/Projects/demo
+         pattern: "{glossary.md,docs/decisions/**/*.md,docs/research/**/*.md,docs/PRD.md,ARCHITECTURE.md,work/0-ideas.md,work/1-planned/**/*.md,work/2-active/**/*.md,work/3-done/**/*.md,work/4-dropped/**/*.md}"
+         ignore: []
+         contexts:
+           "/": "Project knowledge for demo: glossary, work items (the folder is the status), decisions, research"
+           "/docs/decisions": "Decision records — binding unless superseded"
+           "/docs/research": "Dated investigations and architecture reviews — evidence, not authoritative"
+           "/work/1-planned": "Work items agreed but not started; the folder is the status"
+           "/work/2-active": "Work items in progress"
+           "/work/3-done": "Finished work items by month, each with its Outcome"
+           "/work/4-dropped": "Dropped work and rejected requests with the reason — check before proposing similar work"
+     ```
+
+     Afterwards the lint's `qmd registration:` line reads `registered` (or `unindexed` until the
+     setup command has run on this machine). If the table changes a searchable role's path later,
+     the lint reports the pattern as stale; replace the `<slug>-project` pattern with the new
+     `--qmd-entry` output.
+   - **Learning and knowledge:** one collection for `.bc-agent/` (collection name = the slug; copy an existing entry's shape, contexts stating each directory's *authority level*).
+
+10. **Offer rolling wiki maintenance (offer-then-confirm; learning and knowledge only).** Skip
+    this step for code, ops and hybrid. Why: promotion existed to move log entries into vault
+    pages; in the visible layout agents write decisions and research straight to the table's role
+    folders and `log.md` is a plain journal, so there is nothing to promote (the runner exits 0
+    with "not applicable" there). The lint still applies: run `/bc-wiki-maintain` interactively, and
+    offer the lint-list entry in the last paragraph of this step.
+
+    Capture into
     `.bc-agent/log.md` is cheap; promotion is not. Without a per-vault user
     timer, the new wiki will not promote overnight. This is not qmd:
     `bc-qmd-refresh.timer` only refreshes search indexes. `/bc-wiki-maintain`

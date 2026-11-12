@@ -39,6 +39,15 @@
     },
     {
       "from": "bc-init-agent",
+      "to": "bc-wiki-maintain",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "registering a visible-layout project for search",
+      "source": "concepts/bc-init-agent/body/SKILL.md",
+      "reason": "Step 9 appends the collections that wiki_lint.py --qmd-entry prints from the project's table; the lint's qmd registration check expects exactly that shape, and a test pins the skill's sample to the printed output."
+    },
+    {
+      "from": "bc-init-agent",
       "to": "teach",
       "relation": "adapts",
       "required": true,
@@ -478,7 +487,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-wiki-maintain/CONCEPT.md",
-      "reason": "The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ."
+      "reason": "The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ. Its agent-mechanics check allows the .bc-agent/ entries the hybrid scaffold writes and the optional agent-extras role; a test compares the hybrid list with the scaffold's output."
     },
     {
       "from": "triage",

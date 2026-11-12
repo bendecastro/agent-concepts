@@ -53,6 +53,7 @@ def test_code_and_ops_runway_uses_visible_work_and_research(tmp_path):
 # --- helpers for the exact-behaviour tests below ------------------------------
 
 import hashlib
+import os
 import importlib.util
 import re
 
@@ -600,3 +601,25 @@ def test_agent_extras_is_an_optional_role_the_scaffold_does_not_generate(tmp_pat
     lint_module = importlib.util.module_from_spec(linter)
     linter.loader.exec_module(lint_module)
     assert lint_module.AGENT_EXTRAS_ROLE == 'agent-extras'
+
+
+def test_hybrid_teach_adapter_does_not_offer_log_promotion(tmp_path):
+    root = _scaffold(tmp_path, 'hybrid')
+    adapter = (root / '.bc-agent/references/teach-skill.md').read_text()
+    assert 'promote ordinary host evidence' not in adapter
+    assert 'does not promote log entries in this layout' in adapter
+
+
+def test_skill_qmd_sample_is_what_the_lint_prints_for_a_demo_project(tmp_path):
+    """SKILL.md step 9 quotes `wiki_lint.py --qmd-entry` output; this fails when they drift."""
+    home = tmp_path / 'home'
+    root = home / 'Projects/demo'
+    root.mkdir(parents=True)
+    subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(root), '--slug', 'demo', '--archetype', 'code'],
+                   check=True, capture_output=True)
+    linter = SCAFFOLD.parents[2] / 'bc-wiki-maintain/body/wiki_lint.py'
+    printed = subprocess.run([sys.executable, str(linter), str(root / '.bc-agent'), '--qmd-entry', 'demo'],
+                             check=True, capture_output=True, text=True, env={**os.environ, 'HOME': str(home)}).stdout
+    skill = (SCAFFOLD.parent / 'SKILL.md').read_text()
+    sample = skill.split('```yaml\n', 1)[1].split('```', 1)[0]
+    assert '\n'.join(line[5:] for line in sample.rstrip().splitlines()) + '\n' == printed

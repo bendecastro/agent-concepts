@@ -480,9 +480,11 @@ passes. If any unpromoted heading is non-standard, the detector keeps promotion 
 human-readable report around the contract lines. Missing, duplicate, or malformed results fail closed.
 `PROMOTION_REQUIRED=0` exits before Pi is checked or invoked.
 When the report contains the line `Layout: visible` (a `bc-init-agent` visible-layout project),
-the wrapper exits non-zero before any model call or write: its vault-only commit check cannot
-cover that layout's root-level knowledge paths yet. Run promotion there manually; the lint timer
-works unchanged.
+the wrapper logs that promotion is not applicable and exits 0 before the clean-tree gate, any
+model call or write, whatever the detector's own exit status. Promotion moved log entries into
+vault pages; in the visible layout agents write to the role folders directly and `log.md` is a
+plain journal, so the detector prints no `PROMOTION_` lines there. Exit 0 keeps a scheduled
+run over many vaults from being marked failed; the lint timer still reports the project's findings.
 The parent integration must preserve this contract when wiring the detection script.
 
 Before detection, and again before promotion, the wrapper requires a clean Git

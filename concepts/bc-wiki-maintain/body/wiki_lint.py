@@ -215,6 +215,26 @@ def qmd_paths(registry: Path) -> list[Path]:
     return paths
 
 
+def qmd_collections(registry: Path) -> list[dict]:
+    """Collections of a qmd collections file as {name, path, pattern}; narrow line parser."""
+    name_re = re.compile(r"^  ([^\s#][^:]*):\s*$")
+    field_re = re.compile(r"^    (path|pattern):\s*(?:\"([^\"]+)\"|'([^']+)'|(\S.*?))\s*$")
+    found: list[dict] = []
+    for line in text(registry).splitlines():
+        name = name_re.match(line)
+        if name:
+            found.append({"name": name.group(1).strip().strip("\"'"), "path": None, "pattern": "**/*.md"})
+            continue
+        field = field_re.match(line)
+        if field and found:
+            value = next(group for group in field.groups()[1:] if group is not None)
+            if field.group(1) == "path":
+                found[-1]["path"] = Path(os.path.expandvars(value).strip()).expanduser().resolve()
+            else:
+                found[-1]["pattern"] = value.strip()
+    return [collection for collection in found if collection["path"] is not None]
+
+
 def qmd_covering_path(vault: Path, paths: list[Path]) -> Path | None:
     for registered in paths:
         try:
@@ -288,6 +308,64 @@ def qmd_status(
         )
     return result
 
+QMD_EXCLUSION_TEXT = "excluded from the global qmd index"
+
+
+def visible_qmd_status(vault: Path, table: dict[str, str], registry: Path, machine_index: Path) -> dict:
+    """Registration of a visible-layout project: the two collections `--qmd-entry` prints.
+
+    qmd skips every hidden path part, so one collection rooted at the repository cannot
+    index `.bc-agent/`; the mechanics need their own collection rooted there.
+    """
+    project, pattern = vault.parent, knowledge_pattern(table)
+    result = {
+        "registered": False, "unindexed": False, "intentional_exclusion": False,
+        "registry": str(registry), "machine_index": str(machine_index),
+        "canonical_path": None, "machine_path": None, "reason": None,
+        "knowledge_pattern": pattern,
+    }
+    if not registry.exists():
+        result["reason"] = "registry file is missing; skipped"
+        return result
+
+    def missing(collections: list[dict]) -> list[str]:
+        problems = []
+        rooted = [collection for collection in collections if collection["path"] == project]
+        if not any(collection["pattern"] == pattern for collection in rooted):
+            problems.append(
+                f"collection {rooted[0]['name']} at {project} has pattern {rooted[0]['pattern']}; "
+                f"the table expects {pattern}" if rooted else
+                f"no collection rooted at {project} with pattern {pattern}")
+        if not any(collection["path"] == vault for collection in collections):
+            problems.append(f"no collection rooted at {vault}")
+        return problems
+
+    canonical = missing(qmd_collections(registry))
+    if canonical:
+        for line in text(vault / "AGENTS.md").splitlines():
+            if QMD_EXCLUSION_TEXT in line.lower():
+                result.update(intentional_exclusion=True, reason=line.strip())
+                return result
+        result["reason"] = ("; ".join(canonical) + "; print the entry with "
+                            "`wiki_lint.py <vault-root> --qmd-entry <slug>`")
+        return result
+    result["canonical_path"] = str(project)
+    if not machine_index.exists():
+        result["registered"] = True
+        result["reason"] = (f"both collections are in the canonical registry; machine index unavailable at "
+                            f"{machine_index}; reporting canonical-only coverage")
+        return result
+    machine = missing(qmd_collections(machine_index))
+    if machine:
+        result["unindexed"] = True
+        result["reason"] = "both collections are in the canonical registry; machine index: " + "; ".join(machine)
+    else:
+        result["registered"] = True
+        result["machine_path"] = str(project)
+        result["reason"] = f"knowledge collection at {project} and mechanics collection at {vault} in both registries"
+    return result
+
+
 # --- visible layout ------------------------------------------------------------
 # Copied verbatim from concepts/bc-init-agent/body/scaffold.py, which owns the
 # "Where things go" table contract. Copied rather than imported because a skill
@@ -346,6 +424,67 @@ def layout_table(vault: Path) -> dict[str, str] | None:
 
 
 WORK_STAGE_ROLES = ("work-planned", "work-active", "work-done", "work-dropped")
+# Roles whose paths the project's search collection indexes, in pattern order, with the
+# authority context a search hit carries for a folder role (None: a single file).
+SEARCH_ROLE_CONTEXTS = (
+    ("glossary", None),
+    ("decisions", "Decision records — binding unless superseded"),
+    ("research", "Dated investigations and architecture reviews — evidence, not authoritative"),
+    ("requirements", None),
+    ("architecture", None),
+    ("components", "Verified state of real systems, dated"),
+    ("ideas", None),
+    ("work-planned", "Work items agreed but not started; the folder is the status"),
+    ("work-active", "Work items in progress"),
+    ("work-done", "Finished work items by month, each with its Outcome"),
+    ("work-dropped", "Dropped work and rejected requests with the reason — check before proposing similar work"),
+)
+
+
+def search_paths(table: dict[str, str]) -> list[tuple[str, str, str | None]]:
+    """(glob, role path, context) for each searchable role with a visible path."""
+    found: list[tuple[str, str, str | None]] = []
+    for role, context in SEARCH_ROLE_CONTEXTS:
+        path = table.get(role, "").strip().removeprefix("./")
+        if not path or path.startswith("."):
+            continue  # undecided, or hidden: qmd skips hidden paths, and `.bc-agent/` has its own collection
+        folder = path.endswith("/") or not Path(path).suffix
+        glob = path.rstrip("/") + "/**/*.md" if folder else path
+        if glob not in (item[0] for item in found):
+            found.append((glob, path.rstrip("/"), context if folder else None))
+    return found
+
+
+def knowledge_pattern(table: dict[str, str]) -> str:
+    """The qmd pattern of the project's knowledge collection, built from the table."""
+    globs = [glob for glob, _path, _context in search_paths(table)]
+    return "{" + ",".join(globs) + "}" if len(globs) > 1 else (globs[0] if globs else "")
+
+
+def registry_path(path: Path) -> str:
+    """A path as the synced collections file writes it: `~/` under the home folder."""
+    try:
+        return "~/" + path.relative_to(Path.home().resolve()).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
+def qmd_entry(vault: Path, table: dict[str, str], slug: str) -> str:
+    """Collections-file entries for a visible-layout project: knowledge, then mechanics."""
+    project = vault.parent
+    mechanics = [
+        f"  {slug}:", f"    path: {registry_path(vault)}", '    pattern: "**/*.md"', "    ignore: []", "    contexts:",
+        f'      "/": "Agent mechanics for {slug}: session protocol and Where things go table, map, journal log"',
+        '      "/conventions": "Validation, git, layout and workflow norms — follow these"',
+        '      "/references": "Recurring commands, paths, gotchas"',
+    ]
+    knowledge = [
+        f"  {slug}-project:", f"    path: {registry_path(project)}", f'    pattern: "{knowledge_pattern(table)}"',
+        "    ignore: []", "    contexts:",
+        f'      "/": "Project knowledge for {slug}: glossary, work items (the folder is the status), decisions, research"',
+    ]
+    knowledge += [f'      "/{path}": "{context}"' for _glob, path, context in search_paths(table) if context]
+    return "\n".join(mechanics + [""] + knowledge) + "\n"
 # Three or more digits, never all zeros: numbering starts at 001 and continues past 999.
 WORK_ITEM_NAME_RE = re.compile(r"^(?!0+-)(\d{3,})-[A-Za-z0-9][A-Za-z0-9._-]*$")
 MONTH_FOLDER_RE = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
@@ -598,8 +737,13 @@ def lint(
             "pages": len(pages_list), "broken_links": broken, "ambiguous_links": ambiguous,
             "orphans": orphans, "missing_index": missing, "stale_active_references": stale,
             "unknown_active_references": unknown, "stale_days": stale_days,
-            "unpromoted_log": promotion_status(vault, repo),
-            "qmd": qmd_status(vault, registry=qmd_registry, machine_index=qmd_machine_index),
+            # Promotion moved log entries into vault pages; in the visible layout agents write to
+            # the role folders directly and log.md is a plain journal, so there is nothing to promote.
+            "unpromoted_log": promotion_status(vault, repo) if table is None else None,
+            "qmd": qmd_status(vault, registry=qmd_registry, machine_index=qmd_machine_index) if table is None
+            else visible_qmd_status(vault, table,
+                                    qmd_registry or Path.home() / "Sync" / "Scripts" / "config" / "qmd-collections.yml",
+                                    qmd_machine_index or Path.home() / ".config" / "qmd" / "index.yml"),
         }
 
 CLASSIFY_VERDICTS = {"promote", "skip", "conflict"}
@@ -709,18 +853,10 @@ def print_report(report: dict) -> None:
         for entry in unknown:
             print(f"- {entry['page']} — {entry['reason']}")
     promotion = report["unpromoted_log"]
-    print(f"Unpromoted log entries: {promotion['count'] if promotion['count'] is not None else 'unknown'}")
-    if promotion["last_promotion"]:
-        print(f"- Last promotion: {promotion['last_promotion']['date']} {promotion['last_promotion']['subject']}")
-    if promotion["note"]:
-        print(f"- {promotion['note']}")
-    for heading in promotion.get("headings") or []:
-        print(f"- {heading}")
-    undatable = promotion.get("undatable_headings") or []
-    if undatable:
-        print(f"Warning: undatable unpromoted log headings: {len(undatable)}")
-        for heading in undatable:
-            print(f"- {heading}")
+    if promotion is None:
+        print(f"Promotion: {PROMOTION_NOT_APPLICABLE}")
+    else:
+        print_promotion(promotion)
     qmd = report["qmd"]
     status = (
         "registered"
@@ -734,6 +870,8 @@ def print_report(report: dict) -> None:
     print(f"qmd registration: {status}")
     if qmd["reason"]:
         print(f"- {qmd['reason']}")
+    if promotion is None:
+        return
     # Machine-readable contract consumed by runner/run-promotion.sh. Fails closed:
     # an unknown count means git could not answer, so do not license an unattended write.
     required = 1 if promotion["count"] is None or promotion["count"] > 0 else 0
@@ -742,6 +880,27 @@ def print_report(report: dict) -> None:
     print(f"PROMOTION_RANGE={promotion_range}")
     for heading in promotion.get("headings") or []:
         print(f"PROMOTION_HEADING\t{heading}")
+
+
+PROMOTION_NOT_APPLICABLE = (
+    "not applicable (visible layout: agents write decisions and research to the table's role "
+    "folders, and log.md is a plain journal)"
+)
+
+
+def print_promotion(promotion: dict) -> None:
+    print(f"Unpromoted log entries: {promotion['count'] if promotion['count'] is not None else 'unknown'}")
+    if promotion["last_promotion"]:
+        print(f"- Last promotion: {promotion['last_promotion']['date']} {promotion['last_promotion']['subject']}")
+    if promotion["note"]:
+        print(f"- {promotion['note']}")
+    for heading in promotion.get("headings") or []:
+        print(f"- {heading}")
+    undatable = promotion.get("undatable_headings") or []
+    if undatable:
+        print(f"Warning: undatable unpromoted log headings: {len(undatable)}")
+        for heading in undatable:
+            print(f"- {heading}")
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only Markdown wiki lint")
@@ -755,6 +914,11 @@ def main() -> int:
         help="require FILE to classify every unpromoted heading (JSONL); print the verdict"
              " summary on success, or errors and exit 1 on mismatch",
     )
+    mode.add_argument(
+        "--qmd-entry",
+        metavar="SLUG",
+        help="print the qmd collections-file entries for a visible-layout project named SLUG",
+    )
     args = parser.parse_args()
     if args.stale_days < 0:
         parser.error("--stale-days must be non-negative")
@@ -762,7 +926,17 @@ def main() -> int:
     if not vault.is_dir():
         parser.error(f"vault root is not a directory: {vault}")
     report = lint(vault, args.stale_days)
-    report["promotion_required"] = report["unpromoted_log"]["count"] is None or bool(report["unpromoted_log"]["count"])
+    promotion = report["unpromoted_log"]
+    report["promotion_required"] = promotion is not None and (promotion["count"] is None or bool(promotion["count"]))
+    if args.qmd_entry:
+        table = layout_table(vault)
+        if table is None:
+            parser.error("--qmd-entry applies to a visible-layout project (a .bc-agent/ with a Where things go table)")
+        print(qmd_entry(vault, table, args.qmd_entry), end="")
+        return 0
+    if args.verify_classify and promotion is None:
+        print(f"bc-wiki-maintain: promotion is {PROMOTION_NOT_APPLICABLE}", file=sys.stderr)
+        return 1
     if args.verify_classify:
         errors, rows = verify_classification(Path(args.verify_classify).expanduser(), report["unpromoted_log"])
         if errors:
@@ -776,7 +950,6 @@ def main() -> int:
         print(json.dumps(report, indent=2, sort_keys=True))
     else:
         print_report(report)
-    promotion = report["unpromoted_log"]
     invalid_required_range = report["promotion_required"] and not promotion["range"]
     work_errors = any(entry["severity"] == "error" for entry in report["work_findings"])
     return 1 if report["broken_links"] or report["ambiguous_links"] or invalid_required_range or work_errors else 0

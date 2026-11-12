@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # visible-layout lint and promotion routing (W2) changed 2026-11-12: deterministic tests only, not yet pressure-tested
+test_status: partial # visible-layout lint (agent-mechanics, qmd collections) and retired visible promotion changed 2026-11-12: deterministic tests only, not yet pressure-tested
 tested: 2026-09-05
 deployed: 2026-08-23
 ---
@@ -30,9 +30,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   folder, and table paths that do not exist (unless "created on first need" or undecided) are
   warnings. A hybrid
   project's teach `index.md` is checked only for teach-owned folders, because it catalogs
-  those and not agent mechanics. Promotion routes durable entries to the table's roles
-  (glossary, decisions, research; conflicts to the ideas role) and never recreates a vault
-  catalog.
+  those and not agent mechanics. Nothing recreates a vault catalog there.
 - **`.bc-agent/` holds agent mechanics only, checked (owner decision 2026-11-12).** In visible
   mode every entry directly under the vault root other than `AGENTS.md`, `map.md`, `log.md`,
   `conventions/`, `references/` and `templates/` is an `agent-mechanics` error naming where
@@ -56,14 +54,28 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   points to `domain-modeling`'s shared-glossary rule instead of restating it, and the read-path
   and stale-page instructions name the visible-layout equivalents (`.bc-agent/AGENTS.md` for
   orientation, the `ideas` role for a leftover-sentence note).
-- **Unattended promotion stays vault-only for now.** The wrapper commits only paths inside the
-  vault root, while a visible-layout project's knowledge roles live at the repository root. So
-  visible-layout projects may use the lint timer but not the promotion timer; promotion there is
-  manual, and `run-promotion.sh` fails closed (non-zero, before any model call) when the
-  detector reports `Layout: visible`, so a misconfigured timer cannot write there. A later package must decide whether the wrapper may write the table's role paths and
-  how its additive-only check covers them, and whether qmd should register the project root (or
-  its `docs/`) rather than `.bc-agent/`, plus where a qmd exclusion is recorded once
-  `project/overview.md` no longer exists.
+- **Promotion is retired for the visible layout (owner decision 2026-11-12).** Promotion existed
+  to move log entries into vault pages; in the visible layout agents write decisions and research
+  straight to the table's role folders, and `log.md` is a plain journal. So the detector reports
+  `unpromoted_log: null`, prints `Promotion: not applicable` and no `PROMOTION_` contract lines
+  there, `--verify-classify` refuses, and `run-promotion.sh` logs "not applicable" and exits 0
+  before its clean-tree gate whatever the detector's exit status. Why exit 0: a scheduled run over
+  many vaults must not look failed for a project that simply has nothing to promote; lint findings
+  are the lint timer's job. Replaced the earlier fail-closed exit, which read as a failure in timers.
+- **Visible-layout search is two collections, checked against the table (owner decision
+  2026-11-12).** qmd drops every path with a hidden part (`reindexCollection` in qmd 2.5.3 filters
+  `.`-prefixed parts after globbing), so one collection rooted at the repository cannot index
+  `.bc-agent/`. The fewest entries are therefore two: `<slug>` rooted at `.bc-agent/` and
+  `<slug>-project` rooted at the repository with a brace pattern built from the table's
+  glossary, decisions, research, requirements, architecture, components, ideas and work roles
+  (a folder role becomes `<path>/**/*.md`, a file role its path; hidden paths are skipped). The
+  pattern indexes only Markdown inside those paths, so source, media and vendored folders stay out.
+  Keeping the mechanics collection under the bare slug means an already-registered project keeps
+  its entry (`bc-qmd-setup` will not re-point a name at a new path) and adds one. `--qmd-entry
+  <slug>` prints both entries; the `qmd registration` check reports `registered` only when both
+  exist and the knowledge pattern equals the one the current table yields, so a table edit shows
+  up as drift. An exclusion is recorded as a line containing "excluded from the global qmd index"
+  in `.bc-agent/AGENTS.md`.
 - **Separate capture from synthesis.** Agents already capture discoveries in `log.md` because
   appending is cheap and placement-free. This concept performs the later judgment-heavy promotion
   instead of asking the task agent to notice, classify, and rewrite the wiki at the end of work.

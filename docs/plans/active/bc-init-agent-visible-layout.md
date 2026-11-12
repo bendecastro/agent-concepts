@@ -177,6 +177,15 @@ docs/
     2026-11-12).** It says where later work will look and offers to move the writeup; it does not
     claim enforcement. Why: the model followed the user's explicit path over the stronger wording
     in every round, and the lint in decision 33 is the backstop.
+35. **Visible-layout projects are registered for search; nightly promotion is retired for them
+    (owner, 2026-11-12).** `bc-init-agent` step 9 applies to code, ops and hybrid by default
+    (opt-out), as two qmd collections printed from the table by `wiki_lint.py --qmd-entry`:
+    `<slug>` rooted at `.bc-agent/`, `<slug>-project` rooted at the repository with a pattern
+    covering only the glossary, decisions, research, requirements, architecture, components,
+    ideas and work paths. Two, because qmd skips hidden path parts. Step 10 is skipped there, the
+    lint stops demanding promotion, and the runner exits 0 with "not applicable". Why: promotion
+    existed to move log entries into vault pages; in the visible layout agents write decisions and
+    research straight to the role folders, and `log.md` is a plain journal.
 
 ## Affected concepts
 

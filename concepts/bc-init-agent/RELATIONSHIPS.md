@@ -15,6 +15,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.
   Source: [CONCEPT.md](CONCEPT.md#design-decisions)
 
+- depends on `bc-wiki-maintain`'s contract — required, when registering a visible-layout project for search.
+  Step 9 appends the collections that wiki_lint.py --qmd-entry prints from the project's table; the lint's qmd registration check expects exactly that shape, and a test pins the skill's sample to the printed output.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - depends on `domain-modeling`'s contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
@@ -38,7 +42,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-plan-to-issues/CONCEPT.md](../bc-plan-to-issues/CONCEPT.md)
 
 - incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ.
+  The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ. Its agent-mechanics check allows the .bc-agent/ entries the hybrid scaffold writes and the optional agent-extras role; a test compares the hybrid list with the scaffold's output.
   Source: [bc-wiki-maintain/CONCEPT.md](../bc-wiki-maintain/CONCEPT.md)
 
 - incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.

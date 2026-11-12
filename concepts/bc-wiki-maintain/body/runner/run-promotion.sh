@@ -48,7 +48,6 @@ require_clean_tree() {
   fi
 }
 
-require_clean_tree
 log "running detection for $VAULT_ROOT"
 
 # wiki_lint.py's machine-readable contract is one anchored line:
@@ -56,19 +55,27 @@ log "running detection for $VAULT_ROOT"
 #   PROMOTION_REQUIRED=1   (run the promotion pass)
 # The script may print a human-readable report around that line. Missing or
 # malformed status fails closed instead of guessing that a write is safe.
-if ! detection_output="$(python3 "$DETECTION_SCRIPT" "$VAULT_ROOT" 2>&1)"; then
+# Detection is read-only, so it runs before the clean-tree gate: a visible-layout
+# project must reach the not-applicable exit below even when its tree is dirty.
+detection_status=0
+detection_output="$(python3 "$DETECTION_SCRIPT" "$VAULT_ROOT" 2>&1)" || detection_status=$?
+
+# Promotion moved log entries into vault pages. In the visible layout agents write
+# decisions and research straight to the table's role folders and log.md is a plain
+# journal, so there is nothing to promote. Exit 0 so a scheduled run over many vaults
+# is not marked failed; the lint report (and lint timer) still shows any findings.
+if printf '%s\n' "$detection_output" | grep -Eq '^Layout:[[:space:]]*visible[[:space:]]*$'; then
+  log "promotion is not applicable to visible-layout projects; nothing to do for $VAULT_ROOT"
+  exit 0
+fi
+
+if [[ "$detection_status" -ne 0 ]]; then
   printf '%s\n' "$detection_output" >&2
   fail 'detection failed'
 fi
+require_clean_tree
 if [[ -n "$detection_output" ]]; then
   printf '%s\n' "$detection_output"
-fi
-
-# Promotion writes only inside the vault root, but a visible-layout project keeps its
-# knowledge roles at the repository root, so a pass there could not land where the
-# skill routes it. Stop before any model call or write until the wrapper supports it.
-if printf '%s\n' "$detection_output" | grep -Eq '^Layout:[[:space:]]*visible[[:space:]]*$'; then
-  fail 'promotion is not yet supported for visible-layout projects; run it manually (the lint timer is unaffected)'
 fi
 
 required_lines="$(printf '%s\n' "$detection_output" | grep -Ec '^PROMOTION_REQUIRED=' || true)"

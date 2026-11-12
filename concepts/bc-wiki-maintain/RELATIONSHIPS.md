@@ -8,7 +8,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Outgoing
 
 - depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
-  The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ.
+  The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ. Its agent-mechanics check allows the .bc-agent/ entries the hybrid scaffold writes and the optional agent-extras role; a test compares the hybrid list with the scaffold's output.
   Source: [CONCEPT.md](CONCEPT.md)
 
 - depends on `domain-modeling`'s contract — required, when visible-layout hybrid project.
@@ -24,3 +24,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when generated map links.
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.
   Source: [bc-init-agent/CONCEPT.md](../bc-init-agent/CONCEPT.md#design-decisions)
+
+- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when registering a visible-layout project for search.
+  Step 9 appends the collections that wiki_lint.py --qmd-entry prints from the project's table; the lint's qmd registration check expects exactly that shape, and a test pins the skill's sample to the printed output.
+  Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md)

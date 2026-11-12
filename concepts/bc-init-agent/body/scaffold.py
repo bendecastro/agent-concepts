@@ -156,6 +156,8 @@ file's one-line format, and does not remove or redefine project terms without as
 `domain-modeling` and planning skills keep using the same file."""),
         ("| `GLOSSARY.md` | Glossary section of `project/overview.md` | every term and definition represented |",
          "| `GLOSSARY.md` | the project's root `glossary.md` (`../glossary.md`) | every term represented in the one-line format; no project term removed or redefined without asking |"),
+        ("may search host context and promote ordinary host evidence,",
+         "may search host context (it does not promote log entries in this layout),"),
         ("""but it must not fabricate learning evidence, edit teach-owned records or Glossary terms, or
 advance the review queue.""",
          """but it must not fabricate learning evidence, edit teach-owned records, or advance the
