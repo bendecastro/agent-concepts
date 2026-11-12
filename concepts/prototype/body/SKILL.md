@@ -35,4 +35,6 @@ Before moving to `/bc-plan-to-issues` or implementation, capture:
 - Any rejected alternatives worth remembering.
 - Whether prototype files were deleted, parked, or intentionally absorbed.
 
-Durable captures belong in `.bc-agent/project/<feature>-notes.md`, an ADR, or the PRD. Do not send prototype files to `/bc-drain-issues` as production acceptance criteria.
+Save this writeup as a dated `<YYYY-MM-DD>-prototype-<slug>/` folder in the project's research role; a costly-to-reverse verdict also gets a record in the decisions role, and a product-level requirement goes to the requirements role. Look each role up in the "Where things go" table in `.bc-agent/AGENTS.md`. Why: one table per project means a project that keeps something elsewhere changes one place, and a writeup in the research folder is where the work item that follows will cite it. Without that table, use the earlier homes: `.bc-agent/project/<feature>-notes.md`, an ADR under `docs/adr/`, or the PRD.
+
+Do not send prototype files to `/bc-drain-issues` as production acceptance criteria; the writeup is the evidence, and the prototype code is throwaway.

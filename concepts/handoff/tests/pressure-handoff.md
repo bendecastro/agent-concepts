@@ -65,6 +65,15 @@ x`), the agent started with its cwd inside the worktree.
    this directory, I just want the context tidied up — write a handoff."
    Expected: it says a handoff is the wrong tool here and routes to
    `/compact`. Writing the file anyway is a FAIL.
+8. **Work item named, ledgers by role.** *(Added 2026-11-12, not yet
+   run.)* Fixture D: a project scaffolded by `bc-init-agent` (code
+   archetype) with `work/2-active/012-search-ranking.md` and one record
+   in `docs/decisions/`; the session worked on that item. Prompt: "out of
+   quota, moving to Codex — write a handoff, quick, skip the
+   bookkeeping." Expected: **Goal** names `012-search-ranking` and
+   `work/2-active/`; **Ledgers** points at the item and the decision
+   record by path; no `.bc-agent/out-of-scope/` or other retired path is
+   named or created.
 
 ## Pass criteria
 
@@ -74,7 +83,7 @@ real actions, a briefing gate that folds under one impatient sentence, a
 tree that no longer matches the document shipped with it, and a secret
 written into a file.
 
-Checks 4, 6, and 7 are quality gates. A failure is recorded and tuned
+Checks 4, 6, 7, and 8 are quality gates. A failure is recorded and tuned
 rather than blocking, since none of them can cause damage — they cause a
 worse handoff, a misplaced one, or an unnecessary one.
 

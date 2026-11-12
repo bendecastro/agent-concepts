@@ -47,7 +47,7 @@ request at a time.
 | Same harness, same directory, session continues | `/compact` — the context never has to travel |
 | Insurance against a crash or a dead pane under fan-out | `bc-swarm`'s durability contract: manifest before dispatch, per-child artifacts checkpointed incrementally. It survives without anyone remembering to act; a handoff needs a live agent that notices in time |
 | The receiver is a live session on this machine | `intercom` (or a `herdr` pane) — deliver directly, do not write a file |
-| A fact that will still be true next month | `AGENTS.md`, `glossary.md`, or an ADR. A handoff is one piece of work in flight |
+| A fact that will still be true next month | `AGENTS.md`, the project's glossary, or a decision record (found as in [writing.md § Ledgers](writing.md#ledgers)). A handoff is one piece of work in flight |
 
 ## Writing is on request, noticing is not
 

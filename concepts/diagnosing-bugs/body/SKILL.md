@@ -7,7 +7,7 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 A discipline for hard bugs and performance regressions. It complements `tdd`: first build a tight red-capable feedback loop for the bug, then fix and regression-test it.
 
-Read `.bc-agent/project/overview.md` or `glossary.md` and relevant ADRs before editing so hypotheses use project vocabulary.
+Read the project's glossary and relevant decision records before editing so hypotheses use project vocabulary. Find each by its role (glossary, decisions, ideas) in the "Where things go" table in `.bc-agent/AGENTS.md`. Why: one table per project means a project that keeps something elsewhere changes one place. Without that table, use `glossary.md` (or `.bc-agent/project/overview.md` in a `bc-init-agent` vault) and the ADRs under `docs/adr/` (or `.bc-agent/decisions/`).
 
 Use targeted guarded pytest under [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety), including health preflight before full suites. For Btrfs storage incidents use `bc-storage-health`, not `df`. Why: free bytes alone cannot diagnose metadata starvation.
 
@@ -52,7 +52,7 @@ Probe one hypothesis at a time. Prefer debugger/REPL, then targeted logs at boun
 
 ## Phase 5 — Fix + regression test
 
-If a correct test seam exists, turn the minimised repro into a failing regression test **before** the fix, then fix and watch it pass. If no correct seam exists, document that finding — it is architecture debt, and after the bug is fixed you should recommend `/improve-codebase-architecture` with the specific missing seam.
+If a correct test seam exists, turn the minimised repro into a failing regression test **before** the fix, then fix and watch it pass. If no correct seam exists, document that finding — it is architecture debt. After the bug is fixed, recommend `/improve-codebase-architecture` with the specific missing seam, and, when the project's table has an ideas role, add one line there naming the module, the missing seam and the bug. Why: the next architecture review reads observations from the ideas file, so a seam noted only in a chat reply is lost.
 
 ## Phase 6 — Cleanup + post-mortem
 

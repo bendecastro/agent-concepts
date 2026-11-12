@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial # writeup home changed to the research role 2026-11-12; not yet pressure-tested
 tested: 2026-08-21
 deployed: 2026-06-21
 ---
@@ -13,6 +13,8 @@ User-invoked throwaway exploration step for design uncertainty: build a small ru
 - **Question-first.** The artifact shape follows the question; otherwise prototypes become mini-features.
 - **Feeds planning, not drain.** Prototype verdicts become PRD/ADR/issue context; prototype code should not become unattended execution scope unless explicitly absorbed.
 - **No polish by design.** Tests and abstractions are intentionally omitted to preserve speed and throwaway semantics.
+
+- **Writeup goes to the research role (2026-11-12).** The prototype writeup is a dated `<date>-prototype-<slug>/` folder in the research role from the project's "Where things go" table, with decisions and requirements roles for verdicts and product-level requirements. Without a table, the earlier homes (`.bc-agent/project/<feature>-notes.md`, an ADR, the PRD) stay as the fallback. The folder-name pattern mirrors the table's `<date>-<slug>/` research convention; the `prototype-` prefix is a choice made here so prototype writeups are recognisable among other research. Expected behaviour 5 in `tests/scenario.md` covers it and has not been run. Source: [visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md), decision 20.
 
 ## Provenance
 

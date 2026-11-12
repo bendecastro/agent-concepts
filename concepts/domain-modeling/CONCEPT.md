@@ -1,6 +1,6 @@
 ---
 test_kind: accuracy
-test_status: pass
+test_status: partial # role lookup and hybrid shared glossary changed 2026-11-12; not yet checked or pressure-tested
 tested: 2026-10-22
 deployed: yes
 ---
@@ -17,6 +17,8 @@ Model-invoked discipline for actively building and sharpening a project's domain
 - **Alternatives and supersede, not a notes-every-change gate (2026-08-18).** From DeepSeek Agent Notes, grilled and cut to two ideas: when an ADR *is* written, record genuine alternatives and why they lost; never rewrite an accepted ADR into a different decision — supersede and cross-link. The three-part bar is unchanged. Why: the code reconstructs the winner; only the record can carry what was given up, and a silent rewrite hides the reversal.
 
 - **Glossary filename (2026-10-22).** The owner renamed the canonical root file to `glossary.md` because it says what it is. Owner-confirmed defaults (2026-10-22): lowercase `glossary-map.md` points to bounded-context `glossary.md` files; legacy discovery and explicit rename proposals live only in this concept. Consumers refer here rather than copying the rule. The initializer vault adapter remains unchanged. Incoming planning capture and all vocabulary consumers are updated together; ADR, issue handoff, TDD, teach and vault-maintenance contracts are unaffected because only the generic glossary filename/discovery changes.
+
+- **Glossary and decisions by role; hybrid shares one glossary (2026-11-12).** Vocabulary goes to the glossary role and decision records to the decisions role from the project's "Where things go" table, with root `glossary.md` and `docs/adr/` as the stated fallback. In a visible-layout hybrid project the glossary is the shared root `glossary.md`, where `teach` also adds learner terms, so this skill asks before removing or redefining terms it did not add. The vault rule that `teach` owns the Glossary section named by a valid `references/teach-skill.md` adapter lives in the `bc-init-agent` vault adapter; this body points to it rather than restating it. Scenario C in `tests/pressure-legacy-glossary.md` covers the shared glossary and has not been run. Source: [visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md), decisions 20 and 25.
 
 ## Provenance
 

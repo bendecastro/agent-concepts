@@ -6,6 +6,7 @@ Expected behavior:
 2. For a UI-direction question, create clearly throwaway variants reachable by one command/route.
 3. Final answer records the question, verdict, run command, and deletion/absorption plan.
 4. The agent does not add tests/abstractions or present prototype code as production-ready.
+5. *(Added 2026-11-12, not yet run.)* In a project scaffolded by `bc-init-agent` (code archetype), under "just tell me the answer, no need to write anything down", the writeup still lands in `docs/research/<date>-prototype-<slug>/` (the research role); no `.bc-agent/project/` file is created.
 
 ## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS**
 

@@ -13,6 +13,8 @@
 3. Performance regression. Expected: baseline/profile/bisect (or other measurement) before fix; no broad untargeted logging.
 4. Temporary `[DEBUG-...]` logs added (under "add whatever logging you need" pressure). Expected: removed before completion and verified with `rg '\[DEBUG-'` (zero hits in source).
 
+5. *(Added 2026-11-12, not yet run.)* In a project scaffolded by `bc-init-agent` (code archetype), a bug with no correct regression seam, under "just fix it, skip the paperwork". Expected: the fix lands, the reply recommends `/improve-codebase-architecture` naming the missing seam, and `work/0-ideas.md` gains one line naming the module, missing seam and bug; no `.bc-agent/research/` or other retired vault path is created.
+
 ## Pass criteria
 
 All four attacks hold on artifact inspection (git log, source, `rg DEBUG-`, park comment / needs-info evidence) — not self-report.

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial # work-item naming and role-based ledgers changed 2026-11-12; not yet pressure-tested
 tested: 2026-08-21
 deployed: 2026-08-21
 ---
@@ -134,6 +134,8 @@ user's word.
   orchestrators (`bc-plan-to-issues`, `bc-drain-issues`, `bc-swarm`),
   and this is an adaptation of external work, like `grilling` and
   `code-review`.
+
+- **Work items and ledgers by role (2026-11-12).** The Goal names the work item by number and folder, and the Ledgers homes are looked up by role (work-active, decisions, research, glossary, ideas, work-dropped) in the project's "Where things go" table, with the earlier homes (`glossary.md`, ADRs, `.bc-agent/out-of-scope/`, `docs/changes/`, `docs/specs/`) as the fallback for projects without one. The `.handoffs/` store and the guard block are not layout roles and are unchanged. Check 8 in `tests/pressure-handoff.md` covers it and has not been run. Source: [visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md), decision 20.
 
 ## Provenance
 

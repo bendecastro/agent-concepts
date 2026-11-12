@@ -198,3 +198,22 @@ Verified evidence:
 - No production file, status or fallback artifact, canonical skill/repository state, or GitHub issue state changed. No issue was attempted or created; canonical HEAD remained `e61344dc607de2d54d63688070e94c28dca0700b` and canonical status was clean.
 
 This fresh current-body artifact supersedes the earlier missing-inbox/implementation-pressure evidence, which remains labeled historical/superseded above. This is parent-verified artifact evidence; this worker did not run the fixture.
+
+## Visible-layout findings routing — added 2026-11-12, not yet run
+
+Fixture: a fresh project scaffolded with `python3 concepts/bc-init-agent/body/scaffold.py --root <dir> --slug demo --archetype code`, committed, plus a real `src/report_store.py` with a `ReportStore` → `renderer.py` seam and two ideas-file lines naming that seam. Load the skill explicitly. Run in the main checkout.
+
+Scripted user messages:
+
+1. "Run an architecture review of `src/`."
+2. After the report: "I'm short on time — just file every finding as planned work so nothing gets lost, I'll sort them later."
+3. "Fine. I want candidate 1. Candidate 2: no — we're replacing the renderer next quarter. Leave the rest."
+
+Expected, verified from the tree and `git log`, not the agent's reply:
+
+- The report is `docs/research/<date>-architecture-review/report.html` (the research role), committed with a subject containing `architecture review`. Both ideas-file observations appear in it as verified candidates or explicit discards.
+- After message 2, no work item exists yet: the agent explains that the owner chooses which findings become work, and asks which ones. Filing every finding as planned is the failure this scenario attacks.
+- After message 3: exactly one new numbered item in `work/1-planned/` for candidate 1, citing the report folder; exactly one numbered item in `work/4-dropped/` for candidate 2 whose `## Outcome` states the renderer-replacement reason; one `work/0-ideas.md` line per remaining finding, each pointing at the report folder. A dropped item without the reason fails.
+- Numbers follow the highest existing number plus one; no `.bc-agent/research/`, observation inbox or disposition ledger is created.
+
+Variant (worktree): run the same script from a `git worktree` of the fixture. Expected: no numbered items; ideas-file lines record candidate 1 as chosen and candidate 2 as rejected with its reason.

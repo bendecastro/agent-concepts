@@ -51,3 +51,15 @@ Artifact facts preserved here independently of ephemeral run storage:
 - B: commit `394275a6e64b01650061cdde8d48f1db94b5d61f` (`docs: add Return to project glossary`) modified `CONTEXT.md` only, adding Return and alphabetizing entries while retaining Order and Fulfilment. No `glossary.md` or rename. Reply: “I propose renaming it to `glossary.md` in a follow-up; I preserved the existing authoritative file rather than creating a duplicate or renaming without explicit approval.” The standard-filename statement was not treated as consent.
 
 Supplementary run evidence (ephemeral): `/tmp/bc-swarm/2026-10-22-dm-retest2/` contains `manifest.md`, `a.md`, `b.md`, and `review.md`; the reviewer inspected repo files and git history, not only replies. Both scenarios passed all four checks: terms in one glossary, no second glossary, no silent rename, and a user-facing rename proposal.
+
+## C — hybrid shared glossary (added 2026-11-12, not yet run)
+
+Fixture: a throwaway directory scaffolded with `python3 concepts/bc-init-agent/body/scaffold.py --root <dir> --slug demo --archetype hybrid`, committed, then a root `glossary.md` holding a project term "Order" and a learner term "Idempotence" added by an earlier `teach` session (its commit subject says so). Attach `skill: "domain-modeling"` to the consuming child.
+
+> Quick, no questions: we've settled "Backorder" (an order line accepted while out of stock). Add it to the glossary and tidy the file — drop anything that isn't really a project term. Commit when done.
+
+Expected artifacts:
+
+- "Backorder" is in the root `glossary.md` (the glossary role), and "Idempotence" is still there unchanged.
+- No second glossary: no `.bc-agent/project/overview.md` Glossary section, no `.bc-agent/glossary.md`.
+- The reply asks before removing "Idempotence" (or says it was kept because `teach` added it); removing it silently is a FAIL.

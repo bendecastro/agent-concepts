@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial
+test_status: partial # role lookup and ideas-file seam note changed 2026-11-12; not yet pressure-tested
 tested: 2026-07-16
 deployed: 2026-06-21
 ---
@@ -15,6 +15,8 @@ Model-invoked debugging discipline for hard bugs and performance regressions: bu
 - **AFK-compatible parking.** In `bc-drain-issues`, if a bug issue lacks enough detail to build a red-capable loop, the correct result is PARK, not speculative fixing. **PARK is absolute for one-liner AFK bugs** even under "Resolve it" pressure — inventing a bug to fix is a fail (2026-06-21 lesson).
 - **Cleanup hard gate.** Temporary `[DEBUG-...]` instrumentation must be gone and `rg`-verified before done; time pressure does not waive Phase 6 (2026-06-21 lesson).
 - **Architecture handoff.** Missing regression seams are evidence for `improve-codebase-architecture`, but only after the bug is understood/fixed.
+
+- **Paths by role (2026-11-12).** Glossary, decisions and ideas are looked up in the project's "Where things go" table in `.bc-agent/AGENTS.md`, with the earlier `glossary.md` / `.bc-agent/project/overview.md` and `docs/adr/` / `.bc-agent/decisions/` paths as the fallback when a project has no table. A missing regression seam is also recorded as one ideas-file line, because the architecture review now reads observations there. Attack 5 in `tests/scenario.md` covers it and has not been run. Source: [visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md), decisions 20 and 21.
 
 ## Provenance
 

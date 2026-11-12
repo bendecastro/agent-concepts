@@ -17,13 +17,18 @@ Don't accept abstract relationships at face value. Invent concrete edge cases to
 When stated domain logic contradicts how the code actually behaves, flag the contradiction and resolve it — don't paper over it.
 
 ## Capture decisions immediately — don't batch
-- **`glossary.md`** (repo root) is a **pure glossary**: canonical terms and their meanings, stripped of implementation detail, file paths, or specs. Update it the moment a term crystallizes, not at the end.
+
+Vocabulary goes to the project's glossary role and decision records to its decisions role. Look both up in the "Where things go" table in the project's `.bc-agent/AGENTS.md`. Why: each project has one table, so a project that keeps either elsewhere changes one place. Without that table, the glossary is `glossary.md` at the repo root and decision records go under `docs/adr/`; in a `bc-init-agent` vault, follow the vault's own `.bc-agent/AGENTS.md` and, where its `references/teach-skill.md` adapter is valid, the Glossary section that adapter names, which `teach` owns.
+
+In a hybrid project with the table, the glossary is the shared root `glossary.md`, where `teach` also adds the terms a learner needs. Add and sharpen project terms there, but ask before removing or redefining a term you did not add this session. Why: a learner term may look redundant to the project and still be one the owner is studying; one shared file keeps one vocabulary only if neither side silently overwrites the other.
+
+- **The glossary** (default `glossary.md` at the repo root) is a **pure glossary**: canonical terms and their meanings, stripped of implementation detail, file paths, or specs. Update it the moment a term crystallizes, not at the end.
 - **Multi-context systems:** put a `glossary-map.md` at the root pointing to a `glossary.md` inside each bounded context (e.g. `src/ordering/glossary.md`).
 
 - **Legacy glossary:** when a repo has `CONTEXT.md` and no `glossary.md`, read `CONTEXT.md` as the glossary, put new terms there, and always propose renaming it to `glossary.md` in the user-facing reply (a proposal is not a question; required even when the user forbade questions). Do not rename until the user explicitly agrees to rename `CONTEXT.md`; saying the standard file is `glossary.md` is not agreement. Never keep both files: one vocabulary needs one authoritative home.
 
 ## ADRs — a deliberately high bar
-Write an Architecture Decision Record under `docs/adr/` only when **all three** hold:
+Write an Architecture Decision Record in the decisions role only when **all three** hold:
 1. the decision is costly to reverse,
 2. it would puzzle a future reader without the rationale, and
 3. real trade-offs shaped it.

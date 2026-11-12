@@ -73,7 +73,10 @@ is needed.
 
 In this order, because it is the order the next agent needs them.
 
-1. **Goal** — one or two sentences on what this work is.
+1. **Goal** — one or two sentences on what this work is. When the work
+   has a work item, name it by its number and folder, for example
+   `012-search-ranking` in `work/2-active/`. Why: the item is the
+   durable record of the work; the number survives a slug rename.
 2. **Next steps** — prioritised, most important first. Concrete action
    plus the file to touch.
 3. **State** — done / in progress / blocked.
@@ -131,10 +134,17 @@ is told not to restate what earlier ones already covered. What costs
 relayed. What costs only **re-orientation** ("where was I?") stays here
 and expires on pickup.
 
-This workspace already has those homes: ADRs and `glossary.md` from
+Projects already have those homes. Find them by role in the "Where
+things go" table in the project's `.bc-agent/AGENTS.md`: work items in
+the work-active folder (the work in flight), the decisions and research
+folders, the glossary, the ideas file for deferred ideas, and the
+work-dropped folder for rejected requests. Why: each project has one
+table, so a project that keeps something elsewhere changes one place.
+Without that table, the earlier homes apply: ADRs and `glossary.md` from
 `domain-modeling`, `.bc-agent/out-of-scope/`, a `docs/changes/<slug>/`
-folder, `docs/specs/`. Do **not** invent a new store — `domain-modeling`
-owns the bar for when a decision earns an ADR.
+folder, `docs/specs/`. Use an existing home rather than inventing a new
+store, because a store nobody else reads decays exactly like a relay;
+`domain-modeling` owns the bar for when a decision earns a record.
 
 So the section is a pointer list, `path — what it holds`, by stable path.
 Carry forward every entry from the handoff this session picked up, plus
