@@ -1620,3 +1620,6 @@ Deployed to the shared bus, Pi and Claude Code; removed the dangling `frontend-d
 
 ## [2026-11-12] tune | agent-kernel branch cleanup after resolved picks
 The owner asked not to be consulted about deleting a worker branch whose content landed through a conflict-resolved cherry-pick. Storage safety now accepts a recorded resolved-pick proof for `-D` and says not to ask; using-git-worktrees and finishing-development-branch follow. New test variant (i) is unexecuted.
+
+## [2026-11-12] implement | bc-init-agent visible layout plan
+Recorded the design agreed in a 22-question owner interview as `docs/plans/active/bc-init-agent-visible-layout.md`: status by folder under a root `work/`, knowledge in the open, one layout table per project. Plan only; no concept changed.
