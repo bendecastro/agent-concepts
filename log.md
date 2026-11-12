@@ -1647,3 +1647,6 @@ Applied review findings F1–F17 and three follow-ups: drain workers list follow
 
 ## [2026-11-12] test | bc-init-agent visible-layout pressure run
 Four scenarios against the generated work-item rules and the migrate section; two held, two failed on an explicit user override (delete a dropped item; stash and migrate without preview). Rules tightened and both held on rerun. Results: `concepts/bc-init-agent/tests/pressure-visible-layout-results-2026-11-12.md`. Dependent skills not yet pressure-tested.
+
+## [2026-11-12] implement | bc-init-agent migrate rewrites wikilinks
+Per plan decision 32, `--migrate --apply` now turns a wikilink naming a moved file into a relative Markdown link (labels, heading anchors, path forms, embeds); ambiguous names and wikilinks from moved files to files that stay are left and reported. Test-first in `test_migrate.py`; trial on a fresh clone of one ops project: 108 rewrites, all resolving. Not deployed.

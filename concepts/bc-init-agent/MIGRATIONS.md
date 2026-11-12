@@ -49,15 +49,23 @@ procedure, including the rule for each judgment class, is in the skill body unde
 - Rewrites relative Markdown links (inline and reference definitions, outside code fences and
   inline code) in every tracked `.md` file whose target moved, and links inside moved files.
   A folder link is rewritten only when the whole folder moved. Link labels are not changed.
-  Unresolved links, `[[wikilinks]]` naming a moved file, and literal old paths in other tracked
-  text files are reported, never edited. Why: wikilinks resolve against the Obsidian vault root,
-  which the moved files leave, so no mechanical rewrite is correct for all of them.
+- Rewrites every `[[wikilink]]` (outside code) whose target moves into a relative Markdown link
+  from the containing file's new place: `[[name|label]]` keeps the label, `[[name#Heading]]` gets a
+  GitHub-style anchor, a Markdown embed becomes a plain link and a moved image embed becomes
+  `![](path)`. Targets resolve as Obsidian does: bare name by basename (case-insensitive, `.md`
+  optional) anywhere in the repository, path form by path suffix. Why: the Obsidian settings are
+  retired, and plain links resolve in any viewer and for agents (plan decision 32).
+- Reports and leaves: unresolved Markdown links, a bare wikilink name matching more than one file
+  when one of them moves, wikilinks in moved files that name files that stay (they resolve only
+  inside an Obsidian vault), wikilinks to files that stay, and literal old paths in other tracked
+  text files.
 - After apply and commit, `--migrate` refuses (the table exists), and the ordinary scaffold no
   longer names the moved folders as earlier layout; folders still awaiting judgment are named.
 
 A 2026-11-12 trial on clones of one code and one ops project (not the projects themselves) moved a
 `docs/adr/` with 29 link rewrites, and showed that an Obsidian-linked ops vault has about a hundred
-wikilinks to moved files, which the agent fixes by hand.
+wikilinks to moved files; a rerun on a fresh clone of that ops project rewrote 108 wikilinks in 27
+files, none ambiguous, all resolving, and left 32 wikilinks from moved files to files that stay.
 
 ## Migrate existing `map.md` files to graph-visible links
 

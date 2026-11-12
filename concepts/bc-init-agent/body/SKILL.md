@@ -176,7 +176,7 @@ Use this when a code, ops or hybrid project still has the earlier `.bc-agent/` v
    - `home.md`, `index.md` (not hybrid, whose `index.md` is the teach catalog) and `.obsidian/`: delete after checking for unique content.
    - The old `.bc-agent/AGENTS.md`: diff it against the new one (`git show HEAD:.bc-agent/AGENTS.md`) and carry project-specific rules into the new file.
    - Files the script did not recognise, generated files the project edited, and filename clashes: decide by hand and tell the user what you decided.
-   - `KEPT (review by hand)` files are the project's own versions of generated files; merge any pointer they lack. `OTHER REFERENCES`, wikilinks and unresolved links are not rewritten; fix the ones that point at moved files.
+   - `KEPT (review by hand)` files are the project's own versions of generated files; merge any pointer they lack. Apply turns every wikilink that names a moved file into a relative Markdown link; ambiguous wikilinks, wikilinks in moved files that name files that stay, `OTHER REFERENCES` and unresolved links are left as they are, so fix the ones that point at moved files by hand.
 5. **Show the user the result, then commit once per project.** Present the staged diff summary and what you did with each judgment item, then make one commit for the project. Why: one commit keeps the migration reviewable and revertible as a unit.
 
 ## Notes

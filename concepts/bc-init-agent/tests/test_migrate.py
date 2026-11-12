@@ -295,8 +295,10 @@ def test_links_section_counts_rewrites_and_unresolved(tmp_path):
     assert "would rewrite" in links
     assert "unresolved: 1" in links
     assert "README.md:7" in links
-    assert "wikilinks naming a moved file (not rewritten): 1" in links
-    assert ".bc-agent/home.md:3" in links
+    assert "would rewrite 1 wikilinks in 1 files" in links
+    assert "ambiguous wikilinks (left as is): 0" in links
+    assert "wikilinks from moved files to files that stay (left as is; they resolve only inside an " \
+           "Obsidian vault): 0" in links
     other = "\n".join(out["OTHER REFERENCES"])
     assert "tools/run.sh:1" in other
 
@@ -335,7 +337,7 @@ def test_apply_leaves_judgment_paths_untouched(tmp_path):
     root, _head, _out = _apply(tmp_path)
     for rel in (".bc-agent/tasks/active.md", ".bc-agent/tasks/issue-drafts/01-slice.md", ".bc-agent/plans/p.md",
                 ".bc-agent/project/overview.md", ".bc-agent/findings/f.md", ".bc-agent/open-questions/q.md",
-                ".bc-agent/home.md", ".bc-agent/.obsidian/app.json", ".bc-agent/archetype.md", "docs/plans/old.md"):
+                ".bc-agent/.obsidian/app.json", ".bc-agent/archetype.md", "docs/plans/old.md"):
         assert _git(root, "diff", "--cached", "--name-only", "--", rel) == "", rel
         assert (root / rel).is_file(), rel
 
@@ -379,3 +381,129 @@ def test_apply_on_hybrid_keeps_index_catalog(tmp_path):
     assert (root / ".bc-agent/index.md").is_file()
     assert (root / ".bc-agent/learning/plan.md").read_text() == "# Mission\n"
     assert (root / "docs/components/host.md").is_file()
+
+
+# --- wikilinks ----------------------------------------------------------------------------
+
+WIKI_FILES = {
+    # unmoved vault page linking to moved files in every form
+    ".bc-agent/hub.md": "# Hub\n\n"
+                        "Bare [[adr-0001-x]].\n"
+                        "Label [[adr-0001-x|the ADR]].\n"
+                        "Heading [[adr-0001-x#Why: it, matters!]].\n"
+                        "Heading label [[adr-0001-x#Why: it, matters!|why]].\n"
+                        "Path [[decisions/adr-0001-x]].\n"
+                        "Ext [[adr-0001-x.md]].\n"
+                        "Case [[ADR-0001-X]].\n"
+                        "Embed ![[adr-0001-x]].\n"
+                        "Image ![[diagram.png]].\n"
+                        "Still image ![[logo.png]].\n"
+                        "Stays [[map]] and [[log|the log]].\n"
+                        "Code `[[adr-0001-x]]` inline.\n"
+                        "```\n[[adr-0001-x]]\n```\n"
+                        "Ambiguous [[notes]].\n"
+                        "Both [md](decisions/adr-0001-x.md) and [[adr-0001-x]].\n",
+    ".bc-agent/decisions/diagram.png": "png",
+    ".bc-agent/logo.png": "png",
+    ".bc-agent/notes.md": "# Other notes\n",
+    # moved file linking to a moved file and to a file that stays
+    ".bc-agent/research/2026-01-01-r/more.md": "# More\n\nSee [[adr-0001-x|ADR]] and [[map]].\n",
+}
+
+
+def _wiki_repo(tmp_path):
+    root = _vault_repo(tmp_path)
+    _write(root, WIKI_FILES)
+    _write(root, {"README.md": (root / "README.md").read_text() + "Root wiki [[adr-0001-x]].\n"})
+    _commit_all(root, "wikilinks")
+    return root
+
+
+def _wiki_apply(tmp_path):
+    root = _wiki_repo(tmp_path)
+    result = _migrate(root, "code", "--apply")
+    assert result.returncode == 0, result.stdout + result.stderr
+    return root, (root / ".bc-agent/hub.md").read_text().splitlines()
+
+
+def _hub_line(lines, prefix):
+    return next(line for line in lines if line.startswith(prefix))
+
+
+def test_wikilink_bare_name_becomes_relative_link(tmp_path):
+    _root, hub = _wiki_apply(tmp_path)
+    assert _hub_line(hub, "Bare ") == "Bare [adr-0001-x](../docs/decisions/adr-0001-x.md)."
+
+
+def test_wikilink_label_becomes_link_text(tmp_path):
+    _root, hub = _wiki_apply(tmp_path)
+    assert _hub_line(hub, "Label ") == "Label [the ADR](../docs/decisions/adr-0001-x.md)."
+
+
+def test_wikilink_heading_becomes_github_anchor(tmp_path):
+    _root, hub = _wiki_apply(tmp_path)
+    assert _hub_line(hub, "Heading [") == \
+        "Heading [adr-0001-x](../docs/decisions/adr-0001-x.md#why-it-matters)."
+    assert _hub_line(hub, "Heading label ") == \
+        "Heading label [why](../docs/decisions/adr-0001-x.md#why-it-matters)."
+
+
+def test_wikilink_path_form_and_md_extension(tmp_path):
+    _root, hub = _wiki_apply(tmp_path)
+    assert _hub_line(hub, "Path ") == "Path [decisions/adr-0001-x](../docs/decisions/adr-0001-x.md)."
+    assert _hub_line(hub, "Ext ") == "Ext [adr-0001-x.md](../docs/decisions/adr-0001-x.md)."
+
+
+def test_wikilink_match_is_case_insensitive(tmp_path):
+    _root, hub = _wiki_apply(tmp_path)
+    assert _hub_line(hub, "Case ") == "Case [ADR-0001-X](../docs/decisions/adr-0001-x.md)."
+
+
+def test_markdown_embed_becomes_plain_link_and_moved_image_becomes_image(tmp_path):
+    _root, hub = _wiki_apply(tmp_path)
+    assert _hub_line(hub, "Embed ") == "Embed [adr-0001-x](../docs/decisions/adr-0001-x.md)."
+    assert _hub_line(hub, "Image ") == "Image ![](../docs/decisions/diagram.png)."
+    assert _hub_line(hub, "Still image ") == "Still image ![[logo.png]]."
+
+
+def test_wikilinks_to_unmoved_files_and_in_code_are_untouched(tmp_path):
+    _root, hub = _wiki_apply(tmp_path)
+    assert _hub_line(hub, "Stays ") == "Stays [[map]] and [[log|the log]]."
+    assert _hub_line(hub, "Code ") == "Code `[[adr-0001-x]]` inline."
+    assert "[[adr-0001-x]]" in hub[hub.index("```") + 1]
+
+
+def test_ambiguous_wikilink_is_left_and_reported(tmp_path):
+    root = _wiki_repo(tmp_path)
+    links = "\n".join(_sections(_migrate(root).stdout)["LINKS"])
+    assert "ambiguous wikilinks (left as is): 1" in links
+    assert ".bc-agent/hub.md:18" in links
+    _migrate(root, "code", "--apply")
+    hub = (root / ".bc-agent/hub.md").read_text().splitlines()
+    assert _hub_line(hub, "Ambiguous ") == "Ambiguous [[notes]]."
+
+
+def test_line_with_markdown_link_and_wikilink_rewrites_each_once(tmp_path):
+    _root, hub = _wiki_apply(tmp_path)
+    assert _hub_line(hub, "Both ") == ("Both [md](../docs/decisions/adr-0001-x.md) and "
+                                       "[adr-0001-x](../docs/decisions/adr-0001-x.md).")
+
+
+def test_wikilinks_from_moved_file_and_from_root_readme(tmp_path):
+    root, _hub = _wiki_apply(tmp_path)
+    more = (root / "docs/research/2026-01-01-r/more.md").read_text()
+    assert "See [ADR](../../decisions/adr-0001-x.md) and [[map]]." in more
+    assert "Root wiki [adr-0001-x](docs/decisions/adr-0001-x.md)." in (root / "README.md").read_text()
+
+
+def test_wikilink_dry_run_counts(tmp_path):
+    out = _migrate(_wiki_repo(tmp_path)).stdout
+    links = "\n".join(_sections(out)["LINKS"])
+    # hub: 10 rewrites; more.md: 1; README: 1; home.md: 1
+    assert "would rewrite 13 wikilinks in 4 files" in links
+    assert "would rewrite 6 links in 5 files;" in links  # wikilink-only files not counted here
+    assert "wikilinks from moved files to files that stay (left as is; they resolve only inside an " \
+           "Obsidian vault): 1" in links
+    assert "wikilinks naming a moved file" not in out
+    totals = next(line for line in out.splitlines() if line.startswith("Totals:"))
+    assert totals.endswith("link rewrites, 13 wikilink rewrites")

@@ -1781,8 +1781,12 @@ class MigrationPlan:
         self.refusals: list[str] = []
         self.link_edits: dict[str, str] = {}  # new path -> rewritten text
         self.link_count = 0
+        self.link_files: set[str] = set()  # new paths of files with a rewritten Markdown link
         self.unresolved: list[str] = []
-        self.wikilinks: list[str] = []  # file:line of [[wikilinks]] naming a moved file
+        self.wikilink_count = 0
+        self.wikilink_files: set[str] = set()  # new paths of files with a rewritten wikilink
+        self.ambiguous_wikilinks: list[str] = []  # file:line of bare names matching several files
+        self.stay_wikilinks: list[str] = []  # file:line in a moved file naming a file that stays
         self.other_refs: list[str] = []
 
 
@@ -1790,7 +1794,7 @@ _INLINE_LINK = re.compile(r"(\]\()(<[^>\n]*>|[^)\s]+)")
 _REF_DEFINITION = re.compile(r"^( {0,3}\[[^\]\n]+\]:[ \t]+)(<[^>\n]*>|\S+)")
 _FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})")
 _INLINE_CODE = re.compile(r"(`+)[^`\n]*?\1")
-_WIKILINK = re.compile(r"\[\[([^\]|#\n]+)")
+_WIKILINK = re.compile(r"(!?)\[\[([^\[\]\n]+)\]\]")
 _URL_SCHEME = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
 
 
@@ -1831,13 +1835,66 @@ def _rewrite_target(root: Path, target: str, old_file: str, new_file: str,
     return f"<{new_raw}>" if bracketed else new_raw
 
 
+def _heading_anchor(heading: str) -> str:
+    """GitHub-style anchor: lower-case, punctuation other than - and _ dropped, spaces to hyphens."""
+    return re.sub(r"[^\w\- ]", "", heading.strip().lower()).replace(" ", "-")
+
+
+def _wikilink_matches(target: str, by_name: dict[str, list[str]]) -> list[str]:
+    """Tracked files an Obsidian wikilink target names: by basename, or by path suffix for a path form."""
+    target = target.strip().lower()
+    name = target.rsplit("/", 1)[-1]
+    found = by_name.get(name, []) + by_name.get(name + ".md", [])
+    if "/" in target:
+        found = [p for p in found if ("/" + p.lower()).endswith("/" + target)
+                 or ("/" + p.lower()).endswith("/" + target + ".md")]
+    return sorted(set(found))
+
+
+def _rewrite_wikilinks(line: str, location: str, new_file: str, moved_file: bool, by_name: dict[str, list[str]],
+                       file_moves: dict[str, str], plan: MigrationPlan) -> tuple[str, int]:
+    """Replace wikilinks naming a moved file with relative Markdown links; report the ones left."""
+    code = [m.span() for m in _INLINE_CODE.finditer(line)]
+    count = 0
+    for match in reversed(list(_WIKILINK.finditer(line))):
+        if any(a <= match.start() < b for a, b in code):
+            continue
+        embed, inner = match.group(1), match.group(2)
+        target, _bar, label = inner.partition("|")
+        target, _hash, heading = target.rstrip("\\").partition("#")
+        if not target.strip():
+            continue
+        found = _wikilink_matches(target, by_name)
+        if not any(p in file_moves for p in found):
+            if moved_file and found:
+                plan.stay_wikilinks.append(location)
+            continue
+        if len(found) > 1:
+            plan.ambiguous_wikilinks.append(location)
+            continue
+        old = found[0]
+        rel = os.path.relpath(file_moves[old], os.path.dirname(new_file) or ".").replace(os.sep, "/")
+        if any(c in rel for c in " ()<>"):
+            rel = f"<{rel}>"
+        is_markdown = old.lower().endswith(".md")
+        if heading and is_markdown:
+            rel = rel[:-1] + f"#{_heading_anchor(heading)}>" if rel.startswith("<") \
+                else rel + f"#{_heading_anchor(heading)}"
+        if embed and not is_markdown:
+            new = f"![{label.strip()}]({rel})"
+        else:
+            new = f"[{label.strip() or target.strip()}]({rel})"
+        line = line[:match.start()] + new + line[match.end():]
+        count += 1
+    return line, count
+
+
 def _plan_links(root: Path, tracked: list[str], plan: MigrationPlan, dir_moves: dict[str, str]) -> None:
     file_moves = dict(plan.moves)
-    # Obsidian resolves a wikilink by vault-relative path or by bare file name; both forms count.
-    wiki_names = set()
-    for old, _new in plan.moves:
-        stem = old[:-3] if old.endswith(".md") else old
-        wiki_names |= {stem, stem.split("/")[-1], stem.split(".bc-agent/", 1)[-1]}
+    # Obsidian resolves a wikilink by bare file name anywhere, or by path suffix.
+    by_name: dict[str, list[str]] = {}
+    for path in tracked:
+        by_name.setdefault(path.rsplit("/", 1)[-1].lower(), []).append(path)
     for old_file in (p for p in tracked if p.endswith(".md")):
         new_file = file_moves.get(old_file, old_file)
         try:
@@ -1857,8 +1914,6 @@ def _plan_links(root: Path, tracked: list[str], plan: MigrationPlan, dir_moves: 
                 fence = opener.group(1)
                 continue
             code = [m.span() for m in _INLINE_CODE.finditer(line)]
-            if any(m.group(1).strip().removesuffix(".md") in wiki_names for m in _WIKILINK.finditer(line)):
-                plan.wikilinks.append(f"{old_file}:{number}")
             spans = [(m.start(2), m.end(2)) for m in _INLINE_LINK.finditer(line)]
             ref = _REF_DEFINITION.match(line)
             if ref:
@@ -1873,7 +1928,15 @@ def _plan_links(root: Path, tracked: list[str], plan: MigrationPlan, dir_moves: 
                 elif new != target:
                     line = line[:start] + new + line[end:]
                     plan.link_count += 1
+                    plan.link_files.add(new_file)
                     changed = True
+            # After the Markdown links, so a link this produces is not rewritten a second time.
+            line, wiki = _rewrite_wikilinks(line, f"{old_file}:{number}", new_file, old_file in file_moves,
+                                            by_name, file_moves, plan)
+            if wiki:
+                plan.wikilink_count += wiki
+                plan.wikilink_files.add(new_file)
+                changed = True
             lines[number - 1] = line
         if changed:
             plan.link_edits[new_file] = "\n".join(lines)
@@ -2075,11 +2138,14 @@ def run_migrate(root: Path, slug: str, date: str, archetype: str, apply: bool) -
     _print_section("KEPT (review by hand)", plan.kept)
     _print_section("NEEDS JUDGMENT", [f"{path} — {size} — {rule}" for path, size, rule in plan.judgment])
     verb = "rewrote" if apply else "would rewrite"
-    _print_section("LINKS", [f"{verb} {plan.link_count} links in {len(plan.link_edits)} files; "
+    _print_section("LINKS", [f"{verb} {plan.link_count} links in {len(plan.link_files)} files; "
                              f"unresolved: {len(plan.unresolved)} (left as is)"]
                    + [f"  {loc}" for loc in plan.unresolved[:10]]
-                   + [f"wikilinks naming a moved file (not rewritten): {len(plan.wikilinks)}"]
-                   + [f"  {loc}" for loc in plan.wikilinks[:10]])
+                   + [f"{verb} {plan.wikilink_count} wikilinks in {len(plan.wikilink_files)} files",
+                      f"ambiguous wikilinks (left as is): {len(plan.ambiguous_wikilinks)}"]
+                   + [f"  {loc}" for loc in plan.ambiguous_wikilinks[:10]]
+                   + ["wikilinks from moved files to files that stay (left as is; they resolve only inside "
+                      f"an Obsidian vault): {len(plan.stay_wikilinks)}"])
     shown = plan.other_refs[:50]
     if len(plan.other_refs) > 50:
         shown.append(f"... {len(plan.other_refs) - 50} more")
@@ -2087,7 +2153,7 @@ def run_migrate(root: Path, slug: str, date: str, archetype: str, apply: bool) -
     print()
     print(f"Totals: {len(plan.moves)} move, {len(plan.creates)} create, {len(plan.replaces)} replace, "
           f"{len(plan.deletes)} delete, {len(plan.kept)} kept, {len(plan.judgment)} need judgment, "
-          f"{plan.link_count} link rewrites")
+          f"{plan.link_count} link rewrites, {plan.wikilink_count} wikilink rewrites")
     if not apply:
         command = (f"python3 {Path(__file__).resolve()} --root {root} --slug {slug} --date {date} "
                    f"--archetype {archetype} --migrate --apply")
@@ -2116,7 +2182,8 @@ def run_migrate(root: Path, slug: str, date: str, archetype: str, apply: bool) -
         (root / rel).write_text(content)
     _git(root, "add", "-A")
     print(f"Applied: moved {len(plan.moves)}, created {len(plan.creates)}, replaced {len(plan.replaces)}, "
-          f"deleted {len(plan.deletes)}, rewrote {plan.link_count} links in {len(plan.link_edits)} files.")
+          f"deleted {len(plan.deletes)}, rewrote {plan.link_count} links in {len(plan.link_files)} files, "
+          f"{plan.wikilink_count} wikilinks in {len(plan.wikilink_files)} files.")
     print("Everything is staged and nothing was committed: work through NEEDS JUDGMENT, then commit "
           "the project in one commit.")
     return 0
