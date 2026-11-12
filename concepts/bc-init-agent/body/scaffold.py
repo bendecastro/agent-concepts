@@ -17,17 +17,28 @@ overwritten. A visible-layout run on a project with earlier-layout paths under
 .bc-agent/ writes nothing unless --allow-earlier-layout is given. --dry-run reports
 without writing.
 
+--migrate (code, ops, hybrid; needs an explicit --archetype) is the one exception to
+"never deletes": it plans moving an earlier-layout vault in a clean git repository to
+the visible layout and prints the plan; with --apply it performs only the mechanical
+part (git mv, generated files, placeholder deletes, link rewrites), stages it and does
+not commit. Everything else is listed for judgment and left untouched.
+
 Usage:
   scaffold.py --root <repo-root> --slug <project-name> [--date YYYY-MM-DD]
               [--archetype code|ops|learning|knowledge|hybrid]
               [--force] [--force-root] [--allow-earlier-layout] [--dry-run]
+  scaffold.py --root <repo-root> --slug <project-name> --archetype code|ops|hybrid
+              --migrate [--apply]
 """
 
 from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import os
 import re
+import subprocess
+import urllib.parse
 from pathlib import Path
 
 SLUG = "__SLUG__"
@@ -1711,6 +1722,403 @@ def _preflight_targets(root: Path, planned: list[tuple[Path, str, bool]]) -> boo
             return False
     return True
 
+# --- migrate mode: earlier `.bc-agent/` vault layout -> visible layout ----------------
+
+RULE_WORK = ("only work still open becomes numbered work items in `work/` (main checkout, next free "
+             "number); finished lists are kept unchanged as one dated record under the research role")
+RULE_IDEAS = "meaningful lines move to the ideas file `work/0-ideas.md`"
+RULE_DRAFTS = "drafts go inside their parent work item's folder as evidence"
+RULE_OVERVIEW = "glossary terms move to `glossary.md`; the rest is split by role"
+RULE_PRD = ("project-level -> `docs/PRD.md`; feature-level -> the work item's `requirements.md`")
+RULE_FINDINGS = "-> research role (`docs/research/`) as dated folders; take the date from git history"
+RULE_QUESTIONS = ("blocking -> a step in its work item; standalone -> a planned item with the answer in "
+                  "research; minor -> a line in the ideas file")
+RULE_DELETE_CHECKED = "delete after checking for unique content"
+RULE_UNRECOGNISED = "unrecognised; decide by hand"
+RULE_GENERATED_EDITED = ("differs from the generated version; carry unique local guidance into "
+                         "conventions or the work-item template, then delete")
+RULE_CLASH = "another file would land at {dest}; rename one by hand, then move both"
+RULE_ALREADY_THERE = "an identical copy already exists at {dest}; delete this one after checking links"
+RULE_OLD_AGENTS = ("replaced by the generated version; diff the old one (`git show HEAD:.bc-agent/AGENTS.md`, "
+                   "recoverable from git history) and carry project-specific rules into the new file")
+
+# Earlier-layout vault folders whose files move unchanged; components only where the archetype has them.
+_MIGRATE_MOVERS = {"decisions": "docs/decisions", "research": "docs/research"}
+_MIGRATE_OPS_MOVERS = {"components": "docs/components"}
+_MIGRATE_GENERATED = {"conventions/planning-workflow.md": PLANNING_WORKFLOW, "templates/plan.md": TPL_PLAN}
+
+
+def _git(root: Path, *args: str) -> subprocess.CompletedProcess:
+    return subprocess.run(["git", *args], cwd=root, capture_output=True, text=True)
+
+
+def _matches_generated(text: str, template: str, slug: str) -> bool:
+    """True when text equals the template rendered for this slug with any ISO date."""
+    pattern = re.escape(template.replace(SLUG, slug)).replace(re.escape(DATE), r"\d{4}-\d{2}-\d{2}")
+    return re.fullmatch(pattern, text) is not None
+
+
+def _measure(root: Path, path: str, files: list[str]) -> str:
+    if len(files) == 1 and files[0] == path:
+        try:
+            return f"{len((root / path).read_text(errors='ignore').splitlines())} lines"
+        except OSError:
+            return "unreadable"
+    return f"{len(files)} files"
+
+
+class MigrationPlan:
+    def __init__(self) -> None:
+        self.moves: list[tuple[str, str]] = []
+        self.creates: list[tuple[str, str]] = []
+        self.replaces: list[tuple[str, str]] = []
+        self.deletes: list[str] = []
+        self.kept: list[str] = []
+        self.judgment: list[tuple[str, str, str]] = []
+        self.refusals: list[str] = []
+        self.link_edits: dict[str, str] = {}  # new path -> rewritten text
+        self.link_count = 0
+        self.unresolved: list[str] = []
+        self.wikilinks: list[str] = []  # file:line of [[wikilinks]] naming a moved file
+        self.other_refs: list[str] = []
+
+
+_INLINE_LINK = re.compile(r"(\]\()(<[^>\n]*>|[^)\s]+)")
+_REF_DEFINITION = re.compile(r"^( {0,3}\[[^\]\n]+\]:[ \t]+)(<[^>\n]*>|\S+)")
+_FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})")
+_INLINE_CODE = re.compile(r"(`+)[^`\n]*?\1")
+_WIKILINK = re.compile(r"\[\[([^\]|#\n]+)")
+_URL_SCHEME = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
+
+
+def _map_moved(path: str, file_moves: dict[str, str], dir_moves: dict[str, str]) -> str:
+    if path in file_moves:
+        return file_moves[path]
+    for old_dir, new_dir in dir_moves.items():
+        if path == old_dir or path.startswith(old_dir + "/"):
+            return new_dir + path[len(old_dir):]
+    return path
+
+
+def _rewrite_target(root: Path, target: str, old_file: str, new_file: str,
+                    file_moves: dict[str, str], dir_moves: dict[str, str]) -> str | None:
+    """New link text for target, the same text when unchanged, or None when it does not resolve."""
+    bracketed = target.startswith("<") and target.endswith(">")
+    raw = target[1:-1] if bracketed else target
+    if not raw or raw.startswith(("#", "/")) or _URL_SCHEME.match(raw):
+        return target
+    cut = min((i for i in (raw.find("#"), raw.find("?")) if i >= 0), default=len(raw))
+    path_part, suffix = raw[:cut], raw[cut:]
+    if not path_part:
+        return target
+    resolved = os.path.normpath(os.path.join(os.path.dirname(old_file), urllib.parse.unquote(path_part)))
+    if resolved.startswith("..") or not (root / resolved).exists():
+        return None
+    new_target = _map_moved(resolved.replace(os.sep, "/"), file_moves, dir_moves)
+    if new_target == resolved and new_file == old_file:
+        return target
+    new_rel = os.path.relpath(new_target, os.path.dirname(new_file) or ".").replace(os.sep, "/")
+    if path_part.endswith("/") and not new_rel.endswith("/"):
+        new_rel += "/"
+    if os.path.normpath(new_rel) == os.path.normpath(urllib.parse.unquote(path_part)):
+        return target
+    if "%" in path_part:
+        new_rel = urllib.parse.quote(new_rel, safe="/")
+    new_raw = new_rel + suffix
+    return f"<{new_raw}>" if bracketed else new_raw
+
+
+def _plan_links(root: Path, tracked: list[str], plan: MigrationPlan, dir_moves: dict[str, str]) -> None:
+    file_moves = dict(plan.moves)
+    # Obsidian resolves a wikilink by vault-relative path or by bare file name; both forms count.
+    wiki_names = set()
+    for old, _new in plan.moves:
+        stem = old[:-3] if old.endswith(".md") else old
+        wiki_names |= {stem, stem.split("/")[-1], stem.split(".bc-agent/", 1)[-1]}
+    for old_file in (p for p in tracked if p.endswith(".md")):
+        new_file = file_moves.get(old_file, old_file)
+        try:
+            text = (root / old_file).read_text()
+        except (OSError, UnicodeDecodeError):
+            continue
+        lines = text.split("\n")
+        changed = False
+        fence: str | None = None
+        for number, line in enumerate(lines, 1):
+            opener = _FENCE.match(line)
+            if fence:
+                if opener and opener.group(1)[0] == fence[0] and len(opener.group(1)) >= len(fence):
+                    fence = None
+                continue
+            if opener:
+                fence = opener.group(1)
+                continue
+            code = [m.span() for m in _INLINE_CODE.finditer(line)]
+            if any(m.group(1).strip().removesuffix(".md") in wiki_names for m in _WIKILINK.finditer(line)):
+                plan.wikilinks.append(f"{old_file}:{number}")
+            spans = [(m.start(2), m.end(2)) for m in _INLINE_LINK.finditer(line)]
+            ref = _REF_DEFINITION.match(line)
+            if ref:
+                spans.append((ref.start(2), ref.end(2)))
+            for start, end in sorted(spans, reverse=True):
+                if any(a <= start < b for a, b in code):
+                    continue
+                target = line[start:end]
+                new = _rewrite_target(root, target, old_file, new_file, file_moves, dir_moves)
+                if new is None:
+                    plan.unresolved.append(f"{old_file}:{number}")
+                elif new != target:
+                    line = line[:start] + new + line[end:]
+                    plan.link_count += 1
+                    changed = True
+            lines[number - 1] = line
+        if changed:
+            plan.link_edits[new_file] = "\n".join(lines)
+
+
+def _plan_other_references(root: Path, plan: MigrationPlan, sources: list[str]) -> None:
+    needles = sorted({old for old, _new in plan.moves} | {s + "/" for s in sources})
+    if not needles:
+        return
+    args = ["grep", "-n", "-I", "-F"]
+    for needle in needles:
+        args += ["-e", needle]
+    found = _git(root, *args, "--", ".", ":(exclude)*.md")
+    for line in found.stdout.splitlines():
+        location, _, text = line.partition(":")
+        number, _, text = text.partition(":")
+        plan.other_refs.append(f"{location}:{number}: {text.strip()[:100]}")
+
+
+def plan_migration(root: Path, slug: str, date: str, archetype: str) -> MigrationPlan:
+    """Plan the move of an earlier-layout vault to the visible layout. Writes nothing."""
+    plan = MigrationPlan()
+    tracked = _git(root, "ls-files", "-z").stdout.split("\0")
+    tracked = [p for p in tracked if p]
+    vault_prefix = ".bc-agent/"
+    movers = dict(_MIGRATE_MOVERS)
+    if archetype in {"ops", "hybrid"}:
+        movers.update(_MIGRATE_OPS_MOVERS)
+    generated = visible_targets(root, slug, date, archetype)
+    keep_tops = {dest.relative_to(root / ".bc-agent").parts[0]
+                 for dest, _c, _r in generated if (root / ".bc-agent") in dest.parents}
+
+    candidates: list[tuple[str, str]] = []  # (old, new)
+    source_dirs = {vault_prefix + name: dest for name, dest in movers.items()}
+    groups: dict[str, tuple[list[str], str]] = {}
+
+    def judge(path: str, file: str, rule: str) -> None:
+        groups.setdefault(path, ([], rule))[0].append(file)
+
+    if any(p.startswith("docs/adr/") for p in tracked):
+        source_dirs["docs/adr"] = "docs/decisions"
+    for path in tracked:
+        if path.startswith(vault_prefix):
+            rel = path[len(vault_prefix):]
+            top = rel.split("/", 1)[0]
+            if top in movers and "/" in rel:
+                if rel.endswith("/.gitkeep") or rel == top + "/.gitkeep":
+                    plan.deletes.append(path)
+                else:
+                    candidates.append((path, movers[top] + rel[len(top):]))
+            elif top in {"scratch", "out-of-scope"}:
+                judge(vault_prefix + top, path, RULE_UNRECOGNISED)
+            elif rel in _MIGRATE_GENERATED:
+                text = (root / path).read_text(errors="ignore")
+                if _matches_generated(text, _MIGRATE_GENERATED[rel], slug):
+                    plan.deletes.append(path)
+                else:
+                    judge(path, path, RULE_GENERATED_EDITED)
+            elif top in keep_tops:
+                continue
+            elif top == "tasks":
+                name = rel.split("/")
+                if len(name) == 2 and name[1] in {"active.md", "completed.md"}:
+                    judge(path, path, RULE_WORK)
+                elif len(name) == 2 and name[1] == "parking-lot.md":
+                    judge(path, path, RULE_IDEAS)
+                elif len(name) > 2 and "draft" in name[1]:
+                    judge(vault_prefix + "tasks/" + name[1], path, RULE_DRAFTS)
+                else:
+                    judge(path, path, RULE_UNRECOGNISED)
+            elif top == "plans":
+                judge(vault_prefix + "plans", path, RULE_WORK)
+            elif top == "project":
+                base = rel.split("/")[-1].lower()
+                if rel == "project/overview.md":
+                    judge(path, path, RULE_OVERVIEW)
+                elif "prd" in base:
+                    judge(path, path, RULE_PRD)
+                elif "-plan" in base or "-tasks" in base:
+                    judge(path, path, RULE_WORK)
+                else:
+                    judge(path, path, RULE_UNRECOGNISED)
+            elif top == "findings":
+                judge(vault_prefix + top, path, RULE_FINDINGS)
+            elif top == "open-questions":
+                judge(vault_prefix + top, path, RULE_QUESTIONS)
+            elif top in {"home.md", "index.md", ".obsidian"}:
+                judge(vault_prefix + top, path, RULE_DELETE_CHECKED)
+            else:
+                judge(vault_prefix + top, path, RULE_UNRECOGNISED)
+        elif path.startswith("docs/adr/"):
+            if path.endswith("/.gitkeep"):
+                plan.deletes.append(path)
+            else:
+                candidates.append((path, "docs/decisions/" + path[len("docs/adr/"):]))
+        elif path.startswith("docs/plans/"):
+            judge("docs/plans", path, RULE_WORK)
+
+    # scratch/ and out-of-scope/ holding only placeholders are deleted, not judged.
+    for top in ("scratch", "out-of-scope"):
+        key = vault_prefix + top
+        if key in groups and all(f.endswith("/.gitkeep") for f in groups[key][0]):
+            plan.deletes.extend(groups.pop(key)[0])
+
+    by_dest: dict[str, list[str]] = {}
+    for old, new in candidates:
+        by_dest.setdefault(new, []).append(old)
+    for old, new in candidates:
+        if len(by_dest[new]) > 1:
+            judge(old, old, RULE_CLASH.format(dest=new))
+        elif (root / new).exists():
+            if (root / new).is_file() and (root / new).read_bytes() == (root / old).read_bytes():
+                judge(old, old, RULE_ALREADY_THERE.format(dest=new))
+            else:
+                plan.refusals.append(f"destination already exists as a different file: {new} (for {old})")
+        else:
+            plan.moves.append((old, new))
+
+    move_dests = {new for _old, new in plan.moves}
+    move_dirs = {os.path.dirname(new) for new in move_dests}
+    for dest, content, _is_root in generated:
+        rel = dest.relative_to(root).as_posix()
+        if rel in move_dests or (rel.endswith("/.gitkeep") and any(
+                d == os.path.dirname(rel) or d.startswith(os.path.dirname(rel) + "/") for d in move_dirs)):
+            continue
+        if not dest.exists():
+            plan.creates.append((rel, content))
+        elif rel == ".bc-agent/AGENTS.md":
+            if dest.read_text(errors="ignore") != content:
+                plan.replaces.append((rel, content))
+                judge(rel, rel, RULE_OLD_AGENTS)
+        elif not rel.endswith("/.gitkeep") and dest.read_text(errors="ignore") != content:
+            plan.kept.append(rel)
+
+    for path, (files, rule) in sorted(groups.items()):
+        plan.judgment.append((path, _measure(root, path, files), rule))
+
+    # A folder link is rewritten only when everything in the folder moves.
+    unmoved = {old for old, _new in candidates} - {old for old, _new in plan.moves}
+    dir_moves = {src: dst for src, dst in source_dirs.items()
+                 if not any(path.startswith(src + "/") for path in unmoved)}
+    _plan_links(root, tracked, plan, dir_moves)
+    _plan_other_references(root, plan, [src for src in source_dirs
+                                        if any(old.startswith(src + "/") for old, _new in plan.moves)])
+    return plan
+
+
+def _migrate_refusal(root: Path, archetype: str) -> str | None:
+    if archetype not in VISIBLE_ARCHETYPES:
+        return (f"migrate mode is for code, ops and hybrid; the {archetype} archetype keeps the "
+                f".bc-agent/ vault")
+    top = _git(root, "rev-parse", "--show-toplevel")
+    if top.returncode != 0:
+        return f"{root} is not a git repository"
+    if Path(top.stdout.strip()).resolve() != root:
+        return f"{root} is not the repository root ({top.stdout.strip()})"
+    if not (root / ".bc-agent").is_dir():
+        return "no .bc-agent/ vault to migrate; run the scaffold without --migrate for a fresh layout"
+    dirty = _git(root, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
+    if dirty:
+        return "the working tree has uncommitted changes:\n" + "\n".join(f"  {line}" for line in dirty)
+    agents = root / ".bc-agent" / "AGENTS.md"
+    if agents.is_file() and _WHERE_THINGS_GO_LINE.search(agents.read_text(errors="ignore")):
+        return f"{agents} already has a {WHERE_THINGS_GO_HEADING!r} table; the project is already migrated"
+    return None
+
+
+def _print_section(title: str, items: list[str]) -> None:
+    print(title)
+    for item in items or ["(none)"]:
+        print(f"  {item}")
+
+
+def run_migrate(root: Path, slug: str, date: str, archetype: str, apply: bool) -> int:
+    refusal = _migrate_refusal(root, archetype)
+    if refusal:
+        print(f"ERROR: {refusal}")
+        print("Nothing was written.")
+        return 1
+    plan = plan_migration(root, slug, date, archetype)
+    if plan.refusals:
+        for message in plan.refusals:
+            print(f"ERROR: {message}")
+        print("Nothing was written.")
+        return 1
+    planned = [(root / rel, content, False) for rel, content in plan.creates + plan.replaces]
+    if not _preflight_targets(root, planned):
+        print("Nothing was written.")
+        return 1
+
+    print(f"Repo: {root}")
+    print(f"Branch: {_git(root, 'branch', '--show-current').stdout.strip() or '(detached)'}")
+    print(f"Archetype: {archetype} (from --archetype)")
+    print()
+    _print_section("MOVE", [f"{old} -> {new}" for old, new in plan.moves])
+    _print_section("CREATE", [rel for rel, _c in plan.creates])
+    _print_section("REPLACE", [rel for rel, _c in plan.replaces])
+    _print_section("DELETE", plan.deletes)
+    _print_section("KEPT (review by hand)", plan.kept)
+    _print_section("NEEDS JUDGMENT", [f"{path} — {size} — {rule}" for path, size, rule in plan.judgment])
+    verb = "rewrote" if apply else "would rewrite"
+    _print_section("LINKS", [f"{verb} {plan.link_count} links in {len(plan.link_edits)} files; "
+                             f"unresolved: {len(plan.unresolved)} (left as is)"]
+                   + [f"  {loc}" for loc in plan.unresolved[:10]]
+                   + [f"wikilinks naming a moved file (not rewritten): {len(plan.wikilinks)}"]
+                   + [f"  {loc}" for loc in plan.wikilinks[:10]])
+    shown = plan.other_refs[:50]
+    if len(plan.other_refs) > 50:
+        shown.append(f"... {len(plan.other_refs) - 50} more")
+    _print_section("OTHER REFERENCES", shown)
+    print()
+    print(f"Totals: {len(plan.moves)} move, {len(plan.creates)} create, {len(plan.replaces)} replace, "
+          f"{len(plan.deletes)} delete, {len(plan.kept)} kept, {len(plan.judgment)} need judgment, "
+          f"{plan.link_count} link rewrites")
+    if not apply:
+        command = (f"python3 {Path(__file__).resolve()} --root {root} --slug {slug} --date {date} "
+                   f"--archetype {archetype} --migrate --apply")
+        print(f"Dry run; nothing was written. Apply with: {command}")
+        return 0
+
+    for old, new in plan.moves:
+        (root / new).parent.mkdir(parents=True, exist_ok=True)
+        moved = _git(root, "mv", old, new)
+        if moved.returncode != 0:
+            print(f"ERROR: git mv {old} {new} failed: {moved.stderr.strip()}")
+            print("Stopped part-way; inspect `git status` and undo with `git reset --hard` if needed.")
+            return 1
+    if plan.deletes:
+        _git(root, "rm", "-q", "--", *plan.deletes)
+    for old in sorted({os.path.dirname(p) for p, _n in plan.moves} | {os.path.dirname(p) for p in plan.deletes},
+                      key=len, reverse=True):
+        try:  # git mv leaves emptied source folders behind; remove them, never a non-empty one
+            os.removedirs(root / old)
+        except OSError:
+            pass
+    for rel, text in plan.link_edits.items():
+        (root / rel).write_text(text)
+    for rel, content in plan.creates + plan.replaces:
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_text(content)
+    _git(root, "add", "-A")
+    print(f"Applied: moved {len(plan.moves)}, created {len(plan.creates)}, replaced {len(plan.replaces)}, "
+          f"deleted {len(plan.deletes)}, rewrote {plan.link_count} links in {len(plan.link_edits)} files.")
+    print("Everything is staged and nothing was committed: work through NEEDS JUDGMENT, then commit "
+          "the project in one commit.")
+    return 0
+
+
 
 def main() -> int:
     ap = argparse.ArgumentParser(
@@ -1719,8 +2127,9 @@ def main() -> int:
     ap.add_argument("--root", required=True, help="project (repo) root")
     ap.add_argument("--slug", required=True, help="project display name, kebab-case")
     ap.add_argument("--date", default=_dt.date.today().isoformat())
-    ap.add_argument("--archetype", choices=["code", "ops", "learning", "knowledge", "hybrid"], default="code",
-                    help="optional wiki archetype layered on top of the base project scaffold")
+    ap.add_argument("--archetype", choices=["code", "ops", "learning", "knowledge", "hybrid"], default=None,
+                    help="optional wiki archetype layered on top of the base project scaffold "
+                         "(default code; required with --migrate)")
     ap.add_argument("--force", action="store_true",
                     help="overwrite existing files under .bc-agent/ (never files outside it, never "
                          "deletes; root AGENTS.md needs --force-root)")
@@ -1730,6 +2139,11 @@ def main() -> int:
                     help="code/ops/hybrid: create missing visible-layout files even when earlier-layout "
                          "paths exist under .bc-agent/ (they stay untouched)")
     ap.add_argument("--dry-run", action="store_true", help="report what would happen; write nothing")
+    ap.add_argument("--migrate", action="store_true",
+                    help="code/ops/hybrid: plan moving an earlier-layout .bc-agent/ vault to the visible "
+                         "layout; prints the plan and writes nothing unless --apply is given")
+    ap.add_argument("--apply", action="store_true",
+                    help="with --migrate: perform the plan and stage it (never commits)")
     args = ap.parse_args()
 
     root = Path(args.root).expanduser().resolve()
@@ -1740,6 +2154,17 @@ def main() -> int:
     if not slug or slug != slug.lower() or " " in slug:
         print(f"ERROR: slug must be lower-case kebab with no spaces: {slug!r}")
         return 1
+    if args.migrate:
+        if args.archetype is None:
+            print("ERROR: --migrate needs an explicit --archetype (code, ops or hybrid); "
+                  "nothing in the earlier vault records it reliably.")
+            return 1
+        return run_migrate(root, slug, args.date, args.archetype, args.apply)
+    if args.apply:
+        print("ERROR: --apply only applies to --migrate.")
+        return 1
+    if args.archetype is None:
+        args.archetype = "code"
 
     if args.archetype in VISIBLE_ARCHETYPES and not args.allow_earlier_layout:
         legacy = earlier_layout_paths(root, args.archetype)

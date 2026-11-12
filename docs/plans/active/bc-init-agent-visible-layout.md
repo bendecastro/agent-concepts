@@ -147,6 +147,15 @@ docs/
     the generated `AGENTS.md` (slice files) and `bc-plan-to-issues` (two files) disagreeing;
     both now say two files. This was made during the review, not by the owner.
 
+27. **Only open work becomes work items (owner decision 2026-11-12).** When a project is migrated,
+    open tasks and plans become numbered work items; finished task lists are kept unchanged as one
+    dated research record. Why: inventing `Why:` and `Done when:` for past tasks would be fiction.
+28. **An existing `docs/adr/` moves to `docs/decisions/` (owner decision 2026-11-12).** One
+    decisions home in every project, so no table exception is needed.
+29. **Issue drafts live inside their parent work item (owner decision 2026-11-12)** as evidence.
+30. **A project with no vault gets a fresh scaffold (owner decision 2026-11-12)**, not the
+    migrate mode.
+
 ## Affected concepts
 
 Literal-path consumers found by search on 2026-11-12; indirect consumers may exist.

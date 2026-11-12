@@ -23,9 +23,41 @@ visible-layout files, leaves every existing file byte-identical (including a cus
 `.bc-agent/AGENTS.md`), and prints the same paths as an upgrade note. It also notes when
 `.bc-agent/AGENTS.md` has no "Where things go" table.
 
-Moving existing projects to the visible layout is a later work package of
-[the visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md): planned moves are
-shown per repository first and done with `git mv` in one commit. No procedure is recorded here yet.
+### Migrate mode
+
+`scaffold.py --migrate` moves one project to the visible layout (work package W4 of
+[the visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md)). The agent
+procedure, including the rule for each judgment class, is in the skill body under
+"Migrate an existing project"; this section records what the script does and does not do.
+
+- Without `--apply` it writes nothing and prints the plan. With `--apply` it performs the plan,
+  stages it and does not commit.
+- It refuses, writing nothing, when the root is not a git repository root, the working tree is not
+  clean, there is no `.bc-agent/`, `.bc-agent/AGENTS.md` already has a "Where things go" table, the
+  archetype is learning or knowledge, or a destination already exists as a different file.
+  `--archetype` must be explicit: nothing in an earlier vault records it reliably.
+- Moves (`git mv`, content unchanged except links): vault `decisions/` and root `docs/adr/` to
+  `docs/decisions/`, vault `research/` to `docs/research/`, and for ops and hybrid vault
+  `components/` to `docs/components/`. Two files that would land on the same path, or a file whose
+  identical copy is already at the destination, are listed for judgment instead.
+- Creates the missing visible-layout files; replaces only `.bc-agent/AGENTS.md`; lists other
+  generated files the project already has under "kept, review by hand".
+- Deletes only `.gitkeep` files in moved folders, `scratch/` and `out-of-scope/` holding nothing
+  else, and `conventions/planning-workflow.md` and `templates/plan.md` when they equal the current
+  generator's text for any date. Earlier generator versions differ, so in practice those two
+  usually land in the judgment list.
+- Rewrites relative Markdown links (inline and reference definitions, outside code fences and
+  inline code) in every tracked `.md` file whose target moved, and links inside moved files.
+  A folder link is rewritten only when the whole folder moved. Link labels are not changed.
+  Unresolved links, `[[wikilinks]]` naming a moved file, and literal old paths in other tracked
+  text files are reported, never edited. Why: wikilinks resolve against the Obsidian vault root,
+  which the moved files leave, so no mechanical rewrite is correct for all of them.
+- After apply and commit, `--migrate` refuses (the table exists), and the ordinary scaffold no
+  longer names the moved folders as earlier layout; folders still awaiting judgment are named.
+
+A 2026-11-12 trial on clones of one code and one ops project (not the projects themselves) moved a
+`docs/adr/` with 29 link rewrites, and showed that an Obsidian-linked ops vault has about a hundred
+wikilinks to moved files, which the agent fixes by hand.
 
 ## Migrate existing `map.md` files to graph-visible links
 
