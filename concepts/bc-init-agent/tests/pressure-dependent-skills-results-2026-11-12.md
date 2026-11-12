@@ -34,3 +34,12 @@ unexpected folders under `.bc-agent/` in a visible-layout project) is the propos
 
 `bc-drain-issues` and `handoff`: drain needs an issue tracker and a multi-agent landing run,
 which a throwaway project without a remote does not provide.
+
+## Follow-up (2026-11-12)
+
+The owner decided not to keep stronger wording that the model does not follow. `prototype` now
+recommends the research role and, when the user explicitly names another place, follows the user,
+says the research role is where later work will look and offers to move the writeup. The backstop
+is deterministic: `bc-wiki-maintain`'s lint reports every entry under `.bc-agent/` that is not
+agent mechanics (a `scratch/` folder included) as an error in a visible-layout project. The
+softened wording has not been rerun against this scenario.

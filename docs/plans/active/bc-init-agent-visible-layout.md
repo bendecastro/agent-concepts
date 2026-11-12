@@ -173,6 +173,10 @@ docs/
     declares extra mechanics a tool reads by path in an optional `agent-extras` table row. Why:
     `prototype` followed a user's explicit scratch path over the skill's wording in three pressure
     rounds, so wording alone does not hold; a deterministic check does.
+34. **`prototype` recommends the research role and follows a place the user names (owner,
+    2026-11-12).** It says where later work will look and offers to move the writeup; it does not
+    claim enforcement. Why: the model followed the user's explicit path over the stronger wording
+    in every round, and the lint in decision 33 is the backstop.
 
 ## Affected concepts
 
