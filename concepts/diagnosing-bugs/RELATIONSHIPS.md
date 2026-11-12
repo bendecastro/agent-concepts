@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Source: [CONCEPT.md](CONCEPT.md)
+
 - depends on `domain-modeling`'s contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)

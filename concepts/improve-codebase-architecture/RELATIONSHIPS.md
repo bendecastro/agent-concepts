@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+  Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject.
+  Source: [CONCEPT.md](CONCEPT.md)
+
 - depends on `codebase-design`'s contract — required, when organic exploration.
   The friction-signal list and deletion test have one home in codebase-design, so builder roles that load it get the same signals the review uses.
   Source: [body/SKILL.md](body/SKILL.md#1-explore)

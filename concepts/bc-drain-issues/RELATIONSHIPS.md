@@ -11,13 +11,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+  Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules.
+  Source: [CONCEPT.md](CONCEPT.md)
+
 - loads `tdd` — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [body/execute-issue.md](body/execute-issue.md#build-loop)
 
 ## Incoming
 
-- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when generated execution guidance.
+- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when generated execution guidance for vault archetypes.
   Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
   Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
 

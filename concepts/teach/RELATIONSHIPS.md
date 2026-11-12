@@ -21,6 +21,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue.
   Source: [bc-wiki-maintain/body/SKILL.md](../bc-wiki-maintain/body/SKILL.md#teach-adapter-boundary)
 
+- incoming from [domain-modeling](../domain-modeling/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
+  In a visible-layout hybrid project the root glossary.md is shared with teach; domain-modeling asks before removing or redefining terms it did not add.
+  Source: [domain-modeling/body/SKILL.md](../domain-modeling/body/SKILL.md)
+
 - incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when teaching sessions.
   Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts.
   Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)

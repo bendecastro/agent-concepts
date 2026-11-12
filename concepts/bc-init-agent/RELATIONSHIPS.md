@@ -7,7 +7,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `bc-drain-issues`'s contract — required, when generated execution guidance.
+- depends on `bc-drain-issues`'s contract — required, when generated execution guidance for vault archetypes.
   Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
   Source: [body/scaffold.py](body/scaffold.py)
 
@@ -29,6 +29,42 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules.
+  Source: [bc-drain-issues/CONCEPT.md](../bc-drain-issues/CONCEPT.md)
+
+- incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
+  Source: [bc-plan-to-issues/CONCEPT.md](../bc-plan-to-issues/CONCEPT.md)
+
+- incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ.
+  Source: [bc-wiki-maintain/CONCEPT.md](../bc-wiki-maintain/CONCEPT.md)
+
+- incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Source: [diagnosing-bugs/CONCEPT.md](../diagnosing-bugs/CONCEPT.md)
+
+- incoming from [domain-modeling](../domain-modeling/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Source: [domain-modeling/CONCEPT.md](../domain-modeling/CONCEPT.md)
+
+- incoming from [handoff](../handoff/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Source: [handoff/CONCEPT.md](../handoff/CONCEPT.md)
+
+- incoming from [improve-codebase-architecture](../improve-codebase-architecture/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject.
+  Source: [improve-codebase-architecture/CONCEPT.md](../improve-codebase-architecture/CONCEPT.md)
+
+- incoming from [prototype](../prototype/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Source: [prototype/CONCEPT.md](../prototype/CONCEPT.md)
+
 - incoming from [teach](../teach/RELATIONSHIPS.md): depends on this concept's contract — required, when valid teach-host-adapter marker.
   Hosted teach mode relies on the initializer's explicit vault marker and host schema while remaining standalone by default.
   Source: [teach/body/SKILL.md](../teach/body/SKILL.md#hosted-bc-agent-adapter)
+
+- incoming from [triage](../triage/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules.
+  Source: [triage/CONCEPT.md](../triage/CONCEPT.md)

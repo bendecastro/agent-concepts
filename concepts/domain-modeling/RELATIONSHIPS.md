@@ -7,7 +7,13 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-None.
+- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+  Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback.
+  Source: [CONCEPT.md](CONCEPT.md)
+
+- depends on `teach`'s contract — required, when visible-layout hybrid project.
+  In a visible-layout hybrid project the root glossary.md is shared with teach; domain-modeling asks before removing or redefining terms it did not add.
+  Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
 

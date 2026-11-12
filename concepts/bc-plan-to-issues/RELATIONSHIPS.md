@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Close-out recommends draining the published queue; the user decides.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
+- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
+  Source: [CONCEPT.md](CONCEPT.md)
+
 - loads `domain-modeling` — required.
   Step 2 captures terms and decisions inline during the grill.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
