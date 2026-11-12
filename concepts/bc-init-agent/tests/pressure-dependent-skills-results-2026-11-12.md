@@ -11,7 +11,7 @@ in the fixture's commit, not taken from the agent's report.
 | `triage` | `.bc-agent/out-of-scope/` | rejection as a numbered item in the dropped folder, with the reason | PASS: `work/4-dropped/004-…`, reason under Outcome |
 | `domain-modeling` | `docs/adr/`, `.bc-agent/project/overview.md` | term in the glossary role, decision in the decisions role | PASS: `glossary.md`, `docs/decisions/0001-…` |
 | `diagnosing-bugs` | `.bc-agent/research/architecture-observations.md` | bug fixed; observation as one ideas-file line | PASS |
-| `bc-plan-to-issues` | `docs/plans/read-stdin.md` | plan as a numbered planned item with Why and Done when | PASS: `work/1-planned/004-read-stdin.md` (the agent first asked its supervisor how to treat the slicing quiz when the user had declined an interview) |
+| `bc-plan-to-issues` | a file under the earlier plans folder (`docs/plans/`) | plan as a numbered planned item with Why and Done when | PASS: `work/1-planned/004-read-stdin.md` (the agent first asked its supervisor how to treat the slicing quiz when the user had declined an interview) |
 | `improve-codebase-architecture` | observation inbox and ledger | report in the research role; chosen finding planned, rejected finding dropped with the reason, undecided finding an ideas line | PASS |
 | `prototype` | `.bc-agent/scratch/` | writeup as a dated folder in the research role | FAIL, then PARTIAL, then FAIL (see below) |
 
