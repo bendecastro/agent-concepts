@@ -70,4 +70,4 @@ Only remove a worktree if all are true:
 
 Never force-push. Never delete unmerged work without explicit confirmation. Integrated owned worktrees do not need a second confirmation.
 
-For integrated work, record the kernel ancestry/patch-equivalence proof in the manifest, remove the clean inactive owned worktree with `git worktree remove` (no `--force`), then use `git branch -d`. Use `-D` only after patch-equivalence proof; squash/rebase alone is not proof. Keep dirty, active, unmerged or unclear work. Explicit discard remains a separately confirmed destructive action, not integration proof.
+For integrated work, record the kernel ancestry/patch-equivalence proof in the manifest, remove the clean inactive owned worktree with `git worktree remove` (no `--force`), then use `git branch -d`. Use `-D` only after the kernel patch-equivalence or resolved-pick proof, and then without asking; squash/rebase alone is not proof. Keep dirty, active, unmerged or unclear work. Explicit discard remains a separately confirmed destructive action, not integration proof.

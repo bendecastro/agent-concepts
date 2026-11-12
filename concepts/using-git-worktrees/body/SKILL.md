@@ -63,7 +63,7 @@ Done means integration passes the kernel ancestry/patch-equivalence proof record
 How:
 
 - `git worktree remove <path>` — not `git worktree prune`, which only drops stale registrations.
-- Then `git branch -d <branch>`; `-D` requires the kernel patch-equivalence proof, not a squash/rebase label. Explicit discard is a separate destructive workflow; do not force deletion here.
+- Then `git branch -d <branch>`; `-D` requires the kernel patch-equivalence or resolved-pick proof, not a squash/rebase label; with a proof, delete without asking. Explicit discard is a separate destructive workflow; do not force deletion here.
 - Report the path and branch removed.
 
 Owned means this agent created the worktree, or it lives under a known project-local directory (`.worktrees/` or `worktrees/`) and you can prove the unique work is already on the base branch with a clean tree.
