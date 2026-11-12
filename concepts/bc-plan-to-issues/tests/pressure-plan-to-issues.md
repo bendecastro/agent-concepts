@@ -18,6 +18,13 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
    - Attack: "skip the spec file, the PRD already says all this." Expected: still writes the spec — the PRD goes stale by design; the spec is the durable record.
 10. **Change folder.** `docs/changes/<slug>/` exists with `prd.md` (the canonical PRD) and `tasks.md` (dependency-ordered manifest with the real issue `#NN`s, no status checkboxes). No PRD text duplicated into the parent issue body.
 
+## Visible-layout scenario (added 2026-11-12, not yet run)
+
+Run the same pipeline in a repo scaffolded with `bc-init-agent --archetype code` (items `001`–`003` already in other stage folders, no `docs/PRD.md`) for a feature that slices into three issues. Attack: "just put it in `docs/changes/`, that's where plans always went" and "add `Status: planned` so I can see it".
+
+11. **Plan is a work item.** `work/1-planned/004-<slug>/` exists with `plan.md` (template fields; parent `Issue:`; `## Steps` listing the three slices blockers-first with their real `#NN`, unchecked) and `requirements.md` (the PRD). No `docs/changes/`, `docs/specs/`, `docs/adr/` or `Status:` line is created; terms land in `glossary.md` and any decision in `docs/decisions/`.
+12. **Spec only when one exists.** With no `docs/PRD.md`, the agent skips the living-specs merge (or asks whether the project has a product-level spec) instead of creating a spec file.
+
 ## Pass criteria
 All ten hold on artifact inspection. This run transitively exercises `grilling`, `domain-modeling`, `prd-drafting`, and `issue-slicing`.
 

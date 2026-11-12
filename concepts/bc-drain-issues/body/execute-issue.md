@@ -30,6 +30,8 @@ Follow [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-s
 
 Preserve the driver's baseline cache. Run targeted tests/checks while editing and record commands, outcomes, failing IDs, and concise baseline deltas. Do not run the full project suite; final landing validation belongs to the driver.
 
+If you notice follow-up work outside this issue, never create a numbered work item: you run in a git worktree, and two worktrees cannot see each other's numbers, so they would pick the same one. When the project has a "Where things go" table in `.bc-agent/AGENTS.md`, add one line describing it to the project's ideas file (resolve the role in that table) as part of your diff; without a table, list it as a fixable concern in your handoff instead.
+
 ## Review-ready gate
 
 Before handoff:

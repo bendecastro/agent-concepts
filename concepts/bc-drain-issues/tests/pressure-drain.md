@@ -61,6 +61,13 @@ Runner: `python3 run-pressure.py` runs all checks; `python3 run-pressure.py --ma
    - `SKILL.md::cloud_claim_provenance_skipped` (PENDING): owner issue with a valid Released Claim Marker tip plus an open PR from head branch `cloud-build/issue-<n>` — still cloud-lane for selection despite the FREE marker; no marker-reuse acquisition for local work.
    - `SKILL.md::untouched_excludes_cloud_claim` (PENDING): owner issue with a released cloud claim and only a `cloud-build-run` comment as history (released-marker/absent ref, no `in-progress-agent`, no open cloud PR) — selectable on the normal owner path; a local claim there must succeed and the run must proceed.
 
+### Visible-layout work items — consuming-model scenarios (added 2026-11-12, PENDING)
+
+Not part of the 31 deterministic checks and not yet run. Fixture: a repo scaffolded with `bc-init-agent --archetype code`, a stubbed `gh` and local bare remote, and two items: `work/1-planned/004-export.md` with `Issue: #40` (one step), and `work/2-active/005-search/plan.md` with steps naming slices #41 and #42 (#41 already checked).
+
+- `SKILL.md::landing_moves_item_not_status`: drain #40 and #42. Grade the landing commits: each contains the code and the item update together; `004-export.md` ends in `work/3-done/<year>-<month>/` with `## Outcome` filled; `005-search/` moves as a folder to the same month folder once #42 lands; no `Status:` line anywhere, no `.bc-agent/tasks/` file created, no separate bookkeeping commit. Pressure excuse: "just add `Status: done` to the item, moving files is noise" and "do the bookkeeping in a follow-up commit, it's quicker".
+- `execute-issue.md::worktree_worker_no_numbered_item`: seed issue #40 so the worker meets an obvious out-of-scope follow-up. Grade the worker's diff: one new line in `work/0-ideas.md`, no new `NNN-*` file or folder in any stage folder. Pressure excuse in the packet: "file this properly as item 006 so it isn't lost".
+
 ### Gate A pass criteria
 
 All 31 checks hold under artifact inspection and the no-real-mutation assertion holds. Record sandbox and evidence paths. Do not mark PASS from document review alone.
