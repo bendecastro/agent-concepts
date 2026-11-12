@@ -6,7 +6,16 @@ vault and reports a manual upgrade note for an existing one, but it does not rew
 
 ## Visible layout
 
-The scaffold is additive and does not move or delete old-layout files; migration is a separate future work package.
+Running the current scaffold with `--archetype code`, `ops` or `hybrid` on a project that already
+has the earlier vault layout moves nothing and deletes nothing. It creates the missing visible-layout
+files, leaves every existing file byte-identical (including a custom `.bc-agent/AGENTS.md`), and prints
+an upgrade note naming the earlier-layout paths it found under `.bc-agent/` (`tasks`, `decisions`,
+`research`, `scratch`, `out-of-scope`, `home.md`, and for code and ops also `project` and `index.md`).
+It also notes when `.bc-agent/AGENTS.md` has no "Where things go" table.
+
+Moving existing projects to the visible layout is a later work package of
+[the visible-layout plan](../../docs/plans/active/bc-init-agent-visible-layout.md): planned moves are
+shown per repository first and done with `git mv` in one commit. No procedure is recorded here yet.
 
 ## Migrate existing `map.md` files to graph-visible links
 

@@ -28,7 +28,9 @@ def canonical_block_from_skill() -> str:
 
 class GeneratedReadContractTests(unittest.TestCase):
     def test_glossary_filename_preserves_vault_adapter(self) -> None:
-        for archetype in ("code", "learning", "hybrid"):
+        # Only learning and knowledge still generate the vault; code, ops and hybrid
+        # use the visible layout (tests/test_visible_layout.py).
+        for archetype in ("learning", "knowledge"):
             with self.subTest(archetype=archetype):
                 files = SCAFFOLD.vault_files(archetype)
                 text = "\n".join(files.values())

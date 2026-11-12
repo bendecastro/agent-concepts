@@ -1,13 +1,26 @@
 ---
 name: bc-init-agent
-description: Scaffold a project-local .bc-agent wiki + repo-root AGENTS.md so a repo is ready for the plan→issues→drain workflow. Run once per project before /bc-plan-to-issues.
+description: Scaffold a project's agent workspace (visible work/ and docs/ folders plus .bc-agent/ mechanics, or a .bc-agent vault for learning/knowledge) and a repo-root AGENTS.md so a repo is ready for the plan→issues→drain workflow. Run once per project before /bc-plan-to-issues.
 disable-model-invocation: true
 argument-hint: "[project-slug] (defaults to the repo directory name)"
 ---
 
 # Init Agent Workspace
 
-Adaptively initialize project-local agent context. For code, ops and hybrid, work and knowledge are visible at the project root; `.bc-agent/` holds agent mechanics. Learning and knowledge retain their existing vault layout. Hybrid retains hosted teach paths as a compatibility exception.
+Adaptively initialize project-local agent context.
+
+- **Code, ops and hybrid use the visible layout.** Work items live in `work/` (`0-ideas.md`, then
+  `1-planned/`, `2-active/`, `3-done/<year>-<month>/`, `4-dropped/`), decisions and research in
+  `docs/decisions/` and `docs/research/`, the vocabulary in root `glossary.md`; `.bc-agent/` holds
+  agent mechanics only (instructions, map, log, conventions, references, templates). Why: people
+  browse the repository, not a hidden folder, so knowledge kept out of sight goes stale.
+- **The "Where things go" table in `.bc-agent/AGENTS.md` is the single home for these paths.**
+  When you or another skill need a location, look the role up there instead of assuming it. Why:
+  a project with a justified exception then changes one table, not every skill.
+- **Learning and knowledge keep the `.bc-agent/` vault.** Why: `teach` reads exact vault paths;
+  changing them is a separate plan.
+- **Hybrid also keeps the paths the hosted `teach` adapter maps under `.bc-agent/`**, including a
+  separate teach glossary in `.bc-agent/project/overview.md`, until `teach` is redesigned.
 
 ## Operating modes and wiki archetypes
 
@@ -20,8 +33,8 @@ Modes:
 - **Migration assist**: for old/messy projects, propose how existing docs/files could seed `.bc-agent/`; move/copy files only after explicit approval.
 
 Archetypes:
-- **code** — default project execution wiki: PRDs/plans, architecture reviews, ADRs, validation, commands, tasks, architecture-runway nudge tracking, `/bc-plan-to-issues` → `/bc-drain-issues`.
-- **ops** — operational/system wiki like the Music wiki: `components/`, `findings/`, `decisions/`, `open-questions/`, executable plans; evidence before plan.
+- **code** — default project execution workspace: work items (a plan or feature is one item), decision records, research including architecture reviews, validation, commands, architecture-runway nudge tracking, `/bc-plan-to-issues` → `/bc-drain-issues`.
+- **ops** — operational/system workspace: the code layout plus `docs/components/` (verified state of real systems) and `docs/open-questions/`; findings go to `docs/research/` and plans are work items; evidence before plan.
 
 ### Learning archetype adapter
 
@@ -40,11 +53,11 @@ Archetypes:
   destructive and verifies every destination before deleting standalone originals. `questions/`
   is for open questions only, not a second review queue or evidence store.
 - **knowledge** — LLM-maintained knowledge graph: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
-- **hybrid** — code execution plus one or more of ops/learning/knowledge when the folder clearly needs more than one durable mode. If learning is included, use the same explicit teach adapter and shared `sessions/`, `sources/`, `concepts/`, `index.md`, and `log.md` paths; do not add a parallel learning state tree.
+- **hybrid** — the ops layout plus a hosted `teach` workspace, for a folder that both ships or operates something and supports learning. The scaffold adds exactly the paths the teach adapter maps under `.bc-agent/` (`learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, the teach glossary in `project/overview.md`, and the teach catalog `index.md`); do not add a parallel learning state tree. Project work still goes where the table says, not into the teach paths.
 
 ## Process
 
-1. **Locate the project.** Find the repo root (`git rev-parse --show-toplevel`). If choosing a new root, read `~/Sync/CONFIG/preferences/where-things-are.md` and suggest its default project location only if it names one. Warn when the selected root is inside a file-sync folder: a replicated `.git` and runtime state written by two machines can conflict. If not a git repo, ask whether to initialize here, use the folder, or choose another root. Pick the slug from the argument or directory name; confirm ambiguity.
+1. **Locate the project.** Find the repo root (`git rev-parse --show-toplevel`). If choosing a new root, read `~/Sync/CONFIG/preferences/where-things-are.md` and suggest its default project location only if it names one; otherwise ask. Why: the owner decides where projects live, and the preferences file is that decision's one home. If the chosen root is inside a folder replicated by a file-sync tool, warn before scaffolding: the tool replicates `.git` file by file, so two machines can corrupt the repository or leave conflict copies inside it. If not a git repo, ask whether to initialize here, use the folder, or choose another root. Pick the slug from the argument or directory name; confirm ambiguity.
 
 2. **Recon before grilling.** Inspect the environment before asking questions. Keep it bounded; do not crawl huge dependency/build output directories. Check at least:
    - Git state: repo root, branch, dirty status, remotes, existing `AGENTS.md`, existing `.bc-agent/`, `glossary.md`, docs/plans/ADRs. For legacy glossary discovery, follow `domain-modeling`’s legacy glossary rule.
@@ -59,18 +72,17 @@ Archetypes:
 
    For an **existing active project**, integrate without disruption: which docs are authoritative; whether existing docs should be referenced, copied, or left in place; whether an existing root `AGENTS.md` remains primary; validation/build/test commands agents may trust; deploy/publish actions allowed, forbidden, or manual-only.
 
-   For an **operational/system workspace**, identify components, findings/evidence, decisions, open questions, and executable plans. Ask what real-world actions agents may do vs only document for the human.
+   For an **operational/system workspace**, identify components, findings/evidence, decisions, open questions, and planned work. Ask what real-world actions agents may do vs only document for the human.
 
    For a **learning workspace**, ask the subject, desired outcome, current level, preferred learning cadence, source material, and whether to invoke the `teach` skill for multi-session tutoring records.
 
    For a **knowledge-graph workspace**, ask the domain boundary, source-ingest policy, raw immutability expectations, entity/concept granularity, and whether this is personal cross-project knowledge or project-local knowledge.
 
-   For an **old/messy project being revived**, treat init as a reconciliation step: cleanup/continuation/archive/rewrite goal; authoritative old plans/specs/ADRs; which files could seed `project/`, `research/`, `decisions/`, `components/`, `findings/`, `open-questions/`, `learning/`, `sources/`, `concepts/`, `raw/`, or `out-of-scope/`; whether file moves are allowed now or should become a migration plan; what must not be touched.
+   For an **old/messy project being revived**, treat init as a reconciliation step: cleanup/continuation/archive/rewrite goal; authoritative old plans/specs/ADRs; which files could seed which role in the "Where things go" table (for learning or knowledge vaults: `project/`, `research/`, `decisions/`, `learning/`, `sources/`, `concepts/`, `raw/`); rejected old work belongs in the dropped-work folder with its reason; whether file moves are allowed now or should become a migration plan; what must not be touched.
 
 4. **Propose the init plan before writing.** Name the root, slug, mode, selected archetype, files that will be created, existing files that will be preserved, any manual merge needed for `AGENTS.md`, any existing files proposed for later migration, and open decisions. If the plan includes moving/copying existing docs, separate that from the scaffold and require explicit approval.
    Apply `naming-things` when choosing domain or public code names: list them in the init plan and persist glossary entries only after plan approval.
-
-For code, ops and hybrid, ask whether the project has a product-level specification. Create `docs/PRD.md` only on yes; feature requirements belong in the work item. Do not create `ARCHITECTURE.md` until needed.
+   For code, ops and hybrid, ask whether the project has a product-level specification. Create `docs/PRD.md` only on yes; a feature's requirements belong in its work item, and `ARCHITECTURE.md` is created when the project first needs one. Why: an empty placeholder looks like knowledge and is not; the table already names both homes.
 
 5. **Safe to re-run / plug into an existing project.** The script is **additive and idempotent**: it creates only the files that are missing, leaves every existing file untouched (an existing root `AGENTS.md` is preserved verbatim and flagged for a manual pointer-merge), and **never deletes anything**. Re-running changes nothing. Use `--dry-run` when previewing an existing or messy project. Existing files are overwritten only when explicitly forced (`--force` for vault files, `--force-root` for the root `AGENTS.md`) — don't use those unless the user asks. If the script prints **Upgrade notes for existing files left untouched**, treat them as follow-up work for the current agent: inspect the named files and merge the smallest safe pointer by hand rather than assuming the scaffold alone upgraded old instructions.
 
@@ -80,7 +92,7 @@ For code, ops and hybrid, ask whether the project has a product-level specificat
    ```
    Code, ops and hybrid create root `glossary.md`, lifecycle folders under `work/`, `docs/decisions/`, `docs/research/`, and `.bc-agent/` mechanics with a Where things go table and work-item template. Hybrid also retains the hosted teach adapter and its mapped paths, including its separate teach glossary and catalog. Learning and knowledge keep the existing vault including Obsidian metadata. Existing files remain untouched unless forced; no project is migrated by this step.
 
-7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, `index.md`, or `references/agent-skills.md`).
+7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, or `references/agent-skills.md`). When the notes report earlier-layout paths under `.bc-agent/`, leave them in place and say so in the close-out: moving them to the visible layout is a separate migration the owner approves.
 
 8. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, record a line in `work/0-ideas.md` for the visible layout, or `tasks/parking-lot.md` for legacy learning/knowledge vaults.
 
@@ -143,4 +155,4 @@ For code, ops and hybrid, ask whether the project has a product-level specificat
 
 ## Notes
 - The project workspace is separate from the personal `~/Wiki`.
-- If the repo already has a root `AGENTS.md`, the script preserves it — merge in the "read the vault first" pointer rather than clobbering hand-written instructions.
+- If the repo already has a root `AGENTS.md`, the script preserves it — merge in the "read `.bc-agent/AGENTS.md` first" pointer rather than clobbering hand-written instructions.

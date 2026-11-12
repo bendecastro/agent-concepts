@@ -1624,5 +1624,5 @@ The owner asked not to be consulted about deleting a worker branch whose content
 ## [2026-11-12] implement | bc-init-agent visible layout plan
 Recorded the design agreed in a 22-question owner interview as `docs/plans/active/bc-init-agent-visible-layout.md`: status by folder under a root `work/`, knowledge in the open, one layout table per project. Plan only; no concept changed.
 
-## [2026-11-12] implement | bc-init-agent visible scaffold
-Partially implemented visible work and knowledge layout for code, ops and hybrid; retained hosted teach paths and legacy learning/knowledge output. Coverage, instruction cleanup, pressure testing and downstream consumers remain pending.
+## [2026-11-12] implement | bc-init-agent visible layout (W1)
+Code, ops and hybrid now scaffold `work/` lifecycle folders, `docs/decisions/` and `docs/research/`, root `glossary.md` and a "Where things go" table (`parse_where_things_go`) in `.bc-agent/AGENTS.md`; learning/knowledge output is byte-identical to before. Twelve new deterministic tests, SKILL/CONCEPT/MIGRATIONS/scenario updated; not pressure-tested, not redeployed, and consumer concepts (W2+) still assume the vault.
