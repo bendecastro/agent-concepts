@@ -1070,148 +1070,371 @@ def render(text: str, slug: str, date: str) -> str:
     return text.replace(SLUG, slug).replace(DATE, date)
 
 
-VISIBLE_AGENTS = """# __SLUG__ agent instructions
+# --- visible layout (code, ops, hybrid) ----------------------------------------
+# Project knowledge and the work lifecycle live in ordinary folders at the repo
+# root; `.bc-agent/` keeps agent mechanics only. Learning and knowledge
+# archetypes keep the vault above unchanged.
 
-Read this file first. Keep project knowledge current in the same commit as the work.
+VISIBLE_ARCHETYPES = frozenset({"code", "ops", "hybrid"})
+WORK_STAGES = ("1-planned", "2-active", "3-done", "4-dropped")
+WHERE_THINGS_GO_HEADING = "## Where things go"
+# Stable role keys of the "Where things go" table. Other skills look a role up
+# with parse_where_things_go() instead of assuming a path.
+LAYOUT_ROLES = (
+    "work-planned", "work-active", "work-done", "work-dropped", "ideas",
+    "decisions", "research", "glossary", "requirements", "architecture",
+    "project-skills", "project-agents",
+)
 
-## Where things go
+_BASE_ROWS = (
+    ("work-planned", "work/1-planned/", "agreed work that has not started"),
+    ("work-active", "work/2-active/", "work in progress; several items may be active"),
+    ("work-done", "work/3-done/", "finished work, always inside a `<year>-<month>/` folder such as `2026-03/`"),
+    ("work-dropped", "work/4-dropped/", "abandoned work and rejected requests, with the reason"),
+    ("ideas", "work/0-ideas.md", "undecided ideas and observations, one line each"),
+    ("decisions", "docs/decisions/", "one numbered decision record per file"),
+    ("research", "docs/research/", "one `<date>-<slug>/` folder per investigation"),
+    ("glossary", "glossary.md", "canonical names for the project's domain concepts"),
+    ("requirements", "docs/PRD.md", "product-level spec, created on first need; a feature's requirements live in its work item"),
+    ("architecture", "ARCHITECTURE.md", "created on first need"),
+    ("project-skills", ".agents/skills/", "created on first need; one `local-<name>/` folder per skill, with a README naming shared copies and how to refresh them"),
+    ("project-agents", "", "not yet decided; ask the owner before creating project-specific agents"),
+)
+_OPS_ROWS = (
+    ("components", "docs/components/", "verified state of real systems, hosts, tools and services"),
+    ("open-questions", "docs/open-questions/", "unverified assumptions that gate or shape work"),
+)
+_TEACH_ROWS = (
+    ("teach-workspace", ".bc-agent/references/teach-skill.md", "path map of the hosted `teach` workspace; `teach` owns `learning/`, `sources/`, `concepts/`, `sessions/`, `questions/`, `index.md` and the Glossary section of `project/overview.md` under `.bc-agent/`"),
+)
 
-Paths are relative to the project root. Create first-need paths only when needed.
 
-| Role | Path |
-| --- | --- |
-| work-planned | `work/1-planned/` |
-| work-active | `work/2-active/` |
-| work-done | `work/3-done/<year>-<month>/` |
-| work-dropped | `work/4-dropped/` |
-| ideas | `work/0-ideas.md` |
-| decisions | `docs/decisions/` |
-| research | `docs/research/` |
-| glossary | `glossary.md` |
-| requirements | `docs/PRD.md` (product-level, on first need); feature requirements inside the work item |
-| architecture | `ARCHITECTURE.md` (on first need) |
-| project-skills | `.agents/skills/local-<name>/` (on first need; README records shared copies and refresh steps) |
-| project-agents | Open item: discovery folder not yet verified; create on first need only after verification |
+def layout_rows(archetype: str) -> tuple[tuple[str, str, str], ...]:
+    rows = _BASE_ROWS
+    if archetype in {"ops", "hybrid"}:
+        rows += _OPS_ROWS
+    if archetype == "hybrid":
+        rows = tuple(
+            (role, path, note + "; the `teach` glossary in `.bc-agent/project/overview.md` is separate")
+            if role == "glossary" else (role, path, note)
+            for role, path, note in rows
+        ) + _TEACH_ROWS
+    return rows
 
-## Work items
 
-- An item's folder is its status; use `git mv` in the same commit as the work. Why: the tree is the source of truth.
-- Never add a `Status:` line to an item. Why: it could disagree with the folder.
-- Put finished items in `work/3-done/<year>-<month>/`. Why: one rule needs no threshold detection.
-- Put dropped or rejected items in `work/4-dropped/` and give the reason in Outcome. Why: abandoned work and rejected requests share one home.
-- Name items `<3-digit number>-<slug>`; choose the highest number across all stages plus one. Why: a short ID is citable.
-- Only the main checkout creates numbered items; an agent in a worktree adds a line to `work/0-ideas.md` instead. Why: without a central allocator parallel worktrees collide.
-- A small item is one file; a large item is a folder with `plan.md`, requirements and slices, moved as a whole. Why: the item is the feature or plan.
-- Several items may be active at once. Why: work need not be artificially serialized.
-- GitHub issues are optional; record the issue number in the item and close the issue when moving it to done. Why: folders are the source of truth and issues point back.
+def where_things_go_table(archetype: str) -> str:
+    lines = ["| Role | Path | Notes |", "| --- | --- | --- |"]
+    for role, path, note in layout_rows(archetype):
+        lines.append(f"| {role} | {f'`{path}`' if path else '—'} | {note} |")
+    return "\n".join(lines)
 
-Keep decisions in the decisions folder, research in research, and discoveries in `log.md`.
-"""
+
+def parse_where_things_go(text: str) -> dict[str, str]:
+    """Map each role key of a "Where things go" table to its path.
+
+    Paths are relative to the project root. A role with no decided path maps to
+    an empty string. Raises ValueError when the heading is missing.
+    """
+    if WHERE_THINGS_GO_HEADING + "\n" not in text:
+        raise ValueError(f"no {WHERE_THINGS_GO_HEADING!r} section")
+    section = text.split(WHERE_THINGS_GO_HEADING + "\n", 1)[1].split("\n## ", 1)[0]
+    result: dict[str, str] = {}
+    for line in section.splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) < 2 or cells[0] == "Role" or set(cells[0]) <= {"-", ":", " "}:
+            continue
+        result[cells[0]] = cells[1].split("`")[1] if cells[1].count("`") >= 2 else ""
+    return result
+
 
 VISIBLE_ROOT = """# Agent instructions for __SLUG__
 
-1. `.bc-agent/AGENTS.md` is the session protocol and layout table; read it first.
-2. Follow the table for project knowledge and work items.
+Before non-trivial work, read `.bc-agent/AGENTS.md`. It holds the "Where things go" table
+and the work-item rules; pick further context with `.bc-agent/map.md`.
+
+## At a glance
+
+- `work/` — what is planned, active, done and dropped. The folder an item sits in is its status.
+- `docs/decisions/`, `docs/research/` — decision records and investigations.
+- `glossary.md` — the project's vocabulary. Use its terms in code, issues and docs.
+- `.bc-agent/` — agent mechanics only: instructions, conventions, references, templates, log.
+
+## Planning loop trigger
+
+If the request sounds like planning future work (feature ideas, architecture direction,
+slicing, "what should we build"), pause and ask whether to enter `/bc-plan-to-issues`
+before implementing. A concrete edit or fix proceeds normally. When the question is
+architectural runway, check `.bc-agent/conventions/architecture-runway.md` and offer
+`/improve-codebase-architecture` first. Skill map: `.bc-agent/references/agent-skills.md`.
+
+## Scope rules
+
+- Project knowledge goes where the table says, in the same commit as the work it describes.
+- Source-tree README files, `docs/` pages and JSDoc follow `codebase-docs`.
+- Keep personal, cross-project and machine-global knowledge out of this repository.
+- No secrets or `.env` values anywhere in tracked files.
+
+## Publishing
+
+Push commits or close issues only when a rule in the user-owned publish policy
+(`~/.config/agent-concepts/publish.yaml`) authorizes it. No matching rule: ask.
+"""
+
+VISIBLE_AGENTS = """# __SLUG__ — agent session protocol
+
+Read this file before non-trivial work. Project knowledge lives in ordinary folders at the
+repository root so people can browse it; `.bc-agent/` holds agent mechanics only.
+
+## Where things go
+
+Paths are relative to the repository root. Skills look a role up in this table instead of
+assuming a path, so change a path here when the project keeps something elsewhere.
+
+__TABLE__
+
+## Work items
+
+A work item is one feature or plan. Template: [templates/work-item.md](templates/work-item.md).
+
+- **The folder is the status.** Move an item between stage folders with `git mv`, in the
+  same commit as the work that changes its state. Why: the tree then always shows what is
+  planned, active, done and dropped, with nothing else to keep in step.
+- **No `Status:` line in an item.** Why: a written status can disagree with the folder.
+- **Finished items go into `work/3-done/<year>-<month>/`** (for example `work/3-done/2026-03/`);
+  create the month folder when it is missing, and never put an item directly in `3-done/`.
+  Why: one rule from the first item on means the folder never needs reorganizing.
+- **Dropped work and rejected requests go to `work/4-dropped/`**, with the reason under
+  `## Outcome`. Why: a recorded "no, because" stops the same idea being re-argued.
+- **Names are `<3-digit number>-<slug>`**, for example `012-search-ranking`. The next number
+  is the highest number in any stage folder plus one. Why: a short number is easy to cite
+  and survives a rename of the slug.
+- **Only the main checkout creates numbered items.** Working in a git worktree, add a line
+  to `work/0-ideas.md` instead. Why: two worktrees cannot see each other's numbers and
+  would pick the same one.
+- **A small item is one file; a large one is a folder** `NNN-slug/` holding `plan.md`, its
+  requirements and its slices. The folder moves as a whole. Why: everything about a feature
+  stays in one place through its whole life.
+- **Several items may be active at once.**
+- **GitHub issues are optional.** When one exists, record its number on the item's `Issue:`
+  line. Why: the folders are the source of truth; an issue is a pointer to them.
+- **Undecided ideas and observations** are one line each in `work/0-ideas.md`. An idea
+  becomes a numbered item in `work/1-planned/` once someone decides to do it.
+
+## Keep it current
+
+| When you… | Do this |
+| --- | --- |
+| Start non-trivial work | Read the items in `work/2-active/`, then pick context with [map.md](map.md). |
+| Begin agreed work | Create the item from the template, or `git mv` it from `1-planned/` to `2-active/`. |
+| Finish a step | Check its box in the item. |
+| Finish or drop an item | Fill `## Outcome`, then `git mv` it to its done month folder or to `4-dropped/`. |
+| Make an architectural or hard-to-reverse choice | Add a numbered record under `docs/decisions/` from [templates/adr.md](templates/adr.md). |
+| Investigate something at length | Write it up in a dated folder under `docs/research/`. |
+| Sharpen domain vocabulary | Update `glossary.md`. |
+| Learn a recurring command | Add it to [references/commands.md](references/commands.md). |
+| Learn a durable fact with no better home | Append one to three lines to [log.md](log.md). |
+| Find a page that is wrong | Fix it in the same commit. Never leave a stale claim. |
+
+## Discipline
+
+- Do not invent facts. Mark anything unverified as unverified.
+- Inspect `git status` first, stage only your own changes, and commit before finishing.
+- Validation commands: [conventions/validation.md](conventions/validation.md). Git and
+  publishing: [conventions/git-and-commit-policy.md](conventions/git-and-commit-policy.md).
+"""
+
+HYBRID_TEACH_SECTION = """
+## Hosted teach workspace
+
+This project also hosts a `teach` learning workspace inside `.bc-agent/`. Read
+[references/teach-skill.md](references/teach-skill.md) before using `teach`: it is the
+explicit adapter for the host's learning paths. `teach` owns the mapped pedagogy,
+evidence, review state, and the Glossary section of `project/overview.md`. That glossary
+is the learner's vocabulary; the project glossary is `glossary.md` at the repository root.
+Host search-first is for knowledge and learning-record retrieval. Teach may directly read
+mapped known mission/review/notes state and the shared catalog/recent history for session
+bookkeeping. Do not create a second `learning/sessions/` directory or migrate a standalone
+teach workspace.
+
+The read path below applies to teach knowledge pages and learning records under `.bc-agent/`.
+
 """
 
 VISIBLE_MAP = """# Context Map
 
-Link only targets that resolve inside this vault.
+Choose the smallest set of pages for the task. Link only targets that resolve inside
+`.bc-agent/`; name files outside it in inline code, relative to the repository root.
+
+## Always useful
 
 - [AGENTS.md](AGENTS.md)
-- [log.md](log.md)
-- [references/agent-skills.md](references/agent-skills.md)
+- [references/commands.md](references/commands.md)
 - [conventions/validation.md](conventions/validation.md)
+
+## Planning and workflow
+
 - [templates/work-item.md](templates/work-item.md)
+- [conventions/architecture-runway.md](conventions/architecture-runway.md)
+- [references/agent-skills.md](references/agent-skills.md)
+- [conventions/git-and-commit-policy.md](conventions/git-and-commit-policy.md)
+- [log.md](log.md)
+
+## Decisions and layout
+
+- [templates/adr.md](templates/adr.md)
+- [conventions/file-layout.md](conventions/file-layout.md)
+
+## Outside this folder
+
+Work items are in `work/` (ideas in `work/0-ideas.md`), decision records in
+`docs/decisions/`, investigations in `docs/research/`, and vocabulary in `glossary.md`.
+The "Where things go" table in [AGENTS.md](AGENTS.md) is the full list.
+"""
+
+VISIBLE_FILE_LAYOUT = """# File Layout
+
+Where project knowledge and work items go: the "Where things go" table in
+[AGENTS.md](../AGENTS.md).
+
+> **TODO:** record the real source and build paths once known.
+
+## Agent guidance
+
+- Confirm source/build relationships before editing generated-looking files.
+- An empty folder is kept in git by a `.gitkeep` file; remove it once the folder has content.
 """
 
 WORK_ITEM = """# <title>
 
-Why: <reason>
-
-Done when: <observable outcome>
-
-Issue: <optional issue number>
+Why: <the problem or goal, in one or two sentences>
+Done when: <the observable outcome that means this is finished>
+Issue: <optional issue number; delete the line when there is none>
 
 ## Steps
 
-- [ ] <step>
+- [ ] <first step>
 
 ## Outcome
 
+<Filled when the item is finished or dropped: what happened, or why it was dropped.>
+"""
+
+IDEAS = """# Ideas
+
+Undecided ideas and observations, one line each, newest at the bottom. An idea that
+someone decides to do becomes a numbered work item in `1-planned/`; delete its line here.
+"""
+
+GLOSSARY = """# Glossary
+
+Canonical names for this project's domain concepts: one line each, no implementation
+detail. Use these terms in code, issues and docs.
+
+_None captured yet._
+"""
+
+HYBRID_INDEX = """# __SLUG__ — teach workspace catalog
+
+Catalog of the hosted `teach` workspace in this folder. `teach` adds its entries here.
+Project work, decisions and research are not catalogued here; see the "Where things go"
+table in [AGENTS.md](AGENTS.md).
+
+- [Teach host adapter](references/teach-skill.md)
+- [Teach resources](references/teach-resources.md)
+- [Mission](learning/plan.md)
+- [Review queue](learning/review.md)
+- [Notes](learning/notes.md)
+- [Overview and teach glossary](project/overview.md)
+- [Sources](sources/README.md)
+- [Concepts](concepts/README.md)
+- [Questions](questions/README.md)
+- [Sessions](sessions/README.md)
+- [Log](log.md)
+"""
+
+HYBRID_OVERVIEW = """# Teach Workspace Overview
+
+> One paragraph on what is being learned in `__SLUG__`. **TODO:** fill in.
+
+## Glossary
+
+The learner's vocabulary for the hosted `teach` workspace. `teach` owns this section;
+planning and maintenance skills leave it unchanged. The project's own vocabulary is in
+`glossary.md` at the repository root.
+
+<!-- Term — one-line canonical definition. -->
+
+_None captured yet._
 """
 
 
-def parse_where_things_go(text: str) -> dict[str, str]:
-    """Read the fixed layout table; unassigned roles have an empty path."""
-    section = text.split("## Where things go\n", 1)[1].split("\n## ", 1)[0]
-    result = {}
-    for line in section.splitlines():
-        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-        if not line.startswith("|") or len(cells) != 2 or cells[0] in {"Role", "---"}:
-            continue
-        value = cells[1]
-        result[cells[0]] = value.split("`", 2)[1] if "`" in value else ""
-    return result
+def _visible_runway() -> str:
+    replacements = (
+        ("For code/hybrid wikis, this page", "This page"),
+        ("-- .bc-agent |", "-- docs/research |"),
+        ("-- .bc-agent/project .bc-agent/tasks", "-- docs work"),
+        ("normal project\nwiki location", "dated folder under\n`docs/research/`"),
+    )
+    text = ARCHITECTURE_RUNWAY
+    for old, new in replacements:
+        if old not in text:
+            raise RuntimeError(f"architecture runway text changed; update replacement {old!r}")
+        text = text.replace(old, new)
+    return text
 
 
 def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tuple[Path, str, bool]]:
-    vault = root / ".bc-agent"
-    files = {
-        "AGENTS.md": VISIBLE_AGENTS,
+    """Scaffold targets for archetypes that use the visible layout."""
+    agents = VISIBLE_AGENTS.replace("__TABLE__", where_things_go_table(archetype))
+    vault_files_: dict[str, str] = {
+        "AGENTS.md": agents,
         "map.md": VISIBLE_MAP,
         "log.md": LOG,
         "conventions/validation.md": VALIDATION,
-        "conventions/file-layout.md": "# File layout\n\nSee the Where things go table in `../AGENTS.md`.\n",
-        "conventions/architecture-runway.md": ARCHITECTURE_RUNWAY, 
-        "references/commands.md": ref_stub("Commands", "Project commands; fill as discovered.\n"),
-        "references/agent-skills.md": "# Agent skills\n\nUse the shared project skills as appropriate.\n",
-        "templates/adr.md": TPL_ADR + "\nSave ADRs in `docs/decisions/`.\n",
+        "conventions/file-layout.md": VISIBLE_FILE_LAYOUT,
+        "conventions/architecture-runway.md": _visible_runway(),
+        "conventions/git-and-commit-policy.md": GIT_POLICY,
+        "references/commands.md": ref_stub(
+            "Commands", "Recurring project commands. **TODO:** fill as discovered.\n\n_None yet._"),
+        "references/agent-skills.md": AGENT_SKILLS,
+        "templates/adr.md": TPL_ADR + "\n<!-- Save as `docs/decisions/NNNN-<slug>.md`. -->\n",
         "templates/work-item.md": WORK_ITEM,
     }
-    if archetype != "hybrid":
-        files["conventions/architecture-runway.md"] = (ARCHITECTURE_RUNWAY
-            .replace("For code/hybrid wikis", "For this project")
-            .replace("-- .bc-agent |", "-- docs/research |")
-            .replace("-- .bc-agent/project .bc-agent/tasks", "-- docs work")
-            .replace("normal project\nwiki location", "dated folder under `docs/research/`"))
-        files["AGENTS.md"] = (files["AGENTS.md"].replace(
-            "Put finished items in `work/3-done/<year>-<month>/`.",
-            "Put finished items in `work/3-done/<year>-<month>/`, creating the month folder when needed; never put items directly in `3-done/`.",
-        ).replace("product-level, on first need", "product-level, created on first need")
-         .replace("(on first need)", "(created on first need)")
-         .replace("(on first need;", "(created on first need;")
-         .replace("Open item: discovery folder not yet verified; create on first need only after verification", "not yet decided"))
-    if archetype == "hybrid":
-        files.update(archetype_files("learning"))
-        files.update({k: v for k, v in archetype_files("hybrid").items()
-                      if k.startswith("concepts/")})
-        files["project/overview.md"] = OVERVIEW
-        files["index.md"] = INDEX
-        files["AGENTS.md"] += "\nThe hosted teach workspace uses its mapped `.bc-agent/` paths, including its own glossary; the project glossary is `glossary.md`.\n"
-    result = [(root / "AGENTS.md", render(VISIBLE_ROOT, slug, date), True)]
-    result += [(vault / path, render(text, slug, date), False) for path, text in files.items()]
-    extras = {
-        "glossary.md": "# Glossary\n",
-        "work/0-ideas.md": "# Ideas\n\nUndecided ideas and observations, one per line.\n",
-        **{f"work/{stage}/.gitkeep": "" for stage in ("1-planned", "2-active", "3-done", "4-dropped")},
-        "docs/decisions/.gitkeep": "", "docs/research/.gitkeep": "",
+    root_files: dict[str, str] = {
+        "glossary.md": GLOSSARY,
+        "work/0-ideas.md": IDEAS,
+        **{f"work/{stage}/.gitkeep": "" for stage in WORK_STAGES},
+        "docs/decisions/.gitkeep": "",
+        "docs/research/.gitkeep": "",
     }
-    if archetype == "ops":
+    if archetype in {"ops", "hybrid"}:
         ops = archetype_files("ops")
-        extras["docs/components/README.md"] = ops["components/README.md"]
-        extras["docs/open-questions/README.md"] = ops["open-questions/README.md"].replace(
-            "linking findings/decisions", "linking research or decisions")
+        root_files["docs/components/README.md"] = ops["components/README.md"]
+        root_files["docs/open-questions/README.md"] = ops["open-questions/README.md"].replace(
+            "linking findings/decisions", "linking research or decision records")
         for name in ("component", "finding", "open-question"):
-            files_path = f"templates/{name}.md"
-            result.append((vault / files_path, render(ops[files_path], slug, date), False))
-    result += [(root / path, text, False) for path, text in extras.items()]
+            vault_files_[f"templates/{name}.md"] = ops[f"templates/{name}.md"]
+    if archetype == "hybrid":
+        # Exactly the paths the hosted teach adapter maps; nothing else from the vault.
+        vault_files_.update(
+            {path: text for path, text in archetype_files("learning").items() if path != "archetype.md"})
+        vault_files_.update(
+            {path: text for path, text in archetype_files("hybrid").items() if path.startswith("concepts/")})
+        vault_files_["project/overview.md"] = HYBRID_OVERVIEW
+        vault_files_["index.md"] = HYBRID_INDEX
+        vault_files_["AGENTS.md"] = agents + HYBRID_TEACH_SECTION + CANONICAL_VAULT_READ_PATH
+    vault = root / ".bc-agent"
+    result = [(root / "AGENTS.md", render(VISIBLE_ROOT, slug, date), True)]
+    result += [(vault / path, render(text, slug, date), False) for path, text in vault_files_.items()]
+    result += [(root / path, render(text, slug, date), False) for path, text in root_files.items()]
     return result
 
 
 def targets(root: Path, slug: str, date: str, archetype: str = "code") -> list[tuple[Path, str, bool]]:
     """Every file the scaffold owns: (destination, rendered content, is_root_AGENTS)."""
-    if archetype in {"code", "ops", "hybrid"}:
+    if archetype in VISIBLE_ARCHETYPES:
         return visible_targets(root, slug, date, archetype)
     vault = root / ".bc-agent"
     out: list[tuple[Path, str, bool]] = [(root / "AGENTS.md", render(ROOT_AGENTS, slug, date), True)]
@@ -1230,14 +1453,61 @@ def _contains(path: Path, needle: str) -> bool:
         return False
 
 
+def _teach_notes(root: Path) -> list[str]:
+    """Hints about an existing teach adapter or standalone teach state."""
+    vault = root / ".bc-agent"
+    notes: list[str] = []
+    adapter = vault / "references" / "teach-skill.md"
+    if adapter.exists():
+        try:
+            adapter_text = adapter.read_text(encoding="utf-8")
+        except OSError:
+            adapter_text = ""
+        if not is_valid_teach_adapter(adapter_text):
+            notes.append(
+                "existing references/teach-skill.md is not the explicit v1 teach adapter "
+                "(exact first line plus the complete hosted path map); merge the generated "
+                "path map by hand after checking existing state"
+            )
+    standalone_paths = (
+        root / "MISSION.md",
+        root / "REVIEW.md",
+        root / "GLOSSARY.md",
+        root / "RESOURCES.md",
+        root / "NOTES.md",
+        root / "learning-records",
+        root / "lessons",
+    )
+    if any(path.exists() for path in standalone_paths):
+        notes.append(
+            "standalone teach state exists outside .bc-agent; do not migrate or copy it "
+            "automatically — preserve it and ask the user before choosing between competing homes"
+        )
+    return notes
+
+
 def upgrade_notes(root: Path, archetype: str) -> list[str]:
     """Manual merge hints for existing files that were intentionally left untouched."""
     vault = root / ".bc-agent"
     notes: list[str] = []
-    if archetype in {"code", "ops", "hybrid"}:
+    if archetype in VISIBLE_ARCHETYPES:
         map_path = vault / "map.md"
         if map_path.exists() and "- `" in map_path.read_text(errors="ignore"):
             notes.append("`.bc-agent/map.md` should use real Markdown links for in-vault targets")
+        legacy = [name for name in ("tasks", "decisions", "research", "scratch", "out-of-scope", "home.md")
+                  if (vault / name).exists()]
+        if archetype != "hybrid":
+            legacy += [name for name in ("project", "index.md") if (vault / name).exists()]
+        if legacy:
+            notes.append(
+                "earlier-layout paths exist under .bc-agent (" + ", ".join(sorted(legacy)) + "); "
+                "they were left in place and nothing was moved — migrating them to the visible "
+                "layout is a separate, explicit step (see MIGRATIONS.md)")
+        agents_path = vault / "AGENTS.md"
+        if agents_path.exists() and not _contains(agents_path, WHERE_THINGS_GO_HEADING + "\n\n"):
+            notes.append("`.bc-agent/AGENTS.md` has no \"Where things go\" table; skills cannot look paths up until it is added")
+        if archetype == "hybrid":
+            notes.extend(_teach_notes(root))
         return notes
 
     # This contract applies to every archetype. Keep it outside the code/hybrid
@@ -1255,32 +1525,7 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
             notes.append(message)
 
     if archetype in {"learning", "hybrid"}:
-        adapter = vault / "references" / "teach-skill.md"
-        if adapter.exists():
-            try:
-                adapter_text = adapter.read_text(encoding="utf-8")
-            except OSError:
-                adapter_text = ""
-            if not is_valid_teach_adapter(adapter_text):
-                notes.append(
-                    "existing references/teach-skill.md is not the explicit v1 teach adapter "
-                    "(exact first line plus the complete hosted path map); merge the generated "
-                    "path map by hand after checking existing state"
-                )
-        standalone_paths = (
-            root / "MISSION.md",
-            root / "REVIEW.md",
-            root / "GLOSSARY.md",
-            root / "RESOURCES.md",
-            root / "NOTES.md",
-            root / "learning-records",
-            root / "lessons",
-        )
-        if any(path.exists() for path in standalone_paths):
-            notes.append(
-                "standalone teach state exists outside .bc-agent; do not migrate or copy it "
-                "automatically — preserve it and ask the user before choosing between competing homes"
-            )
+        notes.extend(_teach_notes(root))
 
     # These existing upgrade hints depend on the code/hybrid architecture
     # overlay and remain scoped to those archetypes.
