@@ -1632,3 +1632,9 @@ Applied review findings 1–17: visible-layout runs refuse earlier-layout projec
 
 ## [2026-11-12] implement | bc-init-agent ops open questions and hybrid shared glossary
 Owner decisions: ops/hybrid drop `docs/open-questions/` (open questions become work-item steps, planned items or ideas lines), and a hybrid project's `teach` uses the root `glossary.md` via a second valid adapter map; hybrid no longer generates `project/overview.md`. teach SKILL shows both Glossary variants. `bc-pytest concepts/bc-init-agent/tests concepts/teach`: 107 passed; not pressure-tested (teach scenario 5 written), not redeployed.
+
+## [2026-11-12] implement | bc-wiki-maintain visible-layout lint (W2)
+`wiki_lint.py` detects visible-layout projects by their "Where things go" table, drops vault demands there, and checks work folders through the table's paths (duplicate numbers, done month folders, `Status:` lines, empty Outcome as errors; item names, missing `plan.md`, missing role paths as warnings). `SKILL.md` routes promotion to table roles and keeps the promotion timer vault-only. The parser is a verbatim copy guarded by a drift test. Not yet pressure-tested.
+
+## [2026-11-12] implement | visible-layout role lookup in dependent skills (W3)
+`triage`, `bc-drain-issues`, `bc-plan-to-issues`, `improve-codebase-architecture`, `diagnosing-bugs`, `prototype`, `handoff` and `domain-modeling` look glossary, decisions, research, ideas and work folders up in the project's "Where things go" table, with their earlier paths as the stated fallback. Rejections become dropped work items with the reason; drain shows status by moving the item and carries the claim-before-work rule in its body; a plan is a work item; architecture reviews save to the research role and route findings by the owner's choice, with the inbox and ledger retired where the table exists. Relationship edges to the table contract added. Not yet pressure-tested; held on branch `w1-visible-layout`, not deployed.

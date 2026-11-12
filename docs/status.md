@@ -2,7 +2,7 @@
 
 # Status
 
-45 concepts. 0 need testing, 1 not deployed, 23 deployed with a known gap.
+45 concepts. 0 need testing, 1 not deployed, 27 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -17,7 +17,7 @@ Nothing. Every deployed concept has a recorded run.
 |---|---|---|---|
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | not-run | never |
 
-## Deployed with a known gap (23)
+## Deployed with a known gap (27)
 
 Passing overall, but each names a check that was never run or a target never
 tested. See the concept's `## Tests` section for what is missing.
@@ -34,10 +34,14 @@ tested. See the concept's `## Tests` section for what is missing.
 | [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-10-30 | yes |
 | [diagnosing-bugs](../concepts/diagnosing-bugs/CONCEPT.md) | pressure | 2026-07-16 | 2026-06-21 |
 | [dispatching-parallel-agents](../concepts/dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [domain-modeling](../concepts/domain-modeling/CONCEPT.md) | accuracy | 2026-10-22 | yes |
 | [executing-plans](../concepts/executing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [finishing-development-branch](../concepts/finishing-development-branch/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [handoff](../concepts/handoff/CONCEPT.md) | pressure | 2026-08-21 | 2026-08-21 |
+| [improve-codebase-architecture](../concepts/improve-codebase-architecture/CONCEPT.md) | pressure | 2026-08-20 | 2026-06-21 |
 | [issue-slicing](../concepts/issue-slicing/CONCEPT.md) | pressure | 2026-08-17 | yes |
 | [prompting-agents](../concepts/prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
+| [prototype](../concepts/prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [show-me](../concepts/show-me/CONCEPT.md) | pressure | 2026-11-04 | yes |
 | [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
@@ -48,6 +52,6 @@ tested. See the concept's `## Tests` section for what is missing.
 | [using-git-worktrees](../concepts/using-git-worktrees/CONCEPT.md) | pressure | 2026-09-22 | yes |
 | [writing-plans](../concepts/writing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
 
-## Passing and deployed (21)
+## Passing and deployed (17)
 
-[brainstorming](../concepts/brainstorming/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [domain-modeling](../concepts/domain-modeling/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [handoff](../concepts/handoff/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [improve-codebase-architecture](../concepts/improve-codebase-architecture/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [prototype](../concepts/prototype/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [security-audit](../concepts/security-audit/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [to-tickets](../concepts/to-tickets/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md)
+[brainstorming](../concepts/brainstorming/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [security-audit](../concepts/security-audit/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [to-tickets](../concepts/to-tickets/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md)

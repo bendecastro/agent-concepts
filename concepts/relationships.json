@@ -24,7 +24,7 @@
       "to": "bc-drain-issues",
       "relation": "depends_on_contract",
       "required": true,
-      "when": "generated execution guidance",
+      "when": "generated execution guidance for vault archetypes",
       "source": "concepts/bc-init-agent/body/scaffold.py",
       "reason": "Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol."
     },
@@ -470,6 +470,96 @@
       "when": "explanation diagrams",
       "source": "concepts/ui-design/body/SKILL.md",
       "reason": "Explanation diagrams belong to show-me, not product UI design."
+    },
+    {
+      "from": "bc-wiki-maintain",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/bc-wiki-maintain/CONCEPT.md",
+      "reason": "The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ."
+    },
+    {
+      "from": "triage",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/triage/CONCEPT.md",
+      "reason": "Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules."
+    },
+    {
+      "from": "bc-drain-issues",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/bc-drain-issues/CONCEPT.md",
+      "reason": "Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules."
+    },
+    {
+      "from": "bc-plan-to-issues",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/bc-plan-to-issues/CONCEPT.md",
+      "reason": "Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template."
+    },
+    {
+      "from": "improve-codebase-architecture",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/improve-codebase-architecture/CONCEPT.md",
+      "reason": "Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject."
+    },
+    {
+      "from": "diagnosing-bugs",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/diagnosing-bugs/CONCEPT.md",
+      "reason": "Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback."
+    },
+    {
+      "from": "prototype",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/prototype/CONCEPT.md",
+      "reason": "Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback."
+    },
+    {
+      "from": "handoff",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/handoff/CONCEPT.md",
+      "reason": "Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback."
+    },
+    {
+      "from": "domain-modeling",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/domain-modeling/CONCEPT.md",
+      "reason": "Resolves glossary, decisions, research, ideas and work folders in the scaffolded table, with its earlier paths as fallback."
+    },
+    {
+      "from": "domain-modeling",
+      "to": "teach",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "visible-layout hybrid project",
+      "source": "concepts/domain-modeling/body/SKILL.md",
+      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; domain-modeling asks before removing or redefining terms it did not add."
     }
   ]
 }
