@@ -164,6 +164,16 @@ docs/
     that moves becomes a relative Markdown link. Why: the Obsidian settings are retired, and
     plain links resolve in any viewer and for agents.
 
+### Owner decisions at close-out (2026-11-12)
+
+33. **The lint reports anything under `.bc-agent/` that is not agent mechanics (owner,
+    2026-11-12).** In a visible-layout project every direct entry other than `AGENTS.md`,
+    `map.md`, `log.md`, `conventions/`, `references/`, `templates/` (plus a hybrid project's teach
+    paths) is a work-folder error, `scratch/` and a leftover `.obsidian/` included. A project
+    declares extra mechanics a tool reads by path in an optional `agent-extras` table row. Why:
+    `prototype` followed a user's explicit scratch path over the skill's wording in three pressure
+    rounds, so wording alone does not hold; a deterministic check does.
+
 ## Affected concepts
 
 Literal-path consumers found by search on 2026-11-12; indirect consumers may exist.

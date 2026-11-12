@@ -1133,6 +1133,10 @@ LAYOUT_ROLES = (
     "decisions", "research", "glossary", "requirements", "architecture",
     "project-skills", "project-agents",
 )
+# Role keys a project may add to its table; the scaffold does not write them.
+# agent-extras lists, comma-separated, extra `.bc-agent/` entries a tool reads by path,
+# so bc-wiki-maintain's lint accepts them as agent mechanics.
+OPTIONAL_LAYOUT_ROLES = ("agent-extras",)
 
 _BASE_ROWS = (
     ("work-planned", "work/1-planned/", "agreed work that has not started"),

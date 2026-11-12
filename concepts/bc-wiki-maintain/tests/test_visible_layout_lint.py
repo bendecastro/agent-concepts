@@ -263,3 +263,66 @@ def test_two_roles_with_the_same_path_do_not_count_items_twice(tmp_path):
     write(root / "work/1-planned/007-a.md")
     _code, report = lint(root)
     assert findings(report, "duplicate-number") == []
+
+
+# --- .bc-agent/ holds agent mechanics only (owner decision 2026-11-12) ---------
+
+def test_every_visible_archetype_scaffold_has_no_agent_mechanics_findings(tmp_path):
+    for archetype in ("code", "ops", "hybrid"):
+        root = scaffold(tmp_path / archetype, archetype)
+        _code, report = lint(root)
+        assert findings(report, "agent-mechanics") == [], archetype
+
+
+def test_lint_allows_exactly_the_bc_agent_entries_the_hybrid_scaffold_generates(tmp_path):
+    linter, contract = load("wiki_lint_mechanics", LINTER), load("scaffold_mechanics", SCAFFOLD)
+    root = tmp_path / "p"
+    vault = root / ".bc-agent"
+    generated = {
+        path.relative_to(vault).parts[0]
+        for path, _text, _root in contract.targets(root, "demo", "2026-11-12", "hybrid")
+        if path.is_relative_to(vault)
+    }
+    assert generated == linter.AGENT_MECHANICS_ENTRIES | linter.HYBRID_TEACH_ENTRIES
+
+
+def test_unexpected_entries_under_bc_agent_are_errors_naming_where_knowledge_lives(tmp_path):
+    root = scaffold(tmp_path / "p")
+    vault = root / ".bc-agent"
+    for folder in ("scratch", "research", "tasks", "decisions", "project", ".obsidian", "learning"):
+        write(vault / folder / "note.md", "# Note\n")
+    (vault / "stray.txt").write_text("x\n", encoding="utf-8")
+    (vault / ".DS_Store").write_text("x\n", encoding="utf-8")
+    commit_all(root)
+    code, report = lint(root)
+    found = findings(report, "agent-mechanics")
+    assert [entry["path"] for entry in found] == [
+        ".bc-agent/.obsidian", ".bc-agent/decisions", ".bc-agent/learning", ".bc-agent/project",
+        ".bc-agent/research", ".bc-agent/scratch", ".bc-agent/stray.txt", ".bc-agent/tasks"]
+    assert {entry["severity"] for entry in found} == {"error"}
+    assert "project knowledge lives at the table's role paths; `.bc-agent/` holds agent mechanics only" in found[0]["problem"]
+    assert code == 1
+    assert "- .bc-agent/scratch — " in lint_text(root)
+
+
+def test_agent_extras_row_allows_declared_bc_agent_entries(tmp_path):
+    root = scaffold(tmp_path / "p")
+    agents = root / ".bc-agent/AGENTS.md"
+    row = "| agent-extras | `.bc-agent/autoresearch/`, `.bc-agent/runs.jsonl` | records a tool reads by path |\n"
+    text = agents.read_text()
+    anchor = next(line for line in text.splitlines(keepends=True) if line.startswith("| project-agents |"))
+    agents.write_text(text.replace(anchor, anchor + row), encoding="utf-8")
+    write(root / ".bc-agent/autoresearch/run.md", "# Run\n")
+    (root / ".bc-agent/runs.jsonl").write_text("{}\n", encoding="utf-8")
+    write(root / ".bc-agent/scratch/x.md", "# X\n")
+    _code, report = lint(root)
+    assert [entry["path"] for entry in findings(report, "agent-mechanics")] == [".bc-agent/scratch"]
+    assert findings(report, "role-path") == []
+
+
+def test_vault_layout_keeps_its_folders_without_agent_mechanics_findings(tmp_path):
+    root = scaffold(tmp_path / "p", "learning")
+    write(root / ".bc-agent/scratch/x.md", "# X\n")
+    _code, report = lint(root)
+    assert report["layout"] == "vault"
+    assert report["work_findings"] == []

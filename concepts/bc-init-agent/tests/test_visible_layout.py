@@ -586,3 +586,17 @@ def test_hybrid_root_glossary_is_not_standalone_teach_state_on_case_insensitive_
     names = {entry.name for entry in root.iterdir()}
     if 'glossary.md' in names and 'GLOSSARY.md' in names:  # only a case-sensitive filesystem holds both
         assert any('standalone teach state' in note for note in module._teach_notes(root))
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_agent_extras_is_an_optional_role_the_scaffold_does_not_generate(tmp_path, archetype):
+    module = _module()
+    assert module.OPTIONAL_LAYOUT_ROLES == ('agent-extras',)
+    assert 'agent-extras' not in module.LAYOUT_ROLES
+    roles = module.parse_where_things_go((_scaffold(tmp_path, archetype) / '.bc-agent/AGENTS.md').read_text())
+    assert 'agent-extras' not in roles
+    linter = importlib.util.spec_from_file_location(
+        'wiki_lint_roles', SCAFFOLD.parents[2] / 'bc-wiki-maintain/body/wiki_lint.py')
+    lint_module = importlib.util.module_from_spec(linter)
+    linter.loader.exec_module(lint_module)
+    assert lint_module.AGENT_EXTRAS_ROLE == 'agent-extras'

@@ -453,11 +453,14 @@ def work_findings(project: Path, table: dict[str, str], agents_text: str) -> lis
                                      "finished or dropped item has no filled ## Outcome section.",
                                      "write what happened, or why it was dropped, under ## Outcome"))
     for role, path in table.items():
+        if role == AGENT_EXTRAS_ROLE:
+            continue  # a list of `.bc-agent/` entries, checked by agent_mechanics_findings
         if not path or (project / path).exists() or "created on first need" in role_notes(agents_text, role).lower():
             continue
         found.append(finding("warning", "role-path", project / path, project,
                              f"the {role} path in the Where things go table does not exist.",
                              "create it, or correct the path in .bc-agent/AGENTS.md"))
+    found.extend(agent_mechanics_findings(project, table, agents_text))
     for number, items in sorted(numbered.items()):
         if len(items) > 1:
             for item in items:
@@ -467,10 +470,59 @@ def work_findings(project: Path, table: dict[str, str], agents_text: str) -> lis
     return found
 
 
-SKIP_DIR_NAMES = {".git", ".obsidian", "scratch", "temp", "node_modules", "vendor"}
+# `.bc-agent/` holds agent mechanics only (owner decision 2026-11-12, after `prototype`
+# kept writing to a scratch folder the user named). Every other direct entry is an error.
+AGENT_MECHANICS_ENTRIES = {"AGENTS.md", "map.md", "log.md", "conventions", "references", "templates"}
 # Folders a hosted teach workspace owns under `.bc-agent/` (bc-init-agent's
 # teach-workspace row); its index.md catalogs these and nothing else.
 TEACH_OWNED_DIRS = {"learning", "sources", "concepts", "sessions", "questions"}
+# What bc-init-agent's scaffold writes under `.bc-agent/` for the hosted teach workspace of
+# a hybrid project; tests/test_visible_layout_lint.py fails when the scaffold differs.
+HYBRID_TEACH_ENTRIES = TEACH_OWNED_DIRS | {"index.md"}
+AGENT_EXTRAS_ROLE = "agent-extras"
+TEACH_WORKSPACE_ROLE = "teach-workspace"
+
+
+def agent_extras(agents_text: str) -> set[str]:
+    """Entry names a project declares in its optional agent-extras row.
+
+    Read from the raw Path cell, because the shared parser keeps only the first
+    backticked path and this cell lists several, comma-separated.
+    """
+    match = re.search(r"^\|\s*" + re.escape(AGENT_EXTRAS_ROLE) + r"\s*\|([^|\n]*)\|", agents_text, re.M)
+    if not match:
+        return set()
+    names = set()
+    for item in match.group(1).split(","):
+        item = item.strip().strip("`").strip().removeprefix("./").removeprefix(".bc-agent/").strip("/")
+        if item:
+            names.add(item.split("/", 1)[0])
+    return names
+
+
+def agent_mechanics_findings(project: Path, table: dict[str, str], agents_text: str) -> list[dict]:
+    """Errors for entries directly under `.bc-agent/` that are not agent mechanics.
+
+    Hidden entries are skipped (`.gitkeep`, `.DS_Store`), except `.obsidian/`: the
+    Obsidian settings are retired in this layout, so a leftover one is reported.
+    """
+    vault = project / ".bc-agent"
+    allowed = AGENT_MECHANICS_ENTRIES | agent_extras(agents_text)
+    if table.get(TEACH_WORKSPACE_ROLE):
+        allowed |= HYBRID_TEACH_ENTRIES
+    found = []
+    for entry in sorted(vault.iterdir()) if vault.is_dir() else []:
+        if entry.name in allowed or (entry.name.startswith(".") and entry.name != ".obsidian"):
+            continue
+        found.append(finding("error", "agent-mechanics", entry, project,
+                             "not agent mechanics: project knowledge lives at the table's role paths; "
+                             "`.bc-agent/` holds agent mechanics only.",
+                             "move it to the role path in the Where things go table (for example the research "
+                             "folder), delete it, or list it in an agent-extras row if a tool reads it there"))
+    return found
+
+
+SKIP_DIR_NAMES = {".git", ".obsidian", "scratch", "temp", "node_modules", "vendor"}
 
 def maintenance_report(path: Path, vault: Path) -> bool:
     item = path.relative_to(vault)

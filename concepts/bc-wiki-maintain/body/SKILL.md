@@ -183,7 +183,9 @@ Read the report and act on it. Broken or ambiguous links that affect a candidate
 resolved by the smallest additive change or reported as a blocker; never hide them with a
 rewrite. In a vault, missing `findings/` and `decisions/` index entries are fixed by the
 additive index update in Gate 1. In a visible-layout project the detector also reports
-work-folder errors and warnings, each with its path and a one-line fix; report them as
+work-folder errors and warnings, each with its path and a one-line fix (including any entry
+directly under `.bc-agent/` that is not agent mechanics: project knowledge lives at the table's
+role paths, and a tool's own records there must be listed in the table's `agent-extras` row); report them as
 pre-existing findings and leave them alone in this pass, because moving or renumbering work
 items is not log promotion. Distinguish pre-existing findings from defects introduced by this pass. The
 detector is read-only; its report is evidence, not a license to skip the safety gates.

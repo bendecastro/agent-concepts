@@ -33,6 +33,19 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   those and not agent mechanics. Promotion routes durable entries to the table's roles
   (glossary, decisions, research; conflicts to the ideas role) and never recreates a vault
   catalog.
+- **`.bc-agent/` holds agent mechanics only, checked (owner decision 2026-11-12).** In visible
+  mode every entry directly under the vault root other than `AGENTS.md`, `map.md`, `log.md`,
+  `conventions/`, `references/` and `templates/` is an `agent-mechanics` error naming where
+  project knowledge belongs. A hybrid project (table has `teach-workspace`) also may keep the
+  teach paths its scaffold writes there (`learning/`, `sources/`, `concepts/`, `sessions/`,
+  `questions/`, `index.md`); a test scaffolds a hybrid project and compares the two lists. A
+  project declares extra mechanics a tool reads by path in an optional `agent-extras` row, whose
+  Path cell lists `.bc-agent/` entries comma-separated; that cell is read raw, because the shared
+  parser keeps only the first backticked path. Hidden entries are skipped except `.obsidian/`,
+  which is retired in this layout. `scratch/` is seen here although page scanning skips it. Why:
+  a pressure test showed `prototype` following a user's explicit scratch path over the skill's
+  wording three times, so the backstop is deterministic, not more wording
+  ([results](../bc-init-agent/tests/pressure-dependent-skills-results-2026-11-12.md)).
 - **The table parser is a checked copy, not an import.** `bc-init-agent/body/scaffold.py` owns
   `parse_where_things_go`; `wiki_lint.py` carries a verbatim copy, and
   `tests/test_visible_layout_lint.py` fails when the two differ. Importing through
