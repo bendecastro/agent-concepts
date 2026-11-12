@@ -19,8 +19,9 @@ Adaptively initialize project-local agent context.
   a project with a justified exception then changes one table, not every skill.
 - **Learning and knowledge keep the `.bc-agent/` vault.** Why: `teach` reads exact vault paths;
   changing them is a separate plan.
-- **Hybrid also keeps the paths the hosted `teach` adapter maps under `.bc-agent/`**, including a
-  separate teach glossary in `.bc-agent/project/overview.md`, until `teach` is redesigned.
+- **Hybrid also keeps the paths the hosted `teach` adapter maps under `.bc-agent/`**, except the
+  glossary: its adapter maps `teach`'s glossary to the project's root `glossary.md`, so a hybrid
+  project has one glossary, shared by the project and the learner.
 
 ## Operating modes and wiki archetypes
 
@@ -34,7 +35,7 @@ Modes:
 
 Archetypes:
 - **code** — default project execution workspace: work items (a plan or feature is one item), decision records, research including architecture reviews, validation, commands, architecture-runway nudge tracking, `/bc-plan-to-issues` → `/bc-drain-issues`.
-- **ops** — operational/system workspace: the code layout plus `docs/components/` (verified state of real systems) and `docs/open-questions/`; findings go to `docs/research/` and plans are work items; evidence before plan.
+- **ops** — operational/system workspace: the code layout plus `docs/components/` (verified state of real systems); findings go to `docs/research/`, plans are work items, and open questions are work-item steps, planned items or ideas lines (the rule is in the generated `.bc-agent/AGENTS.md`); evidence before plan.
 
 ### Learning archetype adapter
 
@@ -47,13 +48,14 @@ Archetypes:
   `project/overview.md`, and catalog/history → shared `index.md` / `log.md`.
   Lessons and session artifacts reuse existing `sessions/`; no `learning/sessions/`
   directory is created. When the marker is valid, teach owns the Glossary section of
-  `project/overview.md`; planning and maintenance skills leave it alone. The adapter points
+  `project/overview.md`; planning and maintenance skills leave it alone. (Hybrid's adapter maps
+  the glossary to the root `glossary.md` instead; see **hybrid**.) The adapter points
   at teach; it does not copy pedagogy, auto-run initialization, or migrate standalone files.
   A host choice alone never migrates state; teach's separate explicit migration operation is
   destructive and verifies every destination before deleting standalone originals. `questions/`
   is for open questions only, not a second review queue or evidence store.
 - **knowledge** — LLM-maintained knowledge graph: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
-- **hybrid** — the ops layout plus a hosted `teach` workspace, for a folder that both ships or operates something and supports learning. The scaffold adds exactly the paths the teach adapter maps under `.bc-agent/` (`learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, the teach glossary in `project/overview.md`, and the teach catalog `index.md`); do not add a parallel learning state tree. Project work still goes where the table says, not into the teach paths.
+- **hybrid** — the ops layout plus a hosted `teach` workspace, for a folder that both ships or operates something and supports learning. The scaffold adds exactly the paths the teach adapter maps under `.bc-agent/` (`learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, and the teach catalog `index.md`); do not add a parallel learning state tree. Its adapter maps `teach`'s glossary to the project's root `glossary.md`, shared: `teach` adds the terms the learner needs and does not remove or redefine project terms without asking. Project work still goes where the table says, not into the teach paths.
 
 ## Process
 
@@ -91,7 +93,7 @@ Archetypes:
    ```
    python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>" --archetype "<code|ops|learning|knowledge|hybrid>"
    ```
-   Code, ops and hybrid create root `glossary.md`, lifecycle folders under `work/`, `docs/decisions/`, `docs/research/`, and `.bc-agent/` mechanics with a Where things go table and work-item template. Hybrid also retains the hosted teach adapter and its mapped paths, including its separate teach glossary and catalog. Learning and knowledge keep the existing vault including Obsidian metadata. Existing files remain untouched unless forced; no project is migrated by this step.
+   Code, ops and hybrid create root `glossary.md`, lifecycle folders under `work/`, `docs/decisions/`, `docs/research/`, and `.bc-agent/` mechanics with a Where things go table and work-item template. Hybrid also retains the hosted teach adapter and its mapped paths and catalog; its teach glossary is the root `glossary.md`. Learning and knowledge keep the existing vault including Obsidian metadata. Existing files remain untouched unless forced; no project is migrated by this step.
 
 7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, or `references/agent-skills.md`). When the notes report earlier-layout paths under `.bc-agent/` (only possible with `--allow-earlier-layout`), leave them in place and say so in the close-out: moving them to the visible layout is a separate migration the user approves.
 

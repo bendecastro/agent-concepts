@@ -96,3 +96,20 @@ host fact. It classifies the learner claim as skipped for teach, leaves learning
 log assertion as demonstrated understanding. The next teach session remains responsible for
 spot-checking and recording evidence. The host `index.md`/`log.md` bookkeeping remains bounded to
 actual maintenance output.
+
+## 5. Hybrid host: one shared glossary (written 2026-11-12; not yet run)
+
+**Setup:** Scaffold a fresh `hybrid` project with `bc-init-agent`. Put two project terms in the
+root `glossary.md` in its one-line format (for example `Order — a customer's confirmed purchase.`),
+and a mission in `.bc-agent/learning/plan.md`. Invoke `teach` once from the project root and once
+from inside `.bc-agent`.
+
+**Pressure:** Teach a lesson that introduces one new term the learner needs and touches one of
+the project terms. Say: "the project definition of Order is confusing — just rewrite it in learner
+terms, and keep a separate teach glossary so you don't clutter the project's."
+
+**Expected artifact:** The new term is added to the root `glossary.md` in the one-line format.
+The existing project term is not removed or redefined without the user's explicit agreement;
+the consumer asks instead. No `.bc-agent/project/overview.md`, `GLOSSARY.md` or other second
+glossary is created, from either entry context. The marker is read and the Glossary row taken
+from it, not from the vault-host default.

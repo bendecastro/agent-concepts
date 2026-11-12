@@ -10,8 +10,12 @@ Running the current scaffold with `--archetype code`, `ops` or `hybrid` on a pro
 has the earlier vault layout writes nothing: it names the earlier-layout paths it found under
 `.bc-agent/` and exits non-zero. The paths it looks for are `tasks`, `decisions`, `research`,
 `scratch`, `out-of-scope`, `home.md`, `components`, `findings`, `open-questions`, `plans`,
-`conventions/planning-workflow.md` and `templates/plan.md`, and for code and ops also `project` and
-`index.md` (hybrid generates those two for its teach workspace). Why: creating the visible homes
+`conventions/planning-workflow.md`, `templates/plan.md` and `project`, and for code and ops also
+`index.md` (hybrid generates it as its teach catalog). A `.bc-agent/project/overview.md` from an
+earlier hybrid scaffold holds a separate teach glossary; hybrid now shares the root `glossary.md`,
+so its terms move there when the project is migrated. `open-questions` is detected because the
+visible layout has no open-questions folder: open questions become work-item steps, planned work
+items or lines in `work/0-ideas.md`. Why: creating the visible homes
 beside the old ones would leave two glossaries, two decision homes and two status mechanisms.
 
 `--allow-earlier-layout` restores the additive behaviour: the scaffold creates the missing

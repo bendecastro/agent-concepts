@@ -22,7 +22,8 @@ def test_code_and_ops_generated_text_has_no_retired_paths(tmp_path):
 def test_ops_scaffold_keeps_distinct_operations_knowledge(tmp_path):
     subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(tmp_path), '--slug', 'demo', '--archetype', 'ops'], check=True)
     assert (tmp_path / 'docs/components/README.md').is_file()
-    assert (tmp_path / 'docs/open-questions/README.md').is_file()
+    assert not (tmp_path / 'docs/open-questions').exists()
+    assert not (tmp_path / '.bc-agent/templates/open-question.md').exists()
     assert not (tmp_path / 'docs/plans').exists()
 
 
@@ -127,13 +128,10 @@ CODE_FILES = {
 OPS_FILES = CODE_FILES | {
     '.bc-agent/templates/component.md',
     '.bc-agent/templates/finding.md',
-    '.bc-agent/templates/open-question.md',
     'docs/components/README.md',
-    'docs/open-questions/README.md',
 }
 HYBRID_FILES = OPS_FILES | {
     '.bc-agent/index.md',
-    '.bc-agent/project/overview.md',
     '.bc-agent/learning/plan.md',
     '.bc-agent/learning/review.md',
     '.bc-agent/learning/notes.md',
@@ -197,7 +195,7 @@ def test_where_things_go_roles_resolve_in_scaffolded_tree(tmp_path, archetype):
     else:
         assert {role: roles[role] for role in CODE_ROLES} == CODE_ROLES
         assert roles['components'] == 'docs/components/'
-        assert roles['open-questions'] == 'docs/open-questions/'
+        assert 'open-questions' not in roles
     if archetype == 'hybrid':
         assert roles['teach-workspace'] == '.bc-agent/references/teach-skill.md'
     assert roles['project-agents'] == ''
@@ -317,9 +315,16 @@ def test_each_earlier_layout_path_is_detected(tmp_path, rel):
     assert rel.removeprefix('.bc-agent/').split('/')[0] in result.stdout or rel.removeprefix('.bc-agent/') in result.stdout
 
 
-def test_hybrid_does_not_count_its_own_teach_paths(tmp_path):
-    _write(tmp_path, {'.bc-agent/project/overview.md': '# Teach\n', '.bc-agent/index.md': '# Catalog\n'})
+def test_hybrid_does_not_count_its_own_teach_catalog(tmp_path):
+    _write(tmp_path, {'.bc-agent/index.md': '# Catalog\n'})
     assert _raw(tmp_path, 'hybrid').returncode == 0
+
+
+def test_hybrid_counts_project_folder_as_earlier_layout(tmp_path):
+    _write(tmp_path, {'.bc-agent/project/overview.md': '# Teach\n'})
+    result = _raw(tmp_path, 'hybrid')
+    assert result.returncode != 0
+    assert 'project' in result.stdout
 
 
 @pytest.mark.parametrize('archetype', VISIBLE)
@@ -337,7 +342,7 @@ def test_allow_earlier_layout_creates_missing_files_beside_old_ones(tmp_path, ar
 def test_force_never_overwrites_project_files_outside_bc_agent(tmp_path):
     root = _scaffold(tmp_path, 'ops')
     mine = {'glossary.md': 'my terms\n', 'work/0-ideas.md': 'my ideas\n',
-            'docs/components/README.md': 'my hosts\n', 'docs/open-questions/README.md': 'mine\n',
+            'docs/components/README.md': 'my hosts\n',
             'AGENTS.md': 'my root\n', '.bc-agent/log.md': 'old log\n'}
     _write(root, mine)
     _run(root, 'ops', '--force')
@@ -398,8 +403,9 @@ def test_code_and_ops_skill_map_has_no_vault_wording(tmp_path, archetype):
 def test_ops_templates_are_linked_and_used(tmp_path, archetype):
     root = _scaffold(tmp_path, archetype)
     map_text = (root / '.bc-agent/map.md').read_text()
-    for name in ('component', 'finding', 'open-question'):
+    for name in ('component', 'finding'):
         assert f'[templates/{name}.md](templates/{name}.md)' in map_text
+    assert 'open-question' not in map_text
     agents = (root / '.bc-agent/AGENTS.md').read_text()
     assert 'under `docs/components/` from [templates/component.md](templates/component.md)' in agents
     assert 'under `docs/research/` from [templates/finding.md](templates/finding.md)' in agents
@@ -409,6 +415,32 @@ def test_code_map_and_agents_do_not_mention_ops_templates(tmp_path):
     root = _scaffold(tmp_path, 'code')
     assert 'templates/component.md' not in (root / '.bc-agent/map.md').read_text()
     assert 'docs/components/' not in (root / '.bc-agent/AGENTS.md').read_text()
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_open_questions_live_in_work_items(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    text = (root / '.bc-agent/AGENTS.md').read_text()
+    rule = ' '.join(text[text.index('## Work items'):text.index('## Keep it current')].split())
+    assert 'An unanswered question that blocks a piece of work is a step in that work item' in rule
+    assert 'a planned work item whose answer lands in `docs/research/`' in rule
+    assert 'a line in `work/0-ideas.md`' in rule
+    assert 'Why: `work/` stays the single place that shows what is pending' in rule
+    generated = ' '.join(p.read_text() for p in root.rglob('*.md'))
+    assert 'open-questions/' not in generated
+
+
+def test_hybrid_shares_the_root_glossary_with_teach(tmp_path):
+    root = _scaffold(tmp_path, 'hybrid')
+    agents = (root / '.bc-agent/AGENTS.md').read_text()
+    rows = {row.split('|')[1].strip(): row for row in agents.splitlines() if row.startswith('| ')}
+    assert 'teach' not in rows['glossary']
+    assert '`glossary.md`' in rows['teach-workspace']
+    assert 'project/overview.md' not in rows['teach-workspace']
+    section = ' '.join(agents[agents.index('## Hosted teach workspace'):].split())
+    assert 'shared with the project' in section
+    assert 'project/overview.md' not in section
+    assert 'overview' not in (root / '.bc-agent/index.md').read_text()
 
 
 def test_hybrid_points_orientation_at_table_and_links_teach_pages(tmp_path):

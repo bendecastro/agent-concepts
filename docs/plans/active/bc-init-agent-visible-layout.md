@@ -129,6 +129,18 @@ docs/
     as exceptions in its table. A second vault-less project that follows ordinary open-source
     conventions is left alone.
 
+### Owner decisions after W1 (2026-11-12)
+
+24. **Ops has no open-questions folder.** `docs/open-questions/` and its template are dropped.
+    A question that blocks work is a step in that work item; a standalone question someone must
+    investigate is a planned work item whose answer lands in `docs/research/`; one not worth an
+    item yet is a line in `work/0-ideas.md`. Why: `work/` stays the single place that shows what
+    is pending.
+25. **A hybrid project has one glossary.** `teach` uses the project's root `glossary.md`,
+    shared: it adds and refines the terms the learner needs and does not remove or redefine
+    project terms without asking. Hybrid no longer generates `.bc-agent/project/overview.md`;
+    the learning archetype keeps teach's Glossary section there.
+
 ## Affected concepts
 
 Literal-path consumers found by search on 2026-11-12; indirect consumers may exist.

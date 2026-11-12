@@ -126,6 +126,40 @@ in place; this marker alone implies no migration or copied pedagogy.
 """
 
 
+def _hybrid_teach_adapter() -> str:
+    """The adapter for a visible-layout hybrid host: only the glossary differs.
+
+    The glossary is the project's root `glossary.md`, shared with the project, so a
+    hybrid project keeps one vocabulary instead of a second teach-only glossary.
+    """
+    text = TEACH_ADAPTER
+    for old, new in (
+        ("| Glossary | the existing Glossary section of `project/overview.md` | `teach` |",
+         "| Glossary | the project's root `glossary.md` (`../glossary.md`), shared with the project | the project; `teach` adds and refines learner terms |"),
+        ("""valid, `teach` owns the Glossary section of `project/overview.md`; planning and maintenance
+skills must leave that section alone, while non-glossary host sections remain available to
+host maintenance.""",
+         """valid, the Glossary is `glossary.md` at the project root, one level above `<teach-root>`,
+shared with the project: `teach` adds and refines the terms the learner needs there, in the
+file's one-line format, and does not remove or redefine project terms without asking;
+`domain-modeling` and planning skills keep using the same file."""),
+        ("| `GLOSSARY.md` | Glossary section of `project/overview.md` | every term and definition represented |",
+         "| `GLOSSARY.md` | the project's root `glossary.md` (`../glossary.md`) | every term represented in the one-line format; no project term removed or redefined without asking |"),
+        ("""but it must not fabricate learning evidence, edit teach-owned records or Glossary terms, or
+advance the review queue.""",
+         """but it must not fabricate learning evidence, edit teach-owned records, or advance the
+review queue. The shared root `glossary.md` is a project file: keep the terms the learner
+needs when maintaining it."""),
+    ):
+        if old not in text:
+            raise RuntimeError(f"TEACH_ADAPTER text changed; update replacement {old!r}")
+        text = text.replace(old, new)
+    return text
+
+
+TEACH_ADAPTER_HYBRID = _hybrid_teach_adapter()
+
+
 def _teach_adapter_map_rows(text: str) -> tuple[tuple[str, str, str], ...] | None:
     """Return the hosted map rows from a marker, or None when its table is malformed."""
     lines = text.splitlines()
@@ -157,7 +191,8 @@ def is_valid_teach_adapter(text: str) -> bool:
     """Use one structural rule for scaffold upgrade notes and host selection."""
     return (
         text.startswith(TEACH_ADAPTER_MARKER + "\n")
-        and _teach_adapter_map_rows(text) == _teach_adapter_map_rows(TEACH_ADAPTER)
+        and _teach_adapter_map_rows(text) in {
+            _teach_adapter_map_rows(TEACH_ADAPTER), _teach_adapter_map_rows(TEACH_ADAPTER_HYBRID)}
         and bool(_teach_adapter_map_rows(text))
     )
 
@@ -1104,10 +1139,9 @@ _BASE_ROWS = (
 )
 _OPS_ROWS = (
     ("components", "docs/components/", "verified state of real systems, hosts, tools and services"),
-    ("open-questions", "docs/open-questions/", "unverified assumptions that gate or shape work"),
 )
 _TEACH_ROWS = (
-    ("teach-workspace", ".bc-agent/references/teach-skill.md", "path map of the hosted `teach` workspace; `teach` owns `learning/`, `sources/`, `concepts/`, `sessions/`, `questions/`, `index.md` and the Glossary section of `project/overview.md` under `.bc-agent/`"),
+    ("teach-workspace", ".bc-agent/references/teach-skill.md", "path map of the hosted `teach` workspace; `teach` owns `learning/`, `sources/`, `concepts/`, `sessions/`, `questions/` and `index.md` under `.bc-agent/`, and shares the project's `glossary.md`"),
 )
 
 
@@ -1116,11 +1150,7 @@ def layout_rows(archetype: str) -> tuple[tuple[str, str, str], ...]:
     if archetype in {"ops", "hybrid"}:
         rows += _OPS_ROWS
     if archetype == "hybrid":
-        rows = tuple(
-            (role, path, note + "; the `teach` glossary in `.bc-agent/project/overview.md` is separate")
-            if role == "glossary" else (role, path, note)
-            for role, path, note in rows
-        ) + _TEACH_ROWS
+        rows += _TEACH_ROWS
     return rows
 
 
@@ -1241,6 +1271,10 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   line. Why: the folders are the source of truth; an issue is a pointer to them.
 - **Undecided ideas and observations** are one line each in `work/0-ideas.md`. An idea
   becomes a numbered item in `work/1-planned/` once someone decides to do it.
+- **Open questions live in work items.** An unanswered question that blocks a piece of work
+  is a step in that work item. A standalone question that someone must investigate is a
+  planned work item whose answer lands in `docs/research/`. One not worth an item yet is a
+  line in `work/0-ideas.md`. Why: `work/` stays the single place that shows what is pending.
 
 ## Keep it current
 
@@ -1271,8 +1305,9 @@ HYBRID_TEACH_SECTION = """
 This project also hosts a `teach` learning workspace inside `.bc-agent/`. Read
 [references/teach-skill.md](references/teach-skill.md) before using `teach`: it is the
 explicit adapter for the host's learning paths. `teach` owns the mapped pedagogy,
-evidence, review state, and the Glossary section of `project/overview.md`. That glossary
-is the learner's vocabulary; the project glossary is `glossary.md` at the repository root.
+evidence and review state. There is one glossary: `glossary.md` at the repository root,
+shared with the project. `teach` adds and refines the terms the learner needs there and
+does not remove or redefine project terms without asking.
 Host search-first is for knowledge and learning-record retrieval. Teach may directly read
 mapped known mission/review/notes state and the shared catalog/recent history for session
 bookkeeping. Do not create a second `learning/sessions/` directory or migrate a standalone
@@ -1369,27 +1404,11 @@ table in [AGENTS.md](AGENTS.md).
 - [Mission](learning/plan.md)
 - [Review queue](learning/review.md)
 - [Notes](learning/notes.md)
-- [Overview and teach glossary](project/overview.md)
 - [Sources](sources/README.md)
 - [Concepts](concepts/README.md)
 - [Questions](questions/README.md)
 - [Sessions](sessions/README.md)
 - [Log](log.md)
-"""
-
-HYBRID_OVERVIEW = """# Teach Workspace Overview
-
-> One paragraph on what is being learned in `__SLUG__`. **TODO:** fill in.
-
-## Glossary
-
-The learner's vocabulary for the hosted `teach` workspace. `teach` owns this section;
-planning and maintenance skills leave it unchanged. The project's own vocabulary is in
-`glossary.md` at the repository root.
-
-<!-- Term — one-line canonical definition. -->
-
-_None captured yet._
 """
 
 
@@ -1407,7 +1426,6 @@ VISIBLE_OPS_MAP = """
 
 - [templates/component.md](templates/component.md)
 - [templates/finding.md](templates/finding.md)
-- [templates/open-question.md](templates/open-question.md)
 """
 
 VISIBLE_TEACH_MAP = """
@@ -1489,9 +1507,7 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
     if has_ops:
         ops = archetype_files("ops")
         root_files["docs/components/README.md"] = ops["components/README.md"]
-        root_files["docs/open-questions/README.md"] = ops["open-questions/README.md"].replace(
-            "linking findings/decisions", "linking research or decision records")
-        for name in ("component", "finding", "open-question"):
+        for name in ("component", "finding"):
             vault_files_[f"templates/{name}.md"] = ops[f"templates/{name}.md"]
     if archetype == "hybrid":
         # Exactly the paths the hosted teach adapter maps; nothing else from the vault.
@@ -1499,7 +1515,7 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
             {path: text for path, text in archetype_files("learning").items() if path != "archetype.md"})
         vault_files_.update(
             {path: text for path, text in archetype_files("hybrid").items() if path.startswith("concepts/")})
-        vault_files_["project/overview.md"] = HYBRID_OVERVIEW
+        vault_files_["references/teach-skill.md"] = TEACH_ADAPTER_HYBRID
         vault_files_["index.md"] = HYBRID_INDEX
         vault_files_["AGENTS.md"] = agents + HYBRID_TEACH_SECTION + CANONICAL_VAULT_READ_PATH
     vault = root / ".bc-agent"
@@ -1573,10 +1589,10 @@ EARLIER_LAYOUT_PATHS = (
 def earlier_layout_paths(root: Path, archetype: str) -> list[str]:
     """Paths under .bc-agent/ that belong to the earlier vault layout.
 
-    Hybrid legitimately generates `project/` and `index.md` for its teach workspace,
-    so those are not counted for hybrid.
+    Hybrid legitimately generates `index.md` as its teach catalog, so that is not
+    counted for hybrid.
     """
-    own = {"project", "index.md"} if archetype == "hybrid" else set()
+    own = {"index.md"} if archetype == "hybrid" else set()
     vault = root / ".bc-agent"
     return sorted(name for name in EARLIER_LAYOUT_PATHS
                   if name not in own and (vault / name).exists())

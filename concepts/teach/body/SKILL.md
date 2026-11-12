@@ -27,8 +27,8 @@ Before reading or writing any teaching state, resolve `<teach-root>` and both ca
    marker at `.bc-agent/references/teach-skill.md`; the directory containing that `.bc-agent` is
    the marker-owning project root. A valid marker is structurally complete only when its first
    line is exactly `<!-- teach-host-adapter: v1 -->` and its complete `## Hosted teach path map`
-   table exactly matches the approved map below. A prefix-only, missing-row, or altered-map file
-   is incomplete and is not a host contract. Read a valid marker before using host paths; it is
+   table exactly matches one of the two approved maps below (they differ only in the Glossary
+   row). A prefix-only, missing-row, or altered-map file is incomplete and is not a host contract. Read a valid marker before using host paths; it is
    the opt-in adapter for an existing initializer host, not an instruction to run `bc-init-agent`.
 2. Check standalone state (`MISSION.md`, `REVIEW.md`, `GLOSSARY.md`, `RESOURCES.md`, `NOTES.md`,
    `learning-records/`, or `lessons/`) in the current directory first. When a marker candidate is
@@ -49,14 +49,16 @@ Before reading or writing any teaching state, resolve `<teach-root>` and both ca
    until the user explicitly chooses and repairs the host.
 
 The host's schema and orientation remain owned by `bc-init-agent`; `teach` owns the mapped
-pedagogy, evidence, glossary content, source/knowledge content, and spaced-repetition state.
+pedagogy, evidence, source/knowledge content, spaced-repetition state, and the glossary terms
+the learner needs (in a hybrid host the glossary is shared with the project; see below).
 The marker is intentionally a thin path adapter, not a generic config framework or copied
 teach body.
 
 ### Hosted path map
 
-With a valid adapter, these logical teach surfaces use the existing host paths. All paths below
-are relative to `<teach-root>`:
+With a valid adapter, these logical teach surfaces use the existing host paths. The host's
+adapter file is the authority for the map: read it and use the paths it names. All paths below
+are relative to `<teach-root>`. A vault host (the `learning` archetype) uses this map:
 
 | Teach surface | Hosted path | Owner |
 |---|---|---|
@@ -70,6 +72,17 @@ are relative to `<teach-root>`:
 | Resource catalog | `references/teach-resources.md` | `teach` |
 | Glossary | the existing Glossary section of `project/overview.md` | `teach` |
 | Catalog and history | shared `index.md` and `log.md` | `bc-init-agent` host schema; `teach` updates teach entries |
+
+A visible-layout hybrid host (code or operations work plus learning) uses the same map except
+for the Glossary row, which names the project's root `glossary.md`, one level above `<teach-root>`:
+
+| Teach surface | Hosted path | Owner |
+|---|---|---|
+| Glossary | the project's root `glossary.md` (`../glossary.md`), shared with the project | the project; `teach` adds and refines learner terms |
+
+In a hybrid host there is one glossary. Add and refine the terms the learner needs there, in
+that file's one-line format, and do not remove or redefine project terms without asking the
+user; `domain-modeling` and planning skills keep using the same file.
 
 Do not create duplicate root `MISSION.md`, `REVIEW.md`, `GLOSSARY.md`, `RESOURCES.md`, or
 `NOTES.md` files in a hosted workspace. Do not create `learning/sessions/`; lessons and
@@ -110,13 +123,14 @@ untouched.
 | `sources/*` | existing `sources/` | each source arrives byte-identical |
 | `wiki/*` | existing `concepts/` | each knowledge page arrives byte-identical |
 | `RESOURCES.md` | `references/teach-resources.md` | every catalog entry represented |
-| `GLOSSARY.md` | Glossary section of `project/overview.md` | every term and definition represented |
+| `GLOSSARY.md` | the adapter's Glossary path: the Glossary section of `project/overview.md` (vault host) or the root `glossary.md` (hybrid host) | every term and definition represented; in a hybrid host, in the one-line format and with no project term removed or redefined without asking |
 | `index.md` | shared `index.md` | every teach catalog entry represented without replacing host orientation |
 | `log.md` | shared `log.md` | every teach history entry represented without replacing host history |
 
-When the adapter is valid, `teach` owns the Glossary section of `project/overview.md`; planning
-and maintenance skills must leave that section alone. Non-glossary host sections remain available
-to their existing owners. The host search path is for knowledge and learning-record retrieval;
+When the adapter maps the Glossary to the Glossary section of `project/overview.md` (vault
+host), `teach` owns that section; planning and maintenance skills must leave it alone, and
+non-glossary host sections remain available to their existing owners. When it maps the Glossary
+to the hybrid host's root `glossary.md`, the file is shared and the project owns it, as above. The host search path is for knowledge and learning-record retrieval;
 direct reads of known mission, review queue, and notes state remain correct. Use the host's
 canonical search path rather than `index.md` to locate knowledge pages or learning records.
 
@@ -240,7 +254,7 @@ Explorations should compound like everything else.
 Periodically (a reasonable default: every ~5 sessions, or when the user asks), health-check the workspace:
 
 - Contradictions between knowledge pages, or between knowledge and the resolved glossary
-  (`GLOSSARY.md` standalone; the Glossary section of `project/overview.md` hosted).
+  (`GLOSSARY.md` standalone; the adapter's Glossary path hosted).
 - Claims superseded by newer sources — and learning records that need `Status: superseded` as a result.
 - Orphan knowledge pages with no inbound links; concepts mentioned often but lacking a page.
 - Stale review-queue items and dead links in the resolved resource catalog.

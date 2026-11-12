@@ -32,6 +32,23 @@ def hosted_map(marker: str) -> list[tuple[str, str, str]]:
     return rows
 
 
+def hosted_maps(text: str) -> list[list[tuple[str, str, str]]]:
+    """Parse every table with the hosted-map header, in order."""
+    lines = text.splitlines()
+    header = "| Teach surface | Hosted path | Owner |"
+    maps = []
+    for start, line in enumerate(lines):
+        if line != header:
+            continue
+        rows = []
+        for row in lines[start + 2:]:
+            if not row.startswith("|"):
+                break
+            rows.append(tuple(cell.strip() for cell in row.strip().strip("|").split("|")))
+        maps.append(rows)
+    return maps
+
+
 EXPECTED_HOST_MAP = [
     ("Mission", "`learning/plan.md` (no hosted `MISSION.md`)", "`teach`"),
     ("Review queue", "`learning/review.md`", "`teach`"),
@@ -43,6 +60,14 @@ EXPECTED_HOST_MAP = [
     ("Resource catalog", "`references/teach-resources.md`", "`teach`"),
     ("Glossary", "the existing Glossary section of `project/overview.md`", "`teach`"),
     ("Catalog and history", "shared `index.md` and `log.md`", "`bc-init-agent` host schema; `teach` updates teach entries"),
+]
+HYBRID_GLOSSARY_ROW = (
+    "Glossary",
+    "the project's root `glossary.md` (`../glossary.md`), shared with the project",
+    "the project; `teach` adds and refines learner terms",
+)
+EXPECTED_HYBRID_HOST_MAP = [
+    HYBRID_GLOSSARY_ROW if row[0] == "Glossary" else row for row in EXPECTED_HOST_MAP
 ]
 
 
@@ -104,7 +129,7 @@ class TeachAdapterTests(unittest.TestCase):
             self.assertFalse((root / "MISSION.md").exists())
             self.assertFalse((root / "REVIEW.md").exists())
 
-    def test_hybrid_scaffold_reuses_the_same_adapter_and_shared_session_directory(self) -> None:
+    def test_hybrid_scaffold_emits_shared_glossary_map_and_shared_session_directory(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             result = self.run_scaffold(root, "hybrid")
@@ -113,6 +138,11 @@ class TeachAdapterTests(unittest.TestCase):
             marker = (vault / "references/teach-skill.md").read_text(encoding="utf-8")
             self.assertIn("<!-- teach-host-adapter: v1 -->", marker)
             self.assertIn("existing `sessions/` (never `learning/sessions/`)", marker)
+            self.assertEqual(hosted_map(marker), EXPECTED_HYBRID_HOST_MAP)
+            self.assertNotIn("project/overview.md", marker)
+            self.assertFalse((vault / "project/overview.md").exists())
+            self.assertTrue((root / "glossary.md").is_file())
+            self.assertNotIn("not the explicit v1 teach adapter", self.run_scaffold(root, "hybrid").stdout)
             self.assertTrue((vault / "conventions/architecture-runway.md").is_file())
             self.assertTrue((vault / "references/teach-resources.md").is_file())
             self.assertTrue((vault / "concepts/entities/README.md").is_file())
@@ -143,7 +173,7 @@ class TeachAdapterTests(unittest.TestCase):
     def test_teach_resolution_checks_project_root_from_vault_context(self) -> None:
         teach = TEACH_SKILL.read_text(encoding="utf-8")
         self.assertIn("marker-owning project root", teach)
-        self.assertEqual(hosted_map(teach), EXPECTED_HOST_MAP)
+        self.assertEqual(hosted_maps(teach)[:2], [EXPECTED_HOST_MAP, [HYBRID_GLOSSARY_ROW]])
         self.assertIn("invoked from `<project>/.bc-agent`", teach)
         self.assertIn("also inspect its marker-owning project root", teach)
         self.assertIn("For hosted knowledge pages and learning records, use the host's canonical", teach)
@@ -179,6 +209,20 @@ class TeachAdapterTests(unittest.TestCase):
             )
 
             result = self.run_scaffold(root, "learning")
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn("not the explicit v1 teach adapter", result.stdout)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result = self.run_scaffold(root, "hybrid")
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            marker_path = root / ".bc-agent/references/teach-skill.md"
+            marker = marker_path.read_text(encoding="utf-8")
+            marker_path.write_text(
+                marker.replace("`../glossary.md`", "`../GLOSSARY.md`", 1), encoding="utf-8"
+            )
+
+            result = self.run_scaffold(root, "hybrid")
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertIn("not the explicit v1 teach adapter", result.stdout)
 

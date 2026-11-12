@@ -1629,3 +1629,6 @@ Code, ops and hybrid now scaffold `work/` lifecycle folders, `docs/decisions/` a
 
 ## [2026-11-12] implement | bc-init-agent W1 review fixes
 Applied review findings 1–17: visible-layout runs refuse earlier-layout projects unless `--allow-earlier-layout`, `--force` stays inside `.bc-agent/`, the table parser keeps plain paths and rejects empty or duplicate rows, and generated text redirects skill default paths to the table. SKILL steps 9–10 (qmd, nightly maintenance) are learning/knowledge only for now; the merge to the main checkout is held until consumer skills read the table. `bc-pytest concepts/bc-init-agent/tests`: 102 passed; not pressure-tested, not redeployed.
+
+## [2026-11-12] implement | bc-init-agent ops open questions and hybrid shared glossary
+Owner decisions: ops/hybrid drop `docs/open-questions/` (open questions become work-item steps, planned items or ideas lines), and a hybrid project's `teach` uses the root `glossary.md` via a second valid adapter map; hybrid no longer generates `project/overview.md`. teach SKILL shows both Glossary variants. `bc-pytest concepts/bc-init-agent/tests concepts/teach`: 107 passed; not pressure-tested (teach scenario 5 written), not redeployed.
