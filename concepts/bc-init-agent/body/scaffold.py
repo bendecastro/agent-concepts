@@ -1268,6 +1268,9 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   Why: one rule from the first item on means the folder never needs reorganizing.
 - **Dropped work and rejected requests go to `work/4-dropped/`**, with the reason under
   `## Outcome`. Why: a recorded "no, because" stops the same idea being re-argued.
+  Asked to delete an item instead, move it anyway and write what you know, even if that is
+  only "Dropped <date>; no reason given". Why: a deleted item frees its number for reuse, so
+  older references to that number would point at a different item.
 - **Names are `<3-digit number>-<slug>`**, for example `012-search-ranking`. The next number
   is the highest number in any stage folder, including the month folders under `3-done/`,
   plus one. Why: a short number is easy to cite and survives a rename of the slug.
