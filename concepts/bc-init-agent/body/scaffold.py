@@ -1080,7 +1080,10 @@ Paths are relative to the project root. Create first-need paths only when needed
 
 | Role | Path |
 | --- | --- |
-| work-items | `work/1-planned/`, `work/2-active/`, `work/3-done/<year>-<month>/`, `work/4-dropped/` |
+| work-planned | `work/1-planned/` |
+| work-active | `work/2-active/` |
+| work-done | `work/3-done/<year>-<month>/` |
+| work-dropped | `work/4-dropped/` |
 | ideas | `work/0-ideas.md` |
 | decisions | `docs/decisions/` |
 | research | `docs/research/` |
@@ -1137,6 +1140,19 @@ Issue: <optional issue number>
 ## Outcome
 
 """
+
+
+def parse_where_things_go(text: str) -> dict[str, str]:
+    """Read the fixed layout table; unassigned roles have an empty path."""
+    section = text.split("## Where things go\n", 1)[1].split("\n## ", 1)[0]
+    result = {}
+    for line in section.splitlines():
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if not line.startswith("|") or len(cells) != 2 or cells[0] in {"Role", "---"}:
+            continue
+        value = cells[1]
+        result[cells[0]] = value.split("`", 2)[1] if "`" in value else ""
+    return result
 
 
 def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tuple[Path, str, bool]]:
