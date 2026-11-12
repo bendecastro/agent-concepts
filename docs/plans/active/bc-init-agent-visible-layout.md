@@ -140,7 +140,7 @@ docs/
     shared: it adds and refines the terms the learner needs and does not remove or redefine
     project terms without asking. Hybrid no longer generates `.bc-agent/project/overview.md`;
     the learning archetype keeps teach's Glossary section there.
-26. **Decision 10 refined in the W3 review (2026-11-12), pending the owner's confirmation.** A
+26. **Decision 10 refined in the W3 review (2026-11-12); confirmed by the owner the same day.** A
     large item's folder holds `plan.md`, whose `## Steps` are the slices, and
     `requirements.md`, plus any evidence worth keeping; there are no separate slice files.
     Why: the steps already are the slice map, so a second copy would drift. The review found
@@ -155,6 +155,14 @@ docs/
 29. **Issue drafts live inside their parent work item (owner decision 2026-11-12)** as evidence.
 30. **A project with no vault gets a fresh scaffold (owner decision 2026-11-12)**, not the
     migrate mode.
+31. **Pushing back on a hurried instruction stays (owner, 2026-11-12).** Asked to delete a
+    dropped item, the agent moves it and records what is known; told to stash or commit
+    unfinished work in order to migrate, it names the paths and stops; told to skip the
+    migration preview, it shows the dry run and asks for a go-ahead. Why: the pressure run
+    showed agents drop all three under "trust me", and each costs seconds to keep.
+32. **Migration rewrites Obsidian wikilinks (owner, 2026-11-12).** A wikilink naming a file
+    that moves becomes a relative Markdown link. Why: the Obsidian settings are retired, and
+    plain links resolve in any viewer and for agents.
 
 ## Affected concepts
 
