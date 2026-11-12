@@ -4,6 +4,10 @@ This file holds procedures for an existing initialized vault. It is a human-faci
 an injected agent instruction. The scaffold remains additive: it creates the new form for a new
 vault and reports a manual upgrade note for an existing one, but it does not rewrite live files.
 
+## Visible layout
+
+The scaffold is additive and does not move or delete old-layout files; migration is a separate future work package.
+
 ## Migrate existing `map.md` files to graph-visible links
 
 ### Why this is a separate migration

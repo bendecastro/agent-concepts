@@ -7,13 +7,7 @@ argument-hint: "[project-slug] (defaults to the repo directory name)"
 
 # Init Agent Workspace
 
-Adaptively stand up a project-local agent workspace using the user's broader agent-maintained wiki pattern: durable Markdown/Obsidian context, explicit provenance, live task state, decisions, and executable plans. The goal is not just to create files: it is to make the repo ready for the loop `/triage` → optional `/prototype` or `/improve-codebase-architecture` → `/bc-plan-to-issues` → `/bc-drain-issues`, with project-specific context seeded honestly.
-
-The scaffold creates a repo-root `AGENTS.md` that points agents at the vault, a `.bc-agent/` Markdown wiki that is also a minimal Obsidian vault (`.bc-agent/.obsidian/`), with the maintainer schema, templates, conventions, the `planning-workflow.md` adapter, the `architecture-runway.md` nudge tracker, and `references/agent-skills.md` mapping the required loop skills in the shared agent-concepts workspace, plus an empty `.bc-agent/out-of-scope/` directory for durable rejected enhancement records.
-
-The vault lives directly at `.bc-agent/` (no per-project subfolder). The slug is only the wiki's **display name** in titles (defaults to the repo directory name); it doesn't affect the path.
-
-**Project-local wiki model:** no root `glossary.md` — the glossary lives in the vault (`project/overview.md`), ADRs in `decisions/`, plans and actual PRDs in `project/`, exploratory research in `research/`. The adapter tells `grilling`/`domain-modeling` to persist there and tells agents to ask whether to enter `/bc-plan-to-issues` when the human appears to be planning codebase work.
+Adaptively initialize project-local agent context. For code, ops and hybrid, work and knowledge are visible at the project root; `.bc-agent/` holds agent mechanics. Learning and knowledge retain their existing vault layout. Hybrid retains hosted teach paths as a compatibility exception.
 
 ## Operating modes and wiki archetypes
 
@@ -50,7 +44,7 @@ Archetypes:
 
 ## Process
 
-1. **Locate the project.** Find the repo root (`git rev-parse --show-toplevel`). If not a git repo, inspect the current folder and ask whether to initialize git here, use this folder directly, or choose another root. Pick the slug: the argument, else the repo directory name in kebab-case. Confirm with the user if root/slug is ambiguous.
+1. **Locate the project.** Find the repo root (`git rev-parse --show-toplevel`). If choosing a new root, read `~/Sync/CONFIG/preferences/where-things-are.md` and suggest its default project location only if it names one. Warn when the selected root is inside a file-sync folder: a replicated `.git` and runtime state written by two machines can conflict. If not a git repo, ask whether to initialize here, use the folder, or choose another root. Pick the slug from the argument or directory name; confirm ambiguity.
 
 2. **Recon before grilling.** Inspect the environment before asking questions. Keep it bounded; do not crawl huge dependency/build output directories. Check at least:
    - Git state: repo root, branch, dirty status, remotes, existing `AGENTS.md`, existing `.bc-agent/`, `glossary.md`, docs/plans/ADRs. For legacy glossary discovery, follow `domain-modeling`’s legacy glossary rule.
@@ -76,17 +70,19 @@ Archetypes:
 4. **Propose the init plan before writing.** Name the root, slug, mode, selected archetype, files that will be created, existing files that will be preserved, any manual merge needed for `AGENTS.md`, any existing files proposed for later migration, and open decisions. If the plan includes moving/copying existing docs, separate that from the scaffold and require explicit approval.
    Apply `naming-things` when choosing domain or public code names: list them in the init plan and persist glossary entries only after plan approval.
 
+For code, ops and hybrid, ask whether the project has a product-level specification. Create `docs/PRD.md` only on yes; feature requirements belong in the work item. Do not create `ARCHITECTURE.md` until needed.
+
 5. **Safe to re-run / plug into an existing project.** The script is **additive and idempotent**: it creates only the files that are missing, leaves every existing file untouched (an existing root `AGENTS.md` is preserved verbatim and flagged for a manual pointer-merge), and **never deletes anything**. Re-running changes nothing. Use `--dry-run` when previewing an existing or messy project. Existing files are overwritten only when explicitly forced (`--force` for vault files, `--force-root` for the root `AGENTS.md`) — don't use those unless the user asks. If the script prints **Upgrade notes for existing files left untouched**, treat them as follow-up work for the current agent: inspect the named files and merge the smallest safe pointer by hand rather than assuming the scaffold alone upgraded old instructions.
 
 6. **Scaffold.** Run the bundled script (it lives next to this file):
    ```
    python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>" --archetype "<code|ops|learning|knowledge|hybrid>"
    ```
-   It creates any missing files: the root `AGENTS.md` (only if absent — if one exists it's left untouched and you merge the vault pointer by hand) and the `.bc-agent/` tree with generalized schema + TODO stubs (`validation.md`, `file-layout.md`, `architecture-runway.md`, `references/*`, the glossary) for the project's agents to fill as they learn the repo. It also seeds minimal stable Obsidian metadata (`.obsidian/app.json`, `core-plugins.json`, `appearance.json`) but deliberately avoids noisy/user-specific state such as `workspace.json`, `graph.json`, and community plugin config. The scaffold includes `references/agent-skills.md`, a repo-local map of `/bc-plan-to-issues`, `/bc-drain-issues`, `/improve-codebase-architecture`, `codebase-docs`, and their supporting skills; the skill bodies remain canonical in the shared agent-concepts workspace and are not copied into the repo. For `learning` and `hybrid`, it also emits the explicit `references/teach-skill.md` path adapter and the mapped host stubs (`learning/plan.md`, `learning/review.md`, `learning/records/`, `learning/notes.md`, `references/teach-resources.md`) while reusing existing `sources/`, `concepts/`, `sessions/`, `project/overview.md`, `index.md`, and `log.md`; it never invokes teach or migrates standalone state.
+   Code, ops and hybrid create root `glossary.md`, lifecycle folders under `work/`, `docs/decisions/`, `docs/research/`, and `.bc-agent/` mechanics with a Where things go table and work-item template. Hybrid also retains the hosted teach adapter and its mapped paths, including its separate teach glossary and catalog. Learning and knowledge keep the existing vault including Obsidian metadata. Existing files remain untouched unless forced; no project is migrated by this step.
 
 7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, `index.md`, or `references/agent-skills.md`).
 
-8. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, note it as a TODO in the vault's `tasks/parking-lot.md` (the scaffold already seeds that reminder).
+8. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, record a line in `work/0-ideas.md` for the visible layout, or `tasks/parking-lot.md` for legacy learning/knowledge vaults.
 
 9. **Register the vault for global search (default yes, opt-out).** New vaults are searchable by default: append an entry for `.bc-agent/` to the qmd collections file (collection name = the slug; copy an existing entry's shape, contexts stating each directory's *authority level*), then apply it with the setup command — see the `qmd` concept. Skip this step if qmd is not installed. Ask only if the user wants this vault **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos. Append to the synced YAML even when qmd isn't installed on this machine, so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `qmd` skill).
 
@@ -105,7 +101,7 @@ Archetypes:
     vault. Never vendor runner scripts into the project.
 
     If `systemctl --user` is unavailable, skip install and append a
-    parking-lot TODO pointing at
+    TODO in `work/0-ideas.md` (or the legacy vault parking lot for learning/knowledge) pointing at
     `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/README.md`.
 
     On confirm, copy — do not symlink — the templates to slug-suffixed
@@ -137,7 +133,7 @@ Archetypes:
     slug-suffixed unit already exists for this `VAULT_ROOT`, report it and
     skip.
 
-    On decline, append the same parking-lot TODO as the no-systemd case.
+    On decline, append the same TODO as the no-systemd case.
     If `$HOME/.config/agent-concepts/wiki-lint-vaults.txt` already exists,
     mention that it is detection-only and offer to append this vault path;
     do not install `bc-wiki-lint.timer`.
@@ -146,5 +142,5 @@ Archetypes:
     outcome, and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-issues` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 
 ## Notes
-- The vault is detached from the user's personal `~/Wiki` (seeded as ADR-0001).
+- The project workspace is separate from the personal `~/Wiki`.
 - If the repo already has a root `AGENTS.md`, the script preserves it — merge in the "read the vault first" pointer rather than clobbering hand-written instructions.

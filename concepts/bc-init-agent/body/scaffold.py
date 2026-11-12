@@ -1070,8 +1070,112 @@ def render(text: str, slug: str, date: str) -> str:
     return text.replace(SLUG, slug).replace(DATE, date)
 
 
+VISIBLE_AGENTS = """# __SLUG__ agent instructions
+
+Read this file first. Keep project knowledge current in the same commit as the work.
+
+## Where things go
+
+Paths are relative to the project root. Create first-need paths only when needed.
+
+| Role | Path |
+| --- | --- |
+| work-items | `work/1-planned/`, `work/2-active/`, `work/3-done/<year>-<month>/`, `work/4-dropped/` |
+| ideas | `work/0-ideas.md` |
+| decisions | `docs/decisions/` |
+| research | `docs/research/` |
+| glossary | `glossary.md` |
+| requirements | `docs/PRD.md` (product-level, on first need); feature requirements inside the work item |
+| architecture | `ARCHITECTURE.md` (on first need) |
+| project-skills | `.agents/skills/local-<name>/` (on first need; README records shared copies and refresh steps) |
+| project-agents | Open item: discovery folder not yet verified; create on first need only after verification |
+
+## Work items
+
+- An item's folder is its status; use `git mv` in the same commit as the work. Why: the tree is the source of truth.
+- Never add a `Status:` line to an item. Why: it could disagree with the folder.
+- Put finished items in `work/3-done/<year>-<month>/`. Why: one rule needs no threshold detection.
+- Put dropped or rejected items in `work/4-dropped/` and give the reason in Outcome. Why: abandoned work and rejected requests share one home.
+- Name items `<3-digit number>-<slug>`; choose the highest number across all stages plus one. Why: a short ID is citable.
+- Only the main checkout creates numbered items; an agent in a worktree adds a line to `work/0-ideas.md` instead. Why: without a central allocator parallel worktrees collide.
+- A small item is one file; a large item is a folder with `plan.md`, requirements and slices, moved as a whole. Why: the item is the feature or plan.
+- Several items may be active at once. Why: work need not be artificially serialized.
+- GitHub issues are optional; record the issue number in the item and close the issue when moving it to done. Why: folders are the source of truth and issues point back.
+
+Keep decisions in the decisions folder, research in research, and discoveries in `log.md`.
+"""
+
+VISIBLE_ROOT = """# Agent instructions for __SLUG__
+
+1. `.bc-agent/AGENTS.md` is the session protocol and layout table; read it first.
+2. Follow the table for project knowledge and work items.
+"""
+
+VISIBLE_MAP = """# Context Map
+
+Link only targets that resolve inside this vault.
+
+- [AGENTS.md](AGENTS.md)
+- [log.md](log.md)
+- [references/agent-skills.md](references/agent-skills.md)
+- [conventions/validation.md](conventions/validation.md)
+- [templates/work-item.md](templates/work-item.md)
+"""
+
+WORK_ITEM = """# <title>
+
+Why: <reason>
+
+Done when: <observable outcome>
+
+Issue: <optional issue number>
+
+## Steps
+
+- [ ] <step>
+
+## Outcome
+
+"""
+
+
+def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tuple[Path, str, bool]]:
+    vault = root / ".bc-agent"
+    files = {
+        "AGENTS.md": VISIBLE_AGENTS,
+        "map.md": VISIBLE_MAP,
+        "log.md": LOG,
+        "conventions/validation.md": VALIDATION,
+        "conventions/file-layout.md": "# File layout\n\nSee the Where things go table in `../AGENTS.md`.\n",
+        "conventions/architecture-runway.md": ARCHITECTURE_RUNWAY,
+        "references/commands.md": ref_stub("Commands", "Project commands; fill as discovered.\n"),
+        "references/agent-skills.md": "# Agent skills\n\nUse the shared project skills as appropriate.\n",
+        "templates/adr.md": TPL_ADR + "\nSave ADRs in `docs/decisions/`.\n",
+        "templates/work-item.md": WORK_ITEM,
+    }
+    if archetype == "hybrid":
+        files.update(archetype_files("learning"))
+        files.update({k: v for k, v in archetype_files("hybrid").items()
+                      if k.startswith("concepts/")})
+        files["project/overview.md"] = OVERVIEW
+        files["index.md"] = INDEX
+        files["AGENTS.md"] += "\nThe hosted teach workspace uses its mapped `.bc-agent/` paths, including its own glossary; the project glossary is `glossary.md`.\n"
+    result = [(root / "AGENTS.md", render(VISIBLE_ROOT, slug, date), True)]
+    result += [(vault / path, render(text, slug, date), False) for path, text in files.items()]
+    extras = {
+        "glossary.md": "# Glossary\n",
+        "work/0-ideas.md": "# Ideas\n\nUndecided ideas and observations, one per line.\n",
+        **{f"work/{stage}/.gitkeep": "" for stage in ("1-planned", "2-active", "3-done", "4-dropped")},
+        "docs/decisions/.gitkeep": "", "docs/research/.gitkeep": "",
+    }
+    result += [(root / path, text, False) for path, text in extras.items()]
+    return result
+
+
 def targets(root: Path, slug: str, date: str, archetype: str = "code") -> list[tuple[Path, str, bool]]:
     """Every file the scaffold owns: (destination, rendered content, is_root_AGENTS)."""
+    if archetype in {"code", "ops", "hybrid"}:
+        return visible_targets(root, slug, date, archetype)
     vault = root / ".bc-agent"
     out: list[tuple[Path, str, bool]] = [(root / "AGENTS.md", render(ROOT_AGENTS, slug, date), True)]
     for relpath, text in vault_files(archetype).items():
@@ -1093,6 +1197,11 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
     """Manual merge hints for existing files that were intentionally left untouched."""
     vault = root / ".bc-agent"
     notes: list[str] = []
+    if archetype in {"code", "ops", "hybrid"}:
+        map_path = vault / "map.md"
+        if map_path.exists() and "- `" in map_path.read_text(errors="ignore"):
+            notes.append("`.bc-agent/map.md` should use real Markdown links for in-vault targets")
+        return notes
 
     # This contract applies to every archetype. Keep it outside the code/hybrid
     # gate below so learning and knowledge vaults receive the same migration hint.
