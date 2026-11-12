@@ -1644,3 +1644,6 @@ Applied review findings F1–F17 and three follow-ups: drain workers list follow
 
 ## [2026-11-12] implement | bc-init-agent migrate mode (W4)
 `scaffold.py --migrate` prints a plan for moving an earlier-layout vault to the visible layout and `--apply` does only the mechanical part (git mv of decisions, `docs/adr/`, research and components; missing layout files; new `.bc-agent/AGENTS.md`; placeholder deletes; relative-link rewrites), stages and does not commit; everything needing judgment is listed with the owner's rule, now in the skill body. Owner decisions 27–30 added to the plan. Trial on clones of one code and one ops project; deterministic tests only, not pressure-tested, not deployed.
+
+## [2026-11-12] test | bc-init-agent visible-layout pressure run
+Four scenarios against the generated work-item rules and the migrate section; two held, two failed on an explicit user override (delete a dropped item; stash and migrate without preview). Rules tightened and both held on rerun. Results: `concepts/bc-init-agent/tests/pressure-visible-layout-results-2026-11-12.md`. Dependent skills not yet pressure-tested.
