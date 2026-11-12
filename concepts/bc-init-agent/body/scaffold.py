@@ -1163,12 +1163,25 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         "log.md": LOG,
         "conventions/validation.md": VALIDATION,
         "conventions/file-layout.md": "# File layout\n\nSee the Where things go table in `../AGENTS.md`.\n",
-        "conventions/architecture-runway.md": ARCHITECTURE_RUNWAY,
+        "conventions/architecture-runway.md": ARCHITECTURE_RUNWAY, 
         "references/commands.md": ref_stub("Commands", "Project commands; fill as discovered.\n"),
         "references/agent-skills.md": "# Agent skills\n\nUse the shared project skills as appropriate.\n",
         "templates/adr.md": TPL_ADR + "\nSave ADRs in `docs/decisions/`.\n",
         "templates/work-item.md": WORK_ITEM,
     }
+    if archetype != "hybrid":
+        files["conventions/architecture-runway.md"] = (ARCHITECTURE_RUNWAY
+            .replace("For code/hybrid wikis", "For this project")
+            .replace("-- .bc-agent |", "-- docs/research |")
+            .replace("-- .bc-agent/project .bc-agent/tasks", "-- docs work")
+            .replace("normal project\nwiki location", "dated folder under `docs/research/`"))
+        files["AGENTS.md"] = (files["AGENTS.md"].replace(
+            "Put finished items in `work/3-done/<year>-<month>/`.",
+            "Put finished items in `work/3-done/<year>-<month>/`, creating the month folder when needed; never put items directly in `3-done/`.",
+        ).replace("product-level, on first need", "product-level, created on first need")
+         .replace("(on first need)", "(created on first need)")
+         .replace("(on first need;", "(created on first need;")
+         .replace("Open item: discovery folder not yet verified; create on first need only after verification", "not yet decided"))
     if archetype == "hybrid":
         files.update(archetype_files("learning"))
         files.update({k: v for k, v in archetype_files("hybrid").items()
@@ -1184,6 +1197,14 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         **{f"work/{stage}/.gitkeep": "" for stage in ("1-planned", "2-active", "3-done", "4-dropped")},
         "docs/decisions/.gitkeep": "", "docs/research/.gitkeep": "",
     }
+    if archetype == "ops":
+        ops = archetype_files("ops")
+        extras["docs/components/README.md"] = ops["components/README.md"]
+        extras["docs/open-questions/README.md"] = ops["open-questions/README.md"].replace(
+            "linking findings/decisions", "linking research or decisions")
+        for name in ("component", "finding", "open-question"):
+            files_path = f"templates/{name}.md"
+            result.append((vault / files_path, render(ops[files_path], slug, date), False))
     result += [(root / path, text, False) for path, text in extras.items()]
     return result
 
