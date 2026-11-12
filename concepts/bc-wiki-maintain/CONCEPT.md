@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial
+test_status: partial # visible-layout lint and promotion routing (W2) changed 2026-11-12: deterministic tests only, not yet pressure-tested
 tested: 2026-09-05
 deployed: 2026-08-23
 ---
@@ -14,6 +14,32 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 
 ## Design decisions
 
+- **Two layouts, chosen by the detector.** A vault root whose `AGENTS.md` has a parseable
+  "Where things go" table is a visible-layout project (`bc-init-agent` code, ops and hybrid);
+  anything else is a classic vault and keeps its checks unchanged. In visible mode the detector
+  drops every vault demand (no `index.md` coverage, no `tasks/active.md` staleness), keeps link
+  health for the vault root (`map.md` included), and checks the work folders through the
+  table's paths: duplicate numbers across all stages, items outside a `YYYY-MM` done folder,
+  `Status:` lines and missing or placeholder `## Outcome` in done/dropped items are errors
+  (exit 1, like broken links); bad item names, folder items without `plan.md`, and table paths
+  that do not exist (unless "created on first need" or undecided) are warnings. A hybrid
+  project's teach `index.md` is checked only for teach-owned folders, because it catalogs
+  those and not agent mechanics. Promotion routes durable entries to the table's roles
+  (glossary, decisions, research; conflicts to the ideas role) and never recreates a vault
+  catalog.
+- **The table parser is a checked copy, not an import.** `bc-init-agent/body/scaffold.py` owns
+  `parse_where_things_go`; `wiki_lint.py` carries a verbatim copy, and
+  `tests/test_visible_layout_lint.py` fails when the two differ. Importing through
+  `Path(__file__).resolve()` would work for today's symlink deploys but breaks when a skill body
+  is deployed as a copy without its sibling concept, and the detector must stay a standalone
+  stdlib script.
+- **Unattended promotion stays vault-only for now.** The wrapper commits only paths inside the
+  vault root, while a visible-layout project's knowledge roles live at the repository root. So
+  visible-layout projects may use the lint timer but not the promotion timer; promotion there is
+  manual. A later package must decide whether the wrapper may write the table's role paths and
+  how its additive-only check covers them, and whether qmd should register the project root (or
+  its `docs/`) rather than `.bc-agent/`, plus where a qmd exclusion is recorded once
+  `project/overview.md` no longer exists.
 - **Separate capture from synthesis.** Agents already capture discoveries in `log.md` because
   appending is cheap and placement-free. This concept performs the later judgment-heavy promotion
   instead of asking the task agent to notice, classify, and rewrite the wiki at the end of work.
@@ -150,6 +176,9 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 
 ## Provenance
 
+- `docs/plans/active/bc-init-agent-visible-layout.md` ("Resolved decisions") and the
+  `bc-init-agent` "Where things go" table contract — the visible layout this detector and
+  promotion routing now recognize.
 - Perplexity Brain distillation captured in the run artifact `brain.md` — separate capture from
   synthesis, deterministic verification, contradiction handling, and Git-backed audit:
   https://www.perplexity.ai/hub/blog/brain-agentic-memory-as-a-knowledge-wiki
@@ -180,6 +209,11 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   an accuracy superiority claim.
 
 ## Tests
+
+`tests/test_visible_layout_lint.py` drives the detector's CLI on freshly scaffolded code, ops,
+hybrid and learning projects: each work-folder check, the table path being honoured instead of
+`work/`, the teach index scope, link health in `map.md`, and the parser drift guard. The
+visible-layout routing in `body/SKILL.md` has not had a consumer pressure run.
 
 `tests/pressure-promotion.md` defines the promotion-gate pressure scenarios. The teach-owned
 adapter boundary is covered by `../teach/tests/pressure-host-integration.md`. Its cross-skill
@@ -346,5 +380,8 @@ it is scoped to one vault chosen at install time and is not part of the skill de
   continues. A scheduled run may still need human follow-up on the question.
 - Heading lists already closed by a thin 2026-08-23/24 promotion commit stay closed; this gate
   prevents the next occurrence and does not resurrect consumed headings.
+- Visible-layout promotion has no unattended path yet (see Design decisions); enrolling such a
+  project in the promotion timer would fail the wrapper's outside-vault check on the first
+  root-level write.
 - The concept's no-staged-tree choice is bounded to the single-writer pilot; concurrent writers
   or a much larger vault may require a staged-tree and semantic-verification design later.

@@ -288,7 +288,155 @@ def qmd_status(
         )
     return result
 
+# --- visible layout ------------------------------------------------------------
+# Copied verbatim from concepts/bc-init-agent/body/scaffold.py, which owns the
+# "Where things go" table contract. Copied rather than imported because a skill
+# body can be deployed as a copy without its sibling concept;
+# tests/test_visible_layout_lint.py fails when the two copies differ.
+WHERE_THINGS_GO_HEADING = "## Where things go"
+_WHERE_THINGS_GO_LINE = re.compile(r"^" + re.escape(WHERE_THINGS_GO_HEADING) + r"[ \t]*\r?$", re.M)
+_UNDECIDED_PATH_CELLS = {"", "—", "-"}
+
+
+def parse_where_things_go(text: str) -> dict[str, str]:
+    """Map each role key of a "Where things go" table to its path.
+
+    Paths are relative to the project root. A backticked path is unwrapped; a plain
+    path is returned stripped; only `—`, `-` or an empty cell means "no decided path"
+    and maps to an empty string. Raises ValueError when the heading line is missing,
+    when the section has no table rows, or when a role appears twice.
+    """
+    match = _WHERE_THINGS_GO_LINE.search(text)
+    if not match:
+        raise ValueError(f"no {WHERE_THINGS_GO_HEADING!r} section")
+    section = re.split(r"^## ", text[match.end():], maxsplit=1, flags=re.M)[0]
+    result: dict[str, str] = {}
+    for line in section.splitlines():
+        line = line.strip()
+        if not line.startswith("|"):
+            continue
+        cells = [cell.strip() for cell in line.strip("|").split("|")]
+        if len(cells) < 2 or cells[0] == "Role" or set(cells[0]) <= {"-", ":", " "}:
+            continue
+        role, path = cells[0], cells[1]
+        if role in result:
+            raise ValueError(f"role {role!r} appears twice in {WHERE_THINGS_GO_HEADING!r}")
+        if path.count("`") >= 2:
+            path = path.split("`")[1].strip()
+        result[role] = "" if path in _UNDECIDED_PATH_CELLS else path
+    if not result:
+        raise ValueError(f"{WHERE_THINGS_GO_HEADING!r} section has no table rows")
+    return result
+
+
+def layout_table(vault: Path) -> dict[str, str] | None:
+    """Return the role table when VAULT is the `.bc-agent/` of a visible-layout project."""
+    try:
+        return parse_where_things_go(text(vault / "AGENTS.md"))
+    except ValueError:
+        return None
+
+
+WORK_STAGE_ROLES = ("work-planned", "work-active", "work-done", "work-dropped")
+WORK_ITEM_NAME_RE = re.compile(r"^(\d{3})-[A-Za-z0-9][A-Za-z0-9._-]*$")
+MONTH_FOLDER_RE = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
+STATUS_LINE_RE = re.compile(r"^[ \t]*(?:[-*][ \t]+)?\**Status\**[ \t]*:", re.M | re.I)
+
+
+def finding(severity: str, check: str, path: Path, project: Path, problem: str, fix: str) -> dict:
+    return {"severity": severity, "check": check, "path": rel(path, project), "problem": problem, "fix": fix}
+
+
+def stage_items(stage: Path, done: bool, project: Path, found: list[dict]) -> list[Path]:
+    """Items in one stage folder; in the done folder, items sit inside month folders."""
+    entries = sorted(entry for entry in stage.iterdir() if not entry.name.startswith(".")) if stage.is_dir() else []
+    if not done:
+        return entries
+    items: list[Path] = []
+    for entry in entries:
+        if entry.is_dir() and MONTH_FOLDER_RE.match(entry.name):
+            items.extend(sorted(child for child in entry.iterdir() if not child.name.startswith(".")))
+        elif entry.is_dir() and not WORK_ITEM_NAME_RE.match(entry.name):
+            found.append(finding("error", "done-month-folder", entry, project,
+                                 "month folder name is not YYYY-MM.", "rename it to the item's finishing month, e.g. 2026-03"))
+            items.extend(sorted(child for child in entry.iterdir() if not child.name.startswith(".")))
+        else:
+            found.append(finding("error", "done-month-folder", entry, project,
+                                 "item sits directly in the done folder.", "git mv it into a <year>-<month>/ folder"))
+            items.append(entry)
+    return items
+
+
+def role_notes(agents_text: str, role: str) -> str:
+    """Notes cell of ROLE's table row; the shared parser returns paths only."""
+    match = re.search(r"^\|\s*" + re.escape(role) + r"\s*\|[^|\n]*\|(.*)$", agents_text, re.M)
+    return match.group(1) if match else ""
+
+
+def outcome_filled(content: str) -> bool:
+    """True when `## Outcome` has text other than comments or the template's `<...>` placeholder."""
+    match = re.search(r"^## Outcome[ \t]*$", content, re.M)
+    if not match:
+        return False
+    section = re.split(r"^#{1,2} ", content[match.end():], maxsplit=1, flags=re.M)[0]
+    section = re.sub(r"<!--.*?-->", "", section, flags=re.S)
+    return any(line.strip() and not re.fullmatch(r"<[^>]*>", line.strip()) for line in section.splitlines())
+
+
+def item_name_number(item: Path) -> str | None:
+    name = item.name if item.is_dir() else item.stem if item.suffix == ".md" else ""
+    match = WORK_ITEM_NAME_RE.match(name)
+    return match.group(1) if match else None
+
+
+def work_findings(project: Path, table: dict[str, str], agents_text: str) -> list[dict]:
+    """Check the work folders named by the table; errors break the layout's rules."""
+    found: list[dict] = []
+    numbered: dict[str, list[Path]] = {}
+    for role in WORK_STAGE_ROLES:
+        if not table.get(role):
+            continue
+        for item in stage_items(project / table[role], role == "work-done", project, found):
+            number = item_name_number(item)
+            if number is not None:
+                numbered.setdefault(number, []).append(item)
+            if number is None:
+                found.append(finding("warning", "item-name", item, project,
+                                     "item name is not <3-digit number>-<slug>.",
+                                     "git mv it to NNN-slug.md (or NNN-slug/) using the next free number"))
+            body = item / "plan.md" if item.is_dir() else item
+            if item.is_dir() and not body.is_file():
+                found.append(finding("warning", "missing-plan", item, project,
+                                     "folder item has no plan.md.",
+                                     "add plan.md from the work-item template"))
+            content = without_code(text(body)) if body.is_file() else ""
+            if STATUS_LINE_RE.search(content):
+                found.append(finding("error", "status-line", body, project,
+                                     "item has a Status: line; the folder is the status.",
+                                     "delete the Status: line"))
+            if role in {"work-done", "work-dropped"} and not outcome_filled(content):
+                found.append(finding("error", "missing-outcome", body, project,
+                                     "finished or dropped item has no filled ## Outcome section.",
+                                     "write what happened, or why it was dropped, under ## Outcome"))
+    for role, path in table.items():
+        if not path or (project / path).exists() or "created on first need" in role_notes(agents_text, role).lower():
+            continue
+        found.append(finding("warning", "role-path", project / path, project,
+                             f"the {role} path in the Where things go table does not exist.",
+                             "create it, or correct the path in .bc-agent/AGENTS.md"))
+    for number, items in sorted(numbered.items()):
+        if len(items) > 1:
+            for item in items:
+                found.append(finding("error", "duplicate-number", item, project,
+                                     f"number {number} is used by {len(items)} items.",
+                                     "renumber the later item to the highest number in any stage plus one"))
+    return found
+
+
 SKIP_DIR_NAMES = {".git", ".obsidian", "scratch", "temp", "node_modules", "vendor"}
+# Folders a hosted teach workspace owns under `.bc-agent/` (bc-init-agent's
+# teach-workspace row); its index.md catalogs these and nothing else.
+TEACH_OWNED_DIRS = {"learning", "sources", "concepts", "sessions", "questions"}
 
 def maintenance_report(path: Path, vault: Path) -> bool:
     item = path.relative_to(vault)
@@ -332,12 +480,19 @@ def lint(
                 ambiguous.append({"page": rel(path, vault), "link": display, "candidates": [rel(item, vault) for item in candidates]})
             elif not local:
                 broken.append({"page": rel(path, vault), "link": display})
+    table = layout_table(vault)
     index_text, index_path = text(vault / "index.md"), (vault / "index.md").resolve()
-    missing = [rel(path, vault) for path in pages_list if path != index_path and not maintenance_report(path, vault) and rel(path, vault) not in index_text and path.stem not in index_text]
+    # A visible-layout project has no vault catalog; only a hosted teach workspace
+    # keeps an index.md, and it catalogs teach's own folders, not agent mechanics.
+    index_scope = [
+        path for path in pages_list
+        if table is None or (index_path.exists() and path.relative_to(vault).parts[0] in TEACH_OWNED_DIRS)
+    ]
+    missing = [rel(path, vault) for path in index_scope if path != index_path and not maintenance_report(path, vault) and rel(path, vault) not in index_text and path.stem not in index_text]
     orphans = [rel(path, vault) for path, count in incoming.items() if count == 0 and path.name not in {"index.md", "log.md"} and "templates" not in path.parts and not maintenance_report(path, vault)]
 
     stale, unknown, active, repo = [], [], vault / "tasks" / "active.md", git_root(vault)
-    if active.exists():
+    if table is None and active.exists():
         referenced = set()
         for target, _display in links(text(active)):
             resolution = resolve_link(active.resolve(), target, vault, pages, stems)
@@ -352,7 +507,9 @@ def lint(
             age = (today - dt.date.fromisoformat(committed)).days
             if age > stale_days:
                 stale.append({"page": rel(path, vault), "last_modified": committed, "age_days": age})
-    return {"vault": str(vault), "pages": len(pages_list), "broken_links": broken, "ambiguous_links": ambiguous,
+    return {"vault": str(vault), "layout": "vault" if table is None else "visible",
+            "work_findings": [] if table is None else work_findings(vault.parent, table, text(vault / "AGENTS.md")),
+            "pages": len(pages_list), "broken_links": broken, "ambiguous_links": ambiguous,
             "orphans": orphans, "missing_index": missing, "stale_active_references": stale,
             "unknown_active_references": unknown, "stale_days": stale_days,
             "unpromoted_log": promotion_status(vault, repo),
@@ -435,8 +592,11 @@ def classification_summary(rows: list[dict]) -> str:
 
 def print_report(report: dict) -> None:
     print("# Wiki lint report")
-    print(f"Vault: {report['vault']}\nPages: {report['pages']}")
-    checks = (("broken_links", "Broken links"), ("ambiguous_links", "Ambiguous links"), ("orphans", "Orphan pages"), ("missing_index", "Possibly missing from index"))
+    visible = report["layout"] == "visible"
+    print(f"Vault: {report['vault']}\nLayout: {report['layout']}\nPages: {report['pages']}")
+    checks = [("broken_links", "Broken links"), ("ambiguous_links", "Ambiguous links"), ("orphans", "Orphan pages")]
+    if not visible or (Path(report["vault"]) / "index.md").exists():
+        checks.append(("missing_index", "Possibly missing from index" if not visible else "Teach pages possibly missing from index"))
     for name, label in checks:
         entries = report[name]
         print(f"{label}: {len(entries)}")
@@ -447,14 +607,21 @@ def print_report(report: dict) -> None:
                 print(f"- {entry['page']} -> {entry['link']} could be {', '.join(entry['candidates'])}")
             else:
                 print(f"- {entry['page']} -> {entry['link']}")
-    stale = report["stale_active_references"]
-    print(f"Stale pages referenced from tasks/active.md (>{report['stale_days']} days): {len(stale)}")
-    for entry in stale:
-        print(f"- {entry['page']} — {entry['last_modified']} ({entry['age_days']} days)")
-    unknown = report["unknown_active_references"]
-    print(f"Unknown active references: {len(unknown)}")
-    for entry in unknown:
-        print(f"- {entry['page']} — {entry['reason']}")
+    if visible:
+        for severity, label in (("error", "Work-folder errors"), ("warning", "Work-folder warnings")):
+            entries = [entry for entry in report["work_findings"] if entry["severity"] == severity]
+            print(f"{label}: {len(entries)}")
+            for entry in entries:
+                print(f"- {entry['path']} — {entry['problem']} Fix: {entry['fix']}")
+    else:
+        stale = report["stale_active_references"]
+        print(f"Stale pages referenced from tasks/active.md (>{report['stale_days']} days): {len(stale)}")
+        for entry in stale:
+            print(f"- {entry['page']} — {entry['last_modified']} ({entry['age_days']} days)")
+        unknown = report["unknown_active_references"]
+        print(f"Unknown active references: {len(unknown)}")
+        for entry in unknown:
+            print(f"- {entry['page']} — {entry['reason']}")
     promotion = report["unpromoted_log"]
     print(f"Unpromoted log entries: {promotion['count'] if promotion['count'] is not None else 'unknown'}")
     if promotion["last_promotion"]:
@@ -525,7 +692,8 @@ def main() -> int:
         print_report(report)
     promotion = report["unpromoted_log"]
     invalid_required_range = report["promotion_required"] and not promotion["range"]
-    return 1 if report["broken_links"] or report["ambiguous_links"] or invalid_required_range else 0
+    work_errors = any(entry["severity"] == "error" for entry in report["work_findings"])
+    return 1 if report["broken_links"] or report["ambiguous_links"] or invalid_required_range or work_errors else 0
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -12,6 +12,24 @@ in that vault's append-only `log.md`; this pass separates capture from synthesis
 only durable evidence into the smallest appropriate page. It works with `.bc-agent/`, `.agent/`,
 or `agent/wiki/` roots. Do not assume the directory name: the vault-root argument is required.
 
+## Two layouts
+
+The detector decides which layout the target uses and prints it as `Layout:`. Follow the
+detector rather than guessing from folder names, because both layouts use `.bc-agent/`.
+
+- **vault** — the classic wiki: `index.md` catalog, `tasks/`, `project/overview.md`,
+  `findings/`, `decisions/`, `open-questions/` all inside the vault root.
+- **visible** — the vault root's `AGENTS.md` has a parseable "Where things go" table
+  (`bc-init-agent` code, ops and hybrid projects). Project knowledge lives in ordinary folders
+  at the repository root; the vault root holds agent mechanics only (`AGENTS.md`, `map.md`,
+  `log.md`, `conventions/`, `references/`, `templates/`). There is no vault catalog, so never
+  create `index.md`, `tasks/`, `project/overview.md`, `findings/` or `open-questions/` there:
+  the project chose to keep that knowledge visible, and a recreated vault page becomes a
+  second, unread copy. Wherever this skill names a destination by role (glossary, decisions,
+  research, ideas), take the path from that table; one table per project means a project
+  with a justified exception changes one place. In a vault, use the vault path named beside
+  the role below.
+
 The root-cause rule is load-bearing: **triggers must be computed (from Git and the filesystem),
 never recorded in hand-maintained counters or markers.** The architecture-runway tracker is the
 counterexample: since 2026-07-31 its state has remained `TODO / TODO / TODO`, so its nudge never
@@ -38,6 +56,13 @@ non-glossary sections of `project/overview.md` when ordinary host evidence suppo
 If log evidence appears to target a teach-owned path, classify it as `skip` with a reason and
 leave the edit to `teach`; raw source files remain immutable. Do not infer this boundary from
 directory names alone when the explicit marker is absent.
+
+In a visible-layout hybrid project the glossary is the shared root glossary (the table's
+`glossary` role, `glossary.md` by default), not a section of `project/overview.md`. `teach`
+adds learner terms to it. Do not remove or redefine project terms, nor terms `teach` added,
+without asking the owner; both the project and the learner rely on those names meaning one
+thing. A hosted teach workspace keeps its own `index.md` in the vault root: it catalogs only
+teach's folders, so leave it to `teach` and never extend it to agent-mechanics pages.
 
 <!-- Adapted from prompting-agents: scope discipline. -->
 **Implement EXACTLY and ONLY what the log evidence supports.** No extra pages, cleanup, or
@@ -134,7 +159,8 @@ whole or grep its rows to locate a page.
 
 ### 1. Establish the boundary before writing
 
-- Resolve `<vault-root>` and confirm it contains the target vault's `index.md` and `log.md`.
+- Resolve `<vault-root>` and confirm it contains the target vault's `log.md`, plus `index.md`
+  in a vault (a visible-layout project has no vault catalog).
 - Run `git -C "<vault-root>" status --short` before touching anything. If it is not clean,
   **stop**. Do not stash, reset, or fold the promotion into someone else's working changes.
 - Identify the repository root with Git; the dedicated commit belongs to that repository.
@@ -156,14 +182,17 @@ python3 <skill-dir>/wiki_lint.py "<vault-root>"
 
 Read the report and act on it. Broken or ambiguous links that affect a candidate must be
 resolved by the smallest additive change or reported as a blocker; never hide them with a
-rewrite. Missing `findings/` and `decisions/` index entries are fixed by the additive index
-update in Gate 1. Distinguish pre-existing findings from defects introduced by this pass. The
+rewrite. In a vault, missing `findings/` and `decisions/` index entries are fixed by the
+additive index update in Gate 1. In a visible-layout project the detector also reports
+work-folder errors and warnings, each with its path and a one-line fix; report them as
+pre-existing findings and leave them alone in this pass, because moving or renumbering work
+items is not log promotion. Distinguish pre-existing findings from defects introduced by this pass. The
 detector is read-only; its report is evidence, not a license to skip the safety gates.
 
 ### 3. Read the evidence and classify every unpromoted heading
 
 Read the unpromoted `log.md` headings the detector listed, the pages they mention, and the
-relevant `index.md` section. Keep `log.md` intact: it is the evidence trail, not a queue to
+relevant `index.md` section (in a vault). Keep `log.md` intact: it is the evidence trail, not a queue to
 truncate.
 
 Classify **every** listed heading. A later dedicated commit closes this list whether you filed
@@ -190,12 +219,17 @@ gate, not a wiki page. Its verdicts are carried into the promotion commit body, 
 
 For each `promote`, choose the smallest existing page or a new page by meaning:
 
-- verified discovery, scan result, or durable observation → `findings/`;
-- a costly or irreversible choice with a real alternative → the next numbered ADR in
-  `decisions/` (inspect existing numbering first);
-- stable command, path, external reference, or gotcha → `references/`;
-- durable workflow rule or operating convention → `conventions/`;
-- unresolved uncertainty or mutually exclusive claims → `open-questions/`.
+- verified discovery, scan result, or durable observation → vault: `findings/`; visible
+  layout: the `research` role (a dated investigation folder);
+- a costly or irreversible choice with a real alternative → the next numbered record in the
+  `decisions` role (vault: `decisions/`; inspect existing numbering first);
+- a domain term or its canonical name → the `glossary` role (vault: the Glossary section of
+  `project/overview.md`), subject to the teach boundary above;
+- stable command, path, external reference, or gotcha → `references/` in the vault root;
+- durable workflow rule or operating convention → `conventions/` in the vault root;
+- unresolved uncertainty or mutually exclusive claims → vault: `open-questions/`; visible
+  layout: one line in the `ideas` role, because that layout keeps open questions in `work/`
+  and an unattended pass must not create numbered work items.
 
 Do not invent frontmatter: the directory supplies the page kind and Git supplies dates
 (`git log -1 --format=%cs -- <path>`). Name appended sections after the fact, not after the
@@ -209,8 +243,8 @@ change is small, obvious, or time-sensitive.
 
 #### Gate 1 — Additive-only
 
-Create missing pages and append a dated section to an existing page. Append a new link in the
-appropriate curated section of `index.md` when a page is created. Also append a link for an
+Create missing pages and append a dated section to an existing page. In a vault, append a new
+link in the appropriate curated section of `index.md` when a page is created, and also append a link for an
 existing `findings/` or `decisions/` page the detector lists as missing from the index, except
 `README.md` and anything under `templates/`. **Never delete, rewrite, or reflow existing
 prose.** Do not improve wording while you are in the file, normalize headings, generate the
@@ -240,8 +274,9 @@ thin-write failure this gate exists to prevent, entered through the front door. 
 
 Only in a direct manual invocation, where a human asked for the commit, do you create it
 yourself — after running the same checks the wrapper would, including classification coverage.
-Then stage only this pass's verified vault files, commit once with the exact detector-provided
-subject and the verdict summary as the body, and confirm with `git show --stat --oneline HEAD`
+Then stage only this pass's verified files (vault files, plus role paths it wrote in a
+visible-layout project), commit once with the exact detector-provided subject and the verdict
+summary as the body, and confirm with `git show --stat --oneline HEAD`
 and a clean `git status --short`.
 
 A separate commit is not noise: Git is the audit trail and the undo path (`git show` and
@@ -255,7 +290,8 @@ Two different disagreements exist. Only the first is a contradiction.
 - **Mutually exclusive claims** cannot both be true: a research spike says an acceptance bar
   was "formally lowered" while the ADR addendum and `tasks/active.md` say it was not. Write
   both mutually exclusive source pages **and** the exact originating `log.md` heading/date
-  into `open-questions/` (one resolvable question per page or heading, not a batch dump).
+  into `open-questions/` (one resolvable question per page or heading, not a batch dump); in
+  a visible-layout project, into one line per question in the `ideas` role.
   The next reader needs that log provenance; a date on the open-question heading is not a
   source citation. Do not promote either claim as current truth, and classify that heading
   `conflict`. Continue the rest of the pass.
@@ -273,7 +309,7 @@ spike is outdated or that the newer-looking statement wins.
 Before the wrapper handoff or direct-manual commit:
 
 1. Inspect `git diff --check` and the diff itself. Confirm existing prose was not rewritten,
-   no file was deleted or renamed, and every new page has an index entry. The wrapper also
+   no file was deleted or renamed, and (in a vault) every new page has an index entry. The wrapper also
    rejects any non-additive change to a tracked page, so a rewrite fails the whole run rather
    than landing quietly — find it here, not in the failure log.
 2. Re-run `python3 <skill-dir>/wiki_lint.py "<vault-root>"`. Separate pre-existing warnings
@@ -298,3 +334,8 @@ missing or partial classification, or a mutually exclusive claim that cannot eve
 an open question is a safe stop, not a reason to guess. Keep the run scoped to the supplied
 vault; do not modify qmd registry policy, other repositories, or the personal wiki from this
 skill.
+
+The wrapper commits only paths inside the vault root and fails the run on anything else. In a
+visible-layout project the glossary, decisions, research and ideas roles live outside the
+vault root, so do not enrol such a project in the unattended promotion timer: run promotion
+manually there. The lint-only timer is safe for it, because the detector is read-only.
