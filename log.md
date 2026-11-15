@@ -1665,3 +1665,6 @@ Close-out decisions 33-36 landed (`93f9694`). The five migrated projects are reg
 
 ## [2026-11-15] implement | agent-kernel recap: 📦 delivery line, order 📦/👣/🏁
 Owner asked for the Manicule-style delivery line in every session, goal last, no blank lines; 📦 only when something was made for use; delivered = usable now (committed-only is not). Scenario 10 extended with (e). Not yet pressure-tested or propagated to the harness deltas.
+
+## [2026-11-15] test+deploy | agent-kernel recap 🏁/👣/📦
+Owner swapped the order to goal first, delivery last. Scenario 10 (a)–(e) on Sonnet 5.5 low: one tune (never "Delivered: nothing"), then PASS 6/6. Propagated to the five CONFIG deltas, the Muse runtime copy and ~/.claude/CLAUDE.md.

@@ -24,7 +24,7 @@ tested. See the concept's `## Tests` section for what is missing.
 
 | concept | kind | tested | deployed |
 |---|---|---|---|
-| [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-05 | 2026-11-02 |
+| [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-15 | 2026-11-15 |
 | [bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md) | pressure | 2026-06-21 | 2026-06-21 |
 | [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-10-08 | 2026-07-25 |
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-10-04 | 2026-06-21 |
