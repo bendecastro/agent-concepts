@@ -112,22 +112,38 @@ be misread; an unnumbered list or a buried question costs a reread.
 where it goes after the reply format — unless it is a short standalone factual
 answer: no work done, no question open, no goal in progress. Write the lines in
 this order, with no blank line between them:
-- `🏁` followed by the session's goal in about five words — a label, not a restatement.
-- `👣` followed by the next action — what you will do, or what you need from the user.
-  One short line when possible.
-- `📦` — what is new since the user's last message plus what is still open:
+- `📦` — often absent. Write it only when something became ready since the
+  user's last message, or work you have already started (changed a file, ran a
+  build or release step) is not ready yet:
   `📦 Ready to use: <what>. Not ready yet: <what> (<why>).` Ready to use means
   the user can use it now with nothing more for you to do: released, built,
   installed, deployed or pushed. Committed-only work or work on a branch is
   not ready yet. List a ready item once, in the first reply after it becomes
   ready, then drop it; keep each not-ready item in every reply until it is
-  ready or dropped. Leave out an empty half: when nothing is newly ready the
-  line starts `📦 Not ready yet:`, with no `Ready to use:` part in any wording;
-  leave out the whole line when both halves are empty. Only work meant for the
-  user to use counts, and only once you have started making it: an answer, a
-  plan, research or work not yet begun (it is in `👣`) gets no `📦` line. A
-  project's own definition of ready takes precedence.
-Use the emoji as the line labels, not `Goal:`, `Next:` or `Status:`.
+  ready or dropped. Write only the halves that have items — no `Ready to use:`
+  part saying "nothing" or "nothing new" — and no line at all when neither
+  has. An answer, a plan, research or work not yet begun gets no `📦` line —
+  not even `Not ready yet: … (waiting on your choices)`; waiting for the
+  user's choice before starting belongs in `👣`. A project's
+  own definition of ready takes precedence.
+- `👣` followed by the next action — what you will do, or what you need from the user.
+  One short line when possible.
+- `🏁` followed by the session's goal in about five words — a label, not a restatement.
+Use the emoji as the line labels, not `Goal:`, `Next:` or `Status:`. The goal
+is always the last line. With nothing for `📦`, the recap is two lines:
+
+```
+👣 Waiting for your pick (1, 2 or 3).
+🏁 Rename timeout config key
+```
+
+With work under way:
+
+```
+📦 Not ready yet: report export (committed, not pushed).
+👣 I'll push once you confirm the branch name.
+🏁 Add report export
+```
 
 Why: the user remembers only the recent part of a session while you hold the
 whole of it. After long or partial work they may not recall the goal or what to
