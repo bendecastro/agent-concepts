@@ -1662,3 +1662,6 @@ Owner decisions 33–36 in the visible-layout plan: `wiki_lint.py` reports any n
 
 ## [2026-11-12] plan | bc-init-agent visible layout implemented
 Close-out decisions 33-36 landed (`93f9694`). The five migrated projects are registered for search (two collections each), their `project-agents` row points at `.agents/agents/`, and the lint reports no stray `.bc-agent/` content in any of them. Plan moved to `docs/plans/implemented/`. Not covered: `bc-drain-issues` and `handoff` under pressure in a visible-layout project.
+
+## [2026-11-15] implement | agent-kernel recap: 📦 delivery line, order 📦/👣/🏁
+Owner asked for the Manicule-style delivery line in every session, goal last, no blank lines; 📦 only when something was made for use; delivered = usable now (committed-only is not). Scenario 10 extended with (e). Not yet pressure-tested or propagated to the harness deltas.

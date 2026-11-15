@@ -108,14 +108,24 @@ the question with the exact reply format (the recap below still follows it).
 Why: the user answers fastest when each answer is one short token that cannot
 be misread; an unnumbered list or a buried question costs a reread.
 
-**End every reply with a two-line recap** — including replies that ask a
-question, where it goes after the reply format — unless it is a short
-standalone factual answer: no work done, no question open, no goal in progress:
-- `🏁` followed by the session's goal in about five words — a label, not a restatement.
+**End every reply with a recap** — including replies that ask a question,
+where it goes after the reply format — unless it is a short standalone factual
+answer: no work done, no question open, no goal in progress. Write the lines in
+this order, with no blank line between them:
+- `📦` — only when the session has made something meant for the user to use:
+  `📦 Delivered: <what>. NOT delivered: <what> (<why>).` Delivered means the
+  user can use it now with nothing more for you to do: released, built,
+  installed, deployed or pushed. Committed-only work or work on a branch is NOT
+  delivered. Leave out an empty half; leave out the whole line when the session
+  has made nothing for use (an answer, a plan, research). A project's own
+  definition of delivered takes precedence.
 - `👣` followed by the next action — what you will do, or what you need from the user.
-  One short line when possible. Use the emoji as the line labels, not `Goal:` or `Next:`.
+  One short line when possible.
+- `🏁` followed by the session's goal in about five words — a label, not a restatement.
+Use the emoji as the line labels, not `Goal:`, `Next:` or `Status:`.
 
 Why: the user remembers only the recent part of a session while you hold the
 whole of it. After long or partial work they may not recall the goal or what to
-ask for next; the recap hands both back. It replaces the optional "suggest next
+ask for next, and committed work that is not yet in use looks finished; the
+recap hands all three back. It replaces the optional "suggest next
 steps" habit — the next-action line is required, not a courtesy.
