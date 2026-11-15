@@ -115,18 +115,22 @@ this order, with no blank line between them:
 - `🏁` followed by the session's goal in about five words — a label, not a restatement.
 - `👣` followed by the next action — what you will do, or what you need from the user.
   One short line when possible.
-- `📦` — only when the session has made something meant for the user to use:
+- `📦` — what is new since the user's last message plus what is still open:
   `📦 Delivered: <what>. NOT delivered: <what> (<why>).` Delivered means the
   user can use it now with nothing more for you to do: released, built,
   installed, deployed or pushed. Committed-only work or work on a branch is NOT
-  delivered. Leave out an empty half (write `📦 NOT delivered: …` alone, never
-  `Delivered: nothing`); leave out the whole line when the session
-  has made nothing for use (an answer, a plan, research). A project's own
-  definition of delivered takes precedence.
+  delivered. List a delivery once, in the first reply after it happens, then
+  drop it; keep each NOT delivered item in every reply until it is delivered
+  or dropped. Leave out an empty half: when nothing is delivered the line starts
+  `📦 NOT delivered:`, with no `Delivered:` part in any wording; leave out the whole line when both halves are empty.
+  Only work meant for the user to use counts, and only once you have started
+  making it: an answer, a plan, research or work not yet begun (it is in `👣`)
+  gets no `📦` line. A project's own definition of delivered takes precedence.
 Use the emoji as the line labels, not `Goal:`, `Next:` or `Status:`.
 
 Why: the user remembers only the recent part of a session while you hold the
 whole of it. After long or partial work they may not recall the goal or what to
 ask for next, and committed work that is not yet in use looks finished; the
-recap hands all three back. It replaces the optional "suggest next
+recap hands all three back. Repeating old deliveries every reply only buries
+what is new. It replaces the optional "suggest next
 steps" habit — the next-action line is required, not a courtesy.

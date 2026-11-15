@@ -1668,3 +1668,6 @@ Owner asked for the Manicule-style delivery line in every session, goal last, no
 
 ## [2026-11-15] test+deploy | agent-kernel recap 🏁/👣/📦
 Owner swapped the order to goal first, delivery last. Scenario 10 (a)–(e) on Sonnet 5.5 low: one tune (never "Delivered: nothing"), then PASS 6/6. Propagated to the five CONFIG deltas, the Muse runtime copy and ~/.claude/CLAUDE.md.
+
+## [2026-11-15] test+deploy | agent-kernel 📦 lists only new deliveries
+Owner choice: a delivery is listed once; NOT delivered items persist; work not yet begun gets no 📦. Scenario 10 (a)–(f) on Sonnet 5.5 low, two tunes, then PASS. Propagated to the CONFIG deltas, Muse runtime copy and ~/.claude/CLAUDE.md.
