@@ -1126,7 +1126,8 @@ def render(text: str, slug: str, date: str) -> str:
 # archetypes keep the vault above unchanged.
 
 VISIBLE_ARCHETYPES = frozenset({"code", "ops", "hybrid"})
-WORK_STAGES = ("1-planned", "2-active", "3-done", "4-dropped")
+WORK_STATUS_FOLDERS = ("1-planned", "2-active", "3-done", "4-dropped")
+WORK_INDEX_SCRIPT = Path(__file__).resolve().with_name("work_index.py")
 WHERE_THINGS_GO_HEADING = "## Where things go"
 # Stable role keys of the "Where things go" table. Other skills look a role up
 # with parse_where_things_go() instead of assuming a path.
@@ -1223,7 +1224,7 @@ and the work-item rules; pick further context with `.bc-agent/map.md`.
 - `work/` — what is planned, active, done and dropped. The folder an item sits in is its status.
 - `docs/decisions/`, `docs/research/` — decision records and investigations.
 - `glossary.md` — the project's vocabulary. Use its terms in code, issues and docs.
-- `.bc-agent/` — agent mechanics only: instructions, conventions, references, templates, log.
+- `.bc-agent/` — agent mechanics only: instructions, conventions, references, templates, scripts, log.
 
 ## Planning loop trigger
 
@@ -1265,7 +1266,7 @@ __DEFAULT_PATH_RULE__
 
 A work item is one feature or plan. Template: [templates/work-item.md](templates/work-item.md).
 
-- **The folder is the status.** Move an item between stage folders with `git mv`, in the
+- **The folder is the status.** Move an item between status folders with `git mv`, in the
   same commit as the work that changes its state. Why: the tree then always shows what is
   planned, active, done and dropped, with nothing else to keep in step.
 - **No `Status:` line in an item.** Why: a written status can disagree with the folder.
@@ -1278,7 +1279,7 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   only "Dropped <date>; no reason given". Why: a deleted item frees its number for reuse, so
   older references to that number would point at a different item.
 - **Names are `<3-digit number>-<slug>`**, for example `012-search-ranking`. The next number
-  is the highest number in any stage folder, including the month folders under `3-done/`,
+  is the highest number in any status folder, including the month folders under `3-done/`,
   plus one. Why: a short number is easy to cite and survives a rename of the slug.
 - **Only the main checkout creates numbered items.** Working in a git worktree, add a line
   to `work/0-ideas.md` instead. Why: two worktrees cannot see each other's numbers and
@@ -1287,6 +1288,11 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   `## Steps` are the slices) and `requirements.md`, plus any evidence worth keeping. The folder
   moves as a whole. Why: everything about a feature stays in one place through its whole
   life, and the steps already are the slice map, so separate slice files would drift.
+- **Every open item has a `Stage:` line** directly under `Done when:`, naming one of the
+  stages listed in order on the `Stages:` line below. Run `python3 .bc-agent/scripts/work_index.py`
+  after adding, moving or changing an item; it rebuilds the table in
+  [work/README.md](../work/README.md) in that order, and `--check` fails while it is stale.
+  Why: the order of the pipeline is visible on one page without a second list to keep in step.
 - **Several items may be active at once.**
 - **GitHub issues are optional.** When one exists, record its number on the item's `Issue:`
   line. Why: the folders are the source of truth; an issue is a pointer to them.
@@ -1297,14 +1303,16 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   planned work item whose answer lands in `docs/research/`. One not worth an item yet is a
   line in `work/0-ideas.md`. Why: `work/` stays the single place that shows what is pending.
 
+Stages: now, next, later, unscheduled
+
 ## Keep it current
 
 | When you… | Do this |
 | --- | --- |
 | Start non-trivial work | Read the items in `work/2-active/`, then pick context with [map.md](map.md). |
-| Begin agreed work | Create the item from the template, or `git mv` it from `1-planned/` to `2-active/`. |
-| Finish a step | Check its box in the item. |
-| Finish or drop an item | Fill `## Outcome`, then `git mv` it to its done month folder or to `4-dropped/`. |
+| Begin agreed work | Create the item from the template, or `git mv` it from `1-planned/` to `2-active/`, then run `python3 .bc-agent/scripts/work_index.py`. |
+| Finish a step | Check its box in the item, then run `python3 .bc-agent/scripts/work_index.py`. |
+| Finish or drop an item | Fill `## Outcome`, then `git mv` it to its done month folder or to `4-dropped/`, then run `python3 .bc-agent/scripts/work_index.py`. |
 | Make an architectural or hard-to-reverse choice | Add a numbered record under `docs/decisions/` from [templates/adr.md](templates/adr.md). |
 | Investigate something at length | Write it up in a dated folder under `docs/research/`. |
 __OPS_KEEP_CURRENT__| Sharpen domain vocabulary | Update `glossary.md`. |
@@ -1381,7 +1389,7 @@ Where project knowledge and work items go: the "Where things go" table in
 ## Agent guidance
 
 - Confirm source/build relationships before editing generated-looking files.
-- The four `work/` stage folders keep their `.gitkeep` file permanently. Why: git drops an
+- The four `work/` status folders keep their `.gitkeep` file permanently. Why: git drops an
   empty folder, and every stage must stay visible even when it holds no items.
 """
 
@@ -1389,6 +1397,7 @@ WORK_ITEM = """# <title>
 
 Why: <the problem or goal, in one or two sentences>
 Done when: <the observable outcome that means this is finished>
+Stage: <one of the stages on the `Stages:` line in .bc-agent/AGENTS.md>
 Issue: <optional issue number; delete the line when there is none>
 
 ## Steps
@@ -1404,6 +1413,25 @@ IDEAS = """# Ideas
 
 Undecided ideas and observations, one line each, newest at the bottom. An idea that
 someone decides to do becomes a numbered work item in `1-planned/`; delete its line here.
+"""
+
+WORK_README = """# Work
+
+The pipeline of work items. The folder an item sits in is its status:
+
+- [`0-ideas.md`](0-ideas.md): undecided ideas, one line each.
+- [`1-planned/`](1-planned/): decided, not started.
+- [`2-active/`](2-active/): in progress.
+- [`3-done/`](3-done/): finished, filed by month.
+- [`4-dropped/`](4-dropped/): dropped, with the reason.
+
+Each open item names its stage on a `Stage:` line. The table below lists them in the order of
+the `Stages:` line in [.bc-agent/AGENTS.md](../.bc-agent/AGENTS.md#work-items), then by number.
+It is generated: run `python3 .bc-agent/scripts/work_index.py` after changing an item;
+`--check` fails while it is out of date.
+
+<!-- work-index:start -->
+<!-- work-index:end -->
 """
 
 GLOSSARY = """# Glossary
@@ -1522,11 +1550,13 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         "references/agent-skills.md": _visible_agent_skills(),
         "templates/adr.md": TPL_ADR + "\n<!-- Save as `docs/decisions/NNNN-<slug>.md`. -->\n",
         "templates/work-item.md": WORK_ITEM,
+        "scripts/work_index.py": WORK_INDEX_SCRIPT.read_text(),
     }
     root_files: dict[str, str] = {
         "glossary.md": GLOSSARY,
         "work/0-ideas.md": IDEAS,
-        **{f"work/{stage}/.gitkeep": "" for stage in WORK_STAGES},
+        "work/README.md": WORK_README,
+        **{f"work/{stage}/.gitkeep": "" for stage in WORK_STATUS_FOLDERS},
         "docs/decisions/.gitkeep": "",
         "docs/research/.gitkeep": "",
     }

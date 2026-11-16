@@ -259,3 +259,27 @@ Repeat the per-vault report and commit sequence for all eight current lint-list 
 migration is complete only when every selected repository has a clean working tree and its
 post-migration report preserves the broken/ambiguous invariant. Future vaults receive graph-visible
 maps directly from `scaffold.py`; this procedure is only for existing additive installations.
+
+## Work index
+
+Since 2026-11-16 the visible-layout scaffold also writes `.bc-agent/scripts/work_index.py`, a
+`work/README.md` with an empty generated block, a `Stages:` line and a `Stage:` rule in the Work
+items section of `.bc-agent/AGENTS.md`, "run the index" in three Keep-it-current rows, and a
+`Stage:` line in the work-item template. To adopt it in an existing visible-layout project:
+
+1. Re-run the scaffold (`scaffold.py --root <project> --archetype <archetype>`). It creates the
+   script and `work/README.md` when they are missing and leaves every existing file alone;
+   `--force` refreshes `.bc-agent/` files, including the script, and overwrites a customised
+   `.bc-agent/AGENTS.md`, so merge by hand instead when that file has project edits.
+2. In `.bc-agent/AGENTS.md`, add the project's stages in order on a `Stages:` line in the Work
+   items section (default `now, next, later, unscheduled`), the `Stage:` rule and the
+   Keep-it-current additions from a fresh scaffold; add `Stage:` under `Done when:` in
+   `.bc-agent/templates/work-item.md`.
+3. Give every item in `work/1-planned/` and `work/2-active/` a `Stage:` line directly under
+   `Done when:`, then run `python3 .bc-agent/scripts/work_index.py`. It fails, naming the item,
+   while any open item has a missing or unknown stage. An existing `work/README.md` needs the
+   `<!-- work-index:start -->` and `<!-- work-index:end -->` markers added where the table goes.
+4. Add `python3 .bc-agent/scripts/work_index.py --check` to the project's lint or CI, so a stale
+   table fails the build.
+
+The `bc-work-sync` skill proposes these steps in its plan when a project lacks them.

@@ -12,7 +12,7 @@ Adaptively initialize project-local agent context.
 - **Code, ops and hybrid use the visible layout.** Work items live in `work/` (`0-ideas.md`, then
   `1-planned/`, `2-active/`, `3-done/<year>-<month>/`, `4-dropped/`), decisions and research in
   `docs/decisions/` and `docs/research/`, the vocabulary in root `glossary.md`; `.bc-agent/` holds
-  agent mechanics only (instructions, map, log, conventions, references, templates). Why: people
+  agent mechanics only (instructions, map, log, conventions, references, templates, scripts). Why: people
   browse the repository, not a hidden folder, so knowledge kept out of sight goes stale.
   Project-specific skills and agents go to `.agents/skills/local-<name>/` and
   `.agents/agents/local-<name>.md`, created on first need.
@@ -95,7 +95,7 @@ Archetypes:
    ```
    python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>" --archetype "<code|ops|learning|knowledge|hybrid>"
    ```
-   Code, ops and hybrid create root `glossary.md`, lifecycle folders under `work/`, `docs/decisions/`, `docs/research/`, and `.bc-agent/` mechanics with a Where things go table and work-item template. Hybrid also retains the hosted teach adapter and its mapped paths and catalog; its teach glossary is the root `glossary.md`. Learning and knowledge keep the existing vault including Obsidian metadata. Existing files remain untouched unless forced; no project is migrated by this step.
+   Code, ops and hybrid create root `glossary.md`, lifecycle folders under `work/` with a `work/README.md` whose item table `.bc-agent/scripts/work_index.py` generates in the order of the `Stages:` line, `docs/decisions/`, `docs/research/`, and `.bc-agent/` mechanics with a Where things go table and work-item template. Hybrid also retains the hosted teach adapter and its mapped paths and catalog; its teach glossary is the root `glossary.md`. Learning and knowledge keep the existing vault including Obsidian metadata. Existing files remain untouched unless forced; no project is migrated by this step.
 
 7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, or `references/agent-skills.md`). When the notes report earlier-layout paths under `.bc-agent/` (only possible with `--allow-earlier-layout`), leave them in place and say so in the close-out: moving them to the visible layout is a separate migration the user approves.
 

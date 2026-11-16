@@ -33,7 +33,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   those and not agent mechanics. Nothing recreates a vault catalog there.
 - **`.bc-agent/` holds agent mechanics only, checked (owner decision 2026-11-12).** In visible
   mode every entry directly under the vault root other than `AGENTS.md`, `map.md`, `log.md`,
-  `conventions/`, `references/` and `templates/` is an `agent-mechanics` error naming where
+  `conventions/`, `references/`, `templates/` and `scripts/` (bc-init-agent's `work_index.py`, added 2026-11-16) is an `agent-mechanics` error naming where
   project knowledge belongs. A hybrid project (table has `teach-workspace`) also may keep the
   teach paths its scaffold writes there (`learning/`, `sources/`, `concepts/`, `sessions/`,
   `questions/`, `index.md`); a test scaffolds a hybrid project and compares the two lists. A

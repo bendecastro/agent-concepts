@@ -45,6 +45,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ. Its agent-mechanics check allows the .bc-agent/ entries the hybrid scaffold writes and the optional agent-extras role; a test compares the hybrid list with the scaffold's output.
   Source: [bc-wiki-maintain/CONCEPT.md](../bc-wiki-maintain/CONCEPT.md)
 
+- incoming from [bc-work-sync](../bc-work-sync/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, and runs the scaffolded .bc-agent/scripts/work_index.py.
+  Source: [bc-work-sync/body/SKILL.md](../bc-work-sync/body/SKILL.md)
+
 - incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves glossary, decisions and ideas in the scaffolded table, with its earlier paths as fallback.
   Source: [diagnosing-bugs/CONCEPT.md](../diagnosing-bugs/CONCEPT.md)

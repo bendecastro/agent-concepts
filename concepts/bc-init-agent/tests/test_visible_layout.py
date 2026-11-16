@@ -120,8 +120,10 @@ CODE_FILES = {
     '.bc-agent/references/commands.md',
     '.bc-agent/templates/adr.md',
     '.bc-agent/templates/work-item.md',
+    '.bc-agent/scripts/work_index.py',
     'glossary.md',
     'work/0-ideas.md',
+    'work/README.md',
     'work/1-planned/.gitkeep',
     'work/2-active/.gitkeep',
     'work/3-done/.gitkeep',
@@ -222,7 +224,7 @@ def test_generated_markdown_links_resolve(tmp_path, archetype):
             if re.match(r'[a-z]+:', target) or target.startswith('#'):
                 continue
             resolved = (path.parent / target.split('#', 1)[0]).resolve()
-            if resolved not in generated:
+            if resolved not in generated and not (target.endswith('/') and resolved.is_dir()):
                 broken.append(f'{path.relative_to(root)} -> {target}')
     assert broken == []
 
@@ -231,7 +233,7 @@ def test_generated_markdown_links_resolve(tmp_path, archetype):
 def test_work_item_template_has_lifecycle_fields_and_no_plan_template(tmp_path, archetype):
     root = _scaffold(tmp_path, archetype)
     text = (root / '.bc-agent/templates/work-item.md').read_text()
-    for field in ('Why:', 'Done when:', 'Issue:', '## Steps', '## Outcome'):
+    for field in ('Why:', 'Done when:', 'Stage:', 'Issue:', '## Steps', '## Outcome'):
         assert field in text
     assert 'Status:' not in text
     assert not (root / '.bc-agent/templates/plan.md').exists()
@@ -626,3 +628,73 @@ def test_skill_qmd_sample_is_what_the_lint_prints_for_a_demo_project(tmp_path):
     skill = (SCAFFOLD.parent / 'SKILL.md').read_text()
     sample = skill.split('```yaml\n', 1)[1].split('```', 1)[0]
     assert '\n'.join(line[5:] for line in sample.rstrip().splitlines()) + '\n' == printed
+
+
+# --- work index (Stages line, Stage rule, generated table) -------------------
+
+WORK_INDEX = Path(__file__).resolve().parents[1] / 'body/work_index.py'
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_scaffold_copies_the_shared_work_index_script(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    assert (root / '.bc-agent/scripts/work_index.py').read_bytes() == WORK_INDEX.read_bytes()
+
+
+def test_force_refreshes_the_work_index_script(tmp_path):
+    root = _scaffold(tmp_path, 'code')
+    (root / '.bc-agent/scripts/work_index.py').write_text('old\n')
+    _run(root, 'code', '--force')
+    assert (root / '.bc-agent/scripts/work_index.py').read_bytes() == WORK_INDEX.read_bytes()
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_work_item_template_has_stage_directly_under_done_when(tmp_path, archetype):
+    lines = (_scaffold(tmp_path, archetype) / '.bc-agent/templates/work-item.md').read_text().splitlines()
+    done = next(i for i, line in enumerate(lines) if line.startswith('Done when:'))
+    assert lines[done + 1].startswith('Stage: ')
+    assert 'Status:' not in '\n'.join(lines)
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_agents_lists_stages_and_the_stage_rule(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/AGENTS.md').read_text()
+    work = text.split('## Work items')[1].split('\n## ')[0]
+    assert '\nStages: now, next, later, unscheduled\n' in work
+    flat = ' '.join(work.split())
+    assert 'Every open item has a `Stage:` line' in flat
+    assert 'python3 .bc-agent/scripts/work_index.py' in flat
+    keep = text.split('## Keep it current')[1].split('\n## ')[0]
+    for row in ('| Begin agreed work |', '| Finish a step |', '| Finish or drop an item |'):
+        line = next(line for line in keep.splitlines() if line.startswith(row))
+        assert 'python3 .bc-agent/scripts/work_index.py' in line, row
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_status_folders_are_not_called_stages(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    for rel in ('.bc-agent/AGENTS.md', '.bc-agent/conventions/file-layout.md', 'work/README.md'):
+        assert 'stage folder' not in (root / rel).read_text(), rel
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_work_readme_explains_folders_and_index_runs_on_fresh_scaffold(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    text = (root / 'work/README.md').read_text()
+    for name in ('0-ideas.md', '1-planned/', '2-active/', '3-done/', '4-dropped/', 'Stages',
+                 'python3 .bc-agent/scripts/work_index.py'):
+        assert name in text, name
+    assert '<!-- work-index:start -->\n<!-- work-index:end -->' in text
+    script = root / '.bc-agent/scripts/work_index.py'
+    item = root / 'work/1-planned/001-first.md'
+    item.write_text('# First\n\nWhy: Start.\nDone when: x.\nStage: next\n\n## Steps\n\n- [ ] a\n')
+    subprocess.run([sys.executable, str(script)], check=True, cwd=root)
+    subprocess.run([sys.executable, str(script), '--check'], check=True, cwd=root)
+    assert '| next | [001-first](1-planned/001-first.md) | planned | Start. | 0/1 |' in (root / 'work/README.md').read_text()
+
+
+def test_force_keeps_the_projects_work_readme(tmp_path):
+    root = _scaffold(tmp_path, 'code')
+    (root / 'work/README.md').write_text('mine\n')
+    _run(root, 'code', '--force')
+    assert (root / 'work/README.md').read_text() == 'mine\n'

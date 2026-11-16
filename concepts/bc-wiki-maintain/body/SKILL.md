@@ -22,7 +22,7 @@ detector rather than guessing from folder names, because both layouts use `.bc-a
 - **visible** — the vault root's `AGENTS.md` has a parseable "Where things go" table
   (`bc-init-agent` code, ops and hybrid projects). Project knowledge lives in ordinary folders
   at the repository root; the vault root holds agent mechanics only (`AGENTS.md`, `map.md`,
-  `log.md`, `conventions/`, `references/`, `templates/`). There is no vault catalog, so never
+  `log.md`, `conventions/`, `references/`, `templates/`, `scripts/`). There is no vault catalog, so never
   create `index.md`, `tasks/`, `project/overview.md`, `findings/` or `open-questions/` there:
   the project chose to keep that knowledge visible, and a recreated vault page becomes a
   second, unread copy. Wherever this skill names a destination by role (glossary, decisions,
