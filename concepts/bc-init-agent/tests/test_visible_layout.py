@@ -684,8 +684,8 @@ def test_work_readme_explains_folders_and_index_runs_on_fresh_scaffold(tmp_path,
     for name in ('0-ideas.md', '1-planned/', '2-active/', '3-done/', '4-dropped/', 'Stages',
                  'python3 .bc-agent/scripts/work_index.py'):
         assert name in text, name
-    assert '<!-- work-index:start -->\n<!-- work-index:end -->' in text
     script = root / '.bc-agent/scripts/work_index.py'
+    subprocess.run([sys.executable, str(script), '--check'], check=True, cwd=root)
     item = root / 'work/1-planned/001-first.md'
     item.write_text('# First\n\nWhy: Start.\nDone when: x.\nStage: next\n\n## Steps\n\n- [ ] a\n')
     subprocess.run([sys.executable, str(script)], check=True, cwd=root)
@@ -698,3 +698,16 @@ def test_force_keeps_the_projects_work_readme(tmp_path):
     (root / 'work/README.md').write_text('mine\n')
     _run(root, 'code', '--force')
     assert (root / 'work/README.md').read_text() == 'mine\n'
+
+
+def test_upgrade_warns_when_stages_line_missing(tmp_path):
+    root = _scaffold(tmp_path, 'code')
+    agents = root / '.bc-agent/AGENTS.md'
+    agents.write_text('\n'.join(line for line in agents.read_text().split('\n') if not line.startswith('Stages:')))
+    assert any('has no `Stages:` line' in note for note in _module().upgrade_notes(root, 'code'))
+
+
+def test_upgrade_warns_when_work_index_markers_missing(tmp_path):
+    root = _scaffold(tmp_path, 'code')
+    (root / 'work/README.md').write_text('# Work\n')
+    assert 'work/README.md has no work-index markers.' in _module().upgrade_notes(root, 'code')

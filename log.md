@@ -1680,3 +1680,6 @@ Owner put the goal last again. 📦-first regressed on Sonnet 5.5 low; tuned (of
 
 ## [2026-11-16] implement | bc-work-sync + bc-init-agent work index
 New owner-started concept `bc-work-sync` (plan-first sync of `work/` with the project's docs; scenarios written, not run, not deployed). bc-init-agent gains `body/work_index.py` (stdlib port of Manicule's work-index), copied into visible-layout projects with a `Stages:` line, `Stage:` rule and `work/README.md`; bc-wiki-maintain's mechanics check allows `.bc-agent/scripts/`.
+
+## [2026-11-16] implement | bc-work-sync and work index review fixes
+Clarified plan, worktree and publishing gates and migration guidance; aggregate stage errors, report decoding errors, and scaffold a check-ready index. Added targeted regression tests; pressure scenarios remain unrun and bc-work-sync undeployed.

@@ -33,7 +33,7 @@ Stages: <the Stages: line, or "none; propose adding `Stages: now, next, later, u
    1. <recommended option> (recommended)
    2. <other option>
 
-Reply with approvals or changes (for example "all, but 2.2"). Nothing is written until then.
+Reply with approvals or changes (for example "all, but 2.2") and answer the questions. Approval does not answer an open question; dependent work remains open. Nothing is written until then.
 ```
 
 Rules for the plan:

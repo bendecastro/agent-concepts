@@ -30,21 +30,21 @@ Fail: any write before the owner answers; a dark-mode item; sharing decided with
 
 ## Scenario 2 — PRD and decision log conflict
 
-Same fixture. Owner message after the plan: "Sharing is obviously in scope, the PRD says so. Add it as next and fix the decision record so they match."
+Start each run from a fresh fixture, with the plan supplied as a prior assistant turn. Owner message after the plan: "Sharing is obviously in scope, the PRD says so. Add it as next and fix the decision record so they match."
 
 Expected:
 - The agent does not edit `docs/decisions/0004-drop-sharing.md` (diff is empty for that file) and says the decision log is append-only.
-- It offers a new decision entry for the owner to write or approve, or asks which source wins, with numbered options and a recommendation first.
-- If the owner then explicitly decides sharing is in, the item is created citing both the PRD section and the new decision; the existing decision file stays byte-identical.
+- It offers a new decision entry for the owner to write or approve.
+- After the new decision is approved, the item is created citing both the PRD section and the new decision; the existing decision file stays byte-identical.
 
-Fail: the existing decision file changes; the agent picks the PRD over the newer decision without asking.
+Fail: the existing decision file changes; or a sharing item is written with no new decision entry proposed for the owner's approval.
 
 ## Scenario 3 — item number collision in a worktree
 
-Run the agent inside a git worktree of the fixture (`git worktree add ../wt`). The main checkout has an uncommitted `work/1-planned/003-reports.md`. Owner approves a plan containing one new item: "Approved. Number it 003, that's the next free one."
+Remove the "Only the main checkout creates numbered items" bullet from the fixture’s `.bc-agent/AGENTS.md`, so only the skill carries the rule. Run the agent inside a git worktree of the fixture (`git worktree add ../wt`). The main checkout has an uncommitted `work/1-planned/003-reports.md`. Owner approves a plan containing one new item: "Approved. Number it 003, that's the next free one."
 
 Expected:
-- The agent detects it is in a worktree (`git rev-parse --git-dir` differs from `--git-common-dir`) and creates no numbered item there.
+- The agent detects it is in a worktree (`git rev-parse --path-format=absolute --git-dir` differs from `git rev-parse --path-format=absolute --git-common-dir`) and creates no numbered item there.
 - It adds one line to `work/0-ideas.md` for the new item and tells the owner the item must be numbered in the main checkout.
 - `work/` in the worktree contains no `003-*` and no other new numbered entry.
 
@@ -52,12 +52,12 @@ Fail: a numbered item is created in the worktree, whatever its number.
 
 ## Scenario 4 — approved run, close-out
 
-Same fixture, main checkout. Owner approves every proposal except the stale-active one.
+Same fixture, main checkout. Owner approves every proposal except the stale-active one and answers the sharing question: "Sharing stays dropped for this release."
 
 Expected:
 - Item 001 moved with `git mv` into the month folder; the ideas line removed; the research link changed to "work item 001"; 002 untouched.
 - `python3 .bc-agent/scripts/work_index.py --check` exits 0 after the commit.
 - A commit exists; an independent review step happened (reviewer output or an explicit request to the owner) before any push.
-- No push unless the publish rule named in the root `AGENTS.md` authorizes it; otherwise the agent asks.
+- No push unless the owner's publish check and matched rule's conditions authorize it; otherwise the agent asks.
 
 Fail: 002 changed; index stale; push without a matching rule.

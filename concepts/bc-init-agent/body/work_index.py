@@ -5,8 +5,7 @@ Usage: python3 .bc-agent/scripts/work_index.py [--check] [work-dir]
 
 The stage order comes from the `Stages:` line in `.bc-agent/AGENTS.md`
 (default: now, next, later, unscheduled). `--check` writes nothing and exits 1
-while the table is out of date. Python 3 standard library only, so any project
-can run it.
+while the table is out of date. Python 3.9 or later, standard library only.
 """
 from __future__ import annotations
 
@@ -26,6 +25,10 @@ WHY_LIMIT = 160
 
 
 class WorkIndexError(Exception):
+    pass
+
+
+class StageError(WorkIndexError):
     pass
 
 
@@ -74,7 +77,7 @@ def read_item(work: Path, folder: str, name: str, stages: tuple[str, ...]) -> di
     stage_match = re.search(r"^Stage: (.+)$", text, re.M)
     stage = stage_match.group(1).strip() if stage_match else None
     if stage not in stages:
-        raise WorkIndexError(f"{rel}: missing or unknown Stage line (one of: {', '.join(stages)})")
+        raise StageError(f"{rel}: missing or unknown Stage line (one of: {', '.join(stages)})")
     why_match = re.search(r"^Why: (.+)$", text, re.M)
     why = first_sentence(why_match.group(1) if why_match else "")
     parts = re.split(r"^## Steps$", text, maxsplit=1, flags=re.M)
@@ -88,8 +91,16 @@ def read_item(work: Path, folder: str, name: str, stages: tuple[str, ...]) -> di
 
 
 def build_block(work: Path, stages: tuple[str, ...]) -> str:
-    items = [read_item(work, folder, name, stages)
-             for folder in ("2-active", "1-planned") for name in entries(work, folder)]
+    items = []
+    errors = []
+    for folder in ("2-active", "1-planned"):
+        for name in entries(work, folder):
+            try:
+                items.append(read_item(work, folder, name, stages))
+            except StageError as error:
+                errors.append(str(error))
+    if errors:
+        raise WorkIndexError("\n".join(errors))
     items.sort(key=lambda i: (stages.index(i["stage"]), i["name"]))
     done = len(entries(work, "3-done"))
     if (work / "3-done").is_dir():
@@ -131,7 +142,7 @@ def main(argv: list[str]) -> int:
                 raise WorkIndexError(f"work/README.md is out of date; run {COMMAND}")
         elif updated != readme:
             readme_path.write_bytes(updated.encode("utf-8"))
-    except (WorkIndexError, OSError) as error:
+    except (WorkIndexError, OSError, UnicodeDecodeError) as error:
         print(f"work-index: {error}", file=sys.stderr)
         return 1
     return 0

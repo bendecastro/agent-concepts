@@ -263,14 +263,15 @@ maps directly from `scaffold.py`; this procedure is only for existing additive i
 ## Work index
 
 Since 2026-11-16 the visible-layout scaffold also writes `.bc-agent/scripts/work_index.py`, a
-`work/README.md` with an empty generated block, a `Stages:` line and a `Stage:` rule in the Work
+`work/README.md` with a generated empty index, a `Stages:` line and a `Stage:` rule in the Work
 items section of `.bc-agent/AGENTS.md`, "run the index" in three Keep-it-current rows, and a
 `Stage:` line in the work-item template. To adopt it in an existing visible-layout project:
 
-1. Re-run the scaffold (`scaffold.py --root <project> --archetype <archetype>`). It creates the
-   script and `work/README.md` when they are missing and leaves every existing file alone;
-   `--force` refreshes `.bc-agent/` files, including the script, and overwrites a customised
-   `.bc-agent/AGENTS.md`, so merge by hand instead when that file has project edits.
+1. First run the scaffold with `--dry-run`: an additive re-run recreates any scaffold file the
+   project deleted on purpose. Then re-run (`scaffold.py --root <project> --archetype <archetype>`).
+   It creates the script and `work/README.md` when missing and leaves existing files alone. To
+   refresh just the script, run `cp "$AGENT_CONCEPTS/concepts/bc-init-agent/body/work_index.py" .bc-agent/scripts/`.
+   `--force` also refreshes it, along with every other `.bc-agent/` file.
 2. In `.bc-agent/AGENTS.md`, add the project's stages in order on a `Stages:` line in the Work
    items section (default `now, next, later, unscheduled`), the `Stage:` rule and the
    Keep-it-current additions from a fresh scaffold; add `Stage:` under `Done when:` in

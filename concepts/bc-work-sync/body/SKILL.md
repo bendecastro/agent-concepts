@@ -18,7 +18,11 @@ The project's docs say what is planned; `work/` should show the same. This skill
   plan anyway, short if the owner is in a hurry. Why: the plan is where the owner catches
   a wrong stage, a duplicate item or a doc that is stale, and a written item looks decided.
 - Apply only what the owner approved. Answers that change the plan get a revised plan,
-  not a guess.
+  not a guess. An approval does not answer a question; leave out what depends on an
+  unanswered question and list it as still open.
+- In a git worktree, number nothing, even when the owner names the number: add a line to
+  the ideas file and say the item is numbered in the main checkout. Why: a worktree cannot
+  see items created or uncommitted in the main checkout, so the next free number may be taken.
 ```
 
 ## Sources
@@ -54,10 +58,10 @@ Look for each of these; [PLAN.md](PLAN.md) gives the plan's format.
 
 ## After the owner approves
 
-1. Write items from `.bc-agent/templates/work-item.md` under the project's work-item rules in `.bc-agent/AGENTS.md`. Number new items only in the main checkout (`git rev-parse --git-dir` equals `--git-common-dir`); in a worktree, add a line to the ideas file instead and say so. Link to the docs an item comes from instead of copying their content.
+1. Write items from `.bc-agent/templates/work-item.md` under the project's work-item rules in `.bc-agent/AGENTS.md`. Number new items only in the main checkout (`git rev-parse --path-format=absolute --git-dir` equals `git rev-parse --path-format=absolute --git-common-dir`); in a worktree, add a line to the ideas file instead and say so. Link to the docs an item comes from instead of copying their content.
 2. Run `python3 .bc-agent/scripts/work_index.py`, then `python3 .bc-agent/scripts/work_index.py --check` and the project's own lint.
 3. Commit only your own changes, with a subject naming the sync.
 4. Get an independent review of the diff (a fresh reviewer subagent, or the owner when none is available), apply the fixes, re-run step 2 and commit them.
-5. Publishing: follow the publish rule in the project's root `AGENTS.md`, which names where the owner's publish policy lives. No matching rule: ask.
+5. Publishing: run the owner's publish check, `python3 "$AGENT_CONCEPTS/scripts/publish-check.py" --repo "$PWD" --remote "$(git remote get-url origin)" --branch "$(git branch --show-current)"`. Then check the matched rule's `when:` conditions yourself. If there is no matching rule, or the check is not available, ask. Do not restate the policy.
 
 A project scaffolded before the work index has no `.bc-agent/scripts/work_index.py`: see the "Work index" note in bc-init-agent's `MIGRATIONS.md`, and propose adopting it in the plan rather than doing it unasked.

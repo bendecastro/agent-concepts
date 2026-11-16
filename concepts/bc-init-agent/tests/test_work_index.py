@@ -187,3 +187,33 @@ def test_default_work_dir_is_the_project_next_to_bc_agent_scripts(tmp_path):
     result = subprocess.run([sys.executable, str(copy)], capture_output=True, text=True, cwd="/")
     assert result.returncode == 0, result.stderr
     assert "[004-x](1-planned/004-x.md)" in readme(tmp_path)
+
+
+def test_reports_all_invalid_stages(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("bad", "A."),
+                       "work/2-active/002-b.md": "# No stage\n"})
+    result = run(tmp_path, "--check")
+    assert result.returncode == 1
+    assert "1-planned/001-a.md" in result.stderr
+    assert "2-active/002-b.md" in result.stderr
+
+
+def test_non_utf8_item_is_a_clear_error(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": "placeholder"})
+    (tmp_path / "work/1-planned/001-a.md").write_bytes(b"\xff")
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "Traceback" not in result.stderr
+    assert "utf-8" in result.stderr
+
+
+def test_handwritten_tail_survives_two_runs_and_check(tmp_path):
+    tail = b'\n\n- Open questions: [PRD](../docs/PRD.md)\n'
+    fixture(tmp_path, {"work/1-planned/004-x.md": item("v1", "X.")})
+    path = tmp_path / "work/README.md"
+    path.write_bytes(README.encode() + tail)
+    for _ in range(2):
+        assert run(tmp_path).returncode == 0
+        assert path.read_bytes().endswith(tail)
+    assert run(tmp_path, "--check").returncode == 0
+    assert path.read_bytes().endswith(tail)
