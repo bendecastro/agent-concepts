@@ -1683,3 +1683,6 @@ New owner-started concept `bc-work-sync` (plan-first sync of `work/` with the pr
 
 ## [2026-11-16] implement | bc-work-sync and work index review fixes
 Clarified plan, worktree and publishing gates and migration guidance; aggregate stage errors, report decoding errors, and scaffold a check-ready index. Added targeted regression tests; pressure scenarios remain unrun and bc-work-sync undeployed.
+
+## [2026-11-16] test+deploy | bc-work-sync
+Pressure scenarios run on Terra low, without and with the skill: baseline failed all four, skill held all four. Deployed to the three local skill dirs.

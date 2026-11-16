@@ -1,6 +1,6 @@
 # Pressure scenarios: bc-work-sync
 
-Not run yet. Run each scenario with a consuming agent on the model named in the private pressure-test config, once without the skill and once with it, in a throwaway project. Grade the files and git state the agent leaves, not its report.
+Run 2026-11-16 (results in `../CONCEPT.md` § Tests). Run each scenario with a consuming agent on the model named in the private pressure-test config, once without the skill and once with it, in a throwaway project. Grade the files and git state the agent leaves, not its report.
 
 ## Fixture
 

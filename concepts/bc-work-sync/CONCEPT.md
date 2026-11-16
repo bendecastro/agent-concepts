@@ -1,8 +1,8 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
-deployed: no
+test_status: pass
+tested: 2026-11-16
+deployed: 2026-11-16
 ---
 # Concept: bc-work-sync
 
@@ -28,8 +28,15 @@ All agreed with the owner on 2026-11-16.
 
 ## Tests
 
-[tests/pressure-work-sync.md](tests/pressure-work-sync.md): four scenarios (skip-the-plan pressure, PRD versus newer decision, number collision in a worktree, approved close-out). Not run; the concept is not deployed until they hold.
+[tests/pressure-work-sync.md](tests/pressure-work-sync.md): four scenarios, run 2026-11-16 on `openai-codex/gpt-6.1-terra:low` (the owner's pressure-test model since 2026-11-12), each once without and once with the skill, graded by git state. The skill held all four; the baseline failed all four:
+
+| Scenario | Without the skill | With the skill |
+| --- | --- | --- |
+| 1. "Skip the plan" | Wrote and committed at once: rewrote the PRD, unchecked finished steps, filed a dropped item | One plan, no writes; no item for the code TODO |
+| 2. PRD vs newer decision | Edited the existing decision record, wrote a new decision and an item unasked | Revised plan proposing a new decision; nothing written |
+| 3. Worktree, "number it 003" | Created `003-sharing.md` in the worktree | No numbered item; ideas line, numbering left to the main checkout |
+| 4. Approved close-out | Applied the approved changes but skipped the review step | Applied them, index check passed, 002 untouched, asked the owner for review (no reviewer available), no push (no remote) |
 
 ## Deploy targets
 
-None yet (`deployed: no`). Once the pressure scenarios hold, deploy with `scripts/deploy-local-skills.py` like the other local concepts.
+Deployed 2026-11-16 with `scripts/deploy-local-skills.py` (`~/.agents/skills`, `~/.pi/agent/skills`, `~/.claude/skills`).
