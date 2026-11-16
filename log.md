@@ -1677,3 +1677,6 @@ Owner: the not-delivered half usually stands alone and needs a label that reads 
 
 ## [2026-11-15] test+deploy | agent-kernel recap order 📦/👣/🏁
 Owner put the goal last again. 📦-first regressed on Sonnet 5.5 low; tuned (often-absent opening, started = changed a file or ran a build/release step, two example recaps), then PASS. Propagated to the CONFIG deltas, Muse runtime copy and ~/.claude/CLAUDE.md.
+
+## [2026-11-16] implement | bc-work-sync + bc-init-agent work index
+New owner-started concept `bc-work-sync` (plan-first sync of `work/` with the project's docs; scenarios written, not run, not deployed). bc-init-agent gains `body/work_index.py` (stdlib port of Manicule's work-index), copied into visible-layout projects with a `Stages:` line, `Stage:` rule and `work/README.md`; bc-wiki-maintain's mechanics check allows `.bc-agent/scripts/`.

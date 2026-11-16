@@ -632,6 +632,15 @@
       "when": "visible-layout hybrid project",
       "source": "concepts/bc-wiki-maintain/body/SKILL.md",
       "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; maintenance points to it."
+    },
+    {
+      "from": "bc-work-sync",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/bc-work-sync/body/SKILL.md",
+      "reason": "Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, and runs the scaffolded .bc-agent/scripts/work_index.py."
     }
   ]
 }
