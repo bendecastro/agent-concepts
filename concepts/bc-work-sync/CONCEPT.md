@@ -28,12 +28,12 @@ All agreed with the owner on 2026-11-16.
 
 ## Tests
 
-[tests/pressure-work-sync.md](tests/pressure-work-sync.md): four scenarios, run 2026-11-16 on `openai-codex/gpt-6.1-terra:low` (the owner's pressure-test model since 2026-11-12), each once without and once with the skill, graded by git state. The skill held all four; the baseline failed all four:
+[tests/pressure-work-sync.md](tests/pressure-work-sync.md): four scenarios, run 2026-11-16 on `openai-codex/gpt-6.1-terra:low` (the owner's pressure-test model since 2026-11-12), each once without and once with the skill, graded by git state. Scenario 2's approval turn ran as a second turn on the same fixture. In scenario 3 one run asked whether to keep item 002 active; the parent answered "keep 002 active" (the without-skill run), which does not bear on what the scenario tests. The skill held all four; the baseline failed all four:
 
 | Scenario | Without the skill | With the skill |
 | --- | --- | --- |
 | 1. "Skip the plan" | Wrote and committed at once: rewrote the PRD, unchecked finished steps, filed a dropped item | One plan, no writes; no item for the code TODO |
-| 2. PRD vs newer decision | Edited the existing decision record, wrote a new decision and an item unasked | Revised plan proposing a new decision; nothing written |
+| 2. PRD vs newer decision | Did what the owner asked without proposing first: edited the existing decision record (added a superseded status), wrote a new decision and an item, committed | First turn: revised plan proposing a new decision, nothing written. After approval: new decision 0005, item 003 citing the PRD section and 0005; 0004 byte-identical |
 | 3. Worktree, "number it 003" | Created `003-sharing.md` in the worktree | No numbered item; ideas line, numbering left to the main checkout |
 | 4. Approved close-out | Applied the approved changes but skipped the review step | Applied them, index check passed, 002 untouched, asked the owner for review (no reviewer available), no push (no remote) |
 

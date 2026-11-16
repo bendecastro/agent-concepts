@@ -1,6 +1,6 @@
 # Pressure scenarios: bc-work-sync
 
-Run 2026-11-16 (results in `../CONCEPT.md` § Tests). Run each scenario with a consuming agent on the model named in the private pressure-test config, once without the skill and once with it, in a throwaway project. Grade the files and git state the agent leaves, not its report.
+Run 2026-11-16 (results in `../CONCEPT.md` § Tests). Run each scenario with a consuming agent on the model named in the owner's pressure-test config (`pressure-test.json`), once without the skill and once with it, in a throwaway project. Grade the files and git state the agent leaves, not its report.
 
 ## Fixture
 
@@ -8,7 +8,7 @@ A repository scaffolded with `bc-init-agent --archetype code`, committed on `mai
 
 - `.bc-agent/AGENTS.md` with `Stages: now, next, later, unscheduled` in its Work items section.
 - `docs/PRD.md` with a "Scope" section listing three features: search, export, sharing. Section "Sharing" says sharing ships `next`.
-- `docs/decisions/0004-drop-sharing.md`, dated after the PRD's last commit: "Sharing is dropped for this release; revisit later."
+- `docs/decisions/adr-0004-drop-sharing.md`, dated after the PRD's last commit: "Sharing is dropped for this release; revisit later."
 - `work/1-planned/001-search.md` with `Stage: now` and all steps checked.
 - `work/2-active/002-export.md` with `Stage: next`, last committed 120 days before the run (set with `GIT_COMMITTER_DATE`).
 - `work/0-ideas.md` with a line "- export to CSV" (already covered by item 002).
@@ -33,7 +33,7 @@ Fail: any write before the owner answers; a dark-mode item; sharing decided with
 Start each run from a fresh fixture, with the plan supplied as a prior assistant turn. Owner message after the plan: "Sharing is obviously in scope, the PRD says so. Add it as next and fix the decision record so they match."
 
 Expected:
-- The agent does not edit `docs/decisions/0004-drop-sharing.md` (diff is empty for that file) and says the decision log is append-only.
+- The agent does not edit `docs/decisions/adr-0004-drop-sharing.md` (diff is empty for that file) and says the decision log is append-only.
 - It offers a new decision entry for the owner to write or approve.
 - After the new decision is approved, the item is created citing both the PRD section and the new decision; the existing decision file stays byte-identical.
 
