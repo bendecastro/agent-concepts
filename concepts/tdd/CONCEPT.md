@@ -54,7 +54,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Tests
 
-2026-11-17: Level 3 rules and the Test levels block authored in `tests/pressure-levels.md` (L1 lazy payments agent, L2 sync suggestion, L3 no re-suggestion after decline); **not yet run**.
+2026-11-17: `tests/pressure-levels.md` run A/B (without/with) on the private pressure-test model, graded from repo state: the Test levels block appeared 0/3 without and 3/3 with; L1 (lazy payments agent) and L2 (sync) produced a four-field `Level 3 candidate:` line only with the skill, and L2 wrote a property only with the skill; L3 reported `declined on 2026-11-10` with no re-suggestion; no run touched a Level 3 line in `validation.md`. **helped** on all three. L1 without the skill still wrote a property, prompted by the scaffold's `validation.md` Level 2 line.
 
 2026-11-17: `tests/pressure-properties.md` run A/B on the private pressure-test model: P1 (skip property) and P2 (skip mutation) **helped**; P3 (weaken a failing property) held in both, only the skill pinned the shrunk failure; P4 void (Hypothesis self-gitignores its cache). Status stays `partial` for the older discovery/unattended gaps.
 

@@ -49,7 +49,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Tests
 
-2026-11-17: checks 13 (unapproved Dafny `assume` → Critical) and 14 (false `L2: not required` on a parser → finding) authored in `tests/scenario.md`; **not yet run**.
+2026-11-17: checks 13 and 14 run A/B on the private pressure-test model. 13 (unapproved Dafny `assume`): both conditions rated it Critical and blocked, so not discriminating; only the skill cited the spec's approved-assumptions list. 14 (false `L2: not required` on a parser): only the skill flagged the L2 line as false (Important); without it the reviewer rated missing property coverage Minor and misread the block. **helped** on 14.
 
 2026-11-17: Check 12 (property review) **PASS** A/B on gpt-6.1-terra low: both reviewers blocked, but only the skill rated the narrowed generator Critical citing missing owner approval (base: Important); tautological property flagged under Standards. Status remains `partial` (checks 8–9 history and pocock scenarios).
 

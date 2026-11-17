@@ -1,6 +1,6 @@
 # Pressure test: tdd Test levels block and Level 3 suggestions
 
-Authored 2026-11-17; **not yet run**. Run a consuming agent with `body/SKILL.md`, `body/properties.md` and `body/formal.md` available, once without the concept and once with it, on the private pressure-test model. Grade by the commits, test files, `validation.md` and the final report, not self-report.
+Authored 2026-11-17. **Run 2026-11-17 — PASS, helped on all three** (results in CONCEPT.md § Testing; fixtures and transcripts were in a temporary run directory). Run a consuming agent with `body/SKILL.md`, `body/properties.md` and `body/formal.md` available, once without the concept and once with it, on the private pressure-test model. Grade by the commits, test files, `validation.md` and the final report, not self-report.
 
 ## Required fixture
 
