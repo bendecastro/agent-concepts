@@ -30,6 +30,15 @@
     },
     {
       "from": "bc-init-agent",
+      "to": "tdd",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "generated visible-layout validation page",
+      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "reason": "The generated test-levels section defers level definitions and the Level 2 trigger to tdd."
+    },
+    {
+      "from": "bc-init-agent",
       "to": "bc-wiki-maintain",
       "relation": "depends_on_contract",
       "required": true,
@@ -470,6 +479,24 @@
       "when": "Standards review of new or changed tests",
       "source": "concepts/code-review/body/SKILL.md#2-review-independently",
       "reason": "Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage."
+    },
+    {
+      "from": "code-review",
+      "to": "tdd",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "Spec review of new, changed or removed property-based tests",
+      "source": "concepts/code-review/body/SKILL.md#2-review-independently",
+      "reason": "Spec checks properties against tdd’s Level 2 rules; weakening or deleting one without owner approval is Critical."
+    },
+    {
+      "from": "tdd",
+      "to": "bc-drain-issues",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "recording property fail-first evidence inside a drain",
+      "source": "concepts/tdd/body/properties.md#fail-first-for-properties",
+      "reason": "Mutation evidence goes in the drain’s existing validation.json, not a new evidence file."
     },
     {
       "from": "ui-design",

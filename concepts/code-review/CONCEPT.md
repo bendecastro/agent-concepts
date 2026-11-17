@@ -10,6 +10,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Design decisions
 
+- **Spec checks property-based tests (2026-11-17).** Owner-approved three-level testing model: the agent writes tdd's Level 2 properties, and the independent Spec reviewer checks each stated rule and generator domain against the spec, because a property encodes a claim about the spec rather than a code-quality choice. Weakening or deleting an existing property is Critical unless the packet records owner approval, because a narrowed generator stays green while the rule it guarded breaks. Standards still applies tests-that-lie to properties.
+
 - **Lie detection and merge danger.** Standards consumes tdd’s definitions rather than duplicating them; reports classify reversibility and blast radius independently of diff size. One-way effects require human review. Declined the talk’s reviewer-commits-fixes proposal: local review stays independent and read-only; fixes route to a patcher.
 
 - **Cloudflare adaptation (2026-11-02).** Evidence caps severity; human-facing unresolved hypotheses are questions without severity. Machine-gated reports retain their existing untested channel and schema, still subject to the impact ceiling and anti-overclaiming rules. No refuting verifier or coverage ledger is added.
@@ -45,6 +47,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as a first-class result so a check that could not run is recorded with a reason rather than omitted. Restated in this workspace's voice; the upstream repo has no root LICENSE and that skill carries no licence file. (2026-09-06)
 
 ## Tests
+
+2026-11-17: Check 12 (property review) authored in `tests/scenario.md`, **not yet run**; status remains `partial`, historical tested date unchanged.
 
 2026-11-04: `tests/pocock-pressure.md` adds new unrun scenarios; status remains `partial`, historical tested date unchanged.
 

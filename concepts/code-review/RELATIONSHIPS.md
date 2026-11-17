@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `tdd`'s contract — required, when Spec review of new, changed or removed property-based tests.
+  Spec checks properties against tdd’s Level 2 rules; weakening or deleting one without owner approval is Critical.
+  Source: [body/SKILL.md](body/SKILL.md#2-review-independently)
+
 - depends on `tdd`'s contract — required, when Standards review of new or changed tests.
   Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage.
   Source: [body/SKILL.md](body/SKILL.md#2-review-independently)

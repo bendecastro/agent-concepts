@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `bc-drain-issues`'s contract — required, when recording property fail-first evidence inside a drain.
+  Mutation evidence goes in the drain’s existing validation.json, not a new evidence file.
+  Source: [body/properties.md](body/properties.md#fail-first-for-properties)
+
 - hands off to `diagnosing-bugs` — required, when bugs without a tight repro.
   Diagnosis belongs to diagnosing-bugs before the regression-test RED/GREEN cycle.
   Source: [body/SKILL.md](body/SKILL.md)
@@ -28,6 +32,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): loads this concept — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [bc-drain-issues/body/execute-issue.md](../bc-drain-issues/body/execute-issue.md#build-loop)
+
+- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when generated visible-layout validation page.
+  The generated test-levels section defers level definitions and the Level 2 trigger to tdd.
+  Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
+
+- incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Spec review of new, changed or removed property-based tests.
+  Spec checks properties against tdd’s Level 2 rules; weakening or deleting one without owner approval is Critical.
+  Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)
 
 - incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Standards review of new or changed tests.
   Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage.

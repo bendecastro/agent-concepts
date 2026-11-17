@@ -25,6 +25,8 @@ User-invoked adaptive initializer. Code, ops and hybrid scaffold the visible lay
 
 - **W3 review fixes (2026-11-12).** A large work item's folder holds `plan.md` (its `## Steps` are the slices) and `requirements.md`, plus any evidence; no separate slice files, because the steps already are the slice map (decision 10 refined in review, pending the owner's confirmation; recorded in the plan). The visible runway page keeps the default `docs/research` and `docs work` in its snippet and tells the agent to substitute the table's research and work paths when the project changed them. The map upgrade note fires only for an inline-code bullet whose target is an existing file inside `.bc-agent/`, so a bullet naming a project file created on first need (for example `docs/PRD.md`) is not flagged. Standalone teach state is matched by exact directory-entry name, so a hybrid project's shared root `glossary.md` is not mistaken for `GLOSSARY.md` on a case-insensitive filesystem. Provenance: the W2/W3 review of [the visible-layout plan](../../docs/plans/implemented/bc-init-agent-visible-layout.md).
 
+- **Validation page names the test levels (2026-11-17).** Visible-layout `conventions/validation.md` lists tdd's three test levels with `Level 3: off` and the `.hypothesis/`-style cache rule (gitignored, Syncthing-ignored machine-local state). Only visible archetypes get it: learning/knowledge vaults keep the base template byte-identical. No migration: existing projects gain the entry when their first property test lands. Covered by `test_validation_page_names_three_test_levels_with_level_3_off`.
+
 ## Interface: the "Where things go" table
 
 Later work packages and other skills read project paths through this contract, not by assuming them.

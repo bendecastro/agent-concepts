@@ -768,6 +768,22 @@ git status --short
 """
 
 
+# Visible-layout projects carry code; vault archetypes keep the base VALIDATION byte-identical.
+VISIBLE_VALIDATION = VALIDATION + """
+## Test levels
+
+The `tdd` skill defines these levels.
+
+- Level 1: unit (example-based) tests — on.
+- Level 2: property-based tests — required for logic with a statable rule. They run inside the
+  test command above, with no separate gate. **TODO:** when the first property test lands, name
+  the library here (Hypothesis, fast-check or proptest) and add it as a dev dependency.
+  Keep the local failure cache (`.hypothesis/` or similar) out of version control: add it to
+  `.gitignore` and list it as Syncthing-ignored machine-local state.
+- Level 3: off (formal verification; opt-in per project).
+"""
+
+
 FILE_LAYOUT = """# File Layout
 
 > **TODO:** record the real top-level paths once known.
@@ -1551,7 +1567,7 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         "AGENTS.md": agents,
         "map.md": map_text,
         "log.md": _visible_log(),
-        "conventions/validation.md": VALIDATION,
+        "conventions/validation.md": VISIBLE_VALIDATION,
         "conventions/file-layout.md": VISIBLE_FILE_LAYOUT,
         "conventions/architecture-runway.md": _visible_runway(),
         "conventions/git-and-commit-policy.md": GIT_POLICY,

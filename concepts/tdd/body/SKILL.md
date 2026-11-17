@@ -9,6 +9,14 @@ Use targeted RED/GREEN checks through guarded pytest under [kernel Storage safet
 
 These rules apply to new tests and behaviour-changing assertions, including regression tests added during bug fixes or feature work. Reading, running or mechanical test edits (such as import renames) do not require a watched fail or a new plan. For bugs without a tight repro, `diagnosing-bugs` owns diagnosis; this concept owns the regression-test RED/GREEN cycle once the behaviour is identified.
 
+## Test levels
+
+- **Level 1 — unit (example-based) tests.** The default for every change; the rest of this skill.
+- **Level 2 — property-based tests. Required** when the change touches logic with a statable rule: parsers/formatters, data transforms, calculations, sorting/filtering, state transitions. Optional for glue, UI, I/O wiring and config. Hypothesis (Python), fast-check (JS/TS), proptest (Rust), run inside the project's normal suite; shell is out of scope (move rule-bearing shell logic into Python). Fail-first still applies: on code that already works, plant a bug, watch the property catch it, revert, and record that where you already report validation. Pin every shrunk failure as an explicit example. Never weaken or delete an existing property without the owner's approval. Load [properties.md](properties.md) before writing one.
+- **Level 3 — formal verification.** Optional and off by default; a project opts in per project. Rules to be defined after a pilot.
+
+Why: examples cover the inputs you thought of; a property searches for the ones you did not.
+
 ## Philosophy
 
 **Core principle:** tests verify behavior through *public interfaces*, not implementation details. The code inside can change entirely; the tests shouldn't.
@@ -124,6 +132,7 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 [ ] Code is minimal for this test
 [ ] No speculative features added
 [ ] Did not batch multiple RED tests before any GREEN
+[ ] Rule-bearing logic has a property (or the unstatable rule is named); property seen failing (mutation on existing code) and evidence recorded
 ```
 
 ## Rationalizations that still fail the gate
@@ -137,6 +146,9 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 | "Call-count proves the payment path ran" | Assert the observable result (status, receipt, boundary fake state). |
 | "Mocking CartService is just faster CI" | Keep the real collaborator; mock only external boundaries. |
 | "Quick extract while this test is red" | GREEN first, then extract. |
+| "The parser's examples pass; a property is overkill" | Rule-bearing logic needs a property; write it per [properties.md](properties.md). |
+| "The code already works, so the property can't fail" | Plant a bug, watch the property catch it, revert, record it. |
+| "Narrow the generator so the property passes" | Never weaken or delete a property; fix the code, or ask the owner if the spec changed. |
 | "Can't run it; treating that as red enough" | Stop and report the blocker. A test you have not watched fail is not a RED. |
 
 For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

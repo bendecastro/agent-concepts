@@ -711,3 +711,11 @@ def test_upgrade_warns_when_work_index_markers_missing(tmp_path):
     root = _scaffold(tmp_path, 'code')
     (root / 'work/README.md').write_text('# Work\n')
     assert 'work/README.md has no work-index markers.' in _module().upgrade_notes(root, 'code')
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_validation_page_names_three_test_levels_with_level_3_off(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/conventions/validation.md').read_text()
+    for line in ('Level 1', 'Level 2', 'Level 3: off'):
+        assert line in text
+    assert '.hypothesis/' in text and 'Syncthing' in text and '.gitignore' in text

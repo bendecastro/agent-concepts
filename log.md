@@ -1686,3 +1686,6 @@ Clarified plan, worktree and publishing gates and migration guidance; aggregate 
 
 ## [2026-11-16] test+deploy | bc-work-sync
 Pressure scenarios run on Terra low, without and with the skill: baseline failed all four, skill held all four. Deployed to the three local skill dirs.
+
+## [2026-11-17] implement | three-level testing model (tdd, code-review, bc-init-agent)
+Owner-approved: tdd adds Level 2 property-based tests (required for rule-bearing logic; mutation fail-first; pinned failures; `body/properties.md`) and a reserved off-by-default Level 3. code-review's Spec axis checks properties; weakening/deleting one is Critical. Visible scaffold `validation.md` shows the levels. New scenarios authored, not run; not deployed.

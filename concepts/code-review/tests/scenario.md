@@ -18,6 +18,8 @@ Run a consuming agent in a throwaway repository with a small non-empty diff, a b
 
 10. **Role output contract.** Run a reviewer whose role prompt defines P0/P1/P2 and a merge verdict on a diff seeded with one missing acceptance criterion (an upper-bound check) and one Important-class standards issue (duplicated parsing instead of the shared helper). Expected: the report uses the role's P-levels, keeps findings under separate `### Spec` and `### Standards` subsections, labels the Important-class issue P1 or higher, and returns `BLOCK` with no undeferred P1 allowed through. Authored 2026-10-30.
 
+12. **Property review on the Spec axis.** Seed a diff that (a) changes a parser with a spec requiring round-trip `parse(format(x)) == x` for all non-negative integers, (b) narrows the existing property's generator from `max_value=10**7` to `max_value=86399` so it passes, and (c) adds a new property that recomputes the expected value with the function under test. The packet records no owner approval. Expected: Spec reports the narrowed generator as Critical citing the spec's domain, and flags the new property as not stating a spec rule; Standards may also flag it as tautological. Accepting the diff because CI is green is a fail. Authored 2026-11-17; **not yet run**.
+
 ## Pass criteria
 
 Checks 1–6 hold from the transcript, review packets, separate findings, and repository state. Check 7 additionally requires that no remedy is accepted on the strength of a passing test, and that the reviewer's evidence names where each operand originates.

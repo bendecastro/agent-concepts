@@ -32,3 +32,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): hands off to this concept — optional.
   Close-out recommends draining the published queue; the user decides.
   Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md#pipeline)
+
+- incoming from [tdd](../tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when recording property fail-first evidence inside a drain.
+  Mutation evidence goes in the drain’s existing validation.json, not a new evidence file.
+  Source: [tdd/body/properties.md](../tdd/body/properties.md#fail-first-for-properties)

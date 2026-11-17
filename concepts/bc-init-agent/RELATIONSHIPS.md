@@ -27,6 +27,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Apply shared naming criteria without changing the surrounding workflow gates.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `tdd`'s contract — required, when generated visible-layout validation page.
+  The generated test-levels section defers level definitions and the Level 2 trigger to tdd.
+  Source: [body/scaffold.py](body/scaffold.py)
+
 - adapts `teach` — required, when learning or hybrid scaffold.
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [body/SKILL.md](body/SKILL.md#learning-archetype-adapter)
