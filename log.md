@@ -1698,3 +1698,6 @@ Owner decided Level 3: `tdd/body/formal.md` (Dafny/Verus/TLA+/Apalache, owner-on
 
 ## [2026-11-17] test | Level 3 rules and Test levels block (tdd, code-review)
 A/B on gpt-6.1-terra low, graded from repo state: tdd L1–L3 helped (Test levels block 0/3 → 3/3; candidate lines only with skill; decline respected); code-review 14 helped, 13 held in both (seeded `assume` too blatant; subtler hatch noted).
+
+## [2026-11-17] implement | agent-kernel Storage safety: tests clean up temp files
+Owner-approved rule: tests and helpers delete the temp files they create, including on failure, and agents compare the temp-dir footprint before/after a run (one project's tests filled a 7.7 GB tmpfs `/tmp`). Applied to the Pi, Codex and Muse derived copies; pressure scenario 5 authored, not run.
