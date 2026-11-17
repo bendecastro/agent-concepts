@@ -1701,3 +1701,6 @@ A/B on gpt-6.1-terra low, graded from repo state: tdd L1–L3 helped (Test level
 
 ## [2026-11-17] implement | agent-kernel Storage safety: tests clean up temp files
 Owner-approved rule: tests and helpers delete the temp files they create, including on failure, and agents compare the temp-dir footprint before/after a run (one project's tests filled a 7.7 GB tmpfs `/tmp`). Applied to the Pi, Codex and Muse derived copies; pressure scenario 5 authored, not run.
+
+## [2026-11-17] test | agent-kernel temp-cleanup rule
+Scenario 5 passed for kernel alone and kernel + tdd on Terra low (Node fixture, cleanup on failure, footprint compared); no baseline.
