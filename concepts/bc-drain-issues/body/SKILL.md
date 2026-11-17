@@ -128,6 +128,7 @@ When it returns `READY_FOR_REVIEW`, the driver—not a model reviewer—must det
 - targeted validation passed and the baseline delta is explicit;
 - no files are staged and no unrelated files are present;
 - validation evidence and raw logs are outside the worktree.
+- the handoff contains tdd's [Test levels block](../../tdd/body/SKILL.md#test-levels) with a non-empty L1, L2 and L3 line; a missing or empty block fails the gate. Whether each line is true is the Spec reviewer's audit, not the gate's.
 
 A passed gate materializes the round's review packet once, outside every worktree: `packet.json` (base SHA, worktree, issue ref, round, `diff_sha256`, axis scope, acceptance-matrix→file map), `diff.patch`, `changed-files.txt`, `acceptance-matrix.json`, `validation.json`, and on re-review `findings-prior.json`. Reviewers consume these paths instead of re-deriving status and diff, and `diff_sha256` is the identity that standing approvals bind to. A gate rejection escalates the issue to tier 2 permanently.
 

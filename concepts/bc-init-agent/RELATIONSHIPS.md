@@ -28,7 +28,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `tdd`'s contract — required, when generated visible-layout validation page.
-  The generated test-levels section defers level definitions and the Level 2 trigger to tdd.
+  The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats.
   Source: [body/scaffold.py](body/scaffold.py)
 
 - adapts `teach` — required, when learning or hybrid scaffold.

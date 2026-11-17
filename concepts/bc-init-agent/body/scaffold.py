@@ -781,7 +781,12 @@ The `tdd` skill defines these levels.
   Keep the local failure cache out of version control (Hypothesis already writes its own
   `.gitignore` inside `.hypothesis/`; add any other library's cache to `.gitignore`) and list
   it as Syncthing-ignored machine-local state.
-- Level 3: off (formal verification; opt-in per project).
+- Level 3: off
+
+<!-- Only the owner turns Level 3 (formal verification) on, one line per component: -->
+<!-- Level 3: on — <component path> — <tool> <pinned version> — spec: <spec file> — command: <proof command> -->
+<!-- A refused Level 3 suggestion is recorded so agents stop re-suggesting it: -->
+<!-- Level 3 declined: <component>, <YYYY-MM-DD>, <reason> -->
 """
 
 

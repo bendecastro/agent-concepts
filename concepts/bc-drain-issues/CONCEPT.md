@@ -41,6 +41,7 @@ User-invoked AFK executor for a repo's non-`automated` `ready-for-agent` and `re
 - **The inbox edge is distinct from the recurring-defect tune (2026-08-20).** The recurring-defect tune reacts to a failure shape recurring across at least two workers/reviews by patching later run-local dispatch packets; it is not durable architecture evidence and never edits canon. The observation is one post-landing, evidence-backed structural signal for the project's optional architecture-review inbox. Neither path changes the other.
 - **TDD/diagnosis/autoresearch composition remains.** Feature work uses thin RED/GREEN/refactor increments; bug/performance work diagnoses from a red-capable reproduction; metric refinement occurs only after GREEN with correctness and objective improvement gates. Workers search a driver-refreshed qmd collection but never index it.
 - **Agent-agnostic canon with concrete Pi economy.** State, packets, contracts, round caps, and recovery semantics work in any harness. Pi installs minimal `bc-drain-auditor`, `bc-drain-worker`, and `bc-drain-reviewer` roles with no unrelated inherited project context/skills or generic plan/progress reads, plus compact subagent tool descriptions. Other harnesses use equivalent fresh packets. Harness sessions/artifacts stay outside issue worktrees so metadata cannot fail scope gates or enter recovery bundles.
+- **Test levels block in the pre-review gate (2026-11-17).** The deterministic gate rejects a handoff whose tdd Test levels block is missing or has an empty L1/L2/L3 line, so a skipped level surfaces before reviewer tokens are spent. The gate is instruction-only (the driver is a model; no gate code exists), so the check is added to the gate's checklist and the worker's review-ready checklist. Whether each line is true stays with the Spec reviewer: the gate checks presence, not judgment. Provenance: owner decision 7 of the Level 3 rules in [tdd](../tdd/CONCEPT.md).
 
 ## Measured basis
 
@@ -80,6 +81,8 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as the recorded state for an axis check that could not run, matching `code-review`. Restated, not copied. (2026-09-06)
 
 ## Tests
+
+2026-11-17: Test levels gate check added to the instructions; not pressure-tested.
 
 2026-11-12 (W3 review fixes): worker follow-ups moved from the worker's diff to its handoff and the driver's post-landing ideas commit; the observation sink split into with-table and without-table paragraphs; no-item and Outcome-SHA rules added; the pressure scenario `execute-issue.md::worktree_worker_no_numbered_item` regraded accordingly. `run-pressure.py` (Gate A) re-run: exit 0. Not pressure-tested with a consuming model.
 

@@ -20,6 +20,15 @@
       "reason": "Feature workers follow red-green-refactor."
     },
     {
+      "from": "bc-drain-issues",
+      "to": "tdd",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "deterministic pre-review gate",
+      "source": "concepts/bc-drain-issues/body/SKILL.md#build-and-deterministic-pre-review-gate",
+      "reason": "The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review."
+    },
+    {
       "from": "bc-init-agent",
       "to": "bc-drain-issues",
       "relation": "depends_on_contract",
@@ -35,7 +44,7 @@
       "required": true,
       "when": "generated visible-layout validation page",
       "source": "concepts/bc-init-agent/body/scaffold.py",
-      "reason": "The generated test-levels section defers level definitions and the Level 2 trigger to tdd."
+      "reason": "The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats."
     },
     {
       "from": "bc-init-agent",
@@ -485,9 +494,9 @@
       "to": "tdd",
       "relation": "depends_on_contract",
       "required": true,
-      "when": "Spec review of new, changed or removed property-based tests",
+      "when": "Spec review of property-based tests, the Test levels block, or a Level 3 proof",
       "source": "concepts/code-review/body/SKILL.md#2-review-independently",
-      "reason": "Spec checks properties against tdd’s Level 2 rules; weakening or deleting one without owner approval is Critical."
+      "reason": "Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical."
     },
     {
       "from": "tdd",

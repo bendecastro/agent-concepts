@@ -13,9 +13,20 @@ These rules apply to new tests and behaviour-changing assertions, including regr
 
 - **Level 1 — unit (example-based) tests.** The default for every change; the rest of this skill.
 - **Level 2 — property-based tests. Required** when the change touches logic with a statable rule: parsers/formatters, data transforms, calculations, sorting/filtering, state transitions. Optional for glue, UI, I/O wiring and config. Hypothesis (Python), fast-check (JS/TS), proptest (Rust), run inside the project's normal suite; shell is out of scope (move rule-bearing shell logic into Python). Fail-first still applies: on code that already works, plant a bug, watch the property catch it, revert, and record that where you already report validation. Pin every shrunk failure as an explicit example. Never weaken or delete an existing property without the owner's approval. Load [properties.md](properties.md) before writing one.
-- **Level 3 — formal verification.** Optional and off by default; a project opts in per project. Rules to be defined after a pilot.
+- **Level 3 — formal verification.** Full proof (Dafny, Verus, TLA+/Apalache), off by default; only the owner turns it on, per component, in the project's `validation.md`. When your change touches a risk-class component (persisted data, money, security/permissions, concurrency/sync, a core calculation) that is neither on nor declined, add a `Level 3 candidate:` line to your report. Load [formal.md](formal.md) for the tools, the suggestion and decline lines, the spec file, and proof runs.
 
-Why: examples cover the inputs you thought of; a property searches for the ones you did not.
+Why: examples cover the inputs you thought of; a property searches for the ones you did not; a proof covers them all.
+
+Every change report includes this block, one choice per line:
+
+```
+Test levels:
+- L1: <tests added>
+- L2: <properties added> | not required: glue/UI/config | skipped: <the rule that couldn't be stated>
+- L3: on, proof ran | candidate suggested: <line> | declined on <date> | no risk class touched
+```
+
+The reviewer audits each line against the diff. Why: a level you must name is a level you cannot silently skip.
 
 ## Philosophy
 
@@ -149,6 +160,9 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 | "The parser's examples pass; a property is overkill" | Rule-bearing logic needs a property; write it per [properties.md](properties.md). |
 | "The code already works, so the property can't fail" | Plant a bug, watch the property catch it, revert, record it. |
 | "Narrow the generator so the property passes" | Never weaken or delete a property; fix the code, or ask the owner if the spec changed. |
+| "Deadline: L1 is enough" | Rule-bearing logic still needs its property, and a risk-class component still gets its L3 line; a deadline changes neither. |
+| "Owner said just ship it" | Ship with the Test levels block filled in; a candidate line costs one line and blocks nothing. |
+| "Not my job to suggest proofs" | It is: only the owner turns Level 3 on, so only your suggestion puts the choice in front of them. |
 | "Can't run it; treating that as red enough" | Stop and report the blocker. A test you have not watched fail is not a RED. |
 
 For glossary discovery in legacy projects, follow `domain-modeling`’s legacy glossary rule.

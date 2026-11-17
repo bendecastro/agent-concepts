@@ -719,3 +719,11 @@ def test_validation_page_names_three_test_levels_with_level_3_off(tmp_path, arch
     for line in ('Level 1', 'Level 2', 'Level 3: off'):
         assert line in text
     assert '.hypothesis/' in text and 'Syncthing' in text and '.gitignore' in text
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_validation_page_level_3_is_off_with_owner_only_on_and_declined_formats(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/conventions/validation.md').read_text()
+    assert '- Level 3: off\n' in text
+    assert '<!-- Level 3: on — <component path> — <tool> <pinned version> — spec: <spec file> — command: <proof command> -->' in text
+    assert '<!-- Level 3 declined: <component>, <YYYY-MM-DD>, <reason> -->' in text

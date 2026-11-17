@@ -29,16 +29,20 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Test evidence requires a watched behavioural fail; mechanical test edits are excluded.
   Source: [agent-kernel/body/AGENT-KERNEL.md](../agent-kernel/body/AGENT-KERNEL.md#verification)
 
+- incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when deterministic pre-review gate.
+  The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review.
+  Source: [bc-drain-issues/body/SKILL.md](../bc-drain-issues/body/SKILL.md#build-and-deterministic-pre-review-gate)
+
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): loads this concept — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [bc-drain-issues/body/execute-issue.md](../bc-drain-issues/body/execute-issue.md#build-loop)
 
 - incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when generated visible-layout validation page.
-  The generated test-levels section defers level definitions and the Level 2 trigger to tdd.
+  The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats.
   Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
 
-- incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Spec review of new, changed or removed property-based tests.
-  Spec checks properties against tdd’s Level 2 rules; weakening or deleting one without owner approval is Critical.
+- incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Spec review of property-based tests, the Test levels block, or a Level 3 proof.
+  Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical.
   Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)
 
 - incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Standards review of new or changed tests.

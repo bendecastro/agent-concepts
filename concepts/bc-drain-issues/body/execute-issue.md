@@ -41,12 +41,13 @@ Before handoff:
 - inspect `git status`, changed files, and `git diff <base-sha>` for scope;
 - ensure no file is staged and no unrelated artifact is present;
 - write requested validation evidence outside the project worktree.
+- fill in tdd's [Test levels block](../../tdd/body/SKILL.md#test-levels) (L1, L2, L3, one choice per line); the driver's gate rejects a handoff without it.
 
 Return:
 
 `READY_FOR_REVIEW #<n> <base-sha> <targeted-validation-summary>`
 
-Include a compact changed-file list, criterion-to-evidence mapping, commands/results, baseline delta, any fixable concern, and any one-line follow-ups. Do not include a long implementation narrative.
+Include the Test levels block, a compact changed-file list, criterion-to-evidence mapping, commands/results, baseline delta, any fixable concern, and any one-line follow-ups. Do not include a long implementation narrative.
 
 ## Rework assignment
 

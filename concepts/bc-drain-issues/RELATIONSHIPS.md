@@ -19,6 +19,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
   Source: [CONCEPT.md](CONCEPT.md)
 
+- depends on `tdd`'s contract — required, when deterministic pre-review gate.
+  The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review.
+  Source: [body/SKILL.md](body/SKILL.md#build-and-deterministic-pre-review-gate)
+
 - loads `tdd` — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [body/execute-issue.md](body/execute-issue.md#build-loop)

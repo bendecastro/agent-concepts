@@ -1692,3 +1692,6 @@ Owner-approved: tdd adds Level 2 property-based tests (required for rule-bearing
 
 ## [2026-11-17] test | three-level testing model (tdd, code-review)
 Pressure-tested on gpt-6.1-terra low without/with: tdd P1–P2 discriminating, P3 held both (pin only with skill), P4 void; code-review check 12 PASS (Critical only with skill). Trimmed the `.hypothesis/` gitignore instruction, since Hypothesis self-ignores its cache.
+
+## [2026-11-17] implement | Level 3 formal verification rules and Test levels block (tdd, code-review, bc-drain-issues, bc-init-agent)
+Owner decided Level 3: `tdd/body/formal.md` (Dafny/Verus/TLA+/Apalache, owner-only per-component on, mandatory candidate suggestions, dated declines, spec approval, proof runs, Dafny generated code); every report carries a Test levels block that code-review audits (unapproved escape hatch = Critical) and the drain gate requires. Scaffold Level 3 line + format comments. Scenarios authored, not run; not redeployed.
