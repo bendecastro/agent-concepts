@@ -778,8 +778,9 @@ The `tdd` skill defines these levels.
 - Level 2: property-based tests — required for logic with a statable rule. They run inside the
   test command above, with no separate gate. **TODO:** when the first property test lands, name
   the library here (Hypothesis, fast-check or proptest) and add it as a dev dependency.
-  Keep the local failure cache (`.hypothesis/` or similar) out of version control: add it to
-  `.gitignore` and list it as Syncthing-ignored machine-local state.
+  Keep the local failure cache out of version control (Hypothesis already writes its own
+  `.gitignore` inside `.hypothesis/`; add any other library's cache to `.gitignore`) and list
+  it as Syncthing-ignored machine-local state.
 - Level 3: off (formal verification; opt-in per project).
 """
 

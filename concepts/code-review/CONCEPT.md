@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-10-30
+tested: 2026-11-17
 deployed: yes
 ---
 # Concept: code-review
@@ -48,7 +48,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Tests
 
-2026-11-17: Check 12 (property review) authored in `tests/scenario.md`, **not yet run**; status remains `partial`, historical tested date unchanged.
+2026-11-17: Check 12 (property review) **PASS** A/B on gpt-6.1-terra low: both reviewers blocked, but only the skill rated the narrowed generator Critical citing missing owner approval (base: Important); tautological property flagged under Standards. Status remains `partial` (checks 8–9 history and pocock scenarios).
 
 2026-11-04: `tests/pocock-pressure.md` adds new unrun scenarios; status remains `partial`, historical tested date unchanged.
 

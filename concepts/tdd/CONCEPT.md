@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-11-05
+tested: 2026-11-17
 deployed: yes
 ---
 # Concept: tdd
@@ -50,7 +50,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Tests
 
-2026-11-17: `tests/pressure-properties.md` (P1 skip property on a parser, P2 skip mutation on working code, P3 weaken a failing property, P4 commit the cache) authored, **not yet run**; status stays `partial` and the historical tested date does not certify Level 2.
+2026-11-17: `tests/pressure-properties.md` run A/B on the private pressure-test model: P1 (skip property) and P2 (skip mutation) **helped**; P3 (weaken a failing property) held in both, only the skill pinned the shrunk failure; P4 void (Hypothesis self-gitignores its cache). Status stays `partial` for the older discovery/unattended gaps.
 
 2026-11-05: Better-tests scenarios T1–T3 run A/B (without/with skill) on the private pressure-test model in `tests/pocock-pressure.md` § Better-tests run: T2 seam and T3 tests-after-code **helped**, T1 discovery not discriminating. `confirm-red.py` has 44 unit tests (`tests/test_confirm_red.py`, mutation-checked). Status stays `partial`: discovery and the unattended mode have no discriminating run.
 

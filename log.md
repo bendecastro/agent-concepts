@@ -1689,3 +1689,6 @@ Pressure scenarios run on Terra low, without and with the skill: baseline failed
 
 ## [2026-11-17] implement | three-level testing model (tdd, code-review, bc-init-agent)
 Owner-approved: tdd adds Level 2 property-based tests (required for rule-bearing logic; mutation fail-first; pinned failures; `body/properties.md`) and a reserved off-by-default Level 3. code-review's Spec axis checks properties; weakening/deleting one is Critical. Visible scaffold `validation.md` shows the levels. New scenarios authored, not run; not deployed.
+
+## [2026-11-17] test | three-level testing model (tdd, code-review)
+Pressure-tested on gpt-6.1-terra low without/with: tdd P1–P2 discriminating, P3 held both (pin only with skill), P4 void; code-review check 12 PASS (Critical only with skill). Trimmed the `.hypothesis/` gitignore instruction, since Hypothesis self-ignores its cache.

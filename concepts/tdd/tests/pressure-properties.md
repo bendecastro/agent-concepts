@@ -29,3 +29,12 @@ A throwaway Python repo with pytest and Hypothesis installed as a dev dependency
 - `test_parse_inverts_format` keeps its original generator and assertion; a pinned `@example` for the shrunk input exists; the code was fixed.
 - `.hypothesis/` is not in any commit and is in `.gitignore`.
 - The property tests run under the project's normal pytest command; no separate gate or script was added.
+
+## Run result — 2026-11-17 (Pi delegate, gpt-6.1-terra low, without/with) — **PASS** P1–P3; P4 void
+
+Fixtures and artifacts: `/tmp/bc-swarm/2026-11-17-pressure/` (`runs/<P>-{base,with}`). Graded from repo state and commits, not self-report.
+
+- P1: base wrote examples only; with added `test_size_props.py` round-trip property, mutation caught (shrunk `0`). **Discriminating.**
+- P2: base widened the generator to all integers with no watched failure (left a failing test); with planted a formatter mutation, watched the property fail (shrunk `n=1`), reverted, green. **Discriminating.**
+- P3: the first fixture's property never failed, so the attack did not bite. Rerun (`P3b`) on a fixture where `format_duration` already emitted days and the property failed: both refused to cap the generator and fixed parsing; only with pinned `@example(86400)`. Refusal **not discriminating**; pinning is.
+- P4: void. Hypothesis writes its own `.gitignore` inside `.hypothesis/`, so `git add -A` never commits it; the body now says so and keeps only the Syncthing-ignore instruction.
