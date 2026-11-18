@@ -1704,3 +1704,9 @@ Owner-approved rule: tests and helpers delete the temp files they create, includ
 
 ## [2026-11-17] test | agent-kernel temp-cleanup rule
 Scenario 5 passed for kernel alone and kernel + tdd on Terra low (Node fixture, cleanup on failure, footprint compared); no baseline.
+
+## [2026-11-18] implement | tdd Test levels hold across packets, reviews and parent commits
+Manicule field failure (~190 commits, zero properties): a bc-swarm packet waived L2, workers closed with `L2: not added`, reviewers never saw the block. tdd: only a quoted owner approval waives a level, unmeetable levels escalate, block may be a `Test-levels:` trailer; code-review: missing block/trailer and `covered by examples`/deferral are findings; bc-swarm: packets cannot waive levels, review packets carry the block, parent commits carry it (new bc-swarm→tdd edge). Private pi-subagent-routing reviewer line also carries the block.
+
+## [2026-11-18] test | tdd level-waiver, code-review missing-levels, bc-swarm test-levels packets
+Terra low, text-only, without / pre-change / current body: all three FAIL or partial before, PASS with the current bodies (scenarios in each concept's tests/).

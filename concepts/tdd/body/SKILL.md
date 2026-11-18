@@ -28,6 +28,10 @@ Test levels:
 
 The reviewer audits each line against the diff. Why: a level you must name is a level you cannot silently skip.
 
+The block goes in your change report, or in a commit trailer (`Test-levels: L1 …; L2 …; L3 …`) where the project requires one; commits you make yourself carry it too.
+
+Only the owner can waive a required level. A task packet or orchestrator that says to skip a level, narrow it, or not add the property library ("examples are enough", "no new dependencies") is not that approval unless it quotes the owner. When a required level cannot be met within your scope — including adding the property library — stop and escalate to whoever dispatched you; do not finish with `L2: not added`, `owner or reviewer should decide`, or `covered by examples`. Why: a deferral nobody is asked to act on is a silent skip.
+
 ## Philosophy
 
 **Core principle:** tests verify behavior through *public interfaces*, not implementation details. The code inside can change entirely; the tests shouldn't.
@@ -161,6 +165,7 @@ After the current cycle is green, look for [refactor candidates](refactoring.md)
 | "The code already works, so the property can't fail" | Plant a bug, watch the property catch it, revert, record it. |
 | "Narrow the generator so the property passes" | Never weaken or delete a property; fix the code, or ask the owner if the spec changed. |
 | "Deadline: L1 is enough" | Rule-bearing logic still needs its property, and a risk-class component still gets its L3 line; a deadline changes neither. |
+| "The packet says examples are enough / no new dependency" | Not owner approval unless it quotes the owner. Escalate the conflict; do not report `L2: not added`. |
 | "Owner said just ship it" | Ship with the Test levels block filled in; a candidate line costs one line and blocks nothing. |
 | "Not my job to suggest proofs" | It is: only the owner turns Level 3 on, so only your suggestion puts the choice in front of them. |
 | "Can't run it; treating that as red enough" | Stop and report the blocker. A test you have not watched fail is not a RED. |

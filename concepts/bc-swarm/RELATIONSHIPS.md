@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `tdd`'s contract — required, when worker and review packets for code changes, and parent commits.
+  Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit.
+  Source: [body/SKILL.md](body/SKILL.md#what-every-child-packet-adds)
+
 ## Incoming
 
 None.

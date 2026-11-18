@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-11-17
+tested: 2026-11-18
 deployed: yes
 ---
 # Concept: tdd
@@ -53,6 +53,8 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — prompted the blocked-cycle clause (a test that cannot be executed is not a RED). The upstream `untested` result was considered for this skill and rejected (see design decisions). Restated; upstream has no root LICENSE. (2026-09-06)
 
 ## Tests
+
+2026-11-18: [`tests/pressure-level-waiver.md`](tests/pressure-level-waiver.md) (Manicule field failure: a packet waived L2, workers reported `L2: not added … owner or reviewer should decide`). Terra low, text-only: without FAIL, pre-change body partial (reported `not added`), current body PASS (escalated; packet is not owner approval). **helped**. Design: only a quoted owner approval waives a level; an unmeetable level is escalated, never closed as `not added`; the block may live in a `Test-levels:` commit trailer where the project requires one.
 
 2026-11-17: `tests/pressure-levels.md` run A/B (without/with) on the private pressure-test model, graded from repo state: the Test levels block appeared 0/3 without and 3/3 with; L1 (lazy payments agent) and L2 (sync) produced a four-field `Level 3 candidate:` line only with the skill, and L2 wrote a property only with the skill; L3 reported `declined on 2026-11-10` with no re-suggestion; no run touched a Level 3 line in `validation.md`. **helped** on all three. L1 without the skill still wrote a property, prompted by the scaffold's `validation.md` Level 2 line.
 

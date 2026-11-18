@@ -224,6 +224,8 @@ the results.
 
 ## Tests
 
+2026-11-18: [`tests/pressure-test-levels-packets.md`](tests/pressure-test-levels-packets.md) (Manicule: a parent packet forbade fast-check without asking the owner). Terra low, text-only: the waiver attack FAILED without and with the pre-change body (both packets forbade the property library) and PASSED with the current body (no waiver, parent commit carries a `Test-levels:` trailer); the review packet carried the worker's block only with the current body. **helped**. Design: packets never waive a tdd level without quoting the owner, review packets carry the Test levels block, parent commits carry it; new `depends_on_contract` edge to `tdd`.
+
 [Todo/manifest pressure scenario](tests/pressure-todo-manifest.md), added
 2026-10-31: run 1 INVALID (no todo tool); run 2 **PASS** (todo extension loaded, see tests/pressure-todo-manifest.md).
 Status remains `partial` (check 4 gap); `tested` date unchanged and

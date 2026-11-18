@@ -677,6 +677,15 @@
       "when": "project has a Where things go table",
       "source": "concepts/bc-work-sync/body/SKILL.md",
       "reason": "Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, and runs the scaffolded .bc-agent/scripts/work_index.py."
+    },
+    {
+      "from": "bc-swarm",
+      "to": "tdd",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "worker and review packets for code changes, and parent commits",
+      "source": "concepts/bc-swarm/body/SKILL.md#what-every-child-packet-adds",
+      "reason": "Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit."
     }
   ]
 }

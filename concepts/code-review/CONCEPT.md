@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial
-tested: 2026-11-17
+tested: 2026-11-18
 deployed: yes
 ---
 # Concept: code-review
@@ -48,6 +48,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as a first-class result so a check that could not run is recorded with a reason rather than omitted. Restated in this workspace's voice; the upstream repo has no root LICENSE and that skill carries no licence file. (2026-09-06)
 
 ## Tests
+
+2026-11-18: [`tests/pressure-missing-levels.md`](tests/pressure-missing-levels.md) (Manicule: reviewers never saw or mentioned levels). Terra low, text-only: without FAIL, pre-change body FAIL (blocked the review instead of auditing), current body PASS (missing block/trailer and missing property both reported). **helped**. Design: a code-change packet with no block or `Test-levels:` trailer is itself a finding, and an L2 line saying `covered by examples` or deferring to owner/reviewer is a finding.
 
 2026-11-17: checks 13 and 14 run A/B on the private pressure-test model. 13 (unapproved Dafny `assume`): both conditions rated it Critical and blocked, so not discriminating; only the skill cited the spec's approved-assumptions list. 14 (false `L2: not required` on a parser): only the skill flagged the L2 line as false (Important); without it the reviewer rated missing property coverage Minor and misread the block. **helped** on 14.
 

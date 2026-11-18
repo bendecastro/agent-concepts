@@ -41,6 +41,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats.
   Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
 
+- incoming from [bc-swarm](../bc-swarm/RELATIONSHIPS.md): depends on this concept's contract — required, when worker and review packets for code changes, and parent commits.
+  Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit.
+  Source: [bc-swarm/body/SKILL.md](../bc-swarm/body/SKILL.md#what-every-child-packet-adds)
+
 - incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Spec review of property-based tests, the Test levels block, or a Level 3 proof.
   Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical.
   Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)

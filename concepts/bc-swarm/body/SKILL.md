@@ -99,6 +99,12 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
 
 The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
 
+**Test levels travel with the code** ([tdd Test levels](../../tdd/body/SKILL.md#test-levels)):
+
+- A worker packet never waives, narrows or forbids a tdd test level or its property library ("examples are enough", "no new dependency") unless it quotes the owner's approval. A parent that thinks a level is wrong for the task asks the owner. Why: a packet that overrides a level is a skip nobody approved, and the worker follows the packet.
+- A review packet includes the worker's Test levels block, or the commits' `Test-levels:` trailers, and asks the reviewer to audit it against the diff. Why: a reviewer given only diff and spec never sees the levels, so nobody audits them.
+- The parent's own commits of code changes carry the block too.
+
 ## Boundary
 
 `bc-swarm` is for **investigation, analysis, and review** — reconnaissance, reading docs, cross-referencing, independent critique. Fan-out is cheap here because children only read.
