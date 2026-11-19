@@ -1807,3 +1807,5 @@ Reviewer pass over 26 concepts the lexical denylist had cleared. Replaced a priv
 
 ## [2026-11-19] lint | removed private project names and workshop download links from current tree
 Replaced the three private project names with neutral project A/B labels in prose and `<project-a>`/`<project-b>` placeholders in captured evidence (owner-approved one-off); retrieval benchmark reports now render the `--collection` value instead of a hard-coded name; dropped the workshop download URL from six CONCEPT.md citations. `docs/research/raw/` left untouched (immutable).
+
+## [2026-11-19] lint | renamed ingested source image-maze-seo-agents to project-b-seo-agents and dropped the workshop download URL from CITATIONS.md (owner-approved one-off exception to raw-source immutability)

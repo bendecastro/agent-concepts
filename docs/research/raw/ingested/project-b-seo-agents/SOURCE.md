@@ -1,0 +1,2 @@
+> Source: the user's own prior work at `<project-b>/.agent/agents/` (authored 2026-06-11, filed 2026-06-12).
+> Two portable, vendor-neutral SEO system prompts (site-wide strategist + per-asset image specialist with a vision requirement and a single-owner handoff contract) plus their README. The project adapter (`project-context.md`) was deliberately NOT filed — it is project-specific and the work repo's wiki remains its authority.

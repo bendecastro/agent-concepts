@@ -11,7 +11,7 @@ license permits it. The upstream link remains the authority. Every snapshot dire
 | Source | Upstream | Notes |
 |---|---|---|
 | `Agent skill file.md` | [Agent skill file.md](https://herdr.dev/docs/agent-skill/) |  |
-| `AI Engineer Workshop 2026.md` | [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) |  |
+| `AI Engineer Workshop 2026.md` | AI Engineer Workshop 2026 (Matt Pocock) |  |
 | `anthropic-claude-code-best-practices.md` | [anthropic-claude-code-best-practices.md](https://code.claude.com/docs/en/best-practices) |  |
 | `anthropic-claude-prompting-best-practices.md` | [anthropic-claude-prompting-best-practices.md](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) |  |
 | `anthropic-context-engineering.md` | [anthropic-context-engineering.md](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) |  |
@@ -22,7 +22,7 @@ license permits it. The upstream link remains the authority. Every snapshot dire
 | `google-boonstra-prompt-engineering-v7.pdf` | google-boonstra-prompt-engineering-v7.pdf | Lee Boonstra, *Prompt Engineering* whitepaper v7 (Google, March 2025). Source URL unrecorded. |
 | `handoff-skills-upstream` | [mattpocock/skills](https://github.com/mattpocock/skills) + [orzilca/agent-handoff-skills](https://github.com/orzilca/agent-handoff-skills) + [djhyes/context-handoff](https://github.com/djhyes/context-handoff) + [status203/handoff-skill](https://github.com/status203/handoff-skill) | The first three are MIT and vendored verbatim at commits `0ab1b63`, `a6233e0`, `a350295`. `status203/handoff-skill` (`@c833815`) **declares no license** and is cited only, per the `unslop-cursor` precedent. [Lutren/agent-handoff-protocol](https://github.com/Lutren/agent-handoff-protocol) (MIT) read and deliberately not used. Ingested → handoff (2026-08-21). |
 | `google-modern-web-guidance` | [GoogleChrome/modern-web-guidance-src](https://github.com/GoogleChrome/modern-web-guidance-src) |  |
-| `image-maze-seo-agents` | The user's own prior image-maze work | Not third-party. |
+| `project-b-seo-agents` | The user's own prior work on project B | Not third-party. |
 | `iso-24495-iplf` | [IPLF ISO standard](https://www.iplfederation.org/iso-standard/) + [ISO 24495-1 catalog](https://www.iso.org/standard/78907.html) | Citation only; no ISO text. Ingested → plain-language (2026-08-18). |
 | `kepano-obsidian-skills` | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | MIT; immutable snapshot at commit `a1dc48e68138490d522c04cbf5822214c6eb1202`; only `obsidian-markdown`, `obsidian-bases`, and `json-canvas` were adapted/deployed; `obsidian-cli` and `defuddle` remain evidence-only. |
 | `karpathy-llm-wiki.md` | [karpathy-llm-wiki.md](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) |  |

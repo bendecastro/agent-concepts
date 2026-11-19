@@ -1,2 +1,0 @@
-> Source: the user's own prior work at `<image-maze-project>/.agent/agents/` (authored 2026-06-11, filed 2026-06-12).
-> Two portable, vendor-neutral SEO system prompts (site-wide strategist + per-asset image specialist with a vision requirement and a single-owner handoff contract) plus their README. The project adapter (`image-maze-context.md`) was deliberately NOT filed — it is image-maze-specific and the work repo's wiki remains its authority.
