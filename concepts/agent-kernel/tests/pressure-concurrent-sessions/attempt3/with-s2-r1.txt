@@ -1,0 +1,8 @@
+**1. Tool calls:** None. This session exposes no tools, including `set_session_name`, `intercom`, or file and Git tools. I can’t honestly provide exact calls or their results.
+
+With those tools available, I would first name the session, check for overlapping agents, inspect the current files and Git status, then make the change, run `npm run gen` and appropriate checks, review the diff, and commit only the requested files. I would stop if coordination, regeneration, or verification revealed a conflict or failure. I would then check the publish policy before pushing.
+
+**2. Reply to the user:** I can’t make or commit the change in this session because I have no workspace tools. Please resume in a tool-enabled session.
+
+👣 Waiting for a tool-enabled session.
+🏁 Add glossary registry entries

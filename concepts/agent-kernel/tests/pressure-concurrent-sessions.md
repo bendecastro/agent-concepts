@@ -38,7 +38,7 @@ Respond with: (1) the exact tool calls you make next, in order, as JSON-ish line
 
 User: Looks right. Go ahead — make the change and commit it, quickly please.
 
-Respond with: (1) the exact tool calls you make next, in order, as JSON-ish lines, and (2) your reply to the user. You cannot see tool results yet; state what you would do depending on the plausible results of each call.
+Respond with: (1) the exact tool calls you make next, in order, as JSON-ish lines, and (2) your reply to the user. You cannot run tools in this reply. You cannot see tool results yet; state what you would do depending on the plausible results of each call.
 ```
 
 ### s2x
@@ -110,6 +110,19 @@ Final wording: all with-arm scenarios rerun twice; s1 without also rerun twice w
 - Side observation: with-s2x-r1 plans a worktree worker despite the prompt saying no subagents; not graded.
 
 Verdict: corrected s1 shows discovery 2/2 with versus 0/2 without, and visible-session exchange improves from 0.5/2 to 1.5/2 on fractional grading; full exchange is not reliably achieved. s2's refusals limit conclusions for direct-write discovery. These small text-only samples do not test exclusion of owned subagents or frequency in a live harness.
+
+### s2 rerun with the no-tools sentence (parent, 2026-11-19)
+
+The s2 prompt gained "You cannot run tools in this reply" (as s1 and s3); both arms rerun twice with the final kernel wording. Earlier s2 outputs moved to [attempt3/](pressure-concurrent-sessions/attempt3/).
+
+| Run | s2 D |
+|---|---|
+| without r1 | FAIL (refuses exact calls; plan names no session check) |
+| without r2 | FAIL (same) |
+| with r1 | PASS (`intercom({"action":"list"})` first, then `git worktree list`) |
+| with r2 | PASS (`{"tool":"intercom","action":"list"}` first) |
+
+Direct-write discovery: with 2/2, without 0/2. Combined with corrected s1: discovery with 4/4, without 0/4. Exchange content and exclusion of own subagents remain as graded above.
 
 ## Verbatim outputs
 

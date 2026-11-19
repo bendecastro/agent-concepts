@@ -1,0 +1,13 @@
+I can’t give exact tool calls from this context: no tools are available to me, including `set_session_name`, and I can’t see the earlier file contents or the tool schemas. The supplied session context also names `/home/user/Projects/manicule`, while the current working directory is different.
+
+The next actions would be conditional:
+
+1. Call `set_session_name` with `Add Glossary Registry Kind`, if available.
+2. Check the repository path, branch, status, and relevant file contents. Stop if the checkout or existing changes make a safe edit unclear.
+3. Apply the agreed change, run `npm run gen`, and run targeted checks. Stop and report any failure.
+4. Inspect the diff and commit only the intended files. Check the publish policy; push if authorized, otherwise ask.
+
+No calls were made, and no change or commit was created.
+
+👣 Need access to the stated session and its tools to proceed.
+🏁 Add glossary registry kind

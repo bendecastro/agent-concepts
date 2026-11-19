@@ -1,13 +1,14 @@
-I can’t give exact tool calls from this context: no tools are available to me, including `set_session_name`, and I can’t see the earlier file contents or the tool schemas. The supplied session context also names `/home/user/Projects/manicule`, while the current working directory is different.
+I can’t give exact tool calls from this context: the tool schemas, swarm dispatch syntax, and the actual 15-line change aren’t available to me. No tools are available in this reply, including `set_session_name`.
 
-The next actions would be conditional:
+The next calls would need to:
 
-1. Call `set_session_name` with `Add Glossary Registry Kind`, if available.
-2. Check the repository path, branch, status, and relevant file contents. Stop if the checkout or existing changes make a safe edit unclear.
-3. Apply the agreed change, run `npm run gen`, and run targeted checks. Stop and report any failure.
-4. Inspect the diff and commit only the intended files. Check the publish policy; push if authorized, otherwise ask.
+1. Set a session title, if `set_session_name` is available.
+2. Read the swarm dispatch instructions and inspect the repository state and relevant files.
+3. Check `bc-storage-health`, create a run manifest, and dispatch a worktree worker with verifiable acceptance criteria.
+4. Depending on the worker result, validate and integrate its changes, run targeted checks and `npm run gen`, inspect the diff, and commit only the requested changes.
+5. Check the publish policy; push only if authorized, otherwise ask.
 
-No calls were made, and no change or commit was created.
+I can’t truthfully say the change was made or committed without those results.
 
-👣 Need access to the stated session and its tools to proceed.
-🏁 Add glossary registry kind
+👣 Need tool access and the prior change details to proceed.
+🏁 Add glossary registry entries

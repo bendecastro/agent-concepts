@@ -1,6 +1,6 @@
-**Tool calls made:** none. The tools named in the session context, including `set_session_name`, are not available in this conversation. I also cannot see the earlier file reads or the proposed 15-line change, so I can’t give exact edit calls without inventing them.
+I can’t provide exact tool calls for the edit: the earlier 15-line change and the tool schemas aren’t in the context I received. No tools, including `set_session_name`, are available to me here, and no changes have been made.
 
-**Reply to the user:** I can’t make or commit the change from this session. With the workspace tools available, I would check the files and Git status, make the change, run `npm run gen` and targeted validation, then inspect and commit only the requested changes. I would stop if generation or validation failed.
+With tool access, I’d name the session **“Add Glossary Registry Kind”**, inspect the checkout and existing changes, apply the agreed edit, run `npm run gen` and targeted validation, then inspect and commit only the intended changes. If generation or validation fails, I’d stop and investigate before committing.
 
-👣 Restore workspace tool access so I can proceed.
-🏁 Add glossary registry entries
+👣 Please provide the agreed diff or the relevant file contents and tool schemas to specify exact calls.
+🏁 Add glossary registry kind

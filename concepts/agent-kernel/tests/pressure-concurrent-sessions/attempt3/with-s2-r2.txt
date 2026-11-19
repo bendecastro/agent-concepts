@@ -1,0 +1,6 @@
+**No tool calls are available in this session**, including `set_session_name`, so I can’t inspect the checkout, make the change, or commit it. I also can’t give exact executable calls without seeing the tools’ schemas or the earlier code context.
+
+With tools available, I would first name the session, then check for other agents and inspect the checkout and relevant files. If those checks were clear, I’d make the change, run `npm run gen` and targeted checks, inspect the diff, and commit only the requested files. I’d stop if there were conflicting work or a failed check.
+
+👣 Please enable the workspace tools so I can proceed.
+🏁 Add glossary registry entries

@@ -1759,3 +1759,6 @@ Added the coordination clause to bc-swarm, then moved it into Git discipline for
 
 ## [2026-11-19] test | agent-kernel concurrent-session coordination
 Terra low text-only review reruns: discovery 2/4 vs 0/4, visible exchange 1.5/2 vs 0.5/2 with partial credit, control 4/4 in both arms; direct-write discovery was confounded by no-tools refusals. Verbatim results and earlier runs are in the kernel tests.
+
+## [2026-11-19] test | agent-kernel concurrent-sessions s2 rerun
+s2 (direct edit, no subagents) prompt gained the no-tools sentence that s1/s3 already had; rerun both arms x2 on Terra low: discovery with 2/2, without 0/2. Combined discovery 4/4 vs 0/4. Earlier refusing outputs kept under attempt3/.
