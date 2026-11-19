@@ -1750,3 +1750,6 @@ Batch sampling rule (top N by active time + random, "k of n sampled sessions", p
 
 ## [2026-11-19] implement | retro batch review fixes
 Define the parent-session population, reproducible project/file-size sampling and batch report-path precedence; correct deploy notes. Batch pressure re-test remains pending; deployment state unchanged.
+
+## [2026-11-19] implement | retro samples by time across projects
+Batch sampling no longer ranks projects: top 18 parent sessions by active time (`bc-agent-time-report --sessions`) plus 2 seeded random, n=20; sessions started before the window get their time from the JSONL fallback. Owner decision after trial 2 put 8 of 10 samples in one project.
