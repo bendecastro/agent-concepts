@@ -1713,3 +1713,6 @@ Terra low, text-only, without / pre-change / current body: all three FAIL or par
 
 ## [2026-11-19] implement | bc-init-agent staged validation, scripts/gate, CI workflow
 Visible layouts get a staged validation.md (while working / full gate / release, one owner each, 60 s and 5 min budgets), an executable `scripts/gate` stub that fails until filled, `.github/workflows/gate.yml` running it, and a root AGENTS.md rule that red trunk CI blocks landing. From the agent-time-sinks council memo; vault archetypes unchanged. Not pressure-tested.
+
+## [2026-11-19] implement | tdd test layout norms, code-review layout check
+tdd gains a Test layout section (browser tests only where a fake cannot show it, per-file state, ~25 tests/60 s per file, parallel runner + slow marker from the first test commit); code-review's Standards checks new test files against it. From the agent-time-sinks council memo. Not pressure-tested.

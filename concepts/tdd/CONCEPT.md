@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial
+test_status: partial # test layout norms added 2026-11-19, not pressure-tested
 tested: 2026-11-18
 deployed: yes
 ---
@@ -10,6 +10,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Design decisions
 
+- **Test layout norms (2026-11-19).** Browser/integration tests only for behaviour a fake cannot show; each file builds its own state; files under about 25 tests or 60 s; parallel runner and `slow` marker from the first test commit. Each rule carries a time Why. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in the Manicule project) and the owner's decisions of that date. `code-review` checks them on new test files (same change). Other tdd consumers (bc-drain-issues, executing-plans, subagent-driven-development) load tdd for authoring and pick the section up unchanged; no consumer contract changed.
 - **Broad invocation.** Test edits, bug fixes and features with tests trigger the discipline even when tests are incidental; opt-in test-first wording missed ordinary work.
 - **Unattended planning.** Delegated/headless agents record behavior priorities and interface decisions rather than waiting for unavailable approval; interactive approval remains unchanged.
 - **Tests after code still need RED.** Coverage/regression/characterisation additions require a watched behavioral failure and restored green, recording both runs.

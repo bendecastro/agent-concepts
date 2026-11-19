@@ -32,6 +32,15 @@ The block goes in your change report, or in a commit trailer (`Test-levels: L1 �
 
 Only the owner can waive a required level. A task packet or orchestrator that says to skip a level, narrow it, or not add the property library ("examples are enough", "no new dependencies") is not that approval unless it quotes the owner. When a required level cannot be met within your scope — including adding the property library — stop and escalate to whoever dispatched you; do not finish with `L2: not added`, `owner or reviewer should decide`, or `covered by examples`. Why: a deferral nobody is asked to act on is a silent skip.
 
+## Test layout
+
+These keep the suite fast as it grows; check them on every new test file.
+
+- Write a browser, e2e or integration test only for behaviour a fake cannot show (real rendering, a real browser API, the wiring between processes). Everything else is a unit test against a fake boundary. Why: a browser test costs seconds where a unit test costs milliseconds, and the full gate pays for every one.
+- Each test file builds its own state: no fixture, database or temp folder shared across files, and no mutable module-level state shared between tests. Why: shared state forces serial runs and makes one file's failure show up in another.
+- Keep a file under about 25 tests or 60 s; split it by behaviour when it grows past that. Why: the file is the unit a parallel runner schedules, so one large file sets the floor for the whole run.
+- Configure the parallel runner (pytest-xdist, the vitest/Playwright workers setting) and a `slow` marker in the project's first test commit. Why: retrofitting both into a grown suite means first finding every test that shares state.
+
 ## Philosophy
 
 **Core principle:** tests verify behavior through *public interfaces*, not implementation details. The code inside can change entirely; the tests shouldn't.

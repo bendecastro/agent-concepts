@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial
+test_status: partial # test-layout Standards check added 2026-11-19, not pressure-tested
 tested: 2026-11-18
 deployed: yes
 ---
@@ -10,6 +10,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Design decisions
 
+- **Test-layout Standards check (2026-11-19).** One Standards sentence checks new test files against tdd's Test layout section and names the three findable breaches. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in the Manicule project) and the owner's decisions of that date.
 - **Spec checks property-based tests (2026-11-17).** Owner-approved three-level testing model: the agent writes tdd's Level 2 properties, and the independent Spec reviewer checks each stated rule and generator domain against the spec, because a property encodes a claim about the spec rather than a code-quality choice. Weakening or deleting an existing property is Critical unless the packet records owner approval, because a narrowed generator stays green while the rule it guarded breaks. Standards still applies tests-that-lie to properties.
 
 - **Lie detection and merge danger.** Standards consumes tdd’s definitions rather than duplicating them; reports classify reversibility and blast radius independently of diff size. One-way effects require human review. Declined the talk’s reviewer-commits-fixes proposal: local review stays independent and read-only; fixes route to a patcher.
