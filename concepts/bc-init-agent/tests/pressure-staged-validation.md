@@ -2,7 +2,7 @@
 
 Authored and run 2026-11-19 for the change `c825984..02d304b`: generated visible layouts gain a
 staged `.bc-agent/conventions/validation.md` (while working / full gate / release, one owner
-each, 60 s and 5 min budgets), `scripts/gate`, `.github/workflows/gate.yml`, and a root
+each, 60 s and 5 min budgets), a gate script, a CI workflow running it, and a root
 `AGENTS.md` rule that red trunk CI blocks landing except the change that turns it green.
 
 Consumer: private pressure-test model (Terra low), text-only:
