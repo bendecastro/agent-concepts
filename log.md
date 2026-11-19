@@ -1801,3 +1801,6 @@ Reports now end proposals as numbered `## Proposals` items and get a `## Decisio
 
 ## [2026-11-19] test | retro report carry-over, isolated retest
 Terra low, true stranger (project `.pi/APPEND_SYSTEM.md` override + `--no-extensions`, probe No/No vs control Yes/Yes), final body, n=2: undecided ask, decided proceed, headless carry-over, carried items numbered after new proposals with decisions written to the original report, and date-prefix latest-report selection — 12/12 pass. New body only; no real file writes.
+
+## [2026-11-19] lint | semantic privacy pass over word-list-clean concepts
+Reviewer pass over 26 concepts the lexical denylist had cleared. Replaced a private project's real identifiers in naming-things with an invented order-support vocabulary, removed private project names from code-review and bc-work-sync, provider billing status from an unslop test, gendered and owner-setup provenance, private role names, and "per cost rule" notes; the workshop citation in issue-slicing no longer carries a download URL.
