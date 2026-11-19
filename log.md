@@ -1710,3 +1710,6 @@ Manicule field failure (~190 commits, zero properties): a bc-swarm packet waived
 
 ## [2026-11-18] test | tdd level-waiver, code-review missing-levels, bc-swarm test-levels packets
 Terra low, text-only, without / pre-change / current body: all three FAIL or partial before, PASS with the current bodies (scenarios in each concept's tests/).
+
+## [2026-11-19] implement | bc-init-agent staged validation, scripts/gate, CI workflow
+Visible layouts get a staged validation.md (while working / full gate / release, one owner each, 60 s and 5 min budgets), an executable `scripts/gate` stub that fails until filled, `.github/workflows/gate.yml` running it, and a root AGENTS.md rule that red trunk CI blocks landing. From the agent-time-sinks council memo; vault archetypes unchanged. Not pressure-tested.

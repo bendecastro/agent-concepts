@@ -769,15 +769,68 @@ git status --short
 
 
 # Visible-layout projects carry code; vault archetypes keep the base VALIDATION byte-identical.
-VISIBLE_VALIDATION = VALIDATION + """
+VISIBLE_VALIDATION = """# Validation
+
+Run from the repository root. `bc-drain-issues` reads this page to know what "validated" means.
+Each stage has one owner. **TODO:** replace each placeholder with the real command when the
+first test or build step lands.
+
+## While working
+
+Owner: the worker, job or reviewer. Run targeted checks only: typecheck, lint, and the unit
+tests affected by the change (name the test files or IDs). Budget: 60 s. Workers, jobs and
+reviewers run no browser or e2e tests and not the full gate.
+Why: each full run costs minutes and parallel workers multiply it; the full gate runs once on
+the integrated tree.
+
+```sh
+# TODO: <typecheck command>
+# TODO: <lint command>
+# TODO: <run the named unit tests>
+```
+
+## Full gate
+
+Owner: the session that integrates changes. `scripts/gate` holds every step (install,
+typecheck, lint, all tests including every browser/e2e test, build) and runs them directly,
+so CI runs the same file on a clean checkout. Start it in the background with a wake:
+
+```sh
+bc-offload --budget 300 -- scripts/gate
+```
+
+- Run it once per integrated tree and record the tree SHA (`git rev-parse HEAD^{tree}`) and
+  the result in the work item's evidence. Reviewers reuse that record instead of rerunning.
+  Why: the same tree gives the same result; a second run only adds minutes.
+- Run one full gate at a time on a host; `bc-offload` queues the others.
+  Why: two gates on one host slow each other and the owner's machine.
+- For a flaky failure, rerun only the failing tests, never the whole gate in a loop.
+- Budget: 5 minutes on the offload host. After two over-budget runs in a row, open a work item
+  to make the gate fast again before more feature work.
+  Why: an unmeasured gate only grows, and every later change pays for it.
+
+## Release
+
+Owner: the session cutting a release. **TODO:** checks that run only before a release
+(packaging, delivery or install checks), or "none yet".
+
+## Baseline checks
+
+```sh
+git status --short
+```
+
+- Do not claim build/test/runtime validation was run unless it actually ran.
+- Add newly discovered canonical commands here and to `../references/commands.md`.
+
 ## Test levels
 
 The `tdd` skill defines these levels.
 
 - Level 1: unit (example-based) tests — on.
 - Level 2: property-based tests — required for logic with a statable rule. They run inside the
-  test command above, with no separate gate. **TODO:** when the first property test lands, name
-  the library here (Hypothesis, fast-check or proptest) and add it as a dev dependency.
+  project's test command, with no separate gate. **TODO:** when the first property test lands,
+  name the library here (Hypothesis, fast-check or proptest) and add it as a dev dependency.
   Keep the local failure cache out of version control (Hypothesis already writes its own
   `.gitignore` inside `.hypothesis/`; add any other library's cache to `.gitignore`) and list
   it as Syncthing-ignored machine-local state.
@@ -788,6 +841,42 @@ The `tdd` skill defines these levels.
 <!-- A refused Level 3 suggestion is recorded so agents stop re-suggesting it: -->
 <!-- Level 3 declined: <component>, <YYYY-MM-DD>, <reason> -->
 """
+
+
+# `scripts/gate` exits non-zero until filled: a vacuous green gate would let CI report success
+# for a project whose checks were never written, and red blocks landing until the first agent
+# with a test command fills it in.
+GATE_SCRIPT = """#!/usr/bin/env bash
+# Full gate: every check the integrated tree must pass, run directly (no bc-offload here) so CI
+# runs this file unchanged. Agents run it as `bc-offload --budget 300 -- scripts/gate`.
+# Stages and owners: .bc-agent/conventions/validation.md
+set -euo pipefail
+
+# TODO: replace the lines below with the real steps, in order, for example:
+# <install command>
+# <typecheck command>
+# <lint command>
+# <all tests, including every browser/e2e test>
+# <build command>
+echo "scripts/gate: no gate steps yet; fill in this file (see .bc-agent/conventions/validation.md)" >&2
+exit 1
+"""
+
+CI_WORKFLOW = """# Runs the full gate on a clean checkout. Before landing, check the latest trunk run.
+name: gate
+on:
+  push:
+  pull_request:
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # TODO: set up the toolchain scripts/gate needs (for example actions/setup-node).
+      - run: scripts/gate
+"""
+
+EXECUTABLE_TARGETS = frozenset({"scripts/gate"})
 
 
 FILE_LAYOUT = """# File Layout
@@ -1268,6 +1357,8 @@ architectural runway, check `.bc-agent/conventions/architecture-runway.md` and o
 
 Push commits or close issues only when a rule in the user-owned publish policy
 (`~/.config/agent-concepts/publish.yaml`) authorizes it. No matching rule: ask.
+Before landing, check the latest trunk CI run; red blocks landing.
+Why: a red trunk nobody looked at hides every later regression behind the first one.
 """
 
 VISIBLE_AGENTS = """# __SLUG__ — agent session protocol
@@ -1591,6 +1682,8 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         **{f"work/{stage}/.gitkeep": "" for stage in WORK_STATUS_FOLDERS},
         "docs/decisions/.gitkeep": "",
         "docs/research/.gitkeep": "",
+        "scripts/gate": GATE_SCRIPT,
+        ".github/workflows/gate.yml": CI_WORKFLOW,
     }
     if has_ops:
         ops = archetype_files("ops")
@@ -2345,6 +2438,8 @@ def main() -> int:
         if not args.dry_run:
             dest.parent.mkdir(parents=True, exist_ok=True)
             dest.write_text(content)
+            if dest.relative_to(root).as_posix() in EXECUTABLE_TARGETS:
+                dest.chmod(0o755)
         (overwritten if exists else created).append(dest)
 
     verb = "Would create" if args.dry_run else "Created"

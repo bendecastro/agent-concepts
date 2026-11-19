@@ -130,6 +130,8 @@ CODE_FILES = {
     'work/4-dropped/.gitkeep',
     'docs/decisions/.gitkeep',
     'docs/research/.gitkeep',
+    'scripts/gate',
+    '.github/workflows/gate.yml',
 }
 OPS_FILES = CODE_FILES | {
     '.bc-agent/templates/component.md',
@@ -727,3 +729,42 @@ def test_validation_page_level_3_is_off_with_owner_only_on_and_declined_formats(
     assert '- Level 3: off\n' in text
     assert '<!-- Level 3: on — <component path> — <tool> <pinned version> — spec: <spec file> — command: <proof command> -->' in text
     assert '<!-- Level 3 declined: <component>, <YYYY-MM-DD>, <reason> -->' in text
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_validation_page_has_owned_stages_with_budgets(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/conventions/validation.md').read_text()
+    working = text.split('## While working')[1].split('## Full gate')[0]
+    full = text.split('## Full gate')[1].split('## Release')[0]
+    assert 'Workers' in working and 'reviewers' in working and '60 s' in working
+    assert 'no browser' in working and 'not the full gate' in working
+    assert 'bc-offload --budget 300 -- scripts/gate' in full
+    assert 'integrat' in full and 'git rev-parse HEAD^{tree}' in full
+    assert 'one full gate at a time' in full.lower()
+    assert 'only the failing tests' in full
+    assert 'two over-budget runs in a row' in full.lower()
+    assert '## Release' in text
+
+
+def test_gate_stub_is_executable_and_fails_until_filled(tmp_path):
+    root = _scaffold(tmp_path, 'code')
+    gate = root / 'scripts/gate'
+    assert os.access(gate, os.X_OK)
+    text = gate.read_text()
+    commands = [line for line in text.splitlines() if not line.lstrip().startswith('#')]
+    assert not any('bc-offload' in line for line in commands)
+    result = subprocess.run([str(gate)], cwd=root, capture_output=True, text=True)
+    assert result.returncode != 0
+    assert 'scripts/gate' in result.stderr
+
+
+def test_ci_workflow_runs_gate_on_clean_checkout(tmp_path):
+    text = (_scaffold(tmp_path, 'code') / '.github/workflows/gate.yml').read_text()
+    assert 'push' in text and 'pull_request' in text
+    assert 'actions/checkout' in text
+    assert 'run: scripts/gate' in text
+
+
+def test_root_agents_blocks_landing_on_red_trunk_ci(tmp_path):
+    text = (_scaffold(tmp_path, 'code') / 'AGENTS.md').read_text()
+    assert 'latest trunk CI run' in text and 'red blocks landing' in text
