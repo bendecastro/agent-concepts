@@ -1765,3 +1765,6 @@ s2 (direct edit, no subagents) prompt gained the no-tools sentence that s1/s3 al
 
 ## [2026-11-19] fix | agent-kernel concurrent-sessions results note
 Marked the pre-rerun s2 figures in the review-rerun results as superseded (fix-verifier P3-a).
+
+## [2026-11-19] test | retro first live batch run
+beelink `bc-retro-weekly` (Scripts) ran `/skill:retro since 2026-11-12` headless in 4.5 min and wrote `~/Sync/Archives/retro/2026-11-19.md`: 20 of 40 sessions across 9 projects (top 18 by active time + 2 seeded), two proposals with homes (code-review boundary-size question, 3 of 20; manicule delivery-check wording, 2 of 20). `bc-agent-time-report` was not on beelink's PATH (symlinks refreshed after); the JSONL fallback worked. Weekly timer: Mondays 06:00.

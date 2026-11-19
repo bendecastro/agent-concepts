@@ -2,19 +2,14 @@
 
 # Status
 
-47 concepts. 1 need testing, 1 not deployed, 27 deployed with a known gap.
+47 concepts. 0 need testing, 1 not deployed, 28 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
 
-## Needs testing (1)
+## Needs testing (0)
 
-Live in your agents right now with no run recorded. Each one violates the test
-gate, so `lint.py` exits non-zero until it is tested or undeployed.
-
-| concept | kind | test status | deployed |
-|---|---|---|---|
-| [retro](../concepts/retro/CONCEPT.md) | pressure | not-run | yes |
+Nothing. Every deployed concept has a recorded run.
 
 ## Not deployed (1)
 
@@ -22,7 +17,7 @@ gate, so `lint.py` exits non-zero until it is tested or undeployed.
 |---|---|---|---|
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | not-run | never |
 
-## Deployed with a known gap (27)
+## Deployed with a known gap (28)
 
 Passing overall, but each names a check that was never run or a target never
 tested. See the concept's `## Tests` section for what is missing.
@@ -48,6 +43,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [prompting-agents](../concepts/prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
 | [prototype](../concepts/prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
+| [retro](../concepts/retro/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [show-me](../concepts/show-me/CONCEPT.md) | pressure | 2026-11-04 | yes |
 | [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [tdd](../concepts/tdd/CONCEPT.md) | pressure | 2026-11-19 | yes |

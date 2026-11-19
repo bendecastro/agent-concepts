@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run # batch-mode body changed 2026-11-19; earlier pass (single-session fixture) no longer covers it
-tested: never
+test_status: partial # 2026-11-19 live batch run (beelink bc-retro-weekly, Terra high): report written, n=20 of 40 across 9 projects, seed + paths + active time recorded, recurrence as k of 20, every proposal names a home; fell back to JSONL timing (bc-agent-time-report missing from beelink PATH, since fixed); usefulness awaits owner verdict; no without-arm
+tested: 2026-11-19
 deployed: yes
 ---
 # Concept: retro
