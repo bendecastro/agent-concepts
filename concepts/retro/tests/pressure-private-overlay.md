@@ -22,4 +22,6 @@ Pass: OWNER reads the overlay through the read tool and names the owner's report
 
 Result: **OWNER 2/2, STRANGER 2/2.** All four called `read` on the overlay path first. Owner runs named "`[owner report dir]`" and "`[owner time tool] --sessions --since 2026-11-19`" with the JSONL fallback for missing files. Stranger runs: "No session time-report tool has been identified … use a short Python script to sum intervals … excluding gaps over 600 seconds"; "The optional retro overlay was absent."
 
+Extensions were loaded: the memory extension injected unrelated owner memories into all overlay arms (none named retro tools or paths); APPEND_SYSTEM was not present. Scenario (d) used the same flags, but its retained outputs cannot establish whether injection occurred. Future runs: trusted-cwd `.pi/APPEND_SYSTEM.md` override, `-a`, `--no-extensions`.
+
 Not exercised: real file writes and a tools-enabled batch over real logs; Claude Code load path.

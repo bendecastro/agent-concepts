@@ -27,10 +27,10 @@ Why: the population and sample make recurrence counts weighable; the full all-pr
 
 ## Open report first
 
-The report directory is `$RETRO_REPORT_DIR` if set, else `${XDG_STATE_HOME:-~/.local/state}/retro/`. Reports in it are named `YYYY-MM-DD.md` or `YYYY-MM-DD-<scope>.md` (§ Output writes the second form by default; a scheduled run may pass a date-only `--report` name); match both. The **latest report** is the one with the greatest date prefix, newest modification time on a tie, excluding this run's own `--report` target. A report is **decided** once it has a line starting `## Decisions`; its open proposals are the lines starting with a number, a dot and a space (`1. `) between `## Proposals` and the next `## ` heading.
+The report directory is `$RETRO_REPORT_DIR` if set, else the parent directory of `--report` if given, else `${XDG_STATE_HOME:-~/.local/state}/retro/`. Match filenames against `^\d{4}-\d{2}-\d{2}(-[^/]+)?\.md$`. The **latest report** is the one with the greatest date prefix, newest modification time on a tie, excluding this run's own `--report` target. A report is **decided** once it has a line starting `## Decisions`; its open proposals are the lines starting with a number, a dot and a space (`1. `) between `## Proposals` and the next `## ` heading. For each `## Still undecided from <date>` section, check its original report at the recorded path; its items remain open only while that original report is undecided.
 
-- **Interactive run without `--report`:** before any new review, read the latest report. If it is undecided, show its open proposals with its path and ask for picks in the same reply format; start the new review only after the owner answers.
-- **Headless batch (`--report` given or no owner present):** do not ask. If the latest report is undecided, the new report opens with `## Still undecided from <date>`, its path, and its open proposals copied verbatim. They do not count toward the new sample or recurrence counts.
+- **Interactive run without `--report`:** before any new review, read the latest report. Show its open proposals if undecided and any still-open carried items, with their original paths; number carried items after the latest report's proposals and ask for picks in the same reply format. Start the new review only after the owner answers.
+- **Headless batch (`--report` given or no owner present):** do not ask. Carry the latest report's open proposals, if undecided, and any still-open carried items into the new report, each under `## Still undecided from <date>` with its original report path and proposals copied verbatim. They do not count toward the new sample or recurrence counts.
 
 Why: an unanswered report is lost work; a new review on top of it buries it.
 
@@ -87,7 +87,7 @@ Mark one item recommended with a one-line reason. Cite evidence (session file an
 Batch mode always writes the report file: the same list under a `## Proposals` heading, each proposal a top-level item starting `1. `, `2. `, …, with its evidence, the sample size and the population. Write it to `--report <path>` if given, else into the report directory (§ Open report first) as `<YYYY-MM-DD>-<scope>.md`. Use a scope slug such as `since-2026-11-12-all` or `last-20-project`, substituting the project name for `project`. `--report` wins over other output locations the caller names; without it, also honour any caller-named location. In a headless run, do not wait for a pick. The last line of your reply states the report path.
 Why: a batch covers more evidence than fits a chat reply, and the owner reviews it later.
 
-Do not edit any file except the report and its caller-requested copy until the owner picks.
+Do not edit any file except the report, its caller-requested copy, and original reports for carried-item decisions until the owner picks.
 
 ## Decisions record
 
@@ -100,5 +100,5 @@ When the owner picks, append to that report file, before starting work:
 3. deferred — <trigger that reopens it>
 ```
 
-One line per proposal number, every number covered: a number the owner did not pick is `declined` unless the owner defers it. Update a line as its work lands.
+One line per proposal number, every number covered: a number the owner did not pick is `declined` unless the owner defers it. For carried items, map the displayed numbers back to their original proposal numbers and append their decisions to each original report at its recorded path, not the carrying report. Update a line as its work lands.
 Why: the record is what makes a report decided and lets the next retro see what was done.

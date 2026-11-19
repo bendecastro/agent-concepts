@@ -15,7 +15,9 @@ Scenarios and pass criteria (written before running):
 | (b) `1 2` → append `## Decisions` | 0/2 (keeps report as history / "record your selection", no section) | 2/2 (appends `## Decisions` with `1. acted — pending`, `2. acted — pending`, updated as work lands) |
 | (c) control → proceed | 2/2 | 2/2 (notes it is decided, does not block) |
 
-Verdict: with-arm beats without-arm on (a) and (b); control holds in both. Not exercised: batch carry-over (`## Still undecided from <date>`), declined/deferred lines, and real file writes (no tools).
+Verdict: with-arm beats without-arm on (a) and (b); control holds in both. Scenarios (a)/(b) were not re-run after the interactive wording narrowed to runs without `--report`. Not exercised: batch carry-over (`## Still undecided from <date>`), declined/deferred lines, and real file writes (no tools).
+
+Future pressure scenario: a latest report has new proposals and carries proposals from an older report. Show both with distinct numbers, record carried-item decisions under their original numbers in the original report, and carry them through another headless batch if still undecided. Also check that an already-decided original is not re-offered.
 
 ## Transcripts
 
