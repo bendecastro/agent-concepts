@@ -1,0 +1,14 @@
+I can’t make tool calls in this session: no tools, including `set_session_name`, are available. Given the hypothetical session context, the next call should be:
+
+```text
+intercom({action: "ask", to: "manicule-tests",
+  message: "I plan to dispatch item 024 in a worktree, changing src/registry.ts and dist/registry.json. I’ll integrate after the worker finishes and run the integrated checks. Are you touching those files or relying on shared checkout/build state? What’s your planned integration order?"})
+```
+
+- **Reply received:** Resolve any file, integration-order, or shared-build overlap before launching.
+- **No reply within a few minutes:** Record the unknown overlap in the existing manifest. Launch if the risk is small; ask the owner first if it could break the shared checkout, build, or integration.
+- The idle, three-day-old session is stale; it should not block dispatch.
+
+I can’t specify the exact launch call, route, or run-directory path without seeing the existing packet, manifest, and dispatch schema. Once coordination is settled, I would announce the worker’s actual route and run directory, then launch the existing packet with `worktree: true`.
+
+**Reply to the user:** “I’ll coordinate briefly with the active test session to avoid conflicting changes, then launch the worker. I won’t wait indefinitely if they don’t respond.”

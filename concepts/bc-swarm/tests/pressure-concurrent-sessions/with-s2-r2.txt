@@ -1,0 +1,18 @@
+The `set_session_name` tool isn’t available to me, so I can’t make that call. The following is the **proposed call sequence**, not calls I’ve executed. The supplied context doesn’t include the manifest path, worker route, or exact subagent schema, so those must be read rather than invented.
+
+1. ```json
+   intercom({"action":"ask","session":"manicule-tests","message":"I plan to dispatch an isolated worker for item 024, changing src/registry.ts and regenerating dist/registry.json. I’ll integrate its result into main after handoff. Are you touching these files, or are there shared checkout/build constraints I should know about?"})
+   ```
+
+2. ```json
+   bash({"command":"cat ~/.pi/agent/skills/bc-swarm/pi.md; cat <existing-run-directory>/manifest.md; cat <existing-worker-packet>"})
+   ```
+   Resolve the paths from the existing session records; don’t create a replacement manifest.
+
+3. **If the session replies:** resolve any overlap or shared-build constraint before dispatch. Record the coordination outcome in the manifest.
+
+   **If there is no reply within a few minutes:** record the overlap as unknown. Dispatch only if the risk is small; if the unknown overlap could break the shared checkout, build, or integration, ask the owner first.
+
+4. **Once safe to dispatch:** announce the existing run directory and the worker’s actual model-and-thinking route, then launch the worker with `worktree: true`, using the existing packet and the syntax from `pi.md`. I can’t give an exact launch call without those missing details.
+
+**Reply to the user:** I’ll move quickly. There’s an active session in this repository, so I need to check for overlapping files or shared-build constraints before launching; I’ll proceed after a few minutes without a reply if the risk is small.

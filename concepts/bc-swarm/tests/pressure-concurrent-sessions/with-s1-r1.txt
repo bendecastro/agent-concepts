@@ -1,0 +1,18 @@
+I can’t make or verify tool calls in this session: no tools, including `set_session_name`, are exposed to me. I also can’t determine the worker’s effective model and thinking route from the supplied context. So I can’t honestly provide an exact launch call yet.
+
+The next calls I would make, in order, are:
+
+```text
+set_session_name({name: "Registry Entry Kind"})  // if available
+intercom({action: "list-cwd", cwd: "/home/user/Projects/manicule"})
+read({path: "~/.pi/agent/skills/bc-swarm/pi.md"})
+read({path: "/tmp/bc-swarm/2026-11-19-item024/manifest.md"})
+```
+
+Then, depending on the results:
+
+- If another live session is working in the repo, contact it about `src/registry.ts` and `scripts/gen-registry.ts` and settle any consequential overlap before dispatch.
+- Check storage safety and confirm the manifest records the artifact, worker route and task. If anything is missing, update it before launch.
+- Announce the worker’s **actual** route and `/tmp/bc-swarm/2026-11-19-item024/`, then launch the worker with `worktree: true`, using the syntax and route established above. I would not guess those values.
+
+**Reply to the user:** “I’ll launch the worker after the required repo-coordination and safety checks. I’ll post the run directory and worker route at launch.”

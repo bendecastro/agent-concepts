@@ -15,6 +15,10 @@ Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-sa
 
 If a prompt names an interrupted, failed, empty, missing, or reaped prior run, treat it as recovery even when it says redo, relaunch, or start again. Stop before the Tooth or any replacement track, manifest, or dispatch decision and execute rule 4 for that prior run. Never stash, delete, move, or overwrite prior-run evidence merely to make a replacement launchable. Do not name or launch a replacement until recovery proves that track has no usable artifact, valid handoff patch, recorded Git object, or preserved worktree/ref.
 
+## Concurrent sessions — before repo-writing dispatch
+
+Before dispatching work that writes to a repository (workers, worktrees, merges), check whether other live agent sessions are working in the same repository, using the harness's session-discovery tool if it has one (on Pi: `intercom({action: "list-cwd", cwd})`). If one is, tell it your planned files, integration order and shared checkout or build constraints, ask for its own (on Pi: `intercom` `ask`, or `send` when no reply is needed), and settle overlaps before you dispatch. Do not block on a session that is stale or does not reply within a few minutes: record that the overlap is unknown in the manifest, dispatch if the risk is small, and ask the owner first when an unknown overlap could break a shared checkout, build or integration. Why: twice the owner had to remind parallel parents in one repository to coordinate, once after a worker had already been dispatched into an overlapping registry (retro 2026-11-19).
+
 ## The inversion
 
 Normally you delegate when a split is obvious. Here it flips: assume every unit of work goes to a child, and justify what you keep.

@@ -1,0 +1,3 @@
+I can’t make tool calls in this session: no tools, including `set_session_name`, `intercom`, or `subagent`, are available to me. I also can’t see the prepared packet or manifest, so I can’t truthfully provide exact launch arguments or a model route.
+
+In the described session, I would first set the session name, then check with **`manicule-tests`** about possible overlap before launching the worker. I would not contact the idle docs session without a reason. If tests replies that there’s no conflict, I’d launch the prepared worker; if there is a conflict, I’d coordinate it first. If there’s no reply within a few minutes, I’d tell you the check is unanswered rather than assume the work is safe to overlap.

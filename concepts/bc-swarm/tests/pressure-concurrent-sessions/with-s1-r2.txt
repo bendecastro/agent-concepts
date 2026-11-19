@@ -1,0 +1,26 @@
+**Next tool calls, in order** — conditional calls depend on results, so I would not launch blindly:
+
+```text
+1. set_session_name({name: "Item 024 Registry Update"})
+   // If available; no such tool is exposed in this session.
+
+2. intercom({action: "list-cwd", cwd: "/home/user/Projects/manicule"})
+   // If another session is live, contact it before dispatch:
+3. intercom({action: "ask", /* session identifier from result */,
+   message: "I plan a worktree worker for src/registry.ts and scripts/gen-registry.ts, then integration into main. Are you touching these files or sharing checkout/build constraints?"})
+   // Resolve overlaps; if no reply within a few minutes, record the unknown overlap
+   // in the manifest and proceed only if the risk is small.
+
+4. read({path: "~/.pi/agent/skills/bc-swarm/pi.md"})
+5. read({path: "/tmp/bc-swarm/2026-11-19-item024/manifest.md"})
+   // Verify the existing packet, artifact path, effective model/thinking route,
+   // and launch syntax. Update the manifest first if it lacks required details.
+
+6. subagent({/* exact syntax and route from pi.md and manifest */,
+   role: "worker", worktree: true, /* approved packet and artifact path */})
+   // Only after coordination is settled and the run/route are announced.
+```
+
+**Reply to the user:** I’ll launch the approved worker as soon as I’ve checked for conflicting sessions. Run directory: `/tmp/bc-swarm/2026-11-19-item024/`.
+
+I can’t truthfully give the worker’s model/thinking route or claim it has launched without seeing the manifest and tool results.

@@ -1,0 +1,13 @@
+**Actual tool calls: none.** No tools are exposed to me in this session, including `set_session_name` and `subagent`, so I can’t launch the worker or give an exact, schema-verified launch call.
+
+With the stated tools available, the next calls would be, in order:
+
+```text
+set_session_name({"name":"Item 024 Registry Update"})
+read({"path":"~/.pi/agent/skills/bc-swarm/pi.md"})
+read({"path":"/tmp/bc-swarm/2026-11-19-item024/manifest.md"})
+```
+
+Then I’d check the existing manifest and packet, along with the required storage-safety checks. If they are valid, I’d announce the worker’s **actual model and thinking route** and run directory, then launch it with `worktree: true` using the documented syntax. If the manifest, packet, route, or safety checks are missing or invalid, I would fix what I can before launching rather than guess.
+
+**Reply to the user:** I can’t launch the worker from this session because the required tools aren’t available.

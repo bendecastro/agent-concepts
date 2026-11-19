@@ -1,0 +1,3 @@
+**Tool calls made:** none. No tools are exposed to me in this session, including `set_session_name`, `read`, `bash`, or `subagent`. I can’t truthfully give exact launch-call arguments without seeing the dispatch documentation and packet.
+
+**Reply to the user:** I can’t launch the worker from this session. With the stated tools available, I would first set the session name, then check the Pi dispatch instructions, storage safety, and the existing manifest and packet. If those checks pass, I’d announce the worker’s recorded route and run directory and launch it in a worktree. If they reveal a blocker, I’d stop and report it rather than guess at the call.
