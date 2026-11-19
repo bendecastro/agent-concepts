@@ -8,7 +8,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Outgoing
 
 - depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `tdd`'s contract — required, when Spec review of property-based tests, the Test levels block, or a Level 3 proof.
@@ -16,7 +16,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md#2-review-independently)
 
 - depends on `tdd`'s contract — required, when Standards review of new or changed tests.
-  Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage.
+  Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage, and checks new test files against tdd’s Test layout norms.
   Source: [body/SKILL.md](body/SKILL.md#2-review-independently)
 
 ## Incoming

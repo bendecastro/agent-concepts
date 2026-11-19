@@ -8,7 +8,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Outgoing
 
 - depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming

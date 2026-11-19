@@ -14,35 +14,35 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Incoming
 
 - incoming from [bc-autoresearch-loop](../bc-autoresearch-loop/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [bc-autoresearch-loop/body/SKILL.md](../bc-autoresearch-loop/body/SKILL.md)
 
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [bc-drain-issues/body/SKILL.md](../bc-drain-issues/body/SKILL.md)
 
 - incoming from [bc-swarm](../bc-swarm/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [bc-swarm/body/SKILL.md](../bc-swarm/body/SKILL.md)
 
 - incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md)
 
 - incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [diagnosing-bugs/body/SKILL.md](../diagnosing-bugs/body/SKILL.md)
 
 - incoming from [dispatching-parallel-agents](../dispatching-parallel-agents/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [dispatching-parallel-agents/body/SKILL.md](../dispatching-parallel-agents/body/SKILL.md)
 
 - incoming from [executing-plans](../executing-plans/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [executing-plans/body/SKILL.md](../executing-plans/body/SKILL.md)
 
 - incoming from [finishing-development-branch](../finishing-development-branch/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [finishing-development-branch/body/SKILL.md](../finishing-development-branch/body/SKILL.md)
 
 - incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when any invocation.
@@ -50,17 +50,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)
 
 - incoming from [subagent-driven-development](../subagent-driven-development/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [subagent-driven-development/body/SKILL.md](../subagent-driven-development/body/SKILL.md)
 
 - incoming from [tdd](../tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [tdd/body/SKILL.md](../tdd/body/SKILL.md)
 
 - incoming from [using-git-worktrees](../using-git-worktrees/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [using-git-worktrees/body/SKILL.md](../using-git-worktrees/body/SKILL.md)
 
 - incoming from [writing-plans](../writing-plans/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight, shared suite evidence and proven integration cleanup.
+  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [writing-plans/body/SKILL.md](../writing-plans/body/SKILL.md)

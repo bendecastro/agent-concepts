@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial
+test_status: partial # workers never run the full suite (moved to Verification) 2026-11-19, not pressure-tested
 tested: 2026-11-15
 deployed: 2026-11-15
 ---
@@ -12,6 +12,7 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 ## Design decisions
 
+- **Workers never run the full suite (2026-11-19).** The targeted-tests bullet moved from Storage safety to Verification with a time Why, and now says workers and reviewers never run the full suite or gate even when a project page says to; the integrating session runs it once per integrated tree. Zero net lines. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in the Manicule project) and the owner's decisions of that date; Manicule's first agent wrote "full gate before every commit" into its validation page and parent packets pasted it to workers. Consumers whose edge reason named "shared suite evidence" under Storage safety (12 edges in relationships.json) were re-pointed to Verification; their bodies already say targeted checks and one shared landing run, so none contradicts the new rule.
 - **Kernel, not constitution** — always-on instructions must be small enough to avoid context rot. This file names durable defaults and delegates specialized behavior to skills/concepts.
 - **General before prescriptive** — it states posture and failure modes rather than long procedures, following the right-altitude guidance in `prompting-agents`.
 - **Skill-loading policy is load-bearing, implemented as an index pointer** — the kernel points at `index.md` instead of hardcoding concept names, so the catalog can evolve without editing always-on text in N harnesses. To avoid over-eager reads, it consults the catalog only when specialized handling would materially affect the outcome.

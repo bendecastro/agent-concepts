@@ -1716,3 +1716,6 @@ Visible layouts get a staged validation.md (while working / full gate / release,
 
 ## [2026-11-19] implement | tdd test layout norms, code-review layout check
 tdd gains a Test layout section (browser tests only where a fake cannot show it, per-file state, ~25 tests/60 s per file, parallel runner + slow marker from the first test commit); code-review's Standards checks new test files against it. From the agent-time-sinks council memo. Not pressure-tested.
+
+## [2026-11-19] implement | agent-kernel workers never run the full suite
+The targeted-tests bullet moved from Storage safety to Verification with a time Why and now outranks a project page that says to run the full suite; zero net lines. 12 relationship reasons re-pointed from Storage safety to Verification (plus code-review→tdd reason gains the layout check); views regenerated. Derived kernel copies not updated here. Not pressure-tested.
