@@ -1,6 +1,6 @@
 # Pressure test: concurrent sessions before repo-writing dispatch
 
-Authored and run 2026-11-19 for the "Concurrent sessions — before repo-writing dispatch" section of [body/SKILL.md](../body/SKILL.md), from retro finding 1 (owner had to remind parallel Manicule parents to coordinate).
+Authored and run 2026-11-19 for the former bc-swarm section "Concurrent sessions — before repo-writing dispatch" (commit fe826ff; arms used the bc-swarm `SKILL.md` body, not the kernel), from retro finding 1 (owner had to remind parallel Manicule parents to coordinate). Kept as the earlier dispatch-only evidence after the rule moved to the kernel's Git discipline section; the kernel-wording run is [pressure-concurrent-sessions.md](pressure-concurrent-sessions.md).
 
 Consumer: `openai-codex/gpt-6.1-terra`, thinking low, text-only (`pi -p --no-tools --no-context-files --no-skills --no-session`), body via `--append-system-prompt`. Arms: without = body before the section; with = body with it. Two runs per arm per scenario. Text-only, so the agent reports the tool calls it would make; graded on order and content.
 
@@ -51,4 +51,4 @@ Pass (written before running): before launch, ask/send to the busy session with 
 
 ## Verbatim outputs
 
-One file per run (mise install banner stripped): [without-s1-r1](pressure-concurrent-sessions/without-s1-r1.txt), [without-s1-r2](pressure-concurrent-sessions/without-s1-r2.txt), [without-s2-r1](pressure-concurrent-sessions/without-s2-r1.txt), [without-s2-r2](pressure-concurrent-sessions/without-s2-r2.txt), [with-s1-r1](pressure-concurrent-sessions/with-s1-r1.txt), [with-s1-r2](pressure-concurrent-sessions/with-s1-r2.txt), [with-s2-r1](pressure-concurrent-sessions/with-s2-r1.txt), [with-s2-r2](pressure-concurrent-sessions/with-s2-r2.txt).
+One file per run (mise install banner stripped): [without-s1-r1](pressure-concurrent-sessions-dispatch/without-s1-r1.txt), [without-s1-r2](pressure-concurrent-sessions-dispatch/without-s1-r2.txt), [without-s2-r1](pressure-concurrent-sessions-dispatch/without-s2-r1.txt), [without-s2-r2](pressure-concurrent-sessions-dispatch/without-s2-r2.txt), [with-s1-r1](pressure-concurrent-sessions-dispatch/with-s1-r1.txt), [with-s1-r2](pressure-concurrent-sessions-dispatch/with-s1-r2.txt), [with-s2-r1](pressure-concurrent-sessions-dispatch/with-s2-r1.txt), [with-s2-r2](pressure-concurrent-sessions-dispatch/with-s2-r2.txt).

@@ -59,6 +59,8 @@ Tool behavior, retention and health thresholds live in `~/Sync/Scripts/docs/disk
 
 ## Git discipline
 
+**Before writing to a repository** (editing, committing, merging, or dispatching workers or worktrees), if your harness can list live agent sessions, check for others working in it (on Pi: `intercom({action: "list"})`, matching cwds against the repo root, its subdirectories and `git worktree list`; `list-cwd` matches one exact directory). If one is, exchange planned files, integration order and shared checkout or build constraints, and settle overlaps before writing. Do not block on a session that is stale or silent for a few minutes: note the unknown overlap, and ask the owner first when it could break a shared checkout, build or integration. Why: the owner has had to tell parallel sessions in one repository to coordinate, once after a worker was already dispatched into overlapping files.
+
 When working inside a git repository and you changed files:
 
 - **Commit by default — don't ask permission to commit.** Finishing a unit of work in a git repo means committing it. Why: a commit is local and reversible (amend, reset, revert), so the cost of a commit the user didn't want is near zero, while the cost of uncommitted work is real — it is lost to a stray checkout, mixed into the next unrelated change, or left for the user to write up. Asking first spends the user's attention on a decision whose downside they can undo in one command.
