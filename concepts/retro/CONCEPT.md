@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 live batch run (beelink bc-retro-weekly, Terra high): report written, n=20 of 40 across 9 projects, seed + paths + active time recorded, recurrence as k of 20, every proposal names a home; fell back to JSONL timing (bc-agent-time-report missing from beelink PATH, since fixed); usefulness awaits owner verdict; no without-arm
+test_status: partial # 2026-11-19 open-report check + Decisions record: with 6/6 vs without 2/6 (control only), Terra low, n=2 (tests/pressure-retro-decisions.md); batch carry-over untested. Earlier 2026-11-19 live batch run on beelink wrote a valid n=20 report; usefulness awaits owner verdict
 tested: 2026-11-19
 deployed: yes
 ---
@@ -9,6 +9,8 @@ deployed: yes
 Owner-invoked retrospective over one Pi session or a batch of them. It reads targeted slices of the session logs, child-run transcripts, swarm manifests and the time report, then proposes environment changes — checks, review standards, concept/kernel clauses, Scripts tools, owner-stated memory — ordered by severity, each with a named home and a recurrence count. It changes nothing until the owner picks. Adapted from Matt Pocock's `retro` skill (MIT).
 
 ## Design decisions
+
+- **Reports carry their decisions.** A report is decided once it has `## Decisions` (one line per proposal: acted with commit/file, declined, deferred with trigger). Interactive runs show an undecided latest report first; headless batches carry its proposals over under `## Still undecided from <date>`, outside the sample. Why: weekly reports went unanswered with no record of what was acted on. Owner-approved 2026-11-19.
 
 - **Owner-invoked only, as upstream.** Upstream sets `disable-model-invocation: true` and `allow_implicit_invocation: false`. Kept: a retro is costly, and the moment to run one is the owner's call. The model's part is the kernel's 👣 offer at the end of a substantial session (see `agent-kernel` § recap), not invoking the skill.
 - **Adapted, not vendored.** Upstream assumes Claude Code's session store, a `CODING_STANDARDS.md` and a reviewer agent. Here the evidence is Pi's session JSONL, `subagent-artifacts/`, `bc-swarm` manifests and `bc-agent-time-report`, and the reviewer standards live in `code-review`.
@@ -30,6 +32,8 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 - `concepts/prompting-agents/body/SKILL.md` — wording of gates and Why lines.
 
 ## Tests
+
+[`tests/pressure-retro-decisions.md`](tests/pressure-retro-decisions.md) — open-report check and Decisions record, old vs new body.
 
 [`tests/pressure-retro.md`](tests/pressure-retro.md) — without vs with the body on an anonymised session excerpt.
 

@@ -23,6 +23,15 @@ The population is parent session JSONL files in scope across all projects (or th
 Sampling is by time across all projects, never ranked or capped per project, so a week spent on one project still yields a full sample. If the population is at most 20, read all of it. Otherwise list sessions by active time with `bc-agent-time-report --sessions --since D` (for `last M`, D is the earliest selected file's modification date); each line is `<seconds>s  <project>  <path under ~/.pi/agent/sessions/>`, longest first. Keep only population files. If `--sessions` is unavailable, compute each population file's active time from its JSONL timestamps with a short Python snippet (gaps over 600 s are idle); never print whole files. Population files missing from that output (`--since` drops sessions that started before D) get their time from that same fallback; only files with no timestamps count as zero; break ties by path. Read the top 18 plus 2 chosen from the rest of the population with Python's `random.Random` seeded with the report date (`YYYY-MM-DD`) and `sample` over the remaining paths sorted lexically. Record the seed, all sampled paths with their active time, n sampled and population size in the report; phrase each recurrence as "k of n sampled sessions".
 Why: the population and sample make recurrence counts weighable; the full all-project report can overflow tool output.
 
+## Open report first
+
+Reports live in `${RETRO_REPORT_DIR:-~/Sync/Archives/retro}`; the latest is the file with the greatest `YYYY-MM-DD` name. A report is **decided** once it has a line starting `## Decisions`; its open proposals are the top-level numbered items (`1. `) between `## Proposals` and the next `## ` heading.
+
+- **Interactive run (any mode):** before any new review, read the latest report. If it is undecided, show its open proposals with its path and ask for picks in the same reply format; start the new review only after the owner answers.
+- **Headless batch (`--report` given or no owner present):** do not ask. If the previous report is undecided, the new report opens with `## Still undecided from <date>`, its path, and its open proposals copied verbatim. They do not count toward the new sample or recurrence counts.
+
+Why: an unanswered report is lost work; a new review on top of it buries it.
+
 ## Evidence
 
 Read primary sources, in targeted slices. Transcripts are too large to read whole.
@@ -77,3 +86,17 @@ Batch mode always writes the report file: the same list with its evidence, the s
 Why: a batch covers more evidence than fits a chat reply, and the owner reviews it later.
 
 Do not edit any file except the report and its caller-requested copy until the owner picks.
+
+## Decisions record
+
+When the owner picks, append to that report file, before starting work:
+
+```
+## Decisions
+1. acted — <commit/PR or file that did it; `pending` until it lands>
+2. declined — <owner's reason, if given>
+3. deferred — <trigger that reopens it>
+```
+
+One line per proposal number, every number covered. Update a line as its work lands.
+Why: the record is what makes a report decided and lets the next retro see what was done.
