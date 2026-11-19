@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # check 4 accepted gap; 2026-10-31 todo/manifest scenario PASS (run 2); targeted-check packets + background full gate 2026-11-19 not pressure-tested
-tested: 2026-08-25
+test_status: partial # check 4 accepted gap; 2026-10-31 todo/manifest scenario PASS (run 2); 2026-11-19 targeted packets + background gate PASS on Terra low (without FAIL)
+tested: 2026-11-19
 deployed: 2026-08-18
 ---
 # Concept: bc-swarm

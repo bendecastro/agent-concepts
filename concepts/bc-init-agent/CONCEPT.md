@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # visible layout (W1) changed 2026-11-12 and staged validation + scripts/gate changed 2026-11-19: deterministic tests only, not yet pressure-tested
-tested: 2026-10-04
+test_status: partial # visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL)
+tested: 2026-11-19
 deployed: 2026-06-21
 ---
 # Concept: bc-init-agent

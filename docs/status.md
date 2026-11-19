@@ -24,14 +24,14 @@ tested. See the concept's `## Tests` section for what is missing.
 
 | concept | kind | tested | deployed |
 |---|---|---|---|
-| [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-15 | 2026-11-15 |
+| [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-19 | 2026-11-15 |
 | [bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md) | pressure | 2026-06-21 | 2026-06-21 |
 | [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-10-08 | 2026-07-25 |
-| [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-10-04 | 2026-06-21 |
+| [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-11-19 | 2026-06-21 |
 | [bc-plan-to-issues](../concepts/bc-plan-to-issues/CONCEPT.md) | pressure | 2026-07-16 | 2026-06-21 |
-| [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-08-25 | 2026-08-18 |
+| [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-19 | 2026-08-18 |
 | [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-09-05 | 2026-08-23 |
-| [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-11-18 | yes |
+| [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [diagnosing-bugs](../concepts/diagnosing-bugs/CONCEPT.md) | pressure | 2026-07-16 | 2026-06-21 |
 | [dispatching-parallel-agents](../concepts/dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [domain-modeling](../concepts/domain-modeling/CONCEPT.md) | accuracy | 2026-10-22 | yes |
@@ -45,7 +45,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [show-me](../concepts/show-me/CONCEPT.md) | pressure | 2026-11-04 | yes |
 | [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
-| [tdd](../concepts/tdd/CONCEPT.md) | pressure | 2026-11-18 | yes |
+| [tdd](../concepts/tdd/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [teach](../concepts/teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
 | [triage](../concepts/triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [ui-design](../concepts/ui-design/CONCEPT.md) | pressure | 2026-11-11 | yes |

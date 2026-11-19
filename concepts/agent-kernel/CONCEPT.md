@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # workers never run the full suite (moved to Verification) 2026-11-19, not pressure-tested
-tested: 2026-11-15
+test_status: partial # 2026-11-19 full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL)
+tested: 2026-11-19
 deployed: 2026-11-15
 ---
 # Concept: agent-kernel

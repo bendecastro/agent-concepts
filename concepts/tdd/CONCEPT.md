@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # test layout norms added 2026-11-19, not pressure-tested
-tested: 2026-11-18
+test_status: partial # 2026-11-19 test layout: Terra low scenario non-discriminating (without and old also PASS); only current arm adds parallel runner + slow marker
+tested: 2026-11-19
 deployed: yes
 ---
 # Concept: tdd

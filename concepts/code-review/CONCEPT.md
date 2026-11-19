@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # test-layout Standards check added 2026-11-19, not pressure-tested
-tested: 2026-11-18
+test_status: partial # 2026-11-19 test-layout Standards check PASS on Terra low (file-size scenario: without/old FAIL, current PASS)
+tested: 2026-11-19
 deployed: yes
 ---
 # Concept: code-review

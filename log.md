@@ -1725,3 +1725,6 @@ Worker packets name targeted checks (test files/IDs) and never paste the full ga
 
 ## [2026-11-19] implement | staged validation review fixes
 Allow the change that turns red trunk green, keep and fill the scaffold gate on re-runs, and reconcile parallel review with the parent-owned gate result. Correct Verification anchors in five consumers; relationship contracts otherwise unchanged. Not pressure-tested.
+
+## [2026-11-19] test | staged validation and test layout (agent-kernel, bc-swarm, tdd, code-review, bc-init-agent)
+Terra low, text-only, `--no-context-files`, without / pre-change (c825984) / current body. Current bodies PASS every scenario; no body changes. Discriminating: agent-kernel worker scenario, bc-swarm packet (without FAIL), code-review file-size check (without/old FAIL), bc-init-agent full-gate and red-trunk scenarios (without/old FAIL or partial). tdd layout scenario did not discriminate: all arms put the pure-function test in a unit file; only the current arm added the parallel runner and slow marker. Scenarios and quotes in each concept's tests/.
