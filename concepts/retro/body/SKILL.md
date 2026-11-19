@@ -1,7 +1,7 @@
 ---
 name: retro
 description: Retrospective on one or more coding sessions — proposes, ordered by severity, changes to the agent's environment (checks, review standards, concepts, tools) that would make future runs faster or less error-prone. Owner-invoked only via /retro.
-argument-hint: "[session id/path | since YYYY-MM-DD | last N] [project] [--report path]"
+argument-hint: "[session id/path | since YYYY-MM-DD | last M] [project] [--report path]"
 disable-model-invocation: true
 ---
 
@@ -20,7 +20,7 @@ Why: the owner decides what becomes canon; an unasked edit to checks, concepts o
 
 The population is parent session JSONL files in scope across all projects (or the named project); child runs belong to their parent. For `since D`, include files modified on or after D; for `last M`, take the M most recently modified files, breaking ties by path. List project folders under `~/.pi/agent/sessions/` to find them.
 
-If the population is at most 10, read all of it. Otherwise rank projects by active time with `bc-agent-time-report --summary --since D` (for `last M`, use the earliest selected file's modification date as D). If `--summary` is unavailable, run the report once per project and rank by its parent active time. Give projects absent from the report zero time; break project ties by folder path. Never print the full all-project report into context. Take projects in rank order until they contain at least 8 population files, then rank those files by size descending, ties by path; read the first 8 plus 2 chosen from the rest of the entire population. Choose those 2 using Python's `random.Random` seeded with the report date (`YYYY-MM-DD`) and `sample` over the remaining paths sorted lexically. Record the seed, all sampled paths, the file-size proxy, n sampled and population size in the report; phrase each recurrence as "k of n sampled sessions".
+If the population is at most 10, read all of it. Otherwise rank projects by active time with `bc-agent-time-report --summary --since D` (for `last M`, use the earliest selected file's modification date as D). A project is one session folder; a summary row names it by its short name; match the row to the folder whose decoded path ends in that name, and when unsure, `bc-agent-time-report --since D <name> | head -1` prints the path (legacy and current folders of one path are one project). If `--summary` is unavailable, run `bc-agent-time-report --since D <decoded path>` one project at a time and keep only its `Parent split (active …)` line (e.g. `| sed -n 4p`). Give projects absent from the report zero time; break project ties by folder path. Population uses file modification time while the report uses session start, so a project can rank at zero though it has files in the window; note that in the report when it happens. Never print the full all-project report into context. Take projects in rank order until they contain at least 8 population files, then rank those files by size descending, ties by path; read the first 8 plus 2 chosen from the rest of the entire population. Choose those 2 using Python's `random.Random` seeded with the report date (`YYYY-MM-DD`) and `sample` over the remaining paths sorted lexically. Record the seed, all sampled paths, the file-size proxy, n sampled and population size in the report; phrase each recurrence as "k of n sampled sessions".
 Why: the population and sample make recurrence counts weighable; the full all-project report can overflow tool output.
 
 ## Evidence
