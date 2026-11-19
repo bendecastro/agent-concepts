@@ -14,12 +14,14 @@ Why: the owner decides what becomes canon; an unasked edit to checks, concepts o
 
 - No argument: the current session.
 - A session id or path: that session.
-- Batch: `since <date>` or `last N`, optionally one project. Batch mode writes a report file as well as the chat list.
+- Batch: `since <date>` or `last M`, optionally one project. Batch mode writes a report file as well as the chat list.
 
 ### Batch sampling
 
-Rank sessions with `bc-agent-time-report --summary [--since DATE]` (a short per-project table). Never print the full all-project report into context; if `--summary` is unavailable, run the report per project, one at a time. Read the top N sessions by active time (default N = 8) plus 2 picked at random from the rest. State n sampled and the population size in the report, and phrase each recurrence as "k of n sampled sessions".
-Why: an unsampled batch has no denominator, so a recurrence count cannot be weighed.
+The population is parent session JSONL files in scope across all projects (or the named project); child runs belong to their parent. For `since D`, include files modified on or after D; for `last M`, take the M most recently modified files, breaking ties by path. List project folders under `~/.pi/agent/sessions/` to find them.
+
+If the population is at most 10, read all of it. Otherwise rank projects by active time with `bc-agent-time-report --summary --since D` (for `last M`, use the earliest selected file's modification date as D). If `--summary` is unavailable, run the report once per project and rank by its parent active time. Give projects absent from the report zero time; break project ties by folder path. Never print the full all-project report into context. Take projects in rank order until they contain at least 8 population files, then rank those files by size descending, ties by path; read the first 8 plus 2 chosen from the rest of the entire population. Choose those 2 using Python's `random.Random` seeded with the report date (`YYYY-MM-DD`) and `sample` over the remaining paths sorted lexically. Record the seed, all sampled paths, the file-size proxy, n sampled and population size in the report; phrase each recurrence as "k of n sampled sessions".
+Why: the population and sample make recurrence counts weighable; the full all-project report can overflow tool output.
 
 ## Evidence
 
@@ -71,7 +73,7 @@ Reply with the numbers to act on, e.g. `1 3`.
 
 Mark one item recommended with a one-line reason. Cite evidence (session file and timestamp or line), not impressions.
 
-Batch mode always writes the report file: the same list with its evidence, the sample size and the population. Write it to `--report <path>` if given, else under `RETRO_REPORT_DIR` as `<YYYY-MM-DD>-<scope>.md`, else `${TMPDIR:-/tmp}/retro/<YYYY-MM-DD>-<scope>.md`. The report path wins over any other output location the caller names. In a headless run, do not wait for a pick. The last line of your reply states the report path.
+Batch mode always writes the report file: the same list with its evidence, the sample size and the population. Write it to `--report <path>` if given, else under `RETRO_REPORT_DIR` as `<YYYY-MM-DD>-<scope>.md`, else `${TMPDIR:-/tmp}/retro/<YYYY-MM-DD>-<scope>.md`. Use a scope slug such as `since-2026-11-12-all` or `last-20-project`, substituting the project name for `project`. `--report` wins over other output locations the caller names; without it, also honour any caller-named location. In a headless run, do not wait for a pick. The last line of your reply states the report path.
 Why: a batch covers more evidence than fits a chat reply, and the owner reviews it later.
 
-Do not edit any file except that report until the owner picks.
+Do not edit any file except the report and its caller-requested copy until the owner picks.

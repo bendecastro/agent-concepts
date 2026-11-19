@@ -1747,3 +1747,6 @@ Correct session and child log layouts, portable timing lookup, headless batch re
 
 ## [2026-11-19] implement | retro batch mode tightened
 Batch sampling rule (top N by active time + random, "k of n sampled sessions", population stated), report file always written with `--report` winning, ranking via `bc-agent-time-report --summary` with per-project fallback. From the batch trial's skill friction; test_status reset to not-run.
+
+## [2026-11-19] implement | retro batch review fixes
+Define the parent-session population, reproducible project/file-size sampling and batch report-path precedence; correct deploy notes. Batch pressure re-test remains pending; deployment state unchanged.
