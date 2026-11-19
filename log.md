@@ -1789,3 +1789,6 @@ Added a conditional Standards question (size, amplification, growth and limit be
 
 ## [2026-11-19] test | code-review bounded-boundary control
 Scrubbed private provenance paths and project names; a fixed-shape message control produced no size finding in either arm (2/2 each), graded from raw outputs.
+
+## [2026-11-19] implement | bc-swarm generic tool steps + private skill overlays
+bc-swarm's body names no owner tools; an optional private overlay (`~/.config/agent-concepts/overlays/<skill>.md`, convention in AGENTS.md) supplies only tool names the machine's always-loaded instructions lack, states no rules, and yields to project instructions. Pressure PASS: content arms plus tools-enabled load path (Pi Terra low n=2/arm, Claude Code n=1/arm, its stranger arm being the owner's machine without the overlay; both expand `~` before reading). Targeted-packets quotes now carry an explicit `[wrapper redacted]` marker and left lint's mixed-results list.
