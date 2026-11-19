@@ -1,6 +1,6 @@
 # Pressure test: concurrent sessions before repo-writing dispatch
 
-Authored and run 2026-11-19 for the former bc-swarm section "Concurrent sessions — before repo-writing dispatch" (commit fe826ff; arms used the bc-swarm `SKILL.md` body, not the kernel), from retro finding 1 (owner had to remind parallel project A parents to coordinate). Kept as the earlier dispatch-only evidence after the rule moved to the kernel's Git discipline section; the kernel-wording run is [pressure-concurrent-sessions.md](pressure-concurrent-sessions.md).
+Authored and run 2026-11-19 for the former bc-swarm section "Concurrent sessions — before repo-writing dispatch" (commit fe826ff; arms used the bc-swarm `SKILL.md` body, not the kernel), from reflection finding 1 (owner had to remind parallel project A parents to coordinate). Kept as the earlier dispatch-only evidence after the rule moved to the kernel's Git discipline section; the kernel-wording run is [pressure-concurrent-sessions.md](pressure-concurrent-sessions.md).
 
 Consumer: `openai-codex/gpt-6.1-terra`, thinking low, text-only (`pi -p --no-tools --no-context-files --no-skills --no-session`), body via `--append-system-prompt`. Arms: without = body before the section; with = body with it. Two runs per arm per scenario. Text-only, so the agent reports the tool calls it would make; graded on order and content.
 
