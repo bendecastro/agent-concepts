@@ -49,6 +49,43 @@ class PersonalTermsTests(unittest.TestCase):
         lint.lint_personal_terms(issues, self.repo)
         return issues
 
+    def test_evidence_skipped_and_body_warned(self):
+        self.deny("fakehost\n")
+        for name in ("docs/research/raw/a.md", "docs/research/topic/evidence/a.md", "concepts/x/body/a.md", "other.md"):
+            self.track(name, "fakehost\n")
+        issues = self.check()
+        self.assertEqual([(i.severity, i.message.split(":")[0]) for i in issues], [
+            ("WARN", "personal term in concepts/x/body/a.md"),
+            ("ERROR", "personal term in other.md")])
+
+    def test_non_git_repository_warns(self):
+        self.deny("fakehost\n")
+        issues = []
+        lint.lint_personal_terms(issues, self.home)
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0].severity, "WARN")
+
+    def test_empty_matching_regex_warns_and_other_terms_still_work(self):
+        self.deny("re:x*\nfakehost\n")
+        self.track("a.md", "fakehost ! !\n")
+        issues = self.check()
+        self.assertEqual([i.severity for i in issues], ["WARN", "ERROR"])
+        self.assertIn("a.md:1", issues[1].message)
+
+    def test_transcripts_skipped_and_mixed_results_warn(self):
+        self.deny("fakehost\n")
+        self.track("concepts/agent-kernel/tests/pressure-concurrent-sessions/with.txt", "fakehost\n")
+        self.track("concepts/bc-swarm/tests/pressure-targeted-packets.md", "fakehost\n")
+        issues = self.check()
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0].severity, "WARN")
+        self.assertIn("pressure-targeted-packets.md", issues[0].message)
+
+    def test_mixed_smoke_result_warns(self):
+        self.deny("fakehost\n")
+        self.track("concepts/agent-kernel/tests/codex-smoke-2026-06-12.md", "fakehost\n")
+        self.assertEqual([i.severity for i in self.check()], ["WARN"])
+
     def test_absent_denylist_is_skipped(self):
         self.track("a.md", "fakehost is here\n")
         self.assertEqual(self.check(), [])

@@ -4,7 +4,7 @@ The first calls I would make, if those tools were available, are:
 
 ```text
 set_session_name({"name":"Launch Registry Worker"})
-bash({"command":"<storage-health-check>"})
+bash({"command":"bc-storage-health"})
 ```
 
 If storage health is critical, unknown, or the check fails, I would stop. Otherwise, I would read `/tmp/bc-swarm/2026-11-19-item024/manifest.md` and `~/.pi/agent/skills/bc-swarm/pi.md`, then launch the worker with `worktree: true` using the recorded packet and routing. The launch arguments depend on those reads.

@@ -6,7 +6,7 @@ The next calls would need to follow this order, with arguments filled in from th
 set_session_name("Registry Entry Kind")  // if available; before other calls
 read("~/.pi/agent/skills/bc-swarm/pi.md")
 read("/tmp/bc-swarm/2026-11-19-item024/manifest.md")
-bash("cd /home/user/Projects/manicule && <storage-health-check> && git worktree list")
+bash("cd /home/user/Projects/manicule && bc-storage-health && git worktree list")
 intercom({action: "list"})
 ```
 

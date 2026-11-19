@@ -4,7 +4,7 @@ The next calls I would make, using illustrative argument names pending the actua
 
 ```json
 read({"path":"~/.pi/agent/skills/bc-swarm/pi.md"})
-bash({"command":"<storage-health-check>"})
+bash({"command":"bc-storage-health"})
 ```
 
 If the health check passes and the dispatch instructions confirm the syntax and routing, I’d launch the worker with `worktree: true`, using the existing packet and manifest. If health is critical, unknown, or the check cannot run, I’d stop and report that instead.

@@ -9,7 +9,7 @@ Scope: bounded smoke validation plus one nested Codex pressure scenario, not the
 1. **Global delta is present.**
    - Checked `~/.codex/AGENTS.md` for the derived marker and Codex delta sections.
    - Observed lines include:
-     - `DERIVED from <old-private-config-checkout>/concepts/agent-kernel/body/AGENT-KERNEL.md`
+     - `DERIVED from ~/Sync/CONFIG/agents/concepts/agent-kernel/body/AGENT-KERNEL.md`
      - `Codex Global Agent Kernel Delta`
      - `Evidence before claims`
      - `publish-check.py`
@@ -22,13 +22,13 @@ Scope: bounded smoke validation plus one nested Codex pressure scenario, not the
 
 3. **Scenario 5 / 8 objective publish-policy checks work.**
    - Allow path:
-     - Command: `python3 agents/scripts/publish-check.py --repo <private-config> --remote git@github.com:bendecastro/CONFIG.git --branch master --changed-file agents/concepts/agent-kernel/CONCEPT.md`
+     - Command: `python3 agents/scripts/publish-check.py --repo ~/Sync/CONFIG --remote git@github.com:bendecastro/CONFIG.git --branch master --changed-file agents/concepts/agent-kernel/CONCEPT.md`
      - Result: exit 0, matched `config-repo-push-after-agent-commit`, with reminder to verify `after_agent_commit`, `only_agent_authored_changes`, or tier-1 housekeeping conditions.
    - Default-deny path:
      - Command: `python3 agents/scripts/publish-check.py --repo /tmp/agent-kernel-fixture --remote file:///tmp/origin.git --branch master --changed-file README.md`
      - Result: exit 2, no allow rule matched; publishing requires current explicit user instruction.
    - Self-amendment immunity:
-     - Command: `python3 agents/scripts/publish-check.py --repo <private-config> --remote git@github.com:bendecastro/CONFIG.git --branch master --changed-file agents/policies/publish.yaml`
+     - Command: `python3 agents/scripts/publish-check.py --repo ~/Sync/CONFIG --remote git@github.com:bendecastro/CONFIG.git --branch master --changed-file agents/policies/publish.yaml`
      - Result: exit 2, matching rule refused because `~/.config/agent-concepts/publish.yaml` is excluded from rule-based publishing.
 
 4. **Scenario 6 concept-loading behavior was exercised by the active task.**

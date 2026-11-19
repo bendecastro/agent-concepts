@@ -1,7 +1,7 @@
 # Index
 
 Machine-local copied kernel deltas: lint warns on drift using optional private `~/.config/agent-concepts/kernel-copies.json`; see [example](docs/kernel-copies.example.json).
-Personal terms: lint errors on hits from an optional private `~/.config/agent-concepts/personal-terms.txt`; see [example](docs/personal-terms.example.txt).
+Personal terms: lint errors or warns on hits from an optional private `~/.config/agent-concepts/personal-terms.txt`; see [example](docs/personal-terms.example.txt).
 
 ## Concepts
 
@@ -45,7 +45,7 @@ with the frontmatter, the frontmatter is correct.
   - Status: implemented+tested conversationally (4 attacks held, 2026-06-12); artifact workflow scenario added pending run; deployed: Claude Code + Pi symlinks.
 - [herdr](concepts/herdr/CONCEPT.md) — upstream Herdr control reference for agents running inside `HERDR_ENV=1`: inspect topology, create background panes, run commands, start/prompt neighboring agents, read output, and wait safely. Body vendored verbatim from ogulcancelik/herdr.
   - Requires: Herdr installed; agent running with `HERDR_ENV=1` · Status: ingested, accuracy-checked, and deployed to the shared/Pi/Claude skill paths 2026-07-22.
-- [qmd](concepts/qmd/CONCEPT.md) — reference skill for tobi/qmd local hybrid search, **global mode only**: one index, collections per knowledge base from the synced canon (`Scripts/config/qmd-collections.yml` + `<qmd-setup-script>` + daily refresh timer), authority-labeled contexts, project-local `.qmd/` banned (shadows the global registry — verified); backs vault registration-by-default in `bc-init-agent` and the qmd steps in `triage`/`bc-drain-issues`.
+- [qmd](concepts/qmd/CONCEPT.md) — reference skill for tobi/qmd local hybrid search, **global mode only**: one index, collections per knowledge base from the synced canon (`<owner-scripts>/config/qmd-collections.yml` + `<qmd-setup-script>` + daily refresh timer), authority-labeled contexts, project-local `.qmd/` banned (shadows the global registry — verified); backs vault registration-by-default in `bc-init-agent` and the qmd steps in `triage`/`bc-drain-issues`.
   - Requires: `qmd` installed and a collections config registered · Status: implemented 2026-07-13; accuracy check run 2026-07-13 **PASS** on Arch (qmd 2.5.3; finding: project-local index.yml stores absolute paths → gitignore all of .qmd/); deployed 2026-07-13 to Claude Code + Pi + shared `~/.agents/skills/` symlinks.
 - [obsidian-markdown](concepts/obsidian-markdown/CONCEPT.md) — Obsidian Flavored Markdown syntax reference for wikilinks, embeds, callouts, properties, tags, and comments; format guidance only, with vault mutation delegated to existing safe tools. Status: adapted, accuracy-checked + mutation-boundary pressure-tested **PASS** 2026-08-17; deployed via shared/Pi/Claude symlinks.
 - [obsidian-bases](concepts/obsidian-bases/CONCEPT.md) — Obsidian Bases `.base` YAML reference for filters, formulas, views, properties, summaries, and deterministic validation; format/validation only because `pi-obsidian-vault` remains Markdown-only. Status: adapted, accuracy-checked + mutation-boundary pressure-tested **PASS** 2026-08-17; deployed via shared/Pi/Claude symlinks.

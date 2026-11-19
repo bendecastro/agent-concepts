@@ -5,7 +5,7 @@ In the stated scenario, the next calls would be:
 ```text
 intercom({action: "list"})
 bash({command: "cd /home/user/Projects/manicule && git worktree list && git status --short && git branch --show-current"})
-bash({command: "cat ~/.pi/agent/skills/bc-swarm/pi.md && <storage-health-check>"})
+bash({command: "cat ~/.pi/agent/skills/bc-swarm/pi.md && bc-storage-health"})
 ```
 
 Then, depending on the results:

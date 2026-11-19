@@ -90,7 +90,7 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
   reference is either noise or a leak to everyone who does. `scripts/lint.py` reports each hit
   from an optional private denylist, `~/.config/agent-concepts/personal-terms.txt` (path
   override: `AGENT_CONCEPTS_PERSONAL_TERMS`; format: [example](docs/personal-terms.example.txt)),
-  as an ERROR; without the file the check is skipped. Pushed history is left alone; current
+  as an ERROR (concept bodies and mixed pressure-test results warn instead); without the file the check is skipped. Captured evidence under `docs/research/raw/**`, `docs/research/*/evidence/**`, and `concepts/agent-kernel/tests/pressure-concurrent-sessions/**` is skipped because it is immutable. Pushed history is left alone; current
   files get fixed.
 - `log.md` is a historical journal: its stale paths are exempt because they were accurate when
   written, but personal terms are not — scrub them like any other file.

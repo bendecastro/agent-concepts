@@ -600,7 +600,17 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None) -> None:
         term = line.strip()
         if not term or term.startswith("#"):
             continue
-        alternatives.append(term[3:] if term.startswith("re:") else re.escape(term))
+        if term.startswith("re:"):
+            try:
+                if re.fullmatch(term[3:], ""):
+                    issues.append(Issue("WARN", f"personal terms: regex matches empty text in {display(config)}"))
+                    continue
+            except re.error as exc:
+                issues.append(Issue("WARN", f"personal terms: invalid regex in {display(config)}: {exc}"))
+                return
+            alternatives.append(term[3:])
+        else:
+            alternatives.append(re.escape(term))
     if not alternatives:
         return
     try:
@@ -608,9 +618,24 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None) -> None:
     except re.error as exc:
         issues.append(Issue("WARN", f"personal terms: invalid regex in {display(config)}: {exc}"))
         return
-    tracked = subprocess.run(["git", "-C", str(root), "ls-files", "-z"],
-                             capture_output=True, check=True).stdout.decode().split("\0")
+    try:
+        tracked = subprocess.run(["git", "-C", str(root), "ls-files", "-z"],
+                                 capture_output=True, check=True).stdout.decode().split("\0")
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        issues.append(Issue("WARN", "personal terms: cannot list tracked files with git"))
+        return
     for name in filter(None, tracked):
+        parts = Path(name).parts
+        if (parts[:3] == ("docs", "research", "raw")
+                or (parts[:2] == ("docs", "research") and len(parts) > 3 and parts[3] == "evidence")
+                or parts[:4] == ("concepts", "agent-kernel", "tests", "pressure-concurrent-sessions")):
+            continue
+        mixed_results = {
+            "concepts/agent-kernel/tests/codex-smoke-2026-06-12.md",
+            "concepts/agent-kernel/tests/pressure-full-suite-owner.md",
+            "concepts/bc-swarm/tests/pressure-targeted-packets.md",
+        }
+        severity = "WARN" if (len(parts) > 3 and parts[0] == "concepts" and parts[2] == "body") or name in mixed_results else "ERROR"
         path = root / name
         try:
             data = path.read_bytes()
@@ -620,7 +645,7 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None) -> None:
             continue
         for number, text in enumerate(data.decode("utf-8", errors="replace").splitlines(), 1):
             for match in pattern.finditer(text):
-                issues.append(Issue("ERROR", f"personal term in {name}:{number}: {match.group(0)!r}"))
+                issues.append(Issue(severity, f"personal term in {name}:{number}: {match.group(0)!r}"))
 
 
 def lint_skill_copies(issues: list[Issue]) -> None:

@@ -2,7 +2,7 @@ I can’t make tool calls in this reply or verify the tool schemas and routing f
 
 ```text
 intercom({"action":"list"})
-bash({"command":"cd /home/user/Projects/manicule && git worktree list && <storage-health-check>"})
+bash({"command":"cd /home/user/Projects/manicule && git worktree list && bc-storage-health"})
 read({"path":"~/.pi/agent/skills/bc-swarm/pi.md"})
 read({"path":"/tmp/bc-swarm/2026-11-19-item024/manifest.md"})
 ```

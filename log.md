@@ -1770,4 +1770,7 @@ Marked the pre-rerun s2 figures in the review-rerun results as superseded (fix-v
 A scheduled `<weekly-retro-job>` on a second machine ran `/skill:retro since 2026-11-12` headless in 4.5 min and wrote `<report-dir>/2026-11-19.md`: 20 of 40 sessions across 9 projects (top 18 by active time + 2 seeded), two proposals with homes (code-review boundary-size question, 3 of 20; manicule delivery-check wording, 2 of 20). `<agent-time-report>` was not on that machine's PATH (symlinks refreshed after); the JSONL fallback worked. Weekly timer: Mondays 06:00.
 
 ## [2026-11-19] lint | personal-terms check and scrub
-Added `lint_personal_terms` (optional private denylist, ERROR per hit, skipped when absent) with docs/personal-terms.example.txt, stated the public-copyable policy in AGENTS.md § Conventions, and scrubbed personal terms from log/index/docs/scripts and concept CONCEPT.md/tests; concept bodies, raw sources and captured evidence still hold hits pending per-concept owner review.
+Added `lint_personal_terms` (optional private denylist, ERROR per hit, skipped when absent) with docs/personal-terms.example.txt, stated the public-copyable policy in AGENTS.md § Conventions, and scrubbed personal terms from log/index/docs/scripts and concept CONCEPT.md/tests; Concept-body hits warn pending per-concept owner review; immutable raw sources, research evidence and concurrent-session transcripts are skipped, and mixed pressure-test results warn.
+
+## [2026-11-19] lint | personal-terms review fixes
+Preserved captured pressure-test output, excluded immutable evidence, and made pending body and mixed-result hits warnings; hardened denylist handling and corrected placeholder examples.
