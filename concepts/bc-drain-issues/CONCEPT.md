@@ -43,6 +43,8 @@ User-invoked AFK executor for a repo's non-`automated` `ready-for-agent` and `re
 - **Agent-agnostic canon with concrete Pi economy.** State, packets, contracts, round caps, and recovery semantics work in any harness. Pi installs minimal `bc-drain-auditor`, `bc-drain-worker`, and `bc-drain-reviewer` roles with no unrelated inherited project context/skills or generic plan/progress reads, plus compact subagent tool descriptions. Other harnesses use equivalent fresh packets. Harness sessions/artifacts stay outside issue worktrees so metadata cannot fail scope gates or enter recovery bundles.
 - **Test levels block in the pre-review gate (2026-11-17).** The deterministic gate rejects a handoff whose tdd Test levels block is missing or has an empty L1/L2/L3 line, so a skipped level surfaces before reviewer tokens are spent. The gate is instruction-only (the driver is a model; no gate code exists), so the check is added to the gate's checklist and the worker's review-ready checklist. Whether each line is true stays with the Spec reviewer: the gate checks presence, not judgment. Provenance: owner decision 7 of the Level 3 rules in [tdd](../tdd/CONCEPT.md).
 
+- **The worker names no machine-specific test runner (2026-11-19).** `execute-issue.md` defers to the guarded runner the project's or machine's agent instructions name, as the kernel's Storage safety does, instead of a fixed command and owner path. Why: the repository is public, and a stranger's machine has its own runner or none; the owner's runner is already named in the owner's always-loaded instructions, so no overlay is needed.
+
 ## Measured basis
 
 These are historical measurements and design inputs; token totals are not current run controls. Gate B measured review at 61,012 of 277,012 child tokens (22%) on a *clean* v2 issue: Spec 24,104, Standards 36,908, one round, no re-review. The exposure is the multiplier rather than the single pass—an initial review plus three permitted rework cycles dispatches up to eight reviewer children, roughly 244k tokens at those rates, most of it re-reading a diff an axis already approved. v3 therefore attacks repetition (standing approvals, selective re-review), duplicated derivation (driver-materialized packet), disproportionate axis count (tiers), and ungated exploration (reproduction budget). Because clean and probabilistic single-rework fixtures cannot exercise selective re-review reliably, v3's deployment Gate B uses the deterministic two-rework trace; the natural contested fixture remains complementary ecological evidence.
@@ -81,6 +83,8 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as the recorded state for an axis check that could not run, matching `code-review`. Restated, not copied. (2026-09-06)
 
 ## Tests
+
+2026-11-19 (generic runner wording): Terra low, text-only, with body, n=2, a stand-in machine instruction naming invented tools; non-regression only, no without-body arm. 2/2 ran the named guarded runner on the targeted test only (`/tmp/bc-swarm/2026-11-19-retro-skill/pt-drain/`).
 
 2026-11-17: Test levels gate check added to the instructions; not pressure-tested.
 
