@@ -1809,3 +1809,6 @@ Reviewer pass over 26 concepts the lexical denylist had cleared. Replaced a priv
 Replaced the three private project names with neutral project A/B labels in prose and `<project-a>`/`<project-b>` placeholders in captured evidence (owner-approved one-off); retrieval benchmark reports now render the `--collection` value instead of a hard-coded name; dropped the workshop download URL from six CONCEPT.md citations. `docs/research/raw/` left untouched (immutable).
 
 ## [2026-11-19] lint | renamed ingested source image-maze-seo-agents to project-b-seo-agents and dropped the workshop download URL from CITATIONS.md (owner-approved one-off exception to raw-source immutability)
+
+## [2026-11-19] rename | retro → bc-agent-reflect (owner choice; no alias)
+`git mv concepts/retro concepts/bc-agent-reflect`; skill name, overlay path (`overlays/bc-agent-reflect.md`), report-dir variable (`BC_AGENT_REFLECT_REPORT_DIR`, default `${XDG_STATE_HOME:-~/.local/state}/bc-agent-reflect/`), kernel 👣 offer (`/bc-agent-reflect`), relationship edges, index and status updated. Recorded test prompts/outputs keep `/retro` as evidence; upstream raw sources and older log entries unchanged.

@@ -25,6 +25,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | concept | kind | tested | deployed |
 |---|---|---|---|
 | [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-19 | 2026-11-15 |
+| [bc-agent-reflect](../concepts/bc-agent-reflect/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md) | pressure | 2026-06-21 | 2026-06-21 |
 | [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-10-08 | 2026-07-25 |
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-11-19 | 2026-06-21 |
@@ -43,7 +44,6 @@ tested. See the concept's `## Tests` section for what is missing.
 | [prompting-agents](../concepts/prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
 | [prototype](../concepts/prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
-| [retro](../concepts/retro/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [show-me](../concepts/show-me/CONCEPT.md) | pressure | 2026-11-04 | yes |
 | [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [tdd](../concepts/tdd/CONCEPT.md) | pressure | 2026-11-19 | yes |

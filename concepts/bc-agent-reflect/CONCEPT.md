@@ -1,10 +1,12 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 isolated stranger retest of final body (13b3080), Terra low, n=2: undecided ask, decided proceed, headless carry-over, carried items numbered after new + decisions to original report, date-prefix latest — 12/12 pass, new body only, no file writes (tests/pressure-retro-decisions.md). Earlier: open-report check + Decisions record: with 6/6 vs without 2/6 (control only), Terra low, n=2 (tests/pressure-retro-decisions.md); headless carry-over new 2/2 vs old 0/2 and overlay load path owner 2/2, stranger 2/2 (tests/pressure-private-overlay.md); no real file writes tested. Earlier 2026-11-19 live scheduled batch run wrote a valid n=20 report; usefulness awaits owner verdict
+test_status: partial # 2026-11-19 isolated stranger retest of final body (13b3080), Terra low, n=2: undecided ask, decided proceed, headless carry-over, carried items numbered after new + decisions to original report, date-prefix latest — 12/12 pass, new body only, no file writes (tests/pressure-reflect-decisions.md). Earlier: open-report check + Decisions record: with 6/6 vs without 2/6 (control only), Terra low, n=2 (tests/pressure-reflect-decisions.md); headless carry-over new 2/2 vs old 0/2 and overlay load path owner 2/2, stranger 2/2 (tests/pressure-private-overlay.md); no real file writes tested. Earlier 2026-11-19 live scheduled batch run wrote a valid n=20 report; usefulness awaits owner verdict
 tested: 2026-11-19
 deployed: yes
 ---
-# Concept: retro
+# Concept: bc-agent-reflect
+
+Renamed from `retro` on 2026-11-19 (owner choice; no alias). Tests below ran under the former name, so their recorded prompts and outputs keep `/retro`.
 
 Owner-invoked retrospective over one Pi session or a batch of them. It reads targeted slices of the session logs, child-run transcripts, swarm manifests and a session time report when the machine has one, then proposes environment changes — checks, review standards, concept/kernel clauses, Scripts tools, owner-stated memory — ordered by severity, each with a named home and a recurrence count. It changes nothing until the owner picks. Adapted from Matt Pocock's `retro` skill (MIT).
 
@@ -12,7 +14,7 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 
 - **Reports carry their decisions.** A report is decided once it has `## Decisions` (one line per proposal: acted with commit/file, declined, deferred with trigger). Interactive runs show an undecided latest report first; headless batches carry its proposals over under `## Still undecided from <date>`, outside the sample. Why: weekly reports went unanswered with no record of what was acted on. Owner-approved 2026-11-19.
 
-- **Owner-invoked only, as upstream.** Upstream sets `disable-model-invocation: true` and `allow_implicit_invocation: false`. Kept: a retro is costly, and the moment to run one is the owner's call. The model's part is the kernel's 👣 offer at the end of a substantial session (see `agent-kernel` § recap), not invoking the skill.
+- **Owner-invoked only, as upstream.** Upstream sets `disable-model-invocation: true` and `allow_implicit_invocation: false`. Kept: a reflection is costly, and the moment to run one is the owner's call. The model's part is the kernel's 👣 offer at the end of a substantial session (see `agent-kernel` § recap), not invoking the skill.
 - **Adapted, not vendored.** Upstream assumes Claude Code's session store, a `CODING_STANDARDS.md` and a reviewer agent. Here the evidence is Pi's session JSONL, child-run transcripts, `bc-swarm` manifests and a session time-report tool if the machine has one (else JSONL timestamps), and the reviewer standards live in `code-review`.
 - **Wall time and rework added as a category and listed first.** The owner's main loss is time: waits, sleep-polling, reruns, rate-limit stalls, subagent rework rounds (see the agent-time-sinks entries in `log.md`, 2026-11-19). Upstream's seven categories do not name it.
 - **Batch mode.** Upstream reviews one session. The owner wants a weekly run over many sessions; batch scope (`since <date>`, `last M`, optional project) plus a report file (`--report`, else the report directory) serves it. The automation that schedules it is out of scope here.
@@ -23,8 +25,8 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 - **`writing-for-agents` dropped.** Upstream's step 1 loads it. Here `prompting-agents` owns instruction wording, so the body points there.
 - **Transcripts are data.** Not in upstream. Session logs hold tool output and fetched text; the body forbids saving instructions read from them into memory.
 
-- **Owner specifics in a private overlay.** The body names no owner tool or path; one line tells the agent to read `~/.config/agent-concepts/overlays/retro.md` if it exists, which names the owner's session time-report tool and report directory. Why: the repository must work as-is for a stranger (`AGENTS.md` § Conventions), while the owner's agents keep their tool names. Owner decision 2026-11-19.
-- **Report directory:** `RETRO_REPORT_DIR` if set, otherwise the `--report` target's parent if given, otherwise `${XDG_STATE_HOME:-~/.local/state}/retro/`. The open-report check needs one directory that every run reads and writes. A per-project `./retro/` would split one cross-project batch history across repositories and drop files into working trees; `${TMPDIR:-/tmp}` (the earlier default) is wiped, losing undecided reports, and disagreed with where the check read. The XDG state directory is per-user, persistent and outside any repository.
+- **Owner specifics in a private overlay.** The body names no owner tool or path; one line tells the agent to read `~/.config/agent-concepts/overlays/bc-agent-reflect.md` if it exists, which names the owner's session time-report tool and report directory. Why: the repository must work as-is for a stranger (`AGENTS.md` § Conventions), while the owner's agents keep their tool names. Owner decision 2026-11-19.
+- **Report directory:** `BC_AGENT_REFLECT_REPORT_DIR` if set, otherwise the `--report` target's parent if given, otherwise `${XDG_STATE_HOME:-~/.local/state}/bc-agent-reflect/`. The open-report check needs one directory that every run reads and writes. A per-project `./bc-agent-reflect/` would split one cross-project batch history across repositories and drop files into working trees; `${TMPDIR:-/tmp}` (the earlier default) is wiped, losing undecided reports, and disagreed with where the check read. The XDG state directory is per-user, persistent and outside any repository.
 - **Two report-name forms.** Default batch reports are `YYYY-MM-DD-<scope>.md`; a scheduled job may pass a date-only `--report YYYY-MM-DD.md`, which external readers of that directory may rely on. The open-report check matches both by date prefix and excludes the run's own `--report` target, so a same-day rerun does not carry over its own report. The decided/proposals interface (`## Decisions` line; `1. ` items under `## Proposals`) is fixed, and the body now tells the writer to produce it.
 
 ## Provenance
@@ -37,12 +39,12 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 
 ## Tests
 
-[`tests/pressure-retro-decisions.md`](tests/pressure-retro-decisions.md) — open-report check and Decisions record, old vs new body.
+[`tests/pressure-reflect-decisions.md`](tests/pressure-reflect-decisions.md) — open-report check and Decisions record, old vs new body.
 
 [`tests/pressure-private-overlay.md`](tests/pressure-private-overlay.md) — headless carry-over (old vs new body) and overlay load path (owner vs stranger).
 
-[`tests/pressure-retro.md`](tests/pressure-retro.md) — without vs with the body on an anonymised session excerpt.
+[`tests/pressure-reflect.md`](tests/pressure-reflect.md) — without vs with the body on an anonymised session excerpt.
 
 ## Deploy
 
-Deployed via `scripts/deploy-local-skills.py` to the shared bus (`~/.agents/skills/retro`, `~/.pi/agent/skills/retro`, `~/.claude/skills/retro`). Batch changes await a pressure re-test.
+Deployed via `scripts/deploy-local-skills.py` to the shared bus (`~/.agents/skills/bc-agent-reflect`, `~/.pi/agent/skills/bc-agent-reflect`, `~/.claude/skills/bc-agent-reflect`). Batch changes await a pressure re-test.

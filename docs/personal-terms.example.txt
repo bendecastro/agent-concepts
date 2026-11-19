@@ -1,5 +1,5 @@
 # Private denylist for scripts/lint.py (personal-terms check).
-# Scrub placeholders: <owner-scripts>, <owner-wiki>, <music-library>, <private-config>, <old-private-config-checkout>, <synced-home>, <project-b>, <second-machine>, <report-dir>, <weekly-retro-job>, <agent-time-report>, <config-setup-script>, <improve-script>, <qmd-setup-script>, <qmd-refresh-job>, <pytest-wrapper>, <offload-wrapper>, <storage-health-check>.
+# Scrub placeholders: <owner-scripts>, <owner-wiki>, <music-library>, <private-config>, <old-private-config-checkout>, <synced-home>, <project-b>, <second-machine>, <report-dir>, <weekly-retro-job>, <weekly-reflect-job>, <agent-time-report>, <config-setup-script>, <improve-script>, <qmd-setup-script>, <qmd-refresh-job>, <pytest-wrapper>, <offload-wrapper>, <storage-health-check>.
 # Copy to ~/.config/agent-concepts/personal-terms.txt (or point
 # AGENT_CONCEPTS_PERSONAL_TERMS at it). Never commit the real file here.
 #

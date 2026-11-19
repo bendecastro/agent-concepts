@@ -21,9 +21,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-- incoming from [retro](../retro/RELATIONSHIPS.md): hands off to this concept — optional.
+- incoming from [bc-agent-reflect](../bc-agent-reflect/RELATIONSHIPS.md): hands off to this concept — optional.
   Judgement-call standards findings are proposed as code-review standards; mechanical ones become checks.
-  Source: [retro/body/SKILL.md](../retro/body/SKILL.md#every-proposal-names-its-home)
+  Source: [bc-agent-reflect/body/SKILL.md](../bc-agent-reflect/body/SKILL.md#every-proposal-names-its-home)
 
 - incoming from [security-audit](../security-audit/RELATIONSHIPS.md): adapts this concept — required.
   Adapts fresh-context reviewer isolation and findings-are-not-obligations calibration, not the two-axis diff workflow.

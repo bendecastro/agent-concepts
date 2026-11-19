@@ -1,4 +1,6 @@
-# Pressure test: retro open-report check and Decisions record
+# Pressure test: bc-agent-reflect open-report check and Decisions record
+
+Run under the skill's former name `retro` (renamed `bc-agent-reflect` 2026-11-19); recorded prompts and outputs keep it.
 
 Authored and run 2026-11-19. Consumer: `pi -p --no-tools --no-context-files --no-skills --no-session --model openai-codex/gpt-6.1-terra --thinking low --append-system-prompt <arm>`. Without arm: `body/SKILL.md` before this change (git HEAD); with arm: current body. n=2 per arm per scenario. Every prompt opens "You cannot run tools in this reply." and embeds the real `<report-dir>/2026-11-19.md` (undecided, 2 proposals).
 

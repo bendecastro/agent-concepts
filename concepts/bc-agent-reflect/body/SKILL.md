@@ -1,13 +1,13 @@
 ---
-name: retro
-description: Retrospective on one or more coding sessions — proposes, ordered by severity, changes to the agent's environment (checks, review standards, concepts, tools) that would make future runs faster or less error-prone. Owner-invoked only via /retro.
+name: bc-agent-reflect
+description: Reflection on one or more coding sessions — proposes, ordered by severity, changes to the agent's environment (checks, review standards, concepts, tools) that would make future runs faster or less error-prone. Owner-invoked only via /skill:bc-agent-reflect.
 argument-hint: "[session id/path | since YYYY-MM-DD | last M] [project] [--report path]"
 disable-model-invocation: true
 ---
 
-# Retro
+# Agent reflection
 
-If `~/.config/agent-concepts/overlays/retro.md` exists, read it: it supplies tool names and paths for the generic steps below that this machine's agent instructions do not already name. It never changes behaviour, and the project's own instructions take precedence.
+If `~/.config/agent-concepts/overlays/bc-agent-reflect.md` exists, read it: it supplies tool names and paths for the generic steps below that this machine's agent instructions do not already name. It never changes behaviour, and the project's own instructions take precedence.
 
 Look back at what happened in a session and propose changes to the agent's **environment**, not to the code it produced. You propose only: change nothing until the owner picks.
 Why: the owner decides what becomes canon; an unasked edit to checks, concepts or memory is the drift this workspace is built to prevent.
@@ -27,7 +27,7 @@ Why: the population and sample make recurrence counts weighable; the full all-pr
 
 ## Open report first
 
-The report directory is `$RETRO_REPORT_DIR` if set, else the parent directory of `--report` if given, else `${XDG_STATE_HOME:-~/.local/state}/retro/`. Match filenames against `^\d{4}-\d{2}-\d{2}(-[^/]+)?\.md$`. The **latest report** is the one with the greatest date prefix, newest modification time on a tie, excluding this run's own `--report` target. A report is **decided** once it has a line starting `## Decisions`; its open proposals are the lines starting with a number, a dot and a space (`1. `) between `## Proposals` and the next `## ` heading. For each `## Still undecided from <date>` section, check its original report at the recorded path; its items remain open only while that original report is undecided.
+The report directory is `$BC_AGENT_REFLECT_REPORT_DIR` if set, else the parent directory of `--report` if given, else `${XDG_STATE_HOME:-~/.local/state}/bc-agent-reflect/`. Match filenames against `^\d{4}-\d{2}-\d{2}(-[^/]+)?\.md$`. The **latest report** is the one with the greatest date prefix, newest modification time on a tie, excluding this run's own `--report` target. A report is **decided** once it has a line starting `## Decisions`; its open proposals are the lines starting with a number, a dot and a space (`1. `) between `## Proposals` and the next `## ` heading. For each `## Still undecided from <date>` section, check its original report at the recorded path; its items remain open only while that original report is undecided.
 
 - **Interactive run without `--report`:** before any new review, read the latest report. Show its open proposals if undecided and any still-open carried items, with their original paths; number carried items after the latest report's proposals and ask for picks in the same reply format. Start the new review only after the owner answers.
 - **Headless batch (`--report` given or no owner present):** do not ask. Carry the latest report's open proposals, if undecided, and any still-open carried items into the new report, each under `## Still undecided from <date>` with its original report path and proposals copied verbatim. They do not count toward the new sample or recurrence counts.
@@ -101,4 +101,4 @@ When the owner picks, append to that report file, before starting work:
 ```
 
 One line per proposal number, every number covered: a number the owner did not pick is `declined` unless the owner defers it. For carried items, map the displayed numbers back to their original proposal numbers and append their decisions to each original report at its recorded path, not the carrying report. Update a line as its work lands.
-Why: the record is what makes a report decided and lets the next retro see what was done.
+Why: the record is what makes a report decided and lets the next reflection see what was done.

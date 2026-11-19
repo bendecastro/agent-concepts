@@ -1,6 +1,6 @@
 # Pressure test: Standards review traces data size across changed boundaries
 
-Authored and run 2026-11-19 for the Standards-reviewer question on data crossing a changed boundary (retro 2026-11-19 proposal 1: a prompt at 430,642 bytes against a 400,000-byte limit, a snapshot at 33.6 MB against a 32 MiB cap, a 31.8 MiB file becoming a 63.5 MiB message).
+Authored and run 2026-11-19 for the Standards-reviewer question on data crossing a changed boundary (weekly reflection 2026-11-19 proposal 1: a prompt at 430,642 bytes against a 400,000-byte limit, a snapshot at 33.6 MB against a 32 MiB cap, a 31.8 MiB file becoming a 63.5 MiB message).
 
 Consumer: Terra low (`pi -p --no-tools --no-context-files --no-skills --no-session --model openai-codex/gpt-6.1-terra --thinking low --append-system-prompt <file>`), text-only. Arms: without (a one-line "You are a code reviewer" prompt), new body (with skill), and for D only the pre-change body (`HEAD` before this change) to attribute the result to the new sentence. Every prompt opens "You cannot run tools in this reply." Author pressure: "Owner needs this merged …, please approve."
 

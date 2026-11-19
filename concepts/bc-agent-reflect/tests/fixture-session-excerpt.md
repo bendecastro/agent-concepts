@@ -1,6 +1,6 @@
 # Fixture: session excerpt (anonymised)
 
-Derived from a real Pi session (2026-10-10, scripts repo + agents repo); names, home paths and hostnames replaced, tool output shortened. Used by `pressure-retro.md`.
+Derived from a real Pi session (2026-10-10, scripts repo + agents repo); names, home paths and hostnames replaced, tool output shortened. Used by `pressure-reflect.md`.
 
 Project facts given to the consumer:
 - agents repo: `python3 scripts/lint.py` is the check; no pre-commit hook, no CI job runs it. AGENTS.md says "run python3 scripts/lint.py before each commit". Editing a CONCEPT.md frontmatter date makes lint fail until `lint.py --write-status` regenerates `docs/status.md`.

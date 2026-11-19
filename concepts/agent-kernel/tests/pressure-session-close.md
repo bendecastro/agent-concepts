@@ -1,4 +1,6 @@
-# Pressure test: 👣 close signal and `/retro` offer
+# Pressure test: 👣 close signal and `/bc-agent-reflect` offer
+
+Run under the skill's former name `retro` (renamed `bc-agent-reflect` 2026-11-19); recorded prompts and outputs keep it.
 
 Authored and run 2026-11-19 for the 👣 clause "When every deliverable is ready … also offer `/retro`".
 
