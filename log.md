@@ -1740,3 +1740,7 @@ Terra low, text-only. Kernel: without / pre-change / current × long-done, short
 
 ## [2026-11-19] implement | retro review fixes
 Correct session and child log layouts, portable timing lookup, headless batch report destination, and snapshot licence provenance. Existing fixture does not exercise the changed instructions; no deploy or status change.
+
+## [2026-11-19] test | retro + agent-kernel session-close — recorded, deployed retro
+- retro: fixture pressure test PASS 2/2 (without FAIL 0/2) on Terra low; review fixes f8c7fdb fix-verified. Deployed as local skill.
+- agent-kernel: session-close 👣 clause PASS 4/4 per scenario (without and pre-change FAIL in finished-session scenarios). Derived kernel copies synced in CONFIG.

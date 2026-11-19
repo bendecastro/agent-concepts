@@ -1,8 +1,8 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
-deployed: no
+test_status: pass # 2026-11-19 fixture: without FAIL 0/2, with PASS 2/2 (Terra low, text-only; batch/tool use not exercised)
+tested: 2026-11-19
+deployed: yes
 ---
 # Concept: retro
 

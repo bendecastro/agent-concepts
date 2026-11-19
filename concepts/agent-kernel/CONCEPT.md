@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL)
+test_status: partial # 2026-11-19 full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL)
 tested: 2026-11-19
 deployed: 2026-11-15
 ---
