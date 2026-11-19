@@ -1,15 +1,21 @@
-I can’t launch the worker in this session: the tools described in the scenario, including `set_session_name`, aren’t available to me. I also can’t inspect the packet or routing, so I can’t give an exact valid worker call without inventing it.
+I can’t make or verify tool calls in this reply, and the `set_session_name` tool is not available to me here. The required dispatch syntax is also not in the context, so I won’t invent a worker call.
 
-The first calls I would make, if those tools were available, are:
+The next calls I would make, using illustrative argument names pending the actual tool schemas:
 
-```text
-set_session_name({"name":"Launch Registry Worker"})
+```json
+read({"path":"~/.pi/agent/skills/bc-swarm/pi.md"})
 bash({"command":"bc-storage-health"})
 ```
 
-If storage health is critical, unknown, or the check fails, I would stop. Otherwise, I would read `/tmp/bc-swarm/2026-11-19-item024/manifest.md` and `~/.pi/agent/skills/bc-swarm/pi.md`, then launch the worker with `worktree: true` using the recorded packet and routing. The launch arguments depend on those reads.
+If the health check passes and the dispatch instructions confirm the syntax and routing, I’d launch the worker with `worktree: true`, using the existing packet and manifest. If health is critical, unknown, or the check cannot run, I’d stop and report that instead.
 
-**Reply to the user in that scenario:** “I’ll launch the worker after the required storage check; the run directory is `/tmp/bc-swarm/2026-11-19-item024/`.”
+**Reply to the user:**
 
-👣 Provide a session with the stated tools to launch the worker.
-🏁 Launch registry implementation worker
+Item 024 → worker, routing to be confirmed from the dispatch instructions.
+
+Run directory: `/tmp/bc-swarm/2026-11-19-item024/`
+
+I need to run the required storage check before creating the worker’s worktree. If it passes, I’ll launch immediately.
+
+👣 Read dispatch syntax and check storage, then launch if safe.
+🏁 Implement registry entry kind

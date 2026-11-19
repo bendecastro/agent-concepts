@@ -1,17 +1,8 @@
-I can’t provide exact, executable tool calls: this session exposes no tools, including `set_session_name`, and I can’t inspect the swarm dispatch syntax or the repository. The earlier file contents are also not present here.
+**1. Tool calls:** None. This session exposes no tools, including `set_session_name`, `intercom`, or file and Git tools. I can’t honestly provide exact calls or their results.
 
-The next calls would be, schematically:
+With those tools available, I would first name the session, check for overlapping agents, inspect the current files and Git status, then make the change, run `npm run gen` and appropriate checks, review the diff, and commit only the requested files. I would stop if coordination, regeneration, or verification revealed a conflict or failure. I would then check the publish policy before pushing.
 
-```text
-set_session_name("Add Glossary Registry Kind")  // unavailable here
-intercom({action: "list"})                      // check live sessions before writing
-bash("git -C /home/user/Projects/manicule worktree list; git -C /home/user/Projects/manicule status --short")
-bash("bc-storage-health; cat ~/.pi/agent/skills/bc-swarm/pi.md")
-```
+**2. Reply to the user:** I can’t make or commit the change in this session because I have no workspace tools. Please resume in a tool-enabled session.
 
-If another session overlaps, I’d coordinate before writing. If storage health fails or is unknown, I’d stop. Otherwise, I’d use the documented dispatch syntax to create a manifest and launch one worktree worker for the glossary change, then integrate its verified result, run `npm run gen` and appropriate checks, inspect the diff, and commit only the requested changes. I can’t specify those later calls exactly without the dispatch documentation and results.
-
-No changes or commit have been made.
-
-👣 Please provide a session with the named tools enabled.
-🏁 Add glossary registry kind
+👣 Waiting for a tool-enabled session.
+🏁 Add glossary registry entries

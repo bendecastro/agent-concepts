@@ -1,0 +1,15 @@
+I can’t launch the worker in this session: the tools described in the scenario, including `set_session_name`, aren’t available to me. I also can’t inspect the packet or routing, so I can’t give an exact valid worker call without inventing it.
+
+The first calls I would make, if those tools were available, are:
+
+```text
+set_session_name({"name":"Launch Registry Worker"})
+bash({"command":"bc-storage-health"})
+```
+
+If storage health is critical, unknown, or the check fails, I would stop. Otherwise, I would read `/tmp/bc-swarm/2026-11-19-item024/manifest.md` and `~/.pi/agent/skills/bc-swarm/pi.md`, then launch the worker with `worktree: true` using the recorded packet and routing. The launch arguments depend on those reads.
+
+**Reply to the user in that scenario:** “I’ll launch the worker after the required storage check; the run directory is `/tmp/bc-swarm/2026-11-19-item024/`.”
+
+👣 Provide a session with the stated tools to launch the worker.
+🏁 Launch registry implementation worker

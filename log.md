@@ -1753,3 +1753,9 @@ Define the parent-session population, reproducible project/file-size sampling an
 
 ## [2026-11-19] implement | retro samples by time across projects
 Batch sampling no longer ranks projects: top 18 parent sessions by active time (`bc-agent-time-report --sessions`) plus 2 seeded random, n=20; sessions started before the window get their time from the JSONL fallback. Owner decision after trial 2 put 8 of 10 samples in one project.
+
+## [2026-11-19] implement | concurrent-session coordination moved to agent-kernel
+Added the coordination clause to bc-swarm, then moved it into Git discipline for all repository writes; review follow-up excludes own subagents and bounds check frequency. The relationship contracts concern other kernel sections and are unaffected.
+
+## [2026-11-19] test | agent-kernel concurrent-session coordination
+Terra low text-only review reruns: discovery 2/4 vs 0/4, visible exchange 1.5/2 vs 0.5/2 with partial credit, control 4/4 in both arms; direct-write discovery was confounded by no-tools refusals. Verbatim results and earlier runs are in the kernel tests.

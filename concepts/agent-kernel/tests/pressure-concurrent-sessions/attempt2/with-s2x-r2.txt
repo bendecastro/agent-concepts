@@ -1,0 +1,16 @@
+I can’t make or verify tool calls in this session: no tools are exposed, including `set_session_name`. The calls below are a **conditional sequence**, not a claim that they ran. I can’t give exact `subagent` syntax without reading the dispatch documentation.
+
+1. `set_session_name({"name":"Add Glossary Registry Kind"})` — if available; it isn’t exposed here.
+2. `intercom({"action":"ask","to":"c3d4","message":"I plan to change src/registry.ts, scripts/gen-registry.ts and dist/registry.json via a worker, then integrate on main. Are you touching these files or running anything affected by integration?"})`
+   - If the session replies, settle any overlap and shared-checkout constraints before writing.
+   - If it doesn’t reply within a few minutes, note the unknown overlap. Ask the owner before proceeding if it could break the shared checkout, build, or integration.
+   - The docs session is stale; its separate worktree does not by itself block this work.
+3. Read `~/.pi/agent/skills/bc-swarm/pi.md` and the applicable dispatching concept, then run `bc-storage-health`. Stop if health is critical or unknown, or the check cannot run.
+4. Create the swarm manifest and dispatch **registry implementation → worker** in a worktree, with explicit model and thinking settings. The packet would specify the three files, regeneration with `npm run gen`, targeted verification, and durable commit/branch records. The exact launch call depends on the documentation.
+5. On completion, validate and integrate the worker’s handoff, inspect the resulting diff and status, run the appropriate verification, and commit only the requested changes. Prove integration and clean up the worker worktree and branch as required.
+6. Check the publish policy. Push if it authorizes this change; otherwise ask whether to push.
+
+**Reply to the user after the actual calls:** report the commit and verification results if successful; otherwise report the specific blocker. I would not claim the change was made yet.
+
+👣 Need an environment with the listed tools to proceed.
+🏁 Add glossary registry entries

@@ -1,16 +1,40 @@
-I can’t make or verify tool calls in this session: no tools are exposed, including `set_session_name`. The calls below are a **conditional sequence**, not a claim that they ran. I can’t give exact `subagent` syntax without reading the dispatch documentation.
+I can’t make actual tool calls in this session: no tools are exposed, including `set_session_name`. The sequence below is conditional, not a record of completed work. The supplied context says the change is already specified and small enough to keep with the parent.
 
-1. `set_session_name({"name":"Add Glossary Registry Kind"})` — if available; it isn’t exposed here.
-2. `intercom({"action":"ask","to":"c3d4","message":"I plan to change src/registry.ts, scripts/gen-registry.ts and dist/registry.json via a worker, then integrate on main. Are you touching these files or running anything affected by integration?"})`
-   - If the session replies, settle any overlap and shared-checkout constraints before writing.
-   - If it doesn’t reply within a few minutes, note the unknown overlap. Ask the owner before proceeding if it could break the shared checkout, build, or integration.
-   - The docs session is stale; its separate worktree does not by itself block this work.
-3. Read `~/.pi/agent/skills/bc-swarm/pi.md` and the applicable dispatching concept, then run `bc-storage-health`. Stop if health is critical or unknown, or the check cannot run.
-4. Create the swarm manifest and dispatch **registry implementation → worker** in a worktree, with explicit model and thinking settings. The packet would specify the three files, regeneration with `npm run gen`, targeted verification, and durable commit/branch records. The exact launch call depends on the documentation.
-5. On completion, validate and integrate the worker’s handoff, inspect the resulting diff and status, run the appropriate verification, and commit only the requested changes. Prove integration and clean up the worker worktree and branch as required.
-6. Check the publish policy. Push if it authorizes this change; otherwise ask whether to push.
+**Next calls, in order:**
 
-**Reply to the user after the actual calls:** report the commit and verification results if successful; otherwise report the specific blocker. I would not claim the change was made yet.
+```text
+set_session_name({name: "Add Glossary Registry Kind"})
+intercom({action: "send", to: "manicule-tests", message: "I plan to edit src/registry.ts and scripts/gen-registry.ts, regenerate dist/registry.json, and commit in the shared checkout. What files are you changing, and are you running tests or builds that would conflict? Please tell me your planned order."})
+```
 
-👣 Need an environment with the listed tools to proceed.
+If naming is unavailable, continue without it. The docs session is stale and in a separate worktree, so I would note its unknown overlap but not wait for it.
+
+If the tests session agrees there is no conflict, proceed. If it reports overlap or a shared build constraint, settle file ownership and order before writing. If it does not reply within a few minutes, ask the owner before editing the shared checkout; the active session could be testing or changing the same files.
+
+After coordination permits writing:
+
+```text
+bash({command: "cd /home/user/Projects/manicule && git status --short && readlink -f src/registry.ts scripts/gen-registry.ts dist/registry.json && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+```
+
+Inspect the paths, existing changes, and any sync implications before editing. If the target files have unrelated changes that cannot be safely separated, stop and ask. Then make the specified edits, regenerate, inspect the result, and run the relevant bounded checks:
+
+```text
+edit({path: "/home/user/Projects/manicule/src/registry.ts", ...})
+edit({path: "/home/user/Projects/manicule/scripts/gen-registry.ts", ...})
+bash({command: "cd /home/user/Projects/manicule && npm run gen && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+```
+
+The exact edit arguments and test command depend on the file contents and project scripts; I would not invent them from the summary. If generation or validation fails, investigate without committing an unverified result. Before committing, inspect the final status and diff and stage only my changes. After a successful commit, check the publish policy; push if it authorizes this change, otherwise ask whether to push.
+
+**Reply to the user if there is no timely response from the tests session:**
+
+Which next step do you want for the shared checkout?
+
+1. **Wait for the tests session (recommended)** — avoids interfering with its active work.
+2. Proceed despite the unknown overlap.
+
+Reply `1` or `2`.
+
+👣 Waiting for your choice if the tests session does not respond.
 🏁 Add glossary registry entries

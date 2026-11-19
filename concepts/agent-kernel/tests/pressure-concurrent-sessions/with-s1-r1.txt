@@ -1,6 +1,20 @@
-I can’t make or specify exact tool calls from this session: no tools are available here, including `set_session_name`, `bash`, and `subagent`. I also can’t inspect the packet or dispatch syntax, so inventing a launch call or routing would risk misrepresenting what happens.
+I can’t give exact dispatch calls from this context: the named tools, including `set_session_name`, aren’t available here, and I can’t read the dispatch syntax or packet. No worker has been launched.
 
-In the parent session, the sequence is: name the session if still unnamed; check storage health and stop if it is critical, unknown, or unavailable; check for overlapping live sessions and coordinate if needed; read the dispatch syntax and existing packet; then launch the single worktree worker with the packet’s routing and durable commit/branch recording requirements. If the packet lacks those requirements or routing, resolve that before launch.
+The next calls would need to follow this order, with arguments filled in from the files and tool schemas rather than guessed:
 
-👣 Run the launch from the tool-enabled parent session.
-🏁 Delegate item 024 implementation
+```text
+set_session_name("Registry Entry Kind")  // if available; before other calls
+read("~/.pi/agent/skills/bc-swarm/pi.md")
+read("/tmp/bc-swarm/2026-11-19-item024/manifest.md")
+bash("cd /home/user/Projects/manicule && bc-storage-health && git worktree list")
+intercom({action: "list"})
+```
+
+If storage health is critical or unknown, or the check fails, stop. If another live session overlaps, coordinate before dispatch. Otherwise, confirm the packet includes the worker’s artifact and commit/branch requirements, then launch one `worker` with `worktree: true`, using the routing and syntax established by the manifest and dispatch documentation. The exact `subagent` call cannot be determined without reading those.
+
+**Reply to the user:**
+
+I’ll launch the item 024 worker after the required storage and session checks. If either check blocks dispatch, I’ll report why.
+
+👣 Need tool access and the dispatch syntax to launch.
+🏁 Add registry entry kind

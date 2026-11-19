@@ -1,26 +1,22 @@
-I can’t provide **exact** tool calls: this session exposes no tools, so I can’t name the session, inspect the dispatch syntax, or make the change. The sequence below is illustrative, not verified API syntax.
+I can’t make these calls from this session: no tools are available, including `set_session_name`. In the described parent session, I would proceed conditionally as follows; the swarm dispatch schema must be read before giving an exact `subagent` call.
 
-1. `set_session_name({"name":"Add glossary registry entries"})`  
-   If unavailable, continue without claiming the session was named.
+1. `set_session_name({"name":"Add glossary registry kind"})` — if available; otherwise continue without it.
+2. `intercom({"action":"ask","recipient":"c3d4","message":"I plan to change src/registry.ts, scripts/gen-registry.ts and dist/registry.json, then commit on main. Are you touching these files or running a shared build? Please reply with constraints."})`
+3. `intercom({"action":"send","recipient":"e5f6","message":"Planning a glossary registry change in src/registry.ts, scripts/gen-registry.ts and dist/registry.json on main. Please flag overlap if active."})`
+4. `read({"path":"~/.pi/agent/skills/bc-swarm/pi.md"})`
+5. `bash({"command":"bc-storage-health"})` — stop if unavailable or critical, including unknown health.
+6. If the active session reports overlap or shared-build constraints, agree on an integration order before writing. If it replies with no conflict, proceed. If it does not reply within a few minutes, note the unknown overlap; because the same checkout and build are shared, ask the owner before proceeding if they could be disrupted. Do not wait on the three-day-idle session.
+7. After checking the dispatch documentation, create the required run directory and manifest, then dispatch **one worktree worker** to implement the three-file change and run targeted checks. The exact `subagent` call depends on the documented schema and available model routing; I would not invent either.
+8. On completion, validate and integrate the worker’s handoff, inspect the diff, run appropriate verification, and commit only the requested changes. Check the publish policy before any push.
 
-2. `intercom({"action":"send","recipient":"manicule-tests","message":"I plan to change src/registry.ts, scripts/gen-registry.ts and dist/registry.json via a worker, then integrate on main. Are you touching these files or using the shared checkout for a build? Please flag conflicts."})`  
-   If they report overlap, agree on ownership and integration order. If there is no reply within a few minutes, note the unknown overlap; ask the owner before proceeding if it could break the shared checkout, build, or integration. The three-day-idle docs session is stale, so it need not block work.
+**Reply if the active session is silent and shared-checkout safety remains unclear:**
 
-3. `bash({"command":"bc-storage-health"})`  
-   Stop if health is critical or unknown, or the check cannot run.
+“`manicule-tests` is active in the same checkout and has not replied. Changing the registry or running generation could interfere with its work.
 
-4. `bash({"command":"cat ~/.pi/agent/skills/bc-swarm/pi.md"})`  
-   Read the actual dispatch syntax before constructing the worker call. If unavailable, do not invent it.
+1. **Wait for its reply** (recommended) — avoids disrupting its checkout or build.
+2. Proceed despite the unknown overlap.
 
-5. Create a dated run directory and `manifest.md`, then announce the directory and track: **glossary registry → worker, selected model + thinking**.
+Reply `1` or `2`.”
 
-6. Launch one `worker` with `worktree: true`, using the documented syntax. Its task: add the glossary kind, update the generator, run `npm run gen`, validate the changes, commit them, and record its full commit SHA and branch in its artifact. If launch fails, inspect the manifest and recovery artifacts before considering a relaunch.
-
-7. On completion, validate and integrate the worker’s handoff or commit range; inspect the resulting diff and run appropriate verification. Record integration proof and clean up only a proven integrated, clean worker worktree and branch. If validation or integration fails, stop and report the evidence.
-
-8. Check the publish policy. Push only if it authorizes this change; otherwise ask the user whether to push.
-
-**Reply to the user after successful verification:** “Added glossary registry entries and regenerated `dist/registry.json`. Committed as `<SHA>`; validation: `<results>`. `<Push status or question>`.”
-
-👣 Tool access and worker dispatch are needed to make the change.
-🏁 Add glossary registry entries
+👣 The change is not started; the described session needs to coordinate before writing.
+🏁 Add glossary registry kind

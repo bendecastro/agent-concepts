@@ -1,0 +1,19 @@
+I can’t make actual tool calls in this session: no tools are exposed here, including `set_session_name`. I also can’t specify a safe worker launch call without reading the required dispatch syntax. The earlier account of the intended change isn’t enough to reconstruct the exact edits.
+
+**Next calls, conditional on tools being available:**
+
+```text
+set_session_name({name: "Add glossary registry kind"})
+intercom({action: "list"})
+bash({command: "cd /home/user/Projects/manicule && git status --short && git worktree list && bc-storage-health"})
+read({path: "~/.pi/agent/skills/bc-swarm/pi.md"})
+```
+
+If another live session overlaps, coordinate before writing. If storage health is critical or unknown, stop before launching a worktree. Otherwise, read the relevant project instructions and files, create a swarm manifest, and dispatch one worker with `worktree: true` using the documented syntax. I can’t give the exact remaining calls without those results.
+
+After the worker returns, I would validate and integrate its result, run the applicable checks, inspect the final diff, and commit only this change. I would check publish policy before pushing; if it doesn’t authorize a push, I’d ask.
+
+**Reply to the user:** I can’t apply or commit the change in this session because the required tools aren’t available.
+
+👣 Restore tool access so I can inspect, delegate, verify, and commit.
+🏁 Add glossary registry kind

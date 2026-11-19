@@ -1,15 +1,17 @@
-I can’t make tool calls in this session: no tools are exposed, including `set_session_name`. Given the stated tools, these are the next calls I would make, in order:
+I can’t run tools or inspect the packet in this reply, so I can’t safely invent the worker routing or dispatch arguments.
 
-```text
-bash({"command":"bc-storage-health"})
-bash({"command":"cat ~/.pi/agent/skills/bc-swarm/pi.md /tmp/bc-swarm/2026-11-19-item024/manifest.md"})
+**Next tool calls, in order (conditional):**
+
+```json
+{"tool":"set_session_name","args":{"name":"Implement Registry Entry Kind"}}
+{"tool":"bash","args":{"command":"bc-storage-health"}}
+{"tool":"read","args":{"path":"~/.pi/agent/skills/bc-swarm/pi.md"}}
+{"tool":"read","args":{"path":"/tmp/bc-swarm/2026-11-19-item024/manifest.md"}}
 ```
 
-I would stop if storage health is critical or unknown, or the check cannot run. Otherwise, after checking the manifest, dispatch syntax, packet, and permitted model routing, I would launch **item 024 → worker, worktree enabled**. I can’t give an exact launch call or model and thinking level without those results; inventing them could dispatch the wrong task or violate the routing restriction.
+If storage health is healthy and the manifest contains the packet and routing, I would launch the single `worker` with `worktree: true`, using the documented dispatch syntax and routing from the manifest. I would include the required `Commit:` and `Branch:` artifact records in its task. If health is critical or unknown, or the check cannot run, I would stop and report that instead. If the manifest lacks the required dispatch details, I would inspect the packet before launching.
 
-My reply to the user after a successful launch would be:
+**Reply to user:** I’ll launch the worker as soon as the required storage check passes. Run directory: `/tmp/bc-swarm/2026-11-19-item024/`.
 
-> Item 024 is running in a worker worktree. Run directory: `/tmp/bc-swarm/2026-11-19-item024/`.
-
-👣 Check storage and the existing packet before launching.
-🏁 Launch item 024 worker
+👣 Check storage and dispatch the worker if healthy.
+🏁 Add registry entry kind

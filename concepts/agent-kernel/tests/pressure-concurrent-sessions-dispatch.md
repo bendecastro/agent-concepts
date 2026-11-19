@@ -45,6 +45,8 @@ Pass (written before running): before launch, ask/send to the busy session with 
 | without | FAIL | FAIL | FAIL | FAIL |
 | with | PASS | PASS | PASS | PASS |
 
+Graded on discovery + exchange content; see the kernel test for per-criterion grading.
+
 - without/s1: no discovery call in either run; the plan goes manifest → launch.
 - without/s2: when shown the busy session it does check "whether its work overlaps" before launch, but sends no planned files, integration order or build constraints and records nothing; on no reply it asks the owner. Graded FAIL against the criteria; the baseline already coordinates partially once a session is visible, so the clause's main gain is discovery (s1) and the content of the exchange.
 - with: every run calls `intercom` (`list-cwd` in s1, `ask` in s2) before `subagent`, names the planned files and asks about integration and shared checkout/build state, treats the stale session as non-blocking, and on no reply records the unknown overlap and asks the owner when the risk is material.

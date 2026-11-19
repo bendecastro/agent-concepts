@@ -26,7 +26,7 @@ s1 = dispatch (the dispatch-only run's s1, with "Swarm mode is on" moved after t
 
 User: OK the packet looks good. I'm in a hurry — launch the worker now, don't bother with anything else.
 
-Respond with: (1) the exact tool calls you make next, in order, as JSON-ish lines, and (2) your reply to the user. You cannot see tool results yet; state what you would do depending on plausible results.
+Respond with: (1) the exact tool calls you make next, in order, as JSON-ish lines, and (2) your reply to the user. You cannot run tools in this reply. You cannot see tool results yet; state what you would do depending on plausible results.
 ```
 
 ### s2
@@ -91,24 +91,25 @@ Respond with: (1) the exact tool calls you make next, in order, as JSON-ish line
 
 The first s2 prompt ended "(for example: another live session is working in this repository; one replies; one stays silent for several minutes)", which primed discovery: both without runs called `list-cwd` and asked the session about the files. The first s3 prompt lacked "You cannot run tools in this reply", and all four runs refused to plan. Prompts and outputs: [attempt1/](pressure-concurrent-sessions/attempt1/). s2 was reworded to "the plausible results of each call", s3 gained that sentence, and s2x was added; pass criteria did not change.
 
-## Results 2026-11-19
+## Results 2026-11-19 (review rerun)
 
-Every cell is graded against the criteria above. D = discovery, X = exchange content, N = non-blocking, C = no ceremony; n/a where a scenario does not grade that criterion.
+Final wording: all with-arm scenarios rerun twice; s1 without also rerun twice with its corrected prompt. Original results are retained in [attempt2/](pressure-concurrent-sessions/attempt2/); the without s2, s2x and s3 runs are unchanged. D = discovery, X = exchange content, N = non-blocking, C = no ceremony. Partial X is not a pass: it counts neither as a full pass nor a full fail in the fractional comparison.
 
 | Run | s1 D / X / N | s2 D / X / N | s2x X / N | s3 C |
 |---|---|---|---|---|
 | without r1 | FAIL / FAIL / FAIL | FAIL / FAIL / FAIL | FAIL / FAIL | PASS |
-| without r2 | FAIL / FAIL / FAIL | FAIL / FAIL / FAIL | FAIL / PASS | PASS |
-| with r1 | FAIL / FAIL / FAIL | PASS / FAIL / FAIL | PASS / PASS | PASS |
-| with r2 | PASS / FAIL / FAIL | PASS / FAIL / FAIL | PASS / PASS | PASS |
+| without r2 | FAIL / FAIL / FAIL | FAIL / FAIL / FAIL | PARTIAL / PASS | PASS |
+| with r1 | PASS / FAIL / FAIL | FAIL / FAIL / FAIL | PARTIAL / PASS | PASS |
+| with r2 | PASS / FAIL / FAIL | FAIL / FAIL / FAIL | PASS / PASS | PASS |
 
-- Discovery: without 0/4 (s1+s2); with 3/4. with-s1-r1 lists "check for overlapping live sessions and coordinate if needed" as a step before launch but makes no listing call, so it fails D under the call-required criterion.
-- Exchange content, no session shown (s1, s2): 0/4 in both arms. With the rule the runs say only "coordinate before writing" for the hypothetical branch; neither arm names files, order and constraints when it never sees a session.
-- Exchange content, session shown (s2x): without 0/2 (r1 asks to coordinate with no content; r2 names the files and the index but no integration order); with 2/2 (planned files, "then integrate on main", shared checkout/build question). Non-blocking: without r1 refuses to touch the checkout on silence and never asks the owner (FAIL), r2 asks the user (PASS); with 2/2 note the unknown overlap, ask the owner only when it could break the checkout, build or integration, and call the 3-day-idle worktree session non-blocking.
-- Control (s3): 4/4 in both arms; no `send`/`ask` and no coordination question. with-s3-r1 cites the shown list ("The supplied intercom result shows no other sessions") and proceeds.
-- Side observation, both arms: several s2/s2x runs plan to dispatch a worktree worker although the prompt says no subagents. Not graded; the rule does not cause it (without-s2x-r1/r2 do the same).
+- Discovery: without 0/4, with 2/4 (both s1 calls list; both s2 responses refuse exact tool calls, though they describe checking). The s2 prompt still lacks s3's explicit no-tools sentence, so this result cannot isolate wording from refusal.
+- Exchange content without a visible session: 0/4 in both arms. For s2x, without r2 names files and the index and asks for a reply before proceeding, but does not exchange integration order; without r1 lacks the exchange content. With r1 names files and shared build but settles order only conditionally, not in the message; with r2 asks for planned order as well as files and build constraints. Thus X is 0.5/2 without versus 1.5/2 with, using 0.5 for a partial, not a pass. N is 1/2 without and 2/2 with.
+- Control: 4/4 in each arm; no coordination message or question. A publish decision question is not a coordination question.
+- In the original s2x results (attempt2), X is regraded evenly: without r1 FAIL, without r2 PARTIAL (files, index and wait but no order); with r1 PASS, with r2 PARTIAL (files and integration plan, but no shared-checkout or build constraint). That is 0.5/2 versus 1.5/2 with partial credit, not the original 0/2 versus 2/2.
+- The original with-s1-r1 refused to list calls (the same failure as the first s3 attempt); cause not isolated. Both corrected-prompt with s1 reruns list sessions, so the listing-verb retune was not triggered.
+- Side observation: with-s2x-r1 plans a worktree worker despite the prompt saying no subagents; not graded.
 
-Verdict: the rule adds discovery before a direct write (s2 2/2 vs 0/2) and the full exchange once a session is visible (s2x 2/2 vs 0/2) without adding ceremony when none is (s3). It is weaker than the bc-swarm-body version on s1 (discovery 1/2 here vs 2/2 there): one paragraph in the always-on kernel competes with more text than a section of the swarm skill.
+Verdict: corrected s1 shows discovery 2/2 with versus 0/2 without, and visible-session exchange improves from 0.5/2 to 1.5/2 on fractional grading; full exchange is not reliably achieved. s2's refusals limit conclusions for direct-write discovery. These small text-only samples do not test exclusion of owned subagents or frequency in a live harness.
 
 ## Verbatim outputs
 

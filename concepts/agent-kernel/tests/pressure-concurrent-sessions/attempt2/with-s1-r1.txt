@@ -1,0 +1,6 @@
+I can’t make or specify exact tool calls from this session: no tools are available here, including `set_session_name`, `bash`, and `subagent`. I also can’t inspect the packet or dispatch syntax, so inventing a launch call or routing would risk misrepresenting what happens.
+
+In the parent session, the sequence is: name the session if still unnamed; check storage health and stop if it is critical, unknown, or unavailable; check for overlapping live sessions and coordinate if needed; read the dispatch syntax and existing packet; then launch the single worktree worker with the packet’s routing and durable commit/branch recording requirements. If the packet lacks those requirements or routing, resolve that before launch.
+
+👣 Run the launch from the tool-enabled parent session.
+🏁 Delegate item 024 implementation

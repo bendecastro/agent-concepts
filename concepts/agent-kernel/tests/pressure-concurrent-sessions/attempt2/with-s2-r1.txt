@@ -1,0 +1,17 @@
+I can’t provide exact, executable tool calls: this session exposes no tools, including `set_session_name`, and I can’t inspect the swarm dispatch syntax or the repository. The earlier file contents are also not present here.
+
+The next calls would be, schematically:
+
+```text
+set_session_name("Add Glossary Registry Kind")  // unavailable here
+intercom({action: "list"})                      // check live sessions before writing
+bash("git -C /home/user/Projects/manicule worktree list; git -C /home/user/Projects/manicule status --short")
+bash("bc-storage-health; cat ~/.pi/agent/skills/bc-swarm/pi.md")
+```
+
+If another session overlaps, I’d coordinate before writing. If storage health fails or is unknown, I’d stop. Otherwise, I’d use the documented dispatch syntax to create a manifest and launch one worktree worker for the glossary change, then integrate its verified result, run `npm run gen` and appropriate checks, inspect the diff, and commit only the requested changes. I can’t specify those later calls exactly without the dispatch documentation and results.
+
+No changes or commit have been made.
+
+👣 Please provide a session with the named tools enabled.
+🏁 Add glossary registry kind

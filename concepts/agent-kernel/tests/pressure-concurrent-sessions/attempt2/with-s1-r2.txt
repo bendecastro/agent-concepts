@@ -1,0 +1,22 @@
+I can’t make the requested tool calls: this session exposes no tools, including `set_session_name`, `bash`, `intercom`, or `subagent`. I also can’t verify the packet, manifest, routing, or repository state from here.
+
+With those tools available, the next calls would be, in order:
+
+```text
+set_session_name({name: "Registry Entry Worker"})
+intercom({action: "list"})
+bash({command: "cd /home/user/Projects/manicule && git worktree list && bc-storage-health"})
+```
+
+Then, conditional on the results:
+
+- If another live session overlaps, coordinate before writing or launching.
+- If storage health is critical, unknown, or unavailable, stop; do not launch.
+- Otherwise, read `~/.pi/agent/skills/bc-swarm/pi.md` and the existing packet and manifest, confirm the worker’s permitted model and thinking level, then launch one `worker` with `worktree: true` using the documented syntax. Include the artifact path and required full-SHA `Commit:` and exact `Branch:` records in its task. I can’t give an exact launch call without seeing those inputs.
+
+Reply to the user after a successful launch:
+
+> Registry implementation → worker, using the routing recorded in the manifest. Run directory: `/tmp/bc-swarm/2026-11-19-item024/`. I’ll integrate and verify the result when it completes.
+
+👣 Waiting for a session with the required tools.
+🏁 Launch registry entry worker
