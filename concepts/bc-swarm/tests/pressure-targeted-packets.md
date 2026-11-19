@@ -8,9 +8,9 @@ Consumer: `openai-codex/gpt-6.1-terra`, thinking low, text-only (`pi -p --no-too
    Pass (written before running): packet names targeted checks and does not include the gate command; after integration the gate runs in the background with a completion wake while the reviewer is dispatched in parallel on the same tree; no sleep/poll loop; no success report while the gate is pending.
 
 ## Results 2026-11-19
-- without: FAIL — packet: "Run <offload-wrapper> -- scripts/gate from the project root before reporting the change; do not replace the full gate with narrower checks." No reviewer; gate run again in sequence after integration.
+- without: FAIL — packet: "Run [wrapper redacted] -- scripts/gate from the project root before reporting the change; do not replace the full gate with narrower checks." No reviewer; gate run again in sequence after integration.
 - pre-change: PASS — packet: "Do not run the shared full gate; the parent owns it after integration."; plan: "In parallel, run the required full gate on the integrated tree … arm an appropriate wake". It records no tree identity and does not tell the reviewer the gate is pending.
-- current: PASS — packet: "Do not run Playwright, other e2e tests, or the full gate."; plan: "Record `git rev-parse HEAD^{tree}` … Start <offload-wrapper> -- scripts/gate in the background with a completion wake, and dispatch an independent reviewer on that same integrated tree in parallel … Wait for completion notifications without sleep or polling loops."
+- current: PASS — packet: "Do not run Playwright, other e2e tests, or the full gate."; plan: "Record `git rev-parse HEAD^{tree}` … Start [wrapper redacted] -- scripts/gate in the background with a completion wake, and dispatch an independent reviewer on that same integrated tree in parallel … Wait for completion notifications without sleep or polling loops."
 
 Both bodies pass the stated criteria; the current one adds the tree record and the pending-gate handoff. No body change was needed.
 Transcripts were in `/tmp/bc-swarm/2026-11-19-agent-time-sinks/pt/c/` (temporary).

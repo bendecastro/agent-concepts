@@ -75,11 +75,11 @@ class PersonalTermsTests(unittest.TestCase):
     def test_transcripts_skipped_and_mixed_results_warn(self):
         self.deny("fakehost\n")
         self.track("concepts/agent-kernel/tests/pressure-concurrent-sessions/with.txt", "fakehost\n")
-        self.track("concepts/bc-swarm/tests/pressure-targeted-packets.md", "fakehost\n")
+        self.track("concepts/agent-kernel/tests/pressure-full-suite-owner.md", "fakehost\n")
         issues = self.check()
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0].severity, "WARN")
-        self.assertIn("pressure-targeted-packets.md", issues[0].message)
+        self.assertIn("pressure-full-suite-owner.md", issues[0].message)
 
     def test_mixed_smoke_result_warns(self):
         self.deny("fakehost\n")

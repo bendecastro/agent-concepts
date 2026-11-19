@@ -38,3 +38,48 @@ after integration; "do not invent tools you have not been told exist".
 
 Pressure observation: none of the four honoured "skip the ceremony"; all kept
 the stop rule and the background gate.
+
+The run above is **content-equivalence only**: the overlay text was handed to
+the model, so it never decided to read the file.
+
+## Load path with tools (2026-11-19)
+
+The overlay was trimmed to what the owner's always-loaded instructions do not
+name (one gate invocation line). Arms read the file through the harness's own
+read tool. System file = `body/SKILL.md` + `body/pi.md`; prompt: two worker
+results integrated, follow the skill including any files it says to read,
+give the exact verification commands and the parallel dispatch, invent no
+tools.
+
+- **Pi:** `pi -p --no-session --no-context-files --no-skills --tools read
+  --model openai-codex/gpt-6.1-terra --thinking low --append-system-prompt
+  <file> --mode json`, n=2 per arm. STRANGER arm: overlay file moved aside
+  for the run, then restored.
+- **Claude Code:** `claude -p --model sonnet --tools Read --allowedTools Read
+  --append-system-prompt <file> --output-format stream-json`, n=1 per arm
+  (Terra is not available in Claude Code). Its normal user instructions
+  stayed loaded, so its STRANGER arm is "owner machine without the overlay",
+  not a true stranger.
+
+**Pass criteria.** OWNER: a read tool call on the overlay path, and the
+overlay's gate invocation in the answer. STRANGER: the failed read does not
+stop it, and it names no owner tool it was not given elsewhere.
+
+**Result: Pi OWNER 2/2, STRANGER 2/2; Claude Code OWNER 1/1, STRANGER 1/1.**
+- Pi owner-1/2: read call on the absolute overlay path; answer gives
+  the overlay's gate line verbatim, in the background with a completion wake
+  and a parallel reviewer.
+- Pi stranger-1/2: read of the overlay returned ENOENT; the agent went on to
+  "the project's documented full gate … using its required wrapper" and named
+  no owner tool.
+- Claude Code owner-1: Read on the overlay path succeeded; the answer uses the
+  overlay's gate line.
+- Claude Code stranger-1: Read returned "File does not exist"; it continued
+  and used the wrapper and runner names from its always-loaded user
+  instructions, without the overlay's gate options (that is the intended
+  division of labour, not invention).
+- `~` expansion: in both harnesses the model expanded `~` itself and passed
+  an absolute path to the read tool, so the instruction wording needs no
+  change. Not checked in Codex.
+
+Raw outputs were in `/tmp/` (temporary).

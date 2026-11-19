@@ -5,7 +5,7 @@ description: Aggressively delegate investigation, analysis, and review to parall
 
 # bc-swarm
 
-If `~/.config/agent-concepts/overlays/bc-swarm.md` exists, read it: it names this machine's tools for the generic steps below and overrides tool names only, never behaviour.
+If `~/.config/agent-concepts/overlays/bc-swarm.md` exists, read it: it supplies tool names for the generic steps below that this machine's agent instructions do not already name. It never changes behaviour, and the project's own instructions take precedence.
 
 Go wide. While this skill is active, delegating is the default and **keeping** work is what needs a reason.
 

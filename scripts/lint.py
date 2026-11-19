@@ -633,7 +633,6 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None) -> None:
         mixed_results = {
             "concepts/agent-kernel/tests/codex-smoke-2026-06-12.md",
             "concepts/agent-kernel/tests/pressure-full-suite-owner.md",
-            "concepts/bc-swarm/tests/pressure-targeted-packets.md",
         }
         severity = "WARN" if (len(parts) > 3 and parts[0] == "concepts" and parts[2] == "body") or name in mixed_results else "ERROR"
         path = root / name

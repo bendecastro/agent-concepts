@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # check 4 accepted gap; 2026-10-31 todo/manifest scenario PASS (run 2); 2026-11-19 targeted packets + background gate PASS on Terra low (without FAIL)
+test_status: partial # check 4 accepted gap; 2026-10-31 todo/manifest scenario PASS (run 2); 2026-11-19 targeted packets + background gate PASS on Terra low (without FAIL); private overlay PASS (content + tools-enabled load path, Pi n=2, Claude Code n=1)
 tested: 2026-11-19
 deployed: 2026-08-18
 ---
@@ -20,6 +20,7 @@ the results.
 ## Design decisions
 
 - **Targeted-check packets and a background full gate (2026-11-19).** Worker packets name the targeted checks (test files or IDs) and never paste the full gate; after integration the parent starts the gate in the background with a wake and dispatches the reviewer on the same tree in parallel, with no sleep/poll loops. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in the Manicule project) and the owner's decisions of that date. `dispatching-parallel-agents` already says one full verification on the integrated change and was not changed.
+- **Owner tool names in a private overlay (2026-11-19).** The body names no owner tools; it reads the optional overlay `~/.config/agent-concepts/overlays/bc-swarm.md`, which supplies only names the machine's always-loaded instructions lack. Convention and precedence: AGENTS.md Conventions, "Private skill overlays". Test: `tests/pressure-private-overlay.md`.
 - **One concept, not two.** Aggression and durability share a single
   trigger moment — you are about to fan out — and splitting them now would
   buy a composition burden with no second consumer. The durability contract
