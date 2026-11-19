@@ -92,6 +92,7 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
   override: `AGENT_CONCEPTS_PERSONAL_TERMS`; format: [example](docs/personal-terms.example.txt)),
   as an ERROR (concept bodies and mixed pressure-test results warn instead); without the file the check is skipped. Captured evidence under `docs/research/raw/**`, `docs/research/*/evidence/**`, and `concepts/agent-kernel/tests/pressure-concurrent-sessions/**` is skipped because it is immutable. Pushed history is left alone; current
   files get fixed.
+- **Private skill overlays.** A public skill that needs the owner's specifics describes each step generically and adds one line: if `~/.config/agent-concepts/overlays/<skill-name>.md` exists, read it; it overrides tool names only, never behaviour. The overlay is private and machine-local (never committed here; no template needed — it is plain prose), and every tool must work when it is absent: deploy symlinks only `body/`, and the skill's generic wording is the stranger's complete instruction. Why: one home per skill for the specifics keeps the public body copyable while the owner's agents, reading the same live symlink, still get their tool names.
 - `log.md` is a historical journal: its stale paths are exempt because they were accurate when
   written, but personal terms are not — scrub them like any other file.
 - No hardcoded home paths anywhere — `~` or `$HOME` only; symlinks relative.

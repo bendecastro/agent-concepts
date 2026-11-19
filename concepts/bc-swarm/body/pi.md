@@ -12,7 +12,7 @@ ${TMPDIR:-/tmp}/bc-swarm/<YYYY-MM-DD>-<slug>/
 
 ## Fan-out
 
-Run `bc-storage-health` before multi-worker launch or managed worktree creation; stop/report on critical or unavailable health per [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety). Why: harness-managed isolation still allocates storage.
+Run the project's or machine's storage health check, if one exists (check the project's and machine's agent instructions and docs), before multi-worker launch or managed worktree creation; stop/report on critical or unknown health, or if an existing check cannot run, per [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety). Why: harness-managed isolation still allocates storage.
 
 ```js
 subagent({

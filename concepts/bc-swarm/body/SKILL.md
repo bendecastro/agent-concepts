@@ -5,6 +5,8 @@ description: Aggressively delegate investigation, analysis, and review to parall
 
 # bc-swarm
 
+If `~/.config/agent-concepts/overlays/bc-swarm.md` exists, read it: it names this machine's tools for the generic steps below and overrides tool names only, never behaviour.
+
 Go wide. While this skill is active, delegating is the default and **keeping** work is what needs a reason.
 
 It composes `dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
@@ -66,7 +68,7 @@ After applying a valid patch, verify the resulting diff/tree before any commit o
 
 **Parent integration on receipt.** On the first turn a completed worktree result is in front of the parent — a completion wake, status poll, or user report — apply its validated handoff patch or integrate its validated full commit range before any other dispatch. This is completion-wake behavior, never a reason to block or wait on the launch turn; rule 2 remains intact.
 
-**Full gate on the integrated tree.** After integrating, start the project's full gate (for example `bc-offload --budget 300 -- scripts/gate`) in the background with a completion wake, and dispatch the independent reviewer on the same tree in parallel; record the tree SHA (`git rev-parse HEAD^{tree}`) and the gate result. The reviewer reports the gate as pending; the parent combines the gate result with the review verdict before landing. Never wait with sleep or poll loops. Why: the gate and the review are independent, so running them in sequence doubles the wait.
+**Full gate on the integrated tree.** After integrating, start the project's full gate (through the project's or machine's offload/heavy-run wrapper if its agent instructions name one) in the background with a completion wake, and dispatch the independent reviewer on the same tree in parallel; record the tree SHA (`git rev-parse HEAD^{tree}`) and the gate result. The reviewer reports the gate as pending; the parent combines the gate result with the review verdict before landing. Never wait with sleep or poll loops. Why: the gate and the review are independent, so running them in sequence doubles the wait.
 
 Artifacts are scratch, not knowledge. Anything worth keeping gets explicitly promoted into the repo, a concept, or a note; the run directory is disposable by design. For worktree workers, the Git commit and harness patch are the durable handoff records used before that promotion.
 
@@ -93,14 +95,14 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
   `Commit: <full 40-hex SHA> <subject>` and `Branch: <exact branch>` on their own,
   start-of-line records. If you made no commit, write `Commit: none` and `Branch: none`.
   The returned summary is not the only copy of those records.
-- For implementation/testing: follow kernel Storage safety; use `bc-pytest` (or the
-  selected interpreter with `"$HOME/Sync/Scripts/bin/utils/bc-pytest"`), never custom
+- For implementation/testing: follow kernel Storage safety; run pytest through
+  <the project's or machine's guarded pytest runner, if one exists>, never custom
   `--basetemp`. Run only these targeted checks: <test files or IDs, typecheck, lint>.
   No browser/e2e tests and no full gate; the parent runs it on the integrated tree.
   Why: fresh workers must not multiply full suites or unmanaged test roots.
 ```
 
-Fill the targeted checks with named test files or IDs; never paste the project's full gate into a packet, even when its validation page lists the gate. Why: a pasted gate is a full run per worker. The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
+Fill the runner slot from the project's and machine's agent instructions and docs (drop it to plain pytest only when none exists). Fill the targeted checks with named test files or IDs; never paste the project's full gate into a packet, even when its validation page lists the gate. Why: a pasted gate is a full run per worker. The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
 
 **Test levels travel with the code** ([tdd Test levels](../../tdd/body/SKILL.md#test-levels)):
 
