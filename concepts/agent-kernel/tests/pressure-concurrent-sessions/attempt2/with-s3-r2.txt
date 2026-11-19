@@ -3,21 +3,21 @@ No tool calls are available in this session, including `set_session_name`. I can
 **Planned calls, in order** (assuming the named tools are available):
 
 ```text
-bash({"command":"cd /home/user/Projects/manicule && git status --short && git diff -- README.md && readlink -f README.md && sed -n '1,24p' README.md"})
+bash({"command":"cd /home/user/Projects/<project-a> && git status --short && git diff -- README.md && readlink -f README.md && sed -n '1,24p' README.md"})
 ```
 
 If `README.md` has unrelated changes or the typo differs from the supplied context, stop and inspect before editing. Otherwise:
 
 ```text
-edit({"path":"/home/user/Projects/manicule/README.md","oldText":"regsitry","newText":"registry"})
-bash({"command":"cd /home/user/Projects/manicule && git diff --check && git diff -- README.md && git status --short"})
+edit({"path":"/home/user/Projects/<project-a>/README.md","oldText":"regsitry","newText":"registry"})
+bash({"command":"cd /home/user/Projects/<project-a> && git diff --check && git diff -- README.md && git status --short"})
 ```
 
 If the diff contains only the requested correction:
 
 ```text
-bash({"command":"cd /home/user/Projects/manicule && git add -- README.md && git diff --cached --check && git diff --cached -- README.md && git commit -m 'Fix registry typo in README' && git status --short"})
-bash({"command":"cd /home/user/Projects/manicule && \"$AGENT_CONCEPTS/scripts/publish-check.py\""})
+bash({"command":"cd /home/user/Projects/<project-a> && git add -- README.md && git diff --cached --check && git diff --cached -- README.md && git commit -m 'Fix registry typo in README' && git status --short"})
+bash({"command":"cd /home/user/Projects/<project-a> && \"$AGENT_CONCEPTS/scripts/publish-check.py\""})
 ```
 
 The publish-check invocation is provisional: I would first check its documented arguments, and push only if its result authorizes this repository and change. Otherwise, I would ask whether to push.

@@ -31,8 +31,8 @@ Workflow 55d098ca-52f8-45f7-a9b1-5301b06f0e82.
 
 ## Notable single-advisor findings worth relaying
 
-- **`map.md` is dead weight** (opus, corroborated in part by grok): it exists in all nine vaults from `scaffold.py:262-292`, but writes targets as backticked code spans, so `without_code()` (`wiki_lint.py:23-40`) masks them before `links()` (`:71-79`). It contributes zero graph edges and lint never validates it. image-maze's map lists architecture-runway rounds 4-7 while 8 and 9 exist on disk; Music's is still the scaffold default and omits 34 of its 69 pages. Sol did not address `map.md` at all.
-- **The prescribed first move is the bug** (grok): `scaffold.py:163` sends agents to `index.md`, and `run-promotion.sh:122` tells the writer to read `AGENTS.md`, `index.md`, and `log.md` — image-maze's log is 49,767 tokens.
+- **`map.md` is dead weight** (opus, corroborated in part by grok): it exists in all nine vaults from `scaffold.py:262-292`, but writes targets as backticked code spans, so `without_code()` (`wiki_lint.py:23-40`) masks them before `links()` (`:71-79`). It contributes zero graph edges and lint never validates it. project B's map lists architecture-runway rounds 4-7 while 8 and 9 exist on disk; Music's is still the scaffold default and omits 34 of its 69 pages. Sol did not address `map.md` at all.
+- **The prescribed first move is the bug** (grok): `scaffold.py:163` sends agents to `index.md`, and `run-promotion.sh:122` tells the writer to read `AGENTS.md`, `index.md`, and `log.md` — project B's log is 49,767 tokens.
 - **qmd's own docs are optimistic** (opus): `concepts/qmd/body/SKILL.md` (lines 29-33) advertises `--no-rerank ≈ 20s` against a measured 67.1s.
 - **Catalog omissions should be fatal, zero-inbound advisory** (sol): a clean split between the metric that must hold and the one that is only a smell.
 

@@ -11,7 +11,7 @@ I can’t make these calls from this session: no tools are available, including 
 
 **Reply if the active session is silent and shared-checkout safety remains unclear:**
 
-“`manicule-tests` is active in the same checkout and has not replied. Changing the registry or running generation could interfere with its work.
+“`<project-a>-tests` is active in the same checkout and has not replied. Changing the registry or running generation could interfere with its work.
 
 1. **Wait for its reply** (recommended) — avoids disrupting its checkout or build.
 2. Proceed despite the unknown overlap.

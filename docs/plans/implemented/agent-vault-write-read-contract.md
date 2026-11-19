@@ -13,7 +13,7 @@ contradiction rerun brought the combined grade to **PASS 5/5**. This plan is com
 |---|---|---|
 | W1 scaffold mints the read path | **done** | `43072a4`, hardened by `0423ada`; pressure gate passes 3/3 ([results](../../../concepts/bc-init-agent/tests/pressure-read-path-results-2026-08-29.md)) |
 | W2.1 scaffold emits `## [__DATE__]` | **done** | `43072a4`; generated vault lints to a valid range |
-| W2.2 normalize five existing logs | **done** | one commit in each of Scripts, sql, codebase-design, CV, image-maze; heading counts unchanged, diffs heading-only |
+| W2.2 normalize five existing logs | **done** | one commit in each of Scripts, sql, codebase-design, CV, project B; heading counts unchanged, diffs heading-only |
 | W2.3 lint fails closed on `invalid` | **done** | `56cc7bd`; all eight live vaults still exit 0, a pre-normalization backlog now exits 1 |
 | W3 search corpus boundary | **done** | owner chose **tracked-only** on 2026-08-29; boundary is recorded in `bc-wiki-maintain` and both canonical instruction copies; untracked-page regression passes |
 | W4 non-lexical ranker signal | **done — null result** | 2026-08-30 round-two report: direct BM25 3/20 misses, 174.88 median; page-kind candidate 2/20, 179.88 median; overlapping Wilson intervals make the one-miss delta noisy, so production remains lexical |
@@ -93,13 +93,13 @@ independently re-run.
 | `codebase-design/.bc-agent` | `2026-06-28..2026-07-14` | 18 | 1 | 17/18 | — |
 | `sql/.bc-agent` | **`invalid`** | 1 | 1 | 0/1 | — |
 | `Work/CV/.bc-agent` | `none` | 0 | 0 | 0/10 | — |
-| `.../image-maze/.bc-agent` | `none` | 0 | 0 | 0/26 | 155 |
+| `.../project-b/.bc-agent` | `none` | 0 | 0 | 0/26 | 155 |
 
 Three states:
 
 - **Blocked now (2):** Scripts and sql sit at `invalid` — no datable heading in the backlog at
   all. Scheduled promotion cannot run. Scripts has twelve entries stranded since June.
-- **Latent (2):** CV and image-maze have 10 and 26 unbracketed headings but empty backlogs, because
+- **Latent (2):** CV and project B have 10 and 26 unbracketed headings but empty backlogs, because
   a promotion commit on 2026-08-25 cleared them. Their next log entry moves them to `invalid`.
 - **Working as designed (1):** codebase-design's single undatable heading narrows its range and
   still reaches the classification gate. No action needed beyond normalization.
@@ -112,7 +112,7 @@ Before W6, the read-path rollout was also uneven. All eight vault `AGENTS.md` fi
 four (Scripts, codebase-design, sql, CV) carry the one-line form with no empty-result or hub-page
 rules. And **before W6, all eight root `AGENTS.md` files routed a cold agent to `index.md` first** —
 `Music/AGENTS.md:9`, `Scripts/AGENTS.md:5`, `Homeflix/AGENTS.md:11`, `homeflix-prod/AGENTS.md:12`,
-and `:7` in each of CV, sql, codebase-design, and image-maze. A fresh agent pays the old cost
+and `:7` in each of CV, sql, codebase-design, and project B. A fresh agent pays the old cost
 before it reaches the vault file that replaced it.
 
 ## Scope
@@ -193,8 +193,8 @@ say so:
 1. **Scaffold emits `## [__DATE__]`** (`scaffold.py:307` and `:632`). Safe alone; improves every
    new vault.
 2. **Normalize the existing logs.** Wrap the date token in Scripts, sql, codebase-design, CV, and
-   image-maze, each committed in its own repo. Safe alone; unblocks Scripts and sql. Note that
-   CV and image-maze headings carry suffixes (`## 2026-07-31 — Pipeline built`); the detector
+   project B, each committed in its own repo. Safe alone; unblocks Scripts and sql. Note that
+   CV and project B headings carry suffixes (`## 2026-07-31 — Pipeline built`); the detector
    accepts `## [YYYY-MM-DD]` followed by whitespace, so wrap the date and keep the suffix — do not
    flatten to date-only lines.
 3. **`wiki_lint.py` exits nonzero when promotion is required and the range is `invalid`** (today
@@ -318,7 +318,7 @@ is live.
 ## Non-goals
 
 - **Page-size, section, or corpus caps.** Growth is unbounded on both sides and the reader loads
-  every eligible page per query. At 54 pages (Scripts) this is free; at 155 (image-maze) it is
+  every eligible page per query. At 54 pages (Scripts) this is free; at 155 (project B) it is
   still cheap. Revisit when a vault crosses a few hundred pages.
 - **Semantic deduplication or a current-state metadata schema.** The maintainer explicitly refuses
   invented frontmatter (`SKILL.md:176-178`); overturning that needs its own plan and evidence.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Round-two, read-only retrieval benchmark for the image-maze agent vault.
+"""Round-two, read-only retrieval benchmark for an agent vault.
 
 The vault is a positional argument so this harness is portable. It builds the proposed
 catalog in /tmp, runs only read-only qmd searches, and writes a separate round-two report.
@@ -822,7 +822,7 @@ def render_report(
     original_label = ORIGINAL_QUERIES_PATH.relative_to(ROOT).as_posix()
     vault_display = display_path(vault)
     lines = [
-        "# Image-maze retrieval benchmark — round two",
+        f"# Retrieval benchmark — round two (`{collection}` collection)",
         "",
         f"Run date: {dt.date.today().isoformat()}. The target vault was read-only; no qmd index or vault file was mutated.",
         "",
@@ -1021,8 +1021,8 @@ def render_report(
             "",
             "```sh",
             "python3 concepts/bc-wiki-maintain/tests/run_retrieval_benchmark_round2.py \\",
-            '  "<image-maze-project>/.bc-agent" \\',
-            "  --collection image-maze",
+            '  "<project>/.bc-agent" \\',
+            f"  --collection {collection}",
             "```",
             "",
             "The script takes the vault path as an argument, accepts `--collection` and `--qmd-bin`, writes the catalog under `/tmp`, "
@@ -1060,7 +1060,7 @@ def run(args: argparse.Namespace) -> None:
     repo = repo_root(vault)
     pages = eligible_pages(vault, repo)
     if len(pages) != 155:
-        raise RuntimeError(f"expected image-maze benchmark corpus to contain 155 eligible pages, found {len(pages)}")
+        raise RuntimeError(f"expected benchmark corpus to contain 155 eligible pages, found {len(pages)}")
     log_excerpts = log_overlap_excerpts(questions, agent_queries, pages, vault)
     search_docs = search_documents(pages)
     incoming, outgoing = graph(vault, pages)

@@ -218,7 +218,7 @@ list_file="$HOME/.config/agent-concepts/wiki-promotion-vaults.txt"
    ```
 
    One installation had `bc-wiki-maintain.timer`,
-   `bc-wiki-maintain-imagemaze.timer`, `bc-wiki-maintain-homeflix.timer`, and
+   `bc-wiki-maintain-project-b.timer`, `bc-wiki-maintain-homeflix.timer`, and
    `bc-wiki-maintain-homeflix-prod.timer`, alongside `bc-wiki-lint.timer`. That is an example,
    not a portable inventory. The batch unit, if already present, is named
    `bc-wiki-maintain-all.timer`; do not disable it as part of this step. Do not disable or pass

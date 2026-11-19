@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce the image-maze retrieval comparison without mutating the vault.
+"""Reproduce the agent-vault retrieval comparison without mutating the vault.
 
 The target vault is deliberately an argument, not a machine-specific constant.  The script
 only reads the vault and invokes read-only qmd search.  It writes the generated catalog to
@@ -431,7 +431,7 @@ def render_results(
     eligible = len(pages)
     direct = sum(1 for depth in depths.values() if depth == 1)
     within_two = sum(1 for depth in depths.values() if depth <= 2)
-    index_label = "$IMAGE_MAZE_VAULT/index.md"
+    index_label = "$VAULT/index.md"
     catalog_bytes = catalog.stat().st_size
     questions_label = QUESTIONS_PATH.relative_to(ROOT).as_posix()
     keyword_top = {}
@@ -445,7 +445,7 @@ def render_results(
     keyword_top = sorted(keyword_top.items(), key=lambda item: (-item[1], item[0]))[:5]
     sentence_top = sorted(sentence_top.items(), key=lambda item: (-item[1], item[0]))[:5]
     lines = [
-        "# Image-maze retrieval benchmark results",
+        f"# Retrieval benchmark results (`{collection}` collection)",
         "",
         "Run date: 2026-08-27. The target vault was read-only. The frozen keyword file was",
         "committed before this harness ran; see the commit record in the parent run artifact.",
@@ -544,12 +544,12 @@ def render_results(
             "",
             "## Runbook and definitions",
             "",
-            "Run from the repository root with the read-only image-maze vault path:",
+            "Run from the repository root with the read-only vault path and its qmd collection name:",
             "",
             "```sh",
             "python3 concepts/bc-wiki-maintain/tests/run_retrieval_benchmark.py \\",
-            "  \"<image-maze-project>/.bc-agent\" \\",
-            "  --collection image-maze",
+            "  \"<project>/.bc-agent\" \\",
+            f"  --collection {collection}",
             "```",
             "",
             "The harness reads the question/gold table from `concepts/bc-wiki-maintain/tests/retrieval-questions.md` "
@@ -560,14 +560,14 @@ def render_results(
             "Exact retrieval commands issued for each question are:",
             "",
             "```sh",
-            'qmd search "<frozen keywords>" -c image-maze --format files -n 5',
-            'qmd search "<full question>" -c image-maze --format files -n 5',
+            f'qmd search "<frozen keywords>" -c {collection} --format files -n 5',
+            f'qmd search "<full question>" -c {collection} --format files -n 5',
             "```",
             "",
             "For B and D, a line is an AND match when every frozen keyword occurs as a case-insensitive whole word; "
             "an OR match requires any keyword. This is the fixed-string grep meaning implemented by the harness "
             "with word boundaries so `Git` does not match the middle of `digital`. A grep hit requires the exact "
-            "gold relative path in a matching line. qmd rank is the first returned `qmd://image-maze/<path>` row "
+            f"gold relative path in a matching line. qmd rank is the first returned `qmd://{collection}/<path>` row "
             "whose path equals the gold path (with the qmd space-to-hyphen alias allowed); absence from five rows "
             "is a miss.",
             "",
@@ -588,7 +588,7 @@ def render_results(
             "whether a terse row is enough; the reasons and structural reachability make that disagreement visible.",
             "- B/D use frozen keywords chosen before retrieval, but the benchmark does not measure an interactive "
             "agent's ability to refine a miss. Allowing refinement after each result would be a different protocol.",
-            "- qmd's result ranking can change if its index becomes stale. This run uses the installed `image-maze` "
+            f"- qmd's result ranking can change if its index becomes stale. This run uses the installed `{collection}` "
             "collection and records the exact command; no qmd update/embed mutation was performed.",
             "- The catalog summary extractor is deterministic and intentionally conservative. Its generated rows are "
             "a benchmark representation, not evidence that a production W1 implementation should copy every parser detail.",
@@ -597,7 +597,7 @@ def render_results(
             "",
             f"- `{questions_label}`: the pre-registered table supplies each question and gold path; its vault note says "
             '"155 eligible pages (tracked Markdown, `temp/` excluded)."',
-            f"- `{index_label}`: the incumbent source begins `# image-maze Agent Wiki` and its navigation begins at "
+            f"- `{index_label}`: the incumbent source begins with its `# … Agent Wiki` title and its navigation begins at "
             '`## Start here`; the byte count and graph counts above were measured from this exact file and its linked pages.',
             f"- `{catalog}`: generated scratch artifact with the seven columns specified by the benchmark; its byte "
             "count and row contents are the source for the catalog measurements above.",
@@ -616,7 +616,7 @@ def run(args: argparse.Namespace) -> None:
     repo = repo_root(vault)
     pages = eligible_pages(vault, repo)
     if len(pages) != 155:
-        raise RuntimeError(f"expected image-maze benchmark corpus to contain 155 eligible pages, found {len(pages)}")
+        raise RuntimeError(f"expected benchmark corpus to contain 155 eligible pages, found {len(pages)}")
     _page_paths, incoming, outgoing = graph(vault, pages)
     depths = index_reachability(vault, outgoing)
     index_path = (vault / "index.md").resolve()

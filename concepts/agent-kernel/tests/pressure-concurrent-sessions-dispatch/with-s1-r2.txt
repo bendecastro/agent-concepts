@@ -4,7 +4,7 @@
 1. set_session_name({name: "Item 024 Registry Update"})
    // If available; no such tool is exposed in this session.
 
-2. intercom({action: "list-cwd", cwd: "/home/user/Projects/manicule"})
+2. intercom({action: "list-cwd", cwd: "/home/user/Projects/<project-a>"})
    // If another session is live, contact it before dispatch:
 3. intercom({action: "ask", /* session identifier from result */,
    message: "I plan a worktree worker for src/registry.ts and scripts/gen-registry.ts, then integration into main. Are you touching these files or sharing checkout/build constraints?"})

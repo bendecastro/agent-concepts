@@ -133,7 +133,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   result inspectable and reversible without a human approval queue.
 - **A promotion commit considers the whole current heading list.** The detector's unpromoted set
   is every `##` heading not present in `log.md` at the last dedicated promotion commit. Live
-  first runs showed the failure: Homeflix public filed 16 lines from 55 headings, image-maze
+  first runs showed the failure: Homeflix public filed 16 lines from 55 headings, project B
   filed one open question from 26, and the wrapper committed anyway, so the next night saw
   `PROMOTION_REQUIRED=0`. The wrapper now refuses that commit unless a same-pass JSONL
   classification covers every listed heading (`promote` / `skip` + reason / `conflict`). The
@@ -230,7 +230,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 - `concepts/teach/` — the hosted learning owner and explicit adapter path map whose evidence and
   review state this maintenance pass must not fabricate or advance.
 - `tests/retrieval-results.md` (commit `166437c3c0919862a41379bfc1f4dd253cf7db62`) — the
-  pre-registered image-maze comparison that exposed the sentence-versus-keyword query-shape
+  pre-registered project B comparison that exposed the sentence-versus-keyword query-shape
   failure: 17/20 full-sentence misses versus 5/20 keyword misses, with Wilson intervals recorded
   in the report.
 - `tests/retrieval-results-round2.md` (commit `a09d3e38469ea5cd2f460aa5319eaace29a84b71`) —

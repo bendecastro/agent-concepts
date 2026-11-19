@@ -83,7 +83,7 @@ Reframed current `bc-init-agent` docs away from one project name and toward the 
 Made the `.bc-agent/` Obsidian-vault claim concrete: `scaffold.py` now seeds minimal stable `.obsidian/app.json`, `core-plugins.json`, and `appearance.json` while avoiding noisy user-specific workspace/plugin state. Updated skill/concept/test/index wording and verified rerun idempotency preserves existing Obsidian files.
 
 ## [2026-06-26] implement | bc-init-agent wiki archetypes
-Added archetype selection to `bc-init-agent`, based on the user's real wiki patterns: code/project execution (`image-maze`), ops/system planning (`Music/.ai/wiki`), learning/teach-backed study, knowledge graph (`<owner-wiki>`), and hybrid. `scaffold.py` now supports `--archetype code|ops|learning|knowledge|hybrid` overlays; tests/index/concept notes record the new pending pressure scenarios.
+Added archetype selection to `bc-init-agent`, based on the user's real wiki patterns: code/project execution (`project-b`), ops/system planning (`Music/.ai/wiki`), learning/teach-backed study, knowledge graph (`<owner-wiki>`), and hybrid. `scaffold.py` now supports `--archetype code|ops|learning|knowledge|hybrid` overlays; tests/index/concept notes record the new pending pressure scenarios.
 
 ## [2026-06-26] implement | bc-init-agent adaptive onboarding
 Updated `bc-init-agent` from blind scaffold-first behavior to recon-first adaptive onboarding: inspect git/GitHub/project/docs/build/deploy state, grill differently for empty/active/messy projects, propose an init or migration plan before writing, and keep file moves as separately approved migration work. Updated concept notes, index status, and pending pressure scenarios.
@@ -173,7 +173,7 @@ Counter-critique (via second agent) identified the in-flight-edit risk: agents c
 ## [2026-06-12] deploy | agent-kernel delta → Claude Code user CLAUDE.md
 First exercise of the kernel's delta-injection deploy policy: diffed the kernel against Claude Code's built-in prompt; five of seven sections confirmed redundant and not injected. Injected the two genuine deltas into ~/.claude/CLAUDE.md under a DERIVED marker: publish-policy pointer (Claude Code otherwise never uses the pushes publish.yaml grants in Scripts/Music/Wiki) and concepts-catalog pointer (project-scoped memory doesn't reach other repos). Off-vault clause included. CLAUDE.md is Syncthing-synced, not git-tracked.
 
-## [2026-06-12] ingest | image-maze SEO prompts → seo concept
+## [2026-06-12] ingest | project B SEO prompts → seo concept
 Snapshotted the user's seo-agent.md + image-seo-agent.md + README into raw/ and adapted them (verbatim-preserving) into concepts/seo: SKILL.md (strategist, with Agent Skills frontmatter) + IMAGE-SEO.md (vision-required specialist; owns the handoff field lists). Research pass: conflicting 2026 CWV blog claims validated the verify-at-runtime posture (no numbers changed); one delta added — AI-crawler access policy (training-vs-search bot split; llms.txt labeled speculative).
 
 ## [2026-06-12] test+deploy | seo concept passed 4-attack pressure test → Claude Code
@@ -252,16 +252,16 @@ those orchestrators to run-discipline→publish (behavior preserved, scenarios u
 delegation). Added `bc-grill-to-issues` (one-command interactive planner: grill→domain→PRD→
 slice, composes disciplines only) and `bc-drain-issues` (AFK executor: preflight publish-check,
 fresh-subagent-per-issue trunk-based commit/push/close, park-and-continue + circuit-breaker;
-two-file body SKILL.md + execute-issue.md). Added pipeline.md and extended image-maze
+two-file body SKILL.md + execute-issue.md). Added pipeline.md and extended project B
 planning-workflow.md (separate repo) with the execution phase. Deployed `prd-drafting`/
 `issue-slicing` Claude symlinks; held the two `bc-` orchestrators' deploy pending pressure tests.
 
 ## [2026-06-20] implement | bc-init-agent scaffolder
 Added `bc-init-agent`: a user-invoked scaffolder that stands up a repo-root `AGENTS.md` +
-`.agent/<slug>/` Obsidian-vault wiki (generalized from the image-maze vault) wired for the
+`.agent/<slug>/` Obsidian-vault wiki (generalized from the project B vault) wired for the
 grill→issues→drain loop, via a deterministic `body/scaffold.py` (23-file tree, `__SLUG__`/
 `__DATE__` substitution, clobber-guarded exit 2, root-AGENTS preserved if present). Faithful to
-image-maze's persistence model (glossary in the vault, no root CONTEXT.md); the scaffolded
+project B's persistence model (glossary in the vault, no root CONTEXT.md); the scaffolded
 `planning-workflow.md` is the adapter that redirects bc-grill-to-issues persistence and
 documents the bc-drain-issues execution phase. Offers a publish.yaml rule (confirm-then-add,
 never auto-pushed). Script checks pass; Claude symlink deployed; updated pipeline.md/index/
@@ -285,7 +285,7 @@ creates only the gaps; dry-run writes nothing. Updated SKILL/CONCEPT/scenario.
 ## [2026-06-21] implement | rename bc-grill-to-issues → bc-plan-to-issues
 Per user: renamed the planner skill. git mv concept dir + pressure test
 (pressure-plan-to-issues.md); updated the name/title/body and every cross-reference across
-concepts, index, pipeline, harnesses, scaffold.py templates, the plan doc, and image-maze's
+concepts, index, pipeline, harnesses, scaffold.py templates, the plan doc, and project B's
 planning-workflow.md adapter (separate repo). Past log entries keep the old name as history.
 The grill step itself is unchanged — only the skill name. Still deploy-held pending pressure
 test, so no symlink to migrate. Lint clean.
@@ -330,7 +330,7 @@ Research-and-file pass for a future in-house frontend-design concept. Filed to r
 Compiled `concepts/frontend-design/` fusing Anthropic's `frontend-design` SKILL.md (spine: studio voice, subject-grounding, thesis→token-plan→critique→build→critique, anti-cliché list, restraint/copy) with OpenAI's Codex `frontend-skill` (archetype checklist: landing/app-dashboard/imagery/motion/copy, hard rules, reject-these-failures, litmus checks). Lean `SKILL.md` + JIT `archetypes.md` (progressive disclosure). User curation: single aesthetic concept; stack-agnostic; composes `playwright-cli`/`verify` for render verification; Google Modern Web Guidance kept as a modern-platform pointer (not vendored); Material Design 3 deliberately excluded (it's a default look the skill warns against). Deepens the existing `prompting-agents` "Frontend anti-slop" block. 4 pressure scenarios authored (blank-brief attractor, design-system inversion, dashboard utility-copy, verify-against-render); run pending. Deployed Claude Code + Pi symlinks; index + raw ingest-markers updated.
 
 ## [2026-06-26] update | agent-kernel: offer-to-push-after-commit + cross-vendor preference routing
-Added two deltas to `concepts/agent-kernel/body/AGENT-KERNEL.md` from a user request. (1) Git discipline now requires proactively asking whether to push after a commit (still gated on explicit yes / publish policy) — the never-publish rule prevented unwanted pushes but let finished commits sit silently. (2) Operating posture now routes durable user preference requests into this shared canon by default, because the user runs agents across multiple vendors and a per-harness save silently fails elsewhere — prompted by a too-narrow Claude-Code-only memory save that the user corrected. CONCEPT.md design decisions + index entry updated. Refreshed all three deployed deltas (Claude Code `~/.claude/CLAUDE.md`, OpenCode `~/.config/opencode/AGENTS.md`, Codex `~/.codex/AGENTS.md`) with both rules and bumped their DERIVED markers to 2026-06-26. Removed the superseded image-maze project memory `ask-before-push.md`. Pressure scenarios for the two new rules: not yet authored.
+Added two deltas to `concepts/agent-kernel/body/AGENT-KERNEL.md` from a user request. (1) Git discipline now requires proactively asking whether to push after a commit (still gated on explicit yes / publish policy) — the never-publish rule prevented unwanted pushes but let finished commits sit silently. (2) Operating posture now routes durable user preference requests into this shared canon by default, because the user runs agents across multiple vendors and a per-harness save silently fails elsewhere — prompted by a too-narrow Claude-Code-only memory save that the user corrected. CONCEPT.md design decisions + index entry updated. Refreshed all three deployed deltas (Claude Code `~/.claude/CLAUDE.md`, OpenCode `~/.config/opencode/AGENTS.md`, Codex `~/.codex/AGENTS.md`) with both rules and bumped their DERIVED markers to 2026-06-26. Removed the superseded project B project memory `ask-before-push.md`. Pressure scenarios for the two new rules: not yet authored.
 
 ## [2026-06-26] update | agent-kernel: offer-to-push carve-out for policy-authorized pushes
 Refined the same-day offer-to-push rule after the user said "no need to ask if it's under policy." New shape: when a publish-policy rule already authorizes the push, just push (don't ask); only ask when authorization is undetermined. Updated body, CONCEPT.md, and all three deployed deltas (Claude Code, OpenCode, Codex).
@@ -361,8 +361,8 @@ The previous entry's cleanup (999e220) removed symlinks that were dangling on th
 ## [2026-07-04] implement | machine-mesh reference concept
 Added the machine-mesh reference concept documenting the three local SSH aliases, MagicDNS names, rules of engagement, and `agents/scripts/mesh-check` verification entrypoint. Recorded PRD #6 / mesh-slice provenance plus an accuracy-check procedure for this reference (not pressure-test) concept.
 
-## [2026-07-04] update | publish policy: plain agent-commit pushes in image-maze
-Added `image-maze-push-after-agent-commit` to `policies/publish.yaml` at the user's request ("fix publish policy"). Gap: a plain agent docs commit (docs/launch-plan.md) fit neither existing image-maze rule — the push-and-close rule's when-conditions are issue-drain shaped (`issue_acceptance_criteria_satisfied`), and the doc-maintenance rule is confined to `.bc-agent/`/agent instruction files. New rule mirrors `scripts-repo-push-after-agent-commit` (git_push on master, after_agent_commit + only_agent_authored_changes). Also noted for the record: `publish-check.py` takes the remote URL, not the git remote name — passing `origin` yields a false "no rule matches".
+## [2026-07-04] update | publish policy: plain agent-commit pushes in project B
+Added `project-b-push-after-agent-commit` to `policies/publish.yaml` at the user's request ("fix publish policy"). Gap: a plain agent docs commit (docs/launch-plan.md) fit neither existing project B rule — the push-and-close rule's when-conditions are issue-drain shaped (`issue_acceptance_criteria_satisfied`), and the doc-maintenance rule is confined to `.bc-agent/`/agent instruction files. New rule mirrors `scripts-repo-push-after-agent-commit` (git_push on master, after_agent_commit + only_agent_authored_changes). Also noted for the record: `publish-check.py` takes the remote URL, not the git remote name — passing `origin` yields a false "no rule matches".
 
 ## [2026-07-11] implement | sync selected Matt Pocock workflow upgrades
 Renamed standalone `to-spec`/`to-tickets` with `to-prd`/`to-issues` deploy aliases; added primary-source `research`; strengthened issue slicing for fresh contexts and wide refactors; and made AFK issue landing block on independent Spec + Standards review with one remediation/re-review limit. Existing GitHub-only queue semantics and explicit Markdown blockers remain deliberate local divergences.
@@ -410,7 +410,7 @@ A Grok update restored the bundled ~/.grok/skills/code-review (xAI maintainabili
 Added installers/packages/qmd.pkg to Scripts (npm user-local, codex.pkg pattern) and installed qmd 2.5.3 on Arch. Full accuracy check passed: all skill commands work as written; contexts surface authority labels in results; update+embed is a clean no-op. Key finding: project-local .qmd/index.yml stores absolute collection paths → gitignore all of .qmd/, setup per-machine (SKILL.md, scaffold reference page, and CONCEPT.md updated).
 
 ## [2026-07-13] implement | qmd rework: global mode only
-User decision after grilling: one global index, five collections (agents/wiki/music/scripts/image-maze) from synced canon Scripts/config/qmd-collections.yml, converged per-machine by <qmd-setup-script> (+ daily <qmd-refresh-job>.timer, qmd.pkg post_install). Removed the same-day --qmd per-repo design from bc-init-agent's scaffold; its close-out now registers new vaults by default (opt-out). Rationale: project-local .qmd/ shadows the global registry (verified) and is invisible from drain worktrees. Skill body, triage/drain detection, and all four CONCEPT.md files updated. Ran setup on Arch: 1055 docs indexed, first embed in progress.
+User decision after grilling: one global index, five collections (agents/wiki/music/scripts/project-b) from synced canon Scripts/config/qmd-collections.yml, converged per-machine by <qmd-setup-script> (+ daily <qmd-refresh-job>.timer, qmd.pkg post_install). Removed the same-day --qmd per-repo design from bc-init-agent's scaffold; its close-out now registers new vaults by default (opt-out). Rationale: project-local .qmd/ shadows the global registry (verified) and is invisible from drain worktrees. Skill body, triage/drain detection, and all four CONCEPT.md files updated. Ran setup on Arch: 1055 docs indexed, first embed in progress.
 
 ## [2026-07-14] test | qmd vs grep A/B comparison PASS
 Two cold subagents, same question, verified ground truth (music sticker-fork decision). Keyword-friendly question: tie on every axis (36s/25k tokens grep vs 45s/24.6k qmd; both correct) — grep stays the right tool when the words match. Paraphrase question with zero keyword overlap: grep 0 hits across all corpora in five phrasings; qmd query --no-rerank hit ground truth (bc-drain-issues claim branches) first attempt in 20.7s. Cold agent also chose the correct latency tier from the skill text alone. Recorded in concepts/qmd/tests/grep-baseline-comparison.md; CONCEPT.md Tests section updated (accuracy-check status was stale, now marked PASS).
@@ -477,8 +477,8 @@ single citation fix both axes approved. Because the fixture produced only one re
 runner stopped before landing or starting v3, as the two-round contest criterion requires. Recorded
 the attempt as INVALID, not an A/B result; v3 remains deployed but not token-validated.
 
-## [2026-07-27] tune | inert-guard review class from an image-maze drain
-A real `/bc-drain-issues` run on image-maze #203 (an issue *about* two inert referral gates) had its build worker reproduce the defect class it was assigned to remove: it deleted the named tautological clause, left a sibling clause tautological, and substituted `$campaign['id']` for `$campaign_id` — an identical runtime value that made the tautology look like two independent facts. Independent Spec review caught it, and reverting the expression made the test *fail*, proving the clause had only ever been green as a tautology. Promoted per the Tune operation: `code-review` gains a general "Verify a guard can actually fire" block (paired explicitly with *Findings are not obligations* so it is not read as licence for defensive code), `bc-drain-issues` gains a `guard/rejection clause -> can-its-inputs-differ-in-production evidence` audit row and an unfireable-guard rule in `review-contract.md` (AFK reviewers see only the driver's packet). Both bodies are symlink-live immediately; the `code-review` pressure check 7 is authored but **not run**, and the drain row has no Gate A check because it is a model-behaviour property. Test gate is therefore outstanding for both — recorded rather than implied.
+## [2026-07-27] tune | inert-guard review class from an project B drain
+A real `/bc-drain-issues` run on project B #203 (an issue *about* two inert referral gates) had its build worker reproduce the defect class it was assigned to remove: it deleted the named tautological clause, left a sibling clause tautological, and substituted `$campaign['id']` for `$campaign_id` — an identical runtime value that made the tautology look like two independent facts. Independent Spec review caught it, and reverting the expression made the test *fail*, proving the clause had only ever been green as a tautology. Promoted per the Tune operation: `code-review` gains a general "Verify a guard can actually fire" block (paired explicitly with *Findings are not obligations* so it is not read as licence for defensive code), `bc-drain-issues` gains a `guard/rejection clause -> can-its-inputs-differ-in-production evidence` audit row and an unfireable-guard rule in `review-contract.md` (AFK reviewers see only the driver's packet). Both bodies are symlink-live immediately; the `code-review` pressure check 7 is authored but **not run**, and the drain row has no Gate A check because it is a model-behaviour property. Test gate is therefore outstanding for both — recorded rather than implied.
 
 ## [2026-07-27] implement+test | deterministic bc-drain-issues v3 Gate B trace
 Replaced probabilistic topology as the deployment benchmark with a locked S0→S1→S2 trace containing exactly two Standards-only reworks; the natural contested fixture and its one-rework INVALID result remain ecological-pressure provenance. The harness pins hostile-environment-resistant SHA-1 Git identity/config, regenerates its own canonical contract, uses sanitized no-remote roots plus fail-closed receipt stubs without falsely claiming physical network isolation, and derives model/session tokens from real Pi lifecycle artifacts. Reviewer JSON and reworker patches now supply independently checked fidelity; stale Spec hashes cannot land and v3 requires a focused final S2 Spec sync. Gate A remains 22/22 with check 19 strengthened for both intermediate skips and exact-hash sync; trace self-test passes all identity, behavior, evidence, isolation, dispatch, and landing checks. Real same-model/medium v2/v3 token measurement remains outstanding.
@@ -981,7 +981,7 @@ Pressure scenario **not run**; nothing deployed.
 
 ## [2026-08-22] lint | qmd registry coverage
 Registered the two unregistered live vaults (Homeflix public + private, `.agent/` not
-`.bc-agent/`, both active through 2026-08-19) and ignored image-maze `temp/` (84 of 238 indexed
+`.bc-agent/`, both active through 2026-08-19) and ignored project B `temp/` (84 of 238 indexed
 `.md` were generated run artifacts). Committed in Scripts as 79d17c6. CV stays excluded by
 design; the detector now reads that stated reason instead of flagging it.
 
@@ -1001,7 +1001,7 @@ than generating the index. Frontmatter now `pass` / `2026-08-22`; still `deploye
 ## [2026-08-23] deploy | bc-wiki-maintain live; six vaults pointed; CV timer armed
 Skill deployed to shared/Pi/Claude symlinks after the 4/4 pressure pass. Added the
 `/bc-wiki-maintain` pointer to `references/agent-skills.md` in the six scaffold-shaped vaults
-(Music, Scripts, image-maze, CV, Learning/codebase-design, Learning/sql), one commit each, staging
+(Music, Scripts, project B, CV, Learning/codebase-design, Learning/sql), one commit each, staging
 only that file — Music's untracked Obsidian files were left alone. Installed and enabled the
 user timer for the CV pilot only; first run Mon 2026-08-24 03:39 BST. Detection under the service
 environment confirms CV at `PROMOTION_REQUIRED=1` (10 unpromoted entries, 21 pages missing from
@@ -1039,11 +1039,11 @@ as an implementation record, not a user guide.
 Added `run-lint.sh` plus template `bc-wiki-lint` units: detection only, no agent, no commit.
 Local list is `~/.config/agent-concepts/wiki-lint-vaults.txt` (eight live vaults). Detector now
 skips `temp/`/`scratch/`/`.obsidian`/`vendor` and does not fail a vault on example links in
-`templates/` — image-maze's vendor tree was drowning the report. First live sweep: 8 checked,
+`templates/` — project B's vendor tree was drowning the report. First live sweep: 8 checked,
 2 fail (Music leftover example wikilinks; codebase-design broken/ambiguous `[[plan]]` /
-`[[image-maze]]`).
+`[[project-b]]`).
 
-## [2026-08-23] deploy | promotion timers for image-maze and public Homeflix
+## [2026-08-23] deploy | promotion timers for project B and public Homeflix
 Local systemd copies of the promotion unit, staggered after the lint sweep. First runs
 will be large: those vaults have never had a `wiki: promote` commit. Commits stay local
 until something pushes — both remotes exist. Runner README now documents one-unit-per-vault.
@@ -1161,7 +1161,7 @@ Ran a 3-advisor bounded council (council-grok, council-sol, council-opus; fresh 
 making `bc-wiki-maintain` seamless and automatic. Filed brief, claim matrix, supervisor findings, memo,
 and advisor evidence under `docs/research/wiki-autonomy-council/`.
 Diagnosis: the read path is the gap, not the write path — 0 broken links across 9 vaults but 7-21
-orphans each, `index.md` alone is 4,543 tokens in image-maze, and `qmd query` measured 67.1s. All three
+orphans each, `index.md` alone is 4,543 tokens in project B, and `qmd query` measured 67.1s. All three
 advisors independently converged on filter-don't-read via a generated catalog.
 Three defects verified at source, not relayed: scaffolded `map.md` contributes zero graph edges because
 `without_code()` blanks its code-span targets before `links()`; Gate 1 does NOT mechanically block link
@@ -1204,7 +1204,7 @@ Renamed the plan to `agent-vault-read-path.md` and added W5, which stops the sca
 A survey of the eight live vaults broke three assumptions. Directory taxonomy has diverged to 27 distinct
 top-level directories, only six universal, with `concepts/` and `plans/` meaning different things by
 archetype — so the catalog's `kind` is now the vault-relative directory path, not the basename. A third of
-the benchmark vault is gitignored: 84 of image-maze's 239 pages sit under `temp/`, where `git log` returns
+the benchmark vault is gitignored: 84 of project B's 239 pages sit under `temp/`, where `git log` returns
 no date, and excluding them leaves 155 eligible pages, matching the memo's independently derived 151. And
 the first-move line has drifted into three variants across the eight vaults, four of which carry a second
 `START` paragraph, with Music on a different workflow entirely — W2 is eight edits, not a find-replace.
@@ -1232,7 +1232,7 @@ Also recorded that frozen benchmark queries understate live performance — a li
 Q5's gold page at rank 1 where every method missed under the frozen list.
 
 ## [2026-08-28] deploy | canonical read path rolled out to all eight vaults
-Search-first replaces index.md-first in Music, Scripts, image-maze, CV, codebase-design, sql,
+Search-first replaces index.md-first in Music, Scripts, project B, CV, codebase-design, sql,
 Homeflix and homeflix-prod, each committed in its own repo. Music kept its plans-first route
 with search inserted ahead of it. Four lean vaults carry a one-line form only — see the note in
 `docs/plans/active/agent-vault-read-path.md` about their missing empty-result and hub-page rules.
@@ -1243,7 +1243,7 @@ every skill command using the variable.
 Assessed the landed read path against the write path and found they share no contract: the
 scaffold still generates index-first instructions and `## YYYY-MM-DD` log headings the promotion
 detector cannot parse, which leaves Scripts and sql at `PROMOTION_RANGE=invalid` and CV and
-image-maze one entry from it. Filed `docs/plans/active/agent-vault-write-read-contract.md` with
+project B one entry from it. Filed `docs/plans/active/agent-vault-write-read-contract.md` with
 seven work items. An independent review caught five wrong claims in the first draft, including a
 W1 instruction that would have pasted the vault search block into root `AGENTS.md` and searched
 whole repositories; all five are corrected in the filed version.
@@ -1459,13 +1459,13 @@ User stopped using it: uninstalled the upstream package from `~/.agents/skills`,
 Removed the `grill-me` concept and its stale deploy links; standalone grilling now points to `grilling` + `domain-modeling`. Retired the `/to-prd`, `/to-issues`, and `/implement` compatibility aliases and their deployed symlinks, plus the requested Claude-only `skill-writer` and `playwright-cli` installs; canonical skills and `notebooklm` remain.
 
 ## [2026-10-04] implement | bc-drain-issues Released Claim Markers
-Adopted image-maze ADR-0041's marker format: validated tips are free, acquisition uses an exact marker lease plus push/remote ownership proof, and local deletion remains default with leased marker cleanup. Malformed tips stay held; authorization and no-force absent-ref creation remain gated. Supervisor-approved follow-up replaces only bc-init-agent's contradictory claim bullet with a canonical protocol pointer and records the relationship.
+Adopted project B ADR-0041's marker format: validated tips are free, acquisition uses an exact marker lease plus push/remote ownership proof, and local deletion remains default with leased marker cleanup. Malformed tips stay held; authorization and no-force absent-ref creation remain gated. Supervisor-approved follow-up replaces only bc-init-agent's contradictory claim bullet with a canonical protocol pointer and records the relationship.
 
 ## [2026-10-04] test | released-marker protocol and scaffold regression
 Marker-only Gate A check 30 passed against a disposable local bare remote, including malformed tips, stale leases, no-force rejection, and cleanup; installed Git 2.55.0 push help confirms lease semantics. All 15 deterministic scaffold tests passed. No models, network, deploy, or production pushes ran; checks 1–29 were not rerun and both concepts retain partial status.
 Regenerated relationship/status views; workspace lint passes with existing partial-test and worktree-external deploy-symlink warnings.
 
-## [2026-10-04] implement | owner/cloud drain isolation (image-maze #351)
+## [2026-10-04] implement | owner/cloud drain isolation (project B #351)
 Exclude `automated` from fresh/deferred/rework/restart paths before claim/label mutation; report active cloud claims without release/reuse/relabel, and preserve existing local bundles. Marker/CAS, non-automated attended landing, review, and initializer claim-protocol delegation are unchanged; provenance and all relationship impacts recorded in the concept.
 
 ## [2026-10-04] test | automated isolation contract
@@ -1664,7 +1664,7 @@ Owner decisions 33–36 in the visible-layout plan: `wiki_lint.py` reports any n
 Close-out decisions 33-36 landed (`93f9694`). The five migrated projects are registered for search (two collections each), their `project-agents` row points at `.agents/agents/`, and the lint reports no stray `.bc-agent/` content in any of them. Plan moved to `docs/plans/implemented/`. Not covered: `bc-drain-issues` and `handoff` under pressure in a visible-layout project.
 
 ## [2026-11-15] implement | agent-kernel recap: 📦 delivery line, order 📦/👣/🏁
-Owner asked for the Manicule-style delivery line in every session, goal last, no blank lines; 📦 only when something was made for use; delivered = usable now (committed-only is not). Scenario 10 extended with (e). Not yet pressure-tested or propagated to the harness deltas.
+Owner asked for the project-a-style delivery line in every session, goal last, no blank lines; 📦 only when something was made for use; delivered = usable now (committed-only is not). Scenario 10 extended with (e). Not yet pressure-tested or propagated to the harness deltas.
 
 ## [2026-11-15] test+deploy | agent-kernel recap 🏁/👣/📦
 Owner swapped the order to goal first, delivery last. Scenario 10 (a)–(e) on Sonnet 5.5 low: one tune (never "Delivered: nothing"), then PASS 6/6. Propagated to the five CONFIG deltas, the Muse runtime copy and ~/.claude/CLAUDE.md.
@@ -1679,7 +1679,7 @@ Owner: the not-delivered half usually stands alone and needs a label that reads 
 Owner put the goal last again. 📦-first regressed on Sonnet 5.5 low; tuned (often-absent opening, started = changed a file or ran a build/release step, two example recaps), then PASS. Propagated to the CONFIG deltas, Muse runtime copy and ~/.claude/CLAUDE.md.
 
 ## [2026-11-16] implement | bc-work-sync + bc-init-agent work index
-New owner-started concept `bc-work-sync` (plan-first sync of `work/` with the project's docs; scenarios written, not run, not deployed). bc-init-agent gains `body/work_index.py` (stdlib port of Manicule's work-index), copied into visible-layout projects with a `Stages:` line, `Stage:` rule and `work/README.md`; bc-wiki-maintain's mechanics check allows `.bc-agent/scripts/`.
+New owner-started concept `bc-work-sync` (plan-first sync of `work/` with the project's docs; scenarios written, not run, not deployed). bc-init-agent gains `body/work_index.py` (stdlib port of project A's work-index), copied into visible-layout projects with a `Stages:` line, `Stage:` rule and `work/README.md`; bc-wiki-maintain's mechanics check allows `.bc-agent/scripts/`.
 
 ## [2026-11-16] implement | bc-work-sync and work index review fixes
 Clarified plan, worktree and publishing gates and migration guidance; aggregate stage errors, report decoding errors, and scaffold a check-ready index. Added targeted regression tests; pressure scenarios remain unrun and bc-work-sync undeployed.
@@ -1706,7 +1706,7 @@ Owner-approved rule: tests and helpers delete the temp files they create, includ
 Scenario 5 passed for kernel alone and kernel + tdd on Terra low (Node fixture, cleanup on failure, footprint compared); no baseline.
 
 ## [2026-11-18] implement | tdd Test levels hold across packets, reviews and parent commits
-Manicule field failure (~190 commits, zero properties): a bc-swarm packet waived L2, workers closed with `L2: not added`, reviewers never saw the block. tdd: only a quoted owner approval waives a level, unmeetable levels escalate, block may be a `Test-levels:` trailer; code-review: missing block/trailer and `covered by examples`/deferral are findings; bc-swarm: packets cannot waive levels, review packets carry the block, parent commits carry it (new bc-swarm→tdd edge). Private pi-subagent-routing reviewer line also carries the block.
+Project A field failure (~190 commits, zero properties): a bc-swarm packet waived L2, workers closed with `L2: not added`, reviewers never saw the block. tdd: only a quoted owner approval waives a level, unmeetable levels escalate, block may be a `Test-levels:` trailer; code-review: missing block/trailer and `covered by examples`/deferral are findings; bc-swarm: packets cannot waive levels, review packets carry the block, parent commits carry it (new bc-swarm→tdd edge). Private pi-subagent-routing reviewer line also carries the block.
 
 ## [2026-11-18] test | tdd level-waiver, code-review missing-levels, bc-swarm test-levels packets
 Terra low, text-only, without / pre-change / current body: all three FAIL or partial before, PASS with the current bodies (scenarios in each concept's tests/).
@@ -1767,7 +1767,7 @@ s2 (direct edit, no subagents) prompt gained the no-tools sentence that s1/s3 al
 Marked the pre-rerun s2 figures in the review-rerun results as superseded (fix-verifier P3-a).
 
 ## [2026-11-19] test | retro first live batch run
-A scheduled `<weekly-retro-job>` on a second machine ran `/skill:retro since 2026-11-12` headless in 4.5 min and wrote `<report-dir>/2026-11-19.md`: 20 of 40 sessions across 9 projects (top 18 by active time + 2 seeded), two proposals with homes (code-review boundary-size question, 3 of 20; manicule delivery-check wording, 2 of 20). `<agent-time-report>` was not on that machine's PATH (symlinks refreshed after); the JSONL fallback worked. Weekly timer: Mondays 06:00.
+A scheduled `<weekly-retro-job>` on a second machine ran `/skill:retro since 2026-11-12` headless in 4.5 min and wrote `<report-dir>/2026-11-19.md`: 20 of 40 sessions across 9 projects (top 18 by active time + 2 seeded), two proposals with homes (code-review boundary-size question, 3 of 20; project A delivery-check wording, 2 of 20). `<agent-time-report>` was not on that machine's PATH (symlinks refreshed after); the JSONL fallback worked. Weekly timer: Mondays 06:00.
 
 ## [2026-11-19] lint | personal-terms check and scrub
 Added `lint_personal_terms` (optional private denylist, ERROR per hit, skipped when absent) with docs/personal-terms.example.txt, stated the public-copyable policy in AGENTS.md § Conventions, and scrubbed personal terms from log/index/docs/scripts and concept CONCEPT.md/tests; Concept-body hits warn pending per-concept owner review; immutable raw sources, research evidence and concurrent-session transcripts are skipped, and mixed pressure-test results warn.
@@ -1779,7 +1779,7 @@ Preserved captured pressure-test output, excluded immutable evidence, and made p
 Rewrote Storage safety in the public kernel body to name no personal tools ("a guarded test runner, if one exists", "the machine's storage health check, if one exists"); behaviour unchanged where the tools exist, Why unchanged; owner's derived copies keep the exact names. Pressure check 4/4 on Terra low: [tests/pressure-storage-generic.md](concepts/agent-kernel/tests/pressure-storage-generic.md).
 
 ## [2026-11-19] lint | owner-approved raw/evidence path scrub
-Owner-approved one-off exception to the raw-is-immutable rule: replaced personal paths in docs/research/raw/** and docs/research/*/evidence/** with the repo's placeholders (`<synced-home>`, `<owner-scripts>`, `<music-library>`, `<image-maze-project>`, `/home/<user>`); nothing else changed, JSON still valid.
+Owner-approved one-off exception to the raw-is-immutable rule: replaced personal paths in docs/research/raw/** and docs/research/*/evidence/** with the repo's placeholders (`<synced-home>`, `<owner-scripts>`, `<music-library>`, `<project-b>`, `/home/<user>`); nothing else changed, JSON still valid.
 
 ## [2026-11-19] implement | agent-kernel storage review fixes
 Restored the session-close record, clarified the with-kernel-only evidence and missing-tool behavior, and added discovery guidance and private-copy deploy policy. No deploy; consumer-specific tool references remain a separate follow-up.
@@ -1804,3 +1804,6 @@ Terra low, true stranger (project `.pi/APPEND_SYSTEM.md` override + `--no-extens
 
 ## [2026-11-19] lint | semantic privacy pass over word-list-clean concepts
 Reviewer pass over 26 concepts the lexical denylist had cleared. Replaced a private project's real identifiers in naming-things with an invented order-support vocabulary, removed private project names from code-review and bc-work-sync, provider billing status from an unslop test, gendered and owner-setup provenance, private role names, and "per cost rule" notes; the workshop citation in issue-slicing no longer carries a download URL.
+
+## [2026-11-19] lint | removed private project names and workshop download links from current tree
+Replaced the three private project names with neutral project A/B labels in prose and `<project-a>`/`<project-b>` placeholders in captured evidence (owner-approved one-off); retrieval benchmark reports now render the `--collection` value instead of a hard-coded name; dropped the workshop download URL from six CONCEPT.md citations. `docs/research/raw/` left untouched (immutable).

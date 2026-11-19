@@ -2,8 +2,8 @@ I can’t run tools in this reply, and `set_session_name` is not available to me
 
 ```json
 intercom({"action":"list"})
-bash({"command":"cd /home/user/Projects/manicule && git rev-parse --show-toplevel && git worktree list && git status --short && realpath src/registry.ts scripts/gen-registry.ts dist/registry.json && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
-bash({"command":"cd /home/user/Projects/manicule && cat AGENTS.md 2>/dev/null; for f in src/AGENTS.md scripts/AGENTS.md dist/AGENTS.md; do if [ -f \"$f\" ]; then printf '\\n--- %s ---\\n' \"$f\"; cat \"$f\"; fi; done; sed -n '1,240p' src/registry.ts; sed -n '1,240p' scripts/gen-registry.ts; cat package.json"})
+bash({"command":"cd /home/user/Projects/<project-a> && git rev-parse --show-toplevel && git worktree list && git status --short && realpath src/registry.ts scripts/gen-registry.ts dist/registry.json && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+bash({"command":"cd /home/user/Projects/<project-a> && cat AGENTS.md 2>/dev/null; for f in src/AGENTS.md scripts/AGENTS.md dist/AGENTS.md; do if [ -f \"$f\" ]; then printf '\\n--- %s ---\\n' \"$f\"; cat \"$f\"; fi; done; sed -n '1,240p' src/registry.ts; sed -n '1,240p' scripts/gen-registry.ts; cat package.json"})
 ```
 
 If another live session overlaps, I’d coordinate before editing. If paths resolve into synced storage, I’d inspect the affected directory for machine-local state. If the files have unrelated changes, I’d preserve them. The exact edit calls depend on the file contents: the earlier 15-line patch is not included in this prompt, so I can’t specify it honestly yet.

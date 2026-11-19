@@ -1,4 +1,4 @@
-I can’t give exact tool calls from this context: no tools are available to me, including `set_session_name`, and I can’t see the earlier file contents or the tool schemas. The supplied session context also names `/home/user/Projects/manicule`, while the current working directory is different.
+I can’t give exact tool calls from this context: no tools are available to me, including `set_session_name`, and I can’t see the earlier file contents or the tool schemas. The supplied session context also names `/home/user/Projects/<project-a>`, while the current working directory is different.
 
 The next actions would be conditional:
 

@@ -4,7 +4,7 @@ The next calls I would make, in order, are:
 
 ```text
 set_session_name({name: "Registry Entry Kind"})  // if available
-intercom({action: "list-cwd", cwd: "/home/user/Projects/manicule"})
+intercom({action: "list-cwd", cwd: "/home/user/Projects/<project-a>"})
 read({path: "~/.pi/agent/skills/bc-swarm/pi.md"})
 read({path: "/tmp/bc-swarm/2026-11-19-item024/manifest.md"})
 ```

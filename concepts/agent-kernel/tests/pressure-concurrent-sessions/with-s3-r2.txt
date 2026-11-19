@@ -1,19 +1,19 @@
 **Proposed calls** — I cannot execute them in this reply. The stated tool list does not include `set_session_name`, so I cannot call it.
 
 ```text
-bash({"command":"cd /home/user/Projects/manicule && printf '%s\\n' '--- target ---' && readlink -f README.md && printf '%s\\n' '--- status ---' && git status --short && printf '%s\\n' '--- README ---' && sed -n '8,16p' README.md && printf '%s\\n' '--- README diff ---' && git diff HEAD -- README.md"})
+bash({"command":"cd /home/user/Projects/<project-a> && printf '%s\\n' '--- target ---' && readlink -f README.md && printf '%s\\n' '--- status ---' && git status --short && printf '%s\\n' '--- README ---' && sed -n '8,16p' README.md && printf '%s\\n' '--- README diff ---' && git diff HEAD -- README.md"})
 ```
 
 If `README.md` is clean, resolves within the repository, and contains the expected typo on line 12:
 
 ```text
-bash({"command":"cd /home/user/Projects/manicule && python3 -c 'from pathlib import Path; p=Path(\"README.md\"); s=p.read_bytes(); lines=s.splitlines(keepends=True); assert len(lines)>=12 and lines[11].count(b\"regsitry\")==1; lines[11]=lines[11].replace(b\"regsitry\",b\"registry\",1); p.write_bytes(b\"\".join(lines))' && git diff --check && git diff -- README.md && git status --short"})
+bash({"command":"cd /home/user/Projects/<project-a> && python3 -c 'from pathlib import Path; p=Path(\"README.md\"); s=p.read_bytes(); lines=s.splitlines(keepends=True); assert len(lines)>=12 and lines[11].count(b\"regsitry\")==1; lines[11]=lines[11].replace(b\"regsitry\",b\"registry\",1); p.write_bytes(b\"\".join(lines))' && git diff --check && git diff -- README.md && git status --short"})
 ```
 
 If the diff shows only the intended one-word correction:
 
 ```text
-bash({"command":"cd /home/user/Projects/manicule && git add -- README.md && git diff --cached --check && git diff --cached -- README.md && git commit --only -m 'Fix registry typo in README' -- README.md && git status --short && git log -1 --oneline"})
+bash({"command":"cd /home/user/Projects/<project-a> && git add -- README.md && git diff --cached --check && git diff --cached -- README.md && git commit --only -m 'Fix registry typo in README' -- README.md && git status --short && git log -1 --oneline"})
 ```
 
 If the file is dirty, the target is outside the repository, the expected typo is absent, or the diff contains anything else, I would stop and inspect before editing or committing. After a successful commit, I would check the publish policy and push only if authorized; otherwise I would ask.

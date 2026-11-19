@@ -3,7 +3,7 @@ I can’t make actual tool calls here: no tools, including `set_session_name`, a
 ```text
 1. set_session_name({name: "Add Glossary Registry Kind"})
 
-2. intercom({action: "ask", session: "manicule-tests",
+2. intercom({action: "ask", session: "<project-a>-tests",
    message: "I need to edit src/registry.ts, scripts/gen-registry.ts and dist/registry.json and commit. Are you touching these files or the index? Please reply before I proceed."})
 ```
 

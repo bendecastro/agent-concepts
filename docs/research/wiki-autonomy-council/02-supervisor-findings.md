@@ -22,7 +22,7 @@ never validated a single entry in it.
 
 Consequence: the vault ships a "context picker" page that is (a) not counted when
 computing orphans, (b) never checked for broken targets, and (c) drifts silently.
-image-maze's lists architecture-runway rounds 4-7 while 8 and 9 exist on disk.
+project B's lists architecture-runway rounds 4-7 while 8 and 9 exist on disk.
 
 This matters more than it first looks. `map.md` is the closest thing the current
 scaffold has to a cheap read path, and it is both unmaintained and unvalidated.

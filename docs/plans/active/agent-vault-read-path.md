@@ -25,7 +25,7 @@ plan is over the 8 lint-list vaults):
 
 - Zero broken links and zero ambiguous links in every vault. Validation works.
 - 7 to 21 orphan pages per vault; up to 42% of pages unreachable from `index.md`.
-- Reaching an answer in image-maze costs **4,543 tokens for `index.md` alone**, or 11,657 for
+- Reaching an answer in project B costs **4,543 tokens for `index.md` alone**, or 11,657 for
   index plus the three pages a typical question needs.
 - `qmd query`, the designated search overlay, took **67.1 seconds** (57.3s expansion + 7.2s
   embedding). It cannot sit in an inline read path.
@@ -87,7 +87,7 @@ recorded below.
 This is what makes the plan cross-concept.
 
 **B. Coverage is 4 of 8, not 4 of 9.** The lint list holds 8 vaults. Four have promotion timers
-(CV, image-maze, public Homeflix, homeflix-prod); four do not (Music, Scripts, codebase-design,
+(CV, project B, public Homeflix, homeflix-prod); four do not (Music, Scripts, codebase-design,
 sql). The 9th vault was `dng`, now out of scope; it holds 0 unpromoted headings, so the 68 total
 is unchanged.
 
@@ -123,7 +123,7 @@ directory *basename* would silently conflate these.
 not a summary. This is not a frontmatter-skipping problem; it is that the content the extractor
 wants often does not exist yet.
 
-**A third of the benchmark vault is gitignored.** image-maze has 239 Markdown files, of which
+**A third of the benchmark vault is gitignored.** project B has 239 Markdown files, of which
 **84 are under a gitignored `temp/`** (`.gitignore:9`). `git log -1 --format=%cs` returns empty
 for every one, so the catalog's Git-date column would be blank for 35% of that vault. Excluding
 ignored paths leaves **155 eligible pages**, which matches the memo's independently derived
@@ -131,15 +131,15 @@ ignored paths leaves **155 eligible pages**, which matches the memo's independen
 it is settled by evidence, not preference.
 
 **The first-move instruction has drifted into at least three variants.** Scripts, CV,
-codebase-design, and sql share one line; image-maze and both Homeflix vaults add a parenthetical;
+codebase-design, and sql share one line; project B and both Homeflix vaults add a parenthetical;
 Music's is a different workflow entirely (`index.md` → `plans/` page → its open-questions). Four
 of the eight carry a *second* `**START**` paragraph repeating the sequence. The two Homeflix
 vaults also lack most base scaffold files, including all four `conventions/` pages. W2 is
 therefore eight separate edits, not a find-and-replace.
 
-**Sizes, for the token estimate.** Pages range from 37 (sql) to 239 (image-maze); Markdown bytes
+**Sizes, for the token estimate.** Pages range from 37 (sql) to 239 (project B); Markdown bytes
 from 37KB to 1.53MB. `log.md` is the largest page in five of eight vaults, reaching **199,069
-bytes in image-maze** — roughly 50,000 tokens, which is why `run-promotion.sh` telling its writer
+bytes in project B** — roughly 50,000 tokens, which is why `run-promotion.sh` telling its writer
 to read the log is expensive.
 
 ## Work items
@@ -192,7 +192,7 @@ and `concepts` are not. Pages at the vault root get an explicit root kind rather
 field.
 
 **Eligibility is tracked files only.** Exclude anything `git check-ignore` matches, which removes
-image-maze's 84 `temp/` pages, and keep the existing `SKIP_DIR_NAMES` exclusions. A page with no
+project B's 84 `temp/` pages, and keep the existing `SKIP_DIR_NAMES` exclusions. A page with no
 Git date is not a knowledge page; it is an artifact.
 
 **The summary must be deterministic and must degrade honestly.** Take the first sentence of the
@@ -213,7 +213,7 @@ precisely what keeps the catalog from becoming the next `map.md`.
 - `--write-catalog` produces **8 distinct** TSV files, one per lint-list vault, with no slug
   collision between the two `.agent` vaults.
 - Each file has a header row and exactly 7 columns; every row carries all 7 fields populated.
-- For image-maze specifically, the row count is **155**, not 239: no gitignored `temp/` page
+- For project B specifically, the row count is **155**, not 239: no gitignored `temp/` page
   appears.
 - Every row's Git date equals `git log -1 --format=%cs` for that file, and no row has an empty
   date.
@@ -298,13 +298,13 @@ vaults carry a second `**START**` paragraph:
 | Vault | Surface |
 |---|---|
 | Scripts, CV, codebase-design, sql | `AGENTS.md:21`, shared wording |
-| image-maze | `AGENTS.md:26` plus `START` at `:61-62` |
+| project B | `AGENTS.md:26` plus `START` at `:61-62` |
 | Homeflix-public, Homeflix-prod | `AGENTS.md:35` plus `START` at `:66-68` |
 | Music | `AGENTS.md:26` plus `START` at `:39-41` — a different workflow (`index.md` → `plans/` page → open-questions), so it needs its own rewrite rather than the shared line |
 
 Also change `concepts/bc-wiki-maintain/body/runner/run-promotion.sh` at `run-promotion.sh:122`,
 which tells the promotion writer to read `AGENTS.md`, `index.md`, and `log.md`. That is a
-different reader from the task agent, and image-maze's log alone is 199,069 bytes.
+different reader from the task agent, and project B's log alone is 199,069 bytes.
 
 **Cold-cache behaviour.** The prescribed first move must handle a missing or stale catalog by
 running `--write-catalog` and then filtering. A first move that assumes a file nobody has
@@ -375,7 +375,7 @@ Do **not** port the personal wrapper's PID lock or `TimeoutExpired` handling.
 questions with gold pages) was authored blind to the methods and committed *before* any harness
 existed; 15 of 20 questions share no rare vocabulary with their gold page.
 
-Final standings on image-maze, equal 15-row cap, agent-style filter protocol:
+Final standings on project B, equal 15-row cap, agent-style filter protocol:
 
 | Method | Median tokens | Miss | Wilson 95% CI |
 |---|---:|---:|---|
@@ -414,17 +414,17 @@ binary: it is Python standard library, reads the vault at query time, and stores
 This is the go/no-go for the deferred steps. It must be a harness, not an intention: two workers
 running it should get comparable numbers.
 
-Fix a question set against image-maze, the largest vault. For each question record the tokens
+Fix a question set against project B, the largest vault. For each question record the tokens
 spent from vault entry to opening the correct page, and whether the correct page was reached.
 
-- **Baseline: 4,543 tokens** — image-maze `index.md` alone, derived as 18,172 bytes ÷ 4.
+- **Baseline: 4,543 tokens** — project B `index.md` alone, derived as 18,172 bytes ÷ 4.
 - **Tokenizer: bytes ÷ 4**, the same derivation, so the comparison is like-for-like. Not an API
   usage counter and not tiktoken; those produce a different number against the same baseline.
 
 **Acceptance:**
 - A question file of **exactly 20** questions is committed under
   `concepts/bc-wiki-maintain/tests/`, each with the gold page path that answers it.
-- Gold pages are drawn from the **155 eligible** image-maze pages, not from gitignored `temp/`.
+- Gold pages are drawn from the **155 eligible** project B pages, not from gitignored `temp/`.
 - That file is committed **before** any catalog tuning. Otherwise the benchmark measures the
   tuning rather than the approach.
 - The runbook names the agent, the loop, and what counts as "opening" a page and as a miss,
@@ -589,7 +589,7 @@ Blocked on W4 clearing its bars:
 
    **The rule is in-vault targets only.** A survey of the eight live vaults found converting map
    rows adds 0 broken and 0 ambiguous links in the six standard vaults and cuts orphans (Scripts
-   7→3, CV 12→8, sql 17→13, Music 12→9, codebase-design 21→18, image-maze 15→13). Both Homeflix
+   7→3, CV 12→8, sql 17→13, Music 12→9, codebase-design 21→18, project B 15→13). Both Homeflix
    maps carry 15 rows per map pointing at repository source paths *outside* the vault; those must
    stay inline code, because `resolve_link()` cannot make them graph edges either way and literal
    conversion would add 15 broken findings per checkout.

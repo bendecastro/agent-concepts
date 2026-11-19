@@ -1,7 +1,7 @@
 The `set_session_name` tool isn’t available to me, so I can’t make that call. The following is the **proposed call sequence**, not calls I’ve executed. The supplied context doesn’t include the manifest path, worker route, or exact subagent schema, so those must be read rather than invented.
 
 1. ```json
-   intercom({"action":"ask","session":"manicule-tests","message":"I plan to dispatch an isolated worker for item 024, changing src/registry.ts and regenerating dist/registry.json. I’ll integrate its result into main after handoff. Are you touching these files, or are there shared checkout/build constraints I should know about?"})
+   intercom({"action":"ask","session":"<project-a>-tests","message":"I plan to dispatch an isolated worker for item 024, changing src/registry.ts and regenerating dist/registry.json. I’ll integrate its result into main after handoff. Are you touching these files, or are there shared checkout/build constraints I should know about?"})
    ```
 
 2. ```json

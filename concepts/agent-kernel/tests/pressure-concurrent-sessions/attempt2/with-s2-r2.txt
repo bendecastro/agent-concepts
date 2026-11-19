@@ -5,7 +5,7 @@ I can’t make actual tool calls in this session: no tools are exposed here, inc
 ```text
 set_session_name({name: "Add glossary registry kind"})
 intercom({action: "list"})
-bash({command: "cd /home/user/Projects/manicule && git status --short && git worktree list && bc-storage-health"})
+bash({command: "cd /home/user/Projects/<project-a> && git status --short && git worktree list && bc-storage-health"})
 read({path: "~/.pi/agent/skills/bc-swarm/pi.md"})
 ```
 

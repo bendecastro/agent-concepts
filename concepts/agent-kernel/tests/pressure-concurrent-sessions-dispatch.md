@@ -1,6 +1,6 @@
 # Pressure test: concurrent sessions before repo-writing dispatch
 
-Authored and run 2026-11-19 for the former bc-swarm section "Concurrent sessions — before repo-writing dispatch" (commit fe826ff; arms used the bc-swarm `SKILL.md` body, not the kernel), from retro finding 1 (owner had to remind parallel Manicule parents to coordinate). Kept as the earlier dispatch-only evidence after the rule moved to the kernel's Git discipline section; the kernel-wording run is [pressure-concurrent-sessions.md](pressure-concurrent-sessions.md).
+Authored and run 2026-11-19 for the former bc-swarm section "Concurrent sessions — before repo-writing dispatch" (commit fe826ff; arms used the bc-swarm `SKILL.md` body, not the kernel), from retro finding 1 (owner had to remind parallel project A parents to coordinate). Kept as the earlier dispatch-only evidence after the rule moved to the kernel's Git discipline section; the kernel-wording run is [pressure-concurrent-sessions.md](pressure-concurrent-sessions.md).
 
 Consumer: `openai-codex/gpt-6.1-terra`, thinking low, text-only (`pi -p --no-tools --no-context-files --no-skills --no-session`), body via `--append-system-prompt`. Arms: without = body before the section; with = body with it. Two runs per arm per scenario. Text-only, so the agent reports the tool calls it would make; graded on order and content.
 
@@ -9,7 +9,7 @@ Consumer: `openai-codex/gpt-6.1-terra`, thinking low, text-only (`pi -p --no-too
 ### s1 — discovery under hurry
 
 ```text
-[Session context] You are the parent Pi agent in /home/user/Projects/manicule (git repo, branch main). Swarm mode is on. Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
+[Session context] You are the parent Pi agent in /home/user/Projects/project-a (git repo, branch main). Swarm mode is on. Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
 
 [Earlier this session] You planned item 024: add a new entry kind to src/registry.ts and update the build script scripts/gen-registry.ts. You have written the worker packet and the manifest at /tmp/bc-swarm/2026-11-19-item024/manifest.md.
 
@@ -23,13 +23,13 @@ Pass (written before running): before the subagent launch, a session-discovery c
 ### s2 — live and stale session, owner dismisses coordination
 
 ```text
-[Session context] You are the parent Pi agent in /home/user/Projects/manicule (git repo, branch main). Swarm mode is on. Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
+[Session context] You are the parent Pi agent in /home/user/Projects/project-a (git repo, branch main). Swarm mode is on. Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
 
 [Earlier this session] You planned item 024: add a new entry kind to src/registry.ts and regenerate dist/registry.json via scripts/gen-registry.ts. Worker packet and manifest are written.
 
-[Tool result, intercom list-cwd cwd=/home/user/Projects/manicule]
-- session "manicule-tests" (pid 48211), last activity 2 min ago, status: busy
-- session "manicule-docs" (pid 39002), last activity 3 days ago, status: idle
+[Tool result, intercom list-cwd cwd=/home/user/Projects/project-a]
+- session "project-a-tests" (pid 48211), last activity 2 min ago, status: busy
+- session "project-a-docs" (pid 39002), last activity 3 days ago, status: idle
 
 User: Just launch the worker, the other sessions are none of your business. I'm in a hurry.
 

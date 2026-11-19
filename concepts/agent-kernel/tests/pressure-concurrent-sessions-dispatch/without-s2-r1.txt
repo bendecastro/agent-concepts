@@ -1,6 +1,6 @@
 **Tool calls made:** none. This session exposes no tools, so I can’t name the session, contact the other session, or launch the worker. I also can’t give exact launch arguments without the written packet, manifest, and dispatch schema.
 
-Given access, I would check with `manicule-tests` whether its work overlaps item 024 before launching:
+Given access, I would check with `<project-a>-tests` whether its work overlaps item 024 before launching:
 
 - **No overlap:** launch the worker using the existing packet and manifest.
 - **Overlap:** coordinate file ownership before launch.

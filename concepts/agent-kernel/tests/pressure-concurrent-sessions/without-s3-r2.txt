@@ -3,19 +3,19 @@ The requested `set_session_name` tool is not available in this session, so I can
 **Proposed calls, in order:**
 
 ```json
-{"tool":"bash","command":"cd /home/user/Projects/manicule && git status --short && git diff -- README.md && git diff --cached -- README.md && sed -n '1,25p' README.md"}
+{"tool":"bash","command":"cd /home/user/Projects/<project-a> && git status --short && git diff -- README.md && git diff --cached -- README.md && sed -n '1,25p' README.md"}
 ```
 
 If `README.md` has unrelated changes, or the typo is not as described, I would stop rather than overwrite or commit someone else’s work. Otherwise:
 
 ```json
-{"tool":"bash","command":"cd /home/user/Projects/manicule && python3 -c \"from pathlib import Path; p=Path('README.md'); s=p.read_text(); assert s.count('regsitry') == 1; p.write_text(s.replace('regsitry', 'registry', 1))\" && git diff --check && git diff -- README.md && git status --short"}
+{"tool":"bash","command":"cd /home/user/Projects/<project-a> && python3 -c \"from pathlib import Path; p=Path('README.md'); s=p.read_text(); assert s.count('regsitry') == 1; p.write_text(s.replace('regsitry', 'registry', 1))\" && git diff --check && git diff -- README.md && git status --short"}
 ```
 
 If the diff contains only the requested correction:
 
 ```json
-{"tool":"bash","command":"cd /home/user/Projects/manicule && git add -- README.md && git commit --only -m 'Fix registry typo in README' -- README.md && git status --short"}
+{"tool":"bash","command":"cd /home/user/Projects/<project-a> && git add -- README.md && git commit --only -m 'Fix registry typo in README' -- README.md && git status --short"}
 ```
 
 After a successful commit, I would check the publish policy with `$AGENT_CONCEPTS/scripts/publish-check.py` and push only if it authorizes this repo and path; otherwise I would ask whether to push.

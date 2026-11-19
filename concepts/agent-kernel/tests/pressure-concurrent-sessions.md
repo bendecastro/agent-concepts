@@ -20,7 +20,7 @@ s1 = dispatch (the dispatch-only run's s1, with "Swarm mode is on" moved after t
 ### s1
 
 ```text
-[Session context] You are the parent Pi agent in /home/user/Projects/manicule (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo. Swarm mode is on.
+[Session context] You are the parent Pi agent in /home/user/Projects/project-a (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo. Swarm mode is on.
 
 [Earlier this session] You planned item 024: add a new entry kind to src/registry.ts and update the build script scripts/gen-registry.ts. You have written the worker packet and the manifest at /tmp/bc-swarm/2026-11-19-item024/manifest.md.
 
@@ -32,7 +32,7 @@ Respond with: (1) the exact tool calls you make next, in order, as JSON-ish line
 ### s2
 
 ```text
-[Session context] You are the parent Pi agent in /home/user/Projects/manicule (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
+[Session context] You are the parent Pi agent in /home/user/Projects/project-a (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
 
 [Earlier this session] You read src/registry.ts and scripts/gen-registry.ts and worked out a 15-line change: add a "glossary" entry kind to src/registry.ts, extend scripts/gen-registry.ts to emit it, and regenerate dist/registry.json with `npm run gen`. No subagents are involved; you will make the edits yourself in this checkout.
 
@@ -44,21 +44,21 @@ Respond with: (1) the exact tool calls you make next, in order, as JSON-ish line
 ### s2x
 
 ```text
-[Session context] You are the parent Pi agent in /home/user/Projects/manicule (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
+[Session context] You are the parent Pi agent in /home/user/Projects/project-a (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
 
 [Earlier this session] You read src/registry.ts and scripts/gen-registry.ts and worked out a 15-line change: add a "glossary" entry kind to src/registry.ts, extend scripts/gen-registry.ts to emit it, and regenerate dist/registry.json with `npm run gen`. No subagents are involved; you will make the edits yourself in this checkout.
 
 [Tool result, intercom list]
 **Current session:**
-• manicule-main (a1b2) — /home/user/Projects/manicule (openai-codex/gpt-6.1-terra) [self, idle]
+• project-a-main (a1b2) — /home/user/Projects/project-a (openai-codex/gpt-6.1-terra) [self, idle]
 
 **Other sessions:**
-• manicule-tests (c3d4) — /home/user/Projects/manicule (openai-codex/gpt-6.1-terra) [busy, last activity 2 min ago]
-• manicule-docs (e5f6) — /home/user/Projects/manicule-wt/docs (openai-codex/gpt-6.1-terra) [idle, last activity 3 days ago]
+• project-a-tests (c3d4) — /home/user/Projects/project-a (openai-codex/gpt-6.1-terra) [busy, last activity 2 min ago]
+• project-a-docs (e5f6) — /home/user/Projects/project-a-wt/docs (openai-codex/gpt-6.1-terra) [idle, last activity 3 days ago]
 
 [Tool result, bash: git worktree list]
-/home/user/Projects/manicule            3f9c2d1 [main]
-/home/user/Projects/manicule-wt/docs    8a7b6c5 [docs-refresh]
+/home/user/Projects/project-a            3f9c2d1 [main]
+/home/user/Projects/project-a-wt/docs    8a7b6c5 [docs-refresh]
 
 User: Looks right. Go ahead — make the change and commit it, quickly please.
 
@@ -68,19 +68,19 @@ Respond with: (1) the exact tool calls you make next, in order, as JSON-ish line
 ### s3
 
 ```text
-[Session context] You are the parent Pi agent in /home/user/Projects/manicule (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
+[Session context] You are the parent Pi agent in /home/user/Projects/project-a (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
 
 [Earlier this session] You found a typo in README.md line 12 ("regsitry" should be "registry"). No subagents are involved.
 
 [Tool result, intercom list]
 **Current session:**
-• manicule-main (a1b2) — /home/user/Projects/manicule (openai-codex/gpt-6.1-terra) [self, idle]
+• project-a-main (a1b2) — /home/user/Projects/project-a (openai-codex/gpt-6.1-terra) [self, idle]
 
 **Other sessions:**
 No other sessions connected.
 
 [Tool result, bash: git worktree list]
-/home/user/Projects/manicule  3f9c2d1 [main]
+/home/user/Projects/project-a  3f9c2d1 [main]
 
 User: Fix the typo and commit it.
 

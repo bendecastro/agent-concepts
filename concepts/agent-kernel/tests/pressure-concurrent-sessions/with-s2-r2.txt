@@ -4,7 +4,7 @@ The next proposed calls, in order, are:
 
 ```json
 {"tool":"intercom","action":"list"}
-{"tool":"bash","command":"cd /home/user/Projects/manicule && git status --short && git worktree list && git rev-parse --show-toplevel && for f in AGENTS.md src/AGENTS.md scripts/AGENTS.md dist/AGENTS.md src/registry.ts scripts/gen-registry.ts dist/registry.json; do if [ -e \"$f\" ]; then printf '\\n--- %s -> ' \"$f\"; readlink -f \"$f\"; fi; done"}
+{"tool":"bash","command":"cd /home/user/Projects/<project-a> && git status --short && git worktree list && git rev-parse --show-toplevel && for f in AGENTS.md src/AGENTS.md scripts/AGENTS.md dist/AGENTS.md src/registry.ts scripts/gen-registry.ts dist/registry.json; do if [ -e \"$f\" ]; then printf '\\n--- %s -> ' \"$f\"; readlink -f \"$f\"; fi; done"}
 ```
 
 I would check the session list against the checkout and worktrees. If another active session overlaps, I would coordinate before writing. I would inspect the applicable instructions, file contents and any sync targets before editing; if the working tree contains overlapping changes, I would preserve them and resolve the overlap first.

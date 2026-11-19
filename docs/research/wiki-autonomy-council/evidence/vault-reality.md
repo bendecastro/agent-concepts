@@ -18,7 +18,7 @@ It found 10 name candidates. Qualification required both `index.md` and `log.md`
 <owner-scripts>/.bc-agent
 <synced-home>/Work/CV/.bc-agent
 <synced-home>/Work/Development/dng/files/pub/agent/wiki
-<image-maze-project>/.bc-agent
+<project-b>/.bc-agent
 <synced-home>/Work/PUBLIC/Homeflix/.agent
 <synced-home>/Work/homeflix-prod/.agent
 ```
@@ -43,7 +43,7 @@ CV/.bc-agent: files 53; Markdown 42; total 192933 B; log 8733 B; index 1999 B; l
 dng/files/pub/agent/wiki: files 22; Markdown 22; total 36866 B; log 2861 B; index 874 B; last commit 2026-06-08
   root 5, conventions 3, decisions 1, project 4, references 4, tasks 3, templates 2
   largest: references/tags-and-categories.md 10957 B; project/seo-deep-improved-search-2026-plan.md 8001 B; log.md 2861 B
-image-maze/.bc-agent: files 2651; Markdown 239; total 60813914 B; log 199069 B; index 18172 B; last commit 2026-08-25
+<project-b>/.bc-agent: files 2651; Markdown 239; total 60813914 B; log 199069 B; index 18172 B; last commit 2026-08-25
   .obsidian 4, root 5, agents 4, conventions 7, decisions 30, open-questions 1, out-of-scope 1, project 81, raw 1, references 14, research 12, scratch 314, scripts 1, tasks 3, temp 2171, templates 2
   largest: log.md 199069 B; project/architecture-module-map.md 70757 B; project/plans/digital-chest-unlock/referral-unlock-plan.md 46829 B
 Homeflix/.agent: files 42; Markdown 42; total 220363 B; log 41822 B; index 6426 B; last commit 2026-08-25
@@ -56,25 +56,25 @@ homeflix-prod/.agent: files 45; Markdown 45; total 307786 B; log 70353 B; index 
 
 ## B. Token cost of traversal
 
-Token estimate is apparent bytes / 4. The three largest vaults are image-maze, homeflix-prod, and Scripts. The “index + 3 pages” proxy is the standard trio `project/overview.md`, `references/commands.md`, `tasks/active.md`, all present in those vaults.
+Token estimate is apparent bytes / 4. The three largest vaults are <project-b>, homeflix-prod, and Scripts. The “index + 3 pages” proxy is the standard trio `project/overview.md`, `references/commands.md`, `tasks/active.md`, all present in those vaults.
 
 Command/output:
 ```sh
 # stat each top-three vault and the standard trio; compute bytes/4
 ```
 ```text
-image-maze/.bc-agent: pages 239; whole 60813914 B = 15203478.5 tokens; index 18172 B = 4543; trio 1397+18208+8850=28455 B; index+trio 46627 B = 11656.75; log 199069 B = 49767.25; index-linked unique pages 118 (239 exist)
+<project-b>/.bc-agent: pages 239; whole 60813914 B = 15203478.5 tokens; index 18172 B = 4543; trio 1397+18208+8850=28455 B; index+trio 46627 B = 11656.75; log 199069 B = 49767.25; index-linked unique pages 118 (239 exist)
 homeflix-prod/.agent: pages 45; whole 307786 B = 76946.5 tokens; index 6985 B = 1746.25; trio 5164+6777+13509=25450 B; index+trio 32435 B = 8108.75; log 70353 B = 17588.25; index-linked unique pages 41 (45 exist)
 Scripts/.bc-agent: pages 54; whole 222108 B = 55527 tokens; index 5037 B = 1259.25; trio 5425+817+1531=7773 B; index+trio 12810 B = 3202.5; log 8146 B = 2036.5; index-linked unique pages 44 (54 exist)
 ```
-Image-maze’s 239 Markdown pages include generated `temp/`/`scratch/`; the graph/qmd view excludes those and sees 155 pages.
+<project-b>’s 239 Markdown pages include generated `temp/`/`scratch/`; the graph/qmd view excludes those and sees 155 pages.
 
 Exact byte/token command and output used for B:
 ```sh
-for v in <image-maze-project>/.bc-agent <synced-home>/Work/homeflix-prod/.agent <owner-scripts>/.bc-agent; do total=$(find "$v" -type f -printf '%s\n' | awk '{s+=$1} END{print s+0}'); idx=$(stat -c%s "$v/index.md"); log=$(stat -c%s "$v/log.md"); md=$(find "$v" -type f -name '*.md' -printf '%p\n' | wc -l); printf '%s total=%s whole_tokens=%s index=%s index_tokens=%s log=%s log_tokens=%s md=%s\n' "$v" "$total" "$(awk -v n="$total" 'BEGIN{printf "%.2f",n/4}')" "$idx" "$(awk -v n="$idx" 'BEGIN{printf "%.2f",n/4}')" "$log" "$(awk -v n="$log" 'BEGIN{printf "%.2f",n/4}')" "$md"; done
+for v in <project-b>/.bc-agent <synced-home>/Work/homeflix-prod/.agent <owner-scripts>/.bc-agent; do total=$(find "$v" -type f -printf '%s\n' | awk '{s+=$1} END{print s+0}'); idx=$(stat -c%s "$v/index.md"); log=$(stat -c%s "$v/log.md"); md=$(find "$v" -type f -name '*.md' -printf '%p\n' | wc -l); printf '%s total=%s whole_tokens=%s index=%s index_tokens=%s log=%s log_tokens=%s md=%s\n' "$v" "$total" "$(awk -v n="$total" 'BEGIN{printf "%.2f",n/4}')" "$idx" "$(awk -v n="$idx" 'BEGIN{printf "%.2f",n/4}')" "$log" "$(awk -v n="$log" 'BEGIN{printf "%.2f",n/4}')" "$md"; done
 ```
 ```text
-image-maze/.bc-agent total=60813914 whole_tokens=15203478.50 index=18172 index_tokens=4543.00 log=199069 log_tokens=49767.25 md=239
+<project-b>/.bc-agent total=60813914 whole_tokens=15203478.50 index=18172 index_tokens=4543.00 log=199069 log_tokens=49767.25 md=239
 homeflix-prod/.agent total=307786 whole_tokens=76946.50 index=6985 index_tokens=1746.25 log=70353 log_tokens=17588.25 md=45
 Scripts/.bc-agent total=222108 whole_tokens=55527.00 index=5037 index_tokens=1259.25 log=8146 log_tokens=2036.50 md=54
 ```
@@ -91,28 +91,28 @@ Music                                      11/197             10/197     0:12,1:
 Scripts                                    155/0              112/0      0:7,1:9,2:16,3:11,4:2,5:4,7:1                    44/50                 0/0          7
 CV                                         164/0              47/0       0:12,1:12,2:7,3:1,4:3                           23/35                 0/0          12
 dng/files/pub/agent/wiki                   24/0               24/0       0:6,1:7,2:2,3:3                               13/18                 0/0          6
-image-maze                                 400/0              345/0      0:14,1:63,2:33,3:12,4:8,5:6,6:4,7:6,8:1,9:2,10:2 118/151              0/0          14
+<project-b>                                 400/0              345/0      0:14,1:63,2:33,3:12,4:8,5:6,6:4,7:6,8:1,9:2,10:2 118/151              0/0          14
 Homeflix                                   210/0              182/0      1:6,2:3,3:3,4:8,5:8,6:1,7:3,8:2,9:1,10:1,21:1 41/37                 0/0          0
 homeflix-prod                              272/0              242/0      1:7,2:3,3:3,4:4,5:5,6:5,7:1,8:3,9:2,10:2,11:1,12:1,13:1,14:1,23:1 41/40       0/0          0
 ```
-All nine pass the mechanical hub threshold, but only public Homeflix has zero `missing_index`; the detector reports nonzero missing-index counts for the other 8/9. The top inbound targets include `concepts/plus-operator-coercion.md:7` (codebase-design), `findings/existing-music-stack-recon.md:11` (Music), `decisions/adr-0010-abandon-wallpaper-crossfade.md:7` (Scripts), `project/plans/digital-chest-unlock/referral-unlock-plan.md:10` (image-maze), `decisions/adr-0008-single-filesystem-data-root-hardlinks.md:21` (Homeflix), and the same ADR at `:23` (homeflix-prod).
+All nine pass the mechanical hub threshold, but only public Homeflix has zero `missing_index`; the detector reports nonzero missing-index counts for the other 8/9. The top inbound targets include `concepts/plus-operator-coercion.md:7` (codebase-design), `findings/existing-music-stack-recon.md:11` (Music), `decisions/adr-0010-abandon-wallpaper-crossfade.md:7` (Scripts), `project/plans/digital-chest-unlock/referral-unlock-plan.md:10` (<project-b>), `decisions/adr-0008-single-filesystem-data-root-hardlinks.md:21` (Homeflix), and the same ADR at `:23` (homeflix-prod).
 
 ## D. Page anatomy samples
 
 Command actually run for bytes and first three physical lines:
 ```sh
-for f in <music-library>/.bc-agent/findings/existing-music-stack-recon.md <owner-scripts>/.bc-agent/project/wallpaper-rotation-spec.md <synced-home>/Work/CV/.bc-agent/findings/job-ad-scan-saas.md <image-maze-project>/.bc-agent/project/architecture-module-map.md <synced-home>/Work/PUBLIC/Homeflix/.agent/references/gotchas.md <synced-home>/Documents/Learning/codebase-design/.bc-agent/learning-records/0001-variables-let-const.md; do printf '%s\t' "$f"; wc -c < "$f"; done
+for f in <music-library>/.bc-agent/findings/existing-music-stack-recon.md <owner-scripts>/.bc-agent/project/wallpaper-rotation-spec.md <synced-home>/Work/CV/.bc-agent/findings/job-ad-scan-saas.md <project-b>/.bc-agent/project/architecture-module-map.md <synced-home>/Work/PUBLIC/Homeflix/.agent/references/gotchas.md <synced-home>/Documents/Learning/codebase-design/.bc-agent/learning-records/0001-variables-let-const.md; do printf '%s\t' "$f"; wc -c < "$f"; done
 ```
 ```text
 Music/findings/existing-music-stack-recon.md 2173 B; first3: 1 `---` / 2 `type: finding` / 3 `status: stable`
 Scripts/project/wallpaper-rotation-spec.md 22167 B; first3: 1 `# Wallpaper Rotation Specification` / 2 blank / 3 `Updated: 2026-08-24`
 CV/findings/job-ad-scan-saas.md 7700 B; first3: 1 `> **Superseded as a data source.** Raw scan data now lives in` / 2 `> .bc-agent/research/scans/*.json ...` / 3 `> Kept for the written analysis below.`
-image-maze/project/architecture-module-map.md 70757 B; first3: 1 `# Architecture Module Map` / 2 blank / 3 `Status: Current`
+<project-b>/project/architecture-module-map.md 70757 B; first3: 1 `# Architecture Module Map` / 2 blank / 3 `Status: Current`
 Homeflix/references/gotchas.md 18871 B; first3: 1 `# References — Gotchas` / 2 blank / 3 `Updated: 2026-08-17`
 codebase-design/learning-records/0001-variables-let-const.md 1489 B; first3: 1 `---` / 2 `Status: demonstrated` / 3 `---`
 ```
 
-Cold-reader assessment from the sampled prose/status fields: Music has no explicit opening TL;DR (heading then `## Question`), dates 2026-05-29, and no “current through” marker: not enough to know it remains true today. Scripts has an opening synopsis, `Updated: 2026-08-24`, and explicitly describes normative/current truth and pending requirements: current as of that date. CV opens with explicit “Superseded as a data source”; a 2026-08-01 rescan is dated: the superseded state is clear, but it is not current data. Image-maze says `Status: Current`, `Updated: 2026-08-17`, and “verified against shipped code”: current as of that date, not rechecked today. Homeflix has an opening description and `Updated: 2026-08-17`; bullets individually mark historical/fixture-only states, but the mixed page has no single validity state. The learning record opens with a learner-state summary and `Status: demonstrated` but no date: learning status is clear, freshness is not.
+Cold-reader assessment from the sampled prose/status fields: Music has no explicit opening TL;DR (heading then `## Question`), dates 2026-05-29, and no “current through” marker: not enough to know it remains true today. Scripts has an opening synopsis, `Updated: 2026-08-24`, and explicitly describes normative/current truth and pending requirements: current as of that date. CV opens with explicit “Superseded as a data source”; a 2026-08-01 rescan is dated: the superseded state is clear, but it is not current data. <project-b> says `Status: Current`, `Updated: 2026-08-17`, and “verified against shipped code”: current as of that date, not rechecked today. Homeflix has an opening description and `Updated: 2026-08-17`; bullets individually mark historical/fixture-only states, but the mixed page has no single validity state. The learning record opens with a learner-state summary and `Status: demonstrated` but no date: learning status is clear, freshness is not.
 
 ## E. Existing machinery
 
@@ -145,7 +145,7 @@ qmd --version
 qmd collection list
 python3 <synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py <vault> --json
 ```
-`qmd --version` returned `qmd 2.5.3`. `qmd collection list` reported 8 collections: `wiki`, `music`, `scripts`, `image-maze`, `agents`, `homeflix`, `homeflix-prod`, `codebase-design`. Both `/home/<user>/.config/qmd/index.yml` and canonical `<owner-scripts>/config/qmd-collections.yml` contain those eight path definitions.
+`qmd --version` returned `qmd 2.5.3`. `qmd collection list` reported 8 collections: `wiki`, `music`, `scripts`, `<project-b>`, `agents`, `homeflix`, `homeflix-prod`, `codebase-design`. Both `/home/<user>/.config/qmd/index.yml` and canonical `<owner-scripts>/config/qmd-collections.yml` contain those eight path definitions.
 
 ```text
 codebase-design registered (canonical + machine)
@@ -154,11 +154,11 @@ Music registered (canonical + machine)
 Scripts registered (canonical + machine)
 CV intentional exclusion (documented personal-data exclusion)
 dng/files/pub/agent/wiki unregistered (absent from both)
-image-maze registered (canonical + machine)
+<project-b> registered (canonical + machine)
 Homeflix registered (canonical + machine)
 homeflix-prod registered (canonical + machine)
 ```
-Thus 6/9 are registered, 2/9 intentional exclusions, and 1/9 unregistered. qmd’s live collection counts are Music 69, Scripts 54, image-maze 155, Homeflix 42, homeflix-prod 45, codebase-design 52 (templates ignored).
+Thus 6/9 are registered, 2/9 intentional exclusions, and 1/9 unregistered. qmd’s live collection counts are Music 69, Scripts 54, <project-b> 155, Homeflix 42, homeflix-prod 45, codebase-design 52 (templates ignored).
 
 Real query command:
 ```sh
@@ -180,12 +180,12 @@ Measured with Python `time.perf_counter` around the real subprocess: return code
 ```text
 bc-wiki-lint.timer                  enabled active; next 04:15 (+15m randomized)
 bc-wiki-maintain.timer              enabled active; CV, 03:30 (+15m randomized)
-bc-wiki-maintain-imagemaze.timer    enabled active; 04:45 (+15m randomized)
+bc-wiki-maintain-<project-b>.timer    enabled active; 04:45 (+15m randomized)
 bc-wiki-maintain-homeflix.timer     enabled active; 05:30 (+15m randomized)
 bc-wiki-maintain-homeflix-prod.timer enabled active; 06:15 (+15m randomized)
 bc-wiki-*.service                   static inactive (Type=oneshot)
 ```
-Installed services point to the canonical `run-lint.sh`/`run-promotion.sh` under `AGENT_CONCEPTS=<synced-home>/Work/PUBLIC/Agents`; lint uses `/home/<user>/.config/agent-concepts/wiki-lint-vaults.txt`, which contains 8 paths and omits dng. The lint runner is detection-only, continues after a path failure, and reports a final failure count. Promotion services require a clean tree, run detection, fail closed on invalid/malformed ranges, invoke Pi only when required, require complete classification, reject staging/outside-vault/deletion/non-Markdown/non-additive changes, then create one exact-range commit. Today’s journal shows lint checked 8 paths with 0 failures; four promotion runs finished: CV, image-maze, and public Homeflix were no-ops; homeflix-prod classified one entry `skip` and made no commit.
+Installed services point to the canonical `run-lint.sh`/`run-promotion.sh` under `AGENT_CONCEPTS=<synced-home>/Work/PUBLIC/Agents`; lint uses `/home/<user>/.config/agent-concepts/wiki-lint-vaults.txt`, which contains 8 paths and omits dng. The lint runner is detection-only, continues after a path failure, and reports a final failure count. Promotion services require a clean tree, run detection, fail closed on invalid/malformed ranges, invoke Pi only when required, require complete classification, reject staging/outside-vault/deletion/non-Markdown/non-additive changes, then create one exact-range commit. Today’s journal shows lint checked 8 paths with 0 failures; four promotion runs finished: CV, <project-b>, and public Homeflix were no-ops; homeflix-prod classified one entry `skip` and made no commit.
 
 ## F. Evidence of the problem
 
@@ -201,16 +201,16 @@ Music: Pages 69; Broken 0; Ambiguous 0; Orphans 12; Missing index 13; Unpromoted
 Scripts: Pages 54; Broken 0; Ambiguous 0; Orphans 7; Missing index 7; Unpromoted 12; undatable 12; PROMOTION_RANGE=invalid
 CV: Pages 42; Broken 0; Ambiguous 0; Orphans 12; Missing index 13; Unpromoted 0; PROMOTION_RANGE=none
 dng/files/pub/agent/wiki: Pages 22; Broken 0; Ambiguous 0; Orphans 6; Missing index 6; Unpromoted 0; PROMOTION_RANGE=none
-image-maze: Pages 155; Broken 0; Ambiguous 0; Orphans 14; Missing index 16; Unpromoted 0; PROMOTION_RANGE=none
+<project-b>: Pages 155; Broken 0; Ambiguous 0; Orphans 14; Missing index 16; Unpromoted 0; PROMOTION_RANGE=none
 Homeflix: Pages 42; Broken 0; Ambiguous 0; Orphans 0; Missing index 0; Unpromoted 0; PROMOTION_RANGE=none
 homeflix-prod: Pages 45; Broken 0; Ambiguous 0; Orphans 0; Missing index 3; Unpromoted 1; PROMOTION_RANGE=2026-08-24..2026-08-24
 ```
 
 Concrete stuck/failure instances from `--json` and raw `grep -n '^## ' log.md`:
 - **Invalid promotion range:** `sql/.bc-agent/log.md:6` is `## 2026-07-31`; `Scripts/.bc-agent/log.md` has 12 bare headings (`## 2026-06-26`, `## 2026-07-13`, `## 2026-07-15`, `## 2026-07-22`, `## 2026-07-23`, `## 2026-07-25`, `## 2026-07-26`, `## 2026-07-27` twice, `## 2026-07-29`, `## 2026-08-18`, `## 2026-08-24`). All 13 are undatable and both vaults emit `PROMOTION_RANGE=invalid`.
-- **Unpromoted log backlog:** no dedicated promotion commit exists for codebase-design (18 headings, including bare `## 2026-06-28`), sql (1), Music (37), Scripts (12), or dng (0 headings). Music’s backlog starts `## [2026-05-29] maintenance | Initialized plan wiki` and ends `## [2026-08-05] convention | AGENTS.md trimmed to rules; reference material demoted`. homeflix-prod has one post-boundary heading: `## [2026-08-24] wiki | Resolved all six 2026-08-24 promotion conflicts`. CV’s latest promotion is `cdf6775` on 2026-08-25; image-maze `7a241f6`; public Homeflix `be448a5`; homeflix-prod `c5f9ec1`.
-- **Missing index examples:** codebase-design 14 includes `concepts/README.md`, `references/paths.md`, `tasks/parking-lot.md`; sql 20 includes `GLOSSARY.md`, `MISSION.md`, `NOTES.md`; Music 13 includes `decisions/vocabulary-gated-comment-writes.md` and `findings/sticker-db-syncthing-fork.md`; Scripts 7 includes `references/paths.md`; CV 13 includes `findings/README.md`; dng 6 includes `project/create-agent-wiki-plan.md` and `project/seo-deep-improved-search-2026-plan.md`; image-maze 16 includes `references/dcu-trusted-proxy.md`, `references/docker.md`, and four unlisted PRD/plan pages; homeflix-prod 3 are `project/agent-first-acquisition-plan.md`, `project/agent-first-core-setup-plan.md`, and `project/agent-first-storage-plan.md`.
-- **Orphan examples (exact graph counts above):** codebase-design has 21 including all ten `learning-records/*.md`; sql has 17 including `learning/plan.md`; Music has 12 including `home.md` and `decisions/adr-0001-local-project-agent-wiki.md`; Scripts has 7 including `conventions/file-layout.md`; CV has 12 including `findings/README.md`; dng has 6 including both project plans; image-maze has 14 including `project/plans/digital-chest-unlock/referral-engine-study.md`, `references/age-verification-seam.md`, and `references/wordpress-local-env.md`. Homeflix and homeflix-prod have zero orphans.
+- **Unpromoted log backlog:** no dedicated promotion commit exists for codebase-design (18 headings, including bare `## 2026-06-28`), sql (1), Music (37), Scripts (12), or dng (0 headings). Music’s backlog starts `## [2026-05-29] maintenance | Initialized plan wiki` and ends `## [2026-08-05] convention | AGENTS.md trimmed to rules; reference material demoted`. homeflix-prod has one post-boundary heading: `## [2026-08-24] wiki | Resolved all six 2026-08-24 promotion conflicts`. CV’s latest promotion is `cdf6775` on 2026-08-25; <project-b> `7a241f6`; public Homeflix `be448a5`; homeflix-prod `c5f9ec1`.
+- **Missing index examples:** codebase-design 14 includes `concepts/README.md`, `references/paths.md`, `tasks/parking-lot.md`; sql 20 includes `GLOSSARY.md`, `MISSION.md`, `NOTES.md`; Music 13 includes `decisions/vocabulary-gated-comment-writes.md` and `findings/sticker-db-syncthing-fork.md`; Scripts 7 includes `references/paths.md`; CV 13 includes `findings/README.md`; dng 6 includes `project/create-agent-wiki-plan.md` and `project/seo-deep-improved-search-2026-plan.md`; <project-b> 16 includes `references/dcu-trusted-proxy.md`, `references/docker.md`, and four unlisted PRD/plan pages; homeflix-prod 3 are `project/agent-first-acquisition-plan.md`, `project/agent-first-core-setup-plan.md`, and `project/agent-first-storage-plan.md`.
+- **Orphan examples (exact graph counts above):** codebase-design has 21 including all ten `learning-records/*.md`; sql has 17 including `learning/plan.md`; Music has 12 including `home.md` and `decisions/adr-0001-local-project-agent-wiki.md`; Scripts has 7 including `conventions/file-layout.md`; CV has 12 including `findings/README.md`; dng has 6 including both project plans; <project-b> has 14 including `project/plans/digital-chest-unlock/referral-engine-study.md`, `references/age-verification-seam.md`, and `references/wordpress-local-env.md`. Homeflix and homeflix-prod have zero orphans.
 
 No repository file was edited or committed. `<synced-home>/Work/PUBLIC/Agents` status at the end showed only the task-provided untracked `docs/research/wiki-autonomy-council/` directory; its contents were not inspected.
 
@@ -260,7 +260,7 @@ No repository file was edited or committed. `<synced-home>/Work/PUBLIC/Agents` s
     "Agents repository status showed only the task-provided untracked docs/research/wiki-autonomy-council/ directory; no repository file was edited by this run."
   ],
   "residualRisks": [
-    "image-maze whole-vault traversal is 60,813,914 bytes because generated temp/scratch files dominate; index links 118 of 239 Markdown pages.",
+    "<project-b> whole-vault traversal is 60,813,914 bytes because generated temp/scratch files dominate; index links 118 of 239 Markdown pages.",
     "Eight of nine vaults have nonzero detector missing_index counts; 89 eligible pages are orphaned across the corrected graph counts.",
     "The qmd measurement used --no-rerank; full reranked latency was not measured in this run."
   ],
@@ -269,7 +269,7 @@ No repository file was edited or committed. `<synced-home>/Work/PUBLIC/Agents` s
   "reviewFindings": [
     "high: sql and Scripts have PROMOTION_RANGE=invalid with undatable bare log headings.",
     "high: scheduled lint covers 8 paths and omits the discovered dng agent/wiki vault.",
-    "medium: image-maze contains 2,171 temp files totaling 49,058,054 bytes and 14 orphan pages in the detector graph."
+    "medium: <project-b> contains 2,171 temp files totaling 49,058,054 bytes and 14 orphan pages in the detector graph."
   ],
   "manualNotes": "All measurements are read-only."
 }

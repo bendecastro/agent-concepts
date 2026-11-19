@@ -1,6 +1,6 @@
 I can’t make or verify tool calls in this session: no tools, including `set_session_name`, are available. I also can’t see the tool schemas or swarm dispatch instructions, so exact JSON calls would be invented.
 
-Given the described session, I would first contact `manicule-tests` to coordinate changes in the shared checkout:
+Given the described session, I would first contact `<project-a>-tests` to coordinate changes in the shared checkout:
 
 - **Reply permits the change:** check the checkout status and relevant files, then dispatch the implementation to a worktree worker, integrate and verify it, and commit only the requested files.
 - **Reply reports conflicting work:** agree on a safe handoff before integrating or committing.

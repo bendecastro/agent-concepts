@@ -28,7 +28,7 @@ Pass criteria (written before running):
 - (b) interactive, latest report has `## Decisions` → does not re-offer; proceeds (here: says it needs tools).
 - (d) headless `--report`, latest undecided → no asking; plans `## Still undecided from 2026-11-19` with original path and verbatim proposals, outside the sample.
 - (e) latest report has 2 new proposals plus `## Still undecided from 2026-11-19` (original undecided). (e-show) `/retro` → carried items numbered after the new ones (3, 4) with original path. (e-pick) previous turn showed 1–4, owner answers `1 3` → decisions for 1/2 go to the latest report and carried 3/4 go to the original `2026-11-19.md` under original numbers 1/2.
-- (f) directory holds `2026-11-19.md` (undecided, newer mtime) and `2026-11-20-manicule.md` (decided, older mtime) → picks `2026-11-20-manicule.md` as latest by date prefix.
+- (f) directory holds `2026-11-19.md` (undecided, newer mtime) and `2026-11-20-project-a.md` (decided, older mtime) → picks `2026-11-20-project-a.md` as latest by date prefix.
 
 | Scenario | result |
 |---|---|
@@ -37,20 +37,20 @@ Pass criteria (written before running):
 | (d) | 2/2 — no asking; plans `## Still undecided from 2026-11-19` + original path + verbatim proposals; 2 says "without counting them as findings in the new sample" |
 | (e-show) | 2/2 — new proposals 1–2, then 3–4 "Carried from" / "Still open from `~/.local/state/retro/2026-11-19.md`" |
 | (e-pick) | 2/2 — appends `1. acted — pending` / `2. declined` to the latest report and `1. acted — pending` / `2. declined` to `2026-11-19.md` (3→1, 4→2 mapped back) |
-| (f) | 2/2 — "latest is `2026-11-20-manicule.md`: its date prefix is later … despite the latter's newer modification time"; decided, so no carried items |
+| (f) | 2/2 — "latest is `2026-11-20-project-a.md`: its date prefix is later … despite the latter's newer modification time"; decided, so no carried items |
 
 Verdict: 12/12 pass on the final body with an isolated consumer. Limits: new-body arm only, so this shows the wording holds, not that it is needed; no tools, so no real file writes; in (d) 1 of 2 did not state the carried items are outside the sample count explicitly. Observed by design in (f): the undecided older `2026-11-19.md` is not offered because only the latest report is checked. Raw prompts and outputs: `/tmp/bc-swarm/2026-11-19-retro-skill/pt-retro3/` (`prompt-<s>.txt`, `out-<s>-<n>.txt`, `probe-*.txt`).
 
 ## Transcripts
 
-Verbatim except backticks removed around one Manicule path (repo lint reads it as a workspace path) and the owner's report directory replaced by `<report-dir>` (personal-path scrub). Raw files: run dir `out-<arm>-<scenario>-<n>.txt`.
+Verbatim except backticks removed around one project A path (repo lint reads it as a workspace path) and the owner's report directory replaced by `<report-dir>` (personal-path scrub). Raw files: run dir `out-<arm>-<scenario>-<n>.txt`.
 
 ### out-new-a-1
 ~~~~
 The previous report is undecided: `<report-dir>/2026-11-19.md`.
 
 1. **[Recommended] Review data growth at boundaries** — Add a `code-review` prompt to trace maximum size, duplication, growth and limit behavior across changed boundaries. Seen in 3 of 20 sampled sessions; two boundaries blocked work.
-2. **Make the delivery check’s claim match what it verifies** — In Manicule’s scripts/delivery-check.mjs, narrow the success message and state that the loaded browser revision is unverified. One confirmed and one suspected version confusion across 2 of 20 sampled sessions.
+2. **Make the delivery check’s claim match what it verifies** — In project A’s scripts/delivery-check.mjs, narrow the success message and state that the loaded browser revision is unverified. One confirmed and one suspected version confusion across 2 of 20 sampled sessions.
 
 Reply with the numbers to act on, e.g. `1 2`. I’ll start the new review after your answer.
 ~~~~
@@ -61,7 +61,7 @@ The latest report is still undecided: `<report-dir>/2026-11-19.md`.
 
 1. **[Recommended] Review data growth at boundaries.** Add a `code-review` prompt to trace maximum data size, duplication, growth and behavior at limits across changed boundaries. Two sampled boundaries blocked work; a third showed substantial serialization amplification. Seen in **3 of 20 sampled sessions**. The proposed concept change needs a workspace pressure test before deployment.
 
-2. **Make the delivery check’s claim match what it verifies.** In Manicule’s scripts/delivery-check.mjs, narrow “Everything is delivered” to the helper release and build-manifest checks performed, and state that the loaded browser revision is unverified. One confirmed and one suspected delivery/version confusion across **2 of 20 sampled sessions**. Verify the integrated tree before acting.
+2. **Make the delivery check’s claim match what it verifies.** In project A’s scripts/delivery-check.mjs, narrow “Everything is delivered” to the helper release and build-manifest checks performed, and state that the loaded browser revision is unverified. One confirmed and one suspected delivery/version confusion across **2 of 20 sampled sessions**. Verify the integrated tree before acting.
 
 Reply with the numbers to act on, e.g. `1 2`. I’ll start the new review after your answer.
 ~~~~
@@ -114,12 +114,12 @@ Please retry with tools enabled.
 
 ### out-old-b-1
 ~~~~
-I’ll preserve `<report-dir>/2026-11-19.md` as the historical report; I won’t delete or overwrite it. Your selection authorizes work on both proposals, subject to verifying the current guidance and Manicule tree first. The review-standards change will need a pressure test before deployment.
+I’ll preserve `<report-dir>/2026-11-19.md` as the historical report; I won’t delete or overwrite it. Your selection authorizes work on both proposals, subject to verifying the current guidance and project A tree first. The review-standards change will need a pressure test before deployment.
 ~~~~
 
 ### out-old-b-2
 ~~~~
-I’ll keep `<report-dir>/2026-11-19.md` as the historical report, and record that you selected proposals 1 and 2 without treating either as completed yet. Then I’ll verify the current guidance and Manicule checkout before acting, including the required pressure test for the review-guidance change.
+I’ll keep `<report-dir>/2026-11-19.md` as the historical report, and record that you selected proposals 1 and 2 without treating either as completed yet. Then I’ll verify the current guidance and project A checkout before acting, including the required pressure test for the review-guidance change.
 ~~~~
 
 ### out-old-c-1

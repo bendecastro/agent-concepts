@@ -4,7 +4,7 @@ I can’t make actual tool calls in this session: no tools are exposed, includin
 
 ```text
 set_session_name({name: "Add Glossary Registry Kind"})
-intercom({action: "send", to: "manicule-tests", message: "I plan to edit src/registry.ts and scripts/gen-registry.ts, regenerate dist/registry.json, and commit in the shared checkout. What files are you changing, and are you running tests or builds that would conflict? Please tell me your planned order."})
+intercom({action: "send", to: "<project-a>-tests", message: "I plan to edit src/registry.ts and scripts/gen-registry.ts, regenerate dist/registry.json, and commit in the shared checkout. What files are you changing, and are you running tests or builds that would conflict? Please tell me your planned order."})
 ```
 
 If naming is unavailable, continue without it. The docs session is stale and in a separate worktree, so I would note its unknown overlap but not wait for it.
@@ -14,15 +14,15 @@ If the tests session agrees there is no conflict, proceed. If it reports overlap
 After coordination permits writing:
 
 ```text
-bash({command: "cd /home/user/Projects/manicule && git status --short && readlink -f src/registry.ts scripts/gen-registry.ts dist/registry.json && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+bash({command: "cd /home/user/Projects/<project-a> && git status --short && readlink -f src/registry.ts scripts/gen-registry.ts dist/registry.json && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
 ```
 
 Inspect the paths, existing changes, and any sync implications before editing. If the target files have unrelated changes that cannot be safely separated, stop and ask. Then make the specified edits, regenerate, inspect the result, and run the relevant bounded checks:
 
 ```text
-edit({path: "/home/user/Projects/manicule/src/registry.ts", ...})
-edit({path: "/home/user/Projects/manicule/scripts/gen-registry.ts", ...})
-bash({command: "cd /home/user/Projects/manicule && npm run gen && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+edit({path: "/home/user/Projects/<project-a>/src/registry.ts", ...})
+edit({path: "/home/user/Projects/<project-a>/scripts/gen-registry.ts", ...})
+bash({command: "cd /home/user/Projects/<project-a> && npm run gen && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
 ```
 
 The exact edit arguments and test command depend on the file contents and project scripts; I would not invent them from the summary. If generation or validation fails, investigate without committing an unverified result. Before committing, inspect the final status and diff and stage only my changes. After a successful commit, check the publish policy; push if it authorizes this change, otherwise ask whether to push.

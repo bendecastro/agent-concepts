@@ -2,14 +2,14 @@ I can’t make actual tool calls here: this session exposes none, including `set
 
 ```text
 set_session_name({name: "Add Glossary Registry Kind"})
-intercom.list_cwd({cwd: "/home/user/Projects/manicule"})
+intercom.list_cwd({cwd: "/home/user/Projects/<project-a>"})
 # If another live session is present:
 intercom.ask({session: "<session-id>", message: "Are you changing src/registry.ts, scripts/gen-registry.ts, or dist/registry.json? Please reply before I edit."})
 # If it replies that there is no overlap, proceed. If there is overlap, coordinate ownership first.
 # If it stays silent for several minutes, do not assume the checkout is safe; ask the user how to proceed.
 
 read({path: "~/.pi/agent/skills/bc-swarm/pi.md"})
-bash({command: "cd /home/user/Projects/manicule && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+bash({command: "cd /home/user/Projects/<project-a> && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
 # Check storage health, create the swarm manifest, then dispatch one worktree worker
 # using the documented schema and an explicit model and thinking level.
 # The worker implements the glossary kind, runs npm run gen, and records its commit and branch.

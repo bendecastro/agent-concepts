@@ -26,7 +26,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 ## Provenance
 
 - `docs/plans/implemented/bc-grill-to-ship-loop.md` — the grilled-out build plan this concept implements (decisions locked 2026-06-20).
-- [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) — the workshop's plan→execute lifecycle (grill → PRD → tracer-bullet issues) this fuses into one command.
+- AI Engineer Workshop 2026 (Matt Pocock) — the workshop's plan→execute lifecycle (grill → PRD → tracer-bullet issues) this fuses into one command.
 - `concepts/to-spec/` and `concepts/to-tickets/` — the publication orchestrators that remain available for individual phases; the former `grill-me` wrapper was removed 2026-09-27.
 - `concepts/triage/`, `concepts/prototype/`, `concepts/improve-codebase-architecture/` — optional intake/evidence/runway skills integrated around the planning front.
 - `concepts/prompting-agents/body/SKILL.md` — composition boundary and gate phrasing.
@@ -44,4 +44,4 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 ## Invocation policy change (2026-07-03)
 
-Removed `disable-model-invocation: true`. It forced the user to retype the command even after explicitly asking the agent to route work into the loop (observed in an image-maze architecture-review session). The interactivity that matters — the grill and the slicing quiz — is preserved by the skill body's human gates, not by who launches the pipeline. The description now scopes model invocation to cases where the user asks for the bc loop, so agents don't self-select it for ordinary implementation requests.
+Removed `disable-model-invocation: true`. It forced the user to retype the command even after explicitly asking the agent to route work into the loop (observed in an project B architecture-review session). The interactivity that matters — the grill and the slicing quiz — is preserved by the skill body's human gates, not by who launches the pipeline. The description now scopes model invocation to cases where the user asks for the bc loop, so agents don't self-select it for ordinary implementation requests.

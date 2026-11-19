@@ -1,20 +1,20 @@
 **Planned calls** — assuming each preceding check succeeds. The session-name tool is not available here, so I cannot name the session.
 
 ```json
-bash({"command":"cd /home/user/Projects/manicule && git status --short && git diff -- README.md && git diff --cached -- README.md && readlink -f README.md && sed -n '1,30p' README.md && for f in AGENTS.md README.md/AGENTS.md; do [ ! -f \"$f\" ] || cat \"$f\"; done"})
+bash({"command":"cd /home/user/Projects/<project-a> && git status --short && git diff -- README.md && git diff --cached -- README.md && readlink -f README.md && sed -n '1,30p' README.md && for f in AGENTS.md README.md/AGENTS.md; do [ ! -f \"$f\" ] || cat \"$f\"; done"})
 ```
 
 If `README.md` has existing changes, its target is in a synced directory requiring further inspection, or instructions require another check, stop and resolve that first. Otherwise:
 
 ```json
-edit({"path":"/home/user/Projects/manicule/README.md","oldText":"regsitry","newText":"registry"})
-bash({"command":"cd /home/user/Projects/manicule && git diff --check && git diff -- README.md && git status --short"})
+edit({"path":"/home/user/Projects/<project-a>/README.md","oldText":"regsitry","newText":"registry"})
+bash({"command":"cd /home/user/Projects/<project-a> && git diff --check && git diff -- README.md && git status --short"})
 ```
 
 If the diff contains only the requested correction:
 
 ```json
-bash({"command":"cd /home/user/Projects/manicule && git add -- README.md && git diff --cached --check && git diff --cached -- README.md && git commit -m 'Fix registry typo in README' && git status --short"})
+bash({"command":"cd /home/user/Projects/<project-a> && git add -- README.md && git diff --cached --check && git diff --cached -- README.md && git commit -m 'Fix registry typo in README' && git status --short"})
 ```
 
 I would inspect the publish policy before any push; a local commit alone does not authorize publishing.

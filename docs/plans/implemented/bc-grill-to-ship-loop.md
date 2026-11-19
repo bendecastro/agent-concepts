@@ -17,7 +17,7 @@ The workspace already has the four pieces as separate composable skills
 (`grill-me`, `to-prd`, `to-issues`, `tdd`, ingested from the Pocock workshop). What
 is missing is (a) one command that runs the planning sequence so the user doesn't
 have to remember the order, and (b) the "Ralph"-style execution loop that the
-workshop describes but we never built. The image-maze `.agent` repo is a consumer
+workshop describes but we never built. The project B `.agent` repo is a consumer
 of the planning skills via a repo-local adapter and stops at `to-issues`; nothing
 chains planning into execution.
 
@@ -41,14 +41,14 @@ chains planning into execution.
      work visible to the next slice; with nobody to merge, stacked PRs leave slice
      N+1 branched off a base that never saw slice N. Trunk-based propagates
      dependencies for free, and it's exactly what `publish.yaml` already authorizes.
-6. **Publish authorization** — `~/.config/agent-concepts/publish.yaml` already authorizes image-maze
-   via rule `image-maze-push-and-close-after-agent-work` (`git_push` +
+6. **Publish authorization** — `~/.config/agent-concepts/publish.yaml` already authorizes project B
+   via rule `project-b-push-and-close-after-agent-work` (`git_push` +
    `github_issue_close` on `master`, gated on agent-authored + relevant validation +
    acceptance criteria satisfied; requires a commit/validation comment on close).
    - The executor's **launch preflight** runs `scripts/publish-check.py
      --repo --remote --branch master`. Exit 0 → push authorized. Exit 2 → **AFK push
      blocked**: abort and tell the user to pre-authorize the target repo (copy the
-     image-maze rule block, paths/remotes swapped) or run a local-only variant. The
+     project B rule block, paths/remotes swapped) or run a local-only variant. The
      loop **never edits `publish.yaml`** to grant its own push (self-amendment
      immunity).
 7. **Failure posture — park-and-continue + circuit-breaker.** On a slice that can't
@@ -65,7 +65,7 @@ chains planning into execution.
      using the project's `CONTEXT.md` vocabulary.
    - **Completion gate** (satisfies the rule's `after_relevant_validation`) — all
      acceptance-criteria checkboxes met **and** the project's own validation passes.
-     The agent **reads the project's validation/commands conventions** (image-maze:
+     The agent **reads the project's validation/commands conventions** (project B:
      `conventions/validation.md` + `references/commands.md`) rather than hardcoding
      a generic `npm test`.
    - **Land** — commit (agent-authored only, with git status/diff inspection per the
@@ -120,7 +120,7 @@ publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this i
 ### D. Docs
 - **Pipeline doc** in the workspace tying `bc-plan-to-issues → bc-drain-issues` (and
   the disciplines beneath them).
-- **Extend image-maze `planning-workflow.md`** with the execution phase (trunk-based
+- **Extend project B `planning-workflow.md`** with the execution phase (trunk-based
   push/close, `needs-human` parking) so that wiki documents the full loop, not just
   planning.
 
@@ -138,7 +138,7 @@ publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this i
 - [x] 1. Refactor → `prd-drafting` + `issue-slicing`; rewire `to-prd`/`to-issues`; scenarios updated for delegation.
 - [x] 2. `bc-plan-to-issues` built (CONCEPT + body + pressure test authored).
 - [x] 3. `bc-drain-issues` (`SKILL.md` + `execute-issue.md`) built + pressure test authored.
-- [x] 4. Pipeline doc (`pipeline.md`) + image-maze `planning-workflow.md` execution-phase extension.
+- [x] 4. Pipeline doc (`pipeline.md`) + project B `planning-workflow.md` execution-phase extension.
 - [~] 5. Bookkeeping done (`index.md`, `harnesses.md`, `log.md`); `prd-drafting`/`issue-slicing` Claude-symlinked.
       **Done 2026-07-16:** both `bc-` pressure tests PASS (Grok). Remaining if any: confirm deploy/symlink `bc-plan-to-issues`/`bc-drain-issues`
       (Claude) + Pi via `scripts/deploy-local-skills.py`; lint + commit.

@@ -18,7 +18,7 @@ User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbab
 
 - [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — original `to-issues` body and template (the slicing half now lives in `issue-slicing`).
 - Matt Pocock upstream `skills/engineering/to-tickets/SKILL.md` at `391a2701dd948f94f56a39f753f8eea9a859c87` — current public name and wide-refactor guidance. https://github.com/mattpocock/skills/blob/391a2701dd948f94f56a39f753f8eea9a859c87/skills/engineering/to-tickets/SKILL.md
-- [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) — workshop's `/prd-to-issues` step and the tracer-bullet framing.
+- AI Engineer Workshop 2026 (Matt Pocock) — workshop's `/prd-to-issues` step and the tracer-bullet framing.
 - `concepts/issue-slicing/` — the extracted slicing discipline this orchestrator wraps.
 
 ## Tests

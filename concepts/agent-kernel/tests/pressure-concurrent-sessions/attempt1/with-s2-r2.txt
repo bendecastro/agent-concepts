@@ -3,7 +3,7 @@ I can’t make or verify tool calls in this session: no tools are exposed here, 
 ```text
 set_session_name("Add Glossary Registry Kind")
 intercom({action: "list"})
-bash({command: "cd /home/user/Projects/manicule && git worktree list && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json && realpath src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+bash({command: "cd /home/user/Projects/<project-a> && git worktree list && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json && realpath src/registry.ts scripts/gen-registry.ts dist/registry.json"})
 ```
 
 Then, depending on those results:

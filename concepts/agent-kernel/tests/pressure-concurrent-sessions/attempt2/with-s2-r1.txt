@@ -5,7 +5,7 @@ The next calls would be, schematically:
 ```text
 set_session_name("Add Glossary Registry Kind")  // unavailable here
 intercom({action: "list"})                      // check live sessions before writing
-bash("git -C /home/user/Projects/manicule worktree list; git -C /home/user/Projects/manicule status --short")
+bash("git -C /home/user/Projects/<project-a> worktree list; git -C /home/user/Projects/<project-a> status --short")
 bash("bc-storage-health; cat ~/.pi/agent/skills/bc-swarm/pi.md")
 ```
 

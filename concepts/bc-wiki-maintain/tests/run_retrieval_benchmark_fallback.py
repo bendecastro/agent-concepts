@@ -277,8 +277,8 @@ def render_report(
         "",
         "```sh",
         "python3 concepts/bc-wiki-maintain/tests/run_retrieval_benchmark_fallback.py \\",
-        '  "<image-maze-project>/.bc-agent" \\',
-        "  --collection image-maze",
+        '  "<project>/.bc-agent" \\',
+        f"  --collection {collection}",
         "```",
         "",
         "The fallback itself is invoked as:",
@@ -322,7 +322,7 @@ def run(args: argparse.Namespace) -> None:
     repo = round_two.repo_root(vault)
     pages = round_two.eligible_pages(vault, repo)
     if len(pages) != 155:
-        raise RuntimeError(f"expected 155 eligible image-maze pages, found {len(pages)}")
+        raise RuntimeError(f"expected 155 eligible benchmark pages, found {len(pages)}")
     collection = args.collection or os.environ.get("QMD_COLLECTION") or vault.parent.name
     qmd_bin = args.qmd_bin or os.environ.get("QMD_BIN", "qmd")
     if subprocess.run([qmd_bin, "--version"], capture_output=True, check=False).returncode != 0:

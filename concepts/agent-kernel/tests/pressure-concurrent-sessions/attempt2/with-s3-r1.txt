@@ -3,20 +3,20 @@ The typo is a single mechanical edit, so I would handle it directly. No session-
 **Proposed tool calls, in order** (none executed):
 
 ```text
-bash({"command":"cd /home/user/Projects/manicule && git status --short && git diff -- README.md && readlink -f README.md && sed -n '1,25p' README.md && find .. -name AGENTS.md -print"})
+bash({"command":"cd /home/user/Projects/<project-a> && git status --short && git diff -- README.md && readlink -f README.md && sed -n '1,25p' README.md && find .. -name AGENTS.md -print"})
 ```
 
 Read any applicable `AGENTS.md` files and check whether the resolved file is in a synced directory before writing. If `README.md` has unrelated changes or the typo is absent or ambiguous, stop and inspect rather than overwrite them. The supplied intercom result shows no other sessions.
 
 ```text
-edit({"path":"/home/user/Projects/manicule/README.md","oldText":"regsitry","newText":"registry"})
-bash({"command":"cd /home/user/Projects/manicule && git diff --check && git diff -- README.md && git status --short"})
+edit({"path":"/home/user/Projects/<project-a>/README.md","oldText":"regsitry","newText":"registry"})
+bash({"command":"cd /home/user/Projects/<project-a> && git diff --check && git diff -- README.md && git status --short"})
 ```
 
 Only if the diff contains exactly the intended correction, commit it:
 
 ```text
-bash({"command":"cd /home/user/Projects/manicule && git add -- README.md && git diff --cached --check && git diff --cached -- README.md && git commit -m 'Fix registry typo in README' && git status --short"})
+bash({"command":"cd /home/user/Projects/<project-a> && git add -- README.md && git diff --cached --check && git diff --cached -- README.md && git commit -m 'Fix registry typo in README' && git status --short"})
 ```
 
 If the file was already staged or has other changes, do not use that `git add` command; isolate the intended change first. After a successful commit, check publishing authorization:

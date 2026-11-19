@@ -18,7 +18,7 @@ Measured on the live vaults ([vault-reality](#evidence)):
 - Zero broken links and zero ambiguous links in all nine vaults. The link
   checking works.
 - 7 to 21 orphan pages per vault; up to 42% of pages unreachable from `index.md`.
-- Reaching an answer in image-maze costs 4,543 tokens for `index.md` alone, or
+- Reaching an answer in project B costs 4,543 tokens for `index.md` alone, or
   11,657 for index plus the three pages a typical question needs.
 - `qmd query` — the designated search overlay — took **67.1 seconds**
   (57.3s expansion + 7.2s embedding). It cannot be an inline read path.
@@ -57,7 +57,7 @@ fingerprint or mtime. That is precisely how it avoids becoming the next `map.md`
 
 The catalog is useless if the instructions still point elsewhere.
 `scaffold.py:163` sends agents to `index.md` first, and `run-promotion.sh:122`
-tells the writer to read `AGENTS.md`, `index.md`, and `log.md` — image-maze's log
+tells the writer to read `AGENTS.md`, `index.md`, and `log.md` — project B's log
 alone is 49,767 tokens. Change both.
 
 Separately, make the scaffold emit `map.md` targets as real Markdown links so
@@ -110,7 +110,7 @@ consuming daily LLM effort to correct.
 
 1. Catalog writer plus the first-move change. **Measure: median tokens from vault
    entry to opening the correct page, over a fixed ~20-question benchmark.
-   Baseline 4,543 (image-maze index). Target ≤800.**
+   Baseline 4,543 (project B index). Target ≤800.**
 2. List-driven promotion 9/9. Measure: total unpromoted headings across all
    vaults, 68 → <10.
 3. Scaffold heading fix plus loud lint. Measure: zero `PROMOTION_RANGE=invalid`.

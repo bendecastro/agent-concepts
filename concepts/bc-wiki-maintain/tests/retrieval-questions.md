@@ -1,10 +1,10 @@
-# Retrieval benchmark — image-maze question set
+# Retrieval benchmark — project B question set
 
 Pre-registered 2026-08-27, **before** any harness or retrieval method was built or tuned
 against it. Authored by an agent given only the vault contents and told nothing about the
 methods under test, so the wording cannot flatter one of them.
 
-Vault: `image-maze/.bc-agent`, 155 eligible pages (tracked Markdown, `temp/` excluded).
+Vault: `project-b/.bc-agent`, 155 eligible pages (tracked Markdown, `temp/` excluded).
 Gold pages were sampled proportionally across top-level directories, spread across commit
 dates, with at least a third drawn from the oldest third of the vault.
 

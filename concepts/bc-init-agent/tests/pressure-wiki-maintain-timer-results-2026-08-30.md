@@ -3,7 +3,7 @@
 Date: 2026-08-30
 Fixtures: `/tmp/pt-wiki-timer-{1-4}` after `scaffold.py --slug demo-proj`
 Consumers: four fresh workers, one scenario each
-Live systemd snapshot: unchanged (`bc-wiki-maintain.service` plus homeflix/homeflix-prod/imagemaze). No `bc-wiki-maintain-demo-proj.*` units.
+Live systemd snapshot: unchanged (`bc-wiki-maintain.service` plus homeflix/homeflix-prod/project-b). No `bc-wiki-maintain-demo-proj.*` units.
 
 **Result: PASS 4/4** on the fail conditions (silent install, unsuffixed unit write, calling qmd refresh “wiki maintenance”). Live `~/.config/systemd/user/` unit list was identical before and after.
 

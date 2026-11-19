@@ -1,7 +1,7 @@
 I can’t make tool calls in this session: no tools, including `set_session_name`, are available. Given the hypothetical session context, the next call should be:
 
 ```text
-intercom({action: "ask", to: "manicule-tests",
+intercom({action: "ask", to: "<project-a>-tests",
   message: "I plan to dispatch item 024 in a worktree, changing src/registry.ts and dist/registry.json. I’ll integrate after the worker finishes and run the integrated checks. Are you touching those files or relying on shared checkout/build state? What’s your planned integration order?"})
 ```
 

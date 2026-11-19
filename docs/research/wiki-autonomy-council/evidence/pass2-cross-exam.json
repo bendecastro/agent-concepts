@@ -10,7 +10,7 @@
      {
       "claimId": "D1",
       "disposition": "reject",
-      "reason": "A 10-minute poller does not beat installing the existing nightly oneshot on all nine vaults. The measured hole is coverage, not latency: backlogs sit on vaults with no promotion timer or invalid range, while tonight\u2019s CV/image-maze/Homeflix runs correctly no-op\u2019d at PROMOTION_RANGE=none. wiki_lint.py every 10 minutes is cheap; invoking Pi is not. run-promotion.sh:42\u201349 already fail-closes on a dirty tree, so the daemon would mostly spin during real work and only write when HEAD is clean \u2014 which is also when a human or task agent is most likely to start the next edit. That races the single-writer pilot (CONCEPT.md:229\u2013230).\n\n\u201clog.md quiet 10 minutes\u201d is a bad session proxy. Capture is the cheap mid-task act (CONCEPT.md:13\u201315); agents append a log line and keep working. Quiet log \u2260 session done. Nightly 03:30 is the existing \u201cnobody is in the repo\u201d heuristic (runner/README.md). If same-day filing is wanted, a second OnCalendar is cheaper than a new global daemon. Do not replace nightly.",
+      "reason": "A 10-minute poller does not beat installing the existing nightly oneshot on all nine vaults. The measured hole is coverage, not latency: backlogs sit on vaults with no promotion timer or invalid range, while tonight\u2019s CV/<project-b>/Homeflix runs correctly no-op\u2019d at PROMOTION_RANGE=none. wiki_lint.py every 10 minutes is cheap; invoking Pi is not. run-promotion.sh:42\u201349 already fail-closes on a dirty tree, so the daemon would mostly spin during real work and only write when HEAD is clean \u2014 which is also when a human or task agent is most likely to start the next edit. That races the single-writer pilot (CONCEPT.md:229\u2013230).\n\n\u201clog.md quiet 10 minutes\u201d is a bad session proxy. Capture is the cheap mid-task act (CONCEPT.md:13\u201315); agents append a log line and keep working. Quiet log \u2260 session done. Nightly 03:30 is the existing \u201cnobody is in the repo\u201d heuristic (runner/README.md). If same-day filing is wanted, a second OnCalendar is cheaper than a new global daemon. Do not replace nightly.",
       "sources": [
        "<synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:13-19",
        "<synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/CONCEPT.md:229-230",
@@ -45,7 +45,7 @@
      {
       "claimId": "D4",
       "disposition": "reject",
-      "reason": "SQLite FTS is a third index beside Git pages and qmd. Largest eligible graph is image-maze 151 pages (vault-reality.md). A ~30KB jsonl is rg-scale; neighbor lists can be computed fields from the existing link walker (wiki_lint.py:71\u201379, 318\u2013336). qmd search is already the BM25 fallback (~0.5s, qmd SKILL.md:17\u201322). At ~1000 pages jsonl is still ~200KB; ranking pain is what `qmd search` is for. Build FTS only if a measured probe shows rg+qmd-search both miss. Do not add a daemonized query wrapper to the first move.",
+      "reason": "SQLite FTS is a third index beside Git pages and qmd. Largest eligible graph is <project-b> 151 pages (vault-reality.md). A ~30KB jsonl is rg-scale; neighbor lists can be computed fields from the existing link walker (wiki_lint.py:71\u201379, 318\u2013336). qmd search is already the BM25 fallback (~0.5s, qmd SKILL.md:17\u201322). At ~1000 pages jsonl is still ~200KB; ranking pain is what `qmd search` is for. Build FTS only if a measured probe shows rg+qmd-search both miss. Do not add a daemonized query wrapper to the first move.",
       "sources": [
        "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md",
        "<synced-home>/Work/PUBLIC/Agents/concepts/qmd/body/SKILL.md:17-22",
@@ -55,7 +55,7 @@
      {
       "claimId": "D5",
       "disposition": "accept",
-      "reason": "Verified on disk. scaffold.py:262\u2013292 writes targets as `- `path``. All nine live map.md files use that form; Homeflix and image-maze map.md have zero `](` or `[[` matches. without_code() (wiki_lint.py:23\u201340) blanks inline code before links() (:71\u201379), and lint walks map.md (only log.md and templates/ are skipped, :319\u2013324). So map.md contributes zero outbound edges; lint has never validated its targets. index.md does link `[Context map](map.md)` (Homeflix index.md:29), so map.md itself is not an orphan.\n\n`map_is_scaffold_stub` is not enough: Homeflix\u2019s best-maintained map is still graph-invisible. Required: scaffold MAP uses Markdown links; lint extracts map targets (backtick or link) or reports `map_unlinked_targets`; catalog remains the completeness layer. Do not treat map.md as the link graph.",
+      "reason": "Verified on disk. scaffold.py:262\u2013292 writes targets as `- `path``. All nine live map.md files use that form; Homeflix and <project-b> map.md have zero `](` or `[[` matches. without_code() (wiki_lint.py:23\u201340) blanks inline code before links() (:71\u201379), and lint walks map.md (only log.md and templates/ are skipped, :319\u2013324). So map.md contributes zero outbound edges; lint has never validated its targets. index.md does link `[Context map](map.md)` (Homeflix index.md:29), so map.md itself is not an orphan.\n\n`map_is_scaffold_stub` is not enough: Homeflix\u2019s best-maintained map is still graph-invisible. Required: scaffold MAP uses Markdown links; lint extracts map targets (backtick or link) or reports `map_unlinked_targets`; catalog remains the completeness layer. Do not treat map.md as the link graph.",
       "sources": [
        "<synced-home>/Work/PUBLIC/Agents/concepts/bc-init-agent/body/scaffold.py:262-292",
        "<synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:23-40",
@@ -63,7 +63,7 @@
        "<synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:319-324",
        "<synced-home>/Work/PUBLIC/Homeflix/.agent/map.md",
        "<synced-home>/Work/PUBLIC/Homeflix/.agent/index.md:29",
-       "<image-maze-project>/.bc-agent/map.md"
+       "<project-b>/.bc-agent/map.md"
       ]
      }
     ],
@@ -85,7 +85,7 @@
      {
       "claimId": "D1",
       "disposition": "accept",
-      "reason": "The measured distribution is correct: timer-covered CV/image-maze/Homeflix/homeflix-prod have 0+0+0+1 headings, while uncovered codebase-design/sql/Music/Scripts/dng have 18+1+37+12+0=68. A 10-minute dispatcher does not earn its complexity, especially because promotion refuses a dirty tree before detection and again before agent invocation. Adopt one nightly sequential promotion service over the vault scope. However, the existing list has only 8 paths and omits dng, so it reaches 9/9 only after adding/discovering dng; the list is scope configuration, not a recorded trigger.",
+      "reason": "The measured distribution is correct: timer-covered CV/<project-b>/Homeflix/homeflix-prod have 0+0+0+1 headings, while uncovered codebase-design/sql/Music/Scripts/dng have 18+1+37+12+0=68. A 10-minute dispatcher does not earn its complexity, especially because promotion refuses a dirty tree before detection and again before agent invocation. Adopt one nightly sequential promotion service over the vault scope. However, the existing list has only 8 paths and omits dng, so it reaches 9/9 only after adding/discovering dng; the list is scope configuration, not a recorded trigger.",
       "sources": [
        "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md:178-188",
        "/tmp/bc-swarm/2026-08-26-wiki-autonomy/vault-reality.md:198-211",
@@ -96,14 +96,14 @@
      {
       "claimId": "D2",
       "disposition": "accept",
-      "reason": "All nine live vaults have `map.md`. The scaffold explicitly calls it the smallest-context picker but emits targets as code spans. `without_code()` masks those spans before `links()`, so map targets produce no validated graph edges. Music's map is still the scaffold template; directly it names 11 unique files, not all 69 pages (the packet's exact \u201c34\u201d is only reproducible as 45 index-linked pages minus those 11, not as total-page omissions). image-maze is demonstrably stale for architecture work: map stops at rounds 4\u20137 while index contains rounds 8 and 9. Revised design: preserve `map.md` as the curated task-bundle layer, make new scaffold maps real relative Markdown links, lint legacy code-span targets for existence, and add a separate generated `catalog.md` containing every eligible page. Do not overwrite editorial maps automatically.",
+      "reason": "All nine live vaults have `map.md`. The scaffold explicitly calls it the smallest-context picker but emits targets as code spans. `without_code()` masks those spans before `links()`, so map targets produce no validated graph edges. Music's map is still the scaffold template; directly it names 11 unique files, not all 69 pages (the packet's exact \u201c34\u201d is only reproducible as 45 index-linked pages minus those 11, not as total-page omissions). <project-b> is demonstrably stale for architecture work: map stops at rounds 4\u20137 while index contains rounds 8 and 9. Revised design: preserve `map.md` as the curated task-bundle layer, make new scaffold maps real relative Markdown links, lint legacy code-span targets for existence, and add a separate generated `catalog.md` containing every eligible page. Do not overwrite editorial maps automatically.",
       "sources": [
        "<synced-home>/Work/PUBLIC/Agents/concepts/bc-init-agent/body/scaffold.py:262-298",
        "<synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:23-40",
        "<synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py:71-79",
        "<music-library>/.bc-agent/map.md:1-37",
-       "<image-maze-project>/.bc-agent/map.md:39-48",
-       "<image-maze-project>/.bc-agent/index.md:31,53",
+       "<project-b>/.bc-agent/map.md:39-48",
+       "<project-b>/.bc-agent/index.md:31,53",
        "<synced-home>/Documents/Learning/codebase-design/.bc-agent/map.md:1",
        "<synced-home>/Documents/Learning/sql/.bc-agent/map.md:1",
        "<owner-scripts>/.bc-agent/map.md:1",

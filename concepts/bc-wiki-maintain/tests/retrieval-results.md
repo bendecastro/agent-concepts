@@ -1,11 +1,11 @@
-# Image-maze retrieval benchmark results
+# Retrieval benchmark results (`project-b` collection)
 
 Run date: 2026-08-27. The target vault was read-only. The frozen keyword file was
 committed before this harness ran; see the commit record in the parent run artifact.
 
 ## Result
 
-The vault supplied **155 eligible tracked Markdown pages**. The harness read `$IMAGE_MAZE_VAULT/index.md` as the incumbent and generated a **42,421-byte** seven-column catalog at `/tmp/bc-retrieval-catalog-9p2kndtj.tsv` only. Frozen query commit: `f18492510492b7036c29e06af63c98b502397683`.
+The vault supplied **155 eligible tracked Markdown pages**. The harness read `$VAULT/index.md` as the incumbent and generated a **42,421-byte** seven-column catalog at `/tmp/bc-retrieval-catalog-9p2kndtj.tsv` only. Frozen query commit: `f18492510492b7036c29e06af63c98b502397683`.
 The index graph reaches 118 pages at depth 1 and 139 at depth <=2; the benchmark does not infer a hit from reachability alone: A_index_read uses the explicit row judgments below.
 
 Cost is UTF-8 stdout bytes / 4 for search/filter output. A_index_read is the full index byte size / 4; no follow-on page is opened because each judgment is whether the index row identifies the gold page. The bars are median <= 800 tokens and miss rate <= 0.30, and both are required.
@@ -84,7 +84,7 @@ These are human-readable judgments against the exact index rows, made after the 
 
 ## Mechanism and evidence
 
-- The incumbent's structural ceiling is visible from `$IMAGE_MAZE_VAULT/index.md`: the graph reached 118 pages at depth 1 and 139 by depth 2, while the eligible-page count was 155. The A table separates this ceiling from the stricter row-specific judgment.
+- The incumbent's structural ceiling is visible from `$VAULT/index.md`: the graph reached 118 pages at depth 1 and 139 by depth 2, while the eligible-page count was 155. The A table separates this ceiling from the stricter row-specific judgment.
 - The generated catalog is 42,421 bytes (10605.25 tokens by the benchmark rule), versus 18,172 bytes (4543.00 tokens) for the index. Reading the generated catalog wholesale therefore costs more than reading the incumbent.
 - Keyword qmd search missed 5/20 questions; full-sentence qmd search missed 17/20. The per-question qmd output is retained in the table as stdout byte cost and returned rank, rather than treating a command exit status as a hit. Keyword top-path counts: [('AGENTS.md', 1), ('conventions/styling-radius-scale.md', 1), ('decisions/adr-0014-theme-owned-dcu-backend.md', 1), ('decisions/adr-0019-desktop-mouse-click-dismisses-fullscreen.md', 1), ('decisions/adr-0029-dcu-missing-ports-fail-closed.md', 1)]; sentence top-path counts: [('log.md', 7), ('agents/seo-agent.md', 2), ('AGENTS.md', 1), ('conventions/validation.md', 1), ('project/architecture-module-map.md', 1)].
 - The catalog's seven fields are always populated. When a page has no `##` heading, its deterministic H1/path title is used for the heading-keyword field rather than inventing prose.
@@ -92,12 +92,12 @@ These are human-readable judgments against the exact index rows, made after the 
 
 ## Runbook and definitions
 
-Run from the repository root with the read-only image-maze vault path:
+Run from the repository root with the read-only vault path and its qmd collection name:
 
 ```sh
 python3 concepts/bc-wiki-maintain/tests/run_retrieval_benchmark.py \
-  "<image-maze-project>/.bc-agent" \
-  --collection image-maze
+  "<project>/.bc-agent" \
+  --collection project-b
 ```
 
 The harness reads the question/gold table from `concepts/bc-wiki-maintain/tests/retrieval-questions.md` and the frozen keywords from `retrieval-queries.tsv`. It never edits the vault. It enumerates tracked Markdown files with `git ls-files`, excludes the existing skip directories (`.git`, `.obsidian`, `scratch`, `temp`, `node_modules`, `vendor`), and writes the seven-column catalog to `/tmp`.
@@ -105,11 +105,11 @@ The harness reads the question/gold table from `concepts/bc-wiki-maintain/tests/
 Exact retrieval commands issued for each question are:
 
 ```sh
-qmd search "<frozen keywords>" -c image-maze --format files -n 5
-qmd search "<full question>" -c image-maze --format files -n 5
+qmd search "<frozen keywords>" -c project-b --format files -n 5
+qmd search "<full question>" -c project-b --format files -n 5
 ```
 
-For B and D, a line is an AND match when every frozen keyword occurs as a case-insensitive whole word; an OR match requires any keyword. This is the fixed-string grep meaning implemented by the harness with word boundaries so `Git` does not match the middle of `digital`. A grep hit requires the exact gold relative path in a matching line. qmd rank is the first returned `qmd://image-maze/<path>` row whose path equals the gold path (with the qmd space-to-hyphen alias allowed); absence from five rows is a miss.
+For B and D, a line is an AND match when every frozen keyword occurs as a case-insensitive whole word; an OR match requires any keyword. This is the fixed-string grep meaning implemented by the harness with word boundaries so `Git` does not match the middle of `digital`. A grep hit requires the exact gold relative path in a matching line. qmd rank is the first returned `qmd://project-b/<path>` row whose path equals the gold path (with the qmd space-to-hyphen alias allowed); absence from five rows is a miss.
 
 A page is considered opened only when its bytes would be placed in the agent context. For A, only the complete index bytes are counted and no page is opened after the row judgment. For B/D, only matching stdout lines are counted. For qmd, only command stdout is counted; stderr, process startup, and qmd's on-disk index are not context. Catalog generation CPU/disk work is reported but excluded from context tokens because the proposed design asks agents to filter the artifact, not read its build.
 
@@ -120,11 +120,11 @@ A miss means the declared gold path is not identified by the method's allowed ou
 - The question set is 20 items and has known skew recorded in `retrieval-questions.md`; it is evidence, not a universal query distribution.
 - A_index_read is necessarily a human judgment, not a model replay. Another operator may disagree on whether a terse row is enough; the reasons and structural reachability make that disagreement visible.
 - B/D use frozen keywords chosen before retrieval, but the benchmark does not measure an interactive agent's ability to refine a miss. Allowing refinement after each result would be a different protocol.
-- qmd's result ranking can change if its index becomes stale. This run uses the installed `image-maze` collection and records the exact command; no qmd update/embed mutation was performed.
+- qmd's result ranking can change if its index becomes stale. This run uses the installed `project-b` collection and records the exact command; no qmd update/embed mutation was performed.
 - The catalog summary extractor is deterministic and intentionally conservative. Its generated rows are a benchmark representation, not evidence that a production W1 implementation should copy every parser detail.
 
 ## Source citations
 
 - `concepts/bc-wiki-maintain/tests/retrieval-questions.md`: the pre-registered table supplies each question and gold path; its vault note says "155 eligible pages (tracked Markdown, `temp/` excluded)."
-- `$IMAGE_MAZE_VAULT/index.md`: the incumbent source begins `# image-maze Agent Wiki` and its navigation begins at `## Start here`; the byte count and graph counts above were measured from this exact file and its linked pages.
+- `$VAULT/index.md`: the incumbent source begins with its `# … Agent Wiki` title and its navigation begins at `## Start here`; the byte count and graph counts above were measured from this exact file and its linked pages.
 - `/tmp/bc-retrieval-catalog-9p2kndtj.tsv`: generated scratch artifact with the seven columns specified by the benchmark; its byte count and row contents are the source for the catalog measurements above.

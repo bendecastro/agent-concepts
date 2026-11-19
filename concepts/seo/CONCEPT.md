@@ -6,12 +6,12 @@ deployed: 2026-06-12
 ---
 # Concept: seo
 
-A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-first auditing, prioritized by impact × confidence ÷ effort, across crawl/index/rank/present including GEO and AI-crawler policy); `body/IMAGE-SEO.md` is the per-asset image specialist (vision-required metadata packages: filename, alt, caption, ImageObject JSON-LD, IPTC/XMP, delivery). Built from the user's own prior work on the image-maze project.
+A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-first auditing, prioritized by impact × confidence ÷ effort, across crawl/index/rank/present including GEO and AI-crawler policy); `body/IMAGE-SEO.md` is the per-asset image specialist (vision-required metadata packages: filename, alt, caption, ImageObject JSON-LD, IPTC/XMP, delivery). Built from the user's own prior work on project B.
 
 ## Design decisions
 
 - **One concept, two body files** — the pair shares a handoff contract whose field lists are owned solely by `IMAGE-SEO.md` (single owner so the contract can't drift, per the original README). Splitting into two concepts would put the contract across directory boundaries for no benefit.
-- **Verbatim-preserving adaptation** — the source prompts were recently authored, evidence-tiered, and myth-rejecting; the canon copies change only what portability into this workspace requires (frontmatter, cross-reference names, removal of project-specific references). The image-maze project adapter was left in the work repo where its wiki is authoritative.
+- **Verbatim-preserving adaptation** — the source prompts were recently authored, evidence-tiered, and myth-rejecting; the canon copies change only what portability into this workspace requires (frontmatter, cross-reference names, removal of project-specific references). The project B adapter was left in the work repo where its wiki is authoritative.
 - **Scoped skill trigger** — the Agent Skills description is intentionally SEO-specific and names image metadata, while excluding generic performance/accessibility/content/analytics work unless the user frames it as SEO. This keeps the long prompt from loading for adjacent tasks.
 - **Verify-at-runtime over baked numbers — validated by research** — during ingest (2026-06-12), SEO-blog sources made conflicting claims about 2026 CWV changes ("LCP tightened to 2.0s", "Visual Stability Index", none verifiable against official documentation). The prompts' standing instruction to verify thresholds/statistics at runtime is the correct design; no blog-sourced numbers were baked in; a volatile-facts rule now makes this explicit for thresholds, bot behavior, feature status, and platform policy, and points to `body/CITATIONS.md` so the held source map deploys with the skill.
 - **AI-crawler access policy added, but non-absolute** (the one research delta): 2026's training-vs-search bot split (GPTBot vs OAI-SearchBot, ClaudeBot vs Claude-SearchBot, Google-Extended) makes crawler access a deliberate per-site decision; `llms.txt` is not honored by major AI systems as of early 2026 and is labeled speculative. robots.txt remains the working control surface, but provider effects must be verified before claiming exclusion or eligibility.
@@ -19,7 +19,7 @@ A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-
 
 ## Provenance
 
-- the user's own prior image-maze work — snapshot of the user's prompts (authored 2026-06-11) from `<image-maze-project>/.agent/agents/`; the work repo remains a live consumer, not the canon.
+- the user's own prior project B work — snapshot of the user's prompts (authored 2026-06-11) from `<project-b>/.agent/agents/`; the work repo remains a live consumer, not the canon.
 - SEO primary sources (official docs; see concepts/seo) — the traced primary-documentation evidence base (Google Search Central, web.dev, W3C WAI, OpenAI bot docs); the claim→source map is [body/CITATIONS.md](body/CITATIONS.md), which also lists the three not-yet-snapshotted gaps.
 - AI-crawler/llms.txt delta: web research 2026-06-12 — training-vs-search bot split and llms.txt non-adoption corroborated across multiple sources (e.g. digitalapplied.com AI-crawler decision matrix, nohacks.co AI user-agent landscape, limy.ai llms.txt guide); bot lists change, verify at runtime.
 - CWV-claims conflict (reason no numbers were updated): 2026 SEO-blog survey returned contradictory threshold claims; official documentation is the only acceptable source for these, checked at runtime.
@@ -32,5 +32,5 @@ A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-
 
 - Claude Code: `~/.claude/skills/seo` → relative symlink to `body/` (deployed 2026-06-12 after pressure test).
 - Pi: `~/.pi/agent/skills/seo` → relative symlink to `body/` (deployed 2026-06-12 after narrowing trigger and adding citation map).
-- The image-maze work repo currently loads its own copies; migrating its `.claude/agents/` wrappers to point at this canon is a candidate follow-up — decide in that repo, not here.
+- The project B work repo currently loads its own copies; migrating its `.claude/agents/` wrappers to point at this canon is a candidate follow-up — decide in that repo, not here.
 - Other harnesses: manual bootstrap (`../../docs/bootstrap.md`); `IMAGE-SEO.md` additionally requires a vision-capable model.

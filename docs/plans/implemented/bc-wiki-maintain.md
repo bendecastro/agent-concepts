@@ -115,15 +115,15 @@ workspace and indexes 232 files. `<qmd-setup-script>` cannot repair this class b
 skips a collection already registered under a different path, so a corrected canonical path never
 reaches the machine until someone removes the stale entry.
 
-### 10. Rollout starts with CV, then image-maze
+### 10. Rollout starts with CV, then project B
 
 CV is local-only and has the exact index drift this plan addresses, so it is a safe pilot for
-an automatic writer. Image-maze follows because it contains a real contradiction: a Turnstile
+an automatic writer. Project B follows because it contains a real contradiction: a Turnstile
 research page says the acceptance bar was lowered while the active task and index say it was
 not. The rollout does not rename `.agent` to `.bc-agent` or fold legacy variants into a
 migration.
 
-**Landed wider.** The lint timer now covers eight vaults: Music, Scripts, image-maze, CV, the
+**Landed wider.** The lint timer now covers eight vaults: Music, Scripts, project B, CV, the
 codebase-design and sql learning vaults, and Homeflix public and production. The `.agent` and
 `.bc-agent` names still coexist, as planned.
 
@@ -215,7 +215,7 @@ faults found on 2026-08-25.
 
 **The daily timer was failing and is not any more.** Two of eight vaults failed the detector: Music
 with one broken link, codebase-design with five broken and three ambiguous. All were real faults,
-not detector noise. `[[image-maze]]` and `[[expression]]` named pages that were never written, and
+not detector noise. `[[project-b]]` and `[[expression]]` named pages that were never written, and
 bare `[[plan]]` collided with `templates/plan.md`. They now point at the pages that actually document
 those things. The service reports `failures=0` across all eight vaults.
 

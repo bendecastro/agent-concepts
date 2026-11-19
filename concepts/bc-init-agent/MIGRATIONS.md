@@ -138,7 +138,7 @@ outside path literally creates a broken-link finding, while a corrected parent-r
 cannot add an edge to this vault.
 
 Both Homeflix maps have 15 out-of-vault source-tree rows. Leave those rows inline code. The six
-non-Homeflix maps (Music, Scripts, image-maze, CV, codebase-design, and sql) have in-vault targets
+non-Homeflix maps (Music, Scripts, project B, CV, codebase-design, and sql) have in-vault targets
 that can become links.
 
 ### Per-vault procedure
@@ -233,7 +233,7 @@ vault directory.
    | sql | 17 → 13 |
    | Music | 12 → 9 |
    | codebase-design | 21 → 18 |
-   | image-maze | 15 → 13 |
+   | project B | 15 → 13 |
 
    Both Homeflix maps carry 15 out-of-vault source-tree rows that stay inline code. Do not force
    an orphan reduction there; a rise in broken links means an outside target was converted by

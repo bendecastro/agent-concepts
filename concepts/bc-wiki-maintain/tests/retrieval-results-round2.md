@@ -1,10 +1,10 @@
-# Image-maze retrieval benchmark — round two
+# Retrieval benchmark — round two (`project-b` collection)
 
 Run date: 2026-08-30. The target vault was read-only; no qmd index or vault file was mutated.
 
 ## Answer to the review question
 
-The benchmark uses **155 eligible tracked Markdown pages** from `<image-maze-project>/.bc-agent`. The proposed catalog has **57,177 bytes / 14294.25 tokens** before any filter output. The index has 18,172 bytes / 4543.00 tokens.
+The benchmark uses **155 eligible tracked Markdown pages** from `<project-b>/.bc-agent`. The proposed catalog has **57,177 bytes / 14294.25 tokens** before any filter output. The index has 18,172 bytes / 4543.00 tokens.
 
 The answer is based on the agent-style protocol below, not the round-one 3–4-word AND test.
 
@@ -159,8 +159,8 @@ The catalog can be better than round one without being the right first move. If 
 
 ```sh
 python3 concepts/bc-wiki-maintain/tests/run_retrieval_benchmark_round2.py \
-  "<image-maze-project>/.bc-agent" \
-  --collection image-maze
+  "<project>/.bc-agent" \
+  --collection project-b
 ```
 
 The script takes the vault path as an argument, accepts `--collection` and `--qmd-bin`, writes the catalog under `/tmp`, and writes this report to `--results` (default `retrieval-results-round2.md`). It never invokes qmd update, embed, init, cleanup, collection, or context mutation commands.
@@ -173,4 +173,4 @@ The script takes the vault path as an argument, accepts `--collection` and `--qm
 - `page_kind_weighted_rank` in this benchmark: the one experimental page-kind adjustment used by F; no production scorer change was made.
 - `concepts/bc-wiki-maintain/tests/retrieval-queries-original.tsv`: exact pre-width-fix query strings from the ea0e1f9 tree.
 - `/tmp/bc-retrieval-round2-catalog-wrvhuzvx.tsv`: this run's generated seven-column catalog; it is disposable and not an in-vault artifact.
-- `<image-maze-project>/.bc-agent/index.md`: incumbent index bytes and graph source.
+- `<project-b>/.bc-agent/index.md`: incumbent index bytes and graph source.

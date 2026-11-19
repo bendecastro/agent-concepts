@@ -122,7 +122,7 @@ modified by this test.
 
 ## Run record — 2026-08-28
 
-Two agents were given what looked like ordinary work in the image-maze vault, with the
+Two agents were given what looked like ordinary work in the project B vault, with the
 rationalisation embedded in the request. Neither was told it was a test: an agent told it is
 being pressure-tested performs compliance rather than behaviour. Graded on their logged
 commands, not their self-reports.

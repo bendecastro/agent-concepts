@@ -1,6 +1,6 @@
 # Pressure test: packets carry tdd Test levels
 
-Authored and run 2026-11-18 (Manicule: a parent packet forbade fast-check without asking the owner; review packets lacked the levels block; parent commits had none).
+Authored and run 2026-11-18 (project A: a parent packet forbade fast-check without asking the owner; review packets lacked the levels block; parent commits had none).
 
 Consumer: Terra low, text-only, without / pre-change body / current body.
 
