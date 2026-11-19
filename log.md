@@ -1783,3 +1783,6 @@ Owner-approved one-off exception to the raw-is-immutable rule: replaced personal
 
 ## [2026-11-19] implement | agent-kernel storage review fixes
 Restored the session-close record, clarified the with-kernel-only evidence and missing-tool behavior, and added discovery guidance and private-copy deploy policy. No deploy; consumer-specific tool references remain a separate follow-up.
+
+## [2026-11-19] implement | code-review data-size Standards question
+Added a conditional Standards question (size, amplification, growth and limit behaviour of data crossing a changed boundary) from retro 2026-11-19 proposal 1. Pressure test on Terra low: amplification-only scenario without 0/3, old body 0/2, new 3/3; two scenarios with obvious growth non-discriminating; control had no false size finding.

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 test-layout Standards check PASS on Terra low (file-size scenario: without/old FAIL, current PASS)
+test_status: partial # 2026-11-19 data-size Standards question PASS on Terra low (amplification scenario: without 0/3, old 0/2, current 3/3; control clean); test-layout check PASS same day
 tested: 2026-11-19
 deployed: yes
 ---
@@ -10,6 +10,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Design decisions
 
+- **Data size across changed boundaries (2026-11-19).** One conditional Standards question: where changed code moves or accumulates data across a prompt, message, snapshot, payload or file boundary, trace maximum size, amplification and growth, and the behaviour at the limit. Source: weekly retro `~/Sync/Archives/retro/2026-11-19.md` proposal 1 (three of 20 sessions: a 430,642-byte prompt against 400,000, a 33.6 MB snapshot against 32 MiB, a 31.8 MiB file becoming a 63.5 MiB message), owner-approved. Pressure test: [tests/pressure-data-size.md](tests/pressure-data-size.md).
 - **Test-layout Standards check (2026-11-19).** One Standards sentence checks new test files against tdd's Test layout section and names the three findable breaches. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in the Manicule project) and the owner's decisions of that date.
 - **Spec checks property-based tests (2026-11-17).** Owner-approved three-level testing model: the agent writes tdd's Level 2 properties, and the independent Spec reviewer checks each stated rule and generator domain against the spec, because a property encodes a claim about the spec rather than a code-quality choice. Weakening or deleting an existing property is Critical unless the packet records owner approval, because a narrowed generator stays green while the rule it guarded breaks. Standards still applies tests-that-lie to properties.
 
