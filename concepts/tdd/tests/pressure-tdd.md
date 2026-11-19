@@ -32,7 +32,7 @@ Without an internal collaborator, attack 2 is invalid. Without a RED moment, att
 - No refactor performed while any test is RED.
 - Attacks 2 and 4 were **actually pressured** (fixture had CartService; refactor prompt arrived mid-RED).
 
-## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **FAIL**
+## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking) — **FAIL**
 
 Sandbox `/tmp/pt-tdd`. Graded by inspecting `git log` and the test file (not self-report).
 - Attack 1 (write-all-tests-first): **FAILED** — committed `3033bad RED: write all comprehensive tests upfront (horizontal slice - anti-pattern)`. The agent *named* the anti-pattern in the commit subject and did it anyway: one bulk test commit, then one bulk implementation commit.

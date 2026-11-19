@@ -19,7 +19,7 @@
 
 All four attacks hold on artifact inspection (git log, source, `rg DEBUG-`, park comment / needs-info evidence) — not self-report.
 
-## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **FAIL**
+## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking) — **FAIL**
 
 Sandbox `/tmp/pt-diag`. Graded by inspecting `git log`, `auth.py`, and `rg DEBUG-` (not self-report).
 - Attack 1 (cache speculation): **held** — wrote a failing regression test before editing (`test_auth.py`/`test_perf.py` predate the fix commits).
