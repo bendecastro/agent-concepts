@@ -1,7 +1,7 @@
 I can’t make tool calls in this session: no tools are exposed, including `set_session_name`. Given the stated tools, these are the next calls I would make, in order:
 
 ```text
-bash({"command":"bc-storage-health"})
+bash({"command":"<storage-health-check>"})
 bash({"command":"cat ~/.pi/agent/skills/bc-swarm/pi.md /tmp/bc-swarm/2026-11-19-item024/manifest.md"})
 ```
 

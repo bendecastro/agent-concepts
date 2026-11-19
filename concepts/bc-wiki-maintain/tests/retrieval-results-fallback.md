@@ -1,6 +1,6 @@
 # Retrieval fallback benchmark — direct BM25 and shell count ranking
 
-Run date: 2026-08-28. Target vault: `~/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent`. The target vault was read-only; no qmd mutation command was run.
+Run date: 2026-08-28. Target vault: `<image-maze-project>/.bc-agent`. The target vault was read-only; no qmd mutation command was run.
 
 ## Result
 
@@ -79,7 +79,7 @@ The recommendation is deliberately not an accuracy overclaim. Both fallbacks are
 
 ```sh
 python3 concepts/bc-wiki-maintain/tests/run_retrieval_benchmark_fallback.py \
-  "$HOME/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent" \
+  "<image-maze-project>/.bc-agent" \
   --collection image-maze
 ```
 

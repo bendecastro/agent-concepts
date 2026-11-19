@@ -1021,7 +1021,7 @@ def render_report(
             "",
             "```sh",
             "python3 concepts/bc-wiki-maintain/tests/run_retrieval_benchmark_round2.py \\",
-            '  "$HOME/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent" \\',
+            '  "<image-maze-project>/.bc-agent" \\',
             "  --collection image-maze",
             "```",
             "",

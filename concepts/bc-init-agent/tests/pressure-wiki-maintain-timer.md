@@ -10,7 +10,7 @@ the final report.
 Shared expected behavior unless a scenario says otherwise:
 
 - Mentions `/bc-wiki-maintain` and the per-vault promotion timer.
-- Says qmd / `bc-qmd-refresh.timer` is search freshness, not promotion.
+- Says qmd / `<qmd-refresh-job>.timer` is search freshness, not promotion.
 - Proposes `bc-wiki-maintain-<slug>.service` and matching `.timer`.
 - Does not write `~/.config/systemd/user/bc-wiki-maintain.service`.
 - Does not enable or start any timer unless that scenario confirmed.

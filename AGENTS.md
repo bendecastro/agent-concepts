@@ -50,7 +50,7 @@ Before changing a concept's behavioral contract, read its `RELATIONSHIPS.md` and
 - **Other agents:** see `docs/bootstrap.md` and `docs/harnesses.md` — Codex/Gemini still use AGENTS.md deltas or manual bootstrap until a native skills path is verified. Muse's kernel is the user-rules file `~/.config/muse/AGENTS.md` (regular-file copy from its machine-local configured source), not a skill.
 Record deploy targets in the concept's `CONCEPT.md`, `index.md`, and `docs/harnesses.md`.
 
-**Lint.** Copied kernel-delta drift produces warnings using optional private `~/.config/agent-concepts/kernel-copies.json` (see [example](docs/kernel-copies.example.json)). Project skill-copy drift also warns using optional private `~/.config/agent-concepts/skill-copies.json` (see [example](docs/skill-copies.example.json)). Periodically, or on request: run `python3 scripts/lint.py` for mechanical drift (missing tests/provenance, invalid or missing status frontmatter, deployed-but-never-run test-gate violations, broken relative links, stale index entries, unindexed raw sources, missing harness docs, dangling deploy symlinks, invalid relationship-graph edges, stale or missing generated relationship views). `python3 scripts/lint.py --status` prints the test/deploy board, worst first; `--write-status` regenerates [`docs/status.md`](docs/status.md), the human-readable version of the same data. Never hand-edit that page — it is generated, and lint fails when it drifts from the frontmatter. Fix objective issues, report judgment calls, and log the pass. External link rot in provenance is a judgment call unless the user asked for web validation.
+**Lint.** Copied kernel-delta drift produces warnings using optional private `~/.config/agent-concepts/kernel-copies.json` (see [example](docs/kernel-copies.example.json)). Project skill-copy drift also warns using optional private `~/.config/agent-concepts/skill-copies.json` (see [example](docs/skill-copies.example.json)). Periodically, or on request: run `python3 scripts/lint.py` for mechanical drift (missing tests/provenance, invalid or missing status frontmatter, deployed-but-never-run test-gate violations, broken relative links, stale index entries, unindexed raw sources, missing harness docs, dangling deploy symlinks, personal terms from the optional private denylist, invalid relationship-graph edges, stale or missing generated relationship views). `python3 scripts/lint.py --status` prints the test/deploy board, worst first; `--write-status` regenerates [`docs/status.md`](docs/status.md), the human-readable version of the same data. Never hand-edit that page — it is generated, and lint fails when it drifts from the frontmatter. Fix objective issues, report judgment calls, and log the pass. External link rot in provenance is a judgment call unless the user asked for web validation.
 
 ## Gates
 
@@ -82,9 +82,19 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
     `docs/harnesses.md`. An environment variable would not expand in a chat window; a placeholder
     tells the reader to substitute.
   `scripts/lint.py` checks inline repo-relative paths, so a stale reference is caught
-  mechanically; it cannot catch a path that is merely personal, which stays a review concern.
-- `log.md` is a historical journal and is exempt: its paths were accurate when written.
+  mechanically.
+- **Only what a stranger can copy and use as-is.** The owner's machines, personal paths,
+  personal tools and commands that live outside this repository, and personal services or
+  projects go into a private concept (see Layers) or an optional private overlay that a public
+  skill loads only when present. Why: the repository is meant to be copied whole, and a personal
+  reference is either noise or a leak to everyone who does. `scripts/lint.py` reports each hit
+  from an optional private denylist, `~/.config/agent-concepts/personal-terms.txt` (path
+  override: `AGENT_CONCEPTS_PERSONAL_TERMS`; format: [example](docs/personal-terms.example.txt)),
+  as an ERROR; without the file the check is skipped. Pushed history is left alone; current
+  files get fixed.
+- `log.md` is a historical journal: its stale paths are exempt because they were accurate when
+  written, but personal terms are not — scrub them like any other file.
 - No hardcoded home paths anywhere — `~` or `$HOME` only; symlinks relative.
 - **Externally owned authority has one home.** An instruction file names where an authoritative rule lives and how to query it; it never states what the rule decides. Why: a restatement is a second copy that drifts silently, and drift is discovered only when it blocks correct action — as happened here, costing 128 unpushed commits. For publishing, the canonical policy is `~/.config/agent-concepts/publish.yaml`; get the objective path/remote/branch answer from `python3 scripts/publish-check.py --repo "$PWD" --remote "$(git remote get-url origin)" --branch "$(git branch --show-current)"`, then verify the matched rule's `when:` conditions yourself before pushing. Do not restate the policy's rules here.
 - Concept names are dash-case and unique across the workspace.
-- This workspace's value comes from encoding the user's specific workflows, not generic skill-list scraping. When ingesting, ask what's idiosyncratic about how the user wants it.
+- This workspace's value comes from encoding the user's specific workflows, not generic skill-list scraping. When ingesting, ask what's idiosyncratic about how the user wants it — then encode the workflow in a generic, copyable form and put the personal specifics (which machine, which path, which private tool) in a private concept or overlay.

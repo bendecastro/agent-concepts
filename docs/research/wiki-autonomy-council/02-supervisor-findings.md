@@ -37,7 +37,7 @@ wiki-health-check.timer            daily 09:00
 wiki-semantic-consolidation.timer  daily 09:30
 ```
 
-Both enabled and active. They point at `~/Sync/Wiki`, not at a project vault.
+Both enabled and active. They point at `<owner-wiki>`, not at a project vault.
 Recorded because the artifact is otherwise accurate and will be reused.
 
 ## V3 — a working autonomous wiki maintainer already runs on this machine
@@ -45,7 +45,7 @@ Recorded because the artifact is otherwise accurate and will be reused.
 This is the most consequential finding of the run, and no advisor saw it in
 Pass 1 because I scoped them to the project-vault concepts.
 
-`~/Sync/Wiki` is the user's personal wiki: 383 Markdown pages, 1.8 MB. It is
+`<owner-wiki>` is the user's personal wiki: 383 Markdown pages, 1.8 MB. It is
 maintained by two daily systemd user units:
 
 - `wiki_daily_health_check.py` — deterministic lint, commits.
@@ -101,5 +101,5 @@ Its 2026-08-24 report ends with the state the project vaults do not have:
 ## Scope note
 
 `bc-wiki-maintain`'s body explicitly forbids the skill from touching the personal
-wiki, and nothing here proposes changing that. `~/Sync/Wiki` is cited only as
+wiki, and nothing here proposes changing that. `<owner-wiki>` is cited only as
 prior art running on the same machine.

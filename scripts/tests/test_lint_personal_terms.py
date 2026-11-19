@@ -1,0 +1,94 @@
+"""Isolated fixtures for the optional private personal-terms denylist."""
+
+import importlib.util
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+
+SCRIPTS = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(SCRIPTS))
+spec = importlib.util.spec_from_file_location("lint_under_test", SCRIPTS / "lint.py")
+lint = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = lint
+spec.loader.exec_module(lint)
+
+
+class PersonalTermsTests(unittest.TestCase):
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        self.home = Path(temp.name) / "home"
+        self.repo = Path(temp.name) / "repo"
+        self.home.mkdir()
+        self.repo.mkdir()
+        subprocess.run(["git", "init", "-q", str(self.repo)], check=True)
+        env = patch.dict(os.environ, {"HOME": str(self.home)})
+        env.start()
+        self.addCleanup(env.stop)
+        os.environ.pop("AGENT_CONCEPTS_PERSONAL_TERMS", None)
+        self.config = self.home / ".config/agent-concepts/personal-terms.txt"
+
+    def track(self, name, text):
+        path = self.repo / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+        subprocess.run(["git", "-C", str(self.repo), "add", name], check=True)
+
+    def deny(self, text, path=None):
+        path = path or self.config
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+
+    def check(self):
+        issues = []
+        lint.lint_personal_terms(issues, self.repo)
+        return issues
+
+    def test_absent_denylist_is_skipped(self):
+        self.track("a.md", "fakehost is here\n")
+        self.assertEqual(self.check(), [])
+
+    def test_hit_reports_file_line_and_matched_term_only(self):
+        self.deny("# comment\nfakehost\nsecretthing\n")
+        self.track("log.md", "ok\nran on FakeHost today\n")
+        issues = self.check()
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0].severity, "ERROR")
+        self.assertIn("log.md:2", issues[0].message)
+        self.assertIn("FakeHost", issues[0].message)
+        self.assertNotIn("secretthing", issues[0].message)
+
+    def test_word_boundaries(self):
+        self.deny("fakehost\n~/Fake\n$HOME/Fake\n")
+        self.track("a.md", "fakehostname\nunfakehost\n~/Faker\n")
+        self.assertEqual(self.check(), [])
+        self.track("b.md", "see ~/Fake/x and $HOME/Fake.\n")
+        self.assertEqual(len(self.check()), 2)
+
+    def test_regex_prefix(self):
+        self.deny("re:fake-[0-9]+\n")
+        self.track("a.md", "fake-42\n")
+        self.assertEqual(len(self.check()), 1)
+
+    def test_env_override_path(self):
+        other = self.home / "elsewhere.txt"
+        self.deny("fakehost\n", other)
+        self.track("a.md", "fakehost\n")
+        with patch.dict(os.environ, {"AGENT_CONCEPTS_PERSONAL_TERMS": str(other)}):
+            self.assertEqual(len(self.check()), 1)
+
+    def test_untracked_and_binary_files_ignored(self):
+        self.deny("fakehost\n")
+        (self.repo / "untracked.md").write_text("fakehost\n")
+        (self.repo / "bin.dat").write_bytes(b"\x00fakehost")
+        subprocess.run(["git", "-C", str(self.repo), "add", "bin.dat"], check=True)
+        self.assertEqual(self.check(), [])
+
+
+if __name__ == "__main__":
+    unittest.main()

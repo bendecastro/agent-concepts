@@ -62,7 +62,7 @@ Method notes: controller skills simulated nested workers as packet/report files;
 Taught mesh-check to recognize the MacBookPro hostname form observed on the Mac while finishing issue #8, so the Mac skips its self-alias and checks only peers.
 
 ## [2026-07-04] implement | machine mesh foundation
-Added the repo-tracked shared SSH mesh fragment and portable mesh-check script for PRD #6 / slice #7, then wired omarchy's private SSH config and authorized omarchy's identity pubkey on beelink for the tracer path.
+Added the repo-tracked shared SSH mesh fragment and portable mesh-check script for PRD #6 / slice #7, then wired the first machine's private SSH config and authorized its identity pubkey on a second machine for the tracer path.
 
 ## [2026-07-04] implement | CONFIG drain publish policy
 Authorized CONFIG repo AFK issue-drain publishing semantics in publish.yaml: master pushes, bc-drain claim branches, and close-comment issue closeout after validation. User explicitly requested the policy pre-authorization and will push it manually.
@@ -83,7 +83,7 @@ Reframed current `bc-init-agent` docs away from one project name and toward the 
 Made the `.bc-agent/` Obsidian-vault claim concrete: `scaffold.py` now seeds minimal stable `.obsidian/app.json`, `core-plugins.json`, and `appearance.json` while avoiding noisy user-specific workspace/plugin state. Updated skill/concept/test/index wording and verified rerun idempotency preserves existing Obsidian files.
 
 ## [2026-06-26] implement | bc-init-agent wiki archetypes
-Added archetype selection to `bc-init-agent`, based on the user's real wiki patterns: code/project execution (`image-maze`), ops/system planning (`Music/.ai/wiki`), learning/teach-backed study, knowledge graph (`~/Sync/Wiki`), and hybrid. `scaffold.py` now supports `--archetype code|ops|learning|knowledge|hybrid` overlays; tests/index/concept notes record the new pending pressure scenarios.
+Added archetype selection to `bc-init-agent`, based on the user's real wiki patterns: code/project execution (`image-maze`), ops/system planning (`Music/.ai/wiki`), learning/teach-backed study, knowledge graph (`<owner-wiki>`), and hybrid. `scaffold.py` now supports `--archetype code|ops|learning|knowledge|hybrid` overlays; tests/index/concept notes record the new pending pressure scenarios.
 
 ## [2026-06-26] implement | bc-init-agent adaptive onboarding
 Updated `bc-init-agent` from blind scaffold-first behavior to recon-first adaptive onboarding: inspect git/GitHub/project/docs/build/deploy state, grill differently for empty/active/messy projects, propose an init or migration plan before writing, and keep file moves as separately approved migration work. Updated concept notes, index status, and pending pressure scenarios.
@@ -162,7 +162,7 @@ Added `policies/publish.yaml` as the user-owned publish authorization layer: cur
 Closed the self-amendment loop: agents/policies/ changes are never publishable under policy rules (header declaration + exclude_changes_under + kernel clause + AGENTS.md Layers entry). Labeled the enforcement model honestly (interpreted, not enforced) and added scripts/publish-check.py for the objective path/remote/branch match — tested on allow, immunity, and deny cases. SSH remote form added so a future origin switch doesn't silently kill the rule. lint.py now parse-checks the policy YAML and requires the immunity fragment.
 
 ## [2026-06-12] implement | publish policy for Scripts Music Wiki
-Read AGENTS files in `~/Sync/Scripts`, `~/Sync/Music`, and `~/Sync/Wiki`, confirmed each repo uses `master` with GitHub origin, and added explicit user-owned publish-policy rules for agent-authored pushes after commit. Lint now checks those rules remain present.
+Read AGENTS files in `<owner-scripts>`, `<music-library>`, and `<owner-wiki>`, confirmed each repo uses `master` with GitHub origin, and added explicit user-owned publish-policy rules for agent-authored pushes after commit. Lint now checks those rules remain present.
 
 ## [2026-06-12] implement | Repo housekeeping-commit policy
 Incident: an agent `git add agents/` swept the user's manual edits into an agent work commit. Added repo-root AGENTS.md (CLAUDE.md symlinked) defining commit separation: agents stage their work by explicit path, then commit remaining tracked drift (user hand-edits, app-written state) as separate housekeeping commits with diff-derived messages; untracked files and secret-shaped or broken diffs are surfaced, not committed. publish.yaml CONFIG rule gained a matching housekeeping exception (separate commits only; policies/ immunity unchanged).
@@ -292,7 +292,7 @@ test, so no symlink to migrate. Lint clean.
 
 ## [2026-06-21] implement | bc-autoresearch-loop (metric-gated bounded improvement)
 Added `bc-autoresearch-loop`, a model-invoked discipline that re-expresses the AutoResearch idea from
-the Scripts `bc-improve` CLI (idea only — no runtime dependency, rewritten self-contained):
+the Scripts `<improve-script>` CLI (idea only — no runtime dependency, rewritten self-contained):
 name one objective metric, lock correctness, iterate ONE bounded change, keep only if tests still
 pass AND the metric beats the threshold (else revert); stop if no metric exists (don't optimize
 blind). Wired into bc-drain-issues' execute-issue.md as a CONDITIONAL post-GREEN step (runs only
@@ -395,7 +395,7 @@ Refreshed all three kernel delta files with the new posture line: `~/.claude/CLA
 Pi: replaced the three old bias-to-action lines in `~/.pi/agent/AGENTS.md` (tracked) with the consult-on-judgment-calls posture. Grok: created `~/.grok/AGENTS.md` as a new marked kernel delta (posture, defaults-with-reasons, cross-vendor routing, publish policy, concepts pointer) — Grok docs confirm it as the global-rules layer; machine-local, full built-in-prompt diff pending. CONCEPT.md deploy records and harnesses.md updated.
 
 ## [2026-07-12] deploy | Codex/Grok AGENTS.md + sessions into Syncthing
-Moved `~/.codex/AGENTS.md`+`sessions/` and `~/.grok/AGENTS.md`+`sessions/`+`memory/` into `CONFIG/.codex` / `CONFIG/.grok` with per-machine symlinks back, so kernel deltas sync and chats continue from any machine. Sessions/memory are git-ignored (Syncthing-only). `bc-setup-config-symlinks` (Scripts repo, 4f1a845) now links these dirs entry-by-entry and excludes them from wholesale dir-linking — auth, caches, and Grok's per-OS binary stay machine-local. Pi sessions turned out to already sync (the exclusion I cited was git-only); no Pi change needed.
+Moved `~/.codex/AGENTS.md`+`sessions/` and `~/.grok/AGENTS.md`+`sessions/`+`memory/` into `CONFIG/.codex` / `CONFIG/.grok` with per-machine symlinks back, so kernel deltas sync and chats continue from any machine. Sessions/memory are git-ignored (Syncthing-only). `<config-setup-script>` (Scripts repo, 4f1a845) now links these dirs entry-by-entry and excludes them from wholesale dir-linking — auth, caches, and Grok's per-OS binary stay machine-local. Pi sessions turned out to already sync (the exclusion I cited was git-only); no Pi change needed.
 
 ## [2026-07-13] ingest | tobi/qmd → qmd concept + bc wiring
 New reference concept `qmd` (local hybrid search: CLI conventions, driver-owns-indexing rule, authority-labeled context trees). Wired into the bc loop: opt-in `bc-init-agent --qmd` scaffold flag (writes `references/qmd.md` setup page; verified additive/idempotent), drain driver preflight refresh + search-only worker retrieval, triage qmd prior-art query. Source clipping moved to raw/ingested/; accuracy check authored but not run (qmd not installed locally).
@@ -410,7 +410,7 @@ A Grok update restored the bundled ~/.grok/skills/code-review (xAI maintainabili
 Added installers/packages/qmd.pkg to Scripts (npm user-local, codex.pkg pattern) and installed qmd 2.5.3 on Arch. Full accuracy check passed: all skill commands work as written; contexts surface authority labels in results; update+embed is a clean no-op. Key finding: project-local .qmd/index.yml stores absolute collection paths → gitignore all of .qmd/, setup per-machine (SKILL.md, scaffold reference page, and CONCEPT.md updated).
 
 ## [2026-07-13] implement | qmd rework: global mode only
-User decision after grilling: one global index, five collections (agents/wiki/music/scripts/image-maze) from synced canon Scripts/config/qmd-collections.yml, converged per-machine by bc-qmd-setup (+ daily bc-qmd-refresh.timer, qmd.pkg post_install). Removed the same-day --qmd per-repo design from bc-init-agent's scaffold; its close-out now registers new vaults by default (opt-out). Rationale: project-local .qmd/ shadows the global registry (verified) and is invisible from drain worktrees. Skill body, triage/drain detection, and all four CONCEPT.md files updated. Ran setup on Arch: 1055 docs indexed, first embed in progress.
+User decision after grilling: one global index, five collections (agents/wiki/music/scripts/image-maze) from synced canon Scripts/config/qmd-collections.yml, converged per-machine by <qmd-setup-script> (+ daily <qmd-refresh-job>.timer, qmd.pkg post_install). Removed the same-day --qmd per-repo design from bc-init-agent's scaffold; its close-out now registers new vaults by default (opt-out). Rationale: project-local .qmd/ shadows the global registry (verified) and is invisible from drain worktrees. Skill body, triage/drain detection, and all four CONCEPT.md files updated. Ran setup on Arch: 1055 docs indexed, first embed in progress.
 
 ## [2026-07-14] test | qmd vs grep A/B comparison PASS
 Two cold subagents, same question, verified ground truth (music sticker-fork decision). Keyword-friendly question: tie on every axis (36s/25k tokens grep vs 45s/24.6k qmd; both correct) — grep stays the right tool when the words match. Paraphrase question with zero keyword overlap: grep 0 hits across all corpora in five phrasings; qmd query --no-rerank hit ground truth (bc-drain-issues claim branches) first attempt in 20.7s. Cold agent also chose the correct latency tier from the skill text alone. Recorded in concepts/qmd/tests/grep-baseline-comparison.md; CONCEPT.md Tests section updated (accuracy-check status was stale, now marked PASS).
@@ -484,7 +484,7 @@ A real `/bc-drain-issues` run on image-maze #203 (an issue *about* two inert ref
 Replaced probabilistic topology as the deployment benchmark with a locked S0→S1→S2 trace containing exactly two Standards-only reworks; the natural contested fixture and its one-rework INVALID result remain ecological-pressure provenance. The harness pins hostile-environment-resistant SHA-1 Git identity/config, regenerates its own canonical contract, uses sanitized no-remote roots plus fail-closed receipt stubs without falsely claiming physical network isolation, and derives model/session tokens from real Pi lifecycle artifacts. Reviewer JSON and reworker patches now supply independently checked fidelity; stale Spec hashes cannot land and v3 requires a focused final S2 Spec sync. Gate A remains 22/22 with check 19 strengthened for both intermediate skips and exact-hash sync; trace self-test passes all identity, behavior, evidence, isolation, dispatch, and landing checks. Real same-model/medium v2/v3 token measurement remains outstanding.
 
 ## [2026-07-30] implement | machine-mesh remote-command PATH
-Non-interactive SSH sources neither .zprofile nor .zshrc, so an agent had reported node/npm/gh missing on the Mac when all were installed. Documented the check and the `~/.zshenv` fix in body/SKILL.md, recorded the decision and an accuracy-check run. beelink was unreachable during verification.
+Non-interactive SSH sources neither .zprofile nor .zshrc, so an agent had reported node/npm/gh missing on the Mac when all were installed. Documented the check and the `~/.zshenv` fix in body/SKILL.md, recorded the decision and an accuracy-check run. The second machine was unreachable during verification.
 
 ## [2026-08-02] implement | portability — the workspace is installable by anyone
 
@@ -690,7 +690,7 @@ and `~/.claude/CLAUDE.md` (untracked; Syncthing only), adapted to each delta's s
 Verified in the real deployed config, not a fixture: global instructions only, planted
 false claim caught 4/5 runs vs 0/4 before. One failure (H2) was initially misread as
 context dilution; a controlled project-vs-global comparison and three more samples showed
-it was a flake — the global file is loaded (it recalled Luna-max and bc-improve unprompted).
+it was a flake — the global file is loaded (it recalled Luna-max and <improve-script> unprompted).
 Rule is a large improvement, not a guarantee, at low thinking.
 
 ## [2026-08-18] implement | bc-swarm tooth names role + model + thinking
@@ -788,7 +788,7 @@ Pressure test rewritten to 6 checks, not run; still not deployed.
 
 ## [2026-08-20] implement+test | discriminating acceptance evidence; remove acceptance-mutation
 Verified empirically whether the day-old `acceptance-mutation` concept would
-ever fire: zero `.feature` files and zero BDD runners anywhere in `~/Sync`, and
+ever fire: zero `.feature` files and zero BDD runners anywhere in `<synced-home>`, and
 the bc pipeline's spec artifacts are prose checkboxes (`issue-slicing`
 criteria → Agent Brief → `acceptance-matrix.json`) that a worker transcribes by
 hand. Nothing consumes them, so there is no value to mutate. Worse, "acceptance"
@@ -1012,7 +1012,7 @@ deliberately skipped.
 Created `references/agent-skills.md` in the public and private Homeflix `.agent/` vaults (neither
 had a repo-local skill map) and indexed both; the private one additionally binds the maintenance
 pass to `conventions/secrets.md` and says an upstream conflict is recorded, not reconciled.
-Repaired the dead `~/Sync/CONFIG/agents` path in 12 instructional files across six vaults;
+Repaired the dead `<old-private-config-checkout>` path in 12 instructional files across six vaults;
 `log.md`/`tasks/`/`findings/` mentions were deliberately left, being accurate history rather than
 live instruction. The Agents repo itself is deliberately NOT a `bc-wiki-maintain` target: its
 `scripts/lint.py` already covers link/index/status drift, and its `log.md` is the curated output
@@ -1142,10 +1142,10 @@ directly. Limits recorded in CONCEPT.md: one model at max thinking, and the wrap
 is covered by pytest rather than by 3a.
 
 ## [2026-08-25] implement | qmd registry repair, wiki-lint failures cleared, plan doc landed
-Fixed the four queued items. The `agents` qmd collection had pointed at `~/Sync/CONFIG/agents` since
+Fixed the four queued items. The `agents` qmd collection had pointed at `<old-private-config-checkout>` since
 its first commit -- a path that never existed -- yet held 491 indexed documents, so searches returned
 content from a vanished directory rather than nothing. Repointed at the workspace (232 files) and
-corrected its context sub-paths; note that `bc-qmd-setup` skips a collection already registered under
+corrected its context sub-paths; note that `<qmd-setup-script>` skips a collection already registered under
 a different path, so the stale machine entry had to be removed first. Registered the codebase-design
 learning vault; declared `sql` an explicit exclusion while it is scaffold with no sessions.
 Cleared the daily `bc-wiki-lint.service` failure: Music had 1 broken link and codebase-design 5 broken
@@ -1167,7 +1167,7 @@ Three defects verified at source, not relayed: scaffolded `map.md` contributes z
 `without_code()` blanks its code-span targets before `links()`; Gate 1 does NOT mechanically block link
 insertion (`run-promotion.sh:226` short-circuits on zero deletions), so that prohibition is policy only;
 and `scaffold.py:307` emits `## __DATE__` while `wiki_lint.py:19` requires `## [YYYY-MM-DD]`, which is
-the root cause of the two permanently blocked vaults. Also found `~/Sync/Wiki` already runs daily
+the root cause of the two permanently blocked vaults. Also found `<owner-wiki>` already runs daily
 unattended LLM consolidation at 0 orphans / 0 missing index entries — prior art to port rather than
 reinvent. No concept changed yet; the memo's step 1 ships with a benchmark before any build.
 
@@ -1562,7 +1562,7 @@ Authored new artifact-graded scenarios, not run; marked revisions partial while 
 Replaced the fixed-literal injection fixture with a source-grounded path-traversal question (`CACHE_DIR`/`name` caller unseen) and split Check 11 into a consumer packet and a grader key; recorded the old-fixture run as INVALID for the question criterion. Revised check NOT RUN.
 
 ## [2026-11-02] deploy | Muse Code kernel delta + shared-bus docs
-Muse already lists corpus skills from `~/.agents/skills/` (no extra deploy target; do not `muse skills import`/`install`). Added a Codex/Grok-style kernel delta as a regular-file copy `~/Sync/CONFIG/muse/AGENTS.md` → `~/.config/muse/AGENTS.md` (Git discipline omitted: bundled `git` forbids unsolicited commits). Documented in harnesses.md, bootstrap.md, AGENTS.md, deploy-local-skills.py. Live recap pressure run pending.
+Muse already lists corpus skills from `~/.agents/skills/` (no extra deploy target; do not `muse skills import`/`install`). Added a Codex/Grok-style kernel delta as a regular-file copy `<private-config>/muse/AGENTS.md` → `~/.config/muse/AGENTS.md` (Git discipline omitted: bundled `git` forbids unsolicited commits). Documented in harnesses.md, bootstrap.md, AGENTS.md, deploy-local-skills.py. Live recap pressure run pending.
 
 ## [2026-11-03] lint | warn on copied kernel-delta drift (Muse)
 Added generic, warning-only byte comparison from optional private kernel-copies.json, with isolated fixture tests and portable configuration docs.
@@ -1628,10 +1628,10 @@ Recorded the design agreed in a 22-question owner interview as `docs/plans/imple
 Code, ops and hybrid now scaffold `work/` lifecycle folders, `docs/decisions/` and `docs/research/`, root `glossary.md` and a "Where things go" table (`parse_where_things_go`) in `.bc-agent/AGENTS.md`; learning/knowledge output is byte-identical to before. Sixteen new deterministic test functions, SKILL/CONCEPT/MIGRATIONS/scenario updated; not pressure-tested, not redeployed, and consumer concepts (W2+) still assume the vault.
 
 ## [2026-11-12] implement | bc-init-agent W1 review fixes
-Applied review findings 1–17: visible-layout runs refuse earlier-layout projects unless `--allow-earlier-layout`, `--force` stays inside `.bc-agent/`, the table parser keeps plain paths and rejects empty or duplicate rows, and generated text redirects skill default paths to the table. SKILL steps 9–10 (qmd, nightly maintenance) are learning/knowledge only for now; the merge to the main checkout is held until consumer skills read the table. `bc-pytest concepts/bc-init-agent/tests`: 102 passed; not pressure-tested, not redeployed.
+Applied review findings 1–17: visible-layout runs refuse earlier-layout projects unless `--allow-earlier-layout`, `--force` stays inside `.bc-agent/`, the table parser keeps plain paths and rejects empty or duplicate rows, and generated text redirects skill default paths to the table. SKILL steps 9–10 (qmd, nightly maintenance) are learning/knowledge only for now; the merge to the main checkout is held until consumer skills read the table. `<pytest-wrapper> concepts/bc-init-agent/tests`: 102 passed; not pressure-tested, not redeployed.
 
 ## [2026-11-12] implement | bc-init-agent ops open questions and hybrid shared glossary
-Owner decisions: ops/hybrid drop `docs/open-questions/` (open questions become work-item steps, planned items or ideas lines), and a hybrid project's `teach` uses the root `glossary.md` via a second valid adapter map; hybrid no longer generates `project/overview.md`. teach SKILL shows both Glossary variants. `bc-pytest concepts/bc-init-agent/tests concepts/teach`: 107 passed; not pressure-tested (teach scenario 5 written), not redeployed.
+Owner decisions: ops/hybrid drop `docs/open-questions/` (open questions become work-item steps, planned items or ideas lines), and a hybrid project's `teach` uses the root `glossary.md` via a second valid adapter map; hybrid no longer generates `project/overview.md`. teach SKILL shows both Glossary variants. `<pytest-wrapper> concepts/bc-init-agent/tests concepts/teach`: 107 passed; not pressure-tested (teach scenario 5 written), not redeployed.
 
 ## [2026-11-12] implement | bc-wiki-maintain visible-layout lint (W2)
 `wiki_lint.py` detects visible-layout projects by their "Where things go" table, drops vault demands there, and checks work folders through the table's paths (duplicate numbers, done month folders, `Status:` lines, empty Outcome as errors; item names, missing `plan.md`, missing role paths as warnings). `SKILL.md` routes promotion to table roles and keeps the promotion timer vault-only. The parser is a verbatim copy guarded by a drift test. Not yet pressure-tested.
@@ -1746,13 +1746,13 @@ Correct session and child log layouts, portable timing lookup, headless batch re
 - agent-kernel: session-close 👣 clause PASS 4/4 per scenario (without and pre-change FAIL in finished-session scenarios). Derived kernel copies synced in CONFIG.
 
 ## [2026-11-19] implement | retro batch mode tightened
-Batch sampling rule (top N by active time + random, "k of n sampled sessions", population stated), report file always written with `--report` winning, ranking via `bc-agent-time-report --summary` with per-project fallback. From the batch trial's skill friction; test_status reset to not-run.
+Batch sampling rule (top N by active time + random, "k of n sampled sessions", population stated), report file always written with `--report` winning, ranking via `<agent-time-report> --summary` with per-project fallback. From the batch trial's skill friction; test_status reset to not-run.
 
 ## [2026-11-19] implement | retro batch review fixes
 Define the parent-session population, reproducible project/file-size sampling and batch report-path precedence; correct deploy notes. Batch pressure re-test remains pending; deployment state unchanged.
 
 ## [2026-11-19] implement | retro samples by time across projects
-Batch sampling no longer ranks projects: top 18 parent sessions by active time (`bc-agent-time-report --sessions`) plus 2 seeded random, n=20; sessions started before the window get their time from the JSONL fallback. Owner decision after trial 2 put 8 of 10 samples in one project.
+Batch sampling no longer ranks projects: top 18 parent sessions by active time (`<agent-time-report> --sessions`) plus 2 seeded random, n=20; sessions started before the window get their time from the JSONL fallback. Owner decision after trial 2 put 8 of 10 samples in one project.
 
 ## [2026-11-19] implement | concurrent-session coordination moved to agent-kernel
 Added the coordination clause to bc-swarm, then moved it into Git discipline for all repository writes; review follow-up excludes own subagents and bounds check frequency. The relationship contracts concern other kernel sections and are unaffected.
@@ -1767,4 +1767,7 @@ s2 (direct edit, no subagents) prompt gained the no-tools sentence that s1/s3 al
 Marked the pre-rerun s2 figures in the review-rerun results as superseded (fix-verifier P3-a).
 
 ## [2026-11-19] test | retro first live batch run
-beelink `bc-retro-weekly` (Scripts) ran `/skill:retro since 2026-11-12` headless in 4.5 min and wrote `~/Sync/Archives/retro/2026-11-19.md`: 20 of 40 sessions across 9 projects (top 18 by active time + 2 seeded), two proposals with homes (code-review boundary-size question, 3 of 20; manicule delivery-check wording, 2 of 20). `bc-agent-time-report` was not on beelink's PATH (symlinks refreshed after); the JSONL fallback worked. Weekly timer: Mondays 06:00.
+A scheduled `<weekly-retro-job>` on a second machine ran `/skill:retro since 2026-11-12` headless in 4.5 min and wrote `<report-dir>/2026-11-19.md`: 20 of 40 sessions across 9 projects (top 18 by active time + 2 seeded), two proposals with homes (code-review boundary-size question, 3 of 20; manicule delivery-check wording, 2 of 20). `<agent-time-report>` was not on that machine's PATH (symlinks refreshed after); the JSONL fallback worked. Weekly timer: Mondays 06:00.
+
+## [2026-11-19] lint | personal-terms check and scrub
+Added `lint_personal_terms` (optional private denylist, ERROR per hit, skipped when absent) with docs/personal-terms.example.txt, stated the public-copyable policy in AGENTS.md § Conventions, and scrubbed personal terms from log/index/docs/scripts and concept CONCEPT.md/tests; concept bodies, raw sources and captured evidence still hold hits pending per-concept owner review.

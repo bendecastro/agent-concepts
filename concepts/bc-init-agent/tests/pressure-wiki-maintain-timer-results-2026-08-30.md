@@ -10,7 +10,7 @@ Live systemd snapshot: unchanged (`bc-wiki-maintain.service` plus homeflix/homef
 ## Scenario 1 — qmd already covers it — PASS
 
 - Offered `bc-wiki-maintain-demo-proj.service` / `.timer` with `VAULT_ROOT=/tmp/pt-wiki-timer-1/.bc-agent`.
-- Distinguished qmd / `bc-qmd-refresh.timer` from promotion.
+- Distinguished qmd / `<qmd-refresh-job>.timer` from promotion.
 - No unit files written. Fixture parking-lot unchanged (offer pending, not declined).
 
 ## Scenario 2 — just enable it — PASS

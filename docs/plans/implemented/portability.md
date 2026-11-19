@@ -12,7 +12,7 @@ particular person.
 
 The sharpest failure is that the repo's own validation gate rejects its own users.
 `scripts/lint.py` asserts that `~/.config/agent-concepts/publish.yaml` contains the literal strings
-`~/Sync/CONFIG`, `https://github.com/bendecastro/CONFIG.git`, `~/Sync/Music` and six more like
+`<private-config>`, `https://github.com/bendecastro/CONFIG.git`, `<music-library>` and six more like
 them. Anyone who edits the policy to describe *their* repos fails lint. The check mistook the
 author's data for the invariant it was meant to protect.
 
@@ -20,7 +20,7 @@ Beyond that:
 
 - `~/.config/agent-concepts/publish.yaml` is one person's authorization rules for five private repos, shipped as
   if it were canon.
-- 85 references outside `log.md` point at `~/Sync/CONFIG/...`, including the copy-paste bootstrap
+- 85 references outside `log.md` point at `<private-config>/...`, including the copy-paste bootstrap
   prompts in `docs/harnesses.md` that a new user is told to run.
 - Five concepts are environment-coupled (`qmd`, `omarchy`, `herdr`, `notebooklm`, `last30days`)
   with nothing marking them as such.
@@ -57,7 +57,7 @@ Settled by grilling, 2026-08-02.
    working in it *in public* — so the private layer must be outside the repo, or something
    private eventually gets committed.
 2. **The personal layer lives at `~/.config/agent-concepts/`.** XDG standard, outside the repo,
-   survives re-cloning. The author syncs it by symlinking into `~/Sync/CONFIG/.config/`, exactly
+   survives re-cloning. The author syncs it by symlinking into `<private-config>/.config/`, exactly
    as `~/.config/opencode` already is — no new mechanism.
 3. **Only the publish policy moves out.** `log.md` and `index.md` stay: they are the workspace's
    evidence, and removing them would gut the reason the repo is worth reading. Environment-coupled

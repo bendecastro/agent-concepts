@@ -10,7 +10,7 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 
 ## Design decisions
 
-- **Idea borrowed, rewritten — no dependency on the `bc-improve` script (user's instruction).** The principle comes from the user's `~/Sync/Scripts/bin/utils/bc-improve` + `AI/autoresearch-loop.md` ("the harness owns truth; the agent proposes bounded changes; a valid iteration proves correctness AND metric improvement"). But that CLI is Scripts-repo-specific (domains `images`/`playlists`, state under `AI/autoresearch/`). This skill **re-expresses the discipline self-contained** so it works in any repo and doesn't break if that script changes — it never shells out to `bc-improve`.
+- **Idea borrowed, rewritten — no dependency on the `<improve-script>` script (user's instruction).** The principle comes from the user's `<owner-scripts>/bin/utils/<improve-script>` + `AI/autoresearch-loop.md` ("the harness owns truth; the agent proposes bounded changes; a valid iteration proves correctness AND metric improvement"). But that CLI is Scripts-repo-specific (domains `images`/`playlists`, state under `AI/autoresearch/`). This skill **re-expresses the discipline self-contained** so it works in any repo and doesn't break if that script changes — it never shells out to `<improve-script>`.
 - **Both-gates-or-revert is the whole point.** A change survives only if correctness still passes *and* the metric beats the threshold; failing either reverts. Without the dual gate, an AFK agent "optimizing" is a regression generator. This is the discipline's load-bearing rule.
 - **Don't optimize blind.** If no objective metric can be named, the skill stops rather than chasing "looks faster." This is what makes it safe to wire into an autonomous loop conditionally — no metric ⇒ it doesn't run.
 - **One bounded change per iteration** so regressions are attributable and reverts are clean; **correctness before performance**; **no win-by-deleting-output**. These are the named failure modes from the source playbook, kept as guards.
@@ -18,7 +18,7 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 
 ## Provenance
 
-- `~/Sync/Scripts/bin/utils/bc-improve` + `~/Sync/Scripts/AI/autoresearch-loop.md` + `~/Sync/Scripts/docs/utils/bc-improve.md` — the AutoResearch principle and its agent rules (one bounded change, correctness+metric, dry-run/shadow for expensive runtimes, record baseline/current/speedup). **Inspiration only — deliberately not a runtime dependency.**
+- `<owner-scripts>/bin/utils/<improve-script>` + `<owner-scripts>/AI/autoresearch-loop.md` + `<owner-scripts>/docs/utils/<improve-script>.md` — the AutoResearch principle and its agent rules (one bounded change, correctness+metric, dry-run/shadow for expensive runtimes, record baseline/current/speedup). **Inspiration only — deliberately not a runtime dependency.**
 - `concepts/tdd/` — sibling model-invoked discipline; same composition pattern (inlined by the executor).
 - `concepts/prompting-agents/body/SKILL.md` — gate/guard phrasing.
 
@@ -34,4 +34,4 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 
 ## Storage safety contract
 
-2026-10-27 owner-approved Btrfs ENOSPC prevention update: consume the kernel Storage safety contract; tooling/threshold authority is `~/Sync/Scripts/docs/disk-management/storage-prevention.md`. New storage pressure scenarios are authored, not run; historical test/deploy dates above do not certify this revision. See [shared scenarios](../agent-kernel/tests/storage-safety.md).
+2026-10-27 owner-approved Btrfs ENOSPC prevention update: consume the kernel Storage safety contract; tooling/threshold authority is `<owner-scripts>/docs/disk-management/storage-prevention.md`. New storage pressure scenarios are authored, not run; historical test/deploy dates above do not certify this revision. See [shared scenarios](../agent-kernel/tests/storage-safety.md).

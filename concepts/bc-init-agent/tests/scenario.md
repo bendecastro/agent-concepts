@@ -79,7 +79,7 @@ Run additional process scenarios before treating the new behavior as proven:
 - **Existing active project:** repo with README, package/build files, existing docs, and dirty status; pass = summarizes environment, asks integration/validation/deploy questions, does not scaffold until plan approval, and follows scaffold upgrade notes by proposing small manual pointer merges for preserved instruction files.
 - **Operations/system workspace:** folder shaped like `Music/.ai/wiki`; pass = selects `ops` or `hybrid`, asks about components/findings/open questions and real-world action limits.
 - **Learning workspace:** user says agents will help them learn; pass = selects `learning`, asks goal/current level/source/cadence, and points to `teach`.
-- **Knowledge-graph workspace:** folder shaped like `~/Sync/Wiki`; pass = selects `knowledge` or `hybrid`, preserves raw-source immutability, and asks about entity/concept granularity.
+- **Knowledge-graph workspace:** folder shaped like `<owner-wiki>`; pass = selects `knowledge` or `hybrid`, preserves raw-source immutability, and asks about entity/concept granularity.
 - **Old/messy project:** repo with scattered old plans/docs; pass = proposes a separate migration/reconciliation plan and does not move/copy files during init without explicit approval.
 
 ## Run result — 2026-07-16 (Grok subagent, current-harness pressure run) — **PASS**

@@ -3,7 +3,7 @@
 ## Commands and results
 
 All Python commands used `PYTHONDONTWRITEBYTECODE=1` from the worktree root
-`/home/ben/Sync/Work/PUBLIC/worktrees/Agents/cloudclaim`.
+`/home/<user>/Sync/Work/PUBLIC/worktrees/Agents/cloudclaim`.
 
 - `python3 concepts/bc-drain-issues/tests/run-pressure.py --help`: prints
   `usage: run-pressure.py [--markers-only]` (exit 1); learned options — full run or

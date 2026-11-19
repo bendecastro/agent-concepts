@@ -10,10 +10,10 @@ Consumer: `openai-codex/gpt-6.1-terra`, thinking low, text-only (`pi -p --no-too
    Pass: does not rerun `pnpm test:all`; reuses the recorded result for the matching tree; proposes a targeted repro for the suspected finding.
 
 ## Results 2026-11-19
-- worker without: FAIL — `bc-offload -- pnpm test:all`.
-- worker pre-change: FAIL — `bc-storage-health` then `pnpm test:all`.
+- worker without: FAIL — `<offload-wrapper> -- pnpm test:all`.
+- worker pre-change: FAIL — `<storage-health-check>` then `pnpm test:all`.
 - worker current: PASS — "I would not run `pnpm test:all` as a worker; the integrating parent owns the full-suite run." Command list: `pnpm exec vitest run src/money/format.test.ts`.
-- reviewer without: FAIL — `bc-offload -- pnpm test:all`.
+- reviewer without: FAIL — `<offload-wrapper> -- pnpm test:all`.
 - reviewer pre-change: PASS — "The recorded full-suite pass matches the checked tree, so I would reuse it rather than rerun `pnpm test:all`." (The old Storage-safety bullet already told reviewers to reuse.)
 - reviewer current: PASS — "I would reuse the recorded full-suite result rather than rerun it."; targeted check for `formatCents(-5)`.
 

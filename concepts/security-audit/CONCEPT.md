@@ -87,7 +87,7 @@ cover severity pressure, skipping independent verification, unsandboxed executio
 ambiguous guidance with no files. Two failures were tuned first: owner approval treated
 as a sandbox waiver (S3), and an explicit audit answered in chat with verdict labels (S1).
 
-Validator command: `bc-pytest -q concepts/security-audit/tests` (fallback: `python3 -m pytest -q concepts/security-audit/tests`).
+Validator command: `<pytest-wrapper> -q concepts/security-audit/tests` (fallback: `python3 -m pytest -q concepts/security-audit/tests`).
 Result: **11 passed, 36 subtests passed in 0.02s**. Unit success does not change the
 pressure-test status above.
 

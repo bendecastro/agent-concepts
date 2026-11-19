@@ -65,7 +65,7 @@ The memo left five owner decisions open. All five were answered on 2026-08-27.
    decision until the approach earned one meant the approach failed before anyone argued about
    where to put it. The advisors' one genuine disagreement never needed resolving.
 2. **Silent failure — a desktop notification.** In scope for this plan, not deferred.
-3. **Port vs. invent — evaluate adapting `~/Sync/Wiki`'s machinery first.** Done; see
+3. **Port vs. invent — evaluate adapting `<owner-wiki>`'s machinery first.** Done; see
    [finding C](#what-recon-corrected-in-the-memo). The verdict is that the *script* is not
    portable and its *bugs* do not transfer either, because the project runner is bash with no
    lock. W3 takes one idea: write a durable, visible artifact when a run fails.
@@ -92,7 +92,7 @@ sql). The 9th vault was `dng`, now out of scope; it holds 0 unpromoted headings,
 is unchanged.
 
 **C. The personal wiki's consolidation script is not portable, and neither are its bugs.**
-`~/Sync/Wiki/scripts/wiki_semantic_consolidation.py` (151 lines) wraps a `pi` call. It derives
+`<owner-wiki>/scripts/wiki_semantic_consolidation.py` (151 lines) wraps a `pi` call. It derives
 its root from its own file location, hard-codes `ROOT / "wiki"`, and bakes the personal category
 vocabulary into its prompt. Its two known defects — a stranded PID lock that returned 0 for seven
 weeks, and an uncaught `TimeoutExpired` that bypasses the fallback report — are specific to that
@@ -263,8 +263,8 @@ survive contact:
 workspace, so the files on disk are right. The running environment is not, and re-measurement the
 same day showed the earlier "blocker closed" claim was too strong:
 
-- `systemctl --user show-environment` reports `AGENT_CONCEPTS=~/Sync/agents` (expanded), and
-  `ls -ld ~/Sync/agents` returns *No such file or directory*.
+- `systemctl --user show-environment` reports `AGENT_CONCEPTS=<nonexistent-path>` (expanded), and
+  `ls -ld <nonexistent-path>` returns *No such file or directory*.
 - The stale value sits in the **systemd user manager**, so it is inherited by every newly spawned
   session, not only by processes started before the fix. Verified up one live tree:
   `herdr` → `zsh` → `pi` all carry it.
@@ -276,7 +276,7 @@ read path's search command is written as
 `"$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py"`. At that measurement it failed
 for exactly the agents the read path is written for.
 
-**Closed the same day.** `systemctl --user set-environment AGENT_CONCEPTS="$HOME/Sync/Work/PUBLIC/Agents"`
+**Closed the same day.** `systemctl --user set-environment AGENT_CONCEPTS="<agent-concepts>"`
 refreshed the user manager. Verified by running the canonical block's own search command inside a
 freshly spawned `systemd-run --user` unit, which returned real pages. Future logins were already
 safe because `environment.d` was correct on disk; no file needed editing. Two residues: processes
@@ -354,7 +354,7 @@ to defend against. Its early exits are:
 
 The `bc-wiki-maintain` and `bc-wiki-lint` unit templates now add `OnFailure=` to the
 runner-local notifier. It exits nonzero if it cannot display. It does not use
-`~/Sync/Scripts/lib/notify.sh`: that helper is documented as a "silent no-op (exit 0)" when
+`<owner-scripts>/lib/notify.sh`: that helper is documented as a "silent no-op (exit 0)" when
 headless, which is the exact failure mode this work item exists to close, and this repository may
 not depend on one person's machine.
 
@@ -639,7 +639,7 @@ Blocked on W4 clearing its bars:
 - **Two Homeflix vaults are not scaffold-shaped.** They lack all four `conventions/` pages,
   ADR-0001 under its scaffold filename, `research/README.md`, and the `.obsidian/` metadata. Any
   work assuming a complete base vault will not find one there.
-- **No advisor reviewed the `~/Sync/Wiki` evidence.** It arrived after Grok and Sol were
+- **No advisor reviewed the `<owner-wiki>` evidence.** It arrived after Grok and Sol were
   dispatched for Pass 2; only Opus's retry packet contained it, and that run died on quota.
 
 ## What would change this plan

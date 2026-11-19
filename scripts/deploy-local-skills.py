@@ -16,7 +16,7 @@ Muse Code discovery path: those harnesses scan it alongside their native skill
 dirs. No extra symlink targets are required for them. Do not muse-skills-import
 or install corpus skills into ~/.config/muse/skills/ — that copies files and
 freezes bodies. Muse's always-on kernel is a separate regular-file copy of
-~/Sync/CONFIG/muse/AGENTS.md (see docs/harnesses.md), not a skill deploy.
+a machine-local kernel source (see docs/harnesses.md), not a skill deploy.
 
 Some concepts assume software that may not be installed (see "Requires" in
 index.md). They self-gate through their descriptions, so deploying them is

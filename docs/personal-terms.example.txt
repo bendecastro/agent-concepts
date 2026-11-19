@@ -1,0 +1,15 @@
+# Private denylist for scripts/lint.py (personal-terms check).
+# Copy to ~/.config/agent-concepts/personal-terms.txt (or point
+# AGENT_CONCEPTS_PERSONAL_TERMS at it). Never commit the real file here.
+#
+# One term per line; blank lines and lines starting with # are ignored.
+# Matching is case-insensitive and word-boundary aware: "examplehost" does
+# not match "examplehostname". Plain lines are literal text; prefix a line
+# with "re:" to give a Python regular expression instead.
+examplehost
+examplehost-local
+~/MyPrivateDir
+$HOME/MyPrivateDir
+/home/exampleuser
+xx-private-tool
+re:xx-backup-[a-z]+

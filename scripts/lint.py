@@ -12,6 +12,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -571,11 +572,55 @@ def lint_kernel_copies(issues: list[Issue]) -> None:
             differs = source.read_bytes() != runtime.read_bytes()
         except OSError as exc:
             issues.append(Issue("WARN", f"{label}: missing or unreadable file ({exc.strerror}); "
-                                "re-copy source to runtime (bc-setup-config-symlinks or equivalent)"))
+                                "re-copy source to runtime"))
             continue
         if differs:
-            issues.append(Issue("WARN", f"{label}: bytes differ; re-copy source to runtime "
-                                "(bc-setup-config-symlinks or equivalent)"))
+            issues.append(Issue("WARN", f"{label}: bytes differ; re-copy source to runtime"))
+
+
+def lint_personal_terms(issues: list[Issue], root: Path | None = None) -> None:
+    """Flag owner-personal terms from an optional private denylist in tracked files.
+
+    The denylist lives outside the repo because the list itself is personal;
+    strangers have none, so an absent file skips the check. Messages name only
+    the matched text, never the list.
+    """
+    root = root or ROOT
+    config = Path(os.environ.get("AGENT_CONCEPTS_PERSONAL_TERMS")
+                  or Path.home() / ".config/agent-concepts/personal-terms.txt").expanduser()
+    try:
+        lines = config.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return
+    except OSError as exc:
+        issues.append(Issue("WARN", f"personal terms: cannot read {display(config)}: {exc.strerror}"))
+        return
+    alternatives = []
+    for line in lines:
+        term = line.strip()
+        if not term or term.startswith("#"):
+            continue
+        alternatives.append(term[3:] if term.startswith("re:") else re.escape(term))
+    if not alternatives:
+        return
+    try:
+        pattern = re.compile(r"(?<!\w)(?:" + "|".join(alternatives) + r")(?!\w)", re.IGNORECASE)
+    except re.error as exc:
+        issues.append(Issue("WARN", f"personal terms: invalid regex in {display(config)}: {exc}"))
+        return
+    tracked = subprocess.run(["git", "-C", str(root), "ls-files", "-z"],
+                             capture_output=True, check=True).stdout.decode().split("\0")
+    for name in filter(None, tracked):
+        path = root / name
+        try:
+            data = path.read_bytes()
+        except OSError:
+            continue
+        if b"\0" in data:
+            continue
+        for number, text in enumerate(data.decode("utf-8", errors="replace").splitlines(), 1):
+            for match in pattern.finditer(text):
+                issues.append(Issue("ERROR", f"personal term in {name}:{number}: {match.group(0)!r}"))
 
 
 def lint_skill_copies(issues: list[Issue]) -> None:
@@ -694,6 +739,7 @@ def main() -> int:
     lint_deploy_symlinks(issues)
     lint_kernel_copies(issues)
     lint_skill_copies(issues)
+    lint_personal_terms(issues)
 
     if not issues:
         print("agents lint: ok")

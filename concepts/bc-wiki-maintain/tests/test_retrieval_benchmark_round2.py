@@ -44,11 +44,11 @@ class RetrievalBenchmarkRoundTwoTests(unittest.TestCase):
 
     def test_display_path_uses_home_placeholder_not_resolved_home(self) -> None:
         home = Path.home()
-        vault = home / "Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent"
+        vault = home / "projects/image-maze/.bc-agent"
         shown = ROUND_TWO.display_path(vault)
         self.assertEqual(
             shown,
-            "$HOME/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent",
+            "$HOME/projects/image-maze/.bc-agent",
         )
         self.assertNotIn(str(home), shown)
         self.assertEqual(ROUND_TWO.display_path(vault / "index.md"), shown + "/index.md")

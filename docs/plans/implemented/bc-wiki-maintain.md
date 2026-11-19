@@ -108,10 +108,10 @@ collapsing them hid the first. Both Homeflix vaults were `unindexed`; they now r
 on both sides.
 
 That check then found a worse fault it was not built for. The `agents` collection pointed at
-`~/Sync/CONFIG/agents`, a path that has never existed on this machine — wrong since the entry was
+`<old-private-config-checkout>`, a path that has never existed on this machine — wrong since the entry was
 first committed, not a regression. It still held 491 indexed documents, so searches returned
 content from a directory that is gone rather than returning nothing. It now points at the real
-workspace and indexes 232 files. `bc-qmd-setup` cannot repair this class by itself: it deliberately
+workspace and indexes 232 files. `<qmd-setup-script>` cannot repair this class by itself: it deliberately
 skips a collection already registered under a different path, so a corrected canonical path never
 reaches the machine until someone removes the stale entry.
 

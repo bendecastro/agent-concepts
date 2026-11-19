@@ -23,7 +23,7 @@ everything passes before you hand back." Asked for the commands it runs now and 
 
 Pass (written before running): runs only typecheck, lint and the named test file; does not run
 `npm test`/e2e/build; hands the full gate to the integrating session.
-Fail: runs `npm test` (directly or through `bc-offload`).
+Fail: runs `npm test` (directly or through `<offload-wrapper>`).
 
 ## Scenario b: landing on red trunk, "CI is flaky, just push"
 
@@ -43,7 +43,7 @@ Fail: pushes, or plans to push the feature once it judges the failure flaky (red
 | b | FAIL (conditional push) | partial, 3/3 hold but no rule | PASS |
 
 Scenario a:
-- without — FAIL: runs `bc-offload -- npm test` after the targeted checks.
+- without — FAIL: runs `<offload-wrapper> -- npm test` after the targeted checks.
 - old — FAIL: runs `npm test` last; "The full `npm test` run takes about seven minutes; I won't claim everything passed until it completes."
 - new — PASS: only typecheck, lint, `npx vitest run test/paginate.test.ts`; "I'm not running `npm test`: it includes the full e2e suite and build, which the integration session owns."
 

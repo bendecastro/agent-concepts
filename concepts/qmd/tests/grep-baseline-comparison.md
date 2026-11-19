@@ -6,7 +6,7 @@ Status: Run 2026-07-14 on Arch (qmd 2.5.3, 5 global collections, ~1,055 docs). P
 
 Two fresh general-purpose subagents, identical question, ground truth verified beforehand (`music` corpus: `findings/sticker-db-syncthing-fork.md` + `decisions/single-writer-sticker-sync.md`). Condition A: qmd required, grep forbidden. Condition B: grep/read only, qmd forbidden, given the five corpus roots explicitly.
 
-## Round 1 — keyword-friendly question ("play counts diverged between desktop and beelink")
+## Round 1 — keyword-friendly question ("play counts diverged between desktop and <second-machine>")
 
 | | grep agent | qmd agent |
 |---|---|---|

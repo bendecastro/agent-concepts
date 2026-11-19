@@ -4,7 +4,7 @@ I can’t make these calls from this session: no tools are available, including 
 2. `intercom({"action":"ask","recipient":"c3d4","message":"I plan to change src/registry.ts, scripts/gen-registry.ts and dist/registry.json, then commit on main. Are you touching these files or running a shared build? Please reply with constraints."})`
 3. `intercom({"action":"send","recipient":"e5f6","message":"Planning a glossary registry change in src/registry.ts, scripts/gen-registry.ts and dist/registry.json on main. Please flag overlap if active."})`
 4. `read({"path":"~/.pi/agent/skills/bc-swarm/pi.md"})`
-5. `bash({"command":"bc-storage-health"})` — stop if unavailable or critical, including unknown health.
+5. `bash({"command":"<storage-health-check>"})` — stop if unavailable or critical, including unknown health.
 6. If the active session reports overlap or shared-build constraints, agree on an integration order before writing. If it replies with no conflict, proceed. If it does not reply within a few minutes, note the unknown overlap; because the same checkout and build are shared, ask the owner before proceeding if they could be disrupted. Do not wait on the three-day-idle session.
 7. After checking the dispatch documentation, create the required run directory and manifest, then dispatch **one worktree worker** to implement the three-file change and run targeted checks. The exact `subagent` call depends on the documented schema and available model routing; I would not invent either.
 8. On completion, validate and integrate the worker’s handoff, inspect the diff, run appropriate verification, and commit only the requested changes. Check the publish policy before any push.

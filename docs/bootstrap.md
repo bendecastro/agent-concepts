@@ -72,7 +72,7 @@ For stale sessions or one-off use, the generic concept-session bootstrap still w
 
 Muse discovers corpus skills from the shared bus (`~/.agents/skills/`). Run `python3 scripts/deploy-local-skills.py` — do not add a Muse-specific symlink, and do not `muse skills import` or `muse skills install` those skills (that copies into `~/.config/muse/skills/`). Restart Muse after deploy.
 
-Always-on kernel is a **delta**, not the full `AGENT-KERNEL.md` (Muse bundled `git` forbids unsolicited commits). Canon: `~/Sync/CONFIG/muse/AGENTS.md`. Runtime: regular file `~/.config/muse/AGENTS.md` installed by `bc-setup-config-symlinks`. Never dir-link `~/.config/muse` (auth lives there). Muse rejects a symlink as the user-rules path. `/rules import` copies Claude/Codex rules; do not use it for this kernel.
+Always-on kernel is a **delta**, not the full `AGENT-KERNEL.md` (Muse bundled `git` forbids unsolicited commits). Canon: a machine-local kernel source you keep. Runtime: regular file `~/.config/muse/AGENTS.md`, copied from that source by your own setup step. Never dir-link `~/.config/muse` (auth lives there). Muse rejects a symlink as the user-rules path. `/rules import` copies Claude/Codex rules; do not use it for this kernel.
 
 ### Gemini / other agents
 

@@ -54,7 +54,7 @@ class KernelCopiesTests(unittest.TestCase):
         (self.home / "runtime").write_bytes(b"kernel\n")
         issues = self.check()
         self.assertEqual(len(issues), 1)
-        for text in ("~/source", "~/runtime", "re-copy source to runtime", "bc-setup-config-symlinks"):
+        for text in ("~/source", "~/runtime", "re-copy source to runtime"):
             self.assertIn(text, issues[0].message)
         self.assertNotIn(str(self.home), issues[0].message)
 

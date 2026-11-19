@@ -100,7 +100,7 @@ stays `git_date`. Warn above ~12KB; never auto-split, because a split is a
 rewrite.
 
 The strongest evidence for this is not from an advisor. The user's personal wiki
-at `~/Sync/Wiki` *does* carry `updated:` frontmatter, and its daily consolidation
+at `<owner-wiki>` *does* carry `updated:` frontmatter, and its daily consolidation
 pass had to repair five pages whose `updated:` was objectively wrong against
 `git log`. `CONCEPT.md`'s recorded rationale — "a second `updated` field would be
 hand-maintained state that can drift" — is observably drifting next door and
@@ -184,7 +184,7 @@ enforce it.
    answer to *how the user learns it stopped working*. Nothing in the current
    runner or any advisor proposal has one.
 
-3. **Whether to port rather than invent.** `~/Sync/Wiki` already achieves the
+3. **Whether to port rather than invent.** `<owner-wiki>` already achieves the
    target state — 379 pages, 0 broken links, 0 orphans, 0 missing index entries —
    under daily unattended LLM maintenance that commits. Its
    `wiki_semantic_consolidation.py` is 5,983 bytes. Before building new machinery,
@@ -236,7 +236,7 @@ benchmark rather than a promise.
 
 ### Disclosures
 
-- **Asymmetric evidence.** The `~/Sync/Wiki` finding arrived after Grok and Sol
+- **Asymmetric evidence.** The `<owner-wiki>` finding arrived after Grok and Sol
   were dispatched for Pass 2. Only Opus's retry packet contained it, and that run
   never completed. So no advisor has responded to the most consequential evidence
   in this memo; sections citing it are supervisor analysis, unreviewed by the

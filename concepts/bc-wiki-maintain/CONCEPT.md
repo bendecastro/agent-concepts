@@ -71,7 +71,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   (a folder role becomes `<path>/**/*.md`, a file role its path; hidden paths are skipped). The
   pattern indexes only Markdown inside those paths, so source, media and vendored folders stay out.
   Keeping the mechanics collection under the bare slug means an already-registered project keeps
-  its entry (`bc-qmd-setup` will not re-point a name at a new path) and adds one. `--qmd-entry
+  its entry (`<qmd-setup-script>` will not re-point a name at a new path) and adds one. `--qmd-entry
   <slug>` prints both entries; the `qmd registration` check reports `registered` only when both
   exist and the knowledge pattern equals the one the current table yields, so a table edit shows
   up as drift. An exclusion is recorded as a line containing "excluded from the global qmd index"

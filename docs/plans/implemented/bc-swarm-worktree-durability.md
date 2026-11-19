@@ -15,7 +15,7 @@ the commit unreachable and absent from the parent's tree.
 
 ## Evidence (observed 2026-08-25, not hypothetical)
 
-Repo `~/Sync/Work/PUBLIC/Agents`. A `worker` child, run id
+Repo `<agent-concepts>`. A `worker` child, run id
 `d400723f-5e9a-4320-ac68-eb876b319957`, was launched with `worktree: true`. It completed
 successfully and reported committing its work. Then:
 

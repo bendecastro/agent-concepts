@@ -6,7 +6,7 @@ I canâ€™t provide **exact** tool calls: this session exposes no tools, so I canâ
 2. `intercom({"action":"send","recipient":"manicule-tests","message":"I plan to change src/registry.ts, scripts/gen-registry.ts and dist/registry.json via a worker, then integrate on main. Are you touching these files or using the shared checkout for a build? Please flag conflicts."})`  
    If they report overlap, agree on ownership and integration order. If there is no reply within a few minutes, note the unknown overlap; ask the owner before proceeding if it could break the shared checkout, build, or integration. The three-day-idle docs session is stale, so it need not block work.
 
-3. `bash({"command":"bc-storage-health"})`  
+3. `bash({"command":"<storage-health-check>"})`  
    Stop if health is critical or unknown, or the check cannot run.
 
 4. `bash({"command":"cat ~/.pi/agent/skills/bc-swarm/pi.md"})`  

@@ -96,7 +96,7 @@ Run from the repository root with the read-only image-maze vault path:
 
 ```sh
 python3 concepts/bc-wiki-maintain/tests/run_retrieval_benchmark.py \
-  "$HOME/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent" \
+  "<image-maze-project>/.bc-agent" \
   --collection image-maze
 ```
 

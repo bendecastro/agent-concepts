@@ -4,7 +4,7 @@ I can’t run tools or inspect the packet in this reply, so I can’t safely inv
 
 ```json
 {"tool":"set_session_name","args":{"name":"Implement Registry Entry Kind"}}
-{"tool":"bash","args":{"command":"bc-storage-health"}}
+{"tool":"bash","args":{"command":"<storage-health-check>"}}
 {"tool":"read","args":{"path":"~/.pi/agent/skills/bc-swarm/pi.md"}}
 {"tool":"read","args":{"path":"/tmp/bc-swarm/2026-11-19-item024/manifest.md"}}
 ```

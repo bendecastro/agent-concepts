@@ -5,7 +5,7 @@ With those tools available, the next calls would be, in order:
 ```text
 set_session_name({name: "Registry Entry Worker"})
 intercom({action: "list"})
-bash({command: "cd /home/user/Projects/manicule && git worktree list && bc-storage-health"})
+bash({command: "cd /home/user/Projects/manicule && git worktree list && <storage-health-check>"})
 ```
 
 Then, conditional on the results:

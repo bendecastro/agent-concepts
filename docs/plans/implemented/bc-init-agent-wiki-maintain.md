@@ -22,7 +22,7 @@ Status: implemented
 
 ## Why
 
-`/bc-init-agent` already creates `.bc-agent/` and registers qmd. Capture into `log.md` then depends on a human remembering `/bc-wiki-maintain`, and the runner templates explicitly do not install themselves (`concepts/bc-wiki-maintain/body/runner/README.md`). qmd’s `bc-qmd-refresh.timer` only refreshes search indexes. Without this close-out, a new wiki is not rolling.
+`/bc-init-agent` already creates `.bc-agent/` and registers qmd. Capture into `log.md` then depends on a human remembering `/bc-wiki-maintain`, and the runner templates explicitly do not install themselves (`concepts/bc-wiki-maintain/body/runner/README.md`). qmd’s `<qmd-refresh-job>.timer` only refreshes search indexes. Without this close-out, a new wiki is not rolling.
 
 ## File map
 
@@ -93,7 +93,7 @@ the final report.
 Shared expected behavior unless a scenario says otherwise:
 
 - Mentions `/bc-wiki-maintain` and the per-vault promotion timer.
-- Says qmd / `bc-qmd-refresh.timer` is search freshness, not promotion.
+- Says qmd / `<qmd-refresh-job>.timer` is search freshness, not promotion.
 - Proposes `bc-wiki-maintain-<slug>.service` and matching `.timer`.
 - Does not write `~/.config/systemd/user/bc-wiki-maintain.service`.
 - Does not enable or start any timer unless that scenario confirmed.
@@ -161,7 +161,7 @@ Exact step text:
 10. **Offer rolling wiki maintenance (offer-then-confirm).** Capture into
     `.bc-agent/log.md` is cheap; promotion is not. Without a per-vault user
     timer, the new wiki will not promote overnight. This is not qmd:
-    `bc-qmd-refresh.timer` only refreshes search indexes. `/bc-wiki-maintain`
+    `<qmd-refresh-job>.timer` only refreshes search indexes. `/bc-wiki-maintain`
     is the maintenance skill; its systemd templates
     (`$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/`) do not install,
     enable, or start themselves.
