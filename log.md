@@ -1786,3 +1786,6 @@ Restored the session-close record, clarified the with-kernel-only evidence and m
 
 ## [2026-11-19] implement | code-review data-size Standards question
 Added a conditional Standards question (size, amplification, growth and limit behaviour of data crossing a changed boundary) from retro 2026-11-19 proposal 1. Pressure test on Terra low: amplification-only scenario without 0/3, old body 0/2, new 3/3; two scenarios with obvious growth non-discriminating; control had no false size finding.
+
+## [2026-11-19] test | code-review bounded-boundary control
+Scrubbed private provenance paths and project names; a fixed-shape message control produced no size finding in either arm (2/2 each), graded from raw outputs.

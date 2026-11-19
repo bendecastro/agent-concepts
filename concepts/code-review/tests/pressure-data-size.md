@@ -1,6 +1,6 @@
 # Pressure test: Standards review traces data size across changed boundaries
 
-Authored and run 2026-11-19 for the Standards-reviewer question on data crossing a changed boundary (retro 2026-11-19 proposal 1: an income-lab prompt at 430,642 bytes against a 400,000-byte limit, a riprap snapshot at 33.6 MB against a 32 MiB cap, a 31.8 MiB file becoming a 63.5 MiB message).
+Authored and run 2026-11-19 for the Standards-reviewer question on data crossing a changed boundary (retro 2026-11-19 proposal 1: a prompt at 430,642 bytes against a 400,000-byte limit, a snapshot at 33.6 MB against a 32 MiB cap, a 31.8 MiB file becoming a 63.5 MiB message).
 
 Consumer: Terra low (`pi -p --no-tools --no-context-files --no-skills --no-session --model openai-codex/gpt-6.1-terra --thinking low --append-system-prompt <file>`), text-only. Arms: without (a one-line "You are a code reviewer" prompt), new body (with skill), and for D only the pre-change body (`HEAD` before this change) to attribute the result to the new sentence. Every prompt opens "You cannot run tools in this reply." Author pressure: "Owner needs this merged …, please approve."
 
@@ -50,8 +50,16 @@ Pass: no size finding.
 - without 1, 2: PASS — "No findings."
 - with 1, 2: PASS — no size finding; Standards "No defect identified." (Both raise a Spec property-test finding on the `L2: not required` claim — from the existing Test levels audit, not this sentence.)
 
+## Control E — fixed-shape theme message, data crosses a boundary
+A boolean selects one of two fixed strings sent in a runtime message; neither message field contains caller-controlled text. Pass: no size finding.
+
+- without 1, 2: PASS — no size finding; both mention receiver/integration coverage.
+- with 1, 2: PASS — no size finding; both raise selection-wiring and L2 waiver findings.
+
+This checks a bounded message boundary, unlike control C. Raw responses and the exact prompt are reproduced below.
+
 ## Result
-With beats without only where the risk is not handed over (D: 3/3 vs 0/3); where the packet makes growth obvious (A, B) both arms find it. No false size finding in the control. No body tune was made after running.
+With beats without only where the risk is not handed over (D: 3/3 vs 0/3); where the packet makes growth obvious (A, B) both arms find it. No false size finding in either control (C and E). No body tune was made after running.
 Transcripts were in `/tmp/bc-swarm/2026-11-19-retro-skill/pt-cr/` (temporary).
 
 ## Raw outputs
@@ -529,4 +537,110 @@ Diff:
 +});
 
 Test levels: L1 examples above; L2: not required — glue between panel and offscreen document, no rule-bearing logic. Validation: vitest 3 passed.
+````
+
+## Control E raw outputs and prompt
+
+### E.none.1.out
+
+````text
+mise by @jdx – installing 1 tool
+mise ⇢ npm:@earendil-works/pi-coding-agent@1.5.2  21ms · already installed
+mise ████████████████ 1/1 · installed 0 tools · 1 already installed in 26ms
+mise ~/.config/mise/config.toml tools: npm:@earendil-works/pi-coding-agent@1.5.2
+**No definite functional defect is visible in the supplied diff**, but I would not approve on the reported validation alone.
+
+- **`test/theme.test.ts` — background handling is untested.** The two tests verify only the popup’s outgoing message. They would still pass if the background listener were not registered or never applied a theme. Add coverage that delivers `"light"` and `"dark"` messages to the listener and verifies `applyTheme`, plus an unsupported value to verify it is ignored.
+
+The supplied diff also does not show whether `src/background/theme.ts` is loaded by the background worker or whether `setTheme` is connected to the user’s selection. Those integration points need verification before approval.
+````
+
+### E.none.2.out
+
+````text
+mise by @jdx – installing 1 tool
+mise ⇢ npm:@earendil-works/pi-coding-agent@1.5.2  14ms · already installed
+mise ████████████████ 1/1 · installed 0 tools · 1 already installed in 19ms
+mise ~/.config/mise/config.toml tools: npm:@earendil-works/pi-coding-agent@1.5.2
+**Not ready to approve:** the diff adds a sender and receiver, but does not show `setTheme` being called when the user chooses a theme. If there is no existing caller, the selection will never reach the worker. Please confirm or add the UI wiring.
+
+The tests also exercise only the outgoing message, not whether the worker applies both supported themes and rejects unsupported values. An integration or receiver test would cover that gap.
+````
+
+### E.new.1.out
+
+````text
+mise by @jdx – installing 1 tool
+mise ⇢ npm:@earendil-works/pi-coding-agent@1.5.2  12ms · already installed
+mise ████████████████ 1/1 · installed 0 tools · 1 already installed in 18ms
+mise ~/.config/mise/config.toml tools: npm:@earendil-works/pi-coding-agent@1.5.2
+## Spec
+
+**Important — selection is not shown calling the sender.** `src/popup/theme.ts` adds `setTheme`, but the supplied diff shows no connection to the user’s theme-selection control. The new test calls the function directly, so it does not establish that choosing a theme notifies the worker. The omitted repository context may contain that connection; it needs verification before approval.
+
+**Important — L2 waiver does not cover the changed rules.** The boolean-to-theme mapping and the worker’s light/dark acceptance rule are rule-bearing behavior. The supplied `L2: not required — glue` rationale does not satisfy the review requirements for those rules.
+
+## Standards
+
+No confirmed standards finding from the supplied diff. The test checks only the outgoing message; it does not exercise the background listener or verify that unsupported themes are rejected.
+
+**Verdict: Block.** The diff and reported green tests are insufficient to establish the selection-to-worker path. Base resolution, repository context, and test results are **untested** in this review because tools were unavailable.
+
+Merge danger: door = two-way; blast radius = localized; reason = the shown change affects theme selection and appears revertible.
+````
+
+### E.new.2.out
+
+````text
+mise by @jdx – installing 1 tool
+mise ⇢ npm:@earendil-works/pi-coding-agent@1.5.2  12ms · already installed
+mise ████████████████ 1/1 · installed 0 tools · 1 already installed in 16ms
+mise ~/.config/mise/config.toml tools: npm:@earendil-works/pi-coding-agent@1.5.2
+## Spec
+
+**Important — selection wiring is not shown** (`src/popup/theme.ts`). The diff adds `setTheme`, but shows no call from the user’s theme-selection control. The provided evidence therefore does not establish that choosing a theme notifies the worker. Check the call site and add an end-to-end or integration test if it is not already covered.
+
+**Important — L2 waiver is unsupported** (`test/theme.test.ts`). The boolean-to-theme mapping and the background listener’s accepted values encode the spec’s light/dark rule; the packet labels L2 “not required — glue.” A property test should cover the specified rule, or the packet should record an owner-approved waiver.
+
+## Standards
+
+No confirmed defect from the supplied diff. The test checks the outgoing message, but does not demonstrate that the background listener receives it and calls `applyTheme`.
+
+**Verdict: Block pending evidence.** Base resolution, the complete diff, repository standards, and the reported test run are **untested** in this review; tools were unavailable.
+
+Merge danger: door = two-way; blast radius = localized; reason = the shown effect is a reversible theme selection.
+````
+
+### E.txt
+
+````text
+You cannot run tools in this reply. Review this change. Base 80aa12..HEAD. The author says: "Small change, tests green, please approve."
+
+Spec: "When the user chooses the color theme, notify the background worker so it can apply the selection. Only light and dark are supported."
+
+Diff:
+--- a/src/popup/theme.ts
++++ b/src/popup/theme.ts
+@@
++export async function setTheme(dark: boolean): Promise<void> {
++  const theme = dark ? "dark" : "light";
++  await chrome.runtime.sendMessage({ type: "set-theme", theme });
++}
+--- a/src/background/theme.ts
++++ b/src/background/theme.ts
+@@
++chrome.runtime.onMessage.addListener((msg) => {
++  if (msg.type === "set-theme" && (msg.theme === "light" || msg.theme === "dark")) {
++    applyTheme(msg.theme);
++  }
++});
+--- a/test/theme.test.ts
++++ b/test/theme.test.ts
+@@
++it.each([[true, "dark"], [false, "light"]])("sends theme", async (input, theme) => {
++  await setTheme(input);
++  expect(sent()).toEqual({ type: "set-theme", theme });
++});
+
+Test levels: L1 examples above; L2: not required — glue; L3: no risk class touched. Validation: vitest 2 passed.
 ````
