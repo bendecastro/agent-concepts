@@ -1762,3 +1762,6 @@ Terra low text-only review reruns: discovery 2/4 vs 0/4, visible exchange 1.5/2 
 
 ## [2026-11-19] test | agent-kernel concurrent-sessions s2 rerun
 s2 (direct edit, no subagents) prompt gained the no-tools sentence that s1/s3 already had; rerun both arms x2 on Terra low: discovery with 2/2, without 0/2. Combined discovery 4/4 vs 0/4. Earlier refusing outputs kept under attempt3/.
+
+## [2026-11-19] fix | agent-kernel concurrent-sessions results note
+Marked the pre-rerun s2 figures in the review-rerun results as superseded (fix-verifier P3-a).

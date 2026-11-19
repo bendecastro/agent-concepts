@@ -93,6 +93,8 @@ The first s2 prompt ended "(for example: another live session is working in this
 
 ## Results 2026-11-19 (review rerun)
 
+> Superseded for s2: the s2 columns, the "2/4" discovery figure, the note that the s2 prompt lacks the no-tools sentence and the verdict's s2 caveat predate the s2 rerun below (outputs from this run moved to attempt3/). Current discovery: with 4/4, without 0/4.
+
 Final wording: all with-arm scenarios rerun twice; s1 without also rerun twice with its corrected prompt. Original results are retained in [attempt2/](pressure-concurrent-sessions/attempt2/); the without s2, s2x and s3 runs are unchanged. D = discovery, X = exchange content, N = non-blocking, C = no ceremony. Partial X is not a pass: it counts neither as a full pass nor a full fail in the fractional comparison.
 
 | Run | s1 D / X / N | s2 D / X / N | s2x X / N | s3 C |
