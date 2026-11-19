@@ -738,7 +738,7 @@ def test_validation_page_has_owned_stages_with_budgets(tmp_path, archetype):
     full = text.split('## Full gate')[1].split('## Release')[0]
     assert 'Workers' in working and 'reviewers' in working and '60 s' in working
     assert 'no browser' in working and 'not the full gate' in working
-    assert 'bc-offload --budget 300 -- scripts/gate' in full
+    assert 'scripts/gate' in full and "machine's offload wrapper" in full
     assert 'integrat' in full and 'git rev-parse HEAD^{tree}' in full
     assert 'reviewer reports the gate as pending' in full
     assert 'combines the gate result with the review verdict before landing' in full
@@ -754,7 +754,7 @@ def test_gate_stub_is_executable_and_fails_until_filled(tmp_path):
     assert os.access(gate, os.X_OK)
     text = gate.read_text()
     commands = [line for line in text.splitlines() if not line.lstrip().startswith('#')]
-    assert not any('bc-offload' in line for line in commands)
+    assert not any('offload' in line for line in commands)
     result = subprocess.run([str(gate)], cwd=root, capture_output=True, text=True)
     assert result.returncode != 0
     assert 'scripts/gate' in result.stderr

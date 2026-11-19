@@ -793,17 +793,18 @@ the integrated tree.
 
 Owner: the session that integrates changes. `scripts/gate` holds every step (install,
 typecheck, lint, all tests including every browser/e2e test, build) and runs them directly,
-so CI runs the same file on a clean checkout. Start it in the background with a wake:
+so CI runs the same file on a clean checkout. Start it in the background with a wake, through
+the machine's offload wrapper if its agent instructions name one (with a 300 s budget):
 
 ```sh
-bc-offload --budget 300 -- scripts/gate
+scripts/gate
 ```
 
 - Run it once per integrated tree and record the tree SHA (`git rev-parse HEAD^{tree}`) and
   the result in the work item's evidence. A parallel reviewer reports the gate as pending
   instead of rerunning it; the parent combines the gate result with the review verdict before landing.
   Why: the same tree gives the same result; a second run only adds minutes.
-- Run one full gate at a time on a host; `bc-offload` queues the others.
+- Run one full gate at a time on a host; queue the others (an offload wrapper may do this).
   Why: two gates on one host slow each other and the owner's machine.
 - For a flaky failure, rerun only the failing tests, never the whole gate in a loop.
 - Budget: 5 minutes on the offload host. After two over-budget runs in a row, open a work item
@@ -848,8 +849,9 @@ The `tdd` skill defines these levels.
 # for a project whose checks were never written, and red blocks landing until the first agent
 # with a test command fills it in.
 GATE_SCRIPT = """#!/usr/bin/env bash
-# Full gate: every check the integrated tree must pass, run directly (no bc-offload here) so CI
-# runs this file unchanged. Agents run it as `bc-offload --budget 300 -- scripts/gate`.
+# Full gate: every check the integrated tree must pass, run directly (no offload wrapper here) so
+# CI runs this file unchanged. Agents run it through the machine's offload wrapper if its agent
+# instructions name one.
 # Stages and owners: .bc-agent/conventions/validation.md
 set -euo pipefail
 
