@@ -1722,3 +1722,6 @@ The targeted-tests bullet moved from Storage safety to Verification with a time 
 
 ## [2026-11-19] implement | bc-swarm targeted-check packets, background full gate
 Worker packets name targeted checks (test files/IDs) and never paste the full gate; after integration the parent starts the gate in the background with a wake and dispatches the reviewer on the same tree in parallel, no sleep/poll loops. dispatching-parallel-agents and pi-subagent-routing checked: no contradiction. Not pressure-tested.
+
+## [2026-11-19] implement | staged validation review fixes
+Allow the change that turns red trunk green, keep and fill the scaffold gate on re-runs, and reconcile parallel review with the parent-owned gate result. Correct Verification anchors in five consumers; relationship contracts otherwise unchanged. Not pressure-tested.

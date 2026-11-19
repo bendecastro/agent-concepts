@@ -740,6 +740,8 @@ def test_validation_page_has_owned_stages_with_budgets(tmp_path, archetype):
     assert 'no browser' in working and 'not the full gate' in working
     assert 'bc-offload --budget 300 -- scripts/gate' in full
     assert 'integrat' in full and 'git rev-parse HEAD^{tree}' in full
+    assert 'reviewer reports the gate as pending' in full
+    assert 'combines the gate result with the review verdict before landing' in full
     assert 'one full gate at a time' in full.lower()
     assert 'only the failing tests' in full
     assert 'two over-budget runs in a row' in full.lower()
@@ -767,4 +769,5 @@ def test_ci_workflow_runs_gate_on_clean_checkout(tmp_path):
 
 def test_root_agents_blocks_landing_on_red_trunk_ci(tmp_path):
     text = (_scaffold(tmp_path, 'code') / 'AGENTS.md').read_text()
-    assert 'latest trunk CI run' in text and 'red blocks landing' in text
+    assert 'latest trunk CI run' in text
+    assert 'red blocks landing anything except the change that makes it green' in text

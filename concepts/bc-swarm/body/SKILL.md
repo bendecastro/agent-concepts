@@ -9,7 +9,7 @@ Go wide. While this skill is active, delegating is the default and **keeping** w
 
 It composes `dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
 
-Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before fan-out/worktree creation and after integration; copy the guarded pytest/targeted-test rule into worker packets. Why: children do not inherit the kernel and retained worktrees consume storage.
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before fan-out/worktree creation and after integration; copy guarded pytest and [Verification](../../agent-kernel/body/AGENT-KERNEL.md#verification) targeted-test rules into worker packets. Why: children do not inherit the kernel and retained worktrees consume storage.
 
 ## Recovery gate — before routing
 
@@ -66,7 +66,7 @@ After applying a valid patch, verify the resulting diff/tree before any commit o
 
 **Parent integration on receipt.** On the first turn a completed worktree result is in front of the parent — a completion wake, status poll, or user report — apply its validated handoff patch or integrate its validated full commit range before any other dispatch. This is completion-wake behavior, never a reason to block or wait on the launch turn; rule 2 remains intact.
 
-**Full gate on the integrated tree.** After integrating, start the project's full gate (for example `bc-offload --budget 300 -- scripts/gate`) in the background with a completion wake, and dispatch the independent reviewer on the same tree in parallel; record the tree SHA (`git rev-parse HEAD^{tree}`) and the result for the reviewer to reuse. Never wait with sleep or poll loops. Why: the gate and the review are independent, so running them in sequence doubles the wait.
+**Full gate on the integrated tree.** After integrating, start the project's full gate (for example `bc-offload --budget 300 -- scripts/gate`) in the background with a completion wake, and dispatch the independent reviewer on the same tree in parallel; record the tree SHA (`git rev-parse HEAD^{tree}`) and the gate result. The reviewer reports the gate as pending; the parent combines the gate result with the review verdict before landing. Never wait with sleep or poll loops. Why: the gate and the review are independent, so running them in sequence doubles the wait.
 
 Artifacts are scratch, not knowledge. Anything worth keeping gets explicitly promoted into the repo, a concept, or a note; the run directory is disposable by design. For worktree workers, the Git commit and harness patch are the durable handoff records used before that promotion.
 

@@ -800,7 +800,8 @@ bc-offload --budget 300 -- scripts/gate
 ```
 
 - Run it once per integrated tree and record the tree SHA (`git rev-parse HEAD^{tree}`) and
-  the result in the work item's evidence. Reviewers reuse that record instead of rerunning.
+  the result in the work item's evidence. A parallel reviewer reports the gate as pending
+  instead of rerunning it; the parent combines the gate result with the review verdict before landing.
   Why: the same tree gives the same result; a second run only adds minutes.
 - Run one full gate at a time on a host; `bc-offload` queues the others.
   Why: two gates on one host slow each other and the owner's machine.
@@ -1357,7 +1358,7 @@ architectural runway, check `.bc-agent/conventions/architecture-runway.md` and o
 
 Push commits or close issues only when a rule in the user-owned publish policy
 (`~/.config/agent-concepts/publish.yaml`) authorizes it. No matching rule: ask.
-Before landing, check the latest trunk CI run; red blocks landing.
+Before landing, check the latest trunk CI run; red blocks landing anything except the change that makes it green.
 Why: a red trunk nobody looked at hides every later regression behind the first one.
 """
 

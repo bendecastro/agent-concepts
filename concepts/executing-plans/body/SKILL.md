@@ -7,7 +7,7 @@ description: Use when the user provides or selects a written implementation plan
 
 Execute written plans deliberately: review the plan, verify preconditions, complete each task, and stop instead of guessing when the plan is wrong.
 
-Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) in preflight and verification: guarded pytest, targeted per-task checks, health before full suites/isolation/fan-out, and one shared landing run. Why: task-by-task execution must not duplicate full suites.
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) in preflight and verification: guarded pytest and health before full suites/isolation/fan-out; apply [Verification](../../agent-kernel/body/AGENT-KERNEL.md#verification) for targeted per-task checks and one shared landing run. Why: task-by-task execution must not duplicate full suites.
 
 ## Preflight
 

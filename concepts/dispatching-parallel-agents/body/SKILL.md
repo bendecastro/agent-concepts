@@ -7,7 +7,7 @@ description: Use when there are two or more independent investigations, reviews,
 
 Dispatch one fresh agent per independent problem domain. Parallelism is useful only when the domains do not depend on each other and agents will not edit or rely on the same mutable state.
 
-Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before dispatch/isolation; pass guarded pytest and targeted-test limits in packets and record integration/cleanup proof. Why: parallel checks multiply disk use.
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before dispatch/isolation; pass guarded pytest and [Verification](../../agent-kernel/body/AGENT-KERNEL.md#verification) targeted-test limits in packets and record integration/cleanup proof. Why: parallel checks multiply disk use.
 
 ## Use when
 

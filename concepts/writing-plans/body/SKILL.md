@@ -7,7 +7,7 @@ description: Use when an approved spec or resolved requirements need to become a
 
 Write plans for a capable engineer or fresh agent with little project context. The plan must be concrete enough to execute task-by-task without guessing.
 
-Plan [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety): guarded pytest without custom basetemp, targeted task checks, shared baseline/landing suites, health gates and proven worktree cleanup. Why: unsafe commands in plans become unsafe execution.
+Plan [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety): guarded pytest without custom basetemp, health gates and proven worktree cleanup; plan targeted task checks and shared baseline/landing suites under [Verification](../../agent-kernel/body/AGENT-KERNEL.md#verification). Why: unsafe commands in plans become unsafe execution.
 
 ## Scope gate
 

@@ -7,7 +7,7 @@ description: Use when implementation is complete and the user needs options for 
 
 Finish work by verifying first, then presenting clear options. Do not publish, merge, or discard by implication.
 
-Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) for guarded checks, shared full-suite evidence and recorded cleanup proof. Why: completion is not a reason to duplicate suites or delete unproven work.
+Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) for guarded checks and recorded cleanup proof, and [Verification](../../agent-kernel/body/AGENT-KERNEL.md#verification) for shared full-suite evidence. Why: completion is not a reason to duplicate suites or delete unproven work.
 
 ## 1. Verify before offering completion
 
