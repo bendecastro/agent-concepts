@@ -4,7 +4,7 @@ Derived from a real Pi session (2026-10-10, scripts repo + agents repo); names, 
 
 Project facts given to the consumer:
 - agents repo: `python3 scripts/lint.py` is the check; no pre-commit hook, no CI job runs it. AGENTS.md says "run python3 scripts/lint.py before each commit". Editing a CONCEPT.md frontmatter date makes lint fail until `lint.py --write-status` regenerates `docs/status.md`.
-- `bc-agent-time-report` for this session: parent 52 min; bash 9 min, of which ssh 3 min; 2 children (scout 6 min, worker 11 min, worker rework round 1).
+- Session time report for this session: parent 52 min; bash 9 min, of which ssh 3 min; 2 children (scout 6 min, worker 11 min, worker rework round 1).
 
 ```
 14:53:31 user    my usage widget in the top bar is not updating anymore

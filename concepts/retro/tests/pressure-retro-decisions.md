@@ -1,6 +1,6 @@
 # Pressure test: retro open-report check and Decisions record
 
-Authored and run 2026-11-19. Consumer: `pi -p --no-tools --no-context-files --no-skills --no-session --model openai-codex/gpt-6.1-terra --thinking low --append-system-prompt <arm>`. Without arm: `body/SKILL.md` before this change (git HEAD); with arm: current body. n=2 per arm per scenario. Every prompt opens "You cannot run tools in this reply." and embeds the real `~/Sync/Archives/retro/2026-11-19.md` (undecided, 2 proposals).
+Authored and run 2026-11-19. Consumer: `pi -p --no-tools --no-context-files --no-skills --no-session --model openai-codex/gpt-6.1-terra --thinking low --append-system-prompt <arm>`. Without arm: `body/SKILL.md` before this change (git HEAD); with arm: current body. n=2 per arm per scenario. Every prompt opens "You cannot run tools in this reply." and embeds the real `<report-dir>/2026-11-19.md` (undecided, 2 proposals).
 
 Scenarios and pass criteria (written before running):
 - (a) owner types `/retro since 2026-11-19`, latest report undecided → shows its open proposals and asks for picks before a new review.
@@ -19,11 +19,11 @@ Verdict: with-arm beats without-arm on (a) and (b); control holds in both. Not e
 
 ## Transcripts
 
-Verbatim except backticks removed around one Manicule path (repo lint reads it as a workspace path). Raw files: run dir `out-<arm>-<scenario>-<n>.txt`.
+Verbatim except backticks removed around one Manicule path (repo lint reads it as a workspace path) and the owner's report directory replaced by `<report-dir>` (personal-path scrub). Raw files: run dir `out-<arm>-<scenario>-<n>.txt`.
 
 ### out-new-a-1
 ~~~~
-The previous report is undecided: `~/Sync/Archives/retro/2026-11-19.md`.
+The previous report is undecided: `<report-dir>/2026-11-19.md`.
 
 1. **[Recommended] Review data growth at boundaries** — Add a `code-review` prompt to trace maximum size, duplication, growth and limit behavior across changed boundaries. Seen in 3 of 20 sampled sessions; two boundaries blocked work.
 2. **Make the delivery check’s claim match what it verifies** — In Manicule’s scripts/delivery-check.mjs, narrow the success message and state that the loaded browser revision is unverified. One confirmed and one suspected version confusion across 2 of 20 sampled sessions.
@@ -33,7 +33,7 @@ Reply with the numbers to act on, e.g. `1 2`. I’ll start the new review after 
 
 ### out-new-a-2
 ~~~~
-The latest report is still undecided: `~/Sync/Archives/retro/2026-11-19.md`.
+The latest report is still undecided: `<report-dir>/2026-11-19.md`.
 
 1. **[Recommended] Review data growth at boundaries.** Add a `code-review` prompt to trace maximum data size, duplication, growth and behavior at limits across changed boundaries. Two sampled boundaries blocked work; a third showed substantial serialization amplification. Seen in **3 of 20 sampled sessions**. The proposed concept change needs a workspace pressure test before deployment.
 
@@ -44,7 +44,7 @@ Reply with the numbers to act on, e.g. `1 2`. I’ll start the new review after 
 
 ### out-new-b-1
 ~~~~
-Before starting work, I’ll append a `## Decisions` section to `~/Sync/Archives/retro/2026-11-19.md`:
+Before starting work, I’ll append a `## Decisions` section to `<report-dir>/2026-11-19.md`:
 
 ~~~~md
 ## Decisions
@@ -57,12 +57,12 @@ Then I’ll work on both selected proposals and update each line with the result
 
 ### out-new-b-2
 ~~~~
-Before starting work, I’ll append a `## Decisions` section to `~/Sync/Archives/retro/2026-11-19.md`, recording both proposals as **acted — pending**. I’ll update each entry with the resulting commit, PR, or file when it lands.
+Before starting work, I’ll append a `## Decisions` section to `<report-dir>/2026-11-19.md`, recording both proposals as **acted — pending**. I’ll update each entry with the resulting commit, PR, or file when it lands.
 ~~~~
 
 ### out-new-c-1
 ~~~~
-The previous report, `~/Sync/Archives/retro/2026-11-19.md`, has a Decisions section, so it doesn’t block a new review.
+The previous report, `<report-dir>/2026-11-19.md`, has a Decisions section, so it doesn’t block a new review.
 
 I can’t run tools in this reply, so I can’t inspect or sample the sessions, delegate the review, or write the required batch report. No new retrospective has been performed and no files have been changed. Please rerun `/retro since 2026-11-19` with tools available.
 ~~~~
@@ -90,12 +90,12 @@ Please retry with tools enabled.
 
 ### out-old-b-1
 ~~~~
-I’ll preserve `~/Sync/Archives/retro/2026-11-19.md` as the historical report; I won’t delete or overwrite it. Your selection authorizes work on both proposals, subject to verifying the current guidance and Manicule tree first. The review-standards change will need a pressure test before deployment.
+I’ll preserve `<report-dir>/2026-11-19.md` as the historical report; I won’t delete or overwrite it. Your selection authorizes work on both proposals, subject to verifying the current guidance and Manicule tree first. The review-standards change will need a pressure test before deployment.
 ~~~~
 
 ### out-old-b-2
 ~~~~
-I’ll keep `~/Sync/Archives/retro/2026-11-19.md` as the historical report, and record that you selected proposals 1 and 2 without treating either as completed yet. Then I’ll verify the current guidance and Manicule checkout before acting, including the required pressure test for the review-guidance change.
+I’ll keep `<report-dir>/2026-11-19.md` as the historical report, and record that you selected proposals 1 and 2 without treating either as completed yet. Then I’ll verify the current guidance and Manicule checkout before acting, including the required pressure test for the review-guidance change.
 ~~~~
 
 ### out-old-c-1
