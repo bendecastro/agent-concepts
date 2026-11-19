@@ -794,7 +794,9 @@ the integrated tree.
 Owner: the session that integrates changes. `scripts/gate` holds every step (install,
 typecheck, lint, all tests including every browser/e2e test, build) and runs them directly,
 so CI runs the same file on a clean checkout. Start it in the background with a wake, through
-the machine's offload wrapper if its agent instructions name one (with a 300 s budget):
+the machine's offload wrapper if its agent instructions name one. Budget 300 s, measured, not enforced:
+pass it to the wrapper's budget option if available; otherwise time the run. Never wrap the gate in `timeout`:
+an over-budget run must finish and count toward the two-in-a-row rule.
 
 ```sh
 scripts/gate
@@ -807,7 +809,7 @@ scripts/gate
 - Run one full gate at a time on a host; queue the others (an offload wrapper may do this).
   Why: two gates on one host slow each other and the owner's machine.
 - For a flaky failure, rerun only the failing tests, never the whole gate in a loop.
-- Budget: 5 minutes on the offload host. After two over-budget runs in a row, open a work item
+- Budget: 5 minutes on the host that runs it. After two over-budget runs in a row, open a work item
   to make the gate fast again before more feature work.
   Why: an unmeasured gate only grows, and every later change pays for it.
 

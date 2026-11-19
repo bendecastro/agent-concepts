@@ -29,7 +29,7 @@ Model-invoked debugging discipline for hard bugs and performance regressions: bu
 
 ## Tests
 
-2026-11-19 (generic storage-check wording): Terra low, text-only, with body, n=2, a stand-in machine instruction naming invented tools; non-regression only, no without-body arm. 2/2 ran the named storage check before `df`-free diagnosis and before the full suite (`/tmp/bc-swarm/2026-11-19-retro-skill/pt-diag/`). Both also prefixed a tool name absent from the body and prompt to the suite command — model prior, not body wording.
+2026-11-19 (generic storage-check wording): Terra low, text-only, with body, n=2, a stand-in machine instruction naming invented tools; non-regression only, no without-body arm. 2/2 ran the named storage check before `df`-free diagnosis and before the full suite (`/tmp/bc-swarm/2026-11-19-retro-skill/pt-diag/`). Both also prefixed a tool name absent from the body and prompt to the suite command; owner settings leaked into the consumer through the preferences file appended to the system prompt, so these were mixed rather than isolated stranger runs.
 
 `tests/scenario.md` — pressure scenario: red-loop before speculation, PARK underspecified AFK tickets, measure-before-perf-fix, DEBUG cleanup + `rg` verify. **2026-06-21 FAIL**; PARK + cleanup gates hardened; **2026-07-16 PASS** (Grok re-run).
 

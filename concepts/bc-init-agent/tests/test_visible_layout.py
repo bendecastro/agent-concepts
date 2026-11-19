@@ -739,6 +739,8 @@ def test_validation_page_has_owned_stages_with_budgets(tmp_path, archetype):
     assert 'Workers' in working and 'reviewers' in working and '60 s' in working
     assert 'no browser' in working and 'not the full gate' in working
     assert 'scripts/gate' in full and "machine's offload wrapper" in full
+    assert '300 s, measured, not enforced' in full
+    assert 'Never wrap the gate in `timeout`' in full
     assert 'integrat' in full and 'git rev-parse HEAD^{tree}' in full
     assert 'reviewer reports the gate as pending' in full
     assert 'combines the gate result with the review verdict before landing' in full
