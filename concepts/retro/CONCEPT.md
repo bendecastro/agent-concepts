@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: pass # 2026-11-19 fixture: without FAIL 0/2, with PASS 2/2 (Terra low, text-only; batch/tool use not exercised)
-tested: 2026-11-19
+test_status: not-run # batch-mode body changed 2026-11-19; earlier pass (single-session fixture) no longer covers it
+tested: never
 deployed: yes
 ---
 # Concept: retro
@@ -14,6 +14,8 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 - **Adapted, not vendored.** Upstream assumes Claude Code's session store, a `CODING_STANDARDS.md` and a reviewer agent. Here the evidence is Pi's session JSONL, `subagent-artifacts/`, `bc-swarm` manifests and `bc-agent-time-report`, and the reviewer standards live in `code-review`.
 - **Wall time and rework added as a category and listed first.** The owner's main loss is time: waits, sleep-polling, reruns, rate-limit stalls, subagent rework rounds (see the agent-time-sinks entries in `log.md`, 2026-11-19). Upstream's seven categories do not name it.
 - **Batch mode.** Upstream reviews one session. The owner wants a weekly run over many sessions; batch scope (`since <date>`, `last N`, optional project) plus a report file under `${TMPDIR:-/tmp}/retro/` serves it. The automation that schedules it is out of scope here.
+- **Batch sampling with a denominator.** A trial all-project batch (2026-11-19) had no sampling rule, so its counts had no denominator, and the full time report overflowed tool output. The body now ranks by `bc-agent-time-report --summary` (per-project fallback), reads top N by active time plus a few random sessions, and reports "k of n sampled sessions" with the population size.
+- **Report path wins.** The same trial got a conflicting output destination from its caller and skipped the report. Batch mode now always writes the report, `--report` first, and names its path on the last line.
 - **"Adopt only what recurs" made mechanical.** This workspace's Tune operation adopts only recurring failures. Batch mode counts sessions per finding; single-session mode labels one-offs.
 - **Every proposal names a home.** Upstream's homes (AGENTS.md pointers, `CODING_STANDARDS.md`, checks, skills) mapped to the owner's: project check/CI/`./scripts/gate`, `code-review`, a concept or kernel clause in this workspace (which then needs a pressure test), a Scripts tool, or memory/preferences only when the owner said it.
 - **`writing-for-agents` dropped.** Upstream's step 1 loads it. Here `prompting-agents` owns instruction wording, so the body points there.

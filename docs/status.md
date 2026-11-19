@@ -2,14 +2,19 @@
 
 # Status
 
-47 concepts. 0 need testing, 1 not deployed, 27 deployed with a known gap.
+47 concepts. 1 need testing, 1 not deployed, 27 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
 
-## Needs testing (0)
+## Needs testing (1)
 
-Nothing. Every deployed concept has a recorded run.
+Live in your agents right now with no run recorded. Each one violates the test
+gate, so `lint.py` exits non-zero until it is tested or undeployed.
+
+| concept | kind | test status | deployed |
+|---|---|---|---|
+| [retro](../concepts/retro/CONCEPT.md) | pressure | not-run | yes |
 
 ## Not deployed (1)
 
@@ -52,6 +57,6 @@ tested. See the concept's `## Tests` section for what is missing.
 | [using-git-worktrees](../concepts/using-git-worktrees/CONCEPT.md) | pressure | 2026-09-22 | yes |
 | [writing-plans](../concepts/writing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
 
-## Passing and deployed (19)
+## Passing and deployed (18)
 
-[bc-work-sync](../concepts/bc-work-sync/CONCEPT.md), [brainstorming](../concepts/brainstorming/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [retro](../concepts/retro/CONCEPT.md), [security-audit](../concepts/security-audit/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [to-tickets](../concepts/to-tickets/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md)
+[bc-work-sync](../concepts/bc-work-sync/CONCEPT.md), [brainstorming](../concepts/brainstorming/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [security-audit](../concepts/security-audit/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [to-tickets](../concepts/to-tickets/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md)
