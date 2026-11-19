@@ -1737,3 +1737,6 @@ When every deliverable is ready, 👣 says the session can be closed; after a su
 
 ## [2026-11-19] test | agent-kernel session close, retro
 Terra low, text-only. Kernel: without / pre-change / current × long-done, short-done, in-flight; current PASS 12/12 after one tune (closing reply keeps its recap even when one line; drafts lost the signal to the short-answer exemption). Retro: without FAIL, with PASS 2/2 on an anonymised session fixture. Results in each concept's tests/.
+
+## [2026-11-19] implement | retro review fixes
+Correct session and child log layouts, portable timing lookup, headless batch report destination, and snapshot licence provenance. Existing fixture does not exercise the changed instructions; no deploy or status change.
