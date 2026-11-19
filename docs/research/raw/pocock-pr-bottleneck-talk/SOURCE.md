@@ -11,9 +11,10 @@ Immutable evidence snapshot, not a deploy source.
 - "Checks can lie": three test failure modes — tautological (re-assert a constant), structure-sensitive (read source text instead of executing), cannot-fail (stubs remove the real failure modes). → `tdd`.
 - "Merge danger" on PRs: one-way vs two-way door plus blast radius; always human-review one-way doors. → `code-review`.
 - Visual explanation of changes via HumanLayer `show-me`. → new concept; source in [`../humanlayer-show-me/`](../humanlayer-show-me/SOURCE.md).
+- `/retro` skill (session → proposed checks, standards, steering trims; 2026-11-19, owner's choice). → [`concepts/retro`](../../../../concepts/retro/CONCEPT.md); upstream body in [`../ingested/pocock-retro-upstream/`](../ingested/pocock-retro-upstream/SOURCE.md).
 
 ## Considered, not taken forward yet
 
 - Keep coding standards out of the implementer; a separate reviewer context loads them.
 - Reviewer commits fixes rather than comments (local design keeps reviewers read-only; `post-review-patcher` applies fixes).
-- `/retro` skill (session/PR → new checks, standards, skill trims); his PR skill and skills v1.3.
+- His PR skill and skills v1.3.

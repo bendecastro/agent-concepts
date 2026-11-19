@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- hands off to `retro` — optional.
+  The recap's 👣 line offers /retro when a substantial session's deliverables are all ready; the owner decides.
+  Source: [body/AGENT-KERNEL.md](body/AGENT-KERNEL.md)
+
 - loads `tdd` — required, when new tests or behaviour-changing assertions.
   Test evidence requires a watched behavioural fail; mechanical test edits are excluded.
   Source: [body/AGENT-KERNEL.md](body/AGENT-KERNEL.md#verification)

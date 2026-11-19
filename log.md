@@ -1728,3 +1728,12 @@ Allow the change that turns red trunk green, keep and fill the scaffold gate on 
 
 ## [2026-11-19] test | staged validation and test layout (agent-kernel, bc-swarm, tdd, code-review, bc-init-agent)
 Terra low, text-only, `--no-context-files`, without / pre-change (c825984) / current body. Current bodies PASS every scenario; no body changes. Discriminating: agent-kernel worker scenario, bc-swarm packet (without FAIL), code-review file-size check (without/old FAIL), bc-init-agent full-gate and red-trunk scenarios (without/old FAIL or partial). tdd layout scenario did not discriminate: all arms put the pure-function test in a unit file; only the current arm added the parallel runner and slow marker. Scenarios and quotes in each concept's tests/.
+
+## [2026-11-19] ingest | Matt Pocock's retro skill → retro concept
+Vendored `mattpocock/skills@5863806` `retro` + `writing-for-agents` (MIT, blob SHAs verified) under ingested/pocock-retro-upstream; CITATIONS rows that said the repo had no licence corrected to MIT. New owner-invoked `retro` concept: Pi session/child/swarm/time-report evidence, wall-time category added, single-session and batch scope, every proposal homed and counted, proposes only. Not deployed.
+
+## [2026-11-19] implement | agent-kernel 👣 session-close signal and /retro offer
+When every deliverable is ready, 👣 says the session can be closed; after a substantial session it also offers `/retro`. New hands_off edges kernel→retro, retro→prompting-agents/code-review; views regenerated. Derived kernel copies not updated here.
+
+## [2026-11-19] test | agent-kernel session close, retro
+Terra low, text-only. Kernel: without / pre-change / current × long-done, short-done, in-flight; current PASS 12/12 after one tune (closing reply keeps its recap even when one line; drafts lost the signal to the short-answer exemption). Retro: without FAIL, with PASS 2/2 on an anonymised session fixture. Results in each concept's tests/.

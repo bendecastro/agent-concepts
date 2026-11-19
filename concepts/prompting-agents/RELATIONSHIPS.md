@@ -13,6 +13,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [retro](../retro/RELATIONSHIPS.md): hands off to this concept — optional.
+  A proposal homed in a concept or kernel clause is worded per prompting-agents and pressure-tested before deploy.
+  Source: [retro/body/SKILL.md](../retro/body/SKILL.md#every-proposal-names-its-home)
+
 - incoming from [security-audit](../security-audit/RELATIONSHIPS.md): adapts this concept — required.
   Adapts scope, ambiguity, evidence and enforced privileged-action phrasing for guidance versus explicit audit mode.
   Source: [security-audit/CONCEPT.md](../security-audit/CONCEPT.md#design-decisions)

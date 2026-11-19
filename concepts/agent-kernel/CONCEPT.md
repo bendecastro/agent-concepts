@@ -38,6 +38,8 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 - **Test-evidence pointer, not a second testing manual (2026-11-05)** — keep only watched-fail evidence and a direct `tdd` pointer in Verification. This is a deliberate exception to catalog-only discovery: bug fixes adding regression tests missed skill discovery in the pressure run. Scope is new tests or behaviour-changing assertions, not reading/running tests or mechanical import renames. Boundary-fake details belong only to tdd. Existing Storage safety consumers are unaffected: no runner, preflight, fan-out or cleanup contract changes.
 
+- **Session-close signal in 👣 (2026-11-19)** — when every deliverable is ready, 👣 says the session can be closed, and offers `/retro` after a substantial session. Owner's choice: the end-of-session signal lives in the recap rather than a separate line. The clause also says the closing reply gets a recap even when it is one line, because the short-factual-answer exemption otherwise swallowed the signal (pressure run, `tests/pressure-session-close.md`). New outgoing `hands_off` edge to `retro`; incoming edges unaffected: they depend on Verification/Storage safety, and `show-me` only defers final-response rules to the kernel.
+
 ## Provenance
 
 - `concepts/prompting-agents/body/SKILL.md` — right altitude, context economy, scope discipline, tool discipline, plan/promise discipline, dirty repo rules, final-message style.
@@ -56,6 +58,8 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 `tests/pressure-scenarios.md` — compact checks for the kernel's main failure modes: over-planning, scope creep, context dumping, unverified completion, dirty-worktree damage, unsafe publishing, off-vault stalls, missing concept loads, and informational questions triggering edits. Scenario 9's answer-first boundary passed a full two-turn Pi pressure run on 2026-08-12 after two failed phrasings were strengthened.
 
 Scenario 15 (test evidence, 2026-11-05) in `tests/pressure-scenarios.md`: kernel-only, tdd hidden by `bwrap`; with the kernel the consumer watched RED before fixing 2/2 vs 0/2 without.
+
+`tests/pressure-session-close.md` — 👣 close signal and `/retro` offer, three arms × three scenarios on Terra low (2026-11-19).
 
 `tests/codex-smoke-2026-06-12.md` — bounded Codex validation: confirms the global delta file is present and loaded in this session, exercises the objective publish-policy allow/deny/self-amendment checks, and records a child Codex run passing scenario 5's repo-instruction no-push variant; full baseline/off-vault/policy-allow matrix still pending.
 
