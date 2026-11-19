@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL); concurrent-sessions: discovery 4/4 vs 0/4 (s1+s2 after no-tools prompt fix), visible exchange 1.5/2 vs 0.5/2 (partial scores), control 4/4
+test_status: partial # 2026-11-19 generic storage-safety wording PASS 4/4 (with-kernel only); full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL); concurrent-sessions: discovery 4/4 vs 0/4 (s1+s2 after no-tools prompt fix), visible exchange 1.5/2 vs 0.5/2 (partial scores), control 4/4
 tested: 2026-11-19
 deployed: 2026-11-15
 ---
@@ -39,7 +39,9 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 - **Test-evidence pointer, not a second testing manual (2026-11-05)** — keep only watched-fail evidence and a direct `tdd` pointer in Verification. This is a deliberate exception to catalog-only discovery: bug fixes adding regression tests missed skill discovery in the pressure run. Scope is new tests or behaviour-changing assertions, not reading/running tests or mechanical import renames. Boundary-fake details belong only to tdd. Existing Storage safety consumers are unaffected: no runner, preflight, fan-out or cleanup contract changes.
 
-- **Session-close signal in 👣 (2026-11-19)** — when every deliverable is ready, 👣 says the session can be closed, and offers `/retro` after a substantial session. Owner's choice: the end-of-session signal lives in the recap rather than a separate line. The clause also says the closing reply gets a recap even when it is one line, because the short-factual-answer exemption otherwise swallowed the signal (pressure run, `tests/pressure-session-close.md`). New outgoing `hands_off` edge to `retro`; incoming edges unaffected: they depend on Verification/Storage safety, and `show-me` only defers final-response rules to the kernel.
+- **Session-close signal in 👣 (2026-11-19)** — when every deliverable is ready, 👣 says the session can be closed, and offers `/retro` after a substantial session. Owner's choice: the end-of-session signal lives in the recap rather than a separate line. The clause also says the closing reply gets a recap even when it is one line, because the short-factual-answer exemption otherwise swallowed the signal (pressure run, `tests/pressure-storage-generic.md` — the public Storage safety text names no personal tools (2026-11-19, owner decision: public skills describe each step generically, the owner's specifics stay in the private derived kernel copies). Basetemp refusal and health-check preflight held 4/4 on Terra low.
+
+`tests/pressure-session-close.md`). New outgoing `hands_off` edge to `retro`; incoming edges unaffected: they depend on Verification/Storage safety, and `show-me` only defers final-response rules to the kernel.
 
 ## Provenance
 
@@ -91,7 +93,7 @@ Candidate targets, in order of expected value: thin custom harnesses → Pi (if 
 
 ## Storage safety provenance and impact
 
-Owner-approved 2026-10-27 response to an agent-amplified Btrfs metadata ENOSPC incident: unmanaged pytest basetemp roots, duplicate parallel full suites, retained integrated worktrees and misleading df checks. Tool authority: `<owner-scripts>/docs/disk-management/storage-prevention.md`; interpreter selection follows the runner's sys.executable contract. Thresholds remain in Scripts.
+Owner-approved 2026-10-27 response to an agent-amplified Btrfs metadata ENOSPC incident: unmanaged pytest basetemp roots, duplicate parallel full suites, retained integrated worktrees and misleading df checks. Tool authority: `<owner-scripts>/docs/disk-management/storage-prevention.md`; interpreter selection follows the runner's sys.executable contract. Thresholds remain in the owner's scripts. Since 2026-11-19 the public body names no specific tools: it says "a guarded test runner, if one exists" and "the machine's storage health check, if one exists", and the owner's derived kernel copies keep the exact tool names. Consumers' contracts (guarded pytest, health preflight, cleanup proof) are unchanged.
 
 Consumers depend on one Storage safety section, not copied thresholds. Existing graph edges for glossary discovery, drain claims and issue-pipeline handoff are unaffected: no glossary, claim acquisition, recovery-bundle or issue-authority semantics changed. Drain's tdd producer/consumer both receive guarded targeted-test guidance. Inspection also covered unregistered swarm/worktree/completion and review consumers; their cleanup and full-suite conflicts are updated together. New pressure scenarios: [storage-safety](tests/storage-safety.md), pending parent execution; no deployment performed. Existing symlinks may expose edited bodies immediately, but that is not pressure-test certification.
 

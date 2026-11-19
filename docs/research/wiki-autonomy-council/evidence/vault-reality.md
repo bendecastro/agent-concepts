@@ -1,26 +1,26 @@
 # Current agent-wiki reality
 
-Measured 2026-08-26. This is a read-only measurement; the only intended write is this artifact. Search used max depth 10 and pruned `node_modules`, `.git`, and `/home/ben/Sync/Work/PUBLIC/Agents/docs/research`.
+Measured 2026-08-26. This is a read-only measurement; the only intended write is this artifact. Search used max depth 10 and pruned `node_modules`, `.git`, and `<synced-home>/Work/PUBLIC/Agents/docs/research`.
 
 ## A. Inventory
 
 Discovery command actually run:
 ```sh
-find /home/ben/Sync -maxdepth 10 \
-  \( -path '/home/ben/Sync/*/node_modules' -o -path '/home/ben/Sync/*/.git' -o -path '/home/ben/Sync/Work/PUBLIC/Agents/docs/research' \) -prune \
+find <synced-home> -maxdepth 10 \
+  \( -path '<synced-home>/*/node_modules' -o -path '<synced-home>/*/.git' -o -path '<synced-home>/Work/PUBLIC/Agents/docs/research' \) -prune \
   -o \( -type d \( -name '.bc-agent' -o -name '.agent' \) -print -o -type d -path '*/agent/wiki' -print \) 2>/dev/null | sort
 ```
-It found 10 name candidates. Qualification required both `index.md` and `log.md`; `/home/ben/Sync/AI/homeflix/.agent` was excluded because both were missing. Nine qualified:
+It found 10 name candidates. Qualification required both `index.md` and `log.md`; `<synced-home>/AI/homeflix/.agent` was excluded because both were missing. Nine qualified:
 ```text
-/home/ben/Sync/Documents/Learning/codebase-design/.bc-agent
-/home/ben/Sync/Documents/Learning/sql/.bc-agent
-/home/ben/Sync/Music/.bc-agent
-/home/ben/Sync/Scripts/.bc-agent
-/home/ben/Sync/Work/CV/.bc-agent
-/home/ben/Sync/Work/Development/dng/files/pub/agent/wiki
-/home/ben/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent
-/home/ben/Sync/Work/PUBLIC/Homeflix/.agent
-/home/ben/Sync/Work/homeflix-prod/.agent
+<synced-home>/Documents/Learning/codebase-design/.bc-agent
+<synced-home>/Documents/Learning/sql/.bc-agent
+<music-library>/.bc-agent
+<owner-scripts>/.bc-agent
+<synced-home>/Work/CV/.bc-agent
+<synced-home>/Work/Development/dng/files/pub/agent/wiki
+<image-maze-project>/.bc-agent
+<synced-home>/Work/PUBLIC/Homeflix/.agent
+<synced-home>/Work/homeflix-prod/.agent
 ```
 
 Inventory command summed regular-file apparent sizes, counted files by first relative directory, and ran `git log -1 --format=%cs -- .`:
@@ -71,7 +71,7 @@ Image-maze’s 239 Markdown pages include generated `temp/`/`scratch/`; the grap
 
 Exact byte/token command and output used for B:
 ```sh
-for v in /home/ben/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent /home/ben/Sync/Work/homeflix-prod/.agent /home/ben/Sync/Scripts/.bc-agent; do total=$(find "$v" -type f -printf '%s\n' | awk '{s+=$1} END{print s+0}'); idx=$(stat -c%s "$v/index.md"); log=$(stat -c%s "$v/log.md"); md=$(find "$v" -type f -name '*.md' -printf '%p\n' | wc -l); printf '%s total=%s whole_tokens=%s index=%s index_tokens=%s log=%s log_tokens=%s md=%s\n' "$v" "$total" "$(awk -v n="$total" 'BEGIN{printf "%.2f",n/4}')" "$idx" "$(awk -v n="$idx" 'BEGIN{printf "%.2f",n/4}')" "$log" "$(awk -v n="$log" 'BEGIN{printf "%.2f",n/4}')" "$md"; done
+for v in <image-maze-project>/.bc-agent <synced-home>/Work/homeflix-prod/.agent <owner-scripts>/.bc-agent; do total=$(find "$v" -type f -printf '%s\n' | awk '{s+=$1} END{print s+0}'); idx=$(stat -c%s "$v/index.md"); log=$(stat -c%s "$v/log.md"); md=$(find "$v" -type f -name '*.md' -printf '%p\n' | wc -l); printf '%s total=%s whole_tokens=%s index=%s index_tokens=%s log=%s log_tokens=%s md=%s\n' "$v" "$total" "$(awk -v n="$total" 'BEGIN{printf "%.2f",n/4}')" "$idx" "$(awk -v n="$idx" 'BEGIN{printf "%.2f",n/4}')" "$log" "$(awk -v n="$log" 'BEGIN{printf "%.2f",n/4}')" "$md"; done
 ```
 ```text
 image-maze/.bc-agent total=60813914 whole_tokens=15203478.50 index=18172 index_tokens=4543.00 log=199069 log_tokens=49767.25 md=239
@@ -101,7 +101,7 @@ All nine pass the mechanical hub threshold, but only public Homeflix has zero `m
 
 Command actually run for bytes and first three physical lines:
 ```sh
-for f in /home/ben/Sync/Music/.bc-agent/findings/existing-music-stack-recon.md /home/ben/Sync/Scripts/.bc-agent/project/wallpaper-rotation-spec.md /home/ben/Sync/Work/CV/.bc-agent/findings/job-ad-scan-saas.md /home/ben/Sync/Work/Development/wp-theme-builds/localhost/image-maze/.bc-agent/project/architecture-module-map.md /home/ben/Sync/Work/PUBLIC/Homeflix/.agent/references/gotchas.md /home/ben/Sync/Documents/Learning/codebase-design/.bc-agent/learning-records/0001-variables-let-const.md; do printf '%s\t' "$f"; wc -c < "$f"; done
+for f in <music-library>/.bc-agent/findings/existing-music-stack-recon.md <owner-scripts>/.bc-agent/project/wallpaper-rotation-spec.md <synced-home>/Work/CV/.bc-agent/findings/job-ad-scan-saas.md <image-maze-project>/.bc-agent/project/architecture-module-map.md <synced-home>/Work/PUBLIC/Homeflix/.agent/references/gotchas.md <synced-home>/Documents/Learning/codebase-design/.bc-agent/learning-records/0001-variables-let-const.md; do printf '%s\t' "$f"; wc -c < "$f"; done
 ```
 ```text
 Music/findings/existing-music-stack-recon.md 2173 B; first3: 1 `---` / 2 `type: finding` / 3 `status: stable`
@@ -119,11 +119,11 @@ Cold-reader assessment from the sampled prose/status fields: Music has no explic
 ### Source surface and detector
 
 Files/line ranges read:
-- `/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/SKILL.md:26-183` — detector-first loop, classify every unpromoted heading, additive/commit/contradiction gates, verification; `:185-208` runner contract.
+- `<synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/SKILL.md:26-183` — detector-first loop, classify every unpromoted heading, additive/commit/contradiction gates, verification; `:185-208` runner contract.
 - `.../bc-wiki-maintain/body/wiki_lint.py:22-57,71-121,123-138,140-204,206-299,300-363,365-434,436-510` — parser/resolver, promotion, qmd, lint, classification, output/CLI.
-- `.../bc-wiki-maintain/body/runner/run-lint.sh:1-69` and `run-promotion.sh:1-254`; installed units `/home/ben/.config/systemd/user/bc-wiki-*`.
-- `/home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-init-agent/body/SKILL.md:18-80`; `body/scaffold.py:821-987`.
-- `/home/ben/Sync/Work/PUBLIC/Agents/concepts/qmd/body/SKILL.md:17-59`.
+- `.../bc-wiki-maintain/body/runner/run-lint.sh:1-69` and `run-promotion.sh:1-254`; installed units `/home/<user>/.config/systemd/user/bc-wiki-*`.
+- `<synced-home>/Work/PUBLIC/Agents/concepts/bc-init-agent/body/SKILL.md:18-80`; `body/scaffold.py:821-987`.
+- `<synced-home>/Work/PUBLIC/Agents/concepts/qmd/body/SKILL.md:17-59`.
 
 Exactly implemented detector checks/functions:
 - `without_code` masks fenced/inline code; `links` extracts Markdown and `[[wikilink]]`; `skip_link` ignores empty, fragments, external, and special targets; `resolve_link` resolves local targets and identifies broken/ambiguous stem matches.
@@ -143,9 +143,9 @@ Commands:
 ```sh
 qmd --version
 qmd collection list
-python3 /home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py <vault> --json
+python3 <synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py <vault> --json
 ```
-`qmd --version` returned `qmd 2.5.3`. `qmd collection list` reported 8 collections: `wiki`, `music`, `scripts`, `image-maze`, `agents`, `homeflix`, `homeflix-prod`, `codebase-design`. Both `/home/ben/.config/qmd/index.yml` and canonical `/home/ben/Sync/Scripts/config/qmd-collections.yml` contain those eight path definitions.
+`qmd --version` returned `qmd 2.5.3`. `qmd collection list` reported 8 collections: `wiki`, `music`, `scripts`, `image-maze`, `agents`, `homeflix`, `homeflix-prod`, `codebase-design`. Both `/home/<user>/.config/qmd/index.yml` and canonical `<owner-scripts>/config/qmd-collections.yml` contain those eight path definitions.
 
 ```text
 codebase-design registered (canonical + machine)
@@ -175,7 +175,7 @@ Measured with Python `time.perf_counter` around the real subprocess: return code
 
 ### Installed runner
 
-`systemctl --user list-timers --all` and `systemctl --user cat/is-enabled/is-active` were run. Installed units are 10 regular files under `/home/ben/.config/systemd/user/`: five timers and five oneshot services. All five timers are loaded, enabled, active; all five services are installed `static` and currently inactive between runs.
+`systemctl --user list-timers --all` and `systemctl --user cat/is-enabled/is-active` were run. Installed units are 10 regular files under `/home/<user>/.config/systemd/user/`: five timers and five oneshot services. All five timers are loaded, enabled, active; all five services are installed `static` and currently inactive between runs.
 
 ```text
 bc-wiki-lint.timer                  enabled active; next 04:15 (+15m randomized)
@@ -185,13 +185,13 @@ bc-wiki-maintain-homeflix.timer     enabled active; 05:30 (+15m randomized)
 bc-wiki-maintain-homeflix-prod.timer enabled active; 06:15 (+15m randomized)
 bc-wiki-*.service                   static inactive (Type=oneshot)
 ```
-Installed services point to the canonical `run-lint.sh`/`run-promotion.sh` under `AGENT_CONCEPTS=/home/ben/Sync/Work/PUBLIC/Agents`; lint uses `/home/ben/.config/agent-concepts/wiki-lint-vaults.txt`, which contains 8 paths and omits dng. The lint runner is detection-only, continues after a path failure, and reports a final failure count. Promotion services require a clean tree, run detection, fail closed on invalid/malformed ranges, invoke Pi only when required, require complete classification, reject staging/outside-vault/deletion/non-Markdown/non-additive changes, then create one exact-range commit. Today’s journal shows lint checked 8 paths with 0 failures; four promotion runs finished: CV, image-maze, and public Homeflix were no-ops; homeflix-prod classified one entry `skip` and made no commit.
+Installed services point to the canonical `run-lint.sh`/`run-promotion.sh` under `AGENT_CONCEPTS=<synced-home>/Work/PUBLIC/Agents`; lint uses `/home/<user>/.config/agent-concepts/wiki-lint-vaults.txt`, which contains 8 paths and omits dng. The lint runner is detection-only, continues after a path failure, and reports a final failure count. Promotion services require a clean tree, run detection, fail closed on invalid/malformed ranges, invoke Pi only when required, require complete classification, reject staging/outside-vault/deletion/non-Markdown/non-additive changes, then create one exact-range commit. Today’s journal shows lint checked 8 paths with 0 failures; four promotion runs finished: CV, image-maze, and public Homeflix were no-ops; homeflix-prod classified one entry `skip` and made no commit.
 
 ## F. Evidence of the problem
 
 Exact read-only command run against every qualifying vault:
 ```sh
-python3 /home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py <vault>
+python3 <synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py <vault>
 ```
 Summary lines (all exited 0; nonzero would only be broken/ambiguous links):
 ```text
@@ -212,7 +212,7 @@ Concrete stuck/failure instances from `--json` and raw `grep -n '^## ' log.md`:
 - **Missing index examples:** codebase-design 14 includes `concepts/README.md`, `references/paths.md`, `tasks/parking-lot.md`; sql 20 includes `GLOSSARY.md`, `MISSION.md`, `NOTES.md`; Music 13 includes `decisions/vocabulary-gated-comment-writes.md` and `findings/sticker-db-syncthing-fork.md`; Scripts 7 includes `references/paths.md`; CV 13 includes `findings/README.md`; dng 6 includes `project/create-agent-wiki-plan.md` and `project/seo-deep-improved-search-2026-plan.md`; image-maze 16 includes `references/dcu-trusted-proxy.md`, `references/docker.md`, and four unlisted PRD/plan pages; homeflix-prod 3 are `project/agent-first-acquisition-plan.md`, `project/agent-first-core-setup-plan.md`, and `project/agent-first-storage-plan.md`.
 - **Orphan examples (exact graph counts above):** codebase-design has 21 including all ten `learning-records/*.md`; sql has 17 including `learning/plan.md`; Music has 12 including `home.md` and `decisions/adr-0001-local-project-agent-wiki.md`; Scripts has 7 including `conventions/file-layout.md`; CV has 12 including `findings/README.md`; dng has 6 including both project plans; image-maze has 14 including `project/plans/digital-chest-unlock/referral-engine-study.md`, `references/age-verification-seam.md`, and `references/wordpress-local-env.md`. Homeflix and homeflix-prod have zero orphans.
 
-No repository file was edited or committed. `/home/ben/Sync/Work/PUBLIC/Agents` status at the end showed only the task-provided untracked `docs/research/wiki-autonomy-council/` directory; its contents were not inspected.
+No repository file was edited or committed. `<synced-home>/Work/PUBLIC/Agents` status at the end showed only the task-provided untracked `docs/research/wiki-autonomy-council/` directory; its contents were not inspected.
 
 ```acceptance-report
 {
@@ -229,12 +229,12 @@ No repository file was edited or committed. `/home/ben/Sync/Work/PUBLIC/Agents` 
   "testsAddedOrUpdated": [],
   "commandsRun": [
     {
-      "command": "find /home/ben/Sync -maxdepth 10 ... (pruned node_modules, .git, forbidden docs/research)",
+      "command": "find <synced-home> -maxdepth 10 ... (pruned node_modules, .git, forbidden docs/research)",
       "result": "passed",
       "summary": "10 candidates; 9 qualified vaults."
     },
     {
-      "command": "python3 /home/ben/Sync/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py <each qualifying vault>",
+      "command": "python3 <synced-home>/Work/PUBLIC/Agents/concepts/bc-wiki-maintain/body/wiki_lint.py <each qualifying vault>",
       "result": "passed",
       "summary": "All 9 read-only runs exited 0; summaries are included."
     },

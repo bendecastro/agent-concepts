@@ -1774,3 +1774,9 @@ Added `lint_personal_terms` (optional private denylist, ERROR per hit, skipped w
 
 ## [2026-11-19] lint | personal-terms review fixes
 Preserved captured pressure-test output, excluded immutable evidence, and made pending body and mixed-result hits warnings; hardened denylist handling and corrected placeholder examples.
+
+## [2026-11-19] implement | agent-kernel generic storage safety
+Rewrote Storage safety in the public kernel body to name no personal tools ("a guarded test runner, if one exists", "the machine's storage health check, if one exists"); behaviour and Why unchanged, owner's derived copies keep the exact names. Pressure check 4/4 on Terra low: [tests/pressure-storage-generic.md](concepts/agent-kernel/tests/pressure-storage-generic.md).
+
+## [2026-11-19] lint | owner-approved raw/evidence path scrub
+Owner-approved one-off exception to the raw-is-immutable rule: replaced personal paths in docs/research/raw/** and docs/research/*/evidence/** with the repo's placeholders (`<synced-home>`, `<owner-scripts>`, `<music-library>`, `<image-maze-project>`, `/home/<user>`); nothing else changed, JSON still valid.
