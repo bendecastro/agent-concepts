@@ -13,22 +13,22 @@ Read the project's glossary before choosing words. Apply the rules below and the
 
 | Rule | Bad → good | Why |
 |---|---|---|
-| One name, one job; split a class reused for another job. | `ProposalJob` for proposals and benchmarks → `ProposeImprovementsJob` / `SelectBenchmarkJob` | Shared names hide different responsibilities. |
+| One name, one job; split a class reused for another job. | `ReportJob` for building and exporting reports → `BuildReportJob` / `ExportReportJob` | Shared names hide different responsibilities. |
 | One word, one meaning project-wide; check the glossary before adopting a word. | `contract` for acceptance and billing → `acceptance-criteria` / `billing-agreement` | Overloaded words make correct reasoning depend on hidden context. |
-| Steps are verb-object and name their output; reserve `review` for a verdict. | `buyer-review` generating proposals → `propose-improvements` | The name should predict the result, not imply a verdict that never happens. |
+| Steps are verb-object and name their output; reserve `review` for a verdict. | `order-review` drafting replies → `draft-replies` | The name should predict the result, not imply a verdict that never happens. |
 | Name what it does, not who triggers/runs it or the current tool, harness or provider. | `tool-refresh` → `refresh-catalog` | Implementations and operators change without changing the job. |
-| Each state covers exactly one state; states partition the lifecycle. | `Building` including Built → `build-in-progress` / `built-awaiting-publication` | Overlapping states obscure valid transitions. |
-| Avoid jargon/metaphor needing decoding; be grep-friendly. | `sense` → `collect-site-signals` | Readers and searches should find the same concept without translation. |
-| Use the same word in code, config, timers, docs and UI labels. | `collect` / `refill` / `store scan` for one job → `collect-listings` everywhere | Parallel vocabularies break discoverability. |
+| Each state covers exactly one state; states partition the lifecycle. | `Shipping` including shipped → `shipping-in-progress` / `shipped-awaiting-confirmation` | Overlapping states obscure valid transitions. |
+| Avoid jargon/metaphor needing decoding; be grep-friendly. | `pulse` → `collect-usage-metrics` | Readers and searches should find the same concept without translation. |
+| Use the same word in code, config, timers, docs and UI labels. | `sync` / `pull` / `import` for one job → `import-orders` everywhere | Parallel vocabularies break discoverability. |
 | List and settle persisted names before the first write; avoid mutable names in derived ids/hashes unless an alias reader is planned. | hash input `current-step-name` → stable `step-id` | Persisted spellings are expensive to change, not cosmetic labels. |
 
-**Cold-read test:** can a newcomer guess the input, output and verdict/result from the name alone? Bad `shortlist` → good `check-site-terms`. Why: this catches names that sound plausible only after an explanation.
+**Cold-read test:** can a newcomer guess the input, output and verdict/result from the name alone? Bad `triage` → good `classify-tickets`. Why: this catches names that sound plausible only after an explanation.
 
 ## Record the choice
 
 Each new name gets a glossary entry through `domain-modeling`'s rules, with its meaning and a `Saved in:` line. List conceptual surface categories only: `job ids; ledger filename; config key; state value; hash input`, or `none` if not persisted. Mark persisted names **expensive to change**. No file paths, module names or literal keys in the glossary: its purity rule still owns the boundary. If exact locations are useful, put them in a code comment beside the name's single source of truth, not in the glossary.
 
-Example: **Propose improvements** — Turn site findings into ranked improvement proposals. **Saved in:** job ids; ledger filename. **Expensive to change.**
+Example: **Draft replies** — Turn customer messages into suggested reply drafts. **Saved in:** job ids; ledger filename. **Expensive to change.**
 
 ## Audit or rename
 

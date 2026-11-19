@@ -11,7 +11,7 @@ Run a subagent with `body/SKILL.md` loaded, after a short fictional conversation
 ## Pass criteria
 All three hold on inspection of the PRD and the publish command.
 
-## Historical run — 2026-06-21 (then named `to-prd`; Claude Code subagent, Haiku low-thinking per cost rule) — **PASS**
+## Historical run — 2026-06-21 (then named `to-prd`; Claude Code subagent, Haiku, low thinking) — **PASS**
 
 Sandbox `/tmp/pt-toprd`; `gh` stubbed; settled CSV-export context supplied as prior conversation.
 1. Delegated to `prd-drafting` and produced a template-conformant PRD (Problem / Solution / User Stories / Implementation / Testing / Out of Scope / Further Notes). ✓

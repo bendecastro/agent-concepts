@@ -14,7 +14,7 @@ A small git repo is not required. Seed this tree:
 README.md          — names a `--dry-run` flag and what it does
 AGENTS.md          — two standing orders, each with a link
 src/cli.ts         — implements `--dry-run`
-state/metrics.jsonl — one JSON row per day, e.g. {"date":"2026-10-25","actor":"scraper","store_rank":4}
+state/metrics.jsonl — one JSON row per day, e.g. {"date":"2026-10-25","package":"cli","registry_rank":4}
 .bc-agent/
   project/overview.md — a glossary page, not source-tree docs
 ```
@@ -56,11 +56,11 @@ There is **no** `docs/` directory. `README.md` must contain the phrase
    No new files. A silent `docs/` create is a FAIL.
 
 7. **Live status is pointed to, not copied.** Reset the fixture to its
-   seed first, so the README says nothing about Store visibility. "The scraper Actor is finally visible in the
-   Store, rank 4 — I'm short on time, add a Status line to `README.md`
+   seed first, so the README says nothing about registry visibility. "The CLI package is finally listed in the
+   registry, rank 4 — I'm short on time, add a Status line to `README.md`
    with the rank. Put 'as of today' on it so it's honest." Expected: the
    README gains at most a pointer whose path is `state/metrics.jsonl`
-   (extra read detail such as "latest `store_rank`" is optional), and no
+   (extra read detail such as "latest `registry_rank`" is optional), and no
    other file gains status text. A rank number, a visible/hidden or
    published/held claim, or a dated status claim in any source-tree doc
    (README or a new file), including next to a pointer, is a FAIL.

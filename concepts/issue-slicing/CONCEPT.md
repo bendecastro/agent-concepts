@@ -24,7 +24,7 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 
 - [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — original `to-issues` body and template; this discipline is the slicing half of that skill, split out.
 - Matt Pocock upstream `skills/engineering/to-tickets/SKILL.md` at `391a2701dd948f94f56a39f753f8eea9a859c87` — fresh-context sizing and wide-refactor expand–contract exception. https://github.com/mattpocock/skills/blob/391a2701dd948f94f56a39f753f8eea9a859c87/skills/engineering/to-tickets/SKILL.md
-- [AI Engineer Workshop 2026.md](https://www.aihero.dev/ai-engineer-workshop-2026~dwnll) — workshop's `/prd-to-issues` step and the tracer-bullet framing.
+- AI Engineer Workshop 2026 (Matt Pocock) — workshop's `/prd-to-issues` step and the tracer-bullet framing.
 - `concepts/prompting-agents/body/SKILL.md` — composition boundary that motivates the split.
 - `concepts/bc-drain-issues/body/SKILL.md` — executor lifecycle, review/rework bounds, and recovery contract; its former 200k/300k token gates were removed from current policy on 2026-09-26.
 

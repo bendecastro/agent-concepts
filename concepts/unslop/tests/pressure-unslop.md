@@ -79,10 +79,10 @@ rewrite of the user's voice, or a false accusation against clean prose.
   `openai-codex/gpt-5.6-luna:max` via the subagent bridge, fresh context
   per check, isolated fixture copies, graded on files and returned text.
 
-  **Caveat: run at max thinking, not low.** The `pi` harness was
-  unavailable (xAI out of credits, OpenAI and Google not credentialed,
-  Anthropic over its usage limit), so the run went through the subagent
-  bridge, where the routing rule fixes Luna at max. A discipline that
+  **Caveat: run at max thinking, not low.** The preferred
+  low-reasoning consumer was unavailable, so the run went through the
+  subagent bridge, where the consumer model and thinking level were
+  fixed at max. A discipline that
   holds at max thinking is weaker evidence than one that holds at low.
   Re-run at low reasoning when a provider is available.
 

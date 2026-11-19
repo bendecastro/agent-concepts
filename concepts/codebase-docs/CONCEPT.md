@@ -56,7 +56,7 @@ delta over this workspace.
   measuring system; docs name the source and how to read it, never the
   value, even dated. The only exception is an append-only log the project
   already keeps for dated history. Origin: in a separate project, four
-  hand-written docs kept saying two products were "not yet visible" for
+  hand-written docs kept saying two published items were "not yet visible" for
   days after the metrics recorded a rank, and agents repeated it as fact.
   Scoped to this skill only; the owner chose not to add a kernel-wide
   read/write rule for memory, handoffs or digests.

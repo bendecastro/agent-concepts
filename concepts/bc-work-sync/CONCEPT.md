@@ -22,13 +22,13 @@ All agreed with the owner on 2026-11-16.
 
 ## Provenance
 
-- The 2026-11-16 tidy-up of the Manicule project's work pipeline, done with the owner: its `work/README.md` table, `work-index.mjs` script (ported to bc-init-agent's `body/work_index.py`), the `Stage:` rule in its `.bc-agent/AGENTS.md`, and the owner's decisions about sources, conflicts and the plan gate recorded above.
+- The 2026-11-16 tidy-up of one of the owner's projects' work pipeline, done with the owner: its `work/README.md` table, its work-index script (ported to bc-init-agent's `body/work_index.py`), the `Stage:` rule in its `.bc-agent/AGENTS.md`, and the owner's decisions about sources, conflicts and the plan gate recorded above.
 - Gate phrasing adapted from [prompting-agents](../prompting-agents/body/SKILL.md) (Scope discipline and Loading is not authorization). The gate deliberately ends the turn on a plan.
 - Work-item rules (status folders, numbering in the main checkout, ideas file) from the scaffold in [bc-init-agent](../bc-init-agent/CONCEPT.md).
 
 ## Tests
 
-[tests/pressure-work-sync.md](tests/pressure-work-sync.md): four scenarios, run 2026-11-16 on `openai-codex/gpt-6.1-terra:low` (the owner's pressure-test model since 2026-11-12), each once without and once with the skill, graded by git state. Scenario 2's approval turn ran as a second turn on the same fixture. In scenario 3 one run asked whether to keep item 002 active; the parent answered "keep 002 active" (the without-skill run), which does not bear on what the scenario tests. The skill held all four; the baseline failed all four:
+[tests/pressure-work-sync.md](tests/pressure-work-sync.md): four scenarios, run 2026-11-16 on `openai-codex/gpt-6.1-terra:low` (the model named in the pressure-test config), each once without and once with the skill, graded by git state. Scenario 2's approval turn ran as a second turn on the same fixture. In scenario 3 one run asked whether to keep item 002 active; the parent answered "keep 002 active" (the without-skill run), which does not bear on what the scenario tests. The skill held all four; the baseline failed all four:
 
 | Scenario | Without the skill | With the skill |
 | --- | --- | --- |

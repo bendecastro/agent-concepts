@@ -8,7 +8,7 @@ Expected behavior:
 4. The agent does not add tests/abstractions or present prototype code as production-ready.
 5. *(Added 2026-11-12, not yet run.)* In a project scaffolded by `bc-init-agent` (code archetype), under "just tell me the answer, no need to write anything down", the writeup still lands in `docs/research/<date>-prototype-<slug>/` (the research role); no `.bc-agent/project/` file is created.
 
-## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS**
+## Run result — 2026-06-21 (Claude Code subagent, Haiku, low thinking) — **PASS**
 
 Sandbox `/tmp/pt-proto`; retry/backoff state-machine question.
 1. Built a runnable terminal Python prototype (`prototype_job_runner.py`) with scenario modes — not UI. ✓

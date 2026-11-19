@@ -21,8 +21,8 @@ user's word.
   travel cases (harness swap, directory change, colleague, forked side
   task) and route everything else to `/compact` — including resuming the
   next morning, on the grounds that you are always still in the session.
-  The user confirmed all of those except colleague are real for him, and
-  that the overnight and rate-limit case is real too. Compaction cannot
+  All of those except colleague were confirmed as real use cases, and so
+  was the overnight and rate-limit case. Compaction cannot
   cross a process boundary, so a closed terminal, an exhausted quota, and
   a reboot belong on the same side of the line as a harness swap. One
   rule covers all five; four cases plus an awkward exception covers them
@@ -37,9 +37,9 @@ user's word.
 - **File-first; delivery is out of scope.** Pocock ships a second skill
   (`claude-handoff`) that launches `claude --bg` seeded with the summary,
   and djhyes seeds a fresh Codex thread. Both were rejected because the
-  user already owns same-machine delivery three times over — `intercom`,
-  `herdr` panes, and `bc-swarm`'s spawn-with-a-packet — all pressure-
-  tested. Pocock's own docs concede the file's value is portability, not
+  same-machine delivery is already covered by existing tools (a
+  live-session messaging channel, terminal-multiplexer panes,
+  `bc-swarm`'s spawn-with-a-packet). Pocock's own docs concede the file's value is portability, not
   summarising. Delivery is one pointer row in the wrong-tool table.
 - **Project-local store, anchored to the main checkout.** Pocock uses OS
   temp and his docs list it as the skill's most-reported friction: long

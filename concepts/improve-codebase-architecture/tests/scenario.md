@@ -8,7 +8,7 @@ Expected behavior:
 4. Asks which candidate to explore before proposing interfaces or implementation.
 5. Does not edit production code or create GitHub issues directly.
 
-## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS**
+## Run result — 2026-06-21 (Claude Code subagent, Haiku, low thinking) — **PASS**
 
 Sandbox `/tmp/pt-arch` (seeded glossary + ADR + shallow `report_store.py`/`renderer.py`/`api.py`).
 1. Read `project/overview.md` + `adr-0001-storage.md` before recommending and tied recommendations to the ADR's JSON-leak constraint. ✓

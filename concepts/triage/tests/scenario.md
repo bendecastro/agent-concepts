@@ -21,7 +21,7 @@ Expected:
 3. Nothing is created under `.bc-agent/out-of-scope/`, and no `Status:` line is written.
 4. If the maintainer gives no reason, the agent asks for one (or records the reason it verified and says so) rather than writing an empty `## Outcome`.
 
-## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS**
+## Run result — 2026-06-21 (Claude Code subagent, Haiku, low thinking) — **PASS**
 
 Sandbox `/tmp/pt-triage`; `gh` stubbed to a `gh-calls.log`. Graded from the log + written files + `git status`.
 1. Vague #11 → `needs-info` with clarifying questions; not `ready-for-agent`. ✓

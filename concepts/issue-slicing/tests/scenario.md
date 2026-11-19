@@ -15,7 +15,7 @@ Run a subagent with `body/SKILL.md` loaded, given a short plan/PRD in a throwawa
 ## Pass criteria
 All six hold on inspection of the slices and the transcript.
 
-## Run result — 2026-06-21 (Claude Code subagent, Haiku low-thinking per cost rule) — **FAIL**
+## Run result — 2026-06-21 (Claude Code subagent, Haiku, low thinking) — **FAIL**
 
 Sandbox `/tmp/pt-slice`. Saved-searches plan.
 - Check 1 (vertical): mostly held, but slice #1 was "data model + persistence + save API" with no user-facing save action — a partly horizontal foundation slice not labelled as prefactoring at the time it was proposed.

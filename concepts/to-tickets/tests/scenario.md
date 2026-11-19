@@ -12,7 +12,7 @@ Run a subagent with `body/SKILL.md` loaded, given a short multi-feature plan/PRD
 ## Pass criteria
 All four hold on inspection of the breakdown and publish commands.
 
-## Historical run — 2026-06-21 (then named `to-issues`; Claude Code subagent, Haiku low-thinking per cost rule) — **PASS (with note)**
+## Historical run — 2026-06-21 (then named `to-issues`; Claude Code subagent, Haiku, low thinking) — **PASS (with note)**
 
 Sandbox `/tmp/pt-toissues`; `gh` stubbed; team-mentions multi-feature plan.
 1. Delegated to `issue-slicing`; slices were vertical (autocomplete → token → notify → inbox). ✓

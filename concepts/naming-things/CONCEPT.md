@@ -17,7 +17,7 @@ Model-invoked advisory criteria for clear domain and public code names, applied 
 
 ## Provenance
 
-- Owner-approved naming criteria and migration recipe, observed in a private multi-stage automation pipeline rename (2026-10).
+- Naming criteria and migration recipe distilled from a real multi-stage pipeline rename (2026-10); examples are illustrative.
 - [domain-modeling](../domain-modeling/body/SKILL.md) — glossary purity, persistence, conflict reconciliation and ADR ownership.
 - [prompting-agents](../prompting-agents/body/SKILL.md) — explain-the-why, scope discipline, model-invoked composition and progressive disclosure.
 - [codebase-design](../codebase-design/body/SKILL.md) — consistent vocabulary and one responsibility behind an interface.

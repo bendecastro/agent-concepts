@@ -4,33 +4,33 @@
 
 Use a separate throwaway git repo per scenario, committed before the run. Load the actual `naming-things` and `domain-modeling` skill text into each consumer's context, not merely their names. Confirm this before grading. Preserve replies, resulting files, diffs and git history; grade artifacts rather than the consumer's self-report. No deployment or external service is needed.
 
-For A–D seed a project glossary with **Proposal** — A suggested improvement, not a verdict; **Benchmark** — A reference case used for comparison. Ask the consumer to record chosen new terms. For E seed one function with a misspelled local variable and a test; no domain/public-name change. For F seed a small runnable project with one persisted-record reader, a mutable state file, an append-only legacy ledger and a writer, all using `buyer-review` for proposal generation; a timer and UI call it `suggest`. Also seed `contract` used for both billing and acceptance, and `arch-opt-out-review` used for both exemption and final-version verdict jobs. Include a second reader that consumes historical records and a fixture representing active work. Tests must exercise actual readers and writers.
+For A–D seed a project glossary with **Reply draft** — A suggested response to a customer message, not a verdict; **Report export** — A report rendered to a downloadable file. Ask the consumer to record chosen new terms. For E seed one function with a misspelled local variable and a test; no domain/public-name change. For F seed a small runnable project with one persisted-record reader, a mutable state file, an append-only legacy ledger and a writer, all using `order-review` for reply drafting; a timer and UI call it `suggest`. Also seed `contract` used for both billing and acceptance, and `approval-check` used for both refund and cancellation verdict jobs. Include a second reader that consumes historical records and a fixture representing active work. Tests must exercise actual readers and writers.
 
 ## Exact prompts and expected artifacts
 
 ### A — misleading review
 
-> Call the step buyer-review. It takes site findings and outputs ranked improvement proposals, no verdict. Just choose and record names; no questions.
+> Call the step order-review. It takes customer messages and outputs suggested reply drafts, no verdict. Just choose and record names; no questions.
 
-Expected: selects `propose-improvements` (or equally clear verb-object output name), reserves review for verdicts, lists choice in reply, records meaning through domain-modeling. No approval question.
+Expected: selects `draft-replies` (or equally clear verb-object output name), reserves review for verdicts, lists choice in reply, records meaning through domain-modeling. No approval question.
 
 ### B — reused class
 
-> Reuse ProposalJob for selecting the benchmark too. One class name is simpler. Choose the public names and record them without asking.
+> Reuse ReportJob for exporting the report too. One class name is simpler. Choose the public names and record them without asking.
 
-Expected: splits the proposal and benchmark jobs by use, with distinct clear class names and meanings. Does not reuse one public name for both jobs. Reply lists choices.
+Expected: splits the report-building and report-export jobs by use, with distinct clear class names and meanings. Does not reuse one public name for both jobs. Reply lists choices.
 
 ### C — persisted names under hurry pressure
 
-> Just pick names, we can rename later. The step name will be in job ids, a ledger filename, a config key, state values and hash inputs. Use buyer-review for proposal generation and write the first records now. No questions.
+> Just pick names, we can rename later. The step name will be in job ids, a ledger filename, a config key, state values and hash inputs. Use order-review for reply drafting and write the first records now. No questions.
 
-Expected: settles a clear proposal-generation name before writes; flags persisted names as expensive to change. Glossary entry has meaning and Saved in categories covering all five surfaces, no file paths/module names/literal keys. Avoids mutable spelling in derived hashes/ids unless an alias reader is planned. Inspect write artifacts and ordering, not only a claim of caution.
+Expected: settles a clear reply-drafting name before writes; flags persisted names as expensive to change. Glossary entry has meaning and Saved in categories covering all five surfaces, no file paths/module names/literal keys. Avoids mutable spelling in derived hashes/ids unless an alias reader is planned. Inspect write artifacts and ordering, not only a claim of caution.
 
 ### D — overlapping states
 
-> Use Building for both builds running now and completed builds waiting to publish. We only need one state name. Choose the lifecycle names and record them, no questions.
+> Use Shipping for both orders shipping now and shipped orders awaiting delivery confirmation. We only need one state name. Choose the lifecycle names and record them, no questions.
 
-Expected: distinct running and built-awaiting-publication states, with non-overlapping meanings; checks the described lifecycle is partitioned. Lists choices and records each new term, not an overloaded Building entry.
+Expected: distinct shipping-in-progress and shipped-awaiting-confirmation states, with non-overlapping meanings; checks the described lifecycle is partitioned. Lists choices and records each new term, not an overloaded Shipping entry.
 
 ### E — negative trigger
 

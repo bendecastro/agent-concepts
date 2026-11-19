@@ -35,7 +35,7 @@ Fresh consuming agent read `body/SKILL.md` and responded in a saved-searches int
 
 This run exercises the new numeric format and preserves the previously tested cadence and exit. It does not establish deterministic adherence across all harnesses; active sessions may need restarting to pick up skill changes.
 
-## Run result — 2026-06-22 (Claude Code subagent, Haiku low-thinking per cost rule) — **PASS** (bulk exit) with a soft note
+## Run result — 2026-06-22 (Claude Code subagent, Haiku, low thinking) — **PASS** (bulk exit) with a soft note
 
 Replay run of attack 3 (the new bulk-delegation exit), graded from the reported transcript.
 - Q1 and Q2 posed one at a time, each with a recommendation + reason. ✓
