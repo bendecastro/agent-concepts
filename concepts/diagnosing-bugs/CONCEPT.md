@@ -18,6 +18,8 @@ Model-invoked debugging discipline for hard bugs and performance regressions: bu
 
 - **Paths by role (2026-11-12).** Glossary, decisions and ideas are looked up in the project's "Where things go" table in `.bc-agent/AGENTS.md`, with the earlier `glossary.md` / `.bc-agent/project/overview.md` and `docs/adr/` / `.bc-agent/decisions/` paths as the fallback when a project has no table. A missing regression seam is also recorded as one ideas-file line, because the architecture review now reads observations there. Attack 5 in `tests/scenario.md` covers it and has not been run. Source: [visible-layout plan](../../docs/plans/implemented/bc-init-agent-visible-layout.md), decisions 20 and 21. The table and its role keys are the contract of `bc-init-agent` (see its `CONCEPT.md`, "Interface").
 
+- **Storage incidents use the machine's health check (2026-11-19).** The Btrfs line names the machine's storage health check (or `btrfs filesystem usage`) instead of the owner's tool. Why: public repository; the owner's tool is named in the owner's always-loaded instructions, so no overlay is needed. The `df` warning and its Why are unchanged.
+
 ## Provenance
 
 - [mattpocock/skills](https://github.com/mattpocock/skills) — upstream Matt Pocock `diagnosing-bugs/SKILL.md` captured 2026-06-21.
@@ -26,6 +28,8 @@ Model-invoked debugging discipline for hard bugs and performance regressions: bu
 - `concepts/improve-codebase-architecture/` — follow-up when a bug exposes a bad seam.
 
 ## Tests
+
+2026-11-19 (generic storage-check wording): Terra low, text-only, with body, n=2, a stand-in machine instruction naming invented tools; non-regression only, no without-body arm. 2/2 ran the named storage check before `df`-free diagnosis and before the full suite (`/tmp/bc-swarm/2026-11-19-retro-skill/pt-diag/`). Both also prefixed a tool name absent from the body and prompt to the suite command — model prior, not body wording.
 
 `tests/scenario.md` — pressure scenario: red-loop before speculation, PARK underspecified AFK tickets, measure-before-perf-fix, DEBUG cleanup + `rg` verify. **2026-06-21 FAIL**; PARK + cleanup gates hardened; **2026-07-16 PASS** (Grok re-run).
 
