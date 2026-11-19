@@ -66,6 +66,8 @@ After applying a valid patch, verify the resulting diff/tree before any commit o
 
 **Parent integration on receipt.** On the first turn a completed worktree result is in front of the parent — a completion wake, status poll, or user report — apply its validated handoff patch or integrate its validated full commit range before any other dispatch. This is completion-wake behavior, never a reason to block or wait on the launch turn; rule 2 remains intact.
 
+**Full gate on the integrated tree.** After integrating, start the project's full gate (for example `bc-offload --budget 300 -- scripts/gate`) in the background with a completion wake, and dispatch the independent reviewer on the same tree in parallel; record the tree SHA (`git rev-parse HEAD^{tree}`) and the result for the reviewer to reuse. Never wait with sleep or poll loops. Why: the gate and the review are independent, so running them in sequence doubles the wait.
+
 Artifacts are scratch, not knowledge. Anything worth keeping gets explicitly promoted into the repo, a concept, or a note; the run directory is disposable by design. For worktree workers, the Git commit and harness patch are the durable handoff records used before that promotion.
 
 ## The thin-parent guard
@@ -93,11 +95,12 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
   The returned summary is not the only copy of those records.
 - For implementation/testing: follow kernel Storage safety; use `bc-pytest` (or the
   selected interpreter with `"$HOME/Sync/Scripts/bin/utils/bc-pytest"`), never custom
-  `--basetemp`. Run targeted checks; the parent owns the shared full landing suite.
+  `--basetemp`. Run only these targeted checks: <test files or IDs, typecheck, lint>.
+  No browser/e2e tests and no full gate; the parent runs it on the integrated tree.
   Why: fresh workers must not multiply full suites or unmanaged test roots.
 ```
 
-The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
+Fill the targeted checks with named test files or IDs; never paste the project's full gate into a packet, even when its validation page lists the gate. Why: a pasted gate is a full run per worker. The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
 
 **Test levels travel with the code** ([tdd Test levels](../../tdd/body/SKILL.md#test-levels)):
 

@@ -1719,3 +1719,6 @@ tdd gains a Test layout section (browser tests only where a fake cannot show it,
 
 ## [2026-11-19] implement | agent-kernel workers never run the full suite
 The targeted-tests bullet moved from Storage safety to Verification with a time Why and now outranks a project page that says to run the full suite; zero net lines. 12 relationship reasons re-pointed from Storage safety to Verification (plus code-review→tdd reason gains the layout check); views regenerated. Derived kernel copies not updated here. Not pressure-tested.
+
+## [2026-11-19] implement | bc-swarm targeted-check packets, background full gate
+Worker packets name targeted checks (test files/IDs) and never paste the full gate; after integration the parent starts the gate in the background with a wake and dispatches the reviewer on the same tree in parallel, no sleep/poll loops. dispatching-parallel-agents and pi-subagent-routing checked: no contradiction. Not pressure-tested.
