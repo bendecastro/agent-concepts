@@ -15,9 +15,31 @@ Scenarios and pass criteria (written before running):
 | (b) `1 2` → append `## Decisions` | 0/2 (keeps report as history / "record your selection", no section) | 2/2 (appends `## Decisions` with `1. acted — pending`, `2. acted — pending`, updated as work lands) |
 | (c) control → proceed | 2/2 | 2/2 (notes it is decided, does not block) |
 
-Verdict: with-arm beats without-arm on (a) and (b); control holds in both. Scenarios (a)/(b) were not re-run after the interactive wording narrowed to runs without `--report`. Not exercised: batch carry-over (`## Still undecided from <date>`), declined/deferred lines, and real file writes (no tools).
+Verdict: with-arm beats without-arm on (a) and (b); control holds in both. Scenarios (a)/(b) were re-run on the final wording in the isolated retest below. Not exercised: batch carry-over (`## Still undecided from <date>`), declined/deferred lines, and real file writes (no tools).
 
 Future pressure scenario: a latest report has new proposals and carries proposals from an older report. Show both with distinct numbers, record carried-item decisions under their original numbers in the original report, and carry them through another headless batch if still undecided. Also check that an already-decided original is not re-offered.
+
+## Isolated retest of the final body (2026-11-19, after commit 13b3080)
+
+Consumer: true stranger. Run from a scratch cwd whose trusted project `.pi/APPEND_SYSTEM.md` reads "Answer the user." (overrides the owner's agent-directory file), with `pi -p --no-session --no-context-files --no-skills --no-tools --no-extensions -a --model openai-codex/gpt-6.1-terra --thinking low --append-system-prompt <body/SKILL.md at 13b3080>`. Isolation probe rerun first (yes/no: does your context hold a heavy-runs rule / a home-folder rule): isolated No/No, control from /tmp without override or `--no-extensions` Yes/Yes. Every prompt opens "You cannot run tools in this reply." and gives the report directory listing and file contents inline (report dir `~/.local/state/retro/`). n=2 per scenario, new body only (no old-body arm).
+
+Pass criteria (written before running):
+- (a) interactive `/retro`, latest report undecided → shows its open proposals with path and asks before the new review.
+- (b) interactive, latest report has `## Decisions` → does not re-offer; proceeds (here: says it needs tools).
+- (d) headless `--report`, latest undecided → no asking; plans `## Still undecided from 2026-11-19` with original path and verbatim proposals, outside the sample.
+- (e) latest report has 2 new proposals plus `## Still undecided from 2026-11-19` (original undecided). (e-show) `/retro` → carried items numbered after the new ones (3, 4) with original path. (e-pick) previous turn showed 1–4, owner answers `1 3` → decisions for 1/2 go to the latest report and carried 3/4 go to the original `2026-11-19.md` under original numbers 1/2.
+- (f) directory holds `2026-11-19.md` (undecided, newer mtime) and `2026-11-20-manicule.md` (decided, older mtime) → picks `2026-11-20-manicule.md` as latest by date prefix.
+
+| Scenario | result |
+|---|---|
+| (a) | 2/2 — lists both with path; "I'll start the new review after your answer" |
+| (b) | 2/2 — "has a `## Decisions` section, so neither proposal is open"; needs tools |
+| (d) | 2/2 — no asking; plans `## Still undecided from 2026-11-19` + original path + verbatim proposals; 2 says "without counting them as findings in the new sample" |
+| (e-show) | 2/2 — new proposals 1–2, then 3–4 "Carried from" / "Still open from `~/.local/state/retro/2026-11-19.md`" |
+| (e-pick) | 2/2 — appends `1. acted — pending` / `2. declined` to the latest report and `1. acted — pending` / `2. declined` to `2026-11-19.md` (3→1, 4→2 mapped back) |
+| (f) | 2/2 — "latest is `2026-11-20-manicule.md`: its date prefix is later … despite the latter's newer modification time"; decided, so no carried items |
+
+Verdict: 12/12 pass on the final body with an isolated consumer. Limits: new-body arm only, so this shows the wording holds, not that it is needed; no tools, so no real file writes; in (d) 1 of 2 did not state the carried items are outside the sample count explicitly. Observed by design in (f): the undecided older `2026-11-19.md` is not offered because only the latest report is checked. Raw prompts and outputs: `/tmp/bc-swarm/2026-11-19-retro-skill/pt-retro3/` (`prompt-<s>.txt`, `out-<s>-<n>.txt`, `probe-*.txt`).
 
 ## Transcripts
 

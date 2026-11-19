@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 open-report check + Decisions record: with 6/6 vs without 2/6 (control only), Terra low, n=2 (tests/pressure-retro-decisions.md); headless carry-over new 2/2 vs old 0/2 and overlay load path owner 2/2, stranger 2/2 (tests/pressure-private-overlay.md); no real file writes tested. Earlier 2026-11-19 live scheduled batch run wrote a valid n=20 report; usefulness awaits owner verdict
+test_status: partial # 2026-11-19 isolated stranger retest of final body (13b3080), Terra low, n=2: undecided ask, decided proceed, headless carry-over, carried items numbered after new + decisions to original report, date-prefix latest — 12/12 pass, new body only, no file writes (tests/pressure-retro-decisions.md). Earlier: open-report check + Decisions record: with 6/6 vs without 2/6 (control only), Terra low, n=2 (tests/pressure-retro-decisions.md); headless carry-over new 2/2 vs old 0/2 and overlay load path owner 2/2, stranger 2/2 (tests/pressure-private-overlay.md); no real file writes tested. Earlier 2026-11-19 live scheduled batch run wrote a valid n=20 report; usefulness awaits owner verdict
 tested: 2026-11-19
 deployed: yes
 ---
