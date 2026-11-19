@@ -1,6 +1,6 @@
 # Pressure test: review packet with no Test levels block
 
-Authored and run 2026-11-18 (Manicule: reviewers got diff + spec but never the Test levels block, and no review mentioned levels).
+Authored and run 2026-11-18 (a private project: reviewers got diff + spec but never the Test levels block, and no review mentioned levels).
 
 Consumer: Terra low, text-only, without / pre-change body / current body. Packet: spec + diff of a rule-bearing `parsePrice` change with example tests only, commit message without trailers, no Test levels block.
 
