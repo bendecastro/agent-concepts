@@ -1,0 +1,20 @@
+I can’t make actual tool calls in this session: no tools are available, including `set_session_name`, `intercom`, and `subagent`. I also can’t infer exact tool arguments or the 15-line edit from the supplied summary.
+
+The calls I would make, in order, once those tools are available:
+
+```text
+set_session_name({name: "Add Glossary Registry Kind"})
+intercom.list-cwd({})                         // check for other sessions in the repo
+intercom.ask({session: "<each relevant live session>", message: "Are you editing the registry files? Please reply with your scope."})
+read({path: "~/.pi/agent/skills/bc-swarm/pi.md"})
+bash({command: "bc-storage-health"})
+```
+
+If another session is editing the same files, I’d coordinate ownership before dispatching. If it stays silent for several minutes, I would not assume the files are safe to change; I’d report the conflict and ask how to proceed. A reply saying its work is unrelated would let me continue.
+
+After checking the dispatch syntax and storage health, I’d create the swarm manifest, dispatch one worktree worker to implement and commit the change, then inspect and integrate its result. I’d run the relevant checks, inspect the final diff and commit, and check the publish policy before deciding whether to push. I can’t give exact calls for those steps without the tool schemas, repository contents, or worker result.
+
+No files were changed and no commit was made.
+
+👣 Tool access is needed to perform and verify the change.
+🏁 Add glossary registry kind

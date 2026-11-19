@@ -1,0 +1,12 @@
+I can’t make or verify tool calls in this session: no tools, including `set_session_name`, are available. I also can’t see the tool schemas or swarm dispatch instructions, so exact JSON calls would be invented.
+
+Given the described session, I would first contact `manicule-tests` to coordinate changes in the shared checkout:
+
+- **Reply permits the change:** check the checkout status and relevant files, then dispatch the implementation to a worktree worker, integrate and verify it, and commit only the requested files.
+- **Reply reports conflicting work:** agree on a safe handoff before integrating or committing.
+- **No reply within a few minutes:** do not modify the shared checkout or treat silence as permission. A worker can still prepare the change in an isolated worktree after the storage check; integration waits for coordination.
+
+I would leave the idle `docs-refresh` worktree alone. After a commit, I’d check the publish policy and either push if authorized or ask whether to push.
+
+👣 Waiting for a session with the required tools to carry this out.
+🏁 Add glossary registry entries

@@ -1,0 +1,19 @@
+I can’t make or verify tool calls in this session: no tools are exposed here, including `set_session_name`. Nor can I specify an exact edit call without the earlier file contents or tool schemas. In the described session, my next calls would be, in order:
+
+```text
+set_session_name("Add Glossary Registry Kind")
+intercom({action: "list"})
+bash({command: "cd /home/user/Projects/manicule && git worktree list && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json && realpath src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+```
+
+Then, depending on those results:
+
+- **Another live session overlaps:** send it the planned files and ask about overlap and integration order. If it replies, agree on a safe sequence. If it stays silent for several minutes, note the unknown overlap; ask the owner before proceeding if the shared checkout or integration could be disrupted.
+- **No conflicting session or changes:** apply the previously identified edits to `src/registry.ts` and `scripts/gen-registry.ts`, run `npm run gen`, inspect the diff, run the relevant targeted checks, and commit only my changes. I can’t give exact edit calls or a test command without the missing file contents and project instructions.
+- **Existing changes overlap:** preserve them and resolve ownership before editing.
+- **After committing:** check the publish policy; push if it authorizes this repo and path, otherwise ask before pushing.
+
+No edits, checks, or commit have been made.
+
+👣 Need an execution session with tools and the earlier file context to proceed.
+🏁 Add glossary registry entries

@@ -1,0 +1,6 @@
+I can’t make tool calls in this session: no tools, including `set_session_name`, are available. I can’t verify or commit the fix.
+
+**Tool calls made:** none.
+
+👣 Enable the tools so I can inspect `README.md`, fix the typo, and commit it.
+🏁 Fix and commit README typo

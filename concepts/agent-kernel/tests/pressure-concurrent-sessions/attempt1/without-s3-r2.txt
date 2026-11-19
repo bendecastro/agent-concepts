@@ -1,0 +1,4 @@
+**Tool calls:** None. This session has no tools available, including `set_session_name`, so I can’t edit or commit the typo.
+
+👣 Run this in a session with filesystem and Git tools to complete the fix.
+🏁 Fix and commit README typo

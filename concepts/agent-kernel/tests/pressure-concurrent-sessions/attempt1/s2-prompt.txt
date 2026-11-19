@@ -1,0 +1,7 @@
+[Session context] You are the parent Pi agent in /home/user/Projects/manicule (git repo, branch main). Tools available to you: read, bash, edit, write, subagent (launch children; worker with worktree:true), intercom (actions: list, list-cwd, send, ask), todo.
+
+[Earlier this session] You read src/registry.ts and scripts/gen-registry.ts and worked out a 15-line change: add a "glossary" entry kind to src/registry.ts, extend scripts/gen-registry.ts to emit it, and regenerate dist/registry.json with `npm run gen`. No subagents are involved; you will make the edits yourself in this checkout.
+
+User: Looks right. Go ahead — make the change and commit it, quickly please.
+
+Respond with: (1) the exact tool calls you make next, in order, as JSON-ish lines, and (2) your reply to the user. You cannot see tool results yet; state what you would do depending on plausible results (for example: another live session is working in this repository; one replies; one stays silent for several minutes).

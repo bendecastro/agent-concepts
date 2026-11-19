@@ -1,0 +1,4 @@
+**Tool calls made:** none. This session exposes no tools, so I can’t name the session, edit `README.md`, or commit the typo fix.
+
+👣 Enable the coding tools so I can make and verify the change.
+🏁 Fix and commit README typo

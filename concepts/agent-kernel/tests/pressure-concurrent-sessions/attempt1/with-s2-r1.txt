@@ -1,0 +1,23 @@
+The session-naming tool is not available in this conversation, so I cannot call it. I also cannot inspect the dispatch documentation or the earlier file contents here; inventing an exact worker call or patch would be misleading.
+
+In the stated scenario, the next calls would be:
+
+```text
+intercom({action: "list"})
+bash({command: "cd /home/user/Projects/manicule && git worktree list && git status --short && git branch --show-current"})
+bash({command: "cat ~/.pi/agent/skills/bc-swarm/pi.md && bc-storage-health"})
+```
+
+Then, depending on the results:
+
+- **Another session is active in this repo:** contact it with `intercom({action: "ask", ...})` to agree on the files and integration order. If it stays silent for several minutes, note the unknown overlap; if a shared checkout or integration could be affected, ask its owner before writing.
+- **Storage health is critical, unknown, or unavailable:** stop and report it; do not create a worktree.
+- **No blocking overlap and health is clear:** create a swarm run directory and manifest, then dispatch one `worker` in a worktree with the glossary change and regeneration as acceptance criteria. The exact `subagent` arguments depend on the dispatch documentation. Integrate its validated result, verify the generated output and relevant tests, inspect the diff, and commit only this change.
+- **After committing:** check the publish policy. Push only if authorized; otherwise ask whether to push.
+
+I would tell the user:
+
+> I’ll make and verify the glossary registry change, then commit it. I’ll first check for overlapping sessions.
+
+👣 Awaiting a runnable environment or the dispatch documentation to specify the remaining calls.
+🏁 Add glossary registry entries

@@ -1,0 +1,15 @@
+I can’t make tool calls in this session: no tools are exposed, including `set_session_name`. Given the stated tools, these are the next calls I would make, in order:
+
+```text
+bash({"command":"bc-storage-health"})
+bash({"command":"cat ~/.pi/agent/skills/bc-swarm/pi.md /tmp/bc-swarm/2026-11-19-item024/manifest.md"})
+```
+
+I would stop if storage health is critical or unknown, or the check cannot run. Otherwise, after checking the manifest, dispatch syntax, packet, and permitted model routing, I would launch **item 024 → worker, worktree enabled**. I can’t give an exact launch call or model and thinking level without those results; inventing them could dispatch the wrong task or violate the routing restriction.
+
+My reply to the user after a successful launch would be:
+
+> Item 024 is running in a worker worktree. Run directory: `/tmp/bc-swarm/2026-11-19-item024/`.
+
+👣 Check storage and the existing packet before launching.
+🏁 Launch item 024 worker

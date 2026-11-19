@@ -1,0 +1,17 @@
+I can’t make actual tool calls here: no tools, including `set_session_name`, are available in this session. For the supplied scenario, the next calls would be conditional:
+
+```text
+1. set_session_name({name: "Add Glossary Registry Kind"})
+
+2. intercom({action: "ask", session: "manicule-tests",
+   message: "I need to edit src/registry.ts, scripts/gen-registry.ts and dist/registry.json and commit. Are you touching these files or the index? Please reply before I proceed."})
+```
+
+- **If they reply that those files and the index are clear:** inspect `git status`, the relevant files and local instructions; delegate the implementation to one worktree worker with explicit acceptance criteria, after creating the required swarm manifest. Integrate its verified result, run targeted checks, inspect the diff and commit only this change.
+- **If they report overlap or index use:** coordinate a safe handoff before editing or committing.
+- **If there is no reply within a few minutes:** do not assume the shared checkout is safe. Ask the user whether to wait or proceed after coordination; don’t edit or commit.
+
+The exact later calls depend on those results and on the available tool schemas, which I cannot inspect here.
+
+👣 Waiting for access to the tools or the next scenario result.
+🏁 Add glossary registry kind

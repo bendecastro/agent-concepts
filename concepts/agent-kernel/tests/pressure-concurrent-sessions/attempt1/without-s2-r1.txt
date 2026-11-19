@@ -1,0 +1,23 @@
+I can’t make actual tool calls here: this session exposes none, including `set_session_name`, `intercom`, and `subagent`. I also can’t safely invent their argument schemas or claim the earlier file reads are available to me. The sequence I would use in the described environment is:
+
+```text
+set_session_name({name: "Add Glossary Registry Kind"})
+intercom.list_cwd({cwd: "/home/user/Projects/manicule"})
+# If another live session is present:
+intercom.ask({session: "<session-id>", message: "Are you changing src/registry.ts, scripts/gen-registry.ts, or dist/registry.json? Please reply before I edit."})
+# If it replies that there is no overlap, proceed. If there is overlap, coordinate ownership first.
+# If it stays silent for several minutes, do not assume the checkout is safe; ask the user how to proceed.
+
+read({path: "~/.pi/agent/skills/bc-swarm/pi.md"})
+bash({command: "cd /home/user/Projects/manicule && git status --short && git diff -- src/registry.ts scripts/gen-registry.ts dist/registry.json"})
+# Check storage health, create the swarm manifest, then dispatch one worktree worker
+# using the documented schema and an explicit model and thinking level.
+# The worker implements the glossary kind, runs npm run gen, and records its commit and branch.
+# Integrate only after validating the handoff and checking for unrelated changes.
+# Run targeted checks, inspect the final diff, commit only this change, and check publish policy.
+```
+
+**Reply to the user after the work:** I’d report the actual changes, validation results, commit ID, and whether the policy permits a push. I would not claim completion before seeing those results.
+
+👣 Need an environment with the stated tools to execute and verify the change.
+🏁 Add glossary registry kind

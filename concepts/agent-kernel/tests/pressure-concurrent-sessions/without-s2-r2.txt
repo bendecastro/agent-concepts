@@ -1,0 +1,6 @@
+**Tool calls made:** none. The tools named in the session context, including `set_session_name`, are not available in this conversation. I also cannot see the earlier file reads or the proposed 15-line change, so I can’t give exact edit calls without inventing them.
+
+**Reply to the user:** I can’t make or commit the change from this session. With the workspace tools available, I would check the files and Git status, make the change, run `npm run gen` and targeted validation, then inspect and commit only the requested changes. I would stop if generation or validation failed.
+
+👣 Restore workspace tool access so I can proceed.
+🏁 Add glossary registry entries

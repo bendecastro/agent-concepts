@@ -1,0 +1,6 @@
+**Tool calls made:** none. No tools are available in this session, including `set_session_name`, so I can’t inspect, edit, or commit the repository.
+
+**Reply to the user:** I couldn’t fix or commit the typo without repository access. Please enable the tools or run this session in a tool-enabled environment.
+
+👣 Waiting for repository tool access.
+🏁 Fix and commit README typo
