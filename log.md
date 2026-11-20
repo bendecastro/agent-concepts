@@ -1812,3 +1812,6 @@ Replaced the three private project names with neutral project A/B labels in pros
 
 ## [2026-11-19] rename | retro → bc-agent-reflect (owner choice; no alias)
 `git mv concepts/retro concepts/bc-agent-reflect`; skill name, overlay path (`overlays/bc-agent-reflect.md`), report-dir variable (`BC_AGENT_REFLECT_REPORT_DIR`, default `${XDG_STATE_HOME:-~/.local/state}/bc-agent-reflect/`), kernel 👣 offer (`/bc-agent-reflect`), relationship edges, index and status updated. Recorded test prompts/outputs keep `/retro` as evidence; upstream raw sources and older log entries unchanged.
+
+## [2026-11-20] implement | bc-swarm pi.md fan-out example uses `options.script`, not the removed `workflowScript`; publish-check.py made executable
+From a bc-agent-reflect pass (owner picked). The old example led to failed launches ("options.script replaces workflow" in 16 session logs); the shape was checked against a live async launch that succeeded. Syntax-only correction to the Pi mechanics reference, so an accuracy check, not a pressure test. `publish-check.py` lacked the exec bit the kernel's direct invocation needs ("Permission denied" in 201 session logs).

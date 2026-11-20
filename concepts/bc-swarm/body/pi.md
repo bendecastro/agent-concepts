@@ -17,15 +17,17 @@ Run the project's or machine's storage health check, if one exists (check the pr
 ```js
 subagent({
   async: true,
-  workflowScript: `
+  options: { script: `
     const OUT = "/tmp/bc-swarm/2026-08-18-dsh-recon/";
     return await runs.all([
       { key: "notes", agent: "scout", output: OUT + "notes.md", task: "..." },
       { key: "docs",  agent: "scout", output: OUT + "docs.md",  task: "..." },
     ]);
-  `
+  ` },
 })
 ```
+
+The script goes in `options.script`; do not also pass `workflow: true` (the tool rejects the pair: "options.script replaces workflow"). `workflow: true` on its own is the other form: it runs one fenced `js workflow` block written in the same reply. There is no top-level `workflowScript` parameter.
 
 `output` is per child and must be distinct. The path is injected into the child as an authoritative override, so the child does not need to be told the path twice in its task text — but it does need to be told to *append as it goes*.
 
