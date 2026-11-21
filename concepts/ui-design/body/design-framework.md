@@ -8,19 +8,21 @@ Read the project's `docs/design/README.md` first; it lists the project's design 
 
 ## Name the part you reuse
 
-Before adding or restyling any control, name the existing part you are reusing for that kind of control. This is the concrete form of "reuse them" in [existing-app.md](existing-app.md). If there is none, it is a new kind: record it on a page in `docs/design/` in the same commit, and ask the owner when the look or behaviour is a judgement call. Why: past drift came from building a second part beside one that already existed, not from misreading a rule.
+Before adding or restyling any control, name the existing part you are reusing for that kind of control. This is the concrete form of "reuse them" in [existing-app.md](existing-app.md). If there is none, it is a new kind: follow [Decide once, in one place](#decide-once-in-one-place). Why: past drift came from building a second part beside one that already existed, not from misreading a rule.
 
 ## Where a rule lives
 
-If two people could disagree about it, it is prose on a design page, written after the owner decides. If they could only differ by mistake, it is shared code or a design token. If it can be broken unnoticed and found by text search, it is a check. If it shows only on screen (alignment, matching neighbours), it is the screenshot review in [SKILL.md](SKILL.md#screenshot-checklist). Group tokens by role, not by value ([principles.md](principles.md) #17). Where a component takes a size or variant, prefer a type union (for example `type IconSize = 'sm' | 'md'`) over a check.
+If two people could disagree about it, it is prose on a design page stating the current choice, whoever made it. If they could only differ by mistake, it is shared code or a design token. If it can be broken unnoticed and found by text search, it is a check. If it shows only on screen (alignment, matching neighbours), it is the screenshot review in [SKILL.md](SKILL.md#screenshot-checklist). Group tokens by role, not by value ([principles.md](principles.md) #17). Where a component takes a size or variant, prefer a type union (for example `type IconSize = 'sm' | 'md'`) over a check.
 
-## Ask the owner about judgement calls
+## Decide once, in one place
 
-Bring options before building. By default put pictures in `owner-notes/<item>/` (any untracked notes folder the project uses works): numbered mockups, a README with one line per picture, and the owner replies like `1a 2a ok`. Show the control beside its neighbours, in every supported theme. A text-only question needs no pictures. Copy only the pictures the owner must choose between into `owner-notes/<item>/`; working captures stay where [surfaces.md](surfaces.md) puts them. In a non-interactive run, follow the Report section of [SKILL.md](SKILL.md#report).
+When the change needs something the project does not have yet (a colour, size, spacing, icon, wording pattern or new control kind), do not ask. Pick the closest fit to the existing look, define it once (a token in the project's token or theme file, or a shared part), and use it only from there, never as a literal value in the component. Record it on a design page, marked as the agent's choice the owner may change, and list it as one FYI line in the report. Why: the goal is consistency, not sign-off; a choice made in one place is one edit to change, while scattered literals need a thousand.
+
+Ask the owner only when the change would contradict a recorded decision or design-page line, or remove or rename something users already rely on. Then put numbered pictures in `owner-notes/<item>/` (or the project's untracked notes folder) with a README of one line per picture; the owner replies like `1a 2a ok`. Show the control beside its neighbours in every supported theme; a text-only question needs no pictures. Copy only the pictures the owner must choose between into `owner-notes/<item>/`; working captures stay where [surfaces.md](surfaces.md) puts them. In a non-interactive run, follow the Report section of [SKILL.md](SKILL.md#report).
 
 ## Write path
 
-Log the owner's decision in the project's decision log when it is made. The design-page line lands in the same commit as the code that makes it true, and the plan names that step. Why: a line written at decision time describes behaviour that does not exist yet. A reviewer treats a page line that no longer matches the code as a finding.
+Log an owner decision in the project's decision log when it is made. Record an agent choice on its design page. Either way, the design-page line lands in the same commit as the code that makes it true, and the plan names that step. Why: a line written at decision time describes behaviour that does not exist yet. A reviewer treats a page line that no longer matches the code as a finding.
 
 ## Keep pages small
 

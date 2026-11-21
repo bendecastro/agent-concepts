@@ -1821,3 +1821,6 @@ New `ui-design/body/design-framework.md` (inventory step, where a rule lives, as
 
 ## [2026-11-21] implement | design framework review fixes
 ui-design overlay hook replaces a private worked example; README-missing step names `DESIGN_README` and its sections; capture scope moved into the SKILL.md capture gate; restatements trimmed; bc-init-agent upgrade note names `.bc-agent/map.md`, tests match on real Markdown links, `--force` README test, Tests entry.
+
+## [2026-11-21] implement | design framework: decide once, in one place
+ui-design `design-framework.md` and the bc-init-agent `DESIGN_README` now tell agents to decide taste calls themselves, define them once as a token or shared part, and record them as the agent's choice; ask the owner only to contradict a recorded decision or remove something users rely on. Reason: owner goal is consistency over sign-off; pressure run saw hard-coded hex colours.

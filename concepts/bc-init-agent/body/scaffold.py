@@ -1620,16 +1620,19 @@ generic method behind it is `design-framework.md` in the `ui-design` skill.
 
 | If two people could... | It belongs in |
 |---|---|
-| disagree about it (taste, wording, trade-off) | a page here, after the owner decides |
+| disagree about it (taste, wording, trade-off) | a page here, stating the current choice, whoever made it |
 | only differ by mistake (a value, a look, a part) | shared code or a design token |
 | break it without noticing, and it can be found by text search | a check in the test suite, with a message naming the part and the page line |
 | only see it on screen (alignment, matching neighbours) | the screenshot review |
 
 ## Before adding or restyling a control
 
-Name the existing part you are reusing for that kind of control. If there is
-none, it is a new kind: record it on a page here in the same commit, and ask
-the owner when the look or behaviour is a judgement call.
+Name the existing part you are reusing for that kind of control. If the
+change needs something new (a colour, size, icon, wording or control kind),
+pick the closest fit to the existing look, define it once as a token or shared
+part, use it only from there, and record it on a page here in the same commit,
+marked as the agent's choice the owner may change. Ask the owner only to
+contradict a recorded decision or remove something users rely on.
 
 ## Pages
 
