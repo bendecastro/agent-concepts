@@ -46,7 +46,6 @@ A cross-surface UI design skill for any visible change, from a single control to
 - [Principles research](../../docs/research/front-end-design/principles-research.md) and [Agent Skills research](../../docs/research/front-end-design/agent-skills-research.md) — research behind the ranking and trigger.
 - A reflection on one extension project's design drift (2026-11-21, owner-reviewed): drift came from choosing a new part, not misreading a rule; its `design-system.test.ts` is the worked check example.
 - [google-labs-code/stitch-skills](https://github.com/google-labs-code/stitch-skills) — group tokens by role and list banned patterns; no Stitch dependency.
-- [WAI-ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/) — one pattern per control kind with its keyboard behaviour.
 - [GOV.UK Design System](https://design-system.service.gov.uk/), [Primer](https://primer.style/), [Carbon](https://carbondesignsystem.com/) — design docs organised as small current-state pages per component or pattern.
 - [prompting-agents](../prompting-agents/body/SKILL.md) — instruction altitude and anti-slop block.
 

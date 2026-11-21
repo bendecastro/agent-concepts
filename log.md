@@ -1818,3 +1818,6 @@ From a bc-agent-reflect pass (owner picked). The old example led to failed launc
 
 ## [2026-11-21] implement | design framework: ui-design companion + bc-init-agent design README
 New `ui-design/body/design-framework.md` (inventory step, where a rule lives, asking the owner, write path, falling-baseline checks, capture scope), linked from SKILL.md; trigger widened to recording a design decision. bc-init-agent scaffold writes `docs/design/README.md` and a map line for code/ops/hybrid (never overwrites; upgrade note for old maps), with tests. Not yet pressure-tested; status frontmatter unchanged.
+
+## [2026-11-21] implement | design framework review fixes
+ui-design overlay hook replaces a private worked example; README-missing step names `DESIGN_README` and its sections; capture scope moved into the SKILL.md capture gate; restatements trimmed; bc-init-agent upgrade note names `.bc-agent/map.md`, tests match on real Markdown links, `--force` README test, Tests entry.

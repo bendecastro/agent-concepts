@@ -18,10 +18,10 @@ def _module():
     return module
 
 
-def _run(root, archetype):
+def _run(root, archetype, *extra):
     return subprocess.run(
         [sys.executable, str(SCAFFOLD), '--root', str(root), '--slug', 'demo',
-         '--date', '2026-01-02', '--archetype', archetype],
+         '--date', '2026-01-02', '--archetype', archetype, *extra],
         check=True, capture_output=True, text=True).stdout
 
 
@@ -42,12 +42,13 @@ def test_vault_archetypes_get_no_design_readme(tmp_path, archetype):
     assert not (tmp_path / 'docs/design').exists()
 
 
+@pytest.mark.parametrize('force', [(), ('--force',)])
 @pytest.mark.parametrize('archetype', VISIBLE)
-def test_existing_design_readme_is_not_overwritten(tmp_path, archetype):
+def test_existing_design_readme_is_not_overwritten(tmp_path, archetype, force):
     readme = tmp_path / 'docs/design/README.md'
     readme.parent.mkdir(parents=True)
     readme.write_text('# Our design\n')
-    out = _run(tmp_path, archetype)
+    out = _run(tmp_path, archetype, *force)
     assert readme.read_text() == '# Our design\n'
     assert f'= {readme}' in out
 

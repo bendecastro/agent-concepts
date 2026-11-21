@@ -482,9 +482,9 @@ def test_map_note_ignores_inline_code_for_paths_outside_bc_agent(tmp_path):
     module = _module()
     root = _scaffold(tmp_path, 'code')
     (root / '.bc-agent/map.md').write_text('# Map\n\n- `work/` — work items\n- [log.md](log.md)\n')
-    assert not any('map.md' in note for note in module.upgrade_notes(root, 'code'))
+    assert not any('real Markdown links' in note for note in module.upgrade_notes(root, 'code'))
     (root / '.bc-agent/map.md').write_text('# Map\n\n- `log.md`\n')
-    assert any('map.md' in note for note in module.upgrade_notes(root, 'code'))
+    assert any('real Markdown links' in note for note in module.upgrade_notes(root, 'code'))
 
 
 def test_table_note_uses_the_parser(tmp_path):
@@ -572,7 +572,7 @@ def test_map_note_ignores_inline_code_for_outside_paths_created_on_first_need(tm
     module = _module()
     root = _scaffold(tmp_path, 'code')
     (root / '.bc-agent/map.md').write_text('# Map\n\n- `docs/PRD.md` — created on first need\n')
-    assert not any('map.md' in note for note in module.upgrade_notes(root, 'code'))
+    assert not any('real Markdown links' in note for note in module.upgrade_notes(root, 'code'))
 
 
 def test_hybrid_root_glossary_is_not_standalone_teach_state_on_case_insensitive_fs(tmp_path):

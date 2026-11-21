@@ -1858,7 +1858,7 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
                 for line in map_path.read_text(errors="ignore").splitlines()):
             notes.append("`.bc-agent/map.md` should use real Markdown links for in-vault targets")
         if map_path.exists() and "`docs/design/README.md`" not in map_path.read_text(errors="ignore"):
-            notes.append("the `.bc-agent/` context map has no line routing design, UI or CLI wording work to "
+            notes.append("`.bc-agent/map.md` has no line routing design, UI or CLI wording work to "
                          "`docs/design/README.md` (see MIGRATIONS.md#design-readme)")
         legacy = earlier_layout_paths(root, archetype)
         if legacy:
