@@ -49,7 +49,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [tdd](../concepts/tdd/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [teach](../concepts/teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
 | [triage](../concepts/triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
-| [ui-design](../concepts/ui-design/CONCEPT.md) | pressure | 2026-11-11 | yes |
+| [ui-design](../concepts/ui-design/CONCEPT.md) | pressure | 2026-11-21 | yes |
 | [using-git-worktrees](../concepts/using-git-worktrees/CONCEPT.md) | pressure | 2026-09-22 | yes |
 | [writing-plans](../concepts/writing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
 

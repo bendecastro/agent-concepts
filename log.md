@@ -1824,3 +1824,6 @@ ui-design overlay hook replaces a private worked example; README-missing step na
 
 ## [2026-11-21] implement | design framework: decide once, in one place
 ui-design `design-framework.md` and the bc-init-agent `DESIGN_README` now tell agents to decide taste calls themselves, define them once as a token or shared part, and record them as the agent's choice; ask the owner only to contradict a recorded decision or remove something users rely on. Reason: owner goal is consistency over sign-off; pressure run saw hard-coded hex colours.
+
+## [2026-11-21] test | ui-design design-framework.md
+Terra low, old vs new arms in three rounds (`concepts/ui-design/tests/results/design-framework-2026-11-21.md`): same-commit design record held; "decide once, in one place" held after the owner set consistency over sign-off; reuse showed no difference. Status stays partial (contradiction-ask branch, missing-README path untested).
