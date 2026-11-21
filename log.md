@@ -1827,3 +1827,6 @@ ui-design `design-framework.md` and the bc-init-agent `DESIGN_README` now tell a
 
 ## [2026-11-21] test | ui-design design-framework.md
 Terra low, old vs new arms in three rounds (`concepts/ui-design/tests/results/design-framework-2026-11-21.md`): same-commit design record held; "decide once, in one place" held after the owner set consistency over sign-off; reuse showed no difference. Status stays partial (contradiction-ask branch, missing-README path untested).
+
+## [2026-11-21] implement | swarm run folders move to the state directory
+bc-swarm `pi.md` (run-dir line, example `OUT`, why + 7-day automatic cleanup) and bc-agent-reflect § Evidence (new location; older runs may be under `/tmp/bc-swarm/`) now use `${XDG_STATE_HOME:-$HOME/.local/state}/bc-swarm/`. Reason: a reboot wiped `/tmp` mid-run, erasing a manifest, logs and worktree. No other live body names the path (public kernel does not); bc-swarm `SKILL.md` "disposable by design" left as is; test results, research and log history left unchanged. Path change only, no gate change: accuracy check (grep of bodies), no pressure test.

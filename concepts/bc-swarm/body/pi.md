@@ -5,10 +5,10 @@ Concrete syntax for the `subagent` tool from the `pi-subagents` extension. The c
 ## Run directory
 
 ```
-${TMPDIR:-/tmp}/bc-swarm/<YYYY-MM-DD>-<slug>/
+${XDG_STATE_HOME:-$HOME/.local/state}/bc-swarm/<YYYY-MM-DD>-<slug>/
 ```
 
-`mkdir -p` it **before** dispatch. A child cannot write to a directory that does not exist, and it discovers this at the end of its run, which is the worst possible moment. The manifest goes at `manifest.md` in that root.
+`mkdir -p` it **before** dispatch. A child cannot write to a directory that does not exist, and it discovers this at the end of its run, which is the worst possible moment. The manifest goes at `manifest.md` in that root. Why not `/tmp`: a reboot clears it mid-run, taking the manifest, logs and worktree with it; the state directory survives reboots and stays on this machine. Old run folders are removed automatically after 7 days (where the machine runs a cleanup job; check its agent instructions), so do not clean them by hand, and promote anything needed longer out of the run folder.
 
 ## Fan-out
 
@@ -18,7 +18,7 @@ Run the project's or machine's storage health check, if one exists (check the pr
 subagent({
   async: true,
   options: { script: `
-    const OUT = "/tmp/bc-swarm/2026-08-18-dsh-recon/";
+    const OUT = "<run dir, absolute>/";  // e.g. the expanded ~/.local/state/bc-swarm/2026-08-18-dsh-recon/
     return await runs.all([
       { key: "notes", agent: "scout", output: OUT + "notes.md", task: "..." },
       { key: "docs",  agent: "scout", output: OUT + "docs.md",  task: "..." },

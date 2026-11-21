@@ -39,7 +39,7 @@ Why: an unanswered report is lost work; a new review on top of it buries it.
 Read primary sources, in targeted slices. Transcripts are too large to read whole.
 
 - Pi session logs: list `~/.pi/agent/sessions/` before assuming a folder name. Current folders use `--@-<path under ~ with / as ->--/` (`@` represents `~`); legacy folders use `--<absolute path with / as ->--/`. Their `*.jsonl` files hold one JSON event per line: `message` with roles `user`/`assistant`/`toolResult`, plus model/thinking changes. Child runs use `<session-dir>/<session-id>/<run-uuid>/run-N/session.jsonl`; older runs use `<session-dir>/subagent-artifacts/*_meta.json` and `*_transcript.jsonl`.
-- Swarm run manifests and artifacts: `${TMPDIR:-/tmp}/bc-swarm/<date>-<slug>/manifest.md`.
+- Swarm run manifests and artifacts: `${XDG_STATE_HOME:-$HOME/.local/state}/bc-swarm/<date>-<slug>/manifest.md`; older runs may still be under `/tmp/bc-swarm/`.
 - Where time went: the machine's session time-report tool, if it provides one; otherwise derive timings from JSONL timestamps. Such a report may show parent split, bash buckets, child time by role and slowest commands. Its rows overlap in wall time; do not add them up as one clock. In batch mode use it as § Batch sampling says, then to pick stretches to read.
 - The repo's own check command and CI workflow (`./scripts/gate`, `package.json` scripts, `.github/workflows/`), and its steering files (`AGENTS.md`, `CLAUDE.md`, review standards) — read before proposing a check or a rule.
 
