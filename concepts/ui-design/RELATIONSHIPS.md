@@ -7,11 +7,19 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- depends on `bc-init-agent`'s contract — required, when project has no docs/design/README.md.
+  A missing design README is created from the template the scaffold writes; the companion does not keep its own copy.
+  Source: [body/design-framework.md](body/design-framework.md#start-from-the-projects-design-readme)
+
 - hands off to `show-me` — required, when explanation diagrams.
   Explanation diagrams belong to show-me, not product UI design.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
+
+- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout scaffold writes docs/design/README.md.
+  The generated design README names ui-design's design-framework.md as its method and restates only the project-facing summary.
+  Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
 
 - incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when UI redesign.
   Product UI design is not an explanation sketch.

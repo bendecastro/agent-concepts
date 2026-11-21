@@ -130,6 +130,7 @@ CODE_FILES = {
     'work/4-dropped/.gitkeep',
     'docs/decisions/.gitkeep',
     'docs/research/.gitkeep',
+    'docs/design/README.md',
     'scripts/gate',
     '.github/workflows/gate.yml',
 }

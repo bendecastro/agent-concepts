@@ -284,3 +284,18 @@ items section of `.bc-agent/AGENTS.md`, "run the index" in three Keep-it-current
    table fails the build.
 
 The `bc-work-sync` skill proposes these steps in its plan when a project lacks them.
+
+## Design README
+
+Since 2026-11-21 the code, ops and hybrid scaffold also writes `docs/design/README.md`, the entry
+page of the project's design framework (how the product looks and behaves now; its method is the
+`ui-design` skill's `design-framework.md`), and a line in `.bc-agent/map.md` routing design, UI and
+CLI wording work to it. Learning and knowledge vaults do not get it. To adopt it in an existing
+project, one project at a time on its next scaffold run:
+
+1. Re-run the scaffold (`--dry-run` first, as above). It creates `docs/design/README.md` when
+   missing and never overwrites an existing one.
+2. The existing `.bc-agent/map.md` is left alone, and the scaffold prints an upgrade note while it
+   lacks the line. Copy the line from a fresh scaffold's map into the "Outside this folder" section.
+3. If the project already keeps design pages elsewhere, list them under Pages in the README rather
+   than moving them, unless the owner asks for the move.

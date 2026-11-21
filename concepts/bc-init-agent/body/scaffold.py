@@ -1496,6 +1496,8 @@ __OPS_MAP__
 Work items are in `work/` (ideas in `work/0-ideas.md`), decision records in
 `docs/decisions/`, investigations in `docs/research/`, and vocabulary in `glossary.md`.
 The "Where things go" table in `AGENTS.md` is the full list.
+
+Design, UI or CLI wording work (a control, a screen, a message, a design decision) starts at `docs/design/README.md`.
 """
 
 VISIBLE_FILE_LAYOUT = """# File Layout
@@ -1598,6 +1600,50 @@ VISIBLE_OPS_KEEP_CURRENT = """| Check the state of a real system | Update its pa
 | Record a finding | Write it under `docs/research/` from [templates/finding.md](templates/finding.md). |
 """
 
+# The project's design framework entry page: current truth only, no fixed page list.
+# Its generic method lives in the ui-design skill's design-framework.md.
+DESIGN_README = """# Design
+
+This folder says how this product looks and behaves **now**. Agents and people
+read it before adding or changing anything a user sees or operates. The
+generic method behind it is `design-framework.md` in the `ui-design` skill.
+
+## Current truth vs decision log
+
+- These pages state current behaviour only: one fact per line, no history.
+- Why something is so lives in the project's decision log. Link the decision
+  number; do not copy its text.
+- A page line becomes true in the same commit as the code that makes it true.
+  A decision may be logged earlier, when it is made.
+
+## Where a rule lives
+
+| If two people could... | It belongs in |
+|---|---|
+| disagree about it (taste, wording, trade-off) | a page here, after the owner decides |
+| only differ by mistake (a value, a look, a part) | shared code or a design token |
+| break it without noticing, and it can be found by text search | a check in the test suite, with a message naming the part and the page line |
+| only see it on screen (alignment, matching neighbours) | the screenshot review |
+
+## Before adding or restyling a control
+
+Name the existing part you are reusing for that kind of control. If there is
+none, it is a new kind: record it on a page here in the same commit, and ask
+the owner when the look or behaviour is a judgement call.
+
+## Pages
+
+<!-- Add one line per page as the project grows: `page.md`: the question it answers. -->
+
+(none yet)
+
+## Checks
+
+<!-- List each design check: file, what it rejects, and how exceptions are marked. -->
+
+(none yet)
+"""
+
 VISIBLE_OPS_MAP = """
 ## Operations
 
@@ -1687,6 +1733,7 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         **{f"work/{stage}/.gitkeep": "" for stage in WORK_STATUS_FOLDERS},
         "docs/decisions/.gitkeep": "",
         "docs/research/.gitkeep": "",
+        "docs/design/README.md": DESIGN_README,
         "scripts/gate": GATE_SCRIPT,
         ".github/workflows/gate.yml": CI_WORKFLOW,
     }
@@ -1810,6 +1857,9 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
                 _inside_vault_map_bullet(root, line)
                 for line in map_path.read_text(errors="ignore").splitlines()):
             notes.append("`.bc-agent/map.md` should use real Markdown links for in-vault targets")
+        if map_path.exists() and "`docs/design/README.md`" not in map_path.read_text(errors="ignore"):
+            notes.append("the `.bc-agent/` context map has no line routing design, UI or CLI wording work to "
+                         "`docs/design/README.md` (see MIGRATIONS.md#design-readme)")
         legacy = earlier_layout_paths(root, archetype)
         if legacy:
             notes.append(

@@ -1,7 +1,7 @@
 ---
 name: ui-design
 description: >-
-  Use when creating, changing, reviewing, accepting or shipping what users see or operate — UI, layout, styling, controls or labels, a redesign, a “looks bad” complaint, or a verdict such as “is this ready to ship?” — on any surface: web page, extension popup or panel, desktop, mobile or terminal app. Skip when nothing user-visible is involved; explanation diagrams go to show-me.
+  Use when creating, changing, reviewing, accepting or shipping what users see or operate — UI, layout, styling, controls or labels, a redesign, a “looks bad” complaint, or a verdict such as “is this ready to ship?”, or recording a design decision — on any surface: web page, extension popup or panel, desktop, mobile or terminal app. Skip when nothing user-visible is involved; explanation diagrams go to show-me.
 ---
 # UI design
 
@@ -9,7 +9,7 @@ Make the interface understandable and operable before polishing it. Scale the wo
 
 ## Frame and design
 
-Identify the surface and host, users, task, input modes, states, constraints and existing visual system. Preserve user references and established patterns. For an existing app read [existing-app.md](existing-app.md); for a new visual system read [new-work.md](new-work.md). Consult [surfaces.md](surfaces.md) for platform conventions and capture. Apply the ranked checks and evidence in [principles.md](principles.md) as relevant:
+Identify the surface and host, users, task, input modes, states, constraints and existing visual system. Preserve user references and established patterns. For an existing app read [existing-app.md](existing-app.md); for a new visual system read [new-work.md](new-work.md). Consult [surfaces.md](surfaces.md) for platform conventions and capture. When adding or restyling a control, or recording a design decision, read [design-framework.md](design-framework.md). Apply the ranked checks and evidence in [principles.md](principles.md) as relevant:
 
 - Make actions discoverable, show status and results, prevent errors and support recovery.
 - Support keyboard operation, visible focus, semantic names, contrast and distinctions beyond color.

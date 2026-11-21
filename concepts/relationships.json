@@ -710,6 +710,24 @@
       "required": false,
       "source": "concepts/bc-agent-reflect/body/SKILL.md#every-proposal-names-its-home",
       "reason": "Judgement-call standards findings are proposed as code-review standards; mechanical ones become checks."
+    },
+    {
+      "from": "ui-design",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has no docs/design/README.md",
+      "source": "concepts/ui-design/body/design-framework.md#start-from-the-projects-design-readme",
+      "reason": "A missing design README is created from the template the scaffold writes; the companion does not keep its own copy."
+    },
+    {
+      "from": "bc-init-agent",
+      "to": "ui-design",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "visible-layout scaffold writes docs/design/README.md",
+      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "reason": "The generated design README names ui-design's design-framework.md as its method and restates only the project-facing summary."
     }
   ]
 }

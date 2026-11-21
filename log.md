@@ -1815,3 +1815,6 @@ Replaced the three private project names with neutral project A/B labels in pros
 
 ## [2026-11-20] implement | bc-swarm pi.md fan-out example uses `options.script`, not the removed `workflowScript`; publish-check.py made executable
 From a bc-agent-reflect pass (owner picked). The old example led to failed launches ("options.script replaces workflow" in 16 session logs); the shape was checked against a live async launch that succeeded. Syntax-only correction to the Pi mechanics reference, so an accuracy check, not a pressure test. `publish-check.py` lacked the exec bit the kernel's direct invocation needs ("Permission denied" in 201 session logs).
+
+## [2026-11-21] implement | design framework: ui-design companion + bc-init-agent design README
+New `ui-design/body/design-framework.md` (inventory step, where a rule lives, asking the owner, write path, falling-baseline checks, capture scope), linked from SKILL.md; trigger widened to recording a design decision. bc-init-agent scaffold writes `docs/design/README.md` and a map line for code/ops/hybrid (never overwrites; upgrade note for old maps), with tests. Not yet pressure-tested; status frontmatter unchanged.

@@ -30,6 +30,8 @@ User-invoked adaptive initializer. Code, ops and hybrid scaffold the visible lay
 
 - **The scaffolded gate names no machine tool (2026-11-19).** `validation.md` tells agents to start the scaffolded gate script through the machine's offload wrapper if its agent instructions name one, with a measured, non-enforced 300 s budget; its header mentions the wrapper but not the budget. scaffold.py has no machine-config seam (only the vault path and archetype), and adding one would be speculative. Why: scaffolded projects and this repository are public; a stranger's machine may have no wrapper.
 
+- **Design README (2026-11-21).** Code, ops and hybrid scaffolds write `docs/design/README.md` (current truth vs the project's decision log, where a rule lives, the before-adding-a-control step, empty Pages and Checks lists; no fixed page list) and a prose line in `.bc-agent/map.md` routing design, UI and CLI wording work to it. Why these kinds: they ship or operate something people use (GUI, TUI, CLI, or operated tools); learning and knowledge vaults have no product surface, and their output stays byte-identical to the base. The map line is prose, not a bullet, because map bullets must be in-vault links. Existing projects get the README on their next run (never overwritten); an existing map that lacks the line produces an upgrade note. No new "Where things go" role: the owner decided day one creates only the README and the map line. The method is `ui-design`'s `design-framework.md`. Covered by `tests/test_design_readme.py`.
+
 ## Interface: the "Where things go" table
 
 Later work packages and other skills read project paths through this contract, not by assuming them.
@@ -93,6 +95,8 @@ Later work packages and other skills read project paths through this contract, n
 - `concepts/bc-wiki-maintain/body/runner/` — the uninstalled systemd user-unit templates copied by the close-out timer offer.
 - `concepts/bc-wiki-maintain/body/SKILL.md` + `body/wiki_lint.py` — the canonical vault read-path block and bracketed log-heading contract consumed by this scaffold (2026-08-29), plus the boundary protecting teach-owned learning evidence.
 - `concepts/teach/` — the standalone tutor and its linked formats, which define the host adapter's mapped state.
+
+- Design README draft from a reflection on one project's design drift (owner-approved plan, 2026-11-21); page structure informed by [GOV.UK Design System](https://design-system.service.gov.uk/), [Primer](https://primer.style/) and [Carbon](https://carbondesignsystem.com/) documentation.
 
 ## Tests
 

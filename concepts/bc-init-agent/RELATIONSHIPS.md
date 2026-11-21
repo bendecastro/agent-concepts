@@ -35,6 +35,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [body/SKILL.md](body/SKILL.md#learning-archetype-adapter)
 
+- depends on `ui-design`'s contract — required, when visible-layout scaffold writes docs/design/README.md.
+  The generated design README names ui-design's design-framework.md as its method and restates only the project-facing summary.
+  Source: [body/scaffold.py](body/scaffold.py)
+
 ## Incoming
 
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
@@ -80,3 +84,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [triage](../triage/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules.
   Source: [triage/CONCEPT.md](../triage/CONCEPT.md)
+
+- incoming from [ui-design](../ui-design/RELATIONSHIPS.md): depends on this concept's contract — required, when project has no docs/design/README.md.
+  A missing design README is created from the template the scaffold writes; the companion does not keep its own copy.
+  Source: [ui-design/body/design-framework.md](../ui-design/body/design-framework.md#start-from-the-projects-design-readme)

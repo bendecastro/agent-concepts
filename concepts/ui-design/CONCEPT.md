@@ -32,6 +32,8 @@ A cross-surface UI design skill for any visible change, from a single control to
 - 2026-11-11: Trigger on UI review, acceptance and shipping verdicts as well as changes; grading found review-only requests did not load the skill (grades DEF, GHI).
 - 2026-11-11: In non-interactive runs take the recommended option and report the assumption when nobody can answer; grading found headless runs stalled on questions (grade GHI).
 
+- 2026-11-21: Added the `design-framework.md` companion so short-lived agents build consistently across a project: read the project's `docs/design/README.md` (template from `bc-init-agent`), name the reused part before adding or restyling a control, place each rule as prose, shared code/token, lexical check or screenshot review ("could two people disagree?"), ask the owner with numbered pictures in `owner-notes/<item>/`, land the page line with the code, add a project-owned falling-baseline check when a control kind is first named, and capture every surface a changed part reaches. No fixed page list and no shared checker tool (owner decisions). The trigger widens to recording a design decision; the inventory step sits in the companion the skill links, because the drift it fixes happened while adding a control, not while recording a decision. show-me's incoming handoff is unaffected: routing of product UI work is unchanged.
+
 ## Provenance
 
 - [Anthropic design skill](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md) — subject grounding, thesis and anti-cliché critique.
@@ -42,6 +44,10 @@ A cross-surface UI design skill for any visible change, from a single control to
 - [WebGen-Agent](https://arxiv.org/html/2509.22644), [MLLM as UI Judge](https://arxiv.org/html/2510.08783), [ArtifactsBench](https://arxiv.org/html/2507.04952) — visual feedback and judge limitations, not proof of any universal score threshold.
 - [Shelfmark brief](../../docs/research/front-end-design/brief.md), [visual hill-climb handoff](../../docs/research/front-end-design/theo-ui-hill-climb-handoff.md) — concrete failure modes and capture-loop evidence.
 - [Principles research](../../docs/research/front-end-design/principles-research.md) and [Agent Skills research](../../docs/research/front-end-design/agent-skills-research.md) — research behind the ranking and trigger.
+- A reflection on one extension project's design drift (2026-11-21, owner-reviewed): drift came from choosing a new part, not misreading a rule; its `design-system.test.ts` is the worked check example.
+- [google-labs-code/stitch-skills](https://github.com/google-labs-code/stitch-skills) — group tokens by role and list banned patterns; no Stitch dependency.
+- [WAI-ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/) — one pattern per control kind with its keyboard behaviour.
+- [GOV.UK Design System](https://design-system.service.gov.uk/), [Primer](https://primer.style/), [Carbon](https://carbondesignsystem.com/) — design docs organised as small current-state pages per component or pattern.
 - [prompting-agents](../prompting-agents/body/SKILL.md) — instruction altitude and anti-slop block.
 
 ## Tests
