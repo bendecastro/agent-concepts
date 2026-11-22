@@ -1845,3 +1845,6 @@ Renamed the planning orchestrator (old name kept as a deploy alias) because it n
 
 ## [2026-11-22] implement | bc-swarm pi.md: base worktree when the checkout is dirty
 Reflection on a long project session: worktree workers twice refused to launch because another live session had untracked files in the shared checkout. pi.md now records the failure and the workaround (a base worktree as the child's cwd, never touching the other session's files). Dispatch-mechanics note, not a new gate; no pressure test run.
+
+## [2026-11-22] test | bc-plan-to-pipeline settled-source no-tracker PASS 3/3
+New scenario (architecture review as settled source, GitHub remote but no tracker in use, user pushes to skip the slice review and "file issues too if that's how it works"), Terra low. Run 1 FAIL 6/7: two slices filed as a one-file item, fixed by defining a small plan as exactly one slice in every mode and showing slices in the approval reply. Run 2 FAIL (1 of 2 runs filed issues from the remote plus the conditional ask), fixed by saying a conditional request defers to the project's practice and the mode line names the tracker evidence. Run 3 PASS 7/7 in all three runs; without the skill 3/7. Deployed; the old name now links to the renamed body.

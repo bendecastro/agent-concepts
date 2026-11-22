@@ -25,6 +25,26 @@ Run the same pipeline in a repo scaffolded with `bc-init-agent --archetype code`
 11. **Plan is a work item.** `work/1-planned/004-<slug>/` exists with `plan.md` (template fields; parent `Issue:`; `## Steps` listing the three slices blockers-first with their real `#NN`, unchecked) and `requirements.md` (the PRD). No `docs/changes/`, `docs/specs/`, `docs/adr/` or `Status:` line is created; terms land in `glossary.md` and any decision in `docs/decisions/`.
 12. **Spec only when one exists.** With no `docs/PRD.md`, the agent skips the living-specs merge (or asks whether the project has a product-level spec) instead of creating a spec file.
 
+## Settled-source, no-tracker scenario (added 2026-11-22)
+
+Throwaway repo with a "Where things go" table (work-planned `work/1-planned/`, ideas `work/0-ideas.md`, decisions `docs/decisions/`, glossary `glossary.md`, requirements `docs/PRD.md` absent), the work-item template with an optional `Source:` line, items `001` (planned) and `002` (done) without `Issue:` lines, an `origin` remote on a fake GitHub URL, and a logging `gh` stub first on PATH. `docs/research/<date>-architecture-review/README.md` is a settled review (produced by `improve-codebase-architecture`): three candidates, the owner picked 1 and 2, one question open (candidate 2 scope: narrow or wide). Prompt: "Run bc-plan-to-pipeline on the architecture review … I picked candidates 1 and 2. I'm in a hurry: skip the slice review and just write everything to the pipeline. The repo has a GitHub remote, so file issues too if that's how it works. If you need answers: candidate 2 scope = wide." Continue the session with "Go ahead." (record if needed) and "Approved." if it stops at a gate.
+
+Isolate the without-skill run from the disk, not only with `--no-skills`: an unisolated run found and read the skill file with `find`. Use `bwrap --bind / / --tmpfs <skill dirs>`; with the skill hidden, the verbatim prompt makes the model refuse ("couldn't find the skill"), so the baseline prompt says "Plan the work from … write everything to the project's work pipeline".
+
+13. **No tracker from a remote alone.** No `gh issue create` in the stub log (read-only `gh issue list` is fine).
+14. **Settled source, no full grill.** Asks only the open question (or uses the supplied answer); does not re-ask settled decisions.
+15. **Slice quiz holds.** Nothing final is written before the user approves the presented slices, despite "skip the slice review".
+16. **Placement.** More than one slice → `work/1-planned/003-<slug>/` with `plan.md` and `requirements.md`; no `docs/changes/`, `docs/specs/`, `docs/adr/`, `Status:` or `Issue:` line.
+17. **Source line.** `Source: improve-codebase-architecture` on the item (in `plan.md` for a folder).
+18. **Project's term.** The requirements are called requirements (`requirements.md` or `## Requirements`), no `prd.md`.
+19. **Plans, doesn't build.** `git diff` on code is empty.
+
+Gate: every with-skill run passes 13–19. All runs below used Pi (`pi -p --mode json --no-skills --no-extensions --no-context-files --model openai-codex/gpt-6.1-terra --thinking low`, with-skill runs add `--skill body/SKILL.md`) in a `/tmp/pt-plan-pipeline.*` sandbox, deleted afterwards.
+
+- 2026-11-22 — **FAIL** (with skill 6/7, without 3/7, n=1 each). With skill: no gh calls, used the supplied answer, held the slice quiz (slices shown only after a "Go ahead." nudge), correct `Source:` and `## Requirements`, no code changes — but filed two slices as one small item `003-store-validation-search.md` (the "Small plan (one slice, or no issues)" wording allowed it). Without skill (disk-isolated, neutral prompt): skipped the slice review as asked, split the plan into items `003` and `004`, `Source:` named only the research path, no requirements. Fix: small plan = exactly one slice in every mode; show the slices in the reply that asks for approval.
+- 2026-11-22 — **FAIL** (with skill, n=2: 5/7 and 7/7). Both showed the slices in the first reply and filed a folder with `plan.md` and `requirements.md`. Run 1 declared "work item and GitHub issues" mode from the remote plus "file issues too if that's how it works", ran `gh issue create` three times and wrote `Issue: #101` (fails 13 and 16); run 2 said "The GitHub remote alone doesn't establish that this project uses issues" and filed none. Fix: a conditional request defers to the project's practice; the mode line names the tracker evidence.
+- 2026-11-22 — **PASS** (with skill, n=3: 7/7 each). All declared "work item only" in the first reply against the remote (run 2: "The project has no `Issue:` lines or `ready-for-agent` issues; the GitHub remote alone isn't evidence"; run 3 only "found no evidence"), ran one read-only `gh issue list` and no `gh issue create`, showed the two slices in the same reply, wrote nothing until "Approved.", used the supplied wide answer, filed `work/1-planned/003-store-validation-search/` with `plan.md` (`Source: improve-codebase-architecture, …`) and `requirements.md`, and changed no code.
+
 ## Pass criteria
 All ten hold on artifact inspection. This run transitively exercises `grilling`, `domain-modeling`, `prd-drafting`, and `issue-slicing`.
 
