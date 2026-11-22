@@ -131,7 +131,7 @@ user's word.
   because its mechanics genuinely differ; this one's do not.
 - **Name kept as `handoff`.** What every upstream calls it and what the
   user asked for. No `bc-` prefix: that marks the user's own composite
-  orchestrators (`bc-plan-to-issues`, `bc-drain-issues`, `bc-swarm`),
+  orchestrators (`bc-plan-to-pipeline`, `bc-drain-issues`, `bc-swarm`),
   and this is an adaptation of external work, like `grilling` and
   `code-review`.
 

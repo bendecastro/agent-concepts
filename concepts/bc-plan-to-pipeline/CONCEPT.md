@@ -1,10 +1,10 @@
 ---
 test_kind: pressure
-test_status: partial # plan becomes a work item 2026-11-12 (visible layout); not yet pressure-tested
+test_status: partial # renamed + no-tracker/settled-source modes and Source line 2026-11-22; pressure test needs a re-run
 tested: 2026-07-16
 deployed: 2026-06-21
 ---
-# Concept: bc-plan-to-issues
+# Concept: bc-plan-to-pipeline
 
 User-invoked planning orchestrator that runs the whole interactive planning front of the loop in one command: `grilling` → `domain-modeling` + `naming-things` (inline) → `prd-drafting` → publish PRD parent issue → `issue-slicing` (with the approval quiz) → publish dependency-ordered `ready-for-agent` slice issues. It can be fed by `/triage`, `/prototype`, or `/improve-codebase-architecture` when an issue/backlog/design question needs intake or evidence first. Hands off to `bc-drain-issues` for autonomous execution. The `bc-` prefix is the user's personal namespace.
 
@@ -23,6 +23,8 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 - **Visible-layout projects: the plan is a work item (2026-11-12).** The body resolves glossary, decisions, work-planned, ideas, research and requirements in the project's "Where things go" table (`.bc-agent/AGENTS.md`). With a table, planning produces a work item in work-planned instead of `docs/changes/<slug>/`: a small plan (one slice, or no issues) is `NNN-slug.md` from `.bc-agent/templates/work-item.md` with a `## Requirements` section; a large plan is a folder `NNN-slug/` with two files, `plan.md` (the template; `Issue:` holds the parent, `## Steps` are the slices in dependency order with their issue numbers) and `requirements.md` (the PRD). Rejected alternatives: a separate `slices.md` or one file per slice, which would duplicate the step list and drift; `prd.md` as the name, rejected because the layout reserves "PRD" for the product-level spec (`docs/PRD.md`) and calls a feature's version its requirements. Living specs are merged into the requirements role only when the project has a product-level spec. Items are numbered only from the main checkout; in a worktree the pipeline stops after step 2 (capture), adds an ideas line, and resumes from step 3 in the main checkout, since steps 3–8 write into the item. In a hybrid project the body points to `domain-modeling`'s shared-glossary rule rather than restating it (W3 review, 2026-11-12). Without a table the previous paths stay: the `planning-workflow.md` vault mapping when present, otherwise `docs/changes/<slug>/` (`prd.md`, `tasks.md`), `docs/specs/`, `docs/adr/` and `glossary.md`. Provenance: decisions 5, 6, 10–15, 20 and 25 in [the bc-init-agent visible-layout plan](../../docs/plans/implemented/bc-init-agent-visible-layout.md).
 
+- **Renamed from `bc-plan-to-issues`; two modes and a Source line (2026-11-22, owner decision).** The skill now works in any project and files work into the project's work pipeline (a work item), an issue tracker, or both, so "issues" no longer named what it produces. The old name stays as a deploy alias (`DEPLOY_ALIASES` in `scripts/deploy-local-skills.py`) so existing muscle memory keeps working. **No-tracker mode**: when the project has no tracker or the user asks for work items only, every issue step is skipped and the plan is filed as a work item only (large: folder with requirements + `plan.md` whose `## Steps` are the slices with blocked-by and user stories; small: one file). **Settled-source mode**: an already-settled design (an architecture review the owner picked candidates from, an approved spec, a finished grilling) is not re-grilled; only the questions it leaves open are asked, in one batch. The mode is decided at the start from the project (Where-things-go table, gh remote) and stated. The slicing quiz stays a mandatory gate in every mode. The requirements document is named by the project's own term. A filed work item carries `Source: <name>` naming what produced the plan (the upstream skill, or this skill for a raw idea); `bc-init-agent`'s work-item template gained the optional line in the same change.
+
 ## Provenance
 
 - `docs/plans/implemented/bc-grill-to-ship-loop.md` — the grilled-out build plan this concept implements (decisions locked 2026-06-20).
@@ -34,12 +36,12 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 ## Tests
 
-`tests/pressure-plan-to-issues.md` — verifies the pipeline runs in order, the grilling one-question gate holds, docs are captured inline (not batched), the slicing quiz is not skipped, it composes disciplines rather than nested publication orchestrators, living specs + change folder, and slices publish blockers-first with real `#NN` and a `## Parent` ref. Discipline-enforcing → must hold before deploy. **Run 2026-06-21 in Pi: FAIL**. **Run 2026-07-16 in Grok: PASS** (10/10; prior failure modes cleared).
+`tests/pressure-plan-to-pipeline.md` (renamed from `pressure-plan-to-issues.md` 2026-11-22; it does not yet cover the no-tracker and settled-source modes) — verifies the pipeline runs in order, the grilling one-question gate holds, docs are captured inline (not batched), the slicing quiz is not skipped, it composes disciplines rather than nested publication orchestrators, living specs + change folder, and slices publish blockers-first with real `#NN` and a `## Parent` ref. Discipline-enforcing → must hold before deploy. **Run 2026-06-21 in Pi: FAIL**. **Run 2026-07-16 in Grok: PASS** (10/10; prior failure modes cleared).
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/bc-plan-to-issues` → relative symlink to `body/` (deployed 2026-06-21 by explicit user request despite the failing Pi pressure run; use with caution until fixed/re-tested).
-- Pi: `~/.agents/skills/bc-plan-to-issues` and `~/.pi/agent/skills/bc-plan-to-issues` → relative symlinks to `body/` (deployed 2026-06-21 by explicit user request despite the failing Pi pressure run; use with caution until fixed/re-tested).
+- Claude Code: `~/.claude/skills/bc-plan-to-pipeline` → relative symlink to `body/` (deployed 2026-06-21 by explicit user request despite the failing Pi pressure run; use with caution until fixed/re-tested).
+- Pi: `~/.agents/skills/bc-plan-to-pipeline` and `~/.pi/agent/skills/bc-plan-to-pipeline` → relative symlinks to `body/` (deployed 2026-06-21 by explicit user request despite the failing Pi pressure run; use with caution until fixed/re-tested).
 - Other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
 
 ## Invocation policy change (2026-07-03)

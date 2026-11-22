@@ -231,7 +231,7 @@ before finishing. See `.bc-agent/AGENTS.md` for the update triggers and protocol
 
 If the human's request sounds like planning future codebase work — feature ideas,
 architecture direction, implementation strategy, slicing, or "what should we build/change" —
-pause before implementing and ask whether they want to enter `/bc-plan-to-issues`.
+pause before implementing and ask whether they want to enter `/bc-plan-to-pipeline`.
 If they are already asking for a concrete edit/fix, proceed normally. If the request is
 about architectural runway, offer `/improve-codebase-architecture` first. For code/hybrid
 wikis, also check `.bc-agent/conventions/architecture-runway.md`: if enough PRD-sized
@@ -267,7 +267,7 @@ See `.bc-agent/references/agent-skills.md` for the local skill map and
 This project is wired for the grill→issues→drain loop. See
 `.bc-agent/conventions/planning-workflow.md`:
 
-- `/bc-plan-to-issues` — interactive planning (grill → domain capture → PRD → ready-for-agent issues).
+- `/bc-plan-to-pipeline` — interactive planning (grill → domain capture → PRD → ready-for-agent issues).
 - `/bc-drain-issues` — autonomous (AFK) execution of the ready-for-agent queue.
 
 ## Publishing
@@ -380,7 +380,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 | When you… | Do this |
 |---|---|
 | Start non-trivial work | Follow the canonical search-first read path above, then read the relevant returned pages and any in-flight plan. |
-| Hear planning intent for codebase work | Before implementing, ask whether to enter `/bc-plan-to-issues`; offer `/improve-codebase-architecture` first for architecture runway. For code/hybrid wikis, check `conventions/architecture-runway.md` and nudge if the PRD-count threshold has been reached. |
+| Hear planning intent for codebase work | Before implementing, ask whether to enter `/bc-plan-to-pipeline`; offer `/improve-codebase-architecture` first for architecture runway. For code/hybrid wikis, check `conventions/architecture-runway.md` and nudge if the PRD-count threshold has been reached. |
 | Verify/learn a durable fact | Update the smallest relevant `project/` or `references/` page (dated); append a line to `log.md`. |
 | Find a recurring command / path / gotcha | Put it in `references/commands.md` / `paths.md` / `gotchas.md`. |
 | Learn something that contradicts a page | Fix the page; note it in `log.md`. Never leave a stale claim. |
@@ -395,7 +395,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 ## Plans & the live layer
 
 - A multi-step effort gets a **plan page** under `project/` from `templates/plan.md`.
-- For `grilling` + `domain-modeling` or `bc-plan-to-issues` → `bc-drain-issues` work, apply
+- For `grilling` + `domain-modeling` or `bc-plan-to-pipeline` → `bc-drain-issues` work, apply
   `conventions/planning-workflow.md`: it maps generic `glossary.md`/`docs/adr/` persistence
   into this vault's pages.
 - Use `references/agent-skills.md` as the local map of required loop skills and where their
@@ -557,8 +557,8 @@ OVERVIEW = """# Project Overview
 
 The project's shared vocabulary — canonical names for the domain concepts, no implementation
 detail. When `references/teach-skill.md` is a valid adapter, `teach` owns this Glossary section
-and `bc-plan-to-issues` and maintenance leave it unchanged. Without that adapter,
-`domain-modeling` (paired with `grilling` directly or used through `bc-plan-to-issues`) maintains
+and `bc-plan-to-pipeline` and maintenance leave it unchanged. Without that adapter,
+`domain-modeling` (paired with `grilling` directly or used through `bc-plan-to-pipeline`) maintains
 this as the project's `glossary.md`-equivalent. Keep it a pure glossary.
 
 <!-- Term — one-line canonical definition. -->
@@ -590,7 +590,7 @@ adapter so planning persistence lands in `.bc-agent/` instead of generic
 
 When the human sounds like they are planning codebase work — feature ideas, refactor
 direction, architecture strategy, implementation approach, or issue slicing — ask whether
-they want to enter `/bc-plan-to-issues` before writing implementation code. If the request is
+they want to enter `/bc-plan-to-pipeline` before writing implementation code. If the request is
 architectural runway rather than a settled feature, offer `/improve-codebase-architecture`
 first. If they clearly ask for a concrete edit/fix, proceed normally.
 
@@ -598,7 +598,7 @@ first. If they clearly ask for a concrete edit/fix, proceed normally.
 
 - **Glossary / domain facts:** the Glossary section of `project/overview.md` (or a dedicated
   `project/glossary.md` if it grows). Without a valid teach adapter, this is this project's
-  `glossary.md`-equivalent and `domain-modeling` / `bc-plan-to-issues` maintain it. With the adapter,
+  `glossary.md`-equivalent and `domain-modeling` / `bc-plan-to-pipeline` maintain it. With the adapter,
   `teach` owns the Glossary section; planning and maintenance skills leave that section alone.
 - **ADRs:** numbered files under `decisions/` using `templates/adr.md`.
 - **Plans / actual PRDs:** durable planning artifacts under `project/`, linked from `index.md`. Only call it a PRD when the PRD drafting/publishing step actually happened; exploratory notes stay under `research/` or as plans.
@@ -623,7 +623,7 @@ first. If they clearly ask for a concrete edit/fix, proceed normally.
   consider `/improve-codebase-architecture` after enough PRD-sized implementation work has
   landed since the last review.
 
-## Planning — `/bc-plan-to-issues`
+## Planning — `/bc-plan-to-pipeline`
 
 One command runs grill → domain capture → PRD → slices. When the underlying skills would
 persist to generic `glossary.md` / `docs/adr/`, persist here instead:
@@ -1062,7 +1062,7 @@ map so agents know what to invoke.
 
 ## Planning/execution loop
 
-- `/bc-plan-to-issues` — interactive planning front: grill → domain capture → PRD → issue slices.
+- `/bc-plan-to-pipeline` — interactive planning front: grill → domain capture → PRD → issue slices.
 - `/bc-drain-issues` — AFK executor for `ready-for-agent` issue queues.
 - `/improve-codebase-architecture` — optional architecture runway before planning/slicing.
 
@@ -1077,7 +1077,7 @@ map so agents know what to invoke.
 ## Agent behavior
 
 If the user's request sounds like planning future codebase work, ask whether to enter
-`/bc-plan-to-issues` before implementing. Offer `/improve-codebase-architecture` first when
+`/bc-plan-to-pipeline` before implementing. Offer `/improve-codebase-architecture` first when
 the main uncertainty is architecture/seams. In code/hybrid wikis, run the computed check in
 `conventions/architecture-runway.md` and give the optional architecture-runway nudge when its
 planning-surface signal reaches the threshold.
@@ -1345,7 +1345,7 @@ and the work-item rules; pick further context with `.bc-agent/map.md`.
 ## Planning loop trigger
 
 If the request sounds like planning future work (feature ideas, architecture direction,
-slicing, "what should we build"), pause and ask whether to enter `/bc-plan-to-issues`
+slicing, "what should we build"), pause and ask whether to enter `/bc-plan-to-pipeline`
 before implementing. A concrete edit or fix proceeds normally. When the question is
 architectural runway, check `.bc-agent/conventions/architecture-runway.md` and offer
 `/improve-codebase-architecture` first. Skill map: `.bc-agent/references/agent-skills.md`.
@@ -1520,6 +1520,7 @@ Why: <the problem or goal, in one or two sentences>
 Done when: <the observable outcome that means this is finished>
 Stage: <one of the stages on the `Stages:` line in .bc-agent/AGENTS.md>
 Issue: <optional issue number; delete the line when there is none>
+Source: <optional: the skill or review that produced this item, e.g. bc-plan-to-pipeline; delete the line when unknown>
 
 ## Steps
 
@@ -2548,7 +2549,7 @@ def main() -> int:
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
           "read .bc-agent/references/agent-skills.md for the loop skill map; "
           "authorize this repo in policies/publish.yaml if you'll run /bc-drain-issues AFK; "
-          "then /triage existing issues or /bc-plan-to-issues to plan the first feature.")
+          "then /triage existing issues or /bc-plan-to-pipeline to plan the first feature.")
     return 0
 
 

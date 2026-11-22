@@ -1,6 +1,6 @@
 ---
 name: bc-drain-issues
-description: Autonomously drain a repo's ready-for-agent and rework-for-agent GitHub issue queue with isolated worktrees, bounded rework, independent review, and driver-owned landing. Run after /bc-plan-to-issues.
+description: Autonomously drain a repo's ready-for-agent and rework-for-agent GitHub issue queue with isolated worktrees, bounded rework, independent review, and driver-owned landing. Run after /bc-plan-to-pipeline.
 disable-model-invocation: true
 argument-hint: "[max-iters=20] [max-parallel=3] (optional caps; max-parallel 1 = sequential)"
 ---

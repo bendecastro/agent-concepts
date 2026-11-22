@@ -299,3 +299,11 @@ project, one project at a time on its next scaffold run:
    lacks the line. Copy the line from a fresh scaffold's map into the "Outside this folder" section.
 3. If the project already keeps design pages elsewhere, list them under Pages in the README rather
    than moving them, unless the owner asks for the move.
+
+## Source line
+
+Since 2026-11-22 the work-item template has an optional `Source:` line under `Issue:`, naming the
+skill or review that produced the item (for example `bc-plan-to-pipeline` or
+`improve-codebase-architecture`). The scaffold does not rewrite an existing template; to adopt it,
+copy the line from a fresh scaffold's `.bc-agent/templates/work-item.md`. Existing items need no
+change: the line is optional.

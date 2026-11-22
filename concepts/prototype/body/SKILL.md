@@ -28,7 +28,7 @@ If ambiguous and the user is not reachable, choose the branch that matches the s
 
 ## Handoff to the bc loop
 
-Before moving to `/bc-plan-to-issues` or implementation, capture:
+Before moving to `/bc-plan-to-pipeline` or implementation, capture:
 
 - The question the prototype answered.
 - The verdict / chosen behavior or UI direction.

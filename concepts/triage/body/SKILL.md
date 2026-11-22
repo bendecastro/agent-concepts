@@ -56,7 +56,7 @@ Include external PRs only if the repo says PRs are a request surface. Let the us
 2. **Check redundancy and prior rejection.** Search the codebase by domain concept for an existing implementation. Read the items in the work-dropped folder if present; surface any similar rejected request or dropped work. If qmd is installed and a global collection covers this repo's project knowledge (`qmd collection list`), `qmd query` the issue's domain terms too — it surfaces prior ADRs and rejections that exact-name greps miss.
 3. **Verify the claim.** For a bug, reproduce or fail honestly. For a PR, check whether the diff does what it claims and run the relevant validation if bounded. A confirmed claim makes a stronger agent brief.
 4. **Recommend.** Tell the maintainer: category, state, what you verified, and why. Wait for direction unless the user explicitly asked for autonomous triage.
-5. **Grill if needed.** If the issue is close but underspecified, run `grilling` + `domain-modeling` to resolve missing decisions one question at a time. If it is broad enough to need a PRD/slices, send it to `/bc-plan-to-issues` instead of pretending one issue is enough.
+5. **Grill if needed.** If the issue is close but underspecified, run `grilling` + `domain-modeling` to resolve missing decisions one question at a time. If it is broad enough to need a PRD/slices, send it to `/bc-plan-to-pipeline` instead of pretending one issue is enough.
 6. **Apply outcome.**
    - `ready-for-agent`: post an Agent Brief using [AGENT-BRIEF.md](AGENT-BRIEF.md); make acceptance criteria concrete enough for `/bc-drain-issues`.
    - `ready-for-human`: post the same structure, plus why it cannot be delegated.

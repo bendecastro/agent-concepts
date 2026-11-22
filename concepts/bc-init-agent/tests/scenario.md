@@ -51,7 +51,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
     `concepts/bc-wiki-maintain/body/runner/README.md`. Live
     `~/.config/systemd/user/` is untouched unless the user confirmed in that
     run.
-13. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, timer offer outcome, and the next steps (`/bc-plan-to-issues` → `/bc-drain-issues`); commits the scaffold staging only the new files.
+13. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, timer offer outcome, and the next steps (`/bc-plan-to-pipeline` → `/bc-drain-issues`); commits the scaffold staging only the new files.
 
 ## Pass criteria
 Script checks 1–7 plus 7a, 7b, and 7c pass on inspection of the generated tree; process checks 8–13 hold in the subagent transcript.
@@ -69,7 +69,7 @@ Script checks 1–6 run directly (no subagent):
 Process checks 7–9 via Haiku subagent (low-thinking, hard-sandboxed to `/tmp/pt-bcinit2`):
 7. Located root via `git rev-parse --show-toplevel`, kebab-case slug, no ambiguity. ✓
 8. Drafted a repo-specific `publish.yaml` allow-rule and OFFERED to append it; did not write it (verified: real `~/.config/agent-concepts/publish.yaml` untouched). ✓
-9. Close-out pointed at created files + named next steps (`/triage` → `/bc-plan-to-issues` → `/bc-drain-issues`); committed staging only the new scaffold files (`git add AGENTS.md .bc-agent/`), clean tree after. ✓
+9. Close-out pointed at created files + named next steps (`/triage` → `/bc-plan-to-pipeline` → `/bc-drain-issues`); committed staging only the new scaffold files (`git add AGENTS.md .bc-agent/`), clean tree after. ✓
 
 ## New checks to run after adaptive-onboarding update
 

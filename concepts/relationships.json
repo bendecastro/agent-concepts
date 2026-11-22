@@ -92,43 +92,43 @@
       "reason": "Hosted teach mode relies on the initializer's explicit vault marker and host schema while remaining standalone by default."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "grilling",
       "relation": "loads",
       "required": true,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Step 1 interviews the idea before any artifact is written."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "domain-modeling",
       "relation": "loads",
       "required": true,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Step 2 captures terms and decisions inline during the grill."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "prd-drafting",
       "relation": "loads",
       "required": true,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Step 3 synthesizes the PRD from the grill and the codebase."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "issue-slicing",
       "relation": "loads",
       "required": true,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Step 6 slices the PRD and runs the last human gate."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "bc-drain-issues",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Close-out recommends draining the published queue; the user decides."
     },
     {
@@ -330,12 +330,12 @@
       "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "naming-things",
       "relation": "loads",
       "required": true,
       "when": "choosing domain or public code names",
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md",
       "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
     },
     {
@@ -544,12 +544,12 @@
       "reason": "Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/bc-plan-to-issues/CONCEPT.md",
+      "source": "concepts/bc-plan-to-pipeline/CONCEPT.md",
       "reason": "Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template."
     },
     {
@@ -634,12 +634,12 @@
       "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; triage edits it under domain-modeling's shared-glossary rule."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "teach",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout hybrid project",
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md",
       "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under domain-modeling's shared-glossary rule."
     },
     {
@@ -652,12 +652,12 @@
       "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; triage points to it."
     },
     {
-      "from": "bc-plan-to-issues",
+      "from": "bc-plan-to-pipeline",
       "to": "domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout hybrid project",
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md",
       "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; planning points to it."
     },
     {

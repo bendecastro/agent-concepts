@@ -12,14 +12,14 @@ User-invoked collaborative design step for turning a rough idea into an approved
 
 - **Softer than upstream default.** Upstream says use before every creative/code change; this port narrows invocation to genuinely unresolved design or behavior changes, because local agent-kernel favors acting directly on clear tasks.
 - **One-question discipline.** Keeps upstream one-question-at-a-time interview and alternatives-with-recommendation pattern.
-- **Design feeds planning.** This concept stops at an approved design/spec and hands off to `writing-plans`, `prd-drafting`, or `bc-plan-to-issues`; it does not implement.
+- **Design feeds planning.** This concept stops at an approved design/spec and hands off to `writing-plans`, `prd-drafting`, or `bc-plan-to-pipeline`; it does not implement.
 - **Visual companion omitted.** Upstream browser companion scripts are filed as provenance but not ported until there is a local tool path worth maintaining.
 
 ## Provenance
 
 - [obra/superpowers `skills/brainstorming/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/brainstorming/SKILL.md) — design gate, context exploration, alternatives, spec review, handoff.
 - [obra/superpowers `skills/brainstorming/visual-companion.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/brainstorming/visual-companion.md) and `scripts/` — upstream visual companion, not ported.
-- `concepts/grilling/`, `concepts/prototype/`, `concepts/bc-plan-to-issues/` — local adjacent planning skills.
+- `concepts/grilling/`, `concepts/prototype/`, `concepts/bc-plan-to-pipeline/` — local adjacent planning skills.
 
 ## Tests
 

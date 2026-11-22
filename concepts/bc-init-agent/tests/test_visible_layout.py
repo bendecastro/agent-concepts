@@ -87,7 +87,9 @@ def _base_scaffold(tmp_path):
     if shown.returncode != 0:
         pytest.skip(f'base commit {BASE_COMMIT} is not available (shallow clone or export)')
     base = tmp_path / 'base_scaffold.py'
-    base.write_bytes(shown.stdout)
+    # The planning skill was renamed after the base commit (2026-11-22); the rename is the only
+    # intended change to learning and knowledge output.
+    base.write_bytes(shown.stdout.replace(b'bc-plan-to-' + b'issues', b'bc-plan-to-pipeline'))
     return base
 
 
@@ -236,7 +238,7 @@ def test_generated_markdown_links_resolve(tmp_path, archetype):
 def test_work_item_template_has_lifecycle_fields_and_no_plan_template(tmp_path, archetype):
     root = _scaffold(tmp_path, archetype)
     text = (root / '.bc-agent/templates/work-item.md').read_text()
-    for field in ('Why:', 'Done when:', 'Stage:', 'Issue:', '## Steps', '## Outcome'):
+    for field in ('Why:', 'Done when:', 'Stage:', 'Issue:', 'Source:', '## Steps', '## Outcome'):
         assert field in text
     assert 'Status:' not in text
     assert not (root / '.bc-agent/templates/plan.md').exists()

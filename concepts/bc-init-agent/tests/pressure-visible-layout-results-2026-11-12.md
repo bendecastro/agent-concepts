@@ -21,6 +21,6 @@ Changes made between rounds, each stating its reason:
 - Migrate step 2: asked to skip the preview, paste the dry run anyway and ask for a go-ahead.
 
 Not covered by these runs: the role-lookup paths in `triage`, `bc-drain-issues`,
-`bc-plan-to-issues`, `improve-codebase-architecture`, `diagnosing-bugs`, `prototype`, `handoff`
+`bc-plan-to-pipeline`, `improve-codebase-architecture`, `diagnosing-bugs`, `prototype`, `handoff`
 and `domain-modeling`; the judgment-list handling after a migrate apply on a real project;
 models other than the one used here.

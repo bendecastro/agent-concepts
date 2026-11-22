@@ -11,6 +11,6 @@ None.
 
 ## Incoming
 
-- incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): loads this concept — required.
+- incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): loads this concept — required.
   Step 1 interviews the idea before any artifact is written.
-  Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md#pipeline)
+  Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)

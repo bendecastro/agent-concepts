@@ -335,7 +335,7 @@ At minimum, test:
 
 ### Task 4 — Pilot migration
 
-- [ ] Confirm each pilot source anchor before writing it: `## Build loop` occurs exactly once in `concepts/bc-drain-issues/body/execute-issue.md` and `## Pipeline` exactly once in `concepts/bc-plan-to-issues/body/SKILL.md`.
+- [ ] Confirm each pilot source anchor before writing it: `## Build loop` occurs exactly once in `concepts/bc-drain-issues/body/execute-issue.md` and `## Pipeline` exactly once in `concepts/bc-plan-to-pipeline/body/SKILL.md`.
 - [ ] Fill **concepts/relationships.json** with exactly these six verified edges:
 
 ```json
@@ -356,7 +356,7 @@ At minimum, test:
       "to": "grilling",
       "relation": "loads",
       "required": true,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Step 1 interviews the idea before any artifact is written."
     },
     {
@@ -364,7 +364,7 @@ At minimum, test:
       "to": "domain-modeling",
       "relation": "loads",
       "required": true,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Step 2 captures terms and decisions inline during the grill."
     },
     {
@@ -372,7 +372,7 @@ At minimum, test:
       "to": "prd-drafting",
       "relation": "loads",
       "required": true,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Step 3 synthesizes the PRD from the grill and the codebase."
     },
     {
@@ -380,7 +380,7 @@ At minimum, test:
       "to": "issue-slicing",
       "relation": "loads",
       "required": true,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Step 6 slices the PRD and runs the last human gate."
     },
     {
@@ -388,7 +388,7 @@ At minimum, test:
       "to": "bc-drain-issues",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-plan-to-issues/body/SKILL.md#pipeline",
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
       "reason": "Close-out recommends draining the published queue; the user decides."
     }
   ]

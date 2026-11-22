@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Draft a spec (the project’s PRD format) from the current conversation and codebase, then publish it as a GitHub issue. The drafting is the `/prd-drafting` discipline; this orchestrator wraps it with publication.
 
-**Issue tracker: GitHub**, via the `gh` CLI. A PRD parent issue is a planning/coordination artifact, not drainable work; `ready-for-agent` is reserved for implementation slices created by `/to-tickets` or `/bc-plan-to-issues`.
+**Issue tracker: GitHub**, via the `gh` CLI. A PRD parent issue is a planning/coordination artifact, not drainable work; `ready-for-agent` is reserved for implementation slices created by `/to-tickets` or `/bc-plan-to-pipeline`.
 
 ## Process
 
@@ -18,4 +18,4 @@ Draft a spec (the project’s PRD format) from the current conversation and code
    ```
    gh issue create --title "<PRD: feature name>" --body-file <path>
    ```
-   Do **not** apply `ready-for-agent` to the PRD parent. Run `/to-tickets` or `/bc-plan-to-issues` to create drainable `ready-for-agent` implementation slices.
+   Do **not** apply `ready-for-agent` to the PRD parent. Run `/to-tickets` or `/bc-plan-to-pipeline` to create drainable `ready-for-agent` implementation slices.

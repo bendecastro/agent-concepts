@@ -45,9 +45,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules.
   Source: [bc-drain-issues/CONCEPT.md](../bc-drain-issues/CONCEPT.md)
 
-- incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+- incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
-  Source: [bc-plan-to-issues/CONCEPT.md](../bc-plan-to-issues/CONCEPT.md)
+  Source: [bc-plan-to-pipeline/CONCEPT.md](../bc-plan-to-pipeline/CONCEPT.md)
 
 - incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ. Its agent-mechanics check allows the .bc-agent/ entries the hybrid scaffold writes and the optional agent-extras role; a test compares the hybrid list with the scaffold's output.

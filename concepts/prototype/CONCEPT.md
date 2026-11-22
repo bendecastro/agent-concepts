@@ -20,7 +20,7 @@ User-invoked throwaway exploration step for design uncertainty: build a small ru
 ## Provenance
 
 - [mattpocock/skills](https://github.com/mattpocock/skills) — upstream Matt Pocock `prototype/SKILL.md` captured 2026-06-21.
-- `concepts/bc-plan-to-issues/` — optional pre-PRD evidence step when grilling exposes design uncertainty.
+- `concepts/bc-plan-to-pipeline/` — optional pre-PRD evidence step when grilling exposes design uncertainty.
 
 ## Tests
 

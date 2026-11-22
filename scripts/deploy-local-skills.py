@@ -54,7 +54,7 @@ PRIVATE_CONCEPTS = CONFIG_HOME / "agent-concepts" / "concepts"
 
 # Public vocabulary can evolve without breaking existing user muscle memory. Alias
 # destinations must be canonical concept names; aliases never gain their own body.
-DEPLOY_ALIASES: dict[str, str] = {}
+DEPLOY_ALIASES: dict[str, str] = {"bc-plan-to-issues": "bc-plan-to-pipeline"}
 
 
 def rel_target(target: Path, link_parent: Path) -> str:

@@ -1839,3 +1839,6 @@ surfaces.md Web bullet now gives the search/retrieve command (version 1.0.1, tel
 
 ## [2026-11-22] implement | bc-swarm pi.md: give reviewers the worker diff as a file
 Reflection on the design-framework session: a reviewer without a shell could not read a cleaned-up worktree commit. pi.md now tells the parent to write `git diff <base> <tip>` to the run directory first. Dispatch-mechanics note, not a new gate; no pressure test run.
+
+## [2026-11-22] implement | bc-plan-to-issues → bc-plan-to-pipeline
+Renamed the planning orchestrator (old name kept as a deploy alias) because it now files work into the project's work pipeline, a tracker, or both; added no-tracker and settled-source modes, the project's own term for the requirements document, and a `Source:` line on filed work items. `bc-init-agent`'s work-item template gained the optional `Source:` line (MIGRATIONS entry); `improve-codebase-architecture` writes `Source: improve-codebase-architecture`. Not redeployed; pressure test needs a re-run.

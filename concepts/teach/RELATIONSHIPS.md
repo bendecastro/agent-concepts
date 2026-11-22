@@ -17,9 +17,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md#learning-archetype-adapter)
 
-- incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
+- incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
   In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under domain-modeling's shared-glossary rule.
-  Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md)
+  Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md)
 
 - incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when teach adapter marker present.
   Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue.

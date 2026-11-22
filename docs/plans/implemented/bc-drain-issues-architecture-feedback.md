@@ -47,7 +47,7 @@ Verification: Gate A 28/28; clean current-body consumer fixtures PASS; workspace
 ### Do not modify
 
 - `concepts/bc-drain-issues/body/review-contract.md` — the observation is deliberately outside the review path.
-- `concepts/bc-plan-to-issues/body/SKILL.md` — the existing architecture-review output already enters planning through its human-gated path; this change only supplies better input.
+- `concepts/bc-plan-to-pipeline/body/SKILL.md` — the existing architecture-review output already enters planning through its human-gated path; this change only supplies better input.
 - Worker/reviewer Pi role files or token caps — no child is added and no review packet field is needed.
 
 ## Tasks

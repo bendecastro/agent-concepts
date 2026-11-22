@@ -21,9 +21,10 @@ tracker, so no stage depends on a session staying alive.
 scaffolds `.bc-agent/`: `log.md`, `decisions/`, `references/`, `conventions/`, `tasks/active.md`.
 Additive: it never overwrites or deletes without an explicit flag.
 
-**`/bc-plan-to-issues` — turn an idea into a queue.** Grills one question at a time until every
+**`/bc-plan-to-pipeline` — turn an idea into a queue.** Grills one question at a time until every
 branch is resolved, writes a PRD under `docs/changes/<slug>/`, merges requirements into
-`docs/specs/`, then publishes GitHub issues in dependency order. The slicing quiz is the last human
+`docs/specs/`, then files the slices as a work item, as GitHub issues in dependency order, or both. From an
+already-settled design it asks only the open questions. The slicing quiz is the last human
 gate; the skill refuses to skip it.
 
 **`/bc-drain-issues` — work the queue while you sleep.** Claims an issue by pushing a branch (that

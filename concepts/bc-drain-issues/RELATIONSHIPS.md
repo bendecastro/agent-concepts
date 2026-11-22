@@ -33,9 +33,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
   Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
 
-- incoming from [bc-plan-to-issues](../bc-plan-to-issues/RELATIONSHIPS.md): hands off to this concept — optional.
+- incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): hands off to this concept — optional.
   Close-out recommends draining the published queue; the user decides.
-  Source: [bc-plan-to-issues/body/SKILL.md](../bc-plan-to-issues/body/SKILL.md#pipeline)
+  Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)
 
 - incoming from [tdd](../tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when recording property fail-first evidence inside a drain.
   Mutation evidence goes in the drain’s existing validation.json, not a new evidence file.

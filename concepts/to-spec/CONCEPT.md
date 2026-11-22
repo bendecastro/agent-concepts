@@ -10,7 +10,7 @@ User-invoked orchestrator that turns the current conversation + codebase underst
 
 ## Design decisions
 
-- **Thin wrapper over `prd-drafting` (refactor 2026-06-20).** The PRD writing behavior — synthesize-not-interview, seam-first, the template, no-stale-specifics — was extracted into the model-invoked `prd-drafting` discipline so `bc-plan-to-issues` can reuse it without orchestrator-calls-orchestrator. `to-spec` is now: run `/prd-drafting` → publish. The former `/to-prd` compatibility alias was removed 2026-09-27. Behavior preserved, relocated.
+- **Thin wrapper over `prd-drafting` (refactor 2026-06-20).** The PRD writing behavior — synthesize-not-interview, seam-first, the template, no-stale-specifics — was extracted into the model-invoked `prd-drafting` discipline so `bc-plan-to-pipeline` can reuse it without orchestrator-calls-orchestrator. `to-spec` is now: run `/prd-drafting` → publish. The former `/to-prd` compatibility alias was removed 2026-09-27. Behavior preserved, relocated.
 - **GitHub tracker baked in** (user's decision). Upstream defers the tracker vocabulary to a `setup-matt-pocock-skills` configuration step; we hard-wire GitHub via `gh` so there's no per-repo setup skill to port. Parent PRDs are intentionally not `ready-for-agent`; switching trackers later means editing the publish step in this body.
 - **No interview, by contract.** `to-spec` deliberately doesn't grill — use `grilling` + `domain-modeling` first when scope is vague. The stateful `grill-me` wrapper was removed 2026-09-27; the underlying disciplines remain directly usable.
 

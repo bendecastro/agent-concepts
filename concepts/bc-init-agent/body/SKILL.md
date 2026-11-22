@@ -1,6 +1,6 @@
 ---
 name: bc-init-agent
-description: Scaffold a project's agent workspace (visible work/ and docs/ folders plus .bc-agent/ mechanics, or a .bc-agent vault for learning/knowledge) and a repo-root AGENTS.md so a repo is ready for the plan→issues→drain workflow. Run once per project before /bc-plan-to-issues.
+description: Scaffold a project's agent workspace (visible work/ and docs/ folders plus .bc-agent/ mechanics, or a .bc-agent vault for learning/knowledge) and a repo-root AGENTS.md so a repo is ready for the plan→issues→drain workflow. Run once per project before /bc-plan-to-pipeline.
 disable-model-invocation: true
 argument-hint: "[project-slug] (defaults to the repo directory name)"
 ---
@@ -36,7 +36,7 @@ Modes:
 - **Migration assist**: for old/messy projects, propose how existing docs/files could seed the roles in the "Where things go" table (learning/knowledge: `.bc-agent/`); move/copy files only after explicit approval.
 
 Archetypes:
-- **code** — default project execution workspace: work items (a plan or feature is one item), decision records, research including architecture reviews, validation, commands, architecture-runway nudge tracking, `/bc-plan-to-issues` → `/bc-drain-issues`.
+- **code** — default project execution workspace: work items (a plan or feature is one item), decision records, research including architecture reviews, validation, commands, architecture-runway nudge tracking, `/bc-plan-to-pipeline` → `/bc-drain-issues`.
 - **ops** — operational/system workspace: the code layout plus `docs/components/` (verified state of real systems); findings go to `docs/research/`, plans are work items, and open questions are work-item steps, planned items or ideas lines (the rule is in the generated `.bc-agent/AGENTS.md`); evidence before plan.
 
 ### Learning archetype adapter
@@ -203,7 +203,7 @@ Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip bot
     do not install `bc-wiki-lint.timer`.
 
 11. **Close out.** Point at the created files, the wiki-maintain timer offer
-    outcome, and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-issues` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
+    outcome, and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 
 ## Migrate an existing project
 

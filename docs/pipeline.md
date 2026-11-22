@@ -11,10 +11,11 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
    │
    ├──► /improve-codebase-architecture (optional architectural runway)
    │
-   ▼   /bc-plan-to-issues   ── interactive planning (human in the loop) ──┐
+   ▼   /bc-plan-to-pipeline   ── interactive planning (human in the loop) ──┐
    │     grilling ─► domain-modeling ─► prd-drafting ─► [publish PRD issue] │
    │                                     └► issue-slicing ─► [publish slices]
    │                                            ▲ quiz = last human gate    │
+   │     (no tracker: slices become the work item's steps; no issues)       │
    ▼                                                                        │
   ready-for-agent issue queue  ◄──────────────────────────────────────────┘
    │
@@ -33,23 +34,23 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
 ## Optional architecture feedback edge (bounded, not an autonomous phase)
 
 ```text
-bc-plan-to-issues → bc-drain-issues → optional observation inbox
-                                      → human-gated improve-codebase-architecture → bc-plan-to-issues
+bc-plan-to-pipeline → bc-drain-issues → optional observation inbox
+                                      → human-gated improve-codebase-architecture → bc-plan-to-pipeline
 ```
 
-After a landed issue, `bc-drain-issues` may prepend at most one bounded structural observation to the project's declared context inbox. New entries are written in the consumer's current newest-first order, so bounded reads cannot hide new observations below older history. This is a separate context-only, non-authoritative update. `improve-codebase-architecture` verifies the open evidence before exploration and keeps its existing human candidate-selection and grilling gates. This is feedback, not another autonomous drain phase or a direct issue-creation path: only the human-gated route back through `bc-plan-to-issues` can turn a verified runway candidate into planned issues.
+After a landed issue, `bc-drain-issues` may prepend at most one bounded structural observation to the project's declared context inbox. New entries are written in the consumer's current newest-first order, so bounded reads cannot hide new observations below older history. This is a separate context-only, non-authoritative update. `improve-codebase-architecture` verifies the open evidence before exploration and keeps its existing human candidate-selection and grilling gates. This is feedback, not another autonomous drain phase or a direct issue-creation path: only the human-gated route back through `bc-plan-to-pipeline` can turn a verified runway candidate into planned issues.
 
 ## Setup (once per repo) — `/bc-init-agent`
 
-Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from project B) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-issues` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-drain-issues` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. It also offers to install a per-vault `bc-wiki-maintain` systemd user timer so log promotion can run overnight; install happens only after confirm. Run once; then the two halves below.
+Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from project B) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-pipeline` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-drain-issues` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. It also offers to install a per-vault `bc-wiki-maintain` systemd user timer so log promotion can run overnight; install happens only after confirm. Run once; then the two halves below.
 
 ## The two halves
 
-**Intake — `/triage`** (interactive, as needed). Turns existing issues/PRs into the bc state machine: verify, grill if needed, write an Agent Brief, mark `ready-for-agent`, route broad work into `/bc-plan-to-issues`, or record durable `.bc-agent/out-of-scope/` rejections.
+**Intake — `/triage`** (interactive, as needed). Turns existing issues/PRs into the bc state machine: verify, grill if needed, write an Agent Brief, mark `ready-for-agent`, route broad work into `/bc-plan-to-pipeline`, or record durable `.bc-agent/out-of-scope/` rejections.
 
 **Evidence / runway — `/prototype` and `/improve-codebase-architecture`** (interactive, optional). Use prototypes when a state/UI decision needs a throwaway artifact before the PRD. Use architecture review when a feature or bug exposes poor seams and needs a deep-module plan before slicing.
 
-**Planning — `/bc-plan-to-issues`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`glossary.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. Two human gates: the grill and the slicing quiz. Composes model-invoked disciplines only (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never the user-invoked single-step orchestrators.
+**Planning — `/bc-plan-to-pipeline`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`glossary.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. Two human gates: the grill and the slicing quiz. Composes model-invoked disciplines only (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never the user-invoked single-step orchestrators.
 
 **Execution — `/bc-drain-issues`** (AFK, run after planning/triage). A preflight-gated driver loop atomically claims each unblocked issue, dispatches a **fresh worker** to build it test-first (or run `diagnosing-bugs` for bugs), runs a deterministic pre-review gate, then applies tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards) before trunk-based landing (commit → push `master` → close with a validation comment). Material findings receive bounded same-worktree rework/re-review for up to three cycles. Terminal outcomes stay distinct: `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable issue-local environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; and `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. Preflight is the only planned human gate; these outcomes are reported rather than collapsed into one parking state.
 
@@ -58,7 +59,7 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 | Layer | Skills |
 |---|---|
 | User-invoked setup | `bc-init-agent` (scaffolds the per-repo workspace) |
-| User-invoked orchestrators (loop) | `bc-plan-to-issues`, `bc-drain-issues` |
+| User-invoked orchestrators (loop) | `bc-plan-to-pipeline`, `bc-drain-issues` |
 | User-invoked intake / exploration | `triage`, `prototype`, `improve-codebase-architecture` |
 | User-invoked single-step (standalone) | `to-spec`, `to-tickets` |
 | Model-invoked disciplines | `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `research`, `tdd`, `diagnosing-bugs`, `codebase-design`, `bc-autoresearch-loop`, `code-review` |
