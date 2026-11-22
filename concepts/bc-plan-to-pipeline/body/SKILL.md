@@ -34,8 +34,8 @@ Write a `Source: <name>` line under the item's header lines, naming what produce
 
 Call the feature's requirements document by the project's term: the requirements role in the table (a work item's `requirements.md` or `## Requirements` section), not "PRD", when the project names it differently. This skill says "PRD" only for brevity.
 
-- **Small plan** (one slice, or no issues): one file `NNN-slug.md` in work-planned, from `.bc-agent/templates/work-item.md`. Put the feature's requirements in a `## Requirements` section above `## Steps`.
-- **Large plan** (more than one slice): a folder `NNN-slug/` in work-planned holding two files, plus any evidence worth keeping:
+- **Small plan** (exactly one slice, with or without a tracker): one file `NNN-slug.md` in work-planned, from `.bc-agent/templates/work-item.md`. Put the feature's requirements in a `## Requirements` section above `## Steps`.
+- **Large plan** (more than one slice, with or without a tracker): a folder `NNN-slug/` in work-planned holding two files, plus any evidence worth keeping:
   - `plan.md` — the work-item template; its `Issue:` line holds the parent issue (none without a tracker), and its `## Steps` list the slices in dependency order, one checkbox each with title, issue `#NN` (with a tracker), blocked-by and user stories covered;
   - `requirements.md` — the PRD.
   Why two files: the steps already are the slice map, so a separate slices file would be a second copy that drifts.
@@ -66,7 +66,7 @@ In a hybrid project the glossary is shared with `teach`: follow the shared-gloss
    - Stay at requirements level: design rationale belongs in decision records, implementation approach in the PRD, vocabulary in the glossary.
    - **Guard:** same as step 2 — if this isn't a project where such docs belong, confirm before creating them.
 
-6. **Slice.** Run `/issue-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), and **quiz the user on granularity and dependencies until they approve**. This quiz is the **last human gate before autonomous execution** — do not skip it.
+6. **Slice.** Run `/issue-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), and **quiz the user on granularity and dependencies until they approve**. This quiz is the **last human gate before autonomous execution** — do not skip it. Show the draft slices in the same reply that asks for approval; a reply that only promises them leaves the user nothing to approve.
 
 7. **Publish the slices.** Without a tracker, publish nothing: write the approved breakdown into the item's `## Steps` (a large item's `plan.md`), each unchecked step with slice title, blocked-by references (by step title) and user stories covered, or into `tasks.md` in the fallback change folder; then go to step 8. With a tracker: in dependency order (blockers first) so real `#NN` fill each "Blocked by", each with `--label ready-for-agent` and `## Parent #<parent>`. These are the only newly-created issues that enter the drain queue. Each slice body must include an `## Agent Brief`-equivalent contract (desired behavior, key interfaces/domain concepts, acceptance criteria, out-of-scope, blockers) so `/bc-drain-issues` can run AFK without prior conversation:
    ```
