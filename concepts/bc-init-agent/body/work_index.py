@@ -12,7 +12,9 @@ its blockers are done.
 The optional work/order.md is the owner's ranking of open items, top first, as
 a numbered list (`1. 012-search-ranking`); other lines are ignored. Names in
 3-done/ or 4-dropped/ are skipped; an unknown or repeated name is an error.
-Without the file there is no owner order.
+Without the file there is no owner order. Unlisted blockers do not inherit a
+listed item’s rank; dashboard-written orders list every open item, so this
+only affects hand-written partial lists.
 
 The table is a topological order of the open items: an item never precedes an
 open item it is transitively blocked by. Among the items available at each
@@ -138,6 +140,8 @@ def read_owner_order(work: Path, open_items: dict, closed: dict[str, str]) -> tu
         if not match:
             continue
         name = match.group(1)
+        if name in closed and name not in open_items:
+            continue
         if name in seen:
             errors.append(f"order.md: names {name} more than once")
             continue

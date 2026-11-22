@@ -1857,3 +1857,6 @@ Ported the owner's Blocked-by rule set: `work_index.py` requires a `Blocked by:`
 
 ## [2026-11-22] implement | bc-init-agent: owner order in work/order.md
 `work_index.py` reads an optional `work/order.md` (numbered item names) and ranks listed items right after active ones, blockers still winning; unknown or repeated names are errors. Generated Work items rule, SKILL/CONCEPT/MIGRATIONS "Owner order", bc-work-sync check line. Shared spec with the owner's dashboard.
+
+## [2026-11-22] implement | bc-init-agent owner order review fixes
+Ignore repeated closed items, clarify partial orders, and add ordering regression coverage.

@@ -364,3 +364,44 @@ def test_owner_order_duplicate_name_is_an_error(tmp_path):
     result = run(tmp_path)
     assert result.returncode == 1
     assert "order.md: names 001-a more than once" in result.stderr
+
+
+def test_repeated_closed_names_are_ignored(tmp_path):
+    fixture(tmp_path, {"work/3-done/005-old.md": "x", "work/4-dropped/006-gone.md": "x",
+                       "work/order.md": "1. 005-old\n2. 005-old\n3. 006-gone\n4. 006-gone\n"})
+    result = run(tmp_path)
+    assert result.returncode == 0, result.stderr
+
+
+def test_owner_rank_precedes_readiness(tmp_path):
+    fixture(tmp_path, {"work/2-active/001-a.md": item("v1", "A."),
+                       "work/1-planned/002-b.md": item("v1", "B.", blocked_by="001-a"),
+                       "work/1-planned/003-c.md": item("v1", "C."),
+                       "work/order.md": "1. 002-b\n"})
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["001-a", "002-b", "003-c"]
+
+
+def test_transitive_blockers_override_owner_rank(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A."),
+                       "work/1-planned/002-b.md": item("v1", "B.", blocked_by="001-a"),
+                       "work/1-planned/003-c.md": item("v1", "C.", blocked_by="002-b"),
+                       "work/order.md": "1. 003-c\n"})
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["001-a", "002-b", "003-c"]
+
+
+def test_closed_name_repetition_property():
+    from hypothesis import given, settings, strategies as st
+    from tempfile import TemporaryDirectory
+
+    @settings(deadline=None)
+    @given(st.sampled_from(["3-done", "4-dropped"]), st.integers(min_value=2, max_value=20))
+    def check(folder, count):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture(root, {f"work/{folder}/005-old.md": "x",
+                           "work/order.md": "".join(f"{i}. 005-old\n" for i in range(1, count + 1))})
+            result = run(root)
+            assert result.returncode == 0, result.stderr
+    check()
