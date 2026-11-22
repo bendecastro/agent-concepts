@@ -1830,3 +1830,6 @@ Terra low, old vs new arms in three rounds (`concepts/ui-design/tests/results/de
 
 ## [2026-11-21] implement | swarm run folders move to the state directory
 bc-swarm `pi.md` (run-dir line, example `OUT`, why + 7-day automatic cleanup) and bc-agent-reflect § Evidence (new location; older runs may be under `/tmp/bc-swarm/`) now use `${XDG_STATE_HOME:-$HOME/.local/state}/bc-swarm/`. Reason: a reboot wiped `/tmp` mid-run, erasing a manifest, logs and worktree. No other live body names the path (public kernel does not); bc-swarm `SKILL.md` "disposable by design" left as is; test results, research and log history left unchanged. Path change only, no gate change: accuracy check (grep of bodies), no pressure test.
+
+## [2026-11-21] implement | design README template: review-conventions link, stricter ask-cases, test suites
+Scaffold `DESIGN_README` gains an optional link line for a project's screenshot/review conventions page, folds a project's **Stricter ask-cases** into the "only when" ask list (still no asking on taste calls), and says "test suites"; `ui-design` design-framework.md ask wording matches. Reason: adoption feedback from a project using the template.

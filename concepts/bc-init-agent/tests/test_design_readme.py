@@ -36,6 +36,9 @@ def test_fresh_scaffold_creates_design_readme(tmp_path, archetype):
     assert text.count('(none yet)') == 2
     assert "the agent's choice" in text
     assert 'ask the owner when the look' not in text
+    assert 'screenshot and review conventions' in text
+    assert 'or any case listed under **Stricter ask-cases**' in text
+    assert "the project's test suites" in text
 
 
 @pytest.mark.parametrize('archetype', ['learning', 'knowledge'])
