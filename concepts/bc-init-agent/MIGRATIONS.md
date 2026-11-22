@@ -318,9 +318,12 @@ or dropped items.
 
 Since 2026-11-22 `work_index.py` reads an optional `work/order.md`: the owner's ranking of open
 items, top first, one numbered line each (`1. 012-search-ranking`); other lines are ignored.
-Listed items follow the active ones in that order, before unlisted ones; an item still never comes
-before an open item it is blocked by. Done and dropped names are skipped; an unknown or repeated
-name is an error. Without the file the table is unchanged. To adopt it in an existing project:
+The table has three tiers: active items, then planned items an active item is (transitively)
+blocked by, then other planned items. Within a tier, listed items come in list order, before
+unlisted ones; an item still never comes before an open item it is blocked by. Done and dropped
+names (month folders included) are skipped unless an open item has the name; an unknown or
+repeated name is an error. The tiers apply with or without the file, so blockers of active items
+can move up even in a project with no `order.md`. To adopt it in an existing project:
 
 1. Copy the script: `cp "$AGENT_CONCEPTS/concepts/bc-init-agent/body/work_index.py" .bc-agent/scripts/`.
 2. Optionally copy the `work/order.md` rule from a fresh scaffold's `.bc-agent/AGENTS.md` into the

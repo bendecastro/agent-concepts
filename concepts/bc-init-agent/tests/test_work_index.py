@@ -456,6 +456,8 @@ def test_owner_order_property():
             for p in item_names:
                 if folders[p] == "1-planned" and p not in feeds_active:
                     assert position[a] < position[p], (a, p, placed)
+            if not blockers[a]:
+                assert all(position[a] < position[p] for p in item_names if folders[p] == "1-planned"), (a, placed)
         if not any(blockers.values()):
             planned = [n for n in placed if folders[n] == "1-planned"]
             ranked = [n for n in listed if folders[n] == "1-planned"]
@@ -472,3 +474,48 @@ def test_blockers_of_active_items_precede_other_planned_items(tmp_path):
                        "work/order.md": "1. 003-q\n"})
     assert run(tmp_path).returncode == 0
     assert names(tmp_path).index("003-q") > max(names(tmp_path).index(n) for n in ("001-p1", "002-p2"))
+
+
+def test_blockers_of_active_items_lead_without_an_order_file(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-unrelated.md": item("v1", "U."),
+                       "work/1-planned/002-blocker.md": item("v1", "B."),
+                       "work/2-active/003-active.md": item("v1", "A.", blocked_by="002-blocker"),
+                       "work/1-planned/004-later.md": item("v1", "L.", blocked_by="001-unrelated")})
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["002-blocker", "003-active", "001-unrelated", "004-later"]
+
+
+def test_ready_active_item_precedes_ranked_blocker_of_another_active_item(tmp_path):
+    fixture(tmp_path, {"work/2-active/001-ready.md": item("v1", "R."),
+                       "work/2-active/002-waiting.md": item("v1", "W.", blocked_by="003-blocker"),
+                       "work/1-planned/003-blocker.md": item("v1", "B."),
+                       "work/order.md": "1. 003-blocker\n2. 002-waiting\n3. 001-ready\n"})
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["001-ready", "003-blocker", "002-waiting"]
+
+
+def test_owner_order_skips_items_in_dropped_month_folders(tmp_path):
+    fixture(tmp_path, {"work/4-dropped/2026-11/005-old.md": "x",
+                       "work/1-planned/001-a.md": item("v1", "A."),
+                       "work/order.md": "1. 005-old\n2. 001-a\n"})
+    result = run(tmp_path)
+    assert result.returncode == 0, result.stderr
+    assert names(tmp_path) == ["001-a"]
+
+
+def test_open_item_wins_over_closed_item_with_the_same_name(tmp_path):
+    fixture(tmp_path, {"work/4-dropped/2026-11/002-b.md": "x",
+                       "work/1-planned/001-a.md": item("v1", "A."),
+                       "work/1-planned/002-b.md": item("v1", "B."),
+                       "work/order.md": "1. 002-b\n2. 002-b\n"})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "order.md: names 002-b more than once" in result.stderr
+
+
+def test_owner_order_digits_are_ascii_only(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A."),
+                       "work/1-planned/002-b.md": item("v1", "B."),
+                       "work/order.md": "\u0661. 002-b\n"})
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["001-a", "002-b"]

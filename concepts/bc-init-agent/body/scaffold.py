@@ -1419,9 +1419,10 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   the table by it: active items first, then ready ones, those unblocking the most work leading.
   Why: the order is derived from what each item waits for, so it cannot drift from a hand-kept list.
 - **The owner may rank open items in `work/order.md`**, a numbered list of item names, top
-  first (`1. 012-search-ranking`). Listed items come right after the active ones, in that
-  order, unless an item waits on another; `work_index.py` rejects unknown and repeated names
-  and skips done and dropped ones. Why: the owner's priority beats the computed tiebreaks, but
+  first (`1. 012-search-ranking`). The table has three tiers: active items, then planned items
+  an active item waits on, then other planned items. Within each tier listed items come first,
+  in list order, unless an item waits on another; `work_index.py` rejects unknown and repeated
+  names and skips done and dropped ones. Why: the owner's priority beats the computed tiebreaks, but
   never what an item waits for.
 - **A building block gets its own item.** When two items would wait on one step of a third,
   that step becomes its own item, and both name it. Why: an item can only wait on a whole item,

@@ -1863,3 +1863,6 @@ Ignore repeated closed items, clarify partial orders, and add ordering regressio
 
 ## [2026-11-22] implement | bc-init-agent owner order: blockers of active items
 work_index.py ranks planned transitive blockers of active items right after the active ones (spec amendment), with an example test and a Hypothesis property over random blockers, folders and partial order.md.
+
+## [2026-11-22] implement | bc-init-agent owner order round 3
+The three tiers apply with or without `work/order.md` (spec amended); dropped month folders count as closed, an open item wins over a closed one of the same name, order-line digits are ASCII. Scaffold, MIGRATIONS, SKILL and CONCEPT now describe the tiers; `Blocked by:` stays required. New tests plus a stronger property (a ready active item precedes every planned item).

@@ -10,10 +10,11 @@ items are errors. A blocker in 3-done/ is satisfied; an item is ready when all
 its blockers are done.
 
 The optional work/order.md is the owner's ranking of open items, top first, as
-a numbered list (`1. 012-search-ranking`); other lines are ignored. Names in
-3-done/ or 4-dropped/ are skipped; an unknown or repeated name is an error.
-Without the file there is no owner order. Unlisted blockers do not inherit a
-listed item’s rank; dashboard-written orders list every open item, so this
+a numbered list (`1. 012-search-ranking`, ASCII digits); other lines are ignored.
+Names in 3-done/ or 4-dropped/ (or their month folders) are skipped unless an
+open item has the same name; an unknown or repeated name is an error.
+Without the file there is no owner order; the three tiers below still apply.
+Unlisted blockers do not inherit a listed item’s rank; dashboard-written orders list every open item, so this
 only affects hand-written partial lists.
 
 The table is a topological order of the open items: an item never precedes an
@@ -23,7 +24,8 @@ point it picks: active items, then planned items that an active item is
 unlisted), ready before not ready, more open items transitively unblocked
 first, then the stage order from the
 `Stages:` line in `.bc-agent/AGENTS.md` (default: now, next, later,
-unscheduled), then the name. `--check` writes nothing and exits 1 while the
+unscheduled), then the name. A valid owner order is a fixed point: ranking by
+it reproduces it. `--check` writes nothing and exits 1 while the
 table is out of date. Python 3.9 or later, standard library only.
 """
 from __future__ import annotations
@@ -37,7 +39,7 @@ START = "<!-- work-index:start -->"
 END = "<!-- work-index:end -->"
 COMMAND = "python3 .bc-agent/scripts/work_index.py"
 ITEM_NAME = re.compile(r"^\d{3}-")
-ORDER_LINE = re.compile(r"^\s*\d+\.\s+(\d{3}-\S+)\s*$")
+ORDER_LINE = re.compile(r"^\s*\d+\.\s+(\d{3}-\S+)\s*$", re.ASCII)
 MONTH = re.compile(r"^\d{4}-\d{2}$")
 LINK = re.compile(r"!?\[([^\]]+)\]\((?:[^()]|\([^()]*\))*\)")
 ABBREVIATION = re.compile(r"\b(?:e\.g|i\.e|vs|etc|Mr|Mrs|Ms|Dr)\.$", re.I)
@@ -120,8 +122,9 @@ def closed_names(work: Path) -> dict[str, str]:
     """Map each done or dropped item name to its status folder."""
     names = {}
     folders = ["3-done", "4-dropped"]
-    if (work / "3-done").is_dir():
-        folders += [f"3-done/{m.name}" for m in (work / "3-done").iterdir() if m.is_dir() and MONTH.match(m.name)]
+    for top in ("3-done", "4-dropped"):
+        if (work / top).is_dir():
+            folders += [f"{top}/{m.name}" for m in (work / top).iterdir() if m.is_dir() and MONTH.match(m.name)]
     for folder in folders:
         for name in entries(work, folder):
             names[name.removesuffix(".md")] = folder.split("/")[0]
