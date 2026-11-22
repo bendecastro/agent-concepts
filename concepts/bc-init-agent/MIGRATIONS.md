@@ -327,7 +327,9 @@ can move up even in a project with no `order.md`. To adopt it in an existing pro
 
 1. Copy the script: `cp "$AGENT_CONCEPTS/concepts/bc-init-agent/body/work_index.py" .bc-agent/scripts/`.
 2. Optionally copy the `work/order.md` rule from a fresh scaffold's `.bc-agent/AGENTS.md` into the
-   Work items section.
+   Work items section, and replace any older summary of the table order in the `Stage:` and
+   `Blocked by:` rules and in `work/README.md` with the fresh scaffold's wording (three tiers;
+   regenerate after changing `order.md`).
 3. Run `python3 .bc-agent/scripts/work_index.py`, then `--check`.
 
 ## Design README

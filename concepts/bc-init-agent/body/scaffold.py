@@ -1408,16 +1408,16 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   life, and the steps already are the slice map, so separate slice files would drift.
 - **Every open item has a `Stage:` line** directly under `Done when:`, naming one of the
   stages listed in order on the `Stages:` line below. Run `python3 .bc-agent/scripts/work_index.py`
-  after adding, moving or changing an item; it rebuilds the table in
-  [work/README.md](../work/README.md), ordered by `Blocked by:` with the stage as the tiebreak,
-  and `--check` fails while it is stale.
+  after adding, moving or changing an item or `work/order.md`; it rebuilds the table in
+  [work/README.md](../work/README.md) in the order described below, and `--check` fails while
+  it is stale.
   On a merge conflict inside the work-index markers, take either side and re-run the script.
   Why: the order of the pipeline is visible on one page without a second list to keep in step.
 - **Every open item has a `Blocked by:` line** under `Stage:`. It names the items that must
   finish first, by full name (`012-search-ranking`, comma-separated), or `nothing`.
-  `work_index.py` rejects unknown names, dropped blockers, self-blocks and cycles, and orders
-  the table by it: active items first, then ready ones, those unblocking the most work leading.
-  Why: the order is derived from what each item waits for, so it cannot drift from a hand-kept list.
+  `work_index.py` rejects unknown names, dropped blockers, self-blocks and cycles, and never
+  puts an item before what it waits for.
+  Why: what each item waits for is written once, on the item, where it changes.
 - **The owner may rank open items in `work/order.md`**, a numbered list of item names, top
   first (`1. 012-search-ranking`). The table has three tiers: active items, then planned items
   an active item waits on, then other planned items. Within each tier listed items come first,
@@ -1569,11 +1569,12 @@ The pipeline of work items. The folder an item sits in is its status:
 - [`4-dropped/`](4-dropped/): dropped, with the reason.
 
 Each open item names its stage on a `Stage:` line and the items it waits for on a `Blocked by:`
-line. The table below lists them so that no item comes before what it waits for: active items
-first, then ready ones, those unblocking the most work leading, then by the order of the
-`Stages:` line in [.bc-agent/AGENTS.md](../.bc-agent/AGENTS.md#work-items), then by number.
-It is generated: run `python3 .bc-agent/scripts/work_index.py` after changing an item;
-`--check` fails while it is out of date.
+line. The table below never puts an item before what it waits for, and has three tiers: active
+items, then planned items an active item waits on, then other planned items; the owner's
+ranking in `order.md`, when present, orders each tier, before the `Stages:` line and the
+number (see [.bc-agent/AGENTS.md](../.bc-agent/AGENTS.md#work-items)).
+It is generated: run `python3 .bc-agent/scripts/work_index.py` after changing an item or
+`order.md`; `--check` fails while it is out of date.
 Write project-specific notes outside the markers; the script keeps them.
 
 <!-- work-index:start -->

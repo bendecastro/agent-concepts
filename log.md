@@ -1866,3 +1866,6 @@ work_index.py ranks planned transitive blockers of active items right after the 
 
 ## [2026-11-22] implement | bc-init-agent owner order round 3
 The three tiers apply with or without `work/order.md` (spec amended); dropped month folders count as closed, an open item wins over a closed one of the same name, order-line digits are ASCII. Scaffold, MIGRATIONS, SKILL and CONCEPT now describe the tiers; `Blocked by:` stays required. New tests plus a stronger property (a ready active item precedes every planned item).
+
+## [2026-11-22] implement | bc-init-agent owner order round 4
+Order-file lines split on \r\n, \r or \n with space/tab-only whitespace and ASCII digits (shared spec with the dashboard); the Dropped count includes month folders; bad stages and bad order.md names are reported in one pass. Scaffold README and work rules, MIGRATIONS and index.md describe the three tiers and regenerating after changing order.md.

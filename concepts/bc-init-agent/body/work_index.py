@@ -11,6 +11,7 @@ its blockers are done.
 
 The optional work/order.md is the owner's ranking of open items, top first, as
 a numbered list (`1. 012-search-ranking`, ASCII digits); other lines are ignored.
+Lines end at \r\n, \r or \n; whitespace in a line is space or tab only.
 Names in 3-done/ or 4-dropped/ (or their month folders) are skipped unless an
 open item has the same name; an unknown or repeated name is an error.
 Without the file there is no owner order; the three tiers below still apply.
@@ -39,7 +40,7 @@ START = "<!-- work-index:start -->"
 END = "<!-- work-index:end -->"
 COMMAND = "python3 .bc-agent/scripts/work_index.py"
 ITEM_NAME = re.compile(r"^\d{3}-")
-ORDER_LINE = re.compile(r"^\s*\d+\.\s+(\d{3}-\S+)\s*$", re.ASCII)
+ORDER_LINE = re.compile(r"^[ \t]*[0-9]+\.[ \t]+([0-9]{3}-[^ \t]+)[ \t]*$")
 MONTH = re.compile(r"^\d{4}-\d{2}$")
 LINK = re.compile(r"!?\[([^\]]+)\]\((?:[^()]|\([^()]*\))*\)")
 ABBREVIATION = re.compile(r"\b(?:e\.g|i\.e|vs|etc|Mr|Mrs|Ms|Dr)\.$", re.I)
@@ -118,20 +119,24 @@ def read_item(work: Path, folder: str, name: str, stages: tuple[str, ...]) -> di
     }
 
 
+def archive_folders(work: Path, top: str) -> list[str]:
+    """A status folder plus its month folders."""
+    folders = [top]
+    if (work / top).is_dir():
+        folders += [f"{top}/{m.name}" for m in (work / top).iterdir() if m.is_dir() and MONTH.match(m.name)]
+    return folders
+
+
 def closed_names(work: Path) -> dict[str, str]:
     """Map each done or dropped item name to its status folder."""
     names = {}
-    folders = ["3-done", "4-dropped"]
-    for top in ("3-done", "4-dropped"):
-        if (work / top).is_dir():
-            folders += [f"{top}/{m.name}" for m in (work / top).iterdir() if m.is_dir() and MONTH.match(m.name)]
-    for folder in folders:
+    for folder in archive_folders(work, "3-done") + archive_folders(work, "4-dropped"):
         for name in entries(work, folder):
             names[name.removesuffix(".md")] = folder.split("/")[0]
     return names
 
 
-def read_owner_order(work: Path, open_items: dict, closed: dict[str, str]) -> tuple[dict[str, int], list[str]]:
+def read_owner_order(work: Path, open_items: dict | set, closed: dict[str, str]) -> tuple[dict[str, int], list[str]]:
     """Rank of each open item listed in work/order.md, plus errors for unknown or repeated names."""
     path = work / "order.md"
     if not path.is_file():
@@ -139,7 +144,7 @@ def read_owner_order(work: Path, open_items: dict, closed: dict[str, str]) -> tu
     rank: dict[str, int] = {}
     seen: set[str] = set()
     errors = []
-    for line in read_text(path).splitlines():
+    for line in re.split(r"\r\n|\r|\n", read_text(path)):
         match = ORDER_LINE.match(line)
         if not match:
             continue
@@ -251,12 +256,12 @@ def build_block(work: Path, stages: tuple[str, ...]) -> str:
             except StageError as error:
                 errors.append(str(error))
     if errors:
+        open_names = {n.removesuffix(".md") for f in ("2-active", "1-planned") for n in entries(work, f)}
+        errors += read_owner_order(work, open_names, closed_names(work))[1]
         raise WorkIndexError("\n".join(errors))
     items = order_items(work, items, stages)
-    done = len(entries(work, "3-done"))
-    if (work / "3-done").is_dir():
-        done += sum(len(entries(work, f"3-done/{month.name}"))
-                    for month in (work / "3-done").iterdir() if month.is_dir() and MONTH.match(month.name))
+    done = sum(len(entries(work, f)) for f in archive_folders(work, "3-done"))
+    dropped = sum(len(entries(work, f)) for f in archive_folders(work, "4-dropped"))
     ideas_path = work / "0-ideas.md"
     if not ideas_path.is_file():
         raise WorkIndexError("0-ideas.md: missing")
@@ -272,7 +277,7 @@ def build_block(work: Path, stages: tuple[str, ...]) -> str:
         "",
         f"- [Ideas](0-ideas.md): {ideas}",
         f"- [Done](3-done/): {done}",
-        f"- [Dropped](4-dropped/): {len(entries(work, '4-dropped'))}",
+        f"- [Dropped](4-dropped/): {dropped}",
         END,
     ])
 

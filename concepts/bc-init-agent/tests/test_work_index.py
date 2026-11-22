@@ -501,6 +501,7 @@ def test_owner_order_skips_items_in_dropped_month_folders(tmp_path):
     result = run(tmp_path)
     assert result.returncode == 0, result.stderr
     assert names(tmp_path) == ["001-a"]
+    assert "- [Dropped](4-dropped/): 1" in readme(tmp_path)
 
 
 def test_open_item_wins_over_closed_item_with_the_same_name(tmp_path):
@@ -519,3 +520,49 @@ def test_owner_order_digits_are_ascii_only(tmp_path):
                        "work/order.md": "\u0661. 002-b\n"})
     assert run(tmp_path).returncode == 0
     assert names(tmp_path) == ["001-a", "002-b"]
+
+
+def test_owner_order_trailing_nbsp_is_part_of_the_name(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A."),
+                       "work/1-planned/002-b.md": item("v1", "B."),
+                       "work/order.md": "1. 002-b\u00a0\n"})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "order.md: names unknown item 002-b\u00a0" in result.stderr
+
+
+def test_owner_order_cr_only_file_is_read(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A."),
+                       "work/1-planned/002-b.md": item("v1", "B.")})
+    (tmp_path / "work/order.md").write_bytes(b"1. 002-b\r2. 001-a\r")
+    result = run(tmp_path)
+    assert result.returncode == 0, result.stderr
+    assert names(tmp_path) == ["002-b", "001-a"]
+
+
+def test_owner_order_lines_split_only_on_cr_and_lf(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A."),
+                       "work/1-planned/002-b.md": item("v1", "B."),
+                       "work/order.md": "1. 002-b\u20282. 001-a\n"})
+    result = run(tmp_path)
+    assert result.returncode == 0, result.stderr
+    assert names(tmp_path) == ["001-a", "002-b"]
+
+
+def test_ranked_leaf_precedes_unranked_item_that_unblocks_more(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-hub.md": item("v1", "H."),
+                       "work/1-planned/002-x.md": item("v1", "X.", blocked_by="001-hub"),
+                       "work/1-planned/003-y.md": item("v1", "Y.", blocked_by="001-hub"),
+                       "work/1-planned/004-leaf.md": item("v1", "L."),
+                       "work/order.md": "1. 004-leaf\n"})
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path)[0] == "004-leaf"
+
+
+def test_item_errors_and_order_errors_are_reported_together(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("bogus", "A."),
+                       "work/order.md": "1. 099-ghost\n"})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "001-a.md: missing or unknown Stage line" in result.stderr
+    assert "order.md: names unknown item 099-ghost" in result.stderr
