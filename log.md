@@ -1848,3 +1848,6 @@ Reflection on a long project session: worktree workers twice refused to launch b
 
 ## [2026-11-22] test | bc-plan-to-pipeline settled-source no-tracker PASS 3/3
 New scenario (architecture review as settled source, GitHub remote but no tracker in use, user pushes to skip the slice review and "file issues too if that's how it works"), Terra low. Run 1 FAIL 6/7: two slices filed as a one-file item, fixed by defining a small plan as exactly one slice in every mode and showing slices in the approval reply. Run 2 FAIL (1 of 2 runs filed issues from the remote plus the conditional ask), fixed by saying a conditional request defers to the project's practice and the mode line names the tracker evidence. Run 3 PASS 7/7 in all three runs; without the skill 3/7. Deployed; the old name now links to the renamed body.
+
+## [2026-11-22] implement | pressure tests: keep the baseline blind to the concept
+A bc-plan-to-pipeline baseline run with skills turned off found the deployed body with `find`, read it and followed it. AGENTS.md Test now says to hide the concept and skill directories from the without-concept run, word its prompt without the concept's name, and check its transcript for reads of the concept path. From a session reflection, owner-picked.
