@@ -314,6 +314,19 @@ project:
 The `bc-work-sync` skill reports open items with no `Blocked by:` line and blockers naming unknown
 or dropped items.
 
+## Owner order
+
+Since 2026-11-22 `work_index.py` reads an optional `work/order.md`: the owner's ranking of open
+items, top first, one numbered line each (`1. 012-search-ranking`); other lines are ignored.
+Listed items follow the active ones in that order, before unlisted ones; an item still never comes
+before an open item it is blocked by. Done and dropped names are skipped; an unknown or repeated
+name is an error. Without the file the table is unchanged. To adopt it in an existing project:
+
+1. Copy the script: `cp "$AGENT_CONCEPTS/concepts/bc-init-agent/body/work_index.py" .bc-agent/scripts/`.
+2. Optionally copy the `work/order.md` rule from a fresh scaffold's `.bc-agent/AGENTS.md` into the
+   Work items section.
+3. Run `python3 .bc-agent/scripts/work_index.py`, then `--check`.
+
 ## Design README
 
 Since 2026-11-21 the code, ops and hybrid scaffold also writes `docs/design/README.md`, the entry

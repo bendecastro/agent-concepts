@@ -35,7 +35,7 @@ A project without the table is not ready for this skill: say so and stop.
 
 ## Stages
 
-The project lists its stages in order on a `Stages:` line in `.bc-agent/AGENTS.md`; without one, the stages are `now, next, later, unscheduled`, and the plan proposes adding the line. Every open item (in work-planned or work-active) has a `Stage:` line directly under `Done when:` naming one of them. Every open item also has a `Blocked by:` line naming the items it waits for, or `nothing`. `python3 .bc-agent/scripts/work_index.py --check` reports a missing or unknown stage, a missing `Blocked by:` line, and blockers naming unknown, dropped or the item itself, or forming a cycle; run it while reading.
+The project lists its stages in order on a `Stages:` line in `.bc-agent/AGENTS.md`; without one, the stages are `now, next, later, unscheduled`, and the plan proposes adding the line. Every open item (in work-planned or work-active) has a `Stage:` line directly under `Done when:` naming one of them. Every open item also has a `Blocked by:` line naming the items it waits for, or `nothing`. `python3 .bc-agent/scripts/work_index.py --check` reports a missing or unknown stage, a missing `Blocked by:` line, and blockers naming unknown, dropped or the item itself, or forming a cycle, and unknown or repeated names in the owner's optional ranking `work/order.md`; run it while reading.
 
 ## When docs and items disagree
 

@@ -9,9 +9,16 @@ or `nothing`. Unknown names, dropped blockers, self-blocks and cycles among open
 items are errors. A blocker in 3-done/ is satisfied; an item is ready when all
 its blockers are done.
 
-The table is a topological order of the open items. Among the items available
-at each point it picks: active before planned, ready before not ready, more
-open items transitively unblocked first, then the stage order from the
+The optional work/order.md is the owner's ranking of open items, top first, as
+a numbered list (`1. 012-search-ranking`); other lines are ignored. Names in
+3-done/ or 4-dropped/ are skipped; an unknown or repeated name is an error.
+Without the file there is no owner order.
+
+The table is a topological order of the open items: an item never precedes an
+open item it is transitively blocked by. Among the items available at each
+point it picks: active before planned, then owner order (listed before
+unlisted), ready before not ready, more open items transitively unblocked
+first, then the stage order from the
 `Stages:` line in `.bc-agent/AGENTS.md` (default: now, next, later,
 unscheduled), then the name. `--check` writes nothing and exits 1 while the
 table is out of date. Python 3.9 or later, standard library only.
@@ -27,6 +34,7 @@ START = "<!-- work-index:start -->"
 END = "<!-- work-index:end -->"
 COMMAND = "python3 .bc-agent/scripts/work_index.py"
 ITEM_NAME = re.compile(r"^\d{3}-")
+ORDER_LINE = re.compile(r"^\s*\d+\.\s+(\d{3}-\S+)\s*$")
 MONTH = re.compile(r"^\d{4}-\d{2}$")
 LINK = re.compile(r"!?\[([^\]]+)\]\((?:[^()]|\([^()]*\))*\)")
 ABBREVIATION = re.compile(r"\b(?:e\.g|i\.e|vs|etc|Mr|Mrs|Ms|Dr)\.$", re.I)
@@ -117,10 +125,34 @@ def closed_names(work: Path) -> dict[str, str]:
     return names
 
 
+def read_owner_order(work: Path, open_items: dict, closed: dict[str, str]) -> tuple[dict[str, int], list[str]]:
+    """Rank of each open item listed in work/order.md, plus errors for unknown or repeated names."""
+    path = work / "order.md"
+    if not path.is_file():
+        return {}, []
+    rank: dict[str, int] = {}
+    seen: set[str] = set()
+    errors = []
+    for line in read_text(path).splitlines():
+        match = ORDER_LINE.match(line)
+        if not match:
+            continue
+        name = match.group(1)
+        if name in seen:
+            errors.append(f"order.md: names {name} more than once")
+            continue
+        seen.add(name)
+        if name in open_items:
+            rank[name] = len(rank)
+        elif name not in closed:
+            errors.append(f"order.md: names unknown item {name}")
+    return rank, errors
+
+
 def order_items(work: Path, items: list[dict], stages: tuple[str, ...]) -> list[dict]:
     open_items = {i["name"]: i for i in items}
     closed = closed_names(work)
-    errors = []
+    rank, errors = read_owner_order(work, open_items, closed)
     for i in items:
         for b in i["blockers"]:
             if b == i["name"]:
@@ -151,7 +183,7 @@ def order_items(work: Path, items: list[dict], stages: tuple[str, ...]) -> list[
 
     def key(n: str) -> tuple:
         i = open_items[n]
-        return (i["folder"] != "active", bool(waits[n]), -len(reach(n, set())), stages.index(i["stage"]), n)
+        return (i["folder"] != "active", rank.get(n, float("inf")), bool(waits[n]), -len(reach(n, set())), stages.index(i["stage"]), n)
 
     for n, i in open_items.items():
         i["waits"] = ", ".join(f"[{b}]({open_items[b]['path']})" for b in waits[n]) or "—"

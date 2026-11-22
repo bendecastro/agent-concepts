@@ -299,3 +299,68 @@ def test_waits_on_and_unblocks_columns(tmp_path):
         "| 2 | [002-b](1-planned/002-b.md) | planned | [001-a](1-planned/001-a.md) | 003-c | B. | 0/1 |",
         "| 3 | [003-c](1-planned/003-c/plan.md) | planned | [001-a](1-planned/001-a.md), [002-b](1-planned/002-b.md) | — | C. | 0/1 |",
     ]
+
+
+ORDER_HEADER = "# Order\n\nThe owner's ranking of open work items, top first.\n\n"
+
+
+def test_owner_order_ranks_items_without_dependencies(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-a.md": item("v1", "A."),
+        "work/1-planned/002-b.md": item("v1", "B."),
+        "work/1-planned/003-c.md": item("unscheduled", "C."),
+        "work/1-planned/004-d.md": item("v1", "D."),
+        "work/order.md": ORDER_HEADER + "1. 003-c\n2. 002-b\n",
+    })
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["003-c", "002-b", "001-a", "004-d"]
+
+
+def test_active_items_precede_owner_order(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-a.md": item("v1", "A."),
+        "work/2-active/002-b.md": item("v1", "B."),
+        "work/order.md": "1. 001-a\n2. 002-b\n",
+    })
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["002-b", "001-a"]
+
+
+def test_blockers_override_owner_order(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-a.md": item("v1", "A."),
+        "work/1-planned/002-b.md": item("v1", "B.", blocked_by="001-a"),
+        "work/1-planned/003-c.md": item("v1", "C."),
+        "work/order.md": "1. 002-b\n2. 003-c\n",
+    })
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["003-c", "001-a", "002-b"]
+
+
+def test_owner_order_ignores_closed_items_and_other_lines(tmp_path):
+    fixture(tmp_path, {
+        "work/3-done/2026-11/005-old.md": "x",
+        "work/4-dropped/006-gone.md": "x",
+        "work/1-planned/001-a.md": item("v1", "A."),
+        "work/1-planned/002-b.md": item("v1", "B."),
+        "work/order.md": ORDER_HEADER + "1. 005-old\n2. 006-gone\n- 001-a\n3. 002-b\n",
+    })
+    result = run(tmp_path)
+    assert result.returncode == 0, result.stderr
+    assert names(tmp_path) == ["002-b", "001-a"]
+
+
+def test_owner_order_unknown_name_is_an_error(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A."),
+                       "work/order.md": "1. 099-ghost\n"})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "order.md: names unknown item 099-ghost" in result.stderr
+
+
+def test_owner_order_duplicate_name_is_an_error(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A."),
+                       "work/order.md": "1. 001-a\n2. 001-a\n"})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "order.md: names 001-a more than once" in result.stderr

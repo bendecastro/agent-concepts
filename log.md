@@ -1854,3 +1854,6 @@ A bc-plan-to-pipeline baseline run with skills turned off found the deployed bod
 
 ## [2026-11-22] implement | bc-init-agent + bc-work-sync: Blocked-by work pipeline
 Ported the owner's Blocked-by rule set: `work_index.py` requires a `Blocked by:` line, rejects unknown/dropped/self/cyclic blockers and orders the table topologically (stage as tiebreak); template line, four AGENTS.md rules, MIGRATIONS "Blocked by". bc-work-sync now reports missing or invalid Blocked by lines. Pressure test of the new rules still owed.
+
+## [2026-11-22] implement | bc-init-agent: owner order in work/order.md
+`work_index.py` reads an optional `work/order.md` (numbered item names) and ranks listed items right after active ones, blockers still winning; unknown or repeated names are errors. Generated Work items rule, SKILL/CONCEPT/MIGRATIONS "Owner order", bc-work-sync check line. Shared spec with the owner's dashboard.
