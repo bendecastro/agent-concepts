@@ -1833,3 +1833,6 @@ bc-swarm `pi.md` (run-dir line, example `OUT`, why + 7-day automatic cleanup) an
 
 ## [2026-11-21] implement | design README template: review-conventions link, stricter ask-cases, test suites
 Scaffold `DESIGN_README` gains an optional link line for a project's screenshot/review conventions page, folds a project's **Stricter ask-cases** into the "only when" ask list (still no asking on taste calls), and says "test suites"; `ui-design` design-framework.md ask wording matches. Reason: adoption feedback from a project using the template.
+
+## [2026-11-21] implement | ui-design: Modern Web Guidance as a pinned lookup
+surfaces.md Web bullet now gives the search/retrieve command (version 1.0.1, telemetry off) instead of a vague pointer; the upstream skill is not installed because its trigger fires first on every web task.
