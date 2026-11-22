@@ -33,6 +33,8 @@ The script goes in `options.script`; do not also pass `workflow: true` (the tool
 
 Pick roles by authority, not convenience: `scout` for bounded recon, `researcher` for external facts, `reviewer` for independent critique, `oracle` for hard judgment. Fan-out of `scout` children is the common shape.
 
+Before sending a `reviewer` to check a worktree worker's commit, write `git diff <baseCommit> <tip>` to a file in the run directory and give the reviewer that path. Why: the reviewer role has no shell, and once the worker's worktree is cleaned up the commit exists only as git objects it cannot read (2026-11-21: a reviewer stopped and asked for the diff).
+
 For ordinary dispatch, omit both `model` and child `thinking` when the selected role's configured route is correct. Child `thinking` is not a routing control: current child execution ignores it. If an explicit override is needed, preserve the full effective model value, including its thinking suffix, for example:
 
 ```js

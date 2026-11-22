@@ -1836,3 +1836,6 @@ Scaffold `DESIGN_README` gains an optional link line for a project's screenshot/
 
 ## [2026-11-21] implement | ui-design: Modern Web Guidance as a pinned lookup
 surfaces.md Web bullet now gives the search/retrieve command (version 1.0.1, telemetry off) instead of a vague pointer; the upstream skill is not installed because its trigger fires first on every web task.
+
+## [2026-11-22] implement | bc-swarm pi.md: give reviewers the worker diff as a file
+Reflection on the design-framework session: a reviewer without a shell could not read a cleaned-up worktree commit. pi.md now tells the parent to write `git diff <base> <tip>` to the run directory first. Dispatch-mechanics note, not a new gate; no pressure test run.
