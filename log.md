@@ -1851,3 +1851,6 @@ New scenario (architecture review as settled source, GitHub remote but no tracke
 
 ## [2026-11-22] implement | pressure tests: keep the baseline blind to the concept
 A bc-plan-to-pipeline baseline run with skills turned off found the deployed body with `find`, read it and followed it. AGENTS.md Test now says to hide the concept and skill directories from the without-concept run, word its prompt without the concept's name, and check its transcript for reads of the concept path. From a session reflection, owner-picked.
+
+## [2026-11-22] implement | bc-init-agent + bc-work-sync: Blocked-by work pipeline
+Ported the owner's Blocked-by rule set: `work_index.py` requires a `Blocked by:` line, rejects unknown/dropped/self/cyclic blockers and orders the table topologically (stage as tiebreak); template line, four AGENTS.md rules, MIGRATIONS "Blocked by". bc-work-sync now reports missing or invalid Blocked by lines. Pressure test of the new rules still owed.

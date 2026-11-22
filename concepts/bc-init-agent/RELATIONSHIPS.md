@@ -54,7 +54,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-wiki-maintain/CONCEPT.md](../bc-wiki-maintain/CONCEPT.md)
 
 - incoming from [bc-work-sync](../bc-work-sync/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, and runs the scaffolded .bc-agent/scripts/work_index.py.
+  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line and Blocked by lines, and runs the scaffolded .bc-agent/scripts/work_index.py.
   Source: [bc-work-sync/body/SKILL.md](../bc-work-sync/body/SKILL.md)
 
 - incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.

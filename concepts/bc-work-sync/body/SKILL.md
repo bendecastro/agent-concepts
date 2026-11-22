@@ -35,7 +35,7 @@ A project without the table is not ready for this skill: say so and stop.
 
 ## Stages
 
-The project lists its stages in order on a `Stages:` line in `.bc-agent/AGENTS.md`; without one, the stages are `now, next, later, unscheduled`, and the plan proposes adding the line. Every open item (in work-planned or work-active) has a `Stage:` line directly under `Done when:` naming one of them. `python3 .bc-agent/scripts/work_index.py --check` reports a missing or unknown stage; run it while reading.
+The project lists its stages in order on a `Stages:` line in `.bc-agent/AGENTS.md`; without one, the stages are `now, next, later, unscheduled`, and the plan proposes adding the line. Every open item (in work-planned or work-active) has a `Stage:` line directly under `Done when:` naming one of them. Every open item also has a `Blocked by:` line naming the items it waits for, or `nothing`. `python3 .bc-agent/scripts/work_index.py --check` reports a missing or unknown stage, a missing `Blocked by:` line, and blockers naming unknown, dropped or the item itself, or forming a cycle; run it while reading.
 
 ## When docs and items disagree
 
@@ -53,8 +53,9 @@ Look for each of these; [PLAN.md](PLAN.md) gives the plan's format.
 4. Planned items whose work already landed in commits: name the commits.
 5. Lines in the ideas file that became items: remove the line.
 6. Open items with no or an unknown `Stage:` line, and a missing `Stages:` line.
-7. Links to items by path in docs or other items: docs refer to items by number ("work item 012"); only the generated `work/README.md` links paths.
-8. Questions for the owner, each with numbered options and the recommended one first.
+7. Open items with no `Blocked by:` line, and `Blocked by:` names that are unknown, dropped (in work-dropped), the item itself or part of a cycle: propose the real blockers, or a changed plan for a dropped one. A project whose items have no `Blocked by:` lines at all needs the "Blocked by" note in bc-init-agent's `MIGRATIONS.md`; propose it.
+8. Links to items by path in docs or other items: docs refer to items by number ("work item 012"); only the generated `work/README.md` links paths.
+9. Questions for the owner, each with numbered options and the recommended one first.
 
 ## After the owner approves
 

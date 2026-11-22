@@ -692,10 +692,10 @@ def test_work_readme_explains_folders_and_index_runs_on_fresh_scaffold(tmp_path,
     script = root / '.bc-agent/scripts/work_index.py'
     subprocess.run([sys.executable, str(script), '--check'], check=True, cwd=root)
     item = root / 'work/1-planned/001-first.md'
-    item.write_text('# First\n\nWhy: Start.\nDone when: x.\nStage: next\n\n## Steps\n\n- [ ] a\n')
+    item.write_text('# First\n\nWhy: Start.\nDone when: x.\nStage: next\nBlocked by: nothing\n\n## Steps\n\n- [ ] a\n')
     subprocess.run([sys.executable, str(script)], check=True, cwd=root)
     subprocess.run([sys.executable, str(script), '--check'], check=True, cwd=root)
-    assert '| next | [001-first](1-planned/001-first.md) | planned | Start. | 0/1 |' in (root / 'work/README.md').read_text()
+    assert '| 1 | [001-first](1-planned/001-first.md) | planned | — | — | Start. | 0/1 |' in (root / 'work/README.md').read_text()
 
 
 def test_force_keeps_the_projects_work_readme(tmp_path):

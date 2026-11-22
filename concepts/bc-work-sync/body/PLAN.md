@@ -9,9 +9,9 @@ Sources read: <requirements path>, <decisions path> (latest entry: <number/date>
 Stages: <the Stages: line, or "none; propose adding `Stages: now, next, later, unscheduled`">
 
 ### New items
-| # | Title | Stage | From |
-| --- | --- | --- | --- |
-| new | <title> | <stage> | <doc and section, or issue #N> |
+| # | Title | Stage | Blocked by | From |
+| --- | --- | --- | --- | --- |
+| new | <title> | <stage> | <item names, or nothing> | <doc and section, or issue #N> |
 
 ### Moves
 - work item <NNN>: <from> → <to> — <why: all steps checked / work landed in <short SHA> "<subject>">

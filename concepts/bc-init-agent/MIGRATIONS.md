@@ -285,6 +285,35 @@ items section of `.bc-agent/AGENTS.md`, "run the index" in three Keep-it-current
 
 The `bc-work-sync` skill proposes these steps in its plan when a project lacks them.
 
+## Blocked by
+
+Since 2026-11-22 every open work item in a visible-layout project names what it waits for on a
+`Blocked by:` line under `Stage:`: full item names, comma-separated, or `nothing`. The script
+rejects a missing line, an unknown or dropped blocker, a self-block and a cycle, and orders the
+table topologically (active, then ready, then most open items unblocked, then stage, then name),
+with `#`, `Waits on` and `Unblocks` columns. The generated `.bc-agent/AGENTS.md` gains four rules
+(every open item has a `Blocked by:` line; a building block gets its own item; look for overlap
+before creating an item; one item, one deliverable). To adopt it in an existing visible-layout
+project:
+
+1. Copy the script: `cp "$AGENT_CONCEPTS/concepts/bc-init-agent/body/work_index.py" .bc-agent/scripts/`.
+   Its tests live in the concept (`tests/test_work_index.py`); a project that keeps its own copy
+   of tests for the script updates them in the same change.
+2. Add `Blocked by: <full names of the items this waits for, such as 012-search-ranking, or "nothing">`
+   under `Stage:` in `.bc-agent/templates/work-item.md`.
+3. In the Work items section of `.bc-agent/AGENTS.md`, copy the four rules from a fresh scaffold,
+   and say in the `Stage:` rule that the table is ordered by `Blocked by:` with the stage as the
+   tiebreak. Update any prose in `work/README.md` that says the table is ordered by stage.
+4. Give every item in `work/1-planned/` and `work/2-active/` a real `Blocked by:` line: read each
+   item and name the items whose result it needs, or `nothing`. Do not write `nothing` everywhere
+   to get the script to pass; the order is only as true as these lines. Where two items wait on
+   one step of a third, split that step into its own item first.
+5. Run `python3 .bc-agent/scripts/work_index.py`. It fails, naming the item, until every open item
+   has a valid line; then `--check` passes.
+
+The `bc-work-sync` skill reports open items with no `Blocked by:` line and blockers naming unknown
+or dropped items.
+
 ## Design README
 
 Since 2026-11-21 the code, ops and hybrid scaffold also writes `docs/design/README.md`, the entry

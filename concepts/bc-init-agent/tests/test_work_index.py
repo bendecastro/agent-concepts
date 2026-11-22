@@ -8,8 +8,9 @@ README = "# Work\n\nIntro.\n\n<!-- work-index:start -->\n<!-- work-index:end -->
 STAGES_AGENTS = "# demo\n\n## Work items\n\nStages: v1, v1.x, stage 1, stage 2, stage 4, unscheduled\n"
 
 
-def item(stage, why, steps="- [ ] one\n"):
-    return f"# Title\n\nWhy: {why}\nDone when: x.\nStage: {stage}\n\n## Steps\n\n{steps}\n## Outcome\n"
+def item(stage, why, steps="- [ ] one\n", blocked_by="nothing"):
+    blocked = "" if blocked_by is None else f"Blocked by: {blocked_by}\n"
+    return f"# Title\n\nWhy: {why}\nDone when: x.\nStage: {stage}\n{blocked}\n## Steps\n\n{steps}\n## Outcome\n"
 
 
 def fixture(root, files, agents=STAGES_AGENTS):
@@ -32,10 +33,14 @@ def readme(root):
 
 
 def rows(root):
-    return [line for line in readme(root).splitlines() if line.startswith("| ") and not line.startswith(("| Stage", "| ---"))]
+    return [line for line in readme(root).splitlines() if line.startswith("| ") and not line.startswith(("| #", "| ---"))]
 
 
-def test_table_is_ordered_by_stages_line_then_number(tmp_path):
+def names(root):
+    return [row.split("[", 1)[1].split("]", 1)[0] for row in rows(root)]
+
+
+def test_unblocked_items_are_ordered_active_then_by_stages_line_then_number(tmp_path):
     fixture(tmp_path, {
         "work/1-planned/009-ai.md": item("stage 4", "Smart. Second sentence."),
         "work/1-planned/007-unsched.md": item("unscheduled", "Later."),
@@ -47,15 +52,15 @@ def test_table_is_ordered_by_stages_line_then_number(tmp_path):
     result = run(tmp_path)
     assert result.returncode == 0, result.stderr
     assert rows(tmp_path) == [
-        "| v1 | [001-v1](2-active/001-v1/plan.md) | active | Ship it. | 0/1 |",
-        "| v1.x | [006-mobile](1-planned/006-mobile.md) | planned | Phones. | 0/1 |",
-        "| stage 2 | [004-more](1-planned/004-more.md) | planned | More. | 0/1 |",
-        "| stage 2 | [005-columns](1-planned/005-columns/plan.md) | planned | See ADR for a \\| b. | 2/3 |",
-        "| stage 4 | [009-ai](1-planned/009-ai.md) | planned | Smart. | 0/1 |",
-        "| unscheduled | [007-unsched](1-planned/007-unsched.md) | planned | Later. | 0/1 |",
+        "| 1 | [001-v1](2-active/001-v1/plan.md) | active | — | — | Ship it. | 0/1 |",
+        "| 2 | [006-mobile](1-planned/006-mobile.md) | planned | — | — | Phones. | 0/1 |",
+        "| 3 | [004-more](1-planned/004-more.md) | planned | — | — | More. | 0/1 |",
+        "| 4 | [005-columns](1-planned/005-columns/plan.md) | planned | — | — | See ADR for a \\| b. | 2/3 |",
+        "| 5 | [009-ai](1-planned/009-ai.md) | planned | — | — | Smart. | 0/1 |",
+        "| 6 | [007-unsched](1-planned/007-unsched.md) | planned | — | — | Later. | 0/1 |",
     ]
     assert readme(tmp_path).startswith("# Work\n\nIntro.\n\n<!-- work-index:start -->\n")
-    assert "| Stage | Item | Folder | Why | Steps |" in readme(tmp_path)
+    assert "| # | Item | Folder | Waits on | Unblocks | Why | Steps |" in readme(tmp_path)
 
 
 def test_default_stages_when_agents_has_no_stages_line(tmp_path):
@@ -66,13 +71,13 @@ def test_default_stages_when_agents_has_no_stages_line(tmp_path):
         "work/2-active/004-d.md": item("now", "D."),
     }, agents="# demo\n\nNo stages here.\n")
     assert run(tmp_path).returncode == 0
-    assert [row.split(" | ")[0] for row in rows(tmp_path)] == ["| now", "| next", "| later", "| unscheduled"]
+    assert names(tmp_path) == ["004-d", "001-a", "002-b", "003-c"]
 
 
 def test_default_stages_when_agents_file_is_absent(tmp_path):
     fixture(tmp_path, {"work/1-planned/001-a.md": item("now", "A.")}, agents=None)
     assert run(tmp_path).returncode == 0
-    assert rows(tmp_path)[0].startswith("| now |")
+    assert names(tmp_path) == ["001-a"]
 
 
 def test_first_why_sentence_keeps_abbreviations_code_and_nested_links(tmp_path):
@@ -160,7 +165,7 @@ def test_crlf_item_is_read(tmp_path):
     path.parent.mkdir(parents=True)
     path.write_bytes(item("v1", "X.", "- [x] a\n- [ ] b\n").replace("\n", "\r\n").encode())
     assert run(tmp_path).returncode == 0
-    assert "| v1 | [004-x](1-planned/004-x.md) | planned | X. | 1/2 |" in readme(tmp_path)
+    assert "| 1 | [004-x](1-planned/004-x.md) | planned | — | — | X. | 1/2 |" in readme(tmp_path)
 
 
 def test_missing_markers_are_a_clear_error(tmp_path):
@@ -217,3 +222,80 @@ def test_handwritten_tail_survives_two_runs_and_check(tmp_path):
         assert path.read_bytes().endswith(tail)
     assert run(tmp_path, "--check").returncode == 0
     assert path.read_bytes().endswith(tail)
+
+
+def test_missing_blocked_by_line_is_a_clear_error(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A.", blocked_by=None)})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "1-planned/001-a.md: missing Blocked by line" in result.stderr
+
+
+def test_blocked_by_unknown_item_is_an_error(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A.", blocked_by="099-ghost")})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "1-planned/001-a.md: Blocked by names unknown item 099-ghost" in result.stderr
+
+
+def test_blocked_by_dropped_item_is_an_error(tmp_path):
+    fixture(tmp_path, {"work/4-dropped/002-gone.md": "x",
+                       "work/1-planned/001-a.md": item("v1", "A.", blocked_by="002-gone")})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "Blocked by names dropped item 002-gone" in result.stderr
+
+
+def test_blocked_by_itself_is_an_error(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A.", blocked_by="001-a")})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "names the item itself" in result.stderr
+
+
+def test_blocked_by_cycle_is_an_error(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-a.md": item("v1", "A.", blocked_by="002-b"),
+                       "work/1-planned/002-b/plan.md": item("v1", "B.", blocked_by="001-a")})
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "dependency cycle: 001-a -> 002-b -> 001-a" in result.stderr
+
+
+def test_done_blocker_is_satisfied(tmp_path):
+    fixture(tmp_path, {"work/3-done/2026-01/005-old/plan.md": "x",
+                       "work/1-planned/001-a.md": item("v1", "A.", blocked_by="005-old")})
+    assert run(tmp_path).returncode == 0
+    assert "| 1 | [001-a](1-planned/001-a.md) | planned | — | — | A. | 0/1 |" in readme(tmp_path)
+
+
+def test_items_that_unblock_most_come_first(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-few.md": item("v1", "F."),
+        "work/1-planned/002-many.md": item("v1", "M."),
+        "work/1-planned/003-x.md": item("v1", "X.", blocked_by="002-many"),
+        "work/1-planned/004-y.md": item("v1", "Y.", blocked_by="003-x"),
+        "work/1-planned/005-z.md": item("v1", "Z.", blocked_by="001-few"),
+    })
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["002-many", "001-few", "003-x", "004-y", "005-z"]
+
+
+def test_blocked_item_follows_its_blocker_despite_an_earlier_stage(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-late.md": item("unscheduled", "L."),
+                       "work/1-planned/002-early.md": item("v1", "E.", blocked_by="001-late")})
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path) == ["001-late", "002-early"]
+
+
+def test_waits_on_and_unblocks_columns(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-a.md": item("v1", "A."),
+        "work/1-planned/002-b.md": item("v1", "B.", blocked_by="001-a"),
+        "work/1-planned/003-c/plan.md": item("v1", "C.", blocked_by="001-a, 002-b"),
+    })
+    assert run(tmp_path).returncode == 0
+    assert rows(tmp_path) == [
+        "| 1 | [001-a](1-planned/001-a.md) | planned | — | 002-b, 003-c | A. | 0/1 |",
+        "| 2 | [002-b](1-planned/002-b.md) | planned | [001-a](1-planned/001-a.md) | 003-c | B. | 0/1 |",
+        "| 3 | [003-c](1-planned/003-c/plan.md) | planned | [001-a](1-planned/001-a.md), [002-b](1-planned/002-b.md) | — | C. | 0/1 |",
+    ]
