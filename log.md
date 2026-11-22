@@ -1860,3 +1860,6 @@ Ported the owner's Blocked-by rule set: `work_index.py` requires a `Blocked by:`
 
 ## [2026-11-22] implement | bc-init-agent owner order review fixes
 Ignore repeated closed items, clarify partial orders, and add ordering regression coverage.
+
+## [2026-11-22] implement | bc-init-agent owner order: blockers of active items
+work_index.py ranks planned transitive blockers of active items right after the active ones (spec amendment), with an example test and a Hypothesis property over random blockers, folders and partial order.md.

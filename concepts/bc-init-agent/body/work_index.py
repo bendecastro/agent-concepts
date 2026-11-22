@@ -18,7 +18,8 @@ only affects hand-written partial lists.
 
 The table is a topological order of the open items: an item never precedes an
 open item it is transitively blocked by. Among the items available at each
-point it picks: active before planned, then owner order (listed before
+point it picks: active items, then planned items that an active item is
+(transitively) blocked by, then other planned items, then owner order (listed before
 unlisted), ready before not ready, more open items transitively unblocked
 first, then the stage order from the
 `Stages:` line in `.bc-agent/AGENTS.md` (default: now, next, later,
@@ -185,9 +186,18 @@ def order_items(work: Path, items: list[dict], stages: tuple[str, ...]) -> list[
                 reach(d, seen)
         return seen
 
+    feeds_active: set[str] = set()
+    stack = [b for n, i in open_items.items() if i["folder"] == "active" for b in waits[n]]
+    while stack:
+        b = stack.pop()
+        if b not in feeds_active:
+            feeds_active.add(b)
+            stack.extend(waits[b])
+
     def key(n: str) -> tuple:
         i = open_items[n]
-        return (i["folder"] != "active", rank.get(n, float("inf")), bool(waits[n]), -len(reach(n, set())), stages.index(i["stage"]), n)
+        tier = 0 if i["folder"] == "active" else 1 if n in feeds_active else 2
+        return (tier, rank.get(n, float("inf")), bool(waits[n]), -len(reach(n, set())), stages.index(i["stage"]), n)
 
     for n, i in open_items.items():
         i["waits"] = ", ".join(f"[{b}]({open_items[b]['path']})" for b in waits[n]) or "—"

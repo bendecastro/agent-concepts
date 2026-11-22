@@ -405,3 +405,70 @@ def test_closed_name_repetition_property():
             result = run(root)
             assert result.returncode == 0, result.stderr
     check()
+
+
+def owner_order_case(draw):
+    from hypothesis import strategies as st
+    count = draw(st.integers(min_value=1, max_value=7))
+    item_names = [f"{n:03d}-i{n}" for n in range(1, count + 1)]
+    with_blockers = draw(st.booleans())
+    blockers = {n: (sorted(draw(st.sets(st.sampled_from(item_names[:k]), max_size=3))) if with_blockers and k else [])
+                for k, n in enumerate(item_names)}
+    folders = {n: draw(st.sampled_from(["1-planned", "2-active"])) for n in item_names}
+    listed = draw(st.permutations(item_names))[:draw(st.integers(min_value=0, max_value=count))]
+    return item_names, blockers, folders, listed
+
+
+def transitive_blockers(blockers, name):
+    found, stack = set(), list(blockers[name])
+    while stack:
+        b = stack.pop()
+        if b not in found:
+            found.add(b)
+            stack.extend(blockers[b])
+    return found
+
+
+def test_owner_order_property():
+    from hypothesis import given, settings, strategies as st
+    from tempfile import TemporaryDirectory
+
+    @settings(deadline=None, max_examples=60)
+    @given(st.composite(owner_order_case)())
+    def check(case):
+        item_names, blockers, folders, listed = case
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            files = {f"work/{folders[n]}/{n}.md": item("v1", "W.", blocked_by=", ".join(blockers[n]) or "nothing")
+                     for n in item_names}
+            files["work/order.md"] = ORDER_HEADER + "".join(f"{k}. {n}\n" for k, n in enumerate(listed, 1))
+            fixture(root, files)
+            result = run(root)
+            assert result.returncode == 0, result.stderr
+            placed = names(root)
+        assert sorted(placed) == item_names
+        position = {n: k for k, n in enumerate(placed)}
+        for n in item_names:
+            assert all(position[b] < position[n] for b in blockers[n]), (n, placed)
+        active = [n for n in item_names if folders[n] == "2-active"]
+        feeds_active = set().union(*(transitive_blockers(blockers, a) for a in active))
+        for a in active:
+            for p in item_names:
+                if folders[p] == "1-planned" and p not in feeds_active:
+                    assert position[a] < position[p], (a, p, placed)
+        if not any(blockers.values()):
+            planned = [n for n in placed if folders[n] == "1-planned"]
+            ranked = [n for n in listed if folders[n] == "1-planned"]
+            assert planned[:len(ranked)] == ranked, (listed, placed)
+    check()
+
+
+def test_blockers_of_active_items_precede_other_planned_items(tmp_path):
+    fixture(tmp_path, {"work/1-planned/001-p1.md": item("v1", "P1."),
+                       "work/1-planned/002-p2.md": item("v1", "P2."),
+                       "work/1-planned/003-q.md": item("v1", "Q."),
+                       "work/2-active/004-a1.md": item("v1", "A1.", blocked_by="001-p1"),
+                       "work/2-active/005-a2.md": item("v1", "A2.", blocked_by="002-p2"),
+                       "work/order.md": "1. 003-q\n"})
+    assert run(tmp_path).returncode == 0
+    assert names(tmp_path).index("003-q") > max(names(tmp_path).index(n) for n in ("001-p1", "002-p2"))
