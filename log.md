@@ -1872,3 +1872,6 @@ Order-file lines split on \r\n, \r or \n with space/tab-only whitespace and ASCI
 
 ## [2026-11-23] implement | bc-init-agent work_index.py accepts items without Stage:
 An open item without a `Stage:` line sorts after every stage; an unknown stage is still an error. The missing-stage test became a sort-order test, seen failing first. `<pytest-wrapper> concepts/bc-init-agent/tests/test_work_index.py`: 50 passed. Lint errors are pre-existing (handoff paths).
+
+## [2026-11-23] implement | bc-init-agent: an item moves to done only after it lands
+The generated "Finish or drop an item" row now says: only once the work is on the main branch and its full checks passed; a worker in a worktree never moves an item. From a Manicule worker that moved an item to done before its review fixes and gate landed. Pressure test on terra low: baseline moved the item, treatment held (`concepts/bc-init-agent/tests/pressure-finish-after-landing-results-2026-11-23.md`).

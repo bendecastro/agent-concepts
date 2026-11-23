@@ -1451,7 +1451,7 @@ Stages: now, next, later, unscheduled
 | Start non-trivial work | Read the items in `work/2-active/`, then pick context with [map.md](map.md). |
 | Begin agreed work | Create the item from the template, or `git mv` it from `1-planned/` to `2-active/`, then run `python3 .bc-agent/scripts/work_index.py`. |
 | Finish a step | Check its box in the item, then run `python3 .bc-agent/scripts/work_index.py`. |
-| Finish or drop an item | Fill `## Outcome`, then `git mv` it to its done month folder or to `4-dropped/`, then run `python3 .bc-agent/scripts/work_index.py`. |
+| Finish or drop an item | Only once the work is on the main branch and its full checks passed (until then the remaining review fixes and checks stay unticked steps; a worker in a worktree never moves an item). Fill `## Outcome`, then `git mv` it to its done month folder or to `4-dropped/`, then run `python3 .bc-agent/scripts/work_index.py`. |
 | Make an architectural or hard-to-reverse choice | Add a numbered record under `docs/decisions/` from [templates/adr.md](templates/adr.md). |
 | Investigate something at length | Write it up in a dated folder under `docs/research/`. |
 __OPS_KEEP_CURRENT__| Sharpen domain vocabulary | Update `glossary.md`. |
