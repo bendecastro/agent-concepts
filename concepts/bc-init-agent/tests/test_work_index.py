@@ -10,7 +10,8 @@ STAGES_AGENTS = "# demo\n\n## Work items\n\nStages: v1, v1.x, stage 1, stage 2, 
 
 def item(stage, why, steps="- [ ] one\n", blocked_by="nothing"):
     blocked = "" if blocked_by is None else f"Blocked by: {blocked_by}\n"
-    return f"# Title\n\nWhy: {why}\nDone when: x.\nStage: {stage}\n{blocked}\n## Steps\n\n{steps}\n## Outcome\n"
+    stage_line = "" if stage is None else f"Stage: {stage}\n"
+    return f"# Title\n\nWhy: {why}\nDone when: x.\n{stage_line}{blocked}\n## Steps\n\n{steps}\n## Outcome\n"
 
 
 def fixture(root, files, agents=STAGES_AGENTS):
@@ -107,12 +108,15 @@ def test_folder_item_without_plan_is_a_clear_error(tmp_path):
     assert result.stderr.strip() == "work-index: 1-planned/004-x/plan.md: missing"
 
 
-def test_missing_stage_line_is_a_clear_error(tmp_path):
-    fixture(tmp_path, {"work/1-planned/004-x.md": "# Title\nWhy: X.\n"})
+def test_item_without_stage_line_sorts_after_every_stage(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-nostage.md": item(None, "No stage."),
+        "work/1-planned/002-unsched.md": item("unscheduled", "Later."),
+        "work/1-planned/003-v1.md": item("v1", "Soon."),
+    })
     result = run(tmp_path)
-    assert result.returncode == 1
-    assert "1-planned/004-x.md: missing or unknown Stage line" in result.stderr
-    assert "v1, v1.x, stage 1" in result.stderr
+    assert result.returncode == 0, result.stderr
+    assert names(tmp_path) == ["003-v1", "002-unsched", "001-nostage"]
 
 
 def test_unknown_stage_is_a_clear_error(tmp_path):
@@ -564,5 +568,5 @@ def test_item_errors_and_order_errors_are_reported_together(tmp_path):
                        "work/order.md": "1. 099-ghost\n"})
     result = run(tmp_path)
     assert result.returncode == 1
-    assert "001-a.md: missing or unknown Stage line" in result.stderr
+    assert "001-a.md: unknown Stage line" in result.stderr
     assert "order.md: names unknown item 099-ghost" in result.stderr

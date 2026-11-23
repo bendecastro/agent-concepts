@@ -1869,3 +1869,6 @@ The three tiers apply with or without `work/order.md` (spec amended); dropped mo
 
 ## [2026-11-22] implement | bc-init-agent owner order round 4
 Order-file lines split on \r\n, \r or \n with space/tab-only whitespace and ASCII digits (shared spec with the dashboard); the Dropped count includes month folders; bad stages and bad order.md names are reported in one pass. Scaffold README and work rules, MIGRATIONS and index.md describe the three tiers and regenerating after changing order.md.
+
+## [2026-11-23] implement | bc-init-agent work_index.py accepts items without Stage:
+An open item without a `Stage:` line sorts after every stage; an unknown stage is still an error. The missing-stage test became a sort-order test, seen failing first. `<pytest-wrapper> concepts/bc-init-agent/tests/test_work_index.py`: 50 passed. Lint errors are pre-existing (handoff paths).

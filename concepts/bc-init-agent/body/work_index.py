@@ -3,9 +3,9 @@
 
 Usage: python3 .bc-agent/scripts/work_index.py [--check] [work-dir]
 
-Every item in 1-planned/ and 2-active/ needs a `Stage:` line and a
-`Blocked by:` line naming full item names (`012-search-ranking`, comma-separated)
-or `nothing`. Unknown names, dropped blockers, self-blocks and cycles among open
+Every item in 1-planned/ and 2-active/ needs a `Blocked by:` line naming full
+item names (`012-search-ranking`, comma-separated) or `nothing`. A `Stage:` line
+is optional; an unknown stage is an error. Unknown names, dropped blockers, self-blocks and cycles among open
 items are errors. A blocker in 3-done/ is satisfied; an item is ready when all
 its blockers are done.
 
@@ -25,7 +25,8 @@ point it picks: active items, then planned items that an active item is
 unlisted), ready before not ready, more open items transitively unblocked
 first, then the stage order from the
 `Stages:` line in `.bc-agent/AGENTS.md` (default: now, next, later,
-unscheduled), then the name. A valid owner order is a fixed point: ranking by
+unscheduled; an item without a `Stage:` line sorts after every stage), then
+the name. A valid owner order is a fixed point: ranking by
 it reproduces it. `--check` writes nothing and exits 1 while the
 table is out of date. Python 3.9 or later, standard library only.
 """
@@ -99,8 +100,8 @@ def read_item(work: Path, folder: str, name: str, stages: tuple[str, ...]) -> di
     text = read_text(work / rel)
     stage_match = re.search(r"^Stage: (.+)$", text, re.M)
     stage = stage_match.group(1).strip() if stage_match else None
-    if stage not in stages:
-        raise StageError(f"{rel}: missing or unknown Stage line (one of: {', '.join(stages)})")
+    if stage is not None and stage not in stages:
+        raise StageError(f"{rel}: unknown Stage line (one of: {', '.join(stages)})")
     why_match = re.search(r"^Why: (.+)$", text, re.M)
     why = first_sentence(why_match.group(1) if why_match else "")
     parts = re.split(r"^## Steps$", text, maxsplit=1, flags=re.M)
@@ -205,7 +206,7 @@ def order_items(work: Path, items: list[dict], stages: tuple[str, ...]) -> list[
     def key(n: str) -> tuple:
         i = open_items[n]
         tier = 0 if i["folder"] == "active" else 1 if n in feeds_active else 2
-        return (tier, rank.get(n, float("inf")), bool(waits[n]), -len(reach(n, set())), stages.index(i["stage"]), n)
+        return (tier, rank.get(n, float("inf")), bool(waits[n]), -len(reach(n, set())), stages.index(i["stage"]) if i["stage"] else len(stages), n)
 
     for n, i in open_items.items():
         i["waits"] = ", ".join(f"[{b}]({open_items[b]['path']})" for b in waits[n]) or "—"
