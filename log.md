@@ -1875,3 +1875,6 @@ An open item without a `Stage:` line sorts after every stage; an unknown stage i
 
 ## [2026-11-23] implement | bc-init-agent: an item moves to done only after it lands
 The generated "Finish or drop an item" row now says: only once the work is on the main branch and its full checks passed; a worker in a worktree never moves an item. From a Manicule worker that moved an item to done before its review fixes and gate landed. Pressure test on terra low: baseline moved the item, treatment held (`concepts/bc-init-agent/tests/pressure-finish-after-landing-results-2026-11-23.md`).
+
+## [2026-11-23] implement | bc-init-agent: work_index.py --check guards the owner order
+`--check` fails while work/order.md leaves out an open item or lists one above its blocker, and says where a new item goes; the generated Work items section gains the matching rule, bc-work-sync names the faults. Why: an agent added an item and a blocker without listing it and pushed the owner's ranked items to the bottom.

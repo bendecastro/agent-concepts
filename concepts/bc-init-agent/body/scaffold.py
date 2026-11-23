@@ -1424,6 +1424,13 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   in list order, unless an item waits on another; `work_index.py` rejects unknown and repeated
   names and skips done and dropped ones. Why: the owner's priority beats the computed tiebreaks, but
   never what an item waits for.
+- **Never reorder `work/order.md`; place what you add.** When it exists, a new item goes in
+  directly above the first listed item that waits on it, or at the bottom; no other line moves.
+  Before adding a `Blocked by:` line that names an item listed below this one, check with the owner.
+  `work_index.py --check` fails while the file leaves out an open item or lists an item above
+  one it waits on, and says where the item goes. Why: the owner sets this order on their
+  dashboard, which lists every item and refuses a blocker below its dependant; an unplaced
+  item or a new blocker silently pushed the owner's items to the bottom.
 - **A building block gets its own item.** When two items would wait on one step of a third,
   that step becomes its own item, and both name it. Why: an item can only wait on a whole item,
   and a shared building block buried in a large item hides what is ready.

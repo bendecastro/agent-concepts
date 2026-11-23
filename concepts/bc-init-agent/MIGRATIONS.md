@@ -332,6 +332,11 @@ can move up even in a project with no `order.md`. To adopt it in an existing pro
    regenerate after changing `order.md`).
 3. Run `python3 .bc-agent/scripts/work_index.py`, then `--check`.
 
+Since 2026-11-23 `--check` also fails while `order.md` leaves out an open item or lists an item
+above one it waits on, and the fresh scaffold adds the rule "Never reorder `work/order.md`; place
+what you add". A project with an `order.md` re-copies the script (step 1) and the rule (step 2);
+a project without one is unaffected.
+
 ## Design README
 
 Since 2026-11-21 the code, ops and hybrid scaffold also writes `docs/design/README.md`, the entry

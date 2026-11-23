@@ -570,3 +570,42 @@ def test_item_errors_and_order_errors_are_reported_together(tmp_path):
     assert result.returncode == 1
     assert "001-a.md: unknown Stage line" in result.stderr
     assert "order.md: names unknown item 099-ghost" in result.stderr
+
+
+def test_check_fails_while_order_file_omits_an_open_item(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-a.md": item("v1", "A."),
+        "work/1-planned/002-b.md": item("v1", "B.", blocked_by="003-new"),
+        "work/1-planned/003-new.md": item("v1", "New."),
+        "work/1-planned/004-solo.md": item("v1", "Solo."),
+        "work/order.md": ORDER_HEADER + "1. 001-a\n2. 002-b\n",
+    })
+    assert run(tmp_path).returncode == 0
+    result = run(tmp_path, "--check")
+    assert result.returncode == 1
+    assert "order.md does not list 003-new; add it directly above 002-b" in result.stderr
+    assert "order.md does not list 004-solo; add it at the bottom" in result.stderr
+
+
+def test_check_fails_while_an_item_is_listed_above_an_item_it_waits_on(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-a.md": item("v1", "A."),
+        "work/1-planned/002-b.md": item("v1", "B.", blocked_by="001-a"),
+        "work/order.md": ORDER_HEADER + "1. 002-b\n2. 001-a\n",
+    })
+    assert run(tmp_path).returncode == 0
+    result = run(tmp_path, "--check")
+    assert result.returncode == 1
+    assert "order.md lists 002-b above 001-a, which it waits on" in result.stderr
+    assert "check with the owner" in result.stderr
+
+
+def test_check_passes_a_complete_order_that_respects_blockers(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-a.md": item("v1", "A."),
+        "work/1-planned/002-b.md": item("v1", "B.", blocked_by="001-a"),
+        "work/1-planned/003-c.md": item("v1", "C."),
+        "work/order.md": ORDER_HEADER + "1. 003-c\n2. 001-a\n3. 002-b\n",
+    })
+    assert run(tmp_path).returncode == 0
+    assert run(tmp_path, "--check").returncode == 0
