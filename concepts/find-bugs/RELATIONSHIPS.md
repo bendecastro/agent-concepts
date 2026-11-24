@@ -25,4 +25,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-None.
+- incoming from [bc-council-find-bugs](../bc-council-find-bugs/RELATIONSHIPS.md): loads this concept — required, when every council bug hunt.
+  Scope, hunted kinds, candidate block, reproduction, report and filing have one home in find-bugs.
+  Source: [bc-council-find-bugs/body/SKILL.md](../bc-council-find-bugs/body/SKILL.md)

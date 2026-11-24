@@ -809,6 +809,33 @@
       "when": "filing into a work pipeline",
       "source": "concepts/find-bugs/CONCEPT.md",
       "reason": "Relies on the work-item template, Kind placement in order.md and work_index.py --check."
+    },
+    {
+      "from": "bc-council-find-bugs",
+      "to": "council-chain",
+      "relation": "loads",
+      "required": true,
+      "when": "every council bug hunt",
+      "source": "concepts/bc-council-find-bugs/body/SKILL.md",
+      "reason": "Roster, map, passes, merge, fallbacks and cleanup have one home in council-chain."
+    },
+    {
+      "from": "bc-council-find-bugs",
+      "to": "find-bugs",
+      "relation": "loads",
+      "required": true,
+      "when": "every council bug hunt",
+      "source": "concepts/bc-council-find-bugs/body/SKILL.md",
+      "reason": "Scope, hunted kinds, candidate block, reproduction, report and filing have one home in find-bugs."
+    },
+    {
+      "from": "bc-council-find-bugs",
+      "to": "council-mode",
+      "relation": "loads",
+      "required": true,
+      "when": "every council bug hunt",
+      "source": "concepts/bc-council-find-bugs/body/SKILL.md",
+      "reason": "Briefing, launch, relay, resume and the pass cap have one home in council-mode."
     }
   ]
 }

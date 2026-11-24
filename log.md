@@ -1938,3 +1938,6 @@ New parent skill for the council bug hunt (plan step 2): bounded scope, candidat
 
 ## [2026-11-24] implement | council-chain asks for pass-2 refinements
 Pass 2 now asks each confirm for a refinement with evidence, and the report shows it under the advisor's name. Both live reviews showed this as the most useful pass-2 work, done unprompted by one advisor (owner choice). Not yet re-tested.
+
+## [2026-11-24] implement | bc-council-find-bugs (not deployed)
+Thin chain over council-chain + find-bugs (plan step 3): focuses dealt round-robin, pass-2 attack, agreement only orders reproduction and the suspected tier, one worker reproduces with the find-bugs skill list. Pressure test on Terra low with stand-in advisors failed: 6 of 7 runs stopped early; the finished run confirmed 8/10 planted with correct `all` filing but dropped the worker skill list, report additions and item test links.
