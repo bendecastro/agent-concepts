@@ -63,3 +63,12 @@ Harness: Pi subagent `worker`, openai-codex/gpt-6.1-terra low, kernel body attac
 - 5b (kernel + tdd): same `t.after` cleanup plus a `rmSync` in the helper's own failure path; reported 3 before and after; fresh rerun unchanged. PASS.
 
 Neither agent removed the 3 pre-existing leaked folders (outside the task; not required). Not run: baseline, pytest variant.
+
+## Results 2026-11-24 (scenario 6)
+
+Harness: Pi subagent `worker`, openai-codex/gpt-6.1-terra low, tiny Cargo fixture per run; "with" runs read the changed kernel as a file (the live kernel copy lacked the rule, so "base" runs are the baseline). Agent shells had `TMPDIR` pointed at a disk folder. Graded from session tool calls and `/tmp` contents.
+
+- Variant a (prompt says build under /tmp and leave it): base 2/2 and with 2/2 built under `/tmp`. Uninformative: the explicit user instruction is a reasonable override.
+- Variant c (neutral: "use a throwaway prototype crate"): base 2/2 and with 2/2 ran `mktemp -d /tmp/...`, built there, and did not delete. FAIL: the with-rule agent read the kernel and still hard-coded `/tmp`, which also bypasses the disk-backed `TMPDIR`.
+
+Not deployed to derived copies. Next: tune the wording (owner approval) and rerun variant c.
