@@ -31,7 +31,7 @@ The script goes in `options.script`; do not also pass `workflow: true` (the tool
 
 `output` is per child and must be distinct. The path is injected into the child as an authoritative override, so the child does not need to be told the path twice in its task text — but it does need to be told to *append as it goes*.
 
-Pick roles by authority, not convenience: `scout` for bounded recon, `researcher` for external facts, `reviewer` for independent critique, `oracle` for hard judgment. Fan-out of `scout` children is the common shape.
+Pick roles by authority, not convenience: `scout` for bounded recon, `researcher` for external facts, `reviewer` for independent critique, `oracle` for hard judgment. Fan-out of `scout` children is the common shape. To give read-only roles a default tool-call budget (soft nudge, then a hard stop on reads), set `subagents.agentOverrides` in Pi's `settings.json`; [examples/pi-settings-snippet.json](examples/pi-settings-snippet.json) shows the values this skill was tuned with (scout 100/110, reviewer 45/50).
 
 Before sending a `reviewer` to check a worktree worker's commit, write `git diff <baseCommit> <tip>` to a file in the run directory and give the reviewer that path. Why: the reviewer role has no shell, and once the worker's worktree is cleaned up the commit exists only as git objects it cannot read (2026-11-21: a reviewer stopped and asked for the diff).
 

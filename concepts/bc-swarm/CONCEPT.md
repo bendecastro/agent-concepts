@@ -19,6 +19,7 @@ the results.
 
 ## Design decisions
 
+- **Example tool-budget settings (2026-11-24, owner decision).** `body/examples/pi-settings-snippet.json` shows the `subagents.agentOverrides` tool budgets (scout 100/110, reviewer 45/50) the Pi notes were tuned with, so a stranger can reproduce them. Optional: the skill works without budgets.
 - **Targeted-check packets and a background full gate (2026-11-19).** Worker packets name the targeted checks (test files or IDs) and never paste the full gate; after integration the parent starts the gate in the background with a wake and dispatches the reviewer on the same tree in parallel, with no sleep/poll loops. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in project A) and the owner's decisions of that date. `dispatching-parallel-agents` already says one full verification on the integrated change and was not changed.
 - **Owner tool names in a private overlay (2026-11-19).** The body names no owner tools; it reads the optional overlay `~/.config/agent-concepts/overlays/bc-swarm.md`, which supplies only names the machine's always-loaded instructions lack. Convention and precedence: AGENTS.md Conventions, "Private skill overlays". Test: `tests/pressure-private-overlay.md`.
 - **One concept, not two.** Aggression and durability share a single

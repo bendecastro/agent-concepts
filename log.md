@@ -1896,3 +1896,6 @@ Owner decision: own the council protocol as a public concept because it is becom
 
 ## [2026-11-24] deploy | council-mode switched over from the package copy
 Pressure runs on cheap advisors failed twice (workflow block lost on launch; resume id passed as `id`); fixed both, then 3/3 passed. Added the `/council` prompt and three stanced example advisor profiles; deployed, and Pi's settings now exclude the package's skill and prompt.
+
+## [2026-11-24] implement | example role profiles for bc-drain-issues, settings snippet for bc-swarm
+Same idea as the council examples: `bc-drain-issues` named three Pi roles a stranger could not get, so copies now ship in `body/examples/agents/`; `bc-swarm` gains an example `agentOverrides` tool-budget snippet. Documentation only; no behaviour change.

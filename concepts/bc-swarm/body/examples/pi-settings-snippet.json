@@ -1,0 +1,8 @@
+{
+  "subagents": {
+    "agentOverrides": {
+      "scout": { "toolBudget": { "soft": 100, "hard": 110 } },
+      "reviewer": { "toolBudget": { "soft": 45, "hard": 50 } }
+    }
+  }
+}
