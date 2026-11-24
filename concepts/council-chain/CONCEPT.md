@@ -29,3 +29,5 @@ The shared recipe every `bc-council-<job>` skill loads to run a parent skill thr
 ## Deploy targets
 
 None yet (`deployed: no`). When deployed: `scripts/deploy-local-skills.py` to `~/.agents/skills/`, `~/.pi/agent/skills/`, `~/.claude/skills/`. Deploy together with the cut-down `bc-council-improve-codebase`, which loads it.
+
+- **Pass-2 refinements (owner, 2026-11-24).** A confirm may carry a refinement (corrected premise, narrower direction, sharper reproduction) with evidence, and the report shows it under the advisor's name. Evidence: in both live reviews of one project (2026-11-22 by hand, 2026-11-24 by the chain) one advisor's pass-2 refinements reshaped other advisors' cards, unasked. Not yet pressure-tested; the bc-council-find-bugs chain test after this change covers it.

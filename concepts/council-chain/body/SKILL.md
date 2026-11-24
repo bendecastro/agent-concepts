@@ -54,9 +54,11 @@ Deduplicate by the chain's duplicate rule. When two candidates target the same t
 
 Resume each advisor with the candidates it did not propose (curated per `council-mode`, at most five relayed claims per advisor). For each, it must answer one of:
 
-- **Confirm** with a strength of its own.
+- **Confirm** with a strength of its own, and a refinement wherever it has one: a corrected premise, a narrower or safer direction, or a sharper reproduction, each with `file:line` evidence.
 - **Dispute** with code evidence (`file:line`) showing the problem is absent or the direction is wrong.
 - **No view**, with a one-line reason.
+
+Ask for refinements in the relay, not only a verdict. Carry each refinement onto its candidate under the advisor's name ("<advisor>'s refinement: …"). Why: in the first two live reviews the most useful pass-2 work was one advisor correcting and narrowing the others' candidates; it did so unprompted, and an advisor that answers only "Confirm Strong" would lose it.
 
 Run a third pass only when a dispute affects the ranking and advisor evidence could settle it.
 
@@ -64,6 +66,6 @@ Then rank by the chain's verdict rule. Never force agreement. An open dispute th
 
 ## 6. Report and cleanup
 
-Produce the chain's report with a short roster section: advisors, passes run, fallbacks. Then follow the chain's filing steps.
+Produce the chain's report, showing each candidate's refinements under the advisor's name, with a short roster section: advisors, passes run, fallbacks. Then follow the chain's filing steps.
 
 When the run ends, delete any `.git/council-<run-dir name>/` copy made for a sandboxed advisor (`rm -r .git/council-<run-dir name>/`).

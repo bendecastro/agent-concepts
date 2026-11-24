@@ -1935,3 +1935,6 @@ The overlay roster may now drop named advisors instead of listing the kept ones,
 
 ## [2026-11-24] implement | find-bugs
 New parent skill for the council bug hunt (plan step 2): bounded scope, candidate block, reproductions in a separate worktree on `find-bugs/<hunt>`, two-tier report, owner-gated filing as `Kind: bug`/`Source: find-bugs`. Practice project `shopkit` (10 planted bugs, 9 decoys) with answer key; Terra low: 2 with-skill runs pass (9/10 each), blind baseline proves bugs but keeps no report/tiers/worktree and switches the owner's checkout. Parent added "attempt every candidate while slots remain" after both runs left a race unattempted. Deployed.
+
+## [2026-11-24] implement | council-chain asks for pass-2 refinements
+Pass 2 now asks each confirm for a refinement with evidence, and the report shows it under the advisor's name. Both live reviews showed this as the most useful pass-2 work, done unprompted by one advisor (owner choice). Not yet re-tested.
