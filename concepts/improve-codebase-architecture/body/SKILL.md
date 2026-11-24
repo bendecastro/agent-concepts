@@ -67,7 +67,7 @@ Delete each ideas line that seeded a chosen or rejected finding, in the same com
 
 Number items as the project's `.bc-agent/AGENTS.md` work-item rules say, and create numbered items only from the main checkout. In a git worktree, add an ideas-file line for each chosen or rejected finding instead, stating the owner's choice and reason, so the main checkout can number it later. Why: two worktrees cannot see each other's numbers and would pick the same one.
 
-When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each chosen item you filed, one after another, passing the grilling's settled answers so the owner is not asked them again. Why: every planned item gets requirements and sliced steps before anyone starts it; this is a handoff after this skill's own work ends, not a nested call.
+When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each chosen item you filed, one after another in the same reply, without stopping between items, passing the grilling's settled answers so the owner is not asked them again. Why: every planned item gets requirements and sliced steps before anyone starts it; this is a handoff after this skill's own work ends, not a nested call.
 
 Observations you make outside a review, in any later task, are also single lines in the ideas file, naming the module, the seam and the evidence. Why: the next review reads them there, and the ideas file is the one place that shows what is undecided.
 

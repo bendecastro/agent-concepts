@@ -1451,10 +1451,11 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   `Planned: bc-plan-to-pipeline <date>` line under `Source:` once the item has its requirements
   and sliced `## Steps`. Before an item without that line moves from `1-planned/` to
   `2-active/`, by hand, on "carry on" or by a drain, run `bc-plan-to-pipeline` on it from a
-  settled source: it fills the item in place and asks only what is still open. When no one can
-  answer during the run, file the open questions where the owner sees questions (this project's
-  or this machine's instructions name the place), leave the item in `1-planned/` and take the next
-  item. `work_index.py --check` warns about each planned item without the line.
+  settled source, in the same reply: it fills the item in place and asks only what is still open.
+  When the owner said they are away (or the run is a drain) and a question stays open, file it
+  where the owner sees questions (this project's or this machine's instructions name the place),
+  never in chat, leave the item in `1-planned/`, then move the next planned item to `2-active/`
+  and start it in the same run. `work_index.py --check` warns about each planned item without the line.
   Why: an item filed without planning starts with unstated requirements and no slices, and the
   work drifts from what the owner decided.
 - **Several items may be active at once.**
