@@ -1,4 +1,4 @@
-# Pressure scenarios — bc-improve-codebase-council
+# Pressure scenarios — bc-council-improve-codebase
 
 All runs: headless Pi, consuming agent GPT-6.1 Terra low, text-only (the agent states what it would launch instead of launching), skill attached with `--skill`.
 

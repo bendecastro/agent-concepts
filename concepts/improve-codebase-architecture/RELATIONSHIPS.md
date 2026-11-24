@@ -21,13 +21,13 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
+  Inputs, candidate card fields, the visual report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map, roster, merge and agreement rules.
+  Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md)
+
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture observation after landing.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
   Source: [bc-drain-issues/CONCEPT.md](../bc-drain-issues/CONCEPT.md)
-
-- incoming from [bc-improve-codebase-council](../bc-improve-codebase-council/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
-  Inputs, candidate card fields, the visual report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map, roster, merge and agreement rules.
-  Source: [bc-improve-codebase-council/body/SKILL.md](../bc-improve-codebase-council/body/SKILL.md)
 
 - incoming from [diagnosing-bugs](../diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when bug fixed without a correct test seam.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.

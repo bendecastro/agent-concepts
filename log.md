@@ -1911,3 +1911,6 @@ Moved from a private concept: the named map-scout model and Antigravity paragrap
 
 ## [2026-11-24] implement | work-item Kind and top-kind placement
 `work_index.py` reads an optional `Kind:` header and the project's `Top kinds:` line (default security, bug, build, architecture; `none` off); `--check` places new top-kind items below the `order.md` top group, oldest first, never above a blocker. Scaffold and bc-init-agent document it; improve-codebase-architecture, bc-improve-codebase-council (plus a hands-off to bc-plan-to-pipeline), bc-plan-to-pipeline and bc-work-sync set `Kind:`. Owner decision: placement by kind, not by skill; pressure tests pending.
+
+## [2026-11-24] implement | rename bc-improve-codebase-council → bc-council-improve-codebase; council chain naming rule
+Owner decision: council chains share the `bc-council-` prefix so they group together; AGENTS.md Conventions records the rule. Earlier log entries keep the old name.

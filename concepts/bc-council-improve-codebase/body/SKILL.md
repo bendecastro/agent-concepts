@@ -1,6 +1,6 @@
 ---
-name: bc-improve-codebase-council
-description: "Run improve-codebase-architecture through the advisor council: one scout maps the codebase, every available council advisor proposes and cross-examines deep-module candidates, and candidates are ranked by evidence-backed agreement before the normal report and grilling. Use when the user says bc-improve-codebase-council, council architecture review, or asks the council to review the codebase architecture."
+name: bc-council-improve-codebase
+description: "Run improve-codebase-architecture through the advisor council: one scout maps the codebase, every available council advisor proposes and cross-examines deep-module candidates, and candidates are ranked by evidence-backed agreement before the normal report and grilling. Use when the user says bc-council-improve-codebase, council architecture review, or asks the council to review the codebase architecture."
 ---
 
 # Council architecture review
@@ -12,7 +12,7 @@ This skill joins two skills and copies neither. Load both before starting:
 
 This file adds only what neither says: the shared map, the roster rule, the card format advisors return, and the agreement rule. Where this file is silent, those two skills decide.
 
-If `~/.config/agent-concepts/overlays/bc-improve-codebase-council.md` exists, read it: it names this machine's roster and map-scout model.
+If `~/.config/agent-concepts/overlays/bc-council-improve-codebase.md` exists, read it: it names this machine's roster and map-scout model.
 
 ## 1. Roster: whoever is on the council today
 
@@ -76,7 +76,7 @@ Never force agreement. An open dispute the code cannot settle becomes an owner d
 
 ## 7. Report and grilling
 
-Produce the report `improve-codebase-architecture` describes, with two additions per card: an agreement line (for example `3 of 4 Strong, 1 no view`) and any open dispute. Add a short roster section: advisors, passes run, fallbacks. Then hand over to that skill's grilling and filing steps unchanged, except that a work item filed from this review gets the header lines `Kind: architecture` and `Source: bc-improve-codebase-council`, so tools that list work items can filter the ones it filed.
+Produce the report `improve-codebase-architecture` describes, with two additions per card: an agreement line (for example `3 of 4 Strong, 1 no view`) and any open dispute. Add a short roster section: advisors, passes run, fallbacks. Then hand over to that skill's grilling and filing steps unchanged, except that a work item filed from this review gets the header lines `Kind: architecture` and `Source: bc-council-improve-codebase`, so tools that list work items can filter the ones it filed.
 
 After filing, recommend running `/bc-plan-to-pipeline` on each chosen item to slice it, passing the grilling's settled answers along so the owner is not asked the same questions twice.
 

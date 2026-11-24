@@ -11,6 +11,6 @@ None.
 
 ## Incoming
 
-- incoming from [bc-improve-codebase-council](../bc-improve-codebase-council/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
+- incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
   Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode.
-  Source: [bc-improve-codebase-council/body/SKILL.md](../bc-improve-codebase-council/body/SKILL.md)
+  Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md)

@@ -27,8 +27,8 @@ tested. See the concept's `## Tests` section for what is missing.
 | [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-19 | 2026-11-15 |
 | [bc-agent-reflect](../concepts/bc-agent-reflect/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md) | pressure | 2026-06-21 | 2026-06-21 |
+| [bc-council-improve-codebase](../concepts/bc-council-improve-codebase/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-10-08 | 2026-07-25 |
-| [bc-improve-codebase-council](../concepts/bc-improve-codebase-council/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-11-19 | 2026-06-21 |
 | [bc-plan-to-pipeline](../concepts/bc-plan-to-pipeline/CONCEPT.md) | pressure | 2026-11-22 | 2026-06-21 |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-19 | 2026-08-18 |
