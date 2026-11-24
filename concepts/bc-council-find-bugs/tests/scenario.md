@@ -38,3 +38,44 @@ then clean up.
 - `all` filing: one `Kind: bug`, `Source: bc-council-find-bugs` item per confirmed bug in the
   planned folder, `work_index.py --check` passing;
 - no `.git/council-*` copy left; main has no production edits.
+
+## Dry run
+
+The live run above asks Terra low to carry the whole chain; it stopped early (see the results). The
+dry run checks the instructions instead, the way `council-chain` and `bc-council-improve-codebase`
+were tested: the consumer writes `plan.md` stating exactly what it would do and launches nothing.
+
+Setup: per run, a `mktemp -d` scratch copy of the practice project (no `answer-key.md`), `git init
+-b main`, scaffolded pipeline and one-heading `work/order.md` as above, committed. Skill bodies
+copied with `cp -rL` into scratch. Unset every `PI_SUBAGENT*` variable, then run from the copy:
+`bwrap --dev-bind / / --tmpfs ~/.agents/skills --tmpfs ~/.pi/agent/skills --tmpfs ~/.claude/skills
+--tmpfs <overlays folder> pi -p --model <pressure-test model> --thinking low --no-swarm -nc -ns
+--no-prompt-templates --no-skills --skill <council-chain> --skill <find-bugs> --skill <council-mode>
+--skill <bc-council-find-bugs> --session-dir <scratch>/sess-<run> "<prompt>"`.
+
+Prompt: `/skill:bc-council-find-bugs whole repository`, then: dry run; launch no subagent, create
+no branch or worktree, edit nothing but `plan.md` at the repo root, which states every launch (role,
+model/thinking, skills, worktree, branch, arguments), each brief and relay, formats, rules and report
+contents through cleanup; assume `subagent list` returns `council-alpha`, `council-beta`,
+`council-gamma`, `scout`, `worker`, `reviewer`, `oracle`; the owner answers `all` at the filing
+question, so show what filing would write and the commands.
+
+Pass (each run, graded from `plan.md`, not the reply; the checkout must have no other change):
+
+1. Roster taken from the list (the three `council-*`); thresholds as shares of N.
+2. Focuses dealt round-robin in the body's order (inputs and edge cases; error and failure paths;
+   state and data lifecycle); each advisor still reports outside its focus.
+3. One map-scout launch, strong model at high reasoning, with the body's map contents.
+4. Pass-1 brief with the candidate format including `Focus:` and `Strength:`, at most 8 per advisor.
+5. Citation check at merge; duplicate rule (same location and same claimed wrong result).
+6. Pass 2: confirm / dispute / no view, and the relay asks for refinements (corrected premise,
+   narrower direction, sharper reproduction, with `file:line`), carried onto candidates under the
+   advisor's name.
+7. Agreement only orders the reproduction queue and the suspected tier; it never confirms.
+8. ONE reproducing `worker`, skill list `["find-bugs","minimal-solution-ladder","codebase-design",
+   "codebase-docs","diagnosing-bugs","tdd"]`, own worktree, branch `find-bugs/<hunt>`, top 12.
+9. Report additions: per-candidate agreement line, focus, open disputes, refinements, dropped list,
+   roster section with dealt focuses.
+10. `all` filing: `Kind: bug`, `Source: bc-council-find-bugs`, each item names the hunt branch and
+    the test path and name; `work/order.md` placement and `work_index.py --check`.
+11. Cleanup of any `.git/council-*` copy.

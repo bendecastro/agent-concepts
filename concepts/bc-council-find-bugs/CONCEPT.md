@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: fail # Terra low stand-ins: 6 of 7 runs stopped early ("incomplete"); the one finished run confirmed 8/10 planted, no decoy, `all` filing right, but dropped the worker skill list and report additions
+test_status: pass # dry run 2/2 on Terra low: plan.md met all 11 criteria; earlier live attempt stopped early in 6 of 7 runs
 tested: 2026-11-24
 deployed: no
 ---
@@ -29,7 +29,7 @@ All from the owner-approved [council bug hunt plan](../../docs/plans/active/coun
 
 ## Tests
 
-[tests/scenario.md](tests/scenario.md) runs the chain on `find-bugs`' practice project with three stand-in advisors on the pressure-test model, graded against `find-bugs`' answer key. [Results 2026-11-24](tests/results-2026-11-24.md): not passed; on Terra low most runs stop before the report. The first live run with the real council is the live test (decision 10).
+[tests/scenario.md](tests/scenario.md) runs the chain on `find-bugs`' practice project with three stand-in advisors on the pressure-test model, graded against `find-bugs`' answer key. [Results 2026-11-24](tests/results-2026-11-24.md): the earlier live attempt did not pass (on Terra low most runs stopped before the report); the dry run (`plan.md` only, launches nothing) passed 2/2, so the instructions are complete and the live gap is the consumer carrying a long chain. The first live run with the real council is the live test (decision 10).
 
 ## Deploy targets
 
