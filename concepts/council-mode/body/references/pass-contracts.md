@@ -128,23 +128,6 @@ const pass2OutputSchema = {
 
 Use stable resume keys such as `cross-oracle`, `phase: "Council pass 2"`, concise labels, and `output: false` unless separate artifacts are useful. The aggregate Pass 2 receipt uses the Pass 1 row shape with the new `runId` and `structuredOutput ?? output`. Pass 3 resumes those latest ids with new stable keys.
 
-## Advisor profile template
+## Advisor profiles
 
-Create model-based advisors in the user or project agent directory, not in this package:
-
-```markdown
----
-name: council-sol
-description: Read-only fresh-context advisor for bounded council decisions
-tools: read, grep, find, ls
-model: provider/top-reasoning-model
-thinking: high
-systemPromptMode: replace
-inheritProjectContext: true
-inheritSkills: false
-defaultContext: fresh
-acceptanceRole: read-only
----
-
-Analyze the council question independently. Inspect evidence directly. Do not edit, run mutating commands, commit, push, contact peers, or spawn subagents. Return concise, cited advice using the report contract in the council task.
-```
+Ready example profiles with distinct stances live in [../examples/agents/](../examples/agents/README.md). Put profiles in the user or project agent directory, not in this skill.

@@ -1893,3 +1893,6 @@ Owner chose to deploy the reworded rule despite a partial pressure result (locat
 
 ## [2026-11-24] ingest | council-mode adopted from pi-subagents
 Owner decision: own the council protocol as a public concept because it is becoming central and the unpinned package changed it silently. Verbatim copy of 0.90.0 (MIT) with a relative reference path; not deployed until the pressure test passes and the package copy and `/council` prompt are switched over.
+
+## [2026-11-24] deploy | council-mode switched over from the package copy
+Pressure runs on cheap advisors failed twice (workflow block lost on launch; resume id passed as `id`); fixed both, then 3/3 passed. Added the `/council` prompt and three stanced example advisor profiles; deployed, and Pi's settings now exclude the package's skill and prompt.
