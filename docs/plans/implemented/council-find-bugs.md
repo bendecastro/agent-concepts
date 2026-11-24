@@ -64,8 +64,7 @@ with a failing test, so a fix starts from proof rather than from a vote.
 ## Later chains (owner, 2026-11-24)
 
 After this plan: `bc-council-audit-security` and `bc-council-challenge-plan`; see [council-later-chains](../active/council-later-chains.md).
-`bc-council-challenge-plan` (the council attacks a plan or PRD before `bc-plan-to-pipeline`
-slices it). Each gets its own grill. Dropped: a council diagnose chain and a council change review.
+Dropped: a council diagnose chain and a council change review.
 
 ## Execution record
 
