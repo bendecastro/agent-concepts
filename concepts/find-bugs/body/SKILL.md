@@ -73,7 +73,7 @@ Write the report as Markdown, `find-bugs-report.md` at the root of the hunt work
 
 ## 5. File (after the owner answers)
 
-Wait for the owner's answer. Why: the hunt proposes; only the owner decides what becomes work.
+Wait for the owner's answer. Why: the hunt proposes; only the owner decides what becomes work. When the message that invokes you already carries that answer (for example `all`), it is the answer: file and plan in that same reply, and do not end the reply on a summary of what you will file.
 
 **With a project work pipeline** (a "Where things go" table in `.bc-agent/AGENTS.md` with work-planned, work-dropped and ideas roles):
 

@@ -1455,7 +1455,10 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   When the owner said they are away (or the run is a drain) and a question stays open, file it
   where the owner sees questions (this project's or this machine's instructions name the place),
   never in chat, leave the item in `1-planned/`, then move the next planned item to `2-active/`
-  and start it in the same run. `work_index.py --check` warns about each planned item without the line.
+  and start it in the same run. Planning an item is part of carrying on, not a reason to stop:
+  never end a reply that only says an item needs planning, a question needs filing or an item
+  needs starting; do that work first. `work_index.py --check` warns about each planned item
+  without the line.
   Why: an item filed without planning starts with unstated requirements and no slices, and the
   work drifts from what the owner decided.
 - **Several items may be active at once.**
