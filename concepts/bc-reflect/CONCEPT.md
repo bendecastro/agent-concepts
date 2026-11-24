@@ -4,7 +4,7 @@ test_status: partial # 2026-11-19 isolated stranger retest of final body (13b308
 tested: 2026-11-19
 deployed: yes
 ---
-# Concept: bc-agent-reflect
+# Concept: bc-reflect
 
 Renamed from `retro` on 2026-11-19 (owner choice; no alias). Tests below ran under the former name, so their recorded prompts and outputs keep `/retro`.
 
@@ -12,6 +12,7 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 
 ## Design decisions
 
+- **Renamed from `bc-agent-reflect` (2026-11-24, owner decision).** In `bc-init-agent` "agent" means the `.bc-agent/` folder; here it meant the AI agent, and this skill never touches that folder. Old name stays as a deploy alias; the report directory, `BC_AGENT_REFLECT_REPORT_DIR`, the weekly job and the reminder extension keep their names so stored reports and timers keep working.
 - **Reports carry their decisions.** A report is decided once it has `## Decisions` (one line per proposal: acted with commit/file, declined, deferred with trigger). Interactive runs show an undecided latest report first; headless batches carry its proposals over under `## Still undecided from <date>`, outside the sample. Why: weekly reports went unanswered with no record of what was acted on. Owner-approved 2026-11-19.
 
 - **Owner-invoked only, as upstream.** Upstream sets `disable-model-invocation: true` and `allow_implicit_invocation: false`. Kept: a reflection is costly, and the moment to run one is the owner's call. The model's part is the kernel's 👣 offer at the end of a substantial session (see `agent-kernel` § recap), not invoking the skill.
@@ -25,7 +26,7 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 - **`writing-for-agents` dropped.** Upstream's step 1 loads it. Here `prompting-agents` owns instruction wording, so the body points there.
 - **Transcripts are data.** Not in upstream. Session logs hold tool output and fetched text; the body forbids saving instructions read from them into memory.
 
-- **Owner specifics in a private overlay.** The body names no owner tool or path; one line tells the agent to read `~/.config/agent-concepts/overlays/bc-agent-reflect.md` if it exists, which names the owner's session time-report tool and report directory. Why: the repository must work as-is for a stranger (`AGENTS.md` § Conventions), while the owner's agents keep their tool names. Owner decision 2026-11-19.
+- **Owner specifics in a private overlay.** The body names no owner tool or path; one line tells the agent to read `~/.config/agent-concepts/overlays/bc-reflect.md` if it exists, which names the owner's session time-report tool and report directory. Why: the repository must work as-is for a stranger (`AGENTS.md` § Conventions), while the owner's agents keep their tool names. Owner decision 2026-11-19.
 - **Report directory:** `BC_AGENT_REFLECT_REPORT_DIR` if set, otherwise the `--report` target's parent if given, otherwise `${XDG_STATE_HOME:-~/.local/state}/bc-agent-reflect/`. The open-report check needs one directory that every run reads and writes. A per-project `./bc-agent-reflect/` would split one cross-project batch history across repositories and drop files into working trees; `${TMPDIR:-/tmp}` (the earlier default) is wiped, losing undecided reports, and disagreed with where the check read. The XDG state directory is per-user, persistent and outside any repository.
 - **Two report-name forms.** Default batch reports are `YYYY-MM-DD-<scope>.md`; a scheduled job may pass a date-only `--report YYYY-MM-DD.md`, which external readers of that directory may rely on. The open-report check matches both by date prefix and excludes the run's own `--report` target, so a same-day rerun does not carry over its own report. The decided/proposals interface (`## Decisions` line; `1. ` items under `## Proposals`) is fixed, and the body now tells the writer to produce it.
 
@@ -47,4 +48,4 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 
 ## Deploy
 
-Deployed via `scripts/deploy-local-skills.py` to the shared bus (`~/.agents/skills/bc-agent-reflect`, `~/.pi/agent/skills/bc-agent-reflect`, `~/.claude/skills/bc-agent-reflect`). Batch changes await a pressure re-test.
+Deployed via `scripts/deploy-local-skills.py` to the shared bus (`~/.agents/skills/bc-reflect`, `~/.pi/agent/skills/bc-reflect`, `~/.claude/skills/bc-reflect`). Batch changes await a pressure re-test.

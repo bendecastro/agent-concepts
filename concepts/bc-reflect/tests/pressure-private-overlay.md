@@ -1,8 +1,8 @@
 # Pressure test: headless carry-over and private overlay (2026-11-19)
 
-Run under the skill's former name `retro` (renamed `bc-agent-reflect` 2026-11-19); recorded prompts and outputs keep it.
+Run under the skill's former name `retro` (renamed `bc-reflect` 2026-11-19); recorded prompts and outputs keep it.
 
-The body names no owner tool or path; the owner's session time-report tool and report directory live in the optional private overlay `~/.config/agent-concepts/overlays/bc-agent-reflect.md`. Consumer model: `openai-codex/gpt-6.1-terra`, thinking low, n=2 per arm. Raw outputs: run dirs `pt-d/` and `pt-overlay/`.
+The body names no owner tool or path; the owner's session time-report tool and report directory live in the optional private overlay `~/.config/agent-concepts/overlays/bc-reflect.md`. Consumer model: `openai-codex/gpt-6.1-terra`, thinking low, n=2 per arm. Raw outputs: run dirs `pt-d/` and `pt-overlay/`.
 
 ## (d) Headless batch with an undecided latest report
 

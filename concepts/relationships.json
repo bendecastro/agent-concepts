@@ -689,26 +689,26 @@
     },
     {
       "from": "agent-kernel",
-      "to": "bc-agent-reflect",
+      "to": "bc-reflect",
       "relation": "hands_off",
       "required": false,
       "source": "concepts/agent-kernel/body/AGENT-KERNEL.md",
-      "reason": "The recap's 👣 line offers /bc-agent-reflect when a substantial session's deliverables are all ready; the owner decides."
+      "reason": "The recap's 👣 line offers /bc-reflect when a substantial session's deliverables are all ready; the owner decides."
     },
     {
-      "from": "bc-agent-reflect",
+      "from": "bc-reflect",
       "to": "prompting-agents",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-agent-reflect/body/SKILL.md#every-proposal-names-its-home",
+      "source": "concepts/bc-reflect/body/SKILL.md#every-proposal-names-its-home",
       "reason": "A proposal homed in a concept or kernel clause is worded per prompting-agents and pressure-tested before deploy."
     },
     {
-      "from": "bc-agent-reflect",
+      "from": "bc-reflect",
       "to": "code-review",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-agent-reflect/body/SKILL.md#every-proposal-names-its-home",
+      "source": "concepts/bc-reflect/body/SKILL.md#every-proposal-names-its-home",
       "reason": "Judgement-call standards findings are proposed as code-review standards; mechanical ones become checks."
     },
     {

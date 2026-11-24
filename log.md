@@ -1920,3 +1920,6 @@ Terra low: 1/2 placed a new security item above the owner's top item (edited ord
 
 ## [2026-11-24] implement | rename issue-slicing → plan-slicing
 Owner decision: it produces work items as well as issues. Old name kept as a deploy alias; references, relationships and the private routing skill follow.
+
+## [2026-11-24] implement | rename bc-agent-reflect → bc-reflect
+Owner decision: "agent" meant two things across bc-init-agent and this skill. Kernel line and its harness copies now offer `/bc-reflect`; old name kept as a deploy alias; report directory, env var, weekly job and reminder extension keep their names.

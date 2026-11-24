@@ -7,8 +7,8 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- hands off to `bc-agent-reflect` — optional.
-  The recap's 👣 line offers /bc-agent-reflect when a substantial session's deliverables are all ready; the owner decides.
+- hands off to `bc-reflect` — optional.
+  The recap's 👣 line offers /bc-reflect when a substantial session's deliverables are all ready; the owner decides.
   Source: [body/AGENT-KERNEL.md](body/AGENT-KERNEL.md)
 
 - loads `tdd` — required, when new tests or behaviour-changing assertions.

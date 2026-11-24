@@ -1,6 +1,6 @@
-# Pressure test: bc-agent-reflect
+# Pressure test: bc-reflect
 
-Run under the skill's former name `retro` (renamed `bc-agent-reflect` 2026-11-19); recorded prompts and outputs keep it.
+Run under the skill's former name `retro` (renamed `bc-reflect` 2026-11-19); recorded prompts and outputs keep it.
 
 Authored and run 2026-11-19.
 

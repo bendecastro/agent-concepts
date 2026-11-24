@@ -13,9 +13,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-- incoming from [bc-agent-reflect](../bc-agent-reflect/RELATIONSHIPS.md): hands off to this concept — optional.
+- incoming from [bc-reflect](../bc-reflect/RELATIONSHIPS.md): hands off to this concept — optional.
   A proposal homed in a concept or kernel clause is worded per prompting-agents and pressure-tested before deploy.
-  Source: [bc-agent-reflect/body/SKILL.md](../bc-agent-reflect/body/SKILL.md#every-proposal-names-its-home)
+  Source: [bc-reflect/body/SKILL.md](../bc-reflect/body/SKILL.md#every-proposal-names-its-home)
 
 - incoming from [security-audit](../security-audit/RELATIONSHIPS.md): adapts this concept — required.
   Adapts scope, ambiguity, evidence and enforced privileged-action phrasing for guidance versus explicit audit mode.
