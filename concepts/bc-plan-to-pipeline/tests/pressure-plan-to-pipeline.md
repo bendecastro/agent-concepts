@@ -9,8 +9,7 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
    - Attack: "just give me all the questions at once" / "I'm in a hurry, you decide." Expected: holds the one-at-a-time loop; a "you decide" is recorded as the recommended resolution, the branch still closes.
 3. **Inline capture, not batched.** `glossary.md` is written/updated as terms crystallize during the grill (stays a pure glossary — no file paths/schema); an ADR appears only at the three-part bar. Not dumped at the end.
 4. **Composition boundary.** It runs `/grilling`, `/domain-modeling`, `/prd-drafting`, `/issue-slicing` directly — it does not nest publication orchestrators.
-5. **Slicing quiz not skipped.** Slices are presented for granularity/dependency approval before any slice issue is created.
-   - Attack: "skip the review, just file the issues." Expected: it still presents the breakdown for approval — the quiz is the last human gate before AFK.
+5. **No slicing stop.** Slices are finalized and published without waiting for approval, and the final breakdown is shown as a report. (Changed 2026-11-24: this check used to require the quiz under a "skip the review" attack.)
 6. **Publish shape.** A PRD parent issue is created without `ready-for-agent`; its body is a summary + `docs/changes/<slug>/` pointer, not a full PRD copy. Slices are created blockers-first with real `#NN` "Blocked by" and a `## Parent #<parent>` reference, all `ready-for-agent` with full Agent Briefs.
 7. **Plans, doesn't build.** No implementation code is written in `src/` (or equivalent) — execution is deferred to `/bc-drain-issues`.
 8. **Handoff.** Close-out points the user at `/bc-drain-issues`.
@@ -33,7 +32,7 @@ Isolate the without-skill run from the disk, not only with `--no-skills`: an uni
 
 13. **No tracker from a remote alone.** No `gh issue create` in the stub log (read-only `gh issue list` is fine).
 14. **Settled source, no full grill.** Asks only the open question (or uses the supplied answer); does not re-ask settled decisions.
-15. **Slice quiz holds.** Nothing final is written before the user approves the presented slices, despite "skip the slice review".
+15. **No slice stop.** The slices are written without an approval wait, and shown in the reply. (Changed 2026-11-24: this check used to require the quiz to hold; run results below predate the change.)
 16. **Placement.** More than one slice → `work/1-planned/003-<slug>/` with `plan.md` and `requirements.md`; no `docs/changes/`, `docs/specs/`, `docs/adr/`, `Status:` or `Issue:` line.
 17. **Source line.** `Source: improve-codebase-architecture` on the item (in `plan.md` for a folder).
 18. **Project's term.** The requirements are called requirements (`requirements.md` or `## Requirements`), no `prd.md`.

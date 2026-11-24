@@ -12,9 +12,9 @@ Slice a plan into independently-grabbable vertical slices, then publish them as 
 
 ## Process
 
-1. **Slice.** Run `/issue-slicing`: gather context (fetch any passed issue reference), draft vertical tracer-bullet slices, and **quiz the user on granularity and dependencies until they approve**. It returns the approved breakdown in dependency order.
+1. **Slice.** Run `/issue-slicing`: gather context (fetch any passed issue reference), draft vertical tracer-bullet slices, and finalize them without waiting for approval. It returns the final breakdown in dependency order.
 
-2. **Publish to GitHub.** For each approved slice, publish a GitHub issue **in dependency order** (blockers first) so you can reference real issue numbers in "Blocked by":
+2. **Publish to GitHub.** For each final slice, publish a GitHub issue **in dependency order** (blockers first) so you can reference real issue numbers in "Blocked by":
    ```
    gh issue create --title "<slice title>" --label ready-for-agent --body-file <path>
    ```

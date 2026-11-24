@@ -1878,3 +1878,6 @@ The generated "Finish or drop an item" row now says: only once the work is on th
 
 ## [2026-11-23] implement | bc-init-agent: work_index.py --check guards the owner order
 `--check` fails while work/order.md leaves out an open item or lists one above its blocker, and says where a new item goes; the generated Work items section gains the matching rule, bc-work-sync names the faults. Why: an agent added an item and a blocker without listing it and pushed the owner's ranked items to the bottom.
+
+## [2026-11-24] implement | issue-slicing: no human approval stop
+Owner decision: the agent finalizes slices itself and reports them instead of quizzing for approval; a draft-and-wait happens only when the user asks to review first. Propagated to `to-tickets`, `bc-plan-to-pipeline` (grill is now the only human gate), `docs/pipeline.md`, tests and status; the change is not yet pressure-tested.

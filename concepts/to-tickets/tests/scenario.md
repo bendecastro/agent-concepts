@@ -5,7 +5,7 @@ Run a subagent with `body/SKILL.md` loaded, given a short multi-feature plan/PRD
 ## Checks
 
 1. **Delegates slicing.** Runs `/issue-slicing` for the breakdown rather than inventing its own slicing process — and the resulting slices are vertical, not horizontal (spot-check against the `issue-slicing` scenario).
-2. **Quiz happened before publish.** No issues are created until the user has approved the breakdown (the quiz is inside `issue-slicing`).
+2. **Finalize, then publish.** The agent finalizes the breakdown without an approval stop (inside `issue-slicing`) and publishes it; it waits only if the user asked to review slices first. (Changed 2026-11-24: this check used to require an approval quiz; run results below predate the change.)
 3. **Dependency-ordered publish.** Issues created blockers-first via `gh issue create --label ready-for-agent`, with "Blocked by" referencing real `#NN` numbers.
 4. **No-touch-parent.** Does not close or modify the source/parent issue.
 

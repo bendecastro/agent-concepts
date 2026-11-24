@@ -1,12 +1,12 @@
 ---
 test_kind: pressure
-test_status: partial
+test_status: partial # no-approval-stop change 2026-11-24 not yet pressure-tested
 tested: 2026-08-17
 deployed: yes
 ---
 # Concept: issue-slicing
 
-Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbable **vertical tracer-bullet slices**, dependency-ordered, quizzing the user on granularity and dependencies before finalizing. Holds the reusable *slicing* behavior; it does NOT publish and does NOT touch any parent issue. The user-invoked `to-tickets` wraps it with GitHub publication, and `bc-plan-to-pipeline` publishes its output as part of the planning run.
+Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbable **vertical tracer-bullet slices**, dependency-ordered, and finalized by the agent without stopping for human approval. Holds the reusable *slicing* behavior; it does NOT publish and does NOT touch any parent issue. The user-invoked `to-tickets` wraps it with GitHub publication, and `bc-plan-to-pipeline` publishes its output as part of the planning run.
 
 ## Design decisions
 
@@ -16,9 +16,9 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 - **Prefactor first.** "Make the change easy, then make the easy change" — prefactoring is its own first slice.
 - **Wide refactors expand–contract.** A mechanical change whose blast radius prevents independently green vertical slices expands the new form beside the old, migrates callers in bounded green batches, then contracts only after every batch lands.
 - **Fresh-context sizing.** Ordinary slices fit one fresh agent context; split before a handoff becomes necessary.
-- **Drain-lifecycle sizing is qualitative, not a token-threshold readiness gate.** Audit + build + independent review + likely rework—not implementation alone—inform whether a slice fits the executor's lifecycle. When scope, compatibility surface, external semantics, migration risk, or likely rework make end-to-end verification and safe rework implausible, split at independently verifiable behavior boundaries; if the user rejects a necessary split, do not label the unsplit work agent-ready. Explain the judgment in the draft quiz. Do not invent token estimates or treat former 200k/300k executor limits as current requirements; lifecycle fit informs slicing without replacing the human approval gate.
-- **Quiz before finalize — the human gate.** The user approves the breakdown (granularity + dependency graph) before slices become agent-ready work. In `bc-plan-to-pipeline` this quiz *is* the last human checkpoint before the AFK executor runs, so the discipline must not finalize without it.
-- **Hands back, never publishes.** Returns approved slices in dependency order for the caller to publish with real `#NN` references; never creates/closes/modifies a parent issue.
+- **Drain-lifecycle sizing is qualitative, not a token-threshold readiness gate.** Audit + build + independent review + likely rework—not implementation alone—inform whether a slice fits the executor's lifecycle. When scope, compatibility surface, external semantics, migration risk, or likely rework make end-to-end verification and safe rework implausible, split at independently verifiable behavior boundaries; if the user rejects a necessary split, do not label the unsplit work agent-ready. Explain the judgment in the reported breakdown. Do not invent token estimates or treat former 200k/300k executor limits as current requirements; when one slice cannot be verified and reworked safely, the agent splits it rather than handing it back as agent-ready.
+- **No approval stop (owner decision 2026-11-24).** The agent checks granularity and dependencies itself, finalizes, and shows the final breakdown as a report rather than a question. Replaces the former quiz-before-finalize gate, which explicitly refused "I trust you" as approval: the owner now trusts model slicing and the stop blocked the pipeline from running on its own. A user who asks in the request to review the slices first still gets a draft and a wait. In `bc-plan-to-pipeline` the grill is now the only human gate before the AFK executor.
+- **Hands back, never publishes.** Returns final slices in dependency order for the caller to publish with real `#NN` references; never creates/closes/modifies a parent issue.
 
 ## Provenance
 
@@ -30,7 +30,7 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 
 ## Tests
 
-`tests/scenario.md` — verifies vertical (not horizontal) slicing, fresh-context and qualitative drain-lifecycle sizing, the expand–contract exception, the quiz-before-finalize gate, the no-publish / no-touch-parent boundary, and dependency-ordered handback. The 2026-08-17 direct pressure pass exercised the former token-threshold policy; current qualitative-sizing expectations were updated 2026-09-26 and remain untested. Prior pressure also ran transitively via `to-tickets` (then named `to-issues`) and `bc-plan-to-pipeline`.
+`tests/scenario.md` — verifies vertical (not horizontal) slicing, fresh-context and qualitative drain-lifecycle sizing, the expand–contract exception, finalizing without an approval stop (draft-and-wait only on explicit request), the no-publish / no-touch-parent boundary, and dependency-ordered handback. The 2026-08-17 direct pressure pass exercised the former token-threshold policy; current qualitative-sizing expectations were updated 2026-09-26 and remain untested, as does the 2026-11-24 removal of the approval quiz. Prior pressure also ran transitively via `to-tickets` (then named `to-issues`) and `bc-plan-to-pipeline`.
 
 ## Deploy targets
 

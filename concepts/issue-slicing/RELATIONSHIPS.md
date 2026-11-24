@@ -14,5 +14,5 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Incoming
 
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): loads this concept — required.
-  Step 6 slices the PRD and runs the last human gate.
+  Step 6 slices the PRD; the agent finalizes slices without an approval stop.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)

@@ -28,7 +28,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - loads `issue-slicing` — required.
-  Step 6 slices the PRD and runs the last human gate.
+  Step 6 slices the PRD; the agent finalizes slices without an approval stop.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - loads `naming-things` — required, when choosing domain or public code names.

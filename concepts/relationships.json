@@ -121,7 +121,7 @@
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
-      "reason": "Step 6 slices the PRD and runs the last human gate."
+      "reason": "Step 6 slices the PRD; the agent finalizes slices without an approval stop."
     },
     {
       "from": "bc-plan-to-pipeline",
