@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # dry run 2/2 on Terra low: plan.md met all 11 criteria; earlier live attempt stopped early in 6 of 7 runs; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
+test_status: pass # dry run 2/2 on Terra low: plan.md met all 11 criteria; earlier live attempt stopped early in 6 of 7 runs; plan-every-item handoff inherited from find-bugs, which passed 3/3 on Terra low 2026-11-24 (bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md); this chain not run
 tested: 2026-11-24
 deployed: yes
 ---

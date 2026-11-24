@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL); Kind/top placement clause PASS 4/4 on Terra low 2026-11-24 after a run-check-first fix (1/2 before); plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
+test_status: partial # visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL); Kind/top placement clause PASS 4/4 on Terra low 2026-11-24 after a run-check-first fix (1/2 before); plan-every-item pickup rule 2026-11-24 partial on Terra low: held (no unplanned start; baseline started it) but carry-on runs stop text-only before planning, 0/3 in round 3 (bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md)
 tested: 2026-11-24
 deployed: 2026-06-21
 ---

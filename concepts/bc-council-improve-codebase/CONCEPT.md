@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # roster, agreement and citation rules held (2026-11-22, 2026-11-24); full live review never pressure-tested end to end; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind/hand-off lines not run; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
+test_status: partial # roster, agreement and citation rules held (2026-11-22, 2026-11-24); full live review never pressure-tested end to end; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind/hand-off lines not run; plan-every-item change 2026-11-24 (recommend paragraph removed; hand-off via parent skill) not run (bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md covers find-bugs only)
 tested: 2026-11-24
 deployed: yes
 ---

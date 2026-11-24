@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2 with-skill runs each confirmed 9/10 planted bugs, no decoy; blind baseline also confirmed 10/10 but kept no report, tiers or worktree; filing step not run; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
+test_status: pass # 2 with-skill runs each confirmed 9/10 planted bugs, no decoy; blind baseline also confirmed 10/10 but kept no report, tiers or worktree; filing step and plan-every-item handoff 2026-11-24 PASS 3/3 on Terra low in round 3 (filed and planned in place, nothing started; baseline did not plan) (bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md)
 tested: 2026-11-24
 deployed: yes
 ---

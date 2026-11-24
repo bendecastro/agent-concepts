@@ -1956,3 +1956,6 @@ From a /bc-reflect pick: AGENTS.md Test operation now points to docs/pressure-te
 
 ## [2026-11-24] implement | plan every planned item (untested)
 Owner decision: every item in work-planned is planned by bc-plan-to-pipeline before it starts. bc-plan-to-pipeline plans an existing item in place and writes a `Planned:` marker; improve-codebase-architecture and find-bugs hand off to it after filing (council chains inherit; old recommendation removed); bc-init-agent's generated pickup rule, template line and a non-failing `work_index.py --check` warning; bc-drain-issues skips unmarked items as "needs planning". Pressure scenario `bc-plan-to-pipeline/tests/pressure-plan-every-item.md` written, not run.
+
+## [2026-11-24] test | plan every planned item (bc-plan-to-pipeline, find-bugs, bc-init-agent pickup rule)
+Three Terra-low pressure rounds, two wording fixes between them. No new-rule run started an unplanned item, guessed, or asked a seam question; the find-bugs filing handoff passes 3/3; the carry-on and absent-owner scenarios still end text-only before planning (0/3 each in round 3). Statuses stay partial; results in concepts/bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md.

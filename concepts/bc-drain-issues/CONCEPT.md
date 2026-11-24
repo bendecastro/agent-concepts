@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # work items and role lookup added 2026-11-12 (visible layout); deterministic runner re-passed, new consuming-model scenarios not yet run; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
+test_status: partial # work items and role lookup added 2026-11-12 (visible layout); deterministic runner re-passed, new consuming-model scenarios not yet run; plan-every-item skip-unplanned rule 2026-11-24 not run (drain scenario not in bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md)
 tested: 2026-10-08
 deployed: 2026-07-25
 ---

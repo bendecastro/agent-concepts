@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # settled-source no-tracker scenario passed 3/3 on Terra low 2026-11-22; visible-layout tracker scenario not yet run; slicing-quiz removal 2026-11-24 untested; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind line not run; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
-tested: 2026-11-22
+test_status: partial # settled-source no-tracker scenario passed 3/3 on Terra low 2026-11-22; visible-layout tracker scenario not yet run; slicing-quiz removal 2026-11-24 untested; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind line not run; plan-every-item change 2026-11-24 partial on Terra low over 3 rounds: never started an unplanned item, guessed or asked a seam question (baseline did); settled-item planning passes when the run carries on, but A/B single-shot runs stop text-only 0/3 in round 3 (bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md)
+tested: 2026-11-24
 deployed: 2026-06-21
 ---
 # Concept: bc-plan-to-pipeline
