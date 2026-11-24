@@ -172,7 +172,7 @@ The graph's one-home rule prevents a second hand-maintained reverse list. If an 
 
 ### Generate (never hand-edited)
 
-`concepts/<name>/RELATIONSHIPS.md` for each concept touched by an edge. After Task 4 that is `bc-drain-issues`, `bc-plan-to-issues`, `domain-modeling`, `grilling`, `issue-slicing`, `prd-drafting`, and `tdd`.
+`concepts/<name>/RELATIONSHIPS.md` for each concept touched by an edge. After Task 4 that is `bc-drain-issues`, `bc-plan-to-issues`, `domain-modeling`, `grilling`, `plan-slicing`, `prd-drafting`, and `tdd`.
 
 ### Module contract
 
@@ -377,7 +377,7 @@ At minimum, test:
     },
     {
       "from": "bc-plan-to-issues",
-      "to": "issue-slicing",
+      "to": "plan-slicing",
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
@@ -395,7 +395,7 @@ At minimum, test:
 }
 ```
 
-- [ ] Run `python3 scripts/lint.py --write-relationships`; expect seven views written: `bc-drain-issues`, `bc-plan-to-issues`, `domain-modeling`, `grilling`, `issue-slicing`, `prd-drafting`, `tdd`.
+- [ ] Run `python3 scripts/lint.py --write-relationships`; expect seven views written: `bc-drain-issues`, `bc-plan-to-issues`, `domain-modeling`, `grilling`, `plan-slicing`, `prd-drafting`, `tdd`.
 - [ ] Read **concepts/tdd/RELATIONSHIPS.md** and **concepts/bc-drain-issues/RELATIONSHIPS.md**; confirm the incoming row names `bc-drain-issues` as the caller, no row claims TDD depends on the drain, and the `bc-drain-issues` view shows both the outgoing `tdd` load and the incoming optional handoff from `bc-plan-to-issues`.
 - [ ] Preserve every existing runtime clause; no body file changes in this task. Verify with `git status --short` showing no `concepts/*/body/` path.
 - [ ] Run `python3 scripts/lint.py`; expect no ERROR line, which also proves the generated relative links resolve.

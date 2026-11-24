@@ -117,7 +117,7 @@
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "issue-slicing",
+      "to": "plan-slicing",
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
@@ -186,12 +186,12 @@
       "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
     },
     {
-      "from": "issue-slicing",
+      "from": "plan-slicing",
       "to": "domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/issue-slicing/body/SKILL.md",
+      "source": "concepts/plan-slicing/body/SKILL.md",
       "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
     },
     {

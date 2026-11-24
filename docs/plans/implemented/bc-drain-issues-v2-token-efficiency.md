@@ -255,7 +255,7 @@ same packets, state machine, and round caps.
 - `.pi/agent/extensions/subagent/config.json`
   - compact tool-description mode for lower child prompt overhead.
 
-Upstream issue-slicing improvements—such as requiring compatibility inventories in Agent
+Upstream plan-slicing improvements—such as requiring compatibility inventories in Agent
 Briefs—are a separate follow-up after drain-local behavior is measured.
 
 ## Pressure and A/B acceptance

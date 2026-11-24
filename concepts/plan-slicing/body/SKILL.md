@@ -1,5 +1,5 @@
 ---
-name: issue-slicing
+name: plan-slicing
 description: Break a plan, spec, or PRD into independently-grabbable vertical tracer-bullet slices — dependency-ordered and finalized by the agent without waiting for human approval. Use when splitting resolved work into agent-ready issues.
 ---
 

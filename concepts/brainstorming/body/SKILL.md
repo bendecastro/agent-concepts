@@ -24,7 +24,7 @@ Do not use to block clearly specified small edits, bug fixes with a tight repro,
 6. Get user approval or revisions.
 7. Save the approved design/spec if the project expects durable planning docs.
 8. Self-review the spec/design for placeholders, contradictions, ambiguity, and over-broad scope.
-9. Hand off to implementation planning (`writing-plans`, `prd-drafting`, `issue-slicing`, or project-specific pipeline). Do not start coding unless the user approved both design and execution.
+9. Hand off to implementation planning (`writing-plans`, `prd-drafting`, `plan-slicing`, or project-specific pipeline). Do not start coding unless the user approved both design and execution.
 
 ## Design quality checks
 

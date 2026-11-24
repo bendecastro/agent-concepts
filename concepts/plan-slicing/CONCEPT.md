@@ -4,12 +4,13 @@ test_status: partial # no-approval-stop change passed 2026-11-24 (Terra low); wi
 tested: 2026-11-24
 deployed: yes
 ---
-# Concept: issue-slicing
+# Concept: plan-slicing
 
 Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbable **vertical tracer-bullet slices**, dependency-ordered, and finalized by the agent without stopping for human approval. Holds the reusable *slicing* behavior; it does NOT publish and does NOT touch any parent issue. The user-invoked `to-tickets` wraps it with GitHub publication, and `bc-plan-to-pipeline` publishes its output as part of the planning run.
 
 ## Design decisions
 
+- **Renamed from `issue-slicing` (2026-11-24, owner decision).** It slices into work items as well as tracker issues, the same reason `bc-plan-to-issues` became `bc-plan-to-pipeline`. The old name stays as a deploy alias (`DEPLOY_ALIASES`).
 - **Extracted from the then-named `to-issues` (refactor 2026-06-20; renamed `to-tickets` 2026-07-11).** Same motivation as `prd-drafting`: split reusable slicing behavior out of the user-invoked publication orchestrator so `bc-plan-to-pipeline` can inline a model-invoked discipline instead of calling another user-invoked orchestrator (composition boundary; see `prompting-agents`).
 - **The issue template lives here, not in the orchestrator** — one home, no drift between `to-tickets` and `bc-plan-to-pipeline`.
 - **Vertical slices, not horizontal.** Each slice cuts end-to-end through every layer and is independently demoable — the tracer bullet. Horizontal slices are the named anti-pattern, shared with `tdd`.
@@ -34,5 +35,5 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 
 ## Deploy targets
 
-- Claude Code: `~/.claude/skills/issue-slicing` → relative symlink to `body/`.
+- Claude Code: `~/.claude/skills/plan-slicing` → relative symlink to `body/`.
 - Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.

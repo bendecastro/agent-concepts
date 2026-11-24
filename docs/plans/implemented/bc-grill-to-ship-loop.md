@@ -88,17 +88,17 @@ chains planning into execution.
 ### A. Refactor — extract two model-invoked disciplines (build first)
 - **`prd-drafting`** (model-invoked) — synthesize conversation + codebase + test
   seams into a PRD body (the reusable *writing* behavior, minus publishing).
-- **`issue-slicing`** (model-invoked) — break a plan into vertical tracer-bullet
+- **`plan-slicing`** (model-invoked) — break a plan into vertical tracer-bullet
   slices, dependency-ordered, including the granularity/deps quiz.
 - Rewire **`to-prd`** → "run `/prd-drafting` → publish to GitHub" and **`to-issues`**
-  → "run `/issue-slicing` → publish to GitHub". Behavior preserved, relocated. This
+  → "run `/plan-slicing` → publish to GitHub". Behavior preserved, relocated. This
   mirrors how `grilling`/`domain-modeling` already back `grill-me`.
 - Re-run/author `to-prd`/`to-issues` pressure tests to confirm behavior preserved.
 
 ### B. `bc-plan-to-issues` (user-invoked planning orchestrator)
 One command, the interactive front:
 `grilling` → `domain-modeling` (inline, as `grill-me` does) → `prd-drafting` →
-publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this is the
+publish PRD parent issue → `plan-slicing` (incl. the approval quiz — this is the
 **human gate**) → publish slice issues blockers-first with real `#NN` refs, all
 `ready-for-agent`. Composes only model-invoked disciplines. Close-out recommends
 `/bc-drain-issues`.
@@ -135,16 +135,16 @@ publish PRD parent issue → `issue-slicing` (incl. the approval quiz — this i
 - **Refactor**: `to-prd`/`to-issues` behavior preserved after relocation.
 
 ## Build order (checkbox steps)
-- [x] 1. Refactor → `prd-drafting` + `issue-slicing`; rewire `to-prd`/`to-issues`; scenarios updated for delegation.
+- [x] 1. Refactor → `prd-drafting` + `plan-slicing`; rewire `to-prd`/`to-issues`; scenarios updated for delegation.
 - [x] 2. `bc-plan-to-issues` built (CONCEPT + body + pressure test authored).
 - [x] 3. `bc-drain-issues` (`SKILL.md` + `execute-issue.md`) built + pressure test authored.
 - [x] 4. Pipeline doc (`pipeline.md`) + project B `planning-workflow.md` execution-phase extension.
-- [~] 5. Bookkeeping done (`index.md`, `harnesses.md`, `log.md`); `prd-drafting`/`issue-slicing` Claude-symlinked.
+- [~] 5. Bookkeeping done (`index.md`, `harnesses.md`, `log.md`); `prd-drafting`/`plan-slicing` Claude-symlinked.
       **Done 2026-07-16:** both `bc-` pressure tests PASS (Grok). Remaining if any: confirm deploy/symlink `bc-plan-to-issues`/`bc-drain-issues`
       (Claude) + Pi via `scripts/deploy-local-skills.py`; lint + commit.
 
 ## Bookkeeping note
 Concept-name uniqueness: `bc-plan-to-issues`, `bc-drain-issues`, `prd-drafting`,
-`issue-slicing` — all new, dash-case, unique. When authoring the instruction bodies,
+`plan-slicing` — all new, dash-case, unique. When authoring the instruction bodies,
 adapt blocks from `concepts/prompting-agents/body/SKILL.md` rather than inventing
 phrasing (per AGENTS.md Implement/Update).

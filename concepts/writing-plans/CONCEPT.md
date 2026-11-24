@@ -10,7 +10,7 @@ User-invoked implementation-plan authoring skill for turning an approved spec or
 
 ## Design decisions
 
-- **Plain plan, not PRD/issue publishing.** Existing `prd-drafting` and `issue-slicing` cover the GitHub pipeline; this concept covers standalone local implementation plans.
+- **Plain plan, not PRD/issue publishing.** Existing `prd-drafting` and `plan-slicing` cover the GitHub pipeline; this concept covers standalone local implementation plans.
 - **Agent-ready detail.** The body preserves upstream insistence on exact paths, commands, expected outputs, and code snippets because plans are often executed by fresh agents with no context.
 - **No placeholder plans.** Placeholder bans are retained as a gate: a vague plan is worse than no handoff.
 
@@ -18,7 +18,7 @@ User-invoked implementation-plan authoring skill for turning an approved spec or
 
 - [obra/superpowers `skills/writing-plans/SKILL.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/writing-plans/SKILL.md) — plan structure, task granularity, no-placeholder rule, self-review checklist.
 - [obra/superpowers `skills/writing-plans/plan-document-reviewer-prompt.md`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/writing-plans/plan-document-reviewer-prompt.md) — reviewer mindset referenced but not copied into body.
-- `concepts/issue-slicing/` and `concepts/prd-drafting/` — local GitHub-oriented sibling concepts.
+- `concepts/plan-slicing/` and `concepts/prd-drafting/` — local GitHub-oriented sibling concepts.
 
 ## Tests
 

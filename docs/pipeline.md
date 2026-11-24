@@ -13,7 +13,7 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
    │
    ▼   /bc-plan-to-pipeline   ── interactive planning (human in the loop) ──┐
    │     grilling ─► domain-modeling ─► prd-drafting ─► [publish PRD issue] │
-   │                                     └► issue-slicing ─► [publish slices]
+   │                                     └► plan-slicing ─► [publish slices]
    │                                    (slices finalized by the agent)     │
    │     (no tracker: slices become the work item's steps; no issues)       │
    ▼                                                                        │
@@ -50,7 +50,7 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 
 **Evidence / runway — `/prototype` and `/improve-codebase-architecture`** (interactive, optional). Use prototypes when a state/UI decision needs a throwaway artifact before the PRD. Use architecture review when a feature or bug exposes poor seams and needs a deep-module plan before slicing.
 
-**Planning — `/bc-plan-to-pipeline`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`glossary.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. One human gate: the grill; the agent finalizes the slices without an approval stop. Composes model-invoked disciplines only (`grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`) — never the user-invoked single-step orchestrators.
+**Planning — `/bc-plan-to-pipeline`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`glossary.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. One human gate: the grill; the agent finalizes the slices without an approval stop. Composes model-invoked disciplines only (`grilling`, `domain-modeling`, `prd-drafting`, `plan-slicing`) — never the user-invoked single-step orchestrators.
 
 **Execution — `/bc-drain-issues`** (AFK, run after planning/triage). A preflight-gated driver loop atomically claims each unblocked issue, dispatches a **fresh worker** to build it test-first (or run `diagnosing-bugs` for bugs), runs a deterministic pre-review gate, then applies tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards) before trunk-based landing (commit → push `master` → close with a validation comment). Material findings receive bounded same-worktree rework/re-review for up to three cycles. Terminal outcomes stay distinct: `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable issue-local environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; and `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. Preflight is the only planned human gate; these outcomes are reported rather than collapsed into one parking state.
 
@@ -62,7 +62,7 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 | User-invoked orchestrators (loop) | `bc-plan-to-pipeline`, `bc-drain-issues` |
 | User-invoked intake / exploration | `triage`, `prototype`, `improve-codebase-architecture` |
 | User-invoked single-step (standalone) | `to-spec`, `to-tickets` |
-| Model-invoked disciplines | `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `research`, `tdd`, `diagnosing-bugs`, `codebase-design`, `bc-autoresearch-loop`, `code-review` |
+| Model-invoked disciplines | `grilling`, `domain-modeling`, `prd-drafting`, `plan-slicing`, `research`, `tdd`, `diagnosing-bugs`, `codebase-design`, `bc-autoresearch-loop`, `code-review` |
 
 `to-spec` and `to-tickets` remain for one-phase-at-a-time publication. For a standalone interview and domain capture, use `grilling` + `domain-modeling` directly. The loop orchestrators inline the *disciplines* beneath them so nothing is duplicated and no orchestrator calls another orchestrator.
 

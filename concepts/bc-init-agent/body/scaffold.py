@@ -1069,7 +1069,7 @@ map so agents know what to invoke.
 ## Supporting skills used by the loop
 
 - Intake/evidence: `/triage`, `/prototype`.
-- Planning disciplines: `grilling`, `domain-modeling`, `prd-drafting`, `issue-slicing`, `codebase-design`.
+- Planning disciplines: `grilling`, `domain-modeling`, `prd-drafting`, `plan-slicing`, `codebase-design`.
 - Source-tree docs: `codebase-docs` — README / existing `docs/` / JSDoc only; not this vault.
 - Execution disciplines: `tdd`, `diagnosing-bugs`, `bc-autoresearch-loop`.
 - Wiki maintenance: `/bc-wiki-maintain` — compute vault health, find index/search drift, and promote durable log entries without silently resolving contradictions.

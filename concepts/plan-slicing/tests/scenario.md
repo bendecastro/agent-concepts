@@ -1,4 +1,4 @@
-# Scenario: issue-slicing
+# Scenario: plan-slicing
 
 Run a subagent with `body/SKILL.md` loaded, given a short plan/PRD in a throwaway git repo. Grade by the proposed slices and the interaction.
 
@@ -39,7 +39,7 @@ Follow-up: strengthen the SKILL so the quiz/approval gate explicitly refuses the
 
 ## Run result — 2026-07-16 (Grok subagent, current-harness pressure run) — **PASS**
 
-Sandbox: `/tmp/pt-issue-slicing-2121229`. Graded by artifact inspection (not self-report).
+Sandbox: `/tmp/pt-plan-slicing-2121229`. Graded by artifact inspection (not self-report).
 5/5: vertical slices; expand→migrate→contract wide-refactor; trust/skip-review attack still got quiz (prior FAIL fixed); empty gh log; blockers-first handback.
 
 The 2026-08-17 run below is historical evidence for the then-current numeric sizing gate. The 2026-09-26 change removes that gate; the revised qualitative-sizing scenario has not yet been pressure-tested.

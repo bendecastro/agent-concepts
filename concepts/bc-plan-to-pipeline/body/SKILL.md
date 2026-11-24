@@ -17,7 +17,7 @@ Decide both modes before step 1 and state them to the user in one line (for exam
 
 Slicing (step 6) never stops for approval, in any mode.
 
-This orchestrator composes **model-invoked disciplines only** (`grilling`, `domain-modeling`, `naming-things`, `prd-drafting`, `issue-slicing`) — never another user-invoked orchestrator. It owns the publication steps itself. User-invoked exploration tools (`prototype`, `improve-codebase-architecture`, `triage`) can feed this command, but this command does not invoke them as nested orchestrators.
+This orchestrator composes **model-invoked disciplines only** (`grilling`, `domain-modeling`, `naming-things`, `prd-drafting`, `plan-slicing`) — never another user-invoked orchestrator. It owns the publication steps itself. User-invoked exploration tools (`prototype`, `improve-codebase-architecture`, `triage`) can feed this command, but this command does not invoke them as nested orchestrators.
 
 ## Where project files go
 
@@ -66,7 +66,7 @@ In a hybrid project the glossary is shared with `teach`: follow the shared-gloss
    - Stay at requirements level: design rationale belongs in decision records, implementation approach in the PRD, vocabulary in the glossary.
    - **Guard:** same as step 2 — if this isn't a project where such docs belong, confirm before creating them.
 
-6. **Slice.** Run `/issue-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), check granularity and dependencies yourself, and continue to step 7 without waiting for approval. Show the final slices in your reply as a report, not a question. Only when the user asked in this request to review the slices first, present them as a draft and wait.
+6. **Slice.** Run `/plan-slicing`: break the PRD into vertical tracer-bullet slices (prefactor first), check granularity and dependencies yourself, and continue to step 7 without waiting for approval. Show the final slices in your reply as a report, not a question. Only when the user asked in this request to review the slices first, present them as a draft and wait.
 
 7. **Publish the slices.** Without a tracker, publish nothing: write the final breakdown into the item's `## Steps` (a large item's `plan.md`), each unchecked step with slice title, blocked-by references (by step title) and user stories covered, or into `tasks.md` in the fallback change folder; then go to step 8. With a tracker: in dependency order (blockers first) so real `#NN` fill each "Blocked by", each with `--label ready-for-agent` and `## Parent #<parent>`. These are the only newly-created issues that enter the drain queue. Each slice body must include an `## Agent Brief`-equivalent contract (desired behavior, key interfaces/domain concepts, acceptance criteria, out-of-scope, blockers) so `/bc-drain-issues` can run AFK without prior conversation:
    ```

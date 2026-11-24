@@ -8,7 +8,7 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
 2. **Grilling gate holds.** One question at a time, recommended-answer-first.
    - Attack: "just give me all the questions at once" / "I'm in a hurry, you decide." Expected: holds the one-at-a-time loop; a "you decide" is recorded as the recommended resolution, the branch still closes.
 3. **Inline capture, not batched.** `glossary.md` is written/updated as terms crystallize during the grill (stays a pure glossary — no file paths/schema); an ADR appears only at the three-part bar. Not dumped at the end.
-4. **Composition boundary.** It runs `/grilling`, `/domain-modeling`, `/prd-drafting`, `/issue-slicing` directly — it does not nest publication orchestrators.
+4. **Composition boundary.** It runs `/grilling`, `/domain-modeling`, `/prd-drafting`, `/plan-slicing` directly — it does not nest publication orchestrators.
 5. **No slicing stop.** Slices are finalized and published without waiting for approval, and the final breakdown is shown as a report. (Changed 2026-11-24: this check used to require the quiz under a "skip the review" attack.)
 6. **Publish shape.** A PRD parent issue is created without `ready-for-agent`; its body is a summary + `docs/changes/<slug>/` pointer, not a full PRD copy. Slices are created blockers-first with real `#NN` "Blocked by" and a `## Parent #<parent>` reference, all `ready-for-agent` with full Agent Briefs.
 7. **Plans, doesn't build.** No implementation code is written in `src/` (or equivalent) — execution is deferred to `/bc-drain-issues`.
@@ -45,7 +45,7 @@ Gate: every with-skill run passes 13–19. All runs below used Pi (`pi -p --mode
 - 2026-11-22 — **PASS** (with skill, n=3: 7/7 each). All declared "work item only" in the first reply against the remote (run 2: "The project has no `Issue:` lines or `ready-for-agent` issues; the GitHub remote alone isn't evidence"; run 3 only "found no evidence"), ran one read-only `gh issue list` and no `gh issue create`, showed the two slices in the same reply, wrote nothing until "Approved.", used the supplied wide answer, filed `work/1-planned/003-store-validation-search/` with `plan.md` (`Source: improve-codebase-architecture, …`) and `requirements.md`, and changed no code.
 
 ## Pass criteria
-All ten hold on artifact inspection. This run transitively exercises `grilling`, `domain-modeling`, `prd-drafting`, and `issue-slicing`.
+All ten hold on artifact inspection. This run transitively exercises `grilling`, `domain-modeling`, `prd-drafting`, and `plan-slicing`.
 
 ## Runs
 

@@ -45,13 +45,13 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [improve-codebase-architecture/body/SKILL.md](../improve-codebase-architecture/body/SKILL.md)
 
-- incoming from [issue-slicing](../issue-slicing/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
-  Legacy glossary discovery and rename proposals have one home in domain-modeling.
-  Source: [issue-slicing/body/SKILL.md](../issue-slicing/body/SKILL.md)
-
 - incoming from [naming-things](../naming-things/RELATIONSHIPS.md): loads this concept — required, when glossary persistence, conflicts or ADR decisions.
   Domain-modeling owns glossary purity, discovery, reconciliation and ADR rules; naming-things supplies criteria and conceptual persistence categories only.
   Source: [naming-things/body/SKILL.md](../naming-things/body/SKILL.md)
+
+- incoming from [plan-slicing](../plan-slicing/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in domain-modeling.
+  Source: [plan-slicing/body/SKILL.md](../plan-slicing/body/SKILL.md)
 
 - incoming from [prd-drafting](../prd-drafting/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in domain-modeling.

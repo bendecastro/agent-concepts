@@ -1917,3 +1917,6 @@ Owner decision: council chains share the `bc-council-` prefix so they group toge
 
 ## [2026-11-24] test | bc-init-agent top-kind placement
 Terra low: 1/2 placed a new security item above the owner's top item (edited order.md before `--check`); the rule now says to run `--check` first and add the line where it says: 4/4 PASS. Results in `concepts/bc-init-agent/tests/pressure-top-kinds-results-2026-11-24.md`.
+
+## [2026-11-24] implement | rename issue-slicing → plan-slicing
+Owner decision: it produces work items as well as issues. Old name kept as a deploy alias; references, relationships and the private routing skill follow.

@@ -27,13 +27,13 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Step 1 interviews the idea before any artifact is written.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
-- loads `issue-slicing` — required.
-  Step 6 slices the PRD; the agent finalizes slices without an approval stop.
-  Source: [body/SKILL.md](body/SKILL.md#pipeline)
-
 - loads `naming-things` — required, when choosing domain or public code names.
   Apply shared naming criteria without changing the surrounding workflow gates.
   Source: [body/SKILL.md](body/SKILL.md)
+
+- loads `plan-slicing` — required.
+  Step 6 slices the PRD; the agent finalizes slices without an approval stop.
+  Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - loads `prd-drafting` — required.
   Step 3 synthesizes the PRD from the grill and the codebase.

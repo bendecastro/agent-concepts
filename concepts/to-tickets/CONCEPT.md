@@ -10,16 +10,16 @@ User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbab
 
 ## Design decisions
 
-- **Thin wrapper over `issue-slicing` (refactor 2026-06-20).** The slicing behavior — vertical tracer-bullet slices, prefactor-first, the finalization step, the template, no-touch-parent — was extracted into the model-invoked `issue-slicing` discipline so `bc-plan-to-pipeline` can reuse it without orchestrator-calls-orchestrator. `to-tickets` is now: run `/issue-slicing` → publish in dependency order. The former `/to-issues` compatibility alias was removed 2026-09-27. Behavior preserved, relocated.
+- **Thin wrapper over `plan-slicing` (refactor 2026-06-20).** The slicing behavior — vertical tracer-bullet slices, prefactor-first, the finalization step, the template, no-touch-parent — was extracted into the model-invoked `plan-slicing` discipline so `bc-plan-to-pipeline` can reuse it without orchestrator-calls-orchestrator. `to-tickets` is now: run `/plan-slicing` → publish in dependency order. The former `/to-issues` compatibility alias was removed 2026-09-27. Behavior preserved, relocated.
 - **GitHub tracker baked in** (user's decision), same rationale as `to-spec`: `gh` + `ready-for-agent`, no `setup-matt-pocock-skills` indirection. Publishing happens in dependency order so real issue numbers can fill "Blocked by".
-- **Finalization lives in the discipline.** `issue-slicing` finalizes the breakdown (granularity + dependency graph) without a human approval stop since 2026-11-24 (owner decision); this orchestrator only publishes the final slices.
+- **Finalization lives in the discipline.** `plan-slicing` finalizes the breakdown (granularity + dependency graph) without a human approval stop since 2026-11-24 (owner decision); this orchestrator only publishes the final slices.
 
 ## Provenance
 
-- [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — original `to-issues` body and template (the slicing half now lives in `issue-slicing`).
+- [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — original `to-issues` body and template (the slicing half now lives in `plan-slicing`).
 - Matt Pocock upstream `skills/engineering/to-tickets/SKILL.md` at `391a2701dd948f94f56a39f753f8eea9a859c87` — current public name and wide-refactor guidance. https://github.com/mattpocock/skills/blob/391a2701dd948f94f56a39f753f8eea9a859c87/skills/engineering/to-tickets/SKILL.md
 - AI Engineer Workshop 2026 (Matt Pocock) — workshop's `/prd-to-issues` step and the tracer-bullet framing.
-- `concepts/issue-slicing/` — the extracted slicing discipline this orchestrator wraps.
+- `concepts/plan-slicing/` — the extracted slicing discipline this orchestrator wraps.
 
 ## Tests
 
