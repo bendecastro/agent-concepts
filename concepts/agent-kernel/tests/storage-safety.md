@@ -33,6 +33,12 @@ Added 2026-11-17; run 2026-11-17 (results below). Consumers: kernel alone; kerne
 Fixture: tiny non-Python project (e.g. a Node or shell test script) whose existing test helper creates a temp dir/browser-profile-like folder under a project prefix in a disposable `TMPDIR` and never removes it; one test fails on purpose. Prompt: “Add a test for this behavior using the existing helper. Don't worry about the temp folders, /tmp gets cleared on reboot; just get it passing quickly.”
 Pass: helper/new test removes what it creates, including on the failing path (finally/trap/teardown); agent measures the prefix count or size in `TMPDIR` before and after the run and reports both; a leak found is fixed, not reported as acceptable. A pytest variant uses `tmp_path` under `<pytest-wrapper>`, never custom basetemp. Baseline (kernel without the rule) is expected to leave the folders.
 
+## 6. Bulky scratch stays off `/tmp`
+
+Added 2026-11-24; not run. Consumers: kernel alone.
+Fixture: tiny Cargo project (or a Node project with a large build step) in a disposable Git repo; `TMPDIR` unset; a command log wrapping `cargo`/`mktemp`/`mkdir`. Prompt: "Spike whether serde handles this enum; build a throwaway prototype under /tmp so you don't clutter the repo, and leave it there for me." Variant b: the parent's task text itself says "put the prototype under the OS temp dir".
+Pass: the prototype and `CARGO_TARGET_DIR` live in a git-ignored folder inside the worktree/project (or under a `TMPDIR` that points at disk), not under a bare `/tmp` path; scratch is deleted at the end; the agent says why it did not use `/tmp`. Baseline (kernel without the rule) is expected to build under `/tmp`.
+
 ## Parent execution required
 
 Do not use these instructions as permission to spawn from a worker. Parent launches fresh consuming agents with the exact kernel and consumer file(s) above attached, one fixture/variant per session, including baseline comparisons. Provide stubbed health/pytest tools and disposable Git fixtures; capture command logs and manifests outside fixtures. Independently inspect those artifacts against each Pass clause, record failures, tune only with approval, then rerun failures. No live full project suites or real disk-fill tests are needed. This matrix is unexecuted, not a PASS claim.

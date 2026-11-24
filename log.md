@@ -1884,3 +1884,6 @@ Owner decision: the agent finalizes slices itself and reports them instead of qu
 
 ## [2026-11-24] test | issue-slicing: no approval stop
 Pressure run on Terra low: with the skill it finalized slices without asking (×2) and still waited when asked to review first; the blind baseline also did not stop but sliced horizontally. Wide-refactor and unsafe-split checks not exercised; `to-tickets` and `bc-plan-to-pipeline` not re-run.
+
+## [2026-11-24] implement | agent-kernel: bulky scratch off /tmp
+Owner request after a Rust spike filled a 7.7 GB tmpfs `/tmp` and killed three agent runs: Storage safety now keeps build output and prototypes in the worktree or a disk-backed `$TMPDIR`, and forbids telling workers to build in `/tmp`. Pressure scenario 6 added, not run; derived copies wait for it.

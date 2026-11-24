@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 generic storage-safety wording PASS 4/4 (with-kernel only); full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL); concurrent-sessions: discovery 4/4 vs 0/4 (s1+s2 after no-tools prompt fix), visible exchange 1.5/2 vs 0.5/2 (partial scores), control 4/4
+test_status: partial # 2026-11-24 bulky-scratch rule (scenario 6) NOT RUN; 2026-11-19 generic storage-safety wording PASS 4/4 (with-kernel only); full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL); concurrent-sessions: discovery 4/4 vs 0/4 (s1+s2 after no-tools prompt fix), visible exchange 1.5/2 vs 0.5/2 (partial scores), control 4/4
 tested: 2026-11-19
 deployed: 2026-11-15
 ---
@@ -41,6 +41,7 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 - **Session-close signal in 👣 (2026-11-19)** — when every deliverable is ready, 👣 says the session can be closed, and offers `/bc-agent-reflect` after a substantial session. Owner's choice: the end-of-session signal lives in the recap rather than a separate line. The clause also says the closing reply gets a recap even when it is one line, because the short-factual-answer exemption otherwise swallowed the signal (pressure run, `tests/pressure-session-close.md`). New outgoing `hands_off` edge to `bc-agent-reflect` (renamed from `retro`); incoming edges unaffected: they depend on Verification/Storage safety, and `show-me` only defers final-response rules to the kernel.
 
+- **Bulky scratch off `/tmp` (2026-11-24, owner request)** — Storage safety gains one bullet: build output, prototypes and other bulky scratch go in a git-ignored folder in the worktree, or under a disk-backed `$TMPDIR`, never a bare `/tmp` path, and are deleted when done. Source: a worker built a Rust spike under `/tmp` (5.7 GB of a 7.7 GB tmpfs that also holds the subagent runner's state) and three agent runs died silently; the parent's own task text had said "under the OS temp dir", so the rule also forbids passing that instruction to workers. On the owner's machines the harness also points `TMPDIR` at a disk folder swept daily, so this rule is the backstop. Scenario 6 in [storage-safety](tests/storage-safety.md), not yet run; derived copies not yet updated (test gate).
 - **Generic Storage safety (2026-11-19)** — the public text names no personal tools; the owner’s specifics stay in private derived kernel copies. Basetemp refusal and health-check preflight held 4/4 on Terra low with the kernel only; this checks non-regression, not effectiveness against a baseline.
 
 ## Provenance
