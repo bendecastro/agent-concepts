@@ -1923,3 +1923,6 @@ Owner decision: it produces work items as well as issues. Old name kept as a dep
 
 ## [2026-11-24] implement | rename bc-agent-reflect → bc-reflect
 Owner decision: "agent" meant two things across bc-init-agent and this skill. Kernel line and its harness copies now offer `/bc-reflect`; old name kept as a deploy alias; report directory, env var, weekly job and reminder extension keep their names.
+
+## [2026-11-24] implement | plan: council bug hunt
+Owner-approved plan `docs/plans/active/council-find-bugs.md`: parent `find-bugs`, shared `council-chain`, thin `bc-council-find-bugs`; confirmed bugs need a failing test.
