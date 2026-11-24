@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: partial # architecture chain unchanged after extraction, 4/4 dry runs (2026-11-24, Terra low); no live council run through the recipe; second chain not yet built
 tested: 2026-11-24
-deployed: no
+deployed: yes
 ---
 # Concept: council-chain
 

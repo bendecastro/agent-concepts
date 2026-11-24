@@ -2,7 +2,7 @@
 
 # Status
 
-49 concepts. 0 need testing, 1 not deployed, 32 deployed with a known gap.
+50 concepts. 0 need testing, 1 not deployed, 33 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -17,7 +17,7 @@ Nothing. Every deployed concept has a recorded run.
 |---|---|---|---|
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | not-run | never |
 
-## Deployed with a known gap (32)
+## Deployed with a known gap (33)
 
 Passing overall, but each names a check that was never run or a target never
 tested. See the concept's `## Tests` section for what is missing.
@@ -35,6 +35,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-09-05 | 2026-08-23 |
 | [bc-work-sync](../concepts/bc-work-sync/CONCEPT.md) | pressure | 2026-11-16 | 2026-11-16 |
 | [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-11-19 | yes |
+| [council-chain](../concepts/council-chain/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [council-mode](../concepts/council-mode/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [diagnosing-bugs](../concepts/diagnosing-bugs/CONCEPT.md) | pressure | 2026-07-16 | 2026-06-21 |
 | [dispatching-parallel-agents](../concepts/dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-07-16 | yes |

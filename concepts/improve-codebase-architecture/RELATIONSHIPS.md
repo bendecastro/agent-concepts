@@ -22,7 +22,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Incoming
 
 - incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
-  Inputs, candidate card fields, the visual report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map, roster, merge and agreement rules.
+  Inputs, card fields, report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map contents, card format and agreement rule.
   Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md)
 
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture observation after landing.

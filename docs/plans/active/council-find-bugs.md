@@ -61,6 +61,13 @@ with a failing test, so a fix starts from proof rather than from a vote.
 2. `find-bugs` and the practice project; parent pressure test.
 3. `bc-council-find-bugs` on top of both; chain pressure test with stand-in advisors.
 
+## Later chains (owner, 2026-11-24)
+
+After this plan: `bc-council-audit-security` (on `security-audit`'s full audit) and
+`bc-council-challenge-plan` (the council attacks a plan or PRD before `bc-plan-to-pipeline`
+slices it). Each gets its own grill. Dropped: a council diagnose chain and a council change review.
+
 ## Execution record
 
 - 2026-11-24: steps 1 and 2 dispatched to two workers.
+- 2026-11-24: step 1 merged (`council-chain`; architecture chain 4/4 on Terra low).

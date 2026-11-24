@@ -44,7 +44,7 @@
       "required": true,
       "when": "generated visible-layout validation page",
       "source": "concepts/bc-init-agent/body/scaffold.py",
-      "reason": "The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats."
+      "reason": "The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md\u2019s formats."
     },
     {
       "from": "bc-init-agent",
@@ -487,7 +487,7 @@
       "required": true,
       "when": "Standards review of new or changed tests",
       "source": "concepts/code-review/body/SKILL.md#2-review-independently",
-      "reason": "Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage, and checks new test files against tdd’s Test layout norms."
+      "reason": "Standards uses tdd\u2019s tests-that-lie definitions to assess behavioral coverage, and checks new test files against tdd\u2019s Test layout norms."
     },
     {
       "from": "code-review",
@@ -496,7 +496,7 @@
       "required": true,
       "when": "Spec review of property-based tests, the Test levels block, or a Level 3 proof",
       "source": "concepts/code-review/body/SKILL.md#2-review-independently",
-      "reason": "Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical."
+      "reason": "Spec checks properties against tdd\u2019s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md\u2019s approved assumptions as Critical."
     },
     {
       "from": "tdd",
@@ -505,7 +505,7 @@
       "required": true,
       "when": "recording property fail-first evidence inside a drain",
       "source": "concepts/tdd/body/properties.md#fail-first-for-properties",
-      "reason": "Mutation evidence goes in the drain’s existing validation.json, not a new evidence file."
+      "reason": "Mutation evidence goes in the drain\u2019s existing validation.json, not a new evidence file."
     },
     {
       "from": "ui-design",
@@ -693,7 +693,7 @@
       "relation": "hands_off",
       "required": false,
       "source": "concepts/agent-kernel/body/AGENT-KERNEL.md",
-      "reason": "The recap's 👣 line offers /bc-reflect when a substantial session's deliverables are all ready; the owner decides."
+      "reason": "The recap's \ud83d\udc63 line offers /bc-reflect when a substantial session's deliverables are all ready; the owner decides."
     },
     {
       "from": "bc-reflect",
@@ -736,7 +736,7 @@
       "required": true,
       "when": "every council architecture review",
       "source": "concepts/bc-council-improve-codebase/body/SKILL.md",
-      "reason": "Inputs, candidate card fields, the visual report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map, roster, merge and agreement rules."
+      "reason": "Inputs, card fields, report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map contents, card format and agreement rule."
     },
     {
       "from": "bc-council-improve-codebase",
@@ -753,8 +753,26 @@
       "relation": "hands_off",
       "required": false,
       "when": "after filing chosen findings",
-      "source": "concepts/bc-council-improve-codebase/body/SKILL.md#7-report-and-grilling",
+      "source": "concepts/bc-council-improve-codebase/body/SKILL.md#report-and-grilling",
       "reason": "Recommends slicing each chosen item with bc-plan-to-pipeline, reusing the grill's settled answers; the owner decides."
+    },
+    {
+      "from": "bc-council-improve-codebase",
+      "to": "council-chain",
+      "relation": "loads",
+      "required": true,
+      "when": "every council architecture review",
+      "source": "concepts/bc-council-improve-codebase/body/SKILL.md",
+      "reason": "Roster, shared map, pass 1, merge, pass 2, fallbacks and sandbox cleanup have one home in council-chain; this skill defines only the chain parts."
+    },
+    {
+      "from": "council-chain",
+      "to": "council-mode",
+      "relation": "loads",
+      "required": true,
+      "when": "every chain run",
+      "source": "concepts/council-chain/body/SKILL.md",
+      "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode."
     }
   ]
 }

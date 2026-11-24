@@ -1926,3 +1926,6 @@ Owner decision: "agent" meant two things across bc-init-agent and this skill. Ke
 
 ## [2026-11-24] implement | plan: council bug hunt
 Owner-approved plan `docs/plans/active/council-find-bugs.md`: parent `find-bugs`, shared `council-chain`, thin `bc-council-find-bugs`; confirmed bugs need a failing test.
+
+## [2026-11-24] implement | council-chain extracted from bc-council-improve-codebase
+Shared council steps moved into new concept council-chain with an explicit chain interface; bc-council-improve-codebase loads it and keeps only map contents, card, agreement rule, report and filing. Private overlay moves to council-chain.md. Architecture-chain re-run 4/4 on Terra low. Plan: chain 2 of the follow-ups is named bc-council-challenge-plan (owner).

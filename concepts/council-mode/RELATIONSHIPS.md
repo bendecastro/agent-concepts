@@ -14,3 +14,7 @@ None.
 - incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
   Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode.
   Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md)
+
+- incoming from [council-chain](../council-chain/RELATIONSHIPS.md): loads this concept — required, when every chain run.
+  Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode.
+  Source: [council-chain/body/SKILL.md](../council-chain/body/SKILL.md)
