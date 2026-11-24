@@ -1929,3 +1929,6 @@ Owner-approved plan `docs/plans/active/council-find-bugs.md`: parent `find-bugs`
 
 ## [2026-11-24] implement | council-chain extracted from bc-council-improve-codebase
 Shared council steps moved into new concept council-chain with an explicit chain interface; bc-council-improve-codebase loads it and keeps only map contents, card, agreement rule, report and filing. Private overlay moves to council-chain.md. Architecture-chain re-run 4/4 on Terra low. Plan: chain 2 of the follow-ups is named bc-council-challenge-plan (owner).
+
+## [2026-11-24] implement | council-chain roster accepts an exclusion
+The overlay roster may now drop named advisors instead of listing the kept ones, so a new `council-` profile joins every chain without an overlay edit (owner choice).

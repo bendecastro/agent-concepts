@@ -24,7 +24,7 @@ A chain names each of these; this recipe leaves them open:
 
 ## 1. Roster: whoever is on the council today
 
-The council changes over time. Never hard-code advisor names in a chain. If the overlay names a roster, use exactly those advisors. Otherwise run `subagent({ action: "list" })` and use every executable profile whose name starts with `council-`, up to the four-advisor cap in `council-mode`. With more than four, ask the user which four. With fewer than two, follow `council-mode`'s fallback and say so in the report. To set up advisors, start from `council-mode`'s example profiles and give each a different model.
+The council changes over time. Never hard-code advisor names in a chain. Run `subagent({ action: "list" })` and take every executable profile whose name starts with `council-`. If the overlay sets a roster, apply it to that list: a named list keeps only those advisors, an exclusion drops the ones it names. Use the result up to the four-advisor cap in `council-mode`. With more than four, ask the user which four. With fewer than two, follow `council-mode`'s fallback and say so in the report. To set up advisors, start from `council-mode`'s example profiles and give each a different model.
 
 Write every threshold as a share of the roster size N, never as a fixed count. Why: a rule written for three advisors silently breaks when a fourth joins.
 
