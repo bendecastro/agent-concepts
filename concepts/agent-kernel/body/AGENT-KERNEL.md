@@ -114,7 +114,7 @@ be misread; an unnumbered list or a buried question costs a reread.
 
 **End every reply with a recap** — including replies that ask a question,
 where it goes after the reply format — unless it is a short standalone factual
-answer: no work done, no question open, no goal in progress. Write the lines in
+answer: no work done, no question open, no goal in progress. Set the recap apart: a blank line, then a line holding only `---` (three dashes; markdown draws it as a rule), then the recap lines. Write the lines in
 this order, with no blank line between them:
 - `📦` — often absent. Write it only when something became ready since the
   user's last message, or work you have already started (changed a file, ran a

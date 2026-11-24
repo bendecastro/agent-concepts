@@ -1902,3 +1902,6 @@ Same idea as the council examples: `bc-drain-issues` named three Pi roles a stra
 
 ## [2026-11-24] deploy | bc-drain-issues role profiles are now the live files
 The owner's three `bc-drain-*` Pi agent profiles are relative symlinks to `body/examples/agents/`, so the public examples and the profiles Pi runs cannot drift.
+
+## [2026-11-24] implement | agent-kernel recap set apart with a rule
+Owner asked to visually separate the end-of-reply recap: a blank line, then `---`, then the recap lines. Markdown renders it as a rule in Pi (checked in pi-tui's renderer) and it stays a plain divider elsewhere; 2/2 Terra low replies placed it correctly. Copies updated: Pi, OpenCode, Muse, Codex, Claude Code.
