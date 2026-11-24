@@ -1890,3 +1890,6 @@ Owner request after a Rust spike filled a 7.7 GB tmpfs `/tmp` and killed three a
 
 ## [2026-11-24] deploy | agent-kernel: /tmp scratch rule
 Owner chose to deploy the reworded rule despite a partial pressure result (location 1/2, deletion 0/2 on Terra low); applied to the derived Pi, Codex, Claude and Muse copies.
+
+## [2026-11-24] ingest | council-mode adopted from pi-subagents
+Owner decision: own the council protocol as a public concept because it is becoming central and the unpinned package changed it silently. Verbatim copy of 0.90.0 (MIT) with a relative reference path; not deployed until the pressure test passes and the package copy and `/council` prompt are switched over.
