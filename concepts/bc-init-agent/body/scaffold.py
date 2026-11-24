@@ -1447,6 +1447,16 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   lines the new item absorbs. Why: duplicated items drift apart and split one decision across two places.
 - **One item, one deliverable.** Split an item that holds several deliverables that could ship
   and be used separately. Why: a large item's later parts block nothing but still hide behind its first.
+- **Every planned item is planned before it starts.** `bc-plan-to-pipeline` writes a
+  `Planned: bc-plan-to-pipeline <date>` line under `Source:` once the item has its requirements
+  and sliced `## Steps`. Before an item without that line moves from `1-planned/` to
+  `2-active/`, by hand, on "carry on" or by a drain, run `bc-plan-to-pipeline` on it from a
+  settled source: it fills the item in place and asks only what is still open. When no one can
+  answer during the run, file the open questions where the owner sees questions (this project's
+  or this machine's instructions name the place), leave the item in `1-planned/` and take the next
+  item. `work_index.py --check` warns about each planned item without the line.
+  Why: an item filed without planning starts with unstated requirements and no slices, and the
+  work drifts from what the owner decided.
 - **Several items may be active at once.**
 - **GitHub issues are optional.** When one exists, record its number on the item's `Issue:`
   line. Why: the folders are the source of truth; an issue is a pointer to them.
@@ -1465,7 +1475,7 @@ Top kinds: security, bug, build, architecture
 | When you… | Do this |
 | --- | --- |
 | Start non-trivial work | Read the items in `work/2-active/`, then pick context with [map.md](map.md). |
-| Begin agreed work | Create the item from the template, or `git mv` it from `1-planned/` to `2-active/`, then run `python3 .bc-agent/scripts/work_index.py`. |
+| Begin agreed work | Create the item from the template, or `git mv` it from `1-planned/` to `2-active/`, then run `python3 .bc-agent/scripts/work_index.py`. A planned item without a `Planned:` line is planned first (see Work items). |
 | Finish a step | Check its box in the item, then run `python3 .bc-agent/scripts/work_index.py`. |
 | Finish or drop an item | Only once the work is on the main branch and its full checks passed (until then the remaining review fixes and checks stay unticked steps; a worker in a worktree never moves an item). Fill `## Outcome`, then `git mv` it to its done month folder or to `4-dropped/`, then run `python3 .bc-agent/scripts/work_index.py`. |
 | Make an architectural or hard-to-reverse choice | Add a numbered record under `docs/decisions/` from [templates/adr.md](templates/adr.md). |
@@ -1559,6 +1569,7 @@ Blocked by: <full names of the items this waits for, such as 012-search-ranking,
 Issue: <optional issue number; delete the line when there is none>
 Kind: <optional: security, bug, build, architecture, performance, tests, feature, docs, ...; delete the line when unclear>
 Source: <optional: the skill or review that produced this item, e.g. bc-plan-to-pipeline; delete the line when unknown>
+Planned: <written by bc-plan-to-pipeline once it has planned this item, e.g. bc-plan-to-pipeline 2026-11-24; delete the line until then>
 
 ## Steps
 

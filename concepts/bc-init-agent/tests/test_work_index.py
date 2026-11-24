@@ -685,3 +685,18 @@ def test_new_item_of_another_kind_keeps_bottom_placement(tmp_path):
     stderr = top_kind_case(tmp_path, "1. 001-sec\n2. 002-feat\n3. 003-plain\n",
                            **{"009_tests": item("v1", "Tests.", kind="tests")})
     assert "order.md does not list 009-tests; add it at the bottom" in stderr
+
+
+def test_check_warns_about_planned_items_without_planned_line_but_still_passes(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/004-unplanned.md": item("v1", "X."),
+        "work/1-planned/005-planned/plan.md": item("v1", "Y.").replace("Done when:", "Planned: bc-plan-to-pipeline 2026-11-24\nDone when:"),
+        "work/2-active/006-active.md": item("v1", "Z."),
+    })
+    assert run(tmp_path).returncode == 0
+    result = run(tmp_path, "--check")
+    assert result.returncode == 0, result.stderr
+    assert "1-planned/004-unplanned.md" in result.stderr
+    assert "Planned:" in result.stderr
+    assert "005-planned" not in result.stderr
+    assert "006-active" not in result.stderr
