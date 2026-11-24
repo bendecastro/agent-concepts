@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass # 2 with-skill runs each confirmed 9/10 planted bugs, no decoy; blind baseline also confirmed 10/10 but kept no report, tiers or worktree; filing step not run
 tested: 2026-11-24
-deployed: no
+deployed: yes
 ---
 # Concept: find-bugs
 

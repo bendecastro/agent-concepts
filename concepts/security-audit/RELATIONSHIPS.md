@@ -17,6 +17,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [find-bugs](../find-bugs/RELATIONSHIPS.md): hands off to this concept — optional, when a security hole is seen in passing.
+  Security holes are reported with a pointer and audited by security-audit, not here.
+  Source: [find-bugs/body/SKILL.md](../find-bugs/body/SKILL.md#2-hunt)
+
 - incoming from [prompting-agents](../prompting-agents/RELATIONSHIPS.md): depends on this concept's contract — optional, when authoring broad-trigger skills with costly workflows.
   Points to the guidance-default and explicit-audit mode gate as an in-workspace example.
   Source: [prompting-agents/body/SKILL.md](../prompting-agents/body/SKILL.md#loading-is-not-authorization)

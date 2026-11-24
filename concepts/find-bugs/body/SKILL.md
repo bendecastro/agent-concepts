@@ -59,7 +59,7 @@ Take the strongest candidates in rank order, up to `--max-repro` (default 12). F
 
 Commit the kept reproductions on the hunt branch. The project's suite on that branch now fails exactly in the kept tests; say so in the commit message.
 
-Candidates beyond the limit stay suspected, marked "not attempted".
+Candidates beyond the limit stay suspected, marked "not attempted". While slots remain, attempt every candidate, including concurrency and ordering ones (drive the interleaving with threads, a barrier or a patched boundary); a candidate you tried and could not reproduce in time is "could not reproduce in 10 minutes: <why>", never "not attempted". Why: in the first test both runs left a race "not attempted" with three slots unused.
 
 ## 4. Report
 

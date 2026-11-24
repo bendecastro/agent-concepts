@@ -52,3 +52,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Standards review of new or changed tests.
   Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage, and checks new test files against tdd’s Test layout norms.
   Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)
+
+- incoming from [find-bugs](../find-bugs/RELATIONSHIPS.md): adapts this concept — required, when every reproduction.
+  A reproduction counts only when it fails for the stated reason, tdd's watched-fail rule.
+  Source: [find-bugs/body/SKILL.md](../find-bugs/body/SKILL.md#3-reproduce)

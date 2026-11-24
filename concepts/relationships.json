@@ -773,6 +773,42 @@
       "when": "every chain run",
       "source": "concepts/council-chain/body/SKILL.md",
       "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode."
+    },
+    {
+      "from": "find-bugs",
+      "to": "tdd",
+      "relation": "adapts",
+      "required": true,
+      "when": "every reproduction",
+      "source": "concepts/find-bugs/body/SKILL.md#3-reproduce",
+      "reason": "A reproduction counts only when it fails for the stated reason, tdd's watched-fail rule."
+    },
+    {
+      "from": "find-bugs",
+      "to": "security-audit",
+      "relation": "hands_off",
+      "required": false,
+      "when": "a security hole is seen in passing",
+      "source": "concepts/find-bugs/body/SKILL.md#2-hunt",
+      "reason": "Security holes are reported with a pointer and audited by security-audit, not here."
+    },
+    {
+      "from": "find-bugs",
+      "to": "improve-codebase-architecture",
+      "relation": "adapts",
+      "required": true,
+      "when": "filing after the owner answers",
+      "source": "concepts/find-bugs/CONCEPT.md",
+      "reason": "Report-then-owner filing, roles and the no-pipeline fallback mirror improve-codebase-architecture."
+    },
+    {
+      "from": "find-bugs",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "filing into a work pipeline",
+      "source": "concepts/find-bugs/CONCEPT.md",
+      "reason": "Relies on the work-item template, Kind placement in order.md and work_index.py --check."
     }
   ]
 }

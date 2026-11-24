@@ -1932,3 +1932,6 @@ Shared council steps moved into new concept council-chain with an explicit chain
 
 ## [2026-11-24] implement | council-chain roster accepts an exclusion
 The overlay roster may now drop named advisors instead of listing the kept ones, so a new `council-` profile joins every chain without an overlay edit (owner choice).
+
+## [2026-11-24] implement | find-bugs
+New parent skill for the council bug hunt (plan step 2): bounded scope, candidate block, reproductions in a separate worktree on `find-bugs/<hunt>`, two-tier report, owner-gated filing as `Kind: bug`/`Source: find-bugs`. Practice project `shopkit` (10 planted bugs, 9 decoys) with answer key; Terra low: 2 with-skill runs pass (9/10 each), blind baseline proves bugs but keeps no report/tiers/worktree and switches the owner's checkout. Parent added "attempt every candidate while slots remain" after both runs left a race unattempted. Deployed.

@@ -65,6 +65,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Resolves glossary and decisions in the scaffolded table, with its earlier paths as fallback.
   Source: [domain-modeling/CONCEPT.md](../domain-modeling/CONCEPT.md)
 
+- incoming from [find-bugs](../find-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when filing into a work pipeline.
+  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
+  Source: [find-bugs/CONCEPT.md](../find-bugs/CONCEPT.md)
+
 - incoming from [handoff](../handoff/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves work-active, decisions, research, glossary, ideas and work-dropped in the scaffolded table, with its earlier paths as fallback.
   Source: [handoff/CONCEPT.md](../handoff/CONCEPT.md)

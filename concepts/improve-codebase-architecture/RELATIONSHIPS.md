@@ -33,6 +33,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
   Source: [diagnosing-bugs/body/SKILL.md](../diagnosing-bugs/body/SKILL.md)
 
+- incoming from [find-bugs](../find-bugs/RELATIONSHIPS.md): adapts this concept — required, when filing after the owner answers.
+  Report-then-owner filing, roles and the no-pipeline fallback mirror improve-codebase-architecture.
+  Source: [find-bugs/CONCEPT.md](../find-bugs/CONCEPT.md)
+
 - incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture-review reports.
   Architecture-review report artifacts retain their own contract.
   Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)
