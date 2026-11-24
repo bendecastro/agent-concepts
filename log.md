@@ -1905,3 +1905,6 @@ The owner's three `bc-drain-*` Pi agent profiles are relative symlinks to `body/
 
 ## [2026-11-24] implement | agent-kernel recap set apart with a rule
 Owner asked to visually separate the end-of-reply recap: a blank line, then `---`, then the recap lines. Markdown renders it as a rule in Pi (checked in pi-tui's renderer) and it stays a plain divider elsewhere; 2/2 Terra low replies placed it correctly. Copies updated: Pi, OpenCode, Muse, Codex, Claude Code.
+
+## [2026-11-24] deploy | bc-improve-codebase-council published
+Moved from a private concept: the named map-scout model and Antigravity paragraphs became generic rules, and a private overlay now fixes this machine's roster (two advisors for this review) and map-scout model. Pressure re-run on Terra low: 2/2 without the overlay (discovery, cap, scaled thresholds), 2/2 with it (exact roster and model). The private denylist entry that matched this name was narrowed to the exact script name.

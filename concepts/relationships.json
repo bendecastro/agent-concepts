@@ -728,6 +728,24 @@
       "when": "visible-layout scaffold writes docs/design/README.md",
       "source": "concepts/bc-init-agent/body/scaffold.py",
       "reason": "The generated design README names ui-design's design-framework.md as its method and restates only the project-facing summary."
+    },
+    {
+      "from": "bc-improve-codebase-council",
+      "to": "improve-codebase-architecture",
+      "relation": "loads",
+      "required": true,
+      "when": "every council architecture review",
+      "source": "concepts/bc-improve-codebase-council/body/SKILL.md",
+      "reason": "Inputs, candidate card fields, the visual report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map, roster, merge and agreement rules."
+    },
+    {
+      "from": "bc-improve-codebase-council",
+      "to": "council-mode",
+      "relation": "loads",
+      "required": true,
+      "when": "every council architecture review",
+      "source": "concepts/bc-improve-codebase-council/body/SKILL.md",
+      "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode."
     }
   ]
 }

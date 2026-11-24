@@ -2,7 +2,7 @@
 
 # Status
 
-48 concepts. 0 need testing, 1 not deployed, 30 deployed with a known gap.
+49 concepts. 0 need testing, 1 not deployed, 31 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -17,7 +17,7 @@ Nothing. Every deployed concept has a recorded run.
 |---|---|---|---|
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | not-run | never |
 
-## Deployed with a known gap (30)
+## Deployed with a known gap (31)
 
 Passing overall, but each names a check that was never run or a target never
 tested. See the concept's `## Tests` section for what is missing.
@@ -28,6 +28,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-agent-reflect](../concepts/bc-agent-reflect/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md) | pressure | 2026-06-21 | 2026-06-21 |
 | [bc-drain-issues](../concepts/bc-drain-issues/CONCEPT.md) | pressure | 2026-10-08 | 2026-07-25 |
+| [bc-improve-codebase-council](../concepts/bc-improve-codebase-council/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-11-19 | 2026-06-21 |
 | [bc-plan-to-pipeline](../concepts/bc-plan-to-pipeline/CONCEPT.md) | pressure | 2026-11-22 | 2026-06-21 |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-19 | 2026-08-18 |
