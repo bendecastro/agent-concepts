@@ -119,6 +119,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 
 - [docs/status.md](docs/status.md) — generated board: what needs testing, what is undeployed, what passes with a known gap. Regenerate with `python3 scripts/lint.py --write-status`; lint fails while it is stale.
 - [docs/harnesses.md](docs/harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
+- [docs/pressure-test-harness.md](docs/pressure-test-harness.md) — Pi harness for pressure tests: hiding deployed skills, flags, headless pitfalls, dry runs for skills that launch subagents.
 - [docs/bootstrap.md](docs/bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
 - [concepts/relationships.json](concepts/relationships.json) — the one home for skill-to-skill relationships, declared once as forward edges and rendered into per-concept `RELATIONSHIPS.md` views carrying both outgoing relationships and incoming callers. Regenerate with `python3 scripts/lint.py --write-relationships`; lint fails while a view is stale. Maintainer metadata for change-impact review, never a runtime loader.

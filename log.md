@@ -1950,3 +1950,6 @@ New thin chain running security-audit's full audit through the council: own reco
 
 ## [2026-11-24] implement | bc-council-challenge-plan
 New thin council chain: scout maps the plan's code, advisors attack dealt plan sections, owner grilled on surviving objections, answers written into the plan, then bc-plan-to-pipeline in settled-source mode. Dry run 2/2 on Terra low, no body fix. Deployed. Plan council-later-chains moved to implemented.
+
+## [2026-11-24] implement | pressure-test harness page; dry runs for orchestrating skills
+From a /bc-reflect pick: AGENTS.md Test operation now points to docs/pressure-test-harness.md and says skills that launch subagents are tested as dry runs (first real run is the live test). Why: a live council-chain test took four rounds with 6 of 7 runs stopping early, while dry runs of four chains passed; the harness recipe lived only in test result files.
