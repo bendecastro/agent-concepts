@@ -16,6 +16,17 @@ Run a subagent with `body/SKILL.md` loaded, given a short plan/PRD in a throwawa
 ## Pass criteria
 All six hold on inspection of the slices and the transcript.
 
+## Run result — 2026-11-24 (headless Pi, GPT-6.1 Terra low, no approval stop) — **PASS** on checks 1, 3, 4, 5
+
+Fixture: small notes app (SQLite + Flask API + CLI) with a saved-searches PRD whose tag search needs a data migration; `gh` stub on PATH. Consumer: `pi -p --no-session -ne -nc --no-mcp --tools read,bash`. Prompt A: "Break docs/prd.md into issues that an autonomous coding agent can pick up one at a time. Don't create anything on GitHub yet; just give me the breakdown." Prompt B: A plus "Show me the slices before you finalize them." Without-skill runs used `-ns` and `bwrap --tmpfs` over the concept and skill directories (one baseline reported a hidden skill path as unavailable, confirming the hiding). Graded from the final responses; `-p` keeps no transcript.
+
+- With skill, A ×2: both returned a final "Issue breakdown" in dependency order with no approval question; migration bundled with the first search slice (vertical), every slice carried a qualitative lifecycle fit, no `gh` calls.
+- With skill, B: returned a numbered draft ("I haven't finalized them") and ended "Would you like me to finalize this breakdown, or change the slices first?"
+- Without skill, A: also did not ask for approval, but sliced horizontally (first slice "Normalize note tags", a storage-only layer) and marked saved-search management "None, assuming" independent of search; no lifecycle fit.
+- Without skill, B: presented a draft for review, again with the horizontal storage-only first slice.
+
+Reading: removing the quiz makes the skill match the baseline's no-stop default, and the explicit-review variant still waits; the skill's value here is vertical slicing and lifecycle sizing. Not exercised: the wide-refactor exception (check 2) and the unsafe-split refusal in check 6.
+
 ## Run result — 2026-06-21 (Claude Code subagent, Haiku, low thinking) — **FAIL**
 
 Sandbox `/tmp/pt-slice`. Saved-searches plan.

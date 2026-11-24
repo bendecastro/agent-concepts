@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # no-approval-stop change 2026-11-24 not yet pressure-tested
-tested: 2026-08-17
+test_status: partial # no-approval-stop change passed 2026-11-24 (Terra low); wide-refactor and unsafe-split checks not exercised
+tested: 2026-11-24
 deployed: yes
 ---
 # Concept: issue-slicing
@@ -30,7 +30,7 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 
 ## Tests
 
-`tests/scenario.md` — verifies vertical (not horizontal) slicing, fresh-context and qualitative drain-lifecycle sizing, the expand–contract exception, finalizing without an approval stop (draft-and-wait only on explicit request), the no-publish / no-touch-parent boundary, and dependency-ordered handback. The 2026-08-17 direct pressure pass exercised the former token-threshold policy; current qualitative-sizing expectations were updated 2026-09-26 and remain untested, as does the 2026-11-24 removal of the approval quiz. Prior pressure also ran transitively via `to-tickets` (then named `to-issues`) and `bc-plan-to-pipeline`.
+`tests/scenario.md` — verifies vertical (not horizontal) slicing, fresh-context and qualitative drain-lifecycle sizing, the expand–contract exception, finalizing without an approval stop (draft-and-wait only on explicit request), the no-publish / no-touch-parent boundary, and dependency-ordered handback. The 2026-08-17 direct pressure pass exercised the former token-threshold policy; current qualitative-sizing expectations were updated 2026-09-26 and were partly exercised on 2026-11-24, when the removal of the approval quiz passed on Terra low (finalizes without asking; still waits when asked to review first; baseline sliced horizontally). Prior pressure also ran transitively via `to-tickets` (then named `to-issues`) and `bc-plan-to-pipeline`.
 
 ## Deploy targets
 

@@ -1881,3 +1881,6 @@ The generated "Finish or drop an item" row now says: only once the work is on th
 
 ## [2026-11-24] implement | issue-slicing: no human approval stop
 Owner decision: the agent finalizes slices itself and reports them instead of quizzing for approval; a draft-and-wait happens only when the user asks to review first. Propagated to `to-tickets`, `bc-plan-to-pipeline` (grill is now the only human gate), `docs/pipeline.md`, tests and status; the change is not yet pressure-tested.
+
+## [2026-11-24] test | issue-slicing: no approval stop
+Pressure run on Terra low: with the skill it finalized slices without asking (×2) and still waited when asked to review first; the blind baseline also did not stop but sliced horizontally. Wide-refactor and unsafe-split checks not exercised; `to-tickets` and `bc-plan-to-pipeline` not re-run.

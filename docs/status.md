@@ -40,7 +40,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [finishing-development-branch](../concepts/finishing-development-branch/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [handoff](../concepts/handoff/CONCEPT.md) | pressure | 2026-08-21 | 2026-08-21 |
 | [improve-codebase-architecture](../concepts/improve-codebase-architecture/CONCEPT.md) | pressure | 2026-08-20 | 2026-06-21 |
-| [issue-slicing](../concepts/issue-slicing/CONCEPT.md) | pressure | 2026-08-17 | yes |
+| [issue-slicing](../concepts/issue-slicing/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [prompting-agents](../concepts/prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
 | [prototype](../concepts/prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
