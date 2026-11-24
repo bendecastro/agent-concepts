@@ -70,4 +70,5 @@ slices it). Each gets its own grill. Dropped: a council diagnose chain and a cou
 ## Execution record
 
 - 2026-11-24: steps 1 and 2 dispatched to two workers.
+- 2026-11-24 (owner): no subagent role carries `find-bugs` by default; `bc-council-find-bugs` attaches it at launch to its reproducing worker, listing that role's default skills too.
 - 2026-11-24: step 1 merged (`council-chain`; architecture chain 4/4 on Terra low).
