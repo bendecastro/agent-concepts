@@ -41,6 +41,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-council-audit-security](../bc-council-audit-security/RELATIONSHIPS.md): depends on this concept's contract — required, when filing into a work pipeline.
+  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
+  Source: [bc-council-audit-security/body/SKILL.md](../bc-council-audit-security/body/SKILL.md)
+
 - incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules.
   Source: [bc-drain-issues/CONCEPT.md](../bc-drain-issues/CONCEPT.md)

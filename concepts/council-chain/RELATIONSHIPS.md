@@ -13,6 +13,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-council-audit-security](../bc-council-audit-security/RELATIONSHIPS.md): loads this concept — required, when every council security audit.
+  Roster, passes, merge, fallbacks and cleanup have one home in council-chain.
+  Source: [bc-council-audit-security/body/SKILL.md](../bc-council-audit-security/body/SKILL.md)
+
+- incoming from [bc-council-challenge-plan](../bc-council-challenge-plan/RELATIONSHIPS.md): loads this concept — required, when every council plan challenge.
+  Roster, map, passes, merge, fallbacks and cleanup have one home in council-chain.
+  Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md)
+
 - incoming from [bc-council-find-bugs](../bc-council-find-bugs/RELATIONSHIPS.md): loads this concept — required, when every council bug hunt.
   Roster, map, passes, merge, fallbacks and cleanup have one home in council-chain.
   Source: [bc-council-find-bugs/body/SKILL.md](../bc-council-find-bugs/body/SKILL.md)

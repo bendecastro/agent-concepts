@@ -11,6 +11,10 @@ None.
 
 ## Incoming
 
+- incoming from [bc-council-challenge-plan](../bc-council-challenge-plan/RELATIONSHIPS.md): loads this concept — required, when every council plan challenge.
+  Asking the owner one question at a time, recommended answer first, has one home in grilling.
+  Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md)
+
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): loads this concept — required.
   Step 1 interviews the idea before any artifact is written.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)

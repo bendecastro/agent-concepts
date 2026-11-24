@@ -1944,3 +1944,9 @@ Thin chain over council-chain + find-bugs (plan step 3): focuses dealt round-rob
 
 ## [2026-11-24] test | bc-council-find-bugs dry run; deployed
 Dry-run pressure test (plan.md only, Terra low, 2 runs): 11/11 criteria in both, no body fix; also covers council-chain's pass-2 refinement rule. Deployed (owner chose dry-run testing; the first real hunt with the council is the live test). Plan moved to implemented.
+
+## [2026-11-24] implement | bc-council-audit-security
+New thin chain running security-audit's full audit through the council: own recon is the shared map, trust boundaries dealt round-robin, every candidate (pass-2 drops last) gets a fresh refuting reviewer, cap only via --max-verify, confirmed findings pre-selected for Kind: security filing without exploit steps. Dry run on Terra low: round 1 failed the cap criterion; after a body fix 2/2 pass. Deployed.
+
+## [2026-11-24] implement | bc-council-challenge-plan
+New thin council chain: scout maps the plan's code, advisors attack dealt plan sections, owner grilled on surviving objections, answers written into the plan, then bc-plan-to-pipeline in settled-source mode. Dry run 2/2 on Terra low, no body fix. Deployed. Plan council-later-chains moved to implemented.

@@ -45,6 +45,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-council-challenge-plan](../bc-council-challenge-plan/RELATIONSHIPS.md): hands off to this concept — required, when after the owner's answers are written into the plan.
+  Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill.
+  Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md)
+
 - incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): hands off to this concept — optional, when after filing chosen findings.
   Recommends slicing each chosen item with bc-plan-to-pipeline, reusing the grill's settled answers; the owner decides.
   Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md#report-and-grilling)

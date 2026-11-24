@@ -63,7 +63,7 @@ with a failing test, so a fix starts from proof rather than from a vote.
 
 ## Later chains (owner, 2026-11-24)
 
-After this plan: `bc-council-audit-security` and `bc-council-challenge-plan`; see [council-later-chains](../active/council-later-chains.md).
+After this plan: `bc-council-audit-security` and `bc-council-challenge-plan`; see [council-later-chains](council-later-chains.md).
 Dropped: a council diagnose chain and a council change review.
 
 ## Execution record

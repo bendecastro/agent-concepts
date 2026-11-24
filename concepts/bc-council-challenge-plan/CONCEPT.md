@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass # dry run 2/2 on Terra low: plan.md met all 11 criteria, 4/4 planted holes
 tested: 2026-11-24
-deployed: no
+deployed: yes
 ---
 # Concept: bc-council-challenge-plan
 
@@ -10,7 +10,7 @@ Challenges a plan or PRD through the advisor council (`council-chain` + `council
 
 ## Design decisions
 
-All from the owner-approved [later council chains plan](../../docs/plans/active/council-later-chains.md); numbers are that plan's decisions.
+All from the owner-approved [later council chains plan](../../docs/plans/implemented/council-later-chains.md); numbers are that plan's decisions.
 
 - **Thin chain.** Loads `council-chain`, `council-mode`, `grilling` and `bc-plan-to-pipeline` and defines only what `council-chain`'s "What a chain must define" list leaves open. The parent is the plan itself; its pre-reading is reading the plan and numbering its parts. `bc-plan-to-pipeline`'s modes are referenced by name, never copied, so its own edits stay in one home.
 - **Map is the plan's code context.** The scout maps what the plan names or would touch, with existing helpers and each plan claim marked as matching, contradicting or unverifiable. Why: wrong premises and cheaper paths are found in the code, not the plan.
@@ -24,7 +24,7 @@ All from the owner-approved [later council chains plan](../../docs/plans/active/
 
 ## Provenance
 
-- [Later council chains plan](../../docs/plans/active/council-later-chains.md), decisions 5–7 and its Testing section.
+- [Later council chains plan](../../docs/plans/implemented/council-later-chains.md), decisions 5–7 and its Testing section.
 - Composes [council-chain](../council-chain/CONCEPT.md), [council-mode](../council-mode/CONCEPT.md), [grilling](../grilling/CONCEPT.md) and [bc-plan-to-pipeline](../bc-plan-to-pipeline/CONCEPT.md); shape copied from [bc-council-find-bugs](../bc-council-find-bugs/CONCEPT.md).
 
 ## Tests

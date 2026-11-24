@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass # dry run 2/2 on Terra low after one body fix: plan.md met all 12 criteria; no live run yet
 tested: 2026-11-24
-deployed: no
+deployed: yes
 ---
 # Concept: bc-council-audit-security
 
@@ -10,7 +10,7 @@ Runs a `security-audit` full audit through the advisor council (`council-chain` 
 
 ## Design decisions
 
-From the owner-decided plan [Two more council chains](../../docs/plans/active/council-later-chains.md), decisions 1–4.
+From the owner-decided plan [Two more council chains](../../docs/plans/implemented/council-later-chains.md), decisions 1–4.
 
 - **Thin chain.** Loads `council-chain`, `security-audit` and `council-mode` and defines only what `council-chain`'s "What a chain must define" list leaves open. Steps, gates, schemas and the validator stay in `security-audit`.
 - **Council replaces only the hunting pass (decision 1).** Recon and threat model (`security-audit` step 1) run first in the chain's own session; `architecture.md` and `coverage-ledger.json` are the shared map, replacing `council-chain`'s map scout. Output gate, `.security-audit/run-N/`, JSON records and `validate_audit.py` stay unchanged. Why: the parent's independence rule stays whole; the council adds hunting breadth.
@@ -24,7 +24,7 @@ From the owner-decided plan [Two more council chains](../../docs/plans/active/co
 
 ## Provenance
 
-- [Two more council chains plan](../../docs/plans/active/council-later-chains.md), decisions 1–4 and its Testing section.
+- [Two more council chains plan](../../docs/plans/implemented/council-later-chains.md), decisions 1–4 and its Testing section.
 - Composes [council-chain](../council-chain/CONCEPT.md), [security-audit](../security-audit/CONCEPT.md) and [council-mode](../council-mode/CONCEPT.md); shape copied from [bc-council-find-bugs](../bc-council-find-bugs/CONCEPT.md).
 
 ## Tests

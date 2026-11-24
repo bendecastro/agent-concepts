@@ -17,6 +17,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-council-audit-security](../bc-council-audit-security/RELATIONSHIPS.md): loads this concept — required, when every council security audit.
+  Recon, Output gate, execution boundary, fresh verification, JSON records, validator and report have one home in security-audit.
+  Source: [bc-council-audit-security/body/SKILL.md](../bc-council-audit-security/body/SKILL.md)
+
 - incoming from [find-bugs](../find-bugs/RELATIONSHIPS.md): hands off to this concept — optional, when a security hole is seen in passing.
   Security holes are reported with a pointer and audited by security-audit, not here.
   Source: [find-bugs/body/SKILL.md](../find-bugs/body/SKILL.md#2-hunt)

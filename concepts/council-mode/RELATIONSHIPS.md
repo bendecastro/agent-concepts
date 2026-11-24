@@ -11,6 +11,14 @@ None.
 
 ## Incoming
 
+- incoming from [bc-council-audit-security](../bc-council-audit-security/RELATIONSHIPS.md): loads this concept — required, when every council security audit.
+  Briefing, launch, relay, resume and the pass cap have one home in council-mode.
+  Source: [bc-council-audit-security/body/SKILL.md](../bc-council-audit-security/body/SKILL.md)
+
+- incoming from [bc-council-challenge-plan](../bc-council-challenge-plan/RELATIONSHIPS.md): loads this concept — required, when every council plan challenge.
+  Briefing, launch, relay, resume and the pass cap have one home in council-mode.
+  Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md)
+
 - incoming from [bc-council-find-bugs](../bc-council-find-bugs/RELATIONSHIPS.md): loads this concept — required, when every council bug hunt.
   Briefing, launch, relay, resume and the pass cap have one home in council-mode.
   Source: [bc-council-find-bugs/body/SKILL.md](../bc-council-find-bugs/body/SKILL.md)

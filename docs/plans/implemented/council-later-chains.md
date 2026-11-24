@@ -1,7 +1,7 @@
 # Two more council chains — `bc-council-audit-security`, `bc-council-challenge-plan`
 
 Date: 2026-11-24
-Status: active
+Status: implemented
 Decided in a grilling session with the owner. Both are thin chains over `council-chain`, like
 `bc-council-find-bugs`; neither copies its parent's steps.
 
@@ -51,3 +51,4 @@ two runs each. The first real run of each chain is the live test.
 
 - 2026-11-24: both chains dispatched to two workers (bodies, CONCEPT, tests); parent does
   index, log, relationships, status and deploy.
+- 2026-11-24: both merged and deployed (dry runs 2/2 each; audit-security needed one body fix for the --max-verify cap).
