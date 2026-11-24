@@ -32,3 +32,5 @@ Graded from the hunt branch, a fresh run of its tests, and the report file, agai
 
 The baseline is recorded for comparison; it is not required to fail, since a strong
 consumer can pass without the skill.
+
+> Changed 2026-11-24: after an `all` filing, expect `bc-plan-to-pipeline` to run on each filed planned item (in place, settled answers not re-asked, `Planned:` line added). Results files dated 2026-11-24 or earlier predate this.

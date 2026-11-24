@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # visible-layout routing changed 2026-11-12; not yet pressure-tested; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind line not run
+test_status: partial # visible-layout routing changed 2026-11-12; not yet pressure-tested; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind line not run; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
 tested: 2026-08-20
 deployed: 2026-06-21
 ---
@@ -23,6 +23,7 @@ User-invoked architecture review for the bc loop. It scans for deep-module oppor
 - **Disposition remains human-gated and implementation-free (2026-08-20).** The report still asks which candidate to explore. Only after the user chooses and `grilling` determines the outcome may the consumer update an inline inbox entry to exactly `accepted`, `rejected`, or `deferred`; when inline edits are forbidden, it writes a durable architecture-review disposition-ledger row after grilling, leaves the inbox `status: open`, and records the observation identity, canonical source, full verified evidence, and disposition reason. Accepted runway returns to `bc-plan-to-pipeline`; a load-bearing rejection may offer an ADR, while "not now" is deferred without an ADR. The skill never implements production code or creates GitHub issues directly.
 
 - **Visible layout: paths by role, findings routed by the owner's choice (2026-11-12).** The skill resolves glossary, decisions, research, ideas, work-planned and work-dropped from the "Where things go" table in `.bc-agent/AGENTS.md`, falling back to the earlier paths when a project has no table. With the table, the report is saved as `<date>-architecture-review/report.html` under the research role and committed with `architecture review` in the subject, because the generated architecture-runway convention finds the last review by that subject. After the owner has seen the report, a chosen finding becomes a numbered planned item, a rejected one a numbered dropped item with the reason under `## Outcome`, and everything else an ideas-file line pointing at the report; between reviews, observations are ideas-file lines. Numbered items come only from the main checkout; a worktree writes ideas lines, because worktrees cannot see each other's numbers. The observation inbox and disposition ledger are retired where the table exists and kept unchanged, including their pressure-tested contract, as the fallback without one. An old inbox or ledger found next to a table is read, its open entries carried to the ideas file once (an entry whose `source` is already there is skipped, and a dated note appended to the old inbox records the carry), and left in place and reported, never deleted. The ideas line that seeded a chosen or rejected finding is deleted in the same commit as its item, and one that seeded an "everything else" finding is replaced, so the ideas file lists only undecided entries (W3 review fixes, 2026-11-12). Choices made here: the report stays a temp file without the table (no research role to hold it); a rejected finding found from a worktree is an ideas line stating the rejection, not a dropped item. Source: [visible-layout plan](../../docs/plans/implemented/bc-init-agent-visible-layout.md), decisions 20 and 21.
+- **Filed items are planned (2026-11-24, owner decision).** After the §4 filing is committed, the skill runs `bc-plan-to-pipeline` from a settled source on each chosen item, passing the grilling's answers. This replaces `bc-council-improve-codebase`'s recommendation, so the council chain inherits it. It is a sequential handoff after this skill's work ends, so the "no orchestrator calls an orchestrator" boundary in `bc-plan-to-pipeline` still holds (reasoning recorded there).
 
 ## Provenance
 
@@ -34,6 +35,7 @@ User-invoked architecture review for the bc loop. It scans for deep-module oppor
 - `concepts/codebase-design/` — vocabulary and design principles.
 - `concepts/grilling/` and `concepts/domain-modeling/` — used after the user chooses a candidate.
 - `concepts/plain-language/body/SKILL.md` — reader-outcome source for the 2026-08-18 HTML artifact clause; the skill itself is not loaded.
+- Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
 

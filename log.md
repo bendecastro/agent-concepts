@@ -1953,3 +1953,6 @@ New thin council chain: scout maps the plan's code, advisors attack dealt plan s
 
 ## [2026-11-24] implement | pressure-test harness page; dry runs for orchestrating skills
 From a /bc-reflect pick: AGENTS.md Test operation now points to docs/pressure-test-harness.md and says skills that launch subagents are tested as dry runs (first real run is the live test). Why: a live council-chain test took four rounds with 6 of 7 runs stopping early, while dry runs of four chains passed; the harness recipe lived only in test result files.
+
+## [2026-11-24] implement | plan every planned item (untested)
+Owner decision: every item in work-planned is planned by bc-plan-to-pipeline before it starts. bc-plan-to-pipeline plans an existing item in place and writes a `Planned:` marker; improve-codebase-architecture and find-bugs hand off to it after filing (council chains inherit; old recommendation removed); bc-init-agent's generated pickup rule, template line and a non-failing `work_index.py --check` warning; bc-drain-issues skips unmarked items as "needs planning". Pressure scenario `bc-plan-to-pipeline/tests/pressure-plan-every-item.md` written, not run.

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass # dry run 2/2 on Terra low: plan.md met all 11 criteria; earlier live attempt stopped early in 6 of 7 runs
+test_status: partial # dry run 2/2 on Terra low: plan.md met all 11 criteria; earlier live attempt stopped early in 6 of 7 runs; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
 tested: 2026-11-24
 deployed: yes
 ---
@@ -21,15 +21,17 @@ All from the owner-approved [council bug hunt plan](../../docs/plans/implemented
 - **Duplicate rule: same location and same claimed wrong result.** Same location with a different claim is two candidates, mirroring `council-chain`'s "disagreement, not duplicate".
 - **Run through without stopping (pressure test 2026-11-24).** In the first run both consumers stopped after the map and reported "incomplete"; the body now says to run every step through the report, asking only the questions the loaded skills require.
 - **Report written by the parent on the hunt branch.** The worker returns per-candidate outcomes; the parent adds agreement lines, disputes, focuses and the roster section. Choice made here: the plan does not say who writes the report, and only the parent holds the pass 2 matrix.
+- **Filing now ends with planning (2026-11-24, owner decision).** Filing is `find-bugs` §5 unchanged, which now runs `bc-plan-to-pipeline` on each filed planned item; nothing is added here.
 
 ## Provenance
 
 - [Council bug hunt plan](../../docs/plans/implemented/council-find-bugs.md), decisions 1–11 and step 3 of its build order.
 - Composes [council-chain](../council-chain/CONCEPT.md), [find-bugs](../find-bugs/CONCEPT.md) and [council-mode](../council-mode/CONCEPT.md); shape copied from [bc-council-improve-codebase](../bc-council-improve-codebase/CONCEPT.md).
+- Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
 
-[tests/scenario.md](tests/scenario.md) runs the chain on `find-bugs`' practice project with three stand-in advisors on the pressure-test model, graded against `find-bugs`' answer key. [Results 2026-11-24](tests/results-2026-11-24.md): the earlier live attempt did not pass (on Terra low most runs stopped before the report); the dry run (`plan.md` only, launches nothing) passed 2/2, so the instructions are complete and the live gap is the consumer carrying a long chain. The first live run with the real council is the live test (decision 10).
+[tests/scenario.md](tests/scenario.md) runs the chain on `find-bugs`' practice project with three stand-in advisors on the pressure-test model, graded against `find-bugs`' answer key. [Results 2026-11-24](tests/results-2026-11-24.md): the earlier live attempt did not pass (on Terra low most runs stopped before the report); the dry run (`plan.md` only, launches nothing) passed 2/2, so the instructions are complete and the live gap is the consumer carrying a long chain. The first live run with the real council is the live test (decision 10). Since 2026-11-24 `find-bugs` §5 filing ends by running `bc-plan-to-pipeline` on each filed item, so the scenario's `all` filing check now also expects that; the 2026-11-24 results predate the change.
 
 ## Deploy targets
 

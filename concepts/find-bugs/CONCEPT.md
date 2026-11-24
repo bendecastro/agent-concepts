@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass # 2 with-skill runs each confirmed 9/10 planted bugs, no decoy; blind baseline also confirmed 10/10 but kept no report, tiers or worktree; filing step not run
+test_status: partial # 2 with-skill runs each confirmed 9/10 planted bugs, no decoy; blind baseline also confirmed 10/10 but kept no report, tiers or worktree; filing step not run; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
 tested: 2026-11-24
 deployed: yes
 ---
@@ -20,6 +20,7 @@ All from the owner-approved [council bug hunt plan](../../docs/plans/implemented
 - **Limits (decision 11).** 12 reproductions by default, 10 minutes each, `--max-repro N` raises it; the rest stay suspected, "not attempted". The per-advisor candidate cap belongs to the chain.
 - **Filing mirrors improve-codebase-architecture (decision 5).** Report first, owner decides, then: confirmed → `Kind: bug`, `Source: find-bugs` work items placed by the project's work-item rules and `work_index.py --check`; picked suspected → investigation items; rejected → dropped item with the reason; the rest → ideas-file lines; numbered items only from the main checkout. Without a work pipeline the skill files nothing and says so, as `improve-codebase-architecture` does without its table.
 - **Report lives on the hunt branch.** A Markdown report at the hunt worktree root, committed with the tests, so items and the report travel together. Choice made here (the plan does not say where the report goes): the branch already holds the evidence and outlives the session, and a temp file would not.
+- **Filed items are planned (2026-11-24, owner decision).** After the §5 filing is committed, the skill runs `bc-plan-to-pipeline` from a settled source on each work-planned item it filed, passing the owner's filing answer and the report, a one-line bug included. `bc-council-find-bugs` inherits this through §5. Sequential handoff, not a nested call (reasoning in `bc-plan-to-pipeline`'s CONCEPT.md).
 
 ## Provenance
 
@@ -30,10 +31,11 @@ All from the owner-approved [council bug hunt plan](../../docs/plans/implemented
 - [tdd](../tdd/body/SKILL.md) — a reproduction must be watched failing for the stated reason.
 - [prompting-agents](../prompting-agents/body/SKILL.md) — instruction phrasing (rule plus why).
 - [bc-init-agent](../bc-init-agent/CONCEPT.md) — `Kind:` placement by `work_index.py --check`.
+- Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
 
-[`tests/scenario.md`](tests/scenario.md) runs the skill on [`tests/practice-project/`](tests/practice-project/) (ten planted bugs, two per focus, plus decoys; key in [`tests/answer-key.md`](tests/answer-key.md), never copied into a run). [Results 2026-11-24](tests/results-2026-11-24.md): both with-skill runs pass; the filing step (owner's answer, work items) was not exercised. Invoke the skill by slash command in tests: `disable-model-invocation` hides it from the model's list.
+[`tests/scenario.md`](tests/scenario.md) runs the skill on [`tests/practice-project/`](tests/practice-project/) (ten planted bugs, two per focus, plus decoys; key in [`tests/answer-key.md`](tests/answer-key.md), never copied into a run). [Results 2026-11-24](tests/results-2026-11-24.md): both with-skill runs pass; the filing step (owner's answer, work items) was not exercised. Since 2026-11-24 an `all` filing is followed by `bc-plan-to-pipeline` on each filed item, so a filing check written before that date (and the 2026-11-24 results) describes the earlier expectation. Invoke the skill by slash command in tests: `disable-model-invocation` hides it from the model's list.
 
 ## Deploy targets
 

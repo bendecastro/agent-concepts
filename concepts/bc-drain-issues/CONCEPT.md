@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # work items and role lookup added 2026-11-12 (visible layout); deterministic runner re-passed, new consuming-model scenarios not yet run
+test_status: partial # work items and role lookup added 2026-11-12 (visible layout); deterministic runner re-passed, new consuming-model scenarios not yet run; plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
 tested: 2026-10-08
 deployed: 2026-07-25
 ---
@@ -45,6 +45,7 @@ User-invoked AFK executor for a repo's non-`automated` `ready-for-agent` and `re
 - **Test levels block in the pre-review gate (2026-11-17).** The deterministic gate rejects a handoff whose tdd Test levels block is missing or has an empty L1/L2/L3 line, so a skipped level surfaces before reviewer tokens are spent. The gate is instruction-only (the driver is a model; no gate code exists), so the check is added to the gate's checklist and the worker's review-ready checklist. Whether each line is true stays with the Spec reviewer: the gate checks presence, not judgment. Provenance: owner decision 7 of the Level 3 rules in [tdd](../tdd/CONCEPT.md).
 
 - **The worker names no machine-specific test runner (2026-11-19).** `execute-issue.md` defers to the guarded runner the project's or machine's agent instructions name, as the kernel's Storage safety does, instead of a fixed command and owner path. Why: the repository is public, and a stranger's machine has its own runner or none; the owner's runner is already named in the owner's always-loaded instructions, so no overlay is needed.
+- **Unplanned items are skipped (2026-11-24, owner decision).** With a table, an issue whose work item is still in work-planned without a `Planned:` line is skipped before claim and reported as "needs planning", with one note filed where the owner sees questions. The drain does not run `bc-plan-to-pipeline` itself: that skill asks the owner questions and the drain is AFK, so nesting it would either stall the run or guess answers.
 
 ## Measured basis
 
@@ -82,6 +83,7 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - Field observation, project B issue #203, landed `f4a1e02` (2026-07-27) — a real drain (pre-v3 contract as loaded in that session) where the build worker reproduced the inert-guard defect it was assigned to fix. Source of the audit `guard/rejection clause` row and the `review-contract.md` unfireable-guard rule; also the observation that a bounded pre-implementation audit found two errors in the issue's own decision record. (field evidence, no `raw/` file)
 - `concepts/code-review/` — shares the "Verify a guard can actually fire" review class in its general form; the drain's copy exists because AFK reviewers read only the driver's packet.
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as the recorded state for an axis check that could not run, matching `code-review`. Restated, not copied. (2026-09-06)
+- Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
 

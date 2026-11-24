@@ -79,3 +79,5 @@ Pass (each run, graded from `plan.md`, not the reply; the checkout must have no 
 10. `all` filing: `Kind: bug`, `Source: bc-council-find-bugs`, each item names the hunt branch and
     the test path and name; `work/order.md` placement and `work_index.py --check`.
 11. Cleanup of any `.git/council-*` copy.
+
+> Changed 2026-11-24: after an `all` filing, expect `bc-plan-to-pipeline` to run on each filed planned item (in place, settled answers not re-asked, `Planned:` line added). Results files dated 2026-11-24 or earlier predate this.

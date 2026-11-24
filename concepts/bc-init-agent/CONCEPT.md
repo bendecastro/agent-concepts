@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL); Kind/top placement clause PASS 4/4 on Terra low 2026-11-24 after a run-check-first fix (1/2 before)
+test_status: partial # visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL); Kind/top placement clause PASS 4/4 on Terra low 2026-11-24 after a run-check-first fix (1/2 before); plan-every-item change 2026-11-24 untested (scenario bc-plan-to-pipeline/tests/pressure-plan-every-item.md not yet run)
 tested: 2026-11-24
 deployed: 2026-06-21
 ---
@@ -34,6 +34,7 @@ User-invoked adaptive initializer. Code, ops and hybrid scaffold the visible lay
 - **The scaffolded gate names no machine tool (2026-11-19).** `validation.md` tells agents to start the scaffolded gate script through the machine's offload wrapper if its agent instructions name one, with a measured, non-enforced 300 s budget; its header mentions the wrapper but not the budget. scaffold.py has no machine-config seam (only the vault path and archetype), and adding one would be speculative. Why: scaffolded projects and this repository are public; a stranger's machine may have no wrapper.
 
 - **Design README (2026-11-21).** Code, ops and hybrid scaffolds write `docs/design/README.md` (current truth vs the project's decision log, where a rule lives, the before-adding-a-control step, empty Pages and Checks lists; no fixed page list) and a prose line in `.bc-agent/map.md` routing design, UI and CLI wording work to it. Why these kinds: they ship or operate something people use (GUI, TUI, CLI, or operated tools); learning and knowledge vaults have no product surface, and their output stays byte-identical to the base. The map line is prose, not a bullet, because map bullets must be in-vault links. Existing projects get the README on their next run (never overwritten); an existing map that lacks the line produces an upgrade note. No new "Where things go" role: the owner decided day one creates only the README and the map line. The method is `ui-design`'s `design-framework.md`. Covered by `tests/test_design_readme.py`.
+- **Pickup rule and `Planned:` line (2026-11-24, owner decision).** The generated Work-items rules say a planned item without a `Planned:` line is run through `bc-plan-to-pipeline` (settled source, in place) before it moves to `2-active/`, whether by hand, on "carry on" or by a drain; when no one can answer an open question the questions go where the owner sees questions, the item stays planned and the agent takes the next one. The "Begin agreed work" row points at that rule. The work-item template carries an optional `Planned:` line under `Source:`. `work_index.py --check` warns on stderr about each planned item without the line but keeps its exit code, because existing projects hold dozens of legacy planned items and every producer's `--check` placement step would otherwise fail. The generated `work/README.md` table does not show the marker: a new column would churn every project's index for a transitional signal the warning already gives. Items moved into `1-planned/` by a migration are planned at pickup, not during the migration, since planning dozens of legacy items at once would stall the migration on owner questions. Items created straight into `2-active/` for work begun at once are out of scope.
 
 ## Interface: the "Where things go" table
 
@@ -100,6 +101,7 @@ Later work packages and other skills read project paths through this contract, n
 - `concepts/teach/` — the standalone tutor and its linked formats, which define the host adapter's mapped state.
 
 - Design README draft from a reflection on one project's design drift (owner-approved plan, 2026-11-21); page structure informed by [GOV.UK Design System](https://design-system.service.gov.uk/), [Primer](https://primer.style/) and [Carbon](https://carbondesignsystem.com/) documentation.
+- Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
 
