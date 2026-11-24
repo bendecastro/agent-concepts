@@ -24,7 +24,9 @@ Decided in a grilling session with the owner. Both are thin chains over `council
 4. **Verification count.** At most 8 candidates per advisor in pass 1. Every candidate surviving
    pass 2 gets its fresh reviewer, ordered by share of advisors rating it Strong. `--max-verify N`
    caps it; candidates over the cap are reported unverified and the run is incomplete, as the
-   parent requires.
+   parent requires. Candidates pass 2 would drop are not rejected by the council: they go to
+   fresh reviewers after all survivors, ordered last (parent: every candidate gets one reviewer,
+   and `rejected` is only an independent verdict). Pass 2 only orders the queue.
 
 ## `bc-council-challenge-plan` (parent: the plan, then `bc-plan-to-pipeline`)
 
