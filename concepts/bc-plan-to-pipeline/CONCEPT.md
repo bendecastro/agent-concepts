@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # settled-source no-tracker scenario passed 3/3 on Terra low 2026-11-22; visible-layout tracker scenario not yet run; slicing-quiz removal 2026-11-24 untested; Kind/top placement clause not yet pressure-tested
+test_status: partial # settled-source no-tracker scenario passed 3/3 on Terra low 2026-11-22; visible-layout tracker scenario not yet run; slicing-quiz removal 2026-11-24 untested; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind line not run
 tested: 2026-11-22
 deployed: 2026-06-21
 ---

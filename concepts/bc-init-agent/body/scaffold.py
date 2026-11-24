@@ -1431,7 +1431,9 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   on the `Top kinds:` line below goes directly below the run of top-kind items at the top of the
   list (at the top when there is none; several new ones oldest first); any other new item goes
   directly above the first listed item that waits on it, or at the bottom. An item never goes above
-  an item it waits on. No other line moves.
+  an item it waits on. No other line moves. Create the item file first, run `work_index.py --check`
+  before touching `order.md`, and add the line exactly where it says. Why: once the line is listed,
+  `--check` can no longer tell that a new item jumped ahead of one the owner placed.
   Before adding a `Blocked by:` line that names an item listed below this one, check with the owner.
   `work_index.py --check` fails while the file leaves out an open item or lists an item above
   one it waits on, and says where the item goes. Why: the owner sets this order on their

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # passed 2026-11-16; Kind/top placement clause not yet pressure-tested
+test_status: partial # passed 2026-11-16; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind line not run
 tested: 2026-11-16
 deployed: 2026-11-16
 ---

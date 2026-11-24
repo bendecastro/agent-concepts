@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL); Kind/top placement clause not yet pressure-tested
-tested: 2026-11-19
+test_status: partial # visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL); Kind/top placement clause PASS 4/4 on Terra low 2026-11-24 after a run-check-first fix (1/2 before)
+tested: 2026-11-24
 deployed: 2026-06-21
 ---
 # Concept: bc-init-agent

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # roster, agreement and citation rules held (2026-11-22, 2026-11-24); full live review never pressure-tested end to end; Kind/top placement clause not yet pressure-tested
+test_status: partial # roster, agreement and citation rules held (2026-11-22, 2026-11-24); full live review never pressure-tested end to end; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind/hand-off lines not run
 tested: 2026-11-24
 deployed: yes
 ---

@@ -1914,3 +1914,6 @@ Moved from a private concept: the named map-scout model and Antigravity paragrap
 
 ## [2026-11-24] implement | rename bc-improve-codebase-council → bc-council-improve-codebase; council chain naming rule
 Owner decision: council chains share the `bc-council-` prefix so they group together; AGENTS.md Conventions records the rule. Earlier log entries keep the old name.
+
+## [2026-11-24] test | bc-init-agent top-kind placement
+Terra low: 1/2 placed a new security item above the owner's top item (edited order.md before `--check`); the rule now says to run `--check` first and add the line where it says: 4/4 PASS. Results in `concepts/bc-init-agent/tests/pressure-top-kinds-results-2026-11-24.md`.

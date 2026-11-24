@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # visible-layout routing changed 2026-11-12; not yet pressure-tested; Kind/top placement clause not yet pressure-tested
+test_status: partial # visible-layout routing changed 2026-11-12; not yet pressure-tested; Kind line rides on the bc-init-agent placement rule (tested 2026-11-24); this skill's Kind line not run
 tested: 2026-08-20
 deployed: 2026-06-21
 ---
