@@ -1424,8 +1424,14 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   in list order, unless an item waits on another; `work_index.py` rejects unknown and repeated
   names and skips done and dropped ones. Why: the owner's priority beats the computed tiebreaks, but
   never what an item waits for.
-- **Never reorder `work/order.md`; place what you add.** When it exists, a new item goes in
-  directly above the first listed item that waits on it, or at the bottom; no other line moves.
+- **An item may name its kind on a `Kind:` line** (security, bug, build, architecture,
+  performance, tests, feature, docs, ...): what the item is, while `Source:` says who filed it.
+  The owner's dashboard shows it. Why: placement in `work/order.md` follows the kind.
+- **Never reorder `work/order.md`; place what you add.** When it exists, a new item whose kind is
+  on the `Top kinds:` line below goes directly below the run of top-kind items at the top of the
+  list (at the top when there is none; several new ones oldest first); any other new item goes
+  directly above the first listed item that waits on it, or at the bottom. An item never goes above
+  an item it waits on. No other line moves.
   Before adding a `Blocked by:` line that names an item listed below this one, check with the owner.
   `work_index.py --check` fails while the file leaves out an open item or lists an item above
   one it waits on, and says where the item goes. Why: the owner sets this order on their
@@ -1450,6 +1456,7 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   line in `work/0-ideas.md`. Why: `work/` stays the single place that shows what is pending.
 
 Stages: now, next, later, unscheduled
+Top kinds: security, bug, build, architecture
 
 ## Keep it current
 
@@ -1548,6 +1555,7 @@ Done when: <the observable outcome that means this is finished>
 Stage: <one of the stages on the `Stages:` line in .bc-agent/AGENTS.md>
 Blocked by: <full names of the items this waits for, such as 012-search-ranking, or "nothing">
 Issue: <optional issue number; delete the line when there is none>
+Kind: <optional: security, bug, build, architecture, performance, tests, feature, docs, ...; delete the line when unclear>
 Source: <optional: the skill or review that produced this item, e.g. bc-plan-to-pipeline; delete the line when unknown>
 
 ## Steps

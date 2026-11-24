@@ -746,6 +746,15 @@
       "when": "every council architecture review",
       "source": "concepts/bc-improve-codebase-council/body/SKILL.md",
       "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode."
+    },
+    {
+      "from": "bc-improve-codebase-council",
+      "to": "bc-plan-to-pipeline",
+      "relation": "hands_off",
+      "required": false,
+      "when": "after filing chosen findings",
+      "source": "concepts/bc-improve-codebase-council/body/SKILL.md#7-report-and-grilling",
+      "reason": "Recommends slicing each chosen item with bc-plan-to-pipeline, reusing the grill's settled answers; the owner decides."
     }
   ]
 }

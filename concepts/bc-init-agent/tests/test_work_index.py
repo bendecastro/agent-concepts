@@ -8,10 +8,11 @@ README = "# Work\n\nIntro.\n\n<!-- work-index:start -->\n<!-- work-index:end -->
 STAGES_AGENTS = "# demo\n\n## Work items\n\nStages: v1, v1.x, stage 1, stage 2, stage 4, unscheduled\n"
 
 
-def item(stage, why, steps="- [ ] one\n", blocked_by="nothing"):
+def item(stage, why, steps="- [ ] one\n", blocked_by="nothing", kind=None):
     blocked = "" if blocked_by is None else f"Blocked by: {blocked_by}\n"
     stage_line = "" if stage is None else f"Stage: {stage}\n"
-    return f"# Title\n\nWhy: {why}\nDone when: x.\n{stage_line}{blocked}\n## Steps\n\n{steps}\n## Outcome\n"
+    kind_line = "" if kind is None else f"Kind: {kind}\n"
+    return f"# Title\n\nWhy: {why}\nDone when: x.\n{stage_line}{kind_line}{blocked}\n## Steps\n\n{steps}\n## Outcome\n"
 
 
 def fixture(root, files, agents=STAGES_AGENTS):
@@ -609,3 +610,78 @@ def test_check_passes_a_complete_order_that_respects_blockers(tmp_path):
     })
     assert run(tmp_path).returncode == 0
     assert run(tmp_path, "--check").returncode == 0
+
+
+def top_kind_case(tmp_path, order, agents=STAGES_AGENTS, **new):
+    files = {
+        "work/1-planned/001-sec.md": item("v1", "Sec.", kind="security"),
+        "work/1-planned/002-feat.md": item("v1", "Feat.", kind="feature"),
+        "work/1-planned/003-plain.md": item("v1", "Plain."),
+        "work/order.md": ORDER_HEADER + order,
+    }
+    files.update({f"work/1-planned/{name.replace('_', '-')}.md": text for name, text in new.items()})
+    fixture(tmp_path, files, agents=agents)
+    assert run(tmp_path).returncode == 0
+    result = run(tmp_path, "--check")
+    assert result.returncode == 1
+    return result.stderr
+
+
+def test_new_default_top_kind_item_goes_directly_below_the_top_group(tmp_path):
+    stderr = top_kind_case(tmp_path, "1. 001-sec\n2. 002-feat\n3. 003-plain\n",
+                           **{"009_bug": item("v1", "Bug.", kind="bug")})
+    assert "order.md does not list 009-bug; add it directly below 001-sec" in stderr
+
+
+def test_new_top_kind_item_goes_at_the_top_when_the_top_item_is_not_a_top_kind(tmp_path):
+    stderr = top_kind_case(tmp_path, "1. 002-feat\n2. 001-sec\n3. 003-plain\n",
+                           **{"009_build": item("v1", "Build.", kind="build")})
+    assert "order.md does not list 009-build; add it at the top" in stderr
+
+
+def test_several_new_top_kind_items_go_oldest_first(tmp_path):
+    stderr = top_kind_case(tmp_path, "1. 001-sec\n2. 002-feat\n3. 003-plain\n",
+                           **{"008_arch": item("v1", "Arch.", kind="architecture"),
+                              "009_bug": item("v1", "Bug.", kind="bug")})
+    assert "order.md does not list 008-arch; add it directly below 001-sec" in stderr
+    assert "order.md does not list 009-bug; add it directly below 008-arch" in stderr
+
+
+def test_top_kinds_line_replaces_the_defaults(tmp_path):
+    agents = STAGES_AGENTS + "Top kinds: feature, docs\n"
+    stderr = top_kind_case(tmp_path, "1. 002-feat\n2. 001-sec\n3. 003-plain\n", agents=agents,
+                           **{"008_docs": item("v1", "Docs.", kind="docs"),
+                              "009_bug": item("v1", "Bug.", kind="bug")})
+    assert "order.md does not list 008-docs; add it directly below 002-feat" in stderr
+    assert "order.md does not list 009-bug; add it at the bottom" in stderr
+
+
+def test_top_kinds_none_disables_top_placement(tmp_path):
+    agents = STAGES_AGENTS + "Top kinds: none\n"
+    stderr = top_kind_case(tmp_path, "1. 001-sec\n2. 002-feat\n3. 003-plain\n", agents=agents,
+                           **{"009_bug": item("v1", "Bug.", kind="bug")})
+    assert "order.md does not list 009-bug; add it at the bottom" in stderr
+
+
+def test_new_top_kind_item_stays_below_its_blocker(tmp_path):
+    stderr = top_kind_case(tmp_path, "1. 001-sec\n2. 002-feat\n3. 003-plain\n",
+                           **{"009_bug": item("v1", "Bug.", kind="bug", blocked_by="002-feat")})
+    assert "order.md does not list 009-bug; add it directly below 002-feat" in stderr
+
+
+def test_new_top_kind_item_stays_above_the_first_item_that_waits_on_it(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/001-feat.md": item("v1", "Feat.", kind="feature", blocked_by="009-bug"),
+        "work/1-planned/002-sec.md": item("v1", "Sec.", kind="security"),
+        "work/1-planned/009-bug.md": item("v1", "Bug.", kind="bug"),
+        "work/order.md": ORDER_HEADER + "1. 001-feat\n2. 002-sec\n",
+    })
+    assert run(tmp_path).returncode == 0
+    result = run(tmp_path, "--check")
+    assert "order.md does not list 009-bug; add it at the top" in result.stderr
+
+
+def test_new_item_of_another_kind_keeps_bottom_placement(tmp_path):
+    stderr = top_kind_case(tmp_path, "1. 001-sec\n2. 002-feat\n3. 003-plain\n",
+                           **{"009_tests": item("v1", "Tests.", kind="tests")})
+    assert "order.md does not list 009-tests; add it at the bottom" in stderr

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # settled-source no-tracker scenario passed 3/3 on Terra low 2026-11-22; visible-layout tracker scenario not yet run; slicing-quiz removal 2026-11-24 untested
+test_status: partial # settled-source no-tracker scenario passed 3/3 on Terra low 2026-11-22; visible-layout tracker scenario not yet run; slicing-quiz removal 2026-11-24 untested; Kind/top placement clause not yet pressure-tested
 tested: 2026-11-22
 deployed: 2026-06-21
 ---
@@ -10,6 +10,7 @@ User-invoked planning orchestrator that runs the whole interactive planning fron
 
 ## Design decisions
 
+- **`Kind:` when it fits (owner decision 2026-11-24).** The item gets a `Kind:` line from the list when one fits (an upstream item's is kept), and its place in `work/order.md` follows `work_index.py --check`: placement by kind, not by skill, below the existing top group so new items cannot flood ahead of the owner's.
 - **Exists to remove sequencing burden** (user's request). The planning behaviors once sat behind separate wrappers; the user didn't want to remember the former sequence (`grill-me` → `to-prd` → `to-issues`). This collapses the front into one invocation. The stateful `grill-me` wrapper was removed 2026-09-27; use `grilling` + `domain-modeling` directly for a standalone interview and domain capture.
 - **Composes model-invoked disciplines only — option (c) refactor.** Rather than calling single-step user-invoked wrappers (which would break the no-orchestrator-calls-orchestrator boundary), it inlines `grilling`, `domain-modeling`, `naming-things`, `prd-drafting`, and `issue-slicing`. The drafting/slicing disciplines were extracted from their publication orchestrators specifically to make this clean (see those concepts). No behavior is duplicated.
 - **Owns publication itself.** The disciplines don't publish; this orchestrator runs the two `gh issue create` steps (parent PRD issue, then slices in dependency order). Keeps publishing in one place for the pipeline run.

@@ -76,6 +76,8 @@ Never force agreement. An open dispute the code cannot settle becomes an owner d
 
 ## 7. Report and grilling
 
-Produce the report `improve-codebase-architecture` describes, with two additions per card: an agreement line (for example `3 of 4 Strong, 1 no view`) and any open dispute. Add a short roster section: advisors, passes run, fallbacks. Then hand over to that skill's grilling and filing steps unchanged, except that a work item filed from this review gets the header line `Source: bc-improve-codebase-council`, so tools that list work items can filter the ones it filed.
+Produce the report `improve-codebase-architecture` describes, with two additions per card: an agreement line (for example `3 of 4 Strong, 1 no view`) and any open dispute. Add a short roster section: advisors, passes run, fallbacks. Then hand over to that skill's grilling and filing steps unchanged, except that a work item filed from this review gets the header lines `Kind: architecture` and `Source: bc-improve-codebase-council`, so tools that list work items can filter the ones it filed.
+
+After filing, recommend running `/bc-plan-to-pipeline` on each chosen item to slice it, passing the grilling's settled answers along so the owner is not asked the same questions twice.
 
 When the review ends, delete any `.git/council-<run-dir name>/` copy made for a sandboxed advisor (`rm -r .git/council-<run-dir name>/`).

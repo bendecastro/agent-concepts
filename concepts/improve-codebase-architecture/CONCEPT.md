@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # visible-layout routing changed 2026-11-12; not yet pressure-tested
+test_status: partial # visible-layout routing changed 2026-11-12; not yet pressure-tested; Kind/top placement clause not yet pressure-tested
 tested: 2026-08-20
 deployed: 2026-06-21
 ---
@@ -10,6 +10,7 @@ User-invoked architecture review for the bc loop. It scans for deep-module oppor
 
 ## Design decisions
 
+- **Chosen findings carry `Kind: architecture` (owner decision 2026-11-24).** Placement in `work/order.md` follows the kind, not the filing skill; the project's work-item rules put top kinds below the existing top group so new items cannot flood ahead of the owner's.
 - **Review before implementation.** The skill surfaces candidates and grills one; production changes should go through `bc-plan-to-pipeline` so they become vertical slices.
 - **Visual report, not repo artifact.** The report goes to temp storage to avoid committing speculative architecture HTML.
 - **Thin artifact clause, not a `plain-language` load (2026-08-18).** The HTML is a document a busy owner scans to pick a candidate. The body names that reader, leads each card with problem + direction, keeps deep-module vocabulary (terms this reader already uses), and puts the ask last. Loading `plain-language` would invite "familiar words" to strip Module/Interface/Depth.

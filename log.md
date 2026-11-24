@@ -1908,3 +1908,6 @@ Owner asked to visually separate the end-of-reply recap: a blank line, then `---
 
 ## [2026-11-24] deploy | bc-improve-codebase-council published
 Moved from a private concept: the named map-scout model and Antigravity paragraphs became generic rules, and a private overlay now fixes this machine's roster (two advisors for this review) and map-scout model. Pressure re-run on Terra low: 2/2 without the overlay (discovery, cap, scaled thresholds), 2/2 with it (exact roster and model). The private denylist entry that matched this name was narrowed to the exact script name.
+
+## [2026-11-24] implement | work-item Kind and top-kind placement
+`work_index.py` reads an optional `Kind:` header and the project's `Top kinds:` line (default security, bug, build, architecture; `none` off); `--check` places new top-kind items below the `order.md` top group, oldest first, never above a blocker. Scaffold and bc-init-agent document it; improve-codebase-architecture, bc-improve-codebase-council (plus a hands-off to bc-plan-to-pipeline), bc-plan-to-pipeline and bc-work-sync set `Kind:`. Owner decision: placement by kind, not by skill; pressure tests pending.

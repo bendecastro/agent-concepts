@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- hands off to `bc-plan-to-pipeline` — optional, when after filing chosen findings.
+  Recommends slicing each chosen item with bc-plan-to-pipeline, reusing the grill's settled answers; the owner decides.
+  Source: [body/SKILL.md](body/SKILL.md#7-report-and-grilling)
+
 - loads `council-mode` — required, when every council architecture review.
   Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode.
   Source: [body/SKILL.md](body/SKILL.md)

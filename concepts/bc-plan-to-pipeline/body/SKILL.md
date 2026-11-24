@@ -30,7 +30,7 @@ When the project has no such table, use the paths this skill used before:
 
 **The plan is a work item** when the table exists. The fallback change folder is used only without a table; creating `docs/changes/`, `docs/specs/` or `docs/adr/` in a project with a table would scatter the plan outside the folders that show its status.
 
-Write a `Source: <name>` line under the item's header lines, naming what produced the plan: the upstream skill (for example `improve-codebase-architecture`) for a settled source, or `bc-plan-to-pipeline` for a raw idea. In a large plan it goes in `plan.md`.
+Write a `Source: <name>` line under the item's header lines, naming what produced the plan: the upstream skill (for example `improve-codebase-architecture`) for a settled source, or `bc-plan-to-pipeline` for a raw idea. In a large plan it goes in `plan.md`. Next to it, write a `Kind:` line (security, bug, build, architecture, performance, tests, feature, docs, ...) when one fits; keep an upstream item's `Kind:` line. Place a new item in `work/order.md` where `python3 .bc-agent/scripts/work_index.py --check` says (a top kind goes near the top).
 
 Call the feature's requirements document by the project's term: the requirements role in the table (a work item's `requirements.md` or `## Requirements` section), not "PRD", when the project names it differently. This skill says "PRD" only for brevity.
 

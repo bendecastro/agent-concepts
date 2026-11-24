@@ -59,7 +59,7 @@ Look for each of these; [PLAN.md](PLAN.md) gives the plan's format.
 
 ## After the owner approves
 
-1. Write items from `.bc-agent/templates/work-item.md` under the project's work-item rules in `.bc-agent/AGENTS.md`. Number new items only in the main checkout (`git rev-parse --path-format=absolute --git-dir` equals `git rev-parse --path-format=absolute --git-common-dir`); in a worktree, add a line to the ideas file instead and say so. Link to the docs an item comes from instead of copying their content.
+1. Write items from `.bc-agent/templates/work-item.md` under the project's work-item rules in `.bc-agent/AGENTS.md`. Number new items only in the main checkout (`git rev-parse --path-format=absolute --git-dir` equals `git rev-parse --path-format=absolute --git-common-dir`); in a worktree, add a line to the ideas file instead and say so. Link to the docs an item comes from instead of copying their content. Set a `Kind:` line when the doc makes the kind clear (a bug, a security fix, a feature, ...), and place the item in `work/order.md` where `work_index.py --check` says.
 2. Run `python3 .bc-agent/scripts/work_index.py`, then `python3 .bc-agent/scripts/work_index.py --check` and the project's own lint.
 3. Commit only your own changes, with a subject naming the sync.
 4. Get an independent review of the diff (a fresh reviewer subagent, or the owner when none is available), apply the fixes, re-run step 2 and commit them.

@@ -45,4 +45,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-None.
+- incoming from [bc-improve-codebase-council](../bc-improve-codebase-council/RELATIONSHIPS.md): hands off to this concept — optional, when after filing chosen findings.
+  Recommends slicing each chosen item with bc-plan-to-pipeline, reusing the grill's settled answers; the owner decides.
+  Source: [bc-improve-codebase-council/body/SKILL.md](../bc-improve-codebase-council/body/SKILL.md#7-report-and-grilling)

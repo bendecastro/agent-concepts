@@ -59,7 +59,7 @@ If the owner rejects a candidate for a load-bearing reason, offer to record a de
 
 Wait until the owner has seen the report and said which findings they want. Why: a review proposes; only the owner decides what becomes work, and a planned item created on the agent's own judgment reads as a decision nobody made. Then give every finding in the report exactly one home:
 
-- **Chosen** → a numbered work item in the work-planned folder, made from the project's work-item template, citing the report folder, with the line `Source: improve-codebase-architecture`. Grilling outcomes go into the item.
+- **Chosen** → a numbered work item in the work-planned folder, made from the project's work-item template, citing the report folder, with the lines `Kind: architecture` and `Source: improve-codebase-architecture`. Place it in the work-order file where the project's work-item rules say (a top kind goes near the top). Grilling outcomes go into the item.
 - **Rejected** → a numbered work item in the work-dropped folder whose `## Outcome` states the owner's reason. Why: a recorded "no, because" stops the next review re-proposing it; a rejection without its reason is lost at the next review.
 - **Everything else** (not chosen, not rejected, including discarded observations still worth watching) → one line in the ideas file pointing at the report folder.
 

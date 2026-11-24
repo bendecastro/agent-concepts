@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # roster, agreement and citation rules held (2026-11-22, 2026-11-24); full live review never pressure-tested end to end
+test_status: partial # roster, agreement and citation rules held (2026-11-22, 2026-11-24); full live review never pressure-tested end to end; Kind/top placement clause not yet pressure-tested
 tested: 2026-11-24
 deployed: yes
 ---
@@ -10,6 +10,7 @@ Runs `improve-codebase-architecture` through the advisor council (`council-mode`
 
 ## Design decisions
 
+- **`Kind: architecture` and a slicing hand-off (owner decision 2026-11-24).** Filed items carry `Kind: architecture`; placement follows the kind, not the skill, below the existing top group so new items cannot flood ahead of the owner's. After filing, the council recommends `/bc-plan-to-pipeline` per chosen item, reusing the grill's settled answers so the owner is not asked twice.
 - **One shared map (owner, 2026-11-22).** A single scout maps the codebase once; advisors judge the map rather than each scanning the tree. Why: separate scans make disagreements come from what each advisor happened to read, not from judgment.
 - **Agreement by evidence, not vote (owner, 2026-11-22).** Disputes the code cannot settle go to the user; unanimity is not required, and single-advisor finds are kept as Speculative.
 - **Roster discovered at run time, thresholds as shares of N.** The council's membership changes; a rule written for three advisors breaks when a fourth joins.

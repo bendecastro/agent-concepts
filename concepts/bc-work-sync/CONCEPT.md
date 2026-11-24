@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass
+test_status: partial # passed 2026-11-16; Kind/top placement clause not yet pressure-tested
 tested: 2026-11-16
 deployed: 2026-11-16
 ---
@@ -10,6 +10,7 @@ Owner-started skill (`disable-model-invocation: true`) that brings a visible-lay
 
 ## Design decisions
 
+- **`Kind:` when the doc makes it clear (owner decision 2026-11-24).** Items created from docs get a `Kind:` line only when the source makes the kind clear, and are placed where `work_index.py --check` says: placement by kind, not by skill, below the existing top group so new items cannot flood ahead of the owner's.
 All agreed with the owner on 2026-11-16.
 
 - **Plan first, one plan, nothing written before the answer.** Why: a written item looks decided; the plan is where the owner catches a wrong stage, a duplicate or a stale doc. "Skip the plan" does not lift the gate.
