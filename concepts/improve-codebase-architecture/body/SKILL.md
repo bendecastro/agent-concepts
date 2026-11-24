@@ -67,6 +67,8 @@ Delete each ideas line that seeded a chosen or rejected finding, in the same com
 
 Number items as the project's `.bc-agent/AGENTS.md` work-item rules say, and create numbered items only from the main checkout. In a git worktree, add an ideas-file line for each chosen or rejected finding instead, stating the owner's choice and reason, so the main checkout can number it later. Why: two worktrees cannot see each other's numbers and would pick the same one.
 
+When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each chosen item you filed, one after another, passing the grilling's settled answers so the owner is not asked them again. Why: every planned item gets requirements and sliced steps before anyone starts it; this is a handoff after this skill's own work ends, not a nested call.
+
 Observations you make outside a review, in any later task, are also single lines in the ideas file, naming the module, the seam and the evidence. Why: the next review reads them there, and the ideas file is the one place that shows what is undecided.
 
 ## Projects without the table
@@ -92,7 +94,7 @@ When the owner picks a candidate seeded by an inbox observation, leave that obse
 
 - Before `/bc-plan-to-pipeline`: use this when the next feature needs an architectural runway before slicing.
 - After `diagnosing-bugs`: use this when a bug fix reveals no correct regression-test seam.
-- A chosen finding becomes a planned work item (or, without the table, a plan/decision record/issue set via `/bc-plan-to-pipeline`); this skill itself does not create GitHub issues or edit production code.
+- A chosen finding becomes a planned work item that `/bc-plan-to-pipeline` then plans (or, without the table, a plan/decision record/issue set via `/bc-plan-to-pipeline`); this skill itself does not create GitHub issues or edit production code.
 
 Inline how-it-works visuals outside this report → `show-me`; this report keeps its own format.
 

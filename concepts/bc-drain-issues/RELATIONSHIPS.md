@@ -15,6 +15,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules.
   Source: [CONCEPT.md](CONCEPT.md)
 
+- depends on `bc-plan-to-pipeline`'s contract — required, when project has a Where things go table.
+  Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner.
+  Source: [body/SKILL.md](body/SKILL.md#select-classify-and-claim)
+
 - depends on `improve-codebase-architecture`'s contract — required, when architecture observation after landing.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
   Source: [CONCEPT.md](CONCEPT.md)

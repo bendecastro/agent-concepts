@@ -7,10 +7,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- hands off to `bc-plan-to-pipeline` — optional, when after filing chosen findings.
-  Recommends slicing each chosen item with bc-plan-to-pipeline, reusing the grill's settled answers; the owner decides.
-  Source: [body/SKILL.md](body/SKILL.md#report-and-grilling)
-
 - loads `council-chain` — required, when every council architecture review.
   Roster, shared map, pass 1, merge, pass 2, fallbacks and sandbox cleanup have one home in council-chain; this skill defines only the chain parts.
   Source: [body/SKILL.md](body/SKILL.md)

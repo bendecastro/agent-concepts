@@ -49,6 +49,18 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill.
   Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md)
 
-- incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): hands off to this concept — optional, when after filing chosen findings.
-  Recommends slicing each chosen item with bc-plan-to-pipeline, reusing the grill's settled answers; the owner decides.
-  Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md#report-and-grilling)
+- incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner.
+  Source: [bc-drain-issues/body/SKILL.md](../bc-drain-issues/body/SKILL.md#select-classify-and-claim)
+
+- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode.
+  Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
+
+- incoming from [find-bugs](../find-bugs/RELATIONSHIPS.md): hands off to this concept — required, when after filing into a project work pipeline.
+  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through find-bugs §5.
+  Source: [find-bugs/body/SKILL.md](../find-bugs/body/SKILL.md#5-file-after-the-owner-answers)
+
+- incoming from [improve-codebase-architecture](../improve-codebase-architecture/RELATIONSHIPS.md): hands off to this concept — required, when after filing chosen findings in a project with a Where things go table.
+  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-codebase inherits this through its filing step.
+  Source: [improve-codebase-architecture/body/SKILL.md](../improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table)

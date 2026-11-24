@@ -49,6 +49,4 @@ Rank candidates by evidence, not by vote alone:
 
 Produce the report `improve-codebase-architecture` describes, with two additions per card: an agreement line (for example `3 of 4 Strong, 1 no view`) and any open dispute, plus the roster section `council-chain` adds. Then hand over to that skill's grilling and filing steps unchanged, except that a work item filed from this review gets the header lines `Kind: architecture` and `Source: bc-council-improve-codebase`, so tools that list work items can filter the ones it filed.
 
-After filing, recommend running `/bc-plan-to-pipeline` on each chosen item to slice it, passing the grilling's settled answers along so the owner is not asked the same questions twice.
-
 When the review ends, do `council-chain`'s cleanup.

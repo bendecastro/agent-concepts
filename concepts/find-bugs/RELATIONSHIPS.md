@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Relies on the work-item template, Kind placement in order.md and work_index.py --check.
   Source: [CONCEPT.md](CONCEPT.md)
 
+- hands off to `bc-plan-to-pipeline` — required, when after filing into a project work pipeline.
+  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through find-bugs §5.
+  Source: [body/SKILL.md](body/SKILL.md#5-file-after-the-owner-answers)
+
 - adapts `improve-codebase-architecture` — required, when filing after the owner answers.
   Report-then-owner filing, roles and the no-pipeline fallback mirror improve-codebase-architecture.
   Source: [CONCEPT.md](CONCEPT.md)

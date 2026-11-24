@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject.
   Source: [CONCEPT.md](CONCEPT.md)
 
+- hands off to `bc-plan-to-pipeline` — required, when after filing chosen findings in a project with a Where things go table.
+  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-codebase inherits this through its filing step.
+  Source: [body/SKILL.md](body/SKILL.md#4-record-every-finding-projects-with-the-table)
+
 - depends on `codebase-design`'s contract — required, when organic exploration.
   The friction-signal list and deletion test have one home in codebase-design, so builder roles that load it get the same signals the review uses.
   Source: [body/SKILL.md](body/SKILL.md#1-explore)

@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
   Source: [body/scaffold.py](body/scaffold.py)
 
+- depends on `bc-plan-to-pipeline`'s contract — required, when project has a Where things go table.
+  The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode.
+  Source: [body/scaffold.py](body/scaffold.py)
+
 - depends on `bc-wiki-maintain`'s contract — required, when generated map links.
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.
   Source: [CONCEPT.md](CONCEPT.md#design-decisions)

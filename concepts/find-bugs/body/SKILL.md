@@ -85,4 +85,6 @@ Wait for the owner's answer. Why: the hunt proposes; only the owner decides what
 
 Number items only from the main checkout; from a worktree, write ideas-file lines stating the owner's choice instead. Keep the hunt branch: filed items point at it.
 
+When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each work-planned item you filed, one after another, passing the owner's filing answer and the report so nothing settled is asked again. Why: every planned item gets requirements and sliced steps before anyone starts it, a one-line fix included; this is a handoff after this skill's own work ends, not a nested call.
+
 **Without a project work pipeline**, do not invent one: leave the report and branch, list the owner's choices in the reply, and say the findings are not filed.

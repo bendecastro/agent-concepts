@@ -749,15 +749,6 @@
     },
     {
       "from": "bc-council-improve-codebase",
-      "to": "bc-plan-to-pipeline",
-      "relation": "hands_off",
-      "required": false,
-      "when": "after filing chosen findings",
-      "source": "concepts/bc-council-improve-codebase/body/SKILL.md#report-and-grilling",
-      "reason": "Recommends slicing each chosen item with bc-plan-to-pipeline, reusing the grill's settled answers; the owner decides."
-    },
-    {
-      "from": "bc-council-improve-codebase",
       "to": "council-chain",
       "relation": "loads",
       "required": true,
@@ -908,6 +899,42 @@
       "when": "after the owner's answers are written into the plan",
       "source": "concepts/bc-council-challenge-plan/body/SKILL.md",
       "reason": "Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill."
+    },
+    {
+      "from": "improve-codebase-architecture",
+      "to": "bc-plan-to-pipeline",
+      "relation": "hands_off",
+      "required": true,
+      "when": "after filing chosen findings in a project with a Where things go table",
+      "source": "concepts/improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table",
+      "reason": "Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-codebase inherits this through its filing step."
+    },
+    {
+      "from": "find-bugs",
+      "to": "bc-plan-to-pipeline",
+      "relation": "hands_off",
+      "required": true,
+      "when": "after filing into a project work pipeline",
+      "source": "concepts/find-bugs/body/SKILL.md#5-file-after-the-owner-answers",
+      "reason": "Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through find-bugs \u00a75."
+    },
+    {
+      "from": "bc-drain-issues",
+      "to": "bc-plan-to-pipeline",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/bc-drain-issues/body/SKILL.md#select-classify-and-claim",
+      "reason": "Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner."
+    },
+    {
+      "from": "bc-init-agent",
+      "to": "bc-plan-to-pipeline",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has a Where things go table",
+      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "reason": "The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode."
     }
   ]
 }
