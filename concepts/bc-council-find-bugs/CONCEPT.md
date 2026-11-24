@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass # dry run 2/2 on Terra low: plan.md met all 11 criteria; earlier live attempt stopped early in 6 of 7 runs
 tested: 2026-11-24
-deployed: no
+deployed: yes
 ---
 # Concept: bc-council-find-bugs
 
@@ -10,7 +10,7 @@ Runs `find-bugs` through the advisor council (`council-chain` + `council-mode`):
 
 ## Design decisions
 
-All from the owner-approved [council bug hunt plan](../../docs/plans/active/council-find-bugs.md); numbers are that plan's decisions.
+All from the owner-approved [council bug hunt plan](../../docs/plans/implemented/council-find-bugs.md); numbers are that plan's decisions.
 
 - **Thin chain (decisions 1, 6).** Loads `council-chain`, `find-bugs` and `council-mode` and defines only what `council-chain`'s "What a chain must define" list leaves open: pre-reading and map contents, focuses, candidate format, duplicate rule, verdict rule, report additions and filing. Scope, reproduction, report sections and filing stay in `find-bugs`.
 - **Agreement orders, never confirms (decision 3).** Pass 2 attacks; an unanswered code-evidenced dispute drops a candidate; agreement shares of N only order the reproduction queue and the suspected tier. Only a reproduction watched failing confirms.
@@ -24,7 +24,7 @@ All from the owner-approved [council bug hunt plan](../../docs/plans/active/coun
 
 ## Provenance
 
-- [Council bug hunt plan](../../docs/plans/active/council-find-bugs.md), decisions 1–11 and step 3 of its build order.
+- [Council bug hunt plan](../../docs/plans/implemented/council-find-bugs.md), decisions 1–11 and step 3 of its build order.
 - Composes [council-chain](../council-chain/CONCEPT.md), [find-bugs](../find-bugs/CONCEPT.md) and [council-mode](../council-mode/CONCEPT.md); shape copied from [bc-council-improve-codebase](../bc-council-improve-codebase/CONCEPT.md).
 
 ## Tests

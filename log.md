@@ -1941,3 +1941,6 @@ Pass 2 now asks each confirm for a refinement with evidence, and the report show
 
 ## [2026-11-24] implement | bc-council-find-bugs (not deployed)
 Thin chain over council-chain + find-bugs (plan step 3): focuses dealt round-robin, pass-2 attack, agreement only orders reproduction and the suspected tier, one worker reproduces with the find-bugs skill list. Pressure test on Terra low with stand-in advisors failed: 6 of 7 runs stopped early; the finished run confirmed 8/10 planted with correct `all` filing but dropped the worker skill list, report additions and item test links.
+
+## [2026-11-24] test | bc-council-find-bugs dry run; deployed
+Dry-run pressure test (plan.md only, Terra low, 2 runs): 11/11 criteria in both, no body fix; also covers council-chain's pass-2 refinement rule. Deployed (owner chose dry-run testing; the first real hunt with the council is the live test). Plan moved to implemented.

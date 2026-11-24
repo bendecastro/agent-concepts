@@ -10,7 +10,7 @@ The shared recipe every `bc-council-<job>` skill loads to run a parent skill thr
 
 ## Design decisions
 
-- **Extracted at the second chain (owner plan `docs/plans/active/council-find-bugs.md`, decision 6, 2026-11-24).** `bc-council-find-bugs` would have been the second copy of these steps; the second copy is the moment to extract. The steps were moved from `bc-council-improve-codebase` without behaviour change; only the job-specific parts (map contents, candidate format, duplicate rule, agreement rule, report, filing) stayed in that chain. The rationale for each moved step (shared map, shares-of-N thresholds, strong map scout, citation check, sandbox copy) is recorded in [bc-council-improve-codebase](../bc-council-improve-codebase/CONCEPT.md), where those decisions were made.
+- **Extracted at the second chain (owner plan `docs/plans/implemented/council-find-bugs.md`, decision 6, 2026-11-24).** `bc-council-find-bugs` would have been the second copy of these steps; the second copy is the moment to extract. The steps were moved from `bc-council-improve-codebase` without behaviour change; only the job-specific parts (map contents, candidate format, duplicate rule, agreement rule, report, filing) stayed in that chain. The rationale for each moved step (shared map, shares-of-N thresholds, strong map scout, citation check, sandbox copy) is recorded in [bc-council-improve-codebase](../bc-council-improve-codebase/CONCEPT.md), where those decisions were made.
 - **Explicit chain interface.** The body lists what a chain must define, so a new chain is written against a checklist rather than by copying an existing chain.
 - **"Never force agreement" lives in the recipe.** The rule binds every verdict rule a chain writes; each chain still defines its own thresholds.
 - **Roster overlay moved here.** The private overlay `~/.config/agent-concepts/overlays/council-chain.md` (roster, map-scout model, sandboxed advisor kinds) replaces the per-chain overlay `bc-council-improve-codebase.md`. Generic wording (discover `council-*` profiles, strongest model) is the stranger's full instruction.
@@ -18,7 +18,7 @@ The shared recipe every `bc-council-<job>` skill loads to run a parent skill thr
 
 ## Provenance
 
-- Owner plan [council-find-bugs](../../docs/plans/active/council-find-bugs.md), 2026-11-24.
+- Owner plan [council-find-bugs](../../docs/plans/implemented/council-find-bugs.md), 2026-11-24.
 - Steps moved from [bc-council-improve-codebase](../bc-council-improve-codebase/CONCEPT.md) (owner design 2026-11-22, live run and session reflection the same day).
 - Loads [council-mode](../council-mode/CONCEPT.md).
 

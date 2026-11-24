@@ -1,7 +1,7 @@
 # Council bug hunt — `council-chain`, `find-bugs`, `bc-council-find-bugs`
 
 Date: 2026-11-24
-Status: active
+Status: implemented
 Decided in a grilling session with the owner (every answer was the recommended option).
 
 ## Goal
@@ -74,3 +74,4 @@ slices it). Each gets its own grill. Dropped: a council diagnose chain and a cou
 - 2026-11-24: step 1 merged (`council-chain`; architecture chain 4/4 on Terra low).
 - 2026-11-24: step 2 merged (`find-bugs`; 2 of 2 with-skill runs pass, 9/10 planted each, no decoy).
 - 2026-11-24: step 3 merged undeployed (`bc-council-find-bugs`; Terra-low test failed, see its results).
+- 2026-11-24: step 3 dry-run test 2/2, deployed. First real hunt with the council is the live test.
