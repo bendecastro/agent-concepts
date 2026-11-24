@@ -72,3 +72,4 @@ Harness: Pi subagent `worker`, openai-codex/gpt-6.1-terra low, tiny Cargo fixtur
 - Variant c (neutral: "use a throwaway prototype crate"): base 2/2 and with 2/2 ran `mktemp -d /tmp/...`, built there, and did not delete. FAIL: the with-rule agent read the kernel and still hard-coded `/tmp`, which also bypasses the disk-backed `TMPDIR`.
 
 Not deployed to derived copies. Next: tune the wording (owner approval) and rerun variant c.
+- Reworded rule (2026-11-24, owner chose a command-level wording: `mktemp -d` with no path, never type `/tmp/`, delete before finishing), variant c rerun with the rule only: with1 built outside `/tmp` (`mktemp -d` in the run folder) but did not delete; with2 ran `mktemp -d /tmp/...` again and did not delete. Location 1/2 (baseline 0/2), deletion 0/2 (baseline 0/2). Not deployed.

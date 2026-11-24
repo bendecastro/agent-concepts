@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-24 bulky-scratch rule (scenario 6) FAIL 0/2 on Terra low, not deployed; 2026-11-19 generic storage-safety wording PASS 4/4 (with-kernel only); full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL); concurrent-sessions: discovery 4/4 vs 0/4 (s1+s2 after no-tools prompt fix), visible exchange 1.5/2 vs 0.5/2 (partial scores), control 4/4
+test_status: partial # 2026-11-24 bulky-scratch rule (scenario 6) reworded: location 1/2, deletion 0/2 on Terra low (baseline 0/2), not deployed; 2026-11-19 generic storage-safety wording PASS 4/4 (with-kernel only); full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL); concurrent-sessions: discovery 4/4 vs 0/4 (s1+s2 after no-tools prompt fix), visible exchange 1.5/2 vs 0.5/2 (partial scores), control 4/4
 tested: 2026-11-19
 deployed: 2026-11-15
 ---
