@@ -1899,3 +1899,6 @@ Pressure runs on cheap advisors failed twice (workflow block lost on launch; res
 
 ## [2026-11-24] implement | example role profiles for bc-drain-issues, settings snippet for bc-swarm
 Same idea as the council examples: `bc-drain-issues` named three Pi roles a stranger could not get, so copies now ship in `body/examples/agents/`; `bc-swarm` gains an example `agentOverrides` tool-budget snippet. Documentation only; no behaviour change.
+
+## [2026-11-24] deploy | bc-drain-issues role profiles are now the live files
+The owner's three `bc-drain-*` Pi agent profiles are relative symlinks to `body/examples/agents/`, so the public examples and the profiles Pi runs cannot drift.
