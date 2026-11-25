@@ -7,7 +7,7 @@ description: Use when starting feature work that needs isolation, before executi
 
 Work in an isolated workspace when it reduces risk. Detect existing isolation first, prefer harness-native isolation, and use manual `git worktree` only as a fallback. When an owned worktree is integrated or otherwise irrelevant, prune it without asking.
 
-Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety): health-check before either creation path, reuse the once-per-base baseline, and record integration proof before cleanup. Why: native isolation still consumes disk.
+Before either creation path, run the machine's storage health check if one exists, and stop and report on critical or unknown health. Reuse the once-per-base baseline. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof; remove with `git worktree remove`, never `--force`. The `agent-kernel` concept's Storage safety section holds the full rule, when loaded. Why: native isolation still consumes disk.
 
 ## Step 0: detect current state
 

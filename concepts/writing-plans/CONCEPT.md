@@ -10,6 +10,8 @@ User-invoked implementation-plan authoring skill for turning an approved spec or
 
 ## Design decisions
 
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety and Verification rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder.
+
 - **Plain plan, not PRD/issue publishing.** Existing `prd-drafting` and `plan-slicing` cover the GitHub pipeline; this concept covers standalone local implementation plans.
 - **Agent-ready detail.** The body preserves upstream insistence on exact paths, commands, expected outputs, and code snippets because plans are often executed by fresh agents with no context.
 - **No placeholder plans.** Placeholder bans are retained as a gate: a vague plan is worse than no handoff.

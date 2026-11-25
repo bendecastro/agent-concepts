@@ -10,6 +10,8 @@ A reference library of proven instruction blocks for authoring agent instruction
 
 ## Design decisions
 
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the loading-is-not-authorization example names the `security-audit` skill and section instead of linking into its folder; it stays an optional example, so no `loads` edge.
+
 - **Cloudflare adaptation (2026-11-02).** Loading is not authorization separates broad automatic discovery from explicit authorization for costly workflows, using security-audit as the in-workspace example. The new authoring check is not yet run; historical accuracy results do not certify it.
 
 - **Reference type, not discipline type** — it constrains how concepts are *written*, not how an agent behaves at runtime, so the test rule's pressure-scenario requirement doesn't apply. Its test is accuracy: blocks must stay faithful to their sources (see tests/).

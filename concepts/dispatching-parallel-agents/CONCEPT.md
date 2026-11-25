@@ -10,6 +10,8 @@ Model-invoked coordination pattern for splitting independent investigations or r
 
 ## Design decisions
 
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety and Verification rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder.
+
 - **Coordination, not abdication.** Parallel agents accelerate independent domains; the parent still scopes prompts, reviews outputs, checks conflicts, and verifies the combined result.
 - **Independence gate.** The body is strict about not parallelizing related failures or shared-state edits, because parallelism can amplify confusion.
 - **Pi-compatible.** Upstream Task-tool examples are translated to a generic subagent packet usable with Pi `subagent`, Claude Code, or another harness.

@@ -7,7 +7,7 @@ description: Use when executing a written implementation plan in the current ses
 
 A controller executes a plan by giving each task to a fresh implementer agent, then running spec-compliance and code-quality review before moving on.
 
-Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) at preflight and completion; include guarded pytest, targeted tests and shared full-suite evidence in every implementer/reviewer packet. Why: fresh agents cannot infer shared storage ownership.
+At preflight, run the machine's storage health check if one exists, and stop and report on critical or unknown health; at completion, prove each worker's commits are in `HEAD` (ancestor or patch-equivalent) and record that proof before removing worktrees or branches. Every implementer/reviewer packet says: run pytest through the guarded test runner the project's or machine's instructions name, never with a custom `--basetemp`; make scratch folders with `mktemp -d`, never under `/tmp`; run targeted tests only and reuse the shared full-suite evidence. The `agent-kernel` concept's Storage safety section holds the full rule, when loaded. Why: fresh agents cannot infer shared storage ownership.
 
 ## Use when
 

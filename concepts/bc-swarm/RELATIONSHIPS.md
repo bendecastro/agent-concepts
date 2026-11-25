@@ -8,11 +8,15 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Outgoing
 
 - depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
+  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `tdd`'s contract — required, when worker and review packets for code changes, and parent commits.
   Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit.
+  Source: [body/SKILL.md](body/SKILL.md#what-every-child-packet-adds)
+
+- loads `tdd` — required, when worker and review packets for code changes.
+  Packets carry tdd's Test levels rules; the body names the skill instead of linking into its folder.
   Source: [body/SKILL.md](body/SKILL.md#what-every-child-packet-adds)
 
 ## Incoming

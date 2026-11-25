@@ -36,12 +36,15 @@
       "prd-drafting"
     ],
     "bc-reflect": [],
-    "bc-swarm": [],
+    "bc-swarm": [
+      "tdd"
+    ],
     "bc-wiki-maintain": [],
     "bc-work-sync": [],
     "brainstorming": [],
     "code-review": [
-      "codebase-docs"
+      "codebase-docs",
+      "tdd"
     ],
     "codebase-design": [],
     "codebase-docs": [

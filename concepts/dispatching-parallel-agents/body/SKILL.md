@@ -7,7 +7,7 @@ description: Use when there are two or more independent investigations, reviews,
 
 Dispatch one fresh agent per independent problem domain. Parallelism is useful only when the domains do not depend on each other and agents will not edit or rely on the same mutable state.
 
-Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before dispatch/isolation; pass guarded pytest and [Verification](../../agent-kernel/body/AGENT-KERNEL.md#verification) targeted-test limits in packets and record integration/cleanup proof. Why: parallel checks multiply disk use.
+Before dispatch or worktree isolation, run the machine's storage health check if one exists, and stop and report on critical or unknown health. Put in each packet: run pytest through the guarded test runner the project's or machine's instructions name, never with a custom `--basetemp`; make scratch folders with `mktemp -d`, never under `/tmp`; run targeted tests only, never the full suite or gate. After integrating, prove each worker's commits are in `HEAD` (ancestor or patch-equivalent) and record that proof before removing its worktree or branch. The `agent-kernel` concept's Storage safety and Verification sections hold the full rules, when loaded. Why: parallel checks multiply disk use.
 
 ## Use when
 

@@ -10,6 +10,8 @@ User-invoked completion workflow for choosing what to do with a finished develop
 
 ## Design decisions
 
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety and Verification rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder.
+
 - **Menu after evidence.** The upstream starts with test verification; this port also respects local publish policy and never treats PR/push as default.
 - **Destructive option isolated.** Discard requires explicit confirmation and is framed as destructive, aligning with local safety rules.
 - **Cleanup only when owned.** Worktree cleanup is provenance-based and never applied to harness-owned workspaces.

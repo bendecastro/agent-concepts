@@ -203,6 +203,35 @@ def lint_inline_paths(issues: list[Issue]) -> None:
                 issues.append(Issue("ERROR", f"broken inline path in {rel(md)}: {ref}"))
 
 
+# Installers copy each skill's body alone, so a link from one concept's body
+# into another concept's folder breaks on install. Name the other skill instead.
+RELATIVE_INLINE_PATH = re.compile(r"`(\.\.?/[^`\s]+)`")
+
+
+def lint_cross_concept_links(issues: list[Issue], root: Path | None = None) -> None:
+    root = root or ROOT
+    concepts = (root / "concepts").resolve()
+    for md in sorted((root / "concepts").glob("*/body/**/*.md")):
+        owner = md.relative_to(root / "concepts").parts[0]
+        text = read(md)
+        refs = markdown_links(text) + RELATIVE_INLINE_PATH.findall(strip_fenced_code(text))
+        for ref in refs:
+            target = ref.split("#", 1)[0]
+            if not target or re.match(r"^[a-z]+:", target) or target.startswith(("/", "~")):
+                continue
+            resolved = (md.parent / target).resolve()
+            try:
+                into = resolved.relative_to(concepts).parts
+            except ValueError:
+                continue
+            if into and into[0] != owner:
+                issues.append(Issue(
+                    "ERROR",
+                    f"cross-concept link in {md.relative_to(root)}: {ref} "
+                    "(installers copy each skill alone; name the skill instead)",
+                ))
+
+
 def lint_concepts(issues: list[Issue], index: str) -> None:
     concept_dirs = {p.name for p in (ROOT / "concepts").iterdir() if p.is_dir()} if (ROOT / "concepts").exists() else set()
     indexed = concept_names_from_index(index)
@@ -763,6 +792,7 @@ def main() -> int:
     lint_root(issues)
     lint_links(issues)
     lint_inline_paths(issues)
+    lint_cross_concept_links(issues)
     lint_concepts(issues, index)
     lint_status(issues)
     lint_status_doc(issues)

@@ -10,6 +10,8 @@ Model-invoked workspace-isolation discipline for feature work, plan execution, a
 
 ## Design decisions
 
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder.
+
 - **Harness-first.** The upstream skill warns against fighting native worktree tools; this port preserves that and names Pi subagent/worktree isolation as a possible native mechanism.
 - **Consent and dirty-repo safety.** Local CONFIG instructions make dirty workspaces common, so the body asks before creating isolation unless the user or harness already requested it.
 - **No cleanup ownership confusion.** The concept distinguishes agent-created worktrees from harness/user-owned workspaces.

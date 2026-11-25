@@ -47,7 +47,7 @@ workflow. Run that workflow (fan-out, file creation, external actions) only on a
 request for it. If the request is ambiguous, ask one focused question before starting.
 ```
 
-Why: broad descriptions auto-trigger on ordinary questions; loading must not silently authorize costly workflows. From Cloudflare’s security-audit-skill; see [security-audit](../../security-audit/body/SKILL.md#choose-the-mode-before-acting) for the in-workspace example. An explicit workflow request does not bypass its action-specific safety controls.
+Why: broad descriptions auto-trigger on ordinary questions; loading must not silently authorize costly workflows. From Cloudflare’s security-audit-skill; see the `security-audit` skill, section Choose the mode before acting, for the in-workspace example. An explicit workflow request does not bypass its action-specific safety controls.
 
 ## Standing instruction files (always-loaded context)
 

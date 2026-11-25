@@ -26,7 +26,7 @@ For metric-bearing work only, load and follow `bc-autoresearch-loop` after GREEN
 
 When the change alters behavior that a README, an existing `docs/` page, an architecture page, or contract-stating JSDoc already describes, update that owning page in the same diff and follow the repo-available `codebase-docs` for placement. Do not invent a new `docs/` tree, do not restate a contract that already has a home, and do not narrate this issue in a documentation page — the acceptance matrix records what the slice did, and a docs page that narrates a change is stale the moment the next one lands. A repository that keeps no documentation for this surface needs none written to satisfy this rule.
 
-Follow [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety): run pytest through the guarded test runner the project's or machine's agent instructions name (with the selected interpreter for uv/venv projects), never custom `--basetemp`. Why: worker test roots must be owned and bounded.
+Storage safety: run pytest through the guarded test runner the project's or machine's agent instructions name (with the selected interpreter for uv/venv projects), never custom `--basetemp`; make scratch folders with `mktemp -d`, never under `/tmp`; tests you write delete what they create, even on failure. The `agent-kernel` concept's Storage safety section holds the full rule, when loaded. Why: worker test roots must be owned and bounded.
 
 Preserve the driver's baseline cache. Run targeted tests/checks while editing and record commands, outcomes, failing IDs, and concise baseline deltas. Do not run the full project suite; final landing validation belongs to the driver.
 
@@ -41,7 +41,7 @@ Before handoff:
 - inspect `git status`, changed files, and `git diff <base-sha>` for scope;
 - ensure no file is staged and no unrelated artifact is present;
 - write requested validation evidence outside the project worktree.
-- fill in tdd's [Test levels block](../../tdd/body/SKILL.md#test-levels) (L1, L2, L3, one choice per line); the driver's gate rejects a handoff without it.
+- fill in the Test levels block from the `tdd` skill (section Test levels) (L1, L2, L3, one choice per line); the driver's gate rejects a handoff without it.
 
 Return:
 

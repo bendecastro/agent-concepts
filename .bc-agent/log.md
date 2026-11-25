@@ -2047,3 +2047,6 @@ Added `scripts/public_skills.py` and `lint.py --write-public-skills`, generating
 
 ## [2026-11-25] implement | 024 contributor installer
 `deploy-local-skills.py` now skips and reports a symlink that does not point at a concept body it deploys (this repo's `concepts/` or the private concepts folder), instead of replacing it. `--uninstall` (with `--dry-run`, `--harness`) removes only its own links, aliases included. Six tests in `scripts/tests/test_deploy_local_skills.py`; README options line updated.
+
+## [2026-11-25] implement | 024 name references
+Bodies no longer link into other concepts: tdd/security-audit links became name references (new loads edges bc-swarm/code-review -> tdd), kernel Storage safety/Verification links became short inline rules naming agent-kernel. New lint ERROR rejects cross-concept body links.

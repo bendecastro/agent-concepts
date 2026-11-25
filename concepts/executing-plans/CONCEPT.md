@@ -10,6 +10,8 @@ Model-invoked inline executor for a written implementation plan when the user wa
 
 ## Design decisions
 
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety and Verification rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder.
+
 - **Critical review first.** A plan is not blindly executed; the agent checks for blockers, ambiguity, and unsafe branch state before changing code.
 - **Inline fallback.** Existing `bc-pipeline-to-done` is the AFK/GitHub queue executor and `subagent-driven-development` handles fresh-agent task execution; this concept is for direct execution in the current session.
 - **Stop on real blockers.** The upstream stop rules are preserved because guessing during plan execution compounds errors.

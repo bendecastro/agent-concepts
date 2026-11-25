@@ -9,4 +9,4 @@ After a green TDD cycle (all tests passing), look for:
 - **Primitive obsession** → introduce value objects.
 - **Existing code** the new code reveals as problematic.
 
-Run affected targeted tests after each refactor step; use guarded pytest and share full-suite evidence per [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety). Why: refactoring needs fast feedback, not repeated full suites. **Never refactor while RED** — get to green first; the passing tests are what make refactoring safe.
+Run affected targeted tests after each refactor step; run pytest through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`), and share full-suite evidence rather than re-running the suite. The `agent-kernel` concept's Storage safety section holds the full rule, when loaded. Why: refactoring needs fast feedback, not repeated full suites. **Never refactor while RED** — get to green first; the passing tests are what make refactoring safe.

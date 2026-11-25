@@ -8,7 +8,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Outgoing
 
 - depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
+  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - loads `codebase-docs` — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
@@ -21,6 +21,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 - depends on `tdd`'s contract — required, when Standards review of new or changed tests.
   Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage, and checks new test files against tdd’s Test layout norms.
+  Source: [body/SKILL.md](body/SKILL.md#2-review-independently)
+
+- loads `tdd` — required, when reviewing tests, the Test levels block or a Level 3 proof.
+  Spec and Standards review apply tdd's Test levels, Tests that lie, Test layout and formal.md; the body names the skill instead of linking into its folder.
   Source: [body/SKILL.md](body/SKILL.md#2-review-independently)
 
 ## Incoming

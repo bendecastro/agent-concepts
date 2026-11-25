@@ -36,7 +36,7 @@ The workflow is harness-agnostic. It launches three jobs, each a fresh subagent 
 
 If `~/.config/agent-concepts/overlays/bc-pipeline-to-done.md` exists, read it for which roles and models do each job. Without it, use fresh subagents that meet those limits; example Pi profiles are in [examples/agents/](examples/agents/README.md). Set model effort explicitly per this contract. Because the jobs do not inherit the broad skill catalog, pass the worker disciplines explicitly (`minimal-solution-ladder` on every implementation packet, plus `tdd`, `diagnosing-bugs`, and/or `bc-autoresearch-loop` where applicable); auditor and reviewer jobs get none up front: [review-contract.md](review-contract.md) gives the reviewer the `codebase-design` vocabulary and says when to load `codebase-docs`. Bound each read-only auditor/reviewer to four assistant turns and 12 tool calls; mutation-capable workers receive narrow packets and are never arbitrarily interrupted mid-write. Use the configured compact tool descriptions, set top-level `artifacts:false` or an external artifact/session root (including resumed runs), and keep outputs outside unit worktrees. These are economy controls, not permission to weaken correctness gates.
 
-Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before full baseline/landing suites, worktree creation and multi-worker launch; include guarded pytest in packets and record landing proof in the run manifest before releasing integrated worktrees/branches. Why: unattended loops multiply storage leaks.
+Before full baseline/landing suites, worktree creation and multi-worker launch, run the machine's storage health check if one exists, and stop and report on critical or unknown health. Include in packets: run pytest through the guarded test runner the project's or machine's instructions name, never with a custom `--basetemp`, and make scratch folders with `mktemp -d`, never under `/tmp`. Before releasing an integrated worktree or branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that landing proof in the run manifest. The `agent-kernel` concept's Storage safety section holds the full rule, when loaded. Why: unattended loops multiply storage leaks.
 
 ## Claim before work
 
@@ -122,7 +122,7 @@ When it returns `READY_FOR_REVIEW`, the driver—not a model reviewer—must det
 - targeted validation passed and the baseline delta is explicit;
 - no files are staged and no unrelated files are present;
 - validation evidence and raw logs are outside the worktree.
-- the handoff contains tdd's [Test levels block](../../tdd/body/SKILL.md#test-levels) with a non-empty L1, L2 and L3 line; a missing or empty block fails the gate. Whether each line is true is the Spec reviewer's audit, not the gate's.
+- the handoff contains the Test levels block from the `tdd` skill (section Test levels) with a non-empty L1, L2 and L3 line; a missing or empty block fails the gate. Whether each line is true is the Spec reviewer's audit, not the gate's.
 
 A passed gate materializes the round's review packet once, outside every worktree: `packet.json` (base SHA, worktree, issue ref, round, `diff_sha256`, axis scope, acceptance-matrix→file map), `diff.patch`, `changed-files.txt`, `acceptance-matrix.json`, `validation.json`, and on re-review `findings-prior.json`. Reviewers consume these paths instead of re-deriving status and diff, and `diff_sha256` is the identity that standing approvals bind to. A gate rejection escalates the issue to tier 2 permanently.
 

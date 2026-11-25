@@ -8,7 +8,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Outgoing
 
 - depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
+  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-pipeline-to-done`'s contract — required, when recording property fail-first evidence inside a drain.
@@ -45,12 +45,20 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit.
   Source: [bc-swarm/body/SKILL.md](../bc-swarm/body/SKILL.md#what-every-child-packet-adds)
 
+- incoming from [bc-swarm](../bc-swarm/RELATIONSHIPS.md): loads this concept — required, when worker and review packets for code changes.
+  Packets carry tdd's Test levels rules; the body names the skill instead of linking into its folder.
+  Source: [bc-swarm/body/SKILL.md](../bc-swarm/body/SKILL.md#what-every-child-packet-adds)
+
 - incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Spec review of property-based tests, the Test levels block, or a Level 3 proof.
   Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical.
   Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)
 
 - incoming from [code-review](../code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when Standards review of new or changed tests.
   Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage, and checks new test files against tdd’s Test layout norms.
+  Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)
+
+- incoming from [code-review](../code-review/RELATIONSHIPS.md): loads this concept — required, when reviewing tests, the Test levels block or a Level 3 proof.
+  Spec and Standards review apply tdd's Test levels, Tests that lie, Test layout and formal.md; the body names the skill instead of linking into its folder.
   Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)
 
 - incoming from [find-bugs](../find-bugs/RELATIONSHIPS.md): adapts this concept — required, when every reproduction.
