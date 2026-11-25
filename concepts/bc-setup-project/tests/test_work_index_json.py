@@ -85,7 +85,7 @@ def test_json_prints_every_item_with_header_steps_and_outcome(tmp_path):
             {"text": "Third step\nspans two lines.", "checked": True, "notes": None, "review": [], "gate": []},
         ],
         "outcome": "<Filled when the item is finished or dropped.>",
-        "history": [], "held_by": None,
+        "history": [], "held_by": None, "spent": None,
     }
     done, dropped = data["items"][2], data["items"][3]
     assert done["path"] == "3-done/2026-11/001-base/plan.md"

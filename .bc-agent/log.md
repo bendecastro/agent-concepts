@@ -2132,3 +2132,6 @@ npx example switched to Cursor (`-a cursor`, untested, flagged) at the owner's r
 
 ## [2026-11-25] implement | 025 Review and Gate lines step
 `Review:`/`Gate:` step-Notes lines: parser, `--json` per-step lists, `--check` warnings in `work_index.py`; writers in the scaffolded rules, drain work-item source and review contract. Pressure on Terra low: baseline 0, with rule 3/3.
+
+## [2026-11-25] implement | 025 Spent line step
+`work_spent.py` beside `work_index.py` estimates an item's time, tokens and cost from Pi, Claude Code and Codex session files; `--json` parses the `Spent:` line, `--check` warns; scaffolded rules and the drain finish paste it. Pressure on Terra low: baseline 0, with rule 3/3.

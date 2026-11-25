@@ -65,7 +65,9 @@ When the owner answers, write the answer into the item, next to the step it sett
 
 ## Finish
 
-After the last step lands, finish the item in one commit: fill its `## Outcome` with what landed (the step commits and the validation; this commit cannot cite its own SHA), remove its `Held by:` line, `git mv` it into the work-done month folder `<YYYY-MM>/` (create it when missing), regenerate the work index, and commit and push as the core's landing does. Then release the claim and worktree.
+After the last step lands, finish the item in one commit: fill its `## Outcome` with what landed (the step commits and the validation; this commit cannot cite its own SHA) and end it with the `Spent:` line, remove its `Held by:` line, `git mv` it into the work-done month folder `<YYYY-MM>/` (create it when missing), regenerate the work index, and commit and push as the core's landing does. Then release the claim and worktree.
+
+The `Spent:` line comes from the spent script beside the work index script: run `python3 .bc-agent/scripts/work_spent.py <item-name>` in the main checkout and paste the line it prints, unchanged, as the last line of `## Outcome`, for example `Spent: 2h 10m active, 3.4M tokens, $5.20 (estimated; pi 3 sessions, claude-code no files, codex 0 sessions; other tools not counted)`. It estimates the item's active time, tokens and cost from the agent tools' session files; never write or adjust the figures yourself. A project without the script gets no `Spent:` line. Why: the owner's dashboard shows what each item cost, and a guessed figure is worse than none.
 
 ## Report
 

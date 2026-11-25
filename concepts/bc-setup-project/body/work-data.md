@@ -31,7 +31,7 @@
 | `outcome` | the text under `## Outcome`, trimmed; `null` when the section is missing or empty (may still be the template placeholder) | best-effort |
 | `history` | folder moves and step ticks, oldest first, from one `git log --follow` on the item file (renames followed); `[]` when the file is uncommitted, outside a git repository or git is missing. Uncommitted moves and ticks are not shown yet | best-effort |
 | `held_by` | the `Held by:` line parsed (below); `null` when the item has none | best-effort |
-| `spent` | the `Spent:` line in the Outcome, parsed | planned |
+| `spent` | the `Spent:` line in the Outcome, parsed (below); `null` when the Outcome has none | best-effort |
 
 ## Header lines (`header`)
 
@@ -92,5 +92,16 @@ Each result is one line in the step's Notes, starting its own line (an indented 
 | `review[].result`, `reviewer`, `date` | the parts of a `Review:` line; all `null` when it does not match the format (`--check` warns) | best-effort |
 | `gate[].result`, `command`, `commit`, `date` | the parts of a `Gate:` line; all `null` when it does not match the format (`--check` warns) | best-effort |
 | `text` (both) | the line after its label, trimmed | best-effort |
+
+## Spent (`spent`)
+
+`Spent: <active time> active, <tokens> tokens, <cost> (estimated; <sources>)` is the last line of a finished item's `## Outcome`, for example `Spent: 2h 10m active, 3.4M tokens, $5.20 (estimated; pi 3 sessions, claude-code no files, codex 0 sessions; other tools not counted)`. The agent that finishes the item pastes it from `python3 .bc-agent/scripts/work_spent.py <item-name>` (`--json` lists the counted sessions).
+
+The script takes the item's active period from its history (first move into `2-active/` to its move out, or now) and counts every session with an entry in that period whose working folder is the project or one of its git worktrees and whose file mentions the item name. Active time sums the gaps between a session's entries in the period, each capped at 15 minutes, so parallel sessions add up. Tokens include cache reads and writes. It reads Pi (`~/.pi/agent/sessions`, with cost), Claude Code (`~/.claude/projects`, tokens only) and Codex (`~/.codex/sessions`, tokens only); `<sources>` gives each tool's session count, or `no files` when its folder is missing, and other tools are not counted. A session that mentions the item only in passing is counted; a worktree removed before the item closes is not matched. `WORK_SPENT_PI_SESSIONS`, `WORK_SPENT_CLAUDE_SESSIONS` and `WORK_SPENT_CODEX_SESSIONS` override the folders.
+
+| Field | Source | Reliability |
+|---|---|---|
+| `active`, `tokens`, `cost`, `sources` | the parts of the line as written (`1h 5m`, `2.5M`, `$3.10` or `cost unknown`, the text after `estimated; `); all `null` when it does not match the format (`--check` warns) | best-effort |
+| `text` | the line after its label, trimmed | best-effort |
 
 Why the records live in work-item lines and git history rather than in a separate store: the agent-concepts repository's decision record `docs/decisions/0003-work-data-lives-in-work-item-lines.md`.

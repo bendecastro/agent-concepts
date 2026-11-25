@@ -139,6 +139,7 @@ CODE_FILES = {
     '.bc-agent/templates/adr.md',
     '.bc-agent/templates/work-item.md',
     '.bc-agent/scripts/work_index.py',
+    '.bc-agent/scripts/work_spent.py',
     'glossary.md',
     'work/0-ideas.md',
     'work/README.md',
@@ -835,3 +836,16 @@ def test_work_item_rules_record_review_and_gate_lines(tmp_path, archetype):
     keep = text.split('## Keep it current')[1].split('\n## ')[0]
     row = next(line for line in keep.splitlines() if line.startswith('| Finish a step |'))
     assert '`Review:`' in row and '`Gate:`' in row
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_work_item_rules_paste_the_spent_line_when_finishing(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    spent = Path(__file__).resolve().parents[1] / 'body/work_spent.py'
+    assert (root / '.bc-agent/scripts/work_spent.py').read_bytes() == spent.read_bytes()
+    text = (root / '.bc-agent/AGENTS.md').read_text()
+    rule = ' '.join(text[text.index('## Work items'):text.index('## Keep it current')].split())
+    assert 'python3 .bc-agent/scripts/work_spent.py <item-name>' in rule and 'last line of `## Outcome`' in rule
+    keep = text.split('## Keep it current')[1].split('\n## ')[0]
+    row = next(line for line in keep.splitlines() if line.startswith('| Finish or drop an item |'))
+    assert '`Spent:` line' in row and 'work_spent.py' in row

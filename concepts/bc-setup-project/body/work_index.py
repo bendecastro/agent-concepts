@@ -84,6 +84,8 @@ HELD_BY = re.compile(r"^(\S+) (\S+) since (\d{4}-\d{2}-\d{2} \d{2}:\d{2} (?:UTC|
 STEP = re.compile(r"^- \[([ xX])\] ?(.*)$")
 REVIEW = re.compile(r"^(approved|changes requested) by (\S.*?) (\d{4}-\d{2}-\d{2})$")
 GATE = re.compile(r"^(pass|fail) (\S.*?) at ([0-9a-f]{7,40}) (\d{4}-\d{2}-\d{2})$")
+SPENT = re.compile(r"^(.+?) active, (.+?) tokens, (.+?) \(estimated; (.+)\)$")
+SPENT_FORM = "Spent: <active time> active, <tokens> tokens, <cost> (estimated; <sources>)"
 STEP_RECORDS = {"review": ("Review", REVIEW, ("result", "reviewer", "date"),
                            "Review: <approved | changes requested> by <reviewer> <YYYY-MM-DD>"),
                 "gate": ("Gate", GATE, ("result", "command", "commit", "date"),
@@ -505,6 +507,31 @@ def held_by_data(path: Path, text: str | None) -> dict | None:
     return {"tool": tool, "session": session, "since": since, "committed": committed, "age_seconds": age}
 
 
+def spent_data(outcome: str | None) -> dict | None:
+    """The `Spent:` line in the Outcome, parsed; fields `None` when it is malformed."""
+    found = re.search(r"^Spent:[ \t]*(.*)$", outcome or "", re.M)
+    if not found:
+        return None
+    match = SPENT.match(found.group(1).strip())
+    fields = match.groups() if match else (None,) * 4
+    return {**dict(zip(("active", "tokens", "cost", "sources"), fields)), "text": found.group(1).strip()}
+
+
+def spent_warnings(work: Path) -> list[str]:
+    """`--check` warnings: a malformed `Spent:` line in any item's Outcome."""
+    warnings = []
+    for folder in ["1-planned", "2-active"] + archive_folders(work, "3-done") + archive_folders(work, "4-dropped"):
+        for name in entries(work, folder):
+            rel = f"{folder}/{name}/plan.md" if (work / folder / name).is_dir() else f"{folder}/{name}"
+            if not (work / rel).is_file():
+                continue
+            data = spent_data(section(read_text(work / rel), "Outcome"))
+            if data and data["active"] is None:
+                warnings.append(f"{rel} has a malformed Spent: line; write `{SPENT_FORM}` "
+                                f"(python3 .bc-agent/scripts/work_spent.py <item> prints it)")
+    return warnings
+
+
 def held_by_warnings(work: Path) -> list[str]:
     """`--check` warnings: a malformed `Held by:` line, or one left in a done or dropped item."""
     warnings = []
@@ -540,6 +567,7 @@ def item_data(work: Path, folder: str, name: str) -> dict:
         "title": title.group(1).strip() if title else None, "header": header, "steps": parse_steps(text),
         "outcome": outcome.strip() or None if outcome is not None else None,
         "history": item_history(work / rel), "held_by": held_by_data(work / rel, header["held_by"]),
+        "spent": spent_data(outcome),
     }
 
 
@@ -578,7 +606,7 @@ def main(argv: list[str]) -> int:
             project = work.resolve().parent
             for rel in unplanned_items(work):
                 print(f"work-index: warning: {rel} has no Planned: line; run bc-plan-to-pipeline on it before it moves to 2-active/", file=sys.stderr)
-            for warning in held_by_warnings(work) + step_record_warnings(work):
+            for warning in held_by_warnings(work) + step_record_warnings(work) + spent_warnings(work):
                 print(f"work-index: warning: {warning}", file=sys.stderr)
             errors = owner_order_errors(work, read_stages(project), read_top_kinds(project))
             if updated != readme:

@@ -28,7 +28,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/source-work-items.md](body/source-work-items.md#eligibility)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
-  Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines, writes and removes the `Held by:` line and records the steps' `Review:` and `Gate:` lines in the formats of its work-item rules, and reruns the work index script.
+  Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines, writes and removes the `Held by:` line and records the steps' `Review:` and `Gate:` lines in the formats of its work-item rules, pastes the `Spent:` line its spent script prints when finishing an item, and reruns the work index script.
   Source: [CONCEPT.md](CONCEPT.md)
 
 - depends on `bc-tdd`'s contract — required, when deterministic pre-review gate.

@@ -1244,6 +1244,7 @@ def render(text: str, slug: str, date: str) -> str:
 VISIBLE_ARCHETYPES = frozenset({"code", "ops", "hybrid"})
 WORK_STATUS_FOLDERS = ("1-planned", "2-active", "3-done", "4-dropped")
 WORK_INDEX_SCRIPT = Path(__file__).resolve().with_name("work_index.py")
+WORK_SPENT_SCRIPT = Path(__file__).resolve().with_name("work_spent.py")
 WHERE_THINGS_GO_HEADING = "## Where things go"
 # Stable role keys of the "Where things go" table. Other skills look a role up
 # with parse_where_things_go() instead of assuming a path.
@@ -1492,6 +1493,14 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   malformed line.
   Why: the owner's dashboard shows whether each step passed review and the gate; a result left in
   chat or a run log is lost.
+- **A `Spent:` line records what a finished item cost.** When you finish an item, run
+  `python3 .bc-agent/scripts/work_spent.py <item-name>` and paste the line it prints, unchanged, as
+  the last line of `## Outcome`, for example `Spent: 2h 10m active, 3.4M tokens, $5.20 (estimated;
+  pi 3 sessions, claude-code no files, codex 0 sessions; other tools not counted)`. The script
+  estimates it from the agent tools' own session files for the item's active period; never write
+  or adjust the figures yourself, and paste a line that says `0m` or `cost unknown` as it is.
+  `--json` lists the sessions it counted. `work_index.py --check` warns about a malformed line.
+  Why: the owner's dashboard shows what each item cost; a guessed figure is worse than none.
 - **Several items may be active at once.**
 - **GitHub issues are optional.** When one exists, record its number on the item's `Issue:`
   line. Why: the folders are the source of truth; an issue is a pointer to them.
@@ -1514,7 +1523,7 @@ Top kinds: security, bug, build, architecture
 | Resume an active item | Replace or add the `Held by:` line with your own in your first commit on it. |
 | Stop working on an item | Even with steps left: remove your `Held by:` line and commit. |
 | Finish a step | Check its box in the item, add its `Review:` and `Gate:` lines (see Work items), then run `python3 .bc-agent/scripts/work_index.py`. |
-| Finish or drop an item | Only once the work is on the main branch and its full checks passed (until then the remaining review fixes and checks stay unticked steps; a worker in a worktree never moves an item). Fill `## Outcome`, remove the `Held by:` line, then `git mv` it to its done month folder or to `4-dropped/`, then run `python3 .bc-agent/scripts/work_index.py`. |
+| Finish or drop an item | Only once the work is on the main branch and its full checks passed (until then the remaining review fixes and checks stay unticked steps; a worker in a worktree never moves an item). Fill `## Outcome`, ending a finished item's with the `Spent:` line `python3 .bc-agent/scripts/work_spent.py <item-name>` prints (see Work items), remove the `Held by:` line, then `git mv` it to its done month folder or to `4-dropped/`, then run `python3 .bc-agent/scripts/work_index.py`. |
 | Make an architectural or hard-to-reverse choice | Add a numbered record under `docs/decisions/` from [templates/adr.md](templates/adr.md). |
 | Investigate something at length | Write it up in a dated folder under `docs/research/`. |
 __OPS_KEEP_CURRENT__| Sharpen domain vocabulary | Update `glossary.md`. |
@@ -1890,6 +1899,7 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         "templates/adr.md": TPL_ADR + "\n<!-- Save as `docs/decisions/NNNN-<slug>.md`. -->\n",
         "templates/work-item.md": WORK_ITEM,
         "scripts/work_index.py": WORK_INDEX_SCRIPT.read_text(),
+        "scripts/work_spent.py": WORK_SPENT_SCRIPT.read_text(),
     }
     root_files: dict[str, str] = {
         "glossary.md": GLOSSARY,
