@@ -135,7 +135,7 @@ user's word.
   and this is an adaptation of external work, like `grilling` and
   `code-review`.
 
-- **Work items and ledgers by role (2026-11-12).** The Goal names the work item by number and folder, and the Ledgers homes are looked up by role (work-active, decisions, research, glossary, ideas, work-dropped) in the project's "Where things go" table, with the earlier homes (`glossary.md`, ADRs, `.bc-agent/out-of-scope/`, `docs/changes/`, `docs/specs/`) as the fallback for projects without one. The `.handoffs/` store and the guard block are not layout roles and are unchanged. Check 8 in `tests/pressure-handoff.md` covers it and has not been run. Source: [visible-layout plan](../../docs/plans/implemented/bc-init-agent-visible-layout.md), decision 20. The table and its role keys are the contract of `bc-init-agent` (see its `CONCEPT.md`, "Interface").
+- **Work items and ledgers by role (2026-11-12).** The Goal names the work item by number and folder, and the Ledgers homes are looked up by role (work-active, decisions, research, glossary, ideas, work-dropped) in the project's "Where things go" table, with the earlier homes (`glossary.md`, ADRs, `.bc-agent/out-of-scope/`, `docs/changes/`, `docs/specs/`) as the fallback for projects without one. The `.handoffs/` store and the guard block are not layout roles and are unchanged. Check 8 in `tests/pressure-handoff.md` covers it and has not been run. Source: [visible-layout plan](../../work/3-done/2026-11/018-bc-init-agent-visible-layout.md), decision 20. The table and its role keys are the contract of `bc-init-agent` (see its `CONCEPT.md`, "Interface").
 
 ## Provenance
 
@@ -194,5 +194,5 @@ Deployed 2026-08-21 via `scripts/deploy-local-skills.py`:
 - Pi: `~/.pi/agent/skills/handoff` → `body/`.
 - Claude Code: `~/.claude/skills/handoff` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../docs/harnesses.md`. Codex
+Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`. Codex
 and Gemini are the reason the guard header travels inside the document.

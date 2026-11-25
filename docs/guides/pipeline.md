@@ -75,4 +75,4 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 - **Tiered review gates landings** — the deterministic gate runs first; tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec + Standards), with one-way escalation on gate rejection or a Critical finding.
 - **Optional bounded improvement** — after a slice is GREEN, the per-issue agent runs `bc-autoresearch-loop` *only when* the issue targets a measurable metric; a change is kept only if correctness still holds and the metric provably improves, else reverted. No metric ⇒ skipped (never optimize blind).
 
-See `plans/implemented/bc-grill-to-ship-loop.md` for the design rationale and `concepts/<name>/CONCEPT.md` for each skill's decisions.
+See [`work/3-done/2026-08/011-bc-grill-to-ship-loop.md`](../../work/3-done/2026-08/011-bc-grill-to-ship-loop.md) for the design rationale and `concepts/<name>/CONCEPT.md` for each skill's decisions.

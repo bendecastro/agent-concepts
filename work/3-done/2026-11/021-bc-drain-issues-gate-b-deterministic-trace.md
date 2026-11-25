@@ -1,7 +1,12 @@
 # bc-drain-issues Deterministic Gate B Trace Implementation Plan
 
+Why: Probabilistic Gate B fixtures could not reliably produce the two Standards-only reworks needed to measure v3's selective re-review.
+Done when: A deterministic S0 → S1 → S2 trace with locked v2/v3 dispatch and a result verifier exists, and Gate A covers exact-hash selective review.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/active (migrated in 002-docs-reshape)
+
 Date: 2026-07-27
-Status: active
 Verification: fixture self-test and Gate A complete; real model A/B outstanding
 
 **Goal:** Replace the probabilistic deployment Gate B workload with a deterministic two-rework Standards trace while preserving the existing natural fixture as ecological pressure evidence.
@@ -22,7 +27,7 @@ Verification: fixture self-test and Gate A complete; real model A/B outstanding
 - `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/run-trace.py` — deterministic fixture/controller self-test and real-result verifier; never fabricates model usage.
 - `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/README.md` — deployment benchmark contract and pass criteria.
 - `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/AGENT-PROMPT.md` — thin real-model runner handoff.
-- `docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md` — this implementation record.
+- `work/3-done/2026-11/021-bc-drain-issues-gate-b-deterministic-trace.md` — this implementation record.
 
 ### Modify
 
@@ -30,7 +35,7 @@ Verification: fixture self-test and Gate A complete; real model A/B outstanding
 - `concepts/bc-drain-issues/tests/pressure-drain.md` — designate the trace as deployment Gate B and the existing fixture as ecological pressure.
 - `concepts/bc-drain-issues/tests/fixtures/contested-gate-b/README.md` — relabel the natural fixture without changing historical criteria.
 - `concepts/bc-drain-issues/tests/fixtures/contested-gate-b/AGENT-PROMPT.md` — stop treating natural pressure as canonical deployment Gate B.
-- `docs/plans/active/bc-drain-issues-v3-review-economy.md` — record deterministic trace and final hash-sync interpretation.
+- `work/1-planned/008-bc-drain-issues-v3-review-economy.md` — record deterministic trace and final hash-sync interpretation.
 - `concepts/bc-drain-issues/CONCEPT.md` — record benchmark/ecological split and outstanding real A/B.
 - `index.md` and `log.md` — update canonical status/bookkeeping.
 
@@ -74,3 +79,7 @@ Verification: fixture self-test and Gate A complete; real model A/B outstanding
 - [x] Validate Python syntax, JSON outputs, `git diff --check`, and final status/diff.
 - [x] Commit only agent-authored files with a concise test/design message.
 - [x] Run `scripts/publish-check.py`; push only when authorized.
+
+## Outcome
+
+Implemented: every task in this plan is done. The real same-model A/B it enables is still open in `008-bc-drain-issues-v3-review-economy`.

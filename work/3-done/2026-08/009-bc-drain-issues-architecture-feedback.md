@@ -1,7 +1,12 @@
 # bc-drain-issues Architecture Feedback Implementation Plan
 
+Why: Drain runs found structural problems but had no way to hand them to architecture review.
+Done when: A bounded post-landing architecture observation reaches a declared inbox and a human-gated `improve-codebase-architecture` handoff.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-08-20
-Status: implemented
 Verification: Gate A 28/28; clean current-body consumer fixtures PASS; workspace lint has only pre-existing deployed-but-never-run errors; completed 2026-08-20
 
 **Goal:** Carry one optional, evidence-backed structural observation from a landed drain issue into the project's architecture-review inbox without adding a drain phase, child dispatch, or review authority.
@@ -28,7 +33,7 @@ Verification: Gate A 28/28; clean current-body consumer fixtures PASS; workspace
 
 ### Create
 
-- `docs/plans/implemented/bc-drain-issues-architecture-feedback.md` — this implementation plan.
+- `work/3-done/2026-08/009-bc-drain-issues-architecture-feedback.md` — this implementation plan.
 
 ### Modify
 
@@ -39,7 +44,7 @@ Verification: Gate A 28/28; clean current-body consumer fixtures PASS; workspace
 - `concepts/improve-codebase-architecture/tests/scenario.md` — pressure-test stale, shape-only, concrete, missing-inbox, and implementation-pressure cases.
 - `concepts/bc-drain-issues/CONCEPT.md` — record the feedback-edge design, provenance, and test status.
 - `concepts/improve-codebase-architecture/CONCEPT.md` — record the inbox as an optional verified input and update test status after the scenario run.
-- `docs/pipeline.md` — show the bounded drain → observation inbox → human architecture review edge without describing it as an autonomous loop phase.
+- `docs/guides/pipeline.md` — show the bounded drain → observation inbox → human architecture review edge without describing it as an autonomous loop phase.
 - `index.md` — update the two concept summaries after implementation.
 - `log.md` — record the implementation and test operations.
 - `docs/status.md` — regenerate with `python3 scripts/lint.py --write-status`; never hand-edit it.
@@ -140,7 +145,7 @@ git commit -m "Read drain architecture observations before review"
 
 1. Update both `CONCEPT.md` files with the decision that the drain produces bounded, non-authoritative observations and the architecture skill verifies them before exploration.
 2. Add provenance links between the two concepts and the existing project-context/architecture-runway conventions. Record why the observation inbox is distinct from the run-local recurring-defect packet tune and why it does not belong in the review contract.
-3. Update `docs/pipeline.md` to show:
+3. Update `docs/guides/pipeline.md` to show:
    `bc-plan-to-issues → bc-drain-issues → optional observation inbox → human-gated improve-codebase-architecture → bc-plan-to-issues`.
    Label the return edge as feedback, not an autonomous phase or a direct issue-creation path.
 4. Update `index.md` and append the required dated `log.md` entry. Regenerate `docs/status.md` from concept frontmatter.
@@ -160,7 +165,7 @@ Expected results: the drain pressure runner passes all checks, lint reports no s
 **Commit**
 
 ```bash
-git add concepts/bc-drain-issues/CONCEPT.md concepts/improve-codebase-architecture/CONCEPT.md docs/pipeline.md index.md log.md docs/status.md
+git add concepts/bc-drain-issues/CONCEPT.md concepts/improve-codebase-architecture/CONCEPT.md docs/guides/pipeline.md index.md log.md docs/status.md
 git commit -m "Document the drain architecture feedback edge"
 ```
 
@@ -175,3 +180,7 @@ git commit -m "Document the drain architecture feedback edge"
 - [x] Consumed observations receive a durable disposition when a declared/available persistence sink permits it, and terminal matches are not repeatedly rediscovered.
 - [x] Existing Gate A checks and the architecture pressure scenario pass; workspace lint has no new drift and retains only the pre-existing deployed-but-never-run errors plus existing deployed-symlink warnings.
 - [x] Both concept frontmatters and `docs/status.md` state the actual test result; the pressure runs hold, while Gate B remains outstanding and no model-token result is claimed.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

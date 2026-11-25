@@ -1,7 +1,12 @@
 # Council bug hunt — `council-chain`, `find-bugs`, `bc-council-find-bugs`
 
+Why: There was no council-backed bug hunt.
+Done when: `council-chain`, `find-bugs` and `bc-council-find-bugs` exist and are tested.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-11-24
-Status: implemented
 Decided in a grilling session with the owner (every answer was the recommended option).
 
 ## Goal
@@ -63,7 +68,7 @@ with a failing test, so a fix starts from proof rather than from a vote.
 
 ## Later chains (owner, 2026-11-24)
 
-After this plan: `bc-council-audit-security` and `bc-council-challenge-plan`; see [council-later-chains](council-later-chains.md).
+After this plan: `bc-council-audit-security` and `bc-council-challenge-plan`; see [council-later-chains](020-council-later-chains.md).
 Dropped: a council diagnose chain and a council change review.
 
 ## Execution record
@@ -74,3 +79,7 @@ Dropped: a council diagnose chain and a council change review.
 - 2026-11-24: step 2 merged (`find-bugs`; 2 of 2 with-skill runs pass, 9/10 planted each, no decoy).
 - 2026-11-24: step 3 merged undeployed (`bc-council-find-bugs`; Terra-low test failed, see its results).
 - 2026-11-24: step 3 dry-run test 2/2, deployed. First real hunt with the council is the live test.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

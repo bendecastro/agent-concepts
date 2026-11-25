@@ -171,4 +171,4 @@ relative symlinks verified to resolve:
 - Pi: `~/.pi/agent/skills/unslop` → `body/`.
 - Claude Code: `~/.claude/skills/unslop` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.

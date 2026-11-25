@@ -1,7 +1,12 @@
 # Plan: the grill→ship loop (`bc-plan-to-issues` → `bc-drain-issues`)
 
+Why: There was no reliable path from a grilled plan to shipped, reviewed code.
+Done when: The planner and executor skills (`bc-plan-to-issues`, now `bc-plan-to-pipeline`, and `bc-drain-issues`) exist and pass pressure tests.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-06-20
-Status: implemented
 Verification: both `bc-` orchestrators were pressure-tested on 2026-07-16.
 
 Build plan for the missing **plan→execute loop** that ties the workshop pipeline
@@ -148,3 +153,7 @@ Concept-name uniqueness: `bc-plan-to-issues`, `bc-drain-issues`, `prd-drafting`,
 `plan-slicing` — all new, dash-case, unique. When authoring the instruction bodies,
 adapt blocks from `concepts/prompting-agents/body/SKILL.md` rather than inventing
 phrasing (per AGENTS.md Implement/Update).
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

@@ -29,4 +29,4 @@ Model-invoked **reference vocabulary** for designing deep modules: a lot of beha
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/codebase-design` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.

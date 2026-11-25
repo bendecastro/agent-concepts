@@ -1,7 +1,12 @@
 # bc-drain-issues v2 — token-efficient bounded rework
 
+Why: V1 drains spent too many child tokens and could lose work between rework rounds.
+Done when: V2 bounded rework passes Gate A and a same-model Gate B with fewer child tokens than v1.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-07-25
-Status: implemented
 Verification: pressure-tested and deployed 2026-07-25
 
 ## Problem
@@ -279,3 +284,7 @@ Required outcomes:
 
 The skill is not deployed until the updated discipline pressure tests pass and the A/B result
 meets the 500k gate.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

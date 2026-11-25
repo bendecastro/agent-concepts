@@ -66,7 +66,7 @@ How that is enforced here:
 - No advisor is given a peer's report. In Pass 2 each receives only a curated
   challenge packet of disputed claims, attributed to "another advisor".
 - Advisors are told not to read this folder
-  (`docs/research/wiki-autonomy-council/`), because the supervisor's brief,
+  (`docs/research/2026-08-27-wiki-autonomy-council/`), because the supervisor's brief,
   claim matrix, and memo accumulate here during the run. The rest of the
   repository, including `docs/research/`, is available to them.
 

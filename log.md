@@ -1968,3 +1968,6 @@ Ignored `.handoffs/`, `.hypothesis/` and `.gemini/`; lint skips git-ignored Mark
 
 ## [2026-11-25] implement | fix CI-only gate failures
 CI (ubuntu-26.04) failed three bc-wiki-maintain batch-runner tests: the test stub's `\n` broke `dedent`, so its shebang was indented and it ran under `/bin/sh` (dash there, bash locally). Fixed the stub; `run-promotion-all.sh` now requires GNU `timeout` (prefers `gnutimeout`) because uutils `timeout` leaves a timed-out child's descendants running; CI installs `gnu-coreutils` and fetches full history so the base-commit layout tests stop skipping.
+
+## [2026-11-25] implement | docs reshape (item 002)
+`docs/` now holds a README, `guides/` (bootstrap, harnesses, pipeline, pressure-test harness), `examples/` (private-config templates), `status.md`, and dated `research/<date>-<topic>/` folders. `docs/plans/` is gone: open plans became work items `007-agent-vault-read-path` and `008-bc-drain-issues-v3-review-economy`, finished ones moved to `work/3-done/` as 009–021, and the read-path plan record became research. Lint no longer checks plan lifecycle folders.

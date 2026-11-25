@@ -10,7 +10,7 @@ User-invoked bug hunt over a named area (or a small whole repo). It collects can
 
 ## Design decisions
 
-All from the owner-approved [council bug hunt plan](../../docs/plans/implemented/council-find-bugs.md); numbers below are that plan's decisions.
+All from the owner-approved [council bug hunt plan](../../work/3-done/2026-11/019-council-find-bugs.md); numbers below are that plan's decisions.
 
 - **Standalone parent, council chain later (decision 1).** This skill is the single-agent form. A later `bc-council-find-bugs` chain reuses its candidate block (section 2), reproduction step (3), report (4) and filing (5) unchanged and adds only the council steps; keep those sections self-contained so the chain can point at them.
 - **Bounded scope (decision 2).** A named area, or the whole repo only when small; `--since <ref>` narrows to changed code.
@@ -24,7 +24,7 @@ All from the owner-approved [council bug hunt plan](../../docs/plans/implemented
 
 ## Provenance
 
-- [Council bug hunt plan](../../docs/plans/implemented/council-find-bugs.md) — owner decisions 1–11 and build order.
+- [Council bug hunt plan](../../work/3-done/2026-11/019-council-find-bugs.md) — owner decisions 1–11 and build order.
 - [improve-codebase-architecture](../improve-codebase-architecture/body/SKILL.md) — report-then-owner-decides flow, filing roles, `Kind:`/`Source:` lines, main-checkout numbering, no-pipeline fallback.
 - [diagnosing-bugs](../diagnosing-bugs/body/SKILL.md) — reproduction-first stance; owns diagnosing and fixing a bug once filed.
 - [security-audit](../security-audit/body/SKILL.md) — hand-off target for security findings.

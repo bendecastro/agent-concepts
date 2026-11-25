@@ -1,7 +1,12 @@
 # `bc-wiki-maintain` — project-vault maintenance
 
+Why: Project wikis rotted without anyone noticing, and nothing maintained them.
+Done when: `bc-wiki-maintain` diagnoses rot, runs scheduled promotion and lint across the live vaults, and passes its pressure tests.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-08-22
-Status: implemented
 Verification: deployed 2026-08-23; pressure 4/4 (2026-08-22) and 5/5 after the Gate 2 split (2026-08-25); 25 stdlib regression tests; `bc-wiki-lint.service` passes 8/8 vaults; completed 2026-08-25
 
 This is a design record, not current truth. It states the problem as it stood on 2026-08-22 and
@@ -231,3 +236,7 @@ checks that would most strengthen the evidence.
 - The user's existing personal wiki lint and consolidation scripts — prior art for broken-link, orphan, index-drift, and semantic-maintenance checks.
 - [`bc-init-agent`](../../../concepts/bc-init-agent/CONCEPT.md) — additive project-vault scaffold, archetypes, and canonical skill-map pattern.
 - [`qmd`](../../../concepts/qmd/CONCEPT.md) — global search/index overlay and collection registration model.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

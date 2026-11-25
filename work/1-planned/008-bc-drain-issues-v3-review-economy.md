@@ -1,10 +1,23 @@
-# bc-drain-issues v3 — review-phase economy
+# bc-drain-issues v3 — review-phase economy: run the real Gate B A/B
 
-Date: 2026-07-26
-Status: active
-Verification: Gate A 22/22; deterministic Gate B harness ready; real model A/B outstanding
+Why: v3's review-economy rules are live in the drain skill, but their token win is unmeasured; the deterministic Gate B harness exists and the real same-model/medium A/B has never run.
+Done when: the v2/v3 A/B on `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/` has run with real Pi lifecycle token evidence, `run-trace.py --verify-result` accepts both results, and the outcome (v3 fewer child tokens with no correctness regression, or not) is recorded in `concepts/bc-drain-issues/CONCEPT.md` and its test status.
+Stage: later
+Blocked by: nothing
+Kind: tests
+Source: docs/plans/active (migrated in 002-docs-reshape)
 
-## Problem
+## Steps
+
+Already done: the four v3 levers are in the canonical body, Gate A covers them (checks 18–22, 22/22 at the time; the runner has since grown to 31 checks), and the deterministic trace harness landed (`021-bc-drain-issues-gate-b-deterministic-trace`).
+
+- [ ] Run the v2 and v3 arms of the deterministic trace with the same model at medium effort, following the trace's `AGENT-PROMPT.md`.
+- [ ] Verify both result envelopes with `run-trace.py --verify-result` (dispatch topology, two-rework fidelity, final exact-hash approvals, token evidence).
+- [ ] Record the result under `concepts/bc-drain-issues/tests/results/`, update the Gate B lines in `CONCEPT.md` and its status frontmatter, and regenerate `docs/status.md`.
+
+## Design (original plan, 2026-07-26)
+
+### Problem
 
 v2 cut per-issue child tokens 12.2% and fixed the lost-work failure, but it left the review
 phases structurally unchanged: every review round dispatches two independent axes, and every
@@ -28,7 +41,7 @@ Three specific wastes:
 3. **Uniform axis count.** A two-file bug fix and a systemd compatibility replacement both pay
    for two independent reviewers, even though the driver has already classified their risk.
 
-## Goals
+### Goals
 
 - Reduce review-phase child tokens, especially on contested issues, without weakening the
   invariant that **both review axes must stand approved on the exact landed diff**.
@@ -36,7 +49,7 @@ Three specific wastes:
 - Make every economy decision deterministic and driver-owned, so it is auditable rather than a
   model's discretionary shortcut.
 
-## Non-goals
+### Non-goals
 
 - Do not reduce the number of *rework* rounds or relax the deterministic pre-review gate.
 - Do not let a reviewer decide its own scope, tier, or budget.
@@ -44,7 +57,7 @@ Three specific wastes:
 - Do not trade a review round for a rework round; the rework worker is the more expensive unit
   (Gate B: 50,425 vs ~30,000 per reviewer).
 
-## A. Standing approval and selective re-review
+### A. Standing approval and selective re-review
 
 Replace "re-dispatch both axes every round" with **standing approval plus deterministic
 invalidation**. This generalizes a rule v2 already has: a rebase that changes the reviewed diff
@@ -76,7 +89,7 @@ an untouched axis is not asked the same question at every intermediate state.
 The "cannot be mapped deterministically" row is the fail-safe: ambiguity costs a review, never
 an assumption.
 
-## B. Driver-materialized review packet
+### B. Driver-materialized review packet
 
 The driver writes the packet once per round, outside the worktree, under the run artifact root:
 
@@ -99,7 +112,7 @@ bounded reproduction of section D. The packet is authoritative and complete; a m
 deterministic, and `diff_sha256` is the identity that standing approvals bind to. One artifact
 therefore serves economy, determinism, and auditability at once.
 
-## C. Risk-tiered axis count
+### C. Risk-tiered axis count
 
 The driver already classifies risk before the claim. Extend that classification into a recorded
 **review tier**:
@@ -126,7 +139,7 @@ Tier 1 is bounded by escalation rules, so it cannot become the silent default:
 This is the only lever that genuinely trades independence, and the only one whose value depends
 on the escalation rules actually firing — Gate A must attack them directly.
 
-## D. Reproduction budget gated on a formed finding
+### D. Reproduction budget gated on a formed finding
 
 v2 permits "bounded targeted reproduction", which reads as licence for exploratory command runs.
 v3 gates it: a reviewer may run reproduction commands **only after** it has a specific candidate
@@ -136,14 +149,14 @@ existing turn/tool caps.
 
 Refuted hypotheses are simply dropped, not reported; the output schema is unchanged.
 
-## Rejected alternative
+### Rejected alternative
 
 **Serial Spec→Standards with early exit.** It would skip the Standards run whenever Spec
 rejects, but it loses batched findings, so one rework round becomes two. The rework worker cost
 more than either reviewer in Gate B, so this trades a cheap unit for an expensive one. Reviews
 stay parallel.
 
-## Expected effect
+### Expected effect
 
 On a clean issue the win is small: lever B's removed derivation plus lever C's single reviewer,
 roughly 24k–37k saved out of 277k. On a contested three-round issue the win is structural —
@@ -152,7 +165,7 @@ measured on a **deterministic contested trace**; a clean or probabilistically si
 fixture cannot see its main effect. The original natural contested fixture remains ecological
 pressure for autonomous discovery, not the deployment gate.
 
-## Canonical implementation changes
+### Canonical implementation changes
 
 - `body/review-contract.md` — standing approval/invalidation table, packet paths and
   no-re-derivation rule, tier-1 combined-reviewer contract and schema addition, gated
@@ -164,7 +177,7 @@ pressure for autonomous discovery, not the deployment gate.
 - `tests/pressure-drain.md` and `tests/run-pressure.py` — new checks 18–21 and extensions to
   checks 6, 7, and 16.
 
-## Acceptance
+### Acceptance
 
 Gate A (deterministic) must show:
 
@@ -183,3 +196,6 @@ Spec hash-sync. It must show fewer child tokens than v2 with no correctness regr
 axes standing approved on the exact S2 hash. The 2026-07-27 natural contested attempt remains
 invalid ecological evidence after only one rework. v3 is not token-validated until the real
 trace A/B runs.
+
+## Outcome
+

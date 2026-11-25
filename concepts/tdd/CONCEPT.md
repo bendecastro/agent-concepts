@@ -72,7 +72,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/tdd` → relative symlink to `body/`. Discipline skill — deploy after the pressure run holds (or flag as deployed-pending-test in index).
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.
 
 ## Storage safety contract
 

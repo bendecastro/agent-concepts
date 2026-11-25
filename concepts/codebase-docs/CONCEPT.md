@@ -106,4 +106,4 @@ symlinks verified to resolve to `body/`:
 - Pi: `~/.pi/agent/skills/codebase-docs`
 - Claude Code: `~/.claude/skills/codebase-docs`
 
-Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.

@@ -76,7 +76,7 @@ The kernel is deployed only as harness-specific deltas so far. Two rules govern 
 1. **Inject only the delta.** Before deploying to a harness, diff the kernel against what that harness's built-in system prompt already covers, and inject only what's missing. Rich harnesses (Claude Code in particular) already cover most of this kernel natively — deploying the full kernel there duplicates instructions at permanent token cost and risks phrasing conflicts. **Anti-recommended for Claude Code.** The kernel earns its keep in thin harnesses: bare API loops, grok-cli-style agents, minimal CLI wrappers.
 2. **Reference, don't paste.** Prefer include/reference mechanisms so the harness reads the canonical body. Where a harness only supports pasted text, the pasted copy must open with a marker line — `<!-- DERIVED from <agent-concepts>/concepts/agent-kernel/body/AGENT-KERNEL.md @ YYYY-MM-DD — do not edit here -->` — and lint/deploy passes refresh stale copies from canon. Private derived copies may intentionally keep owner-specific tool names when refreshing from the public kernel. Why: an unmarked pasted copy is exactly the hand-edited derived output the canon gate exists to prevent.
 
-Candidate targets, in order of expected value: thin custom harnesses → Pi (if its base prompt is thin; check first) → Codex durable AGENTS.md layer (delta only). When deployed, record the exact harness file or include path here, in `../../docs/harnesses.md`, and `../../index.md`.
+Candidate targets, in order of expected value: thin custom harnesses → Pi (if its base prompt is thin; check first) → Codex durable AGENTS.md layer (delta only). When deployed, record the exact harness file or include path here, in `../../docs/guides/harnesses.md`, and `../../index.md`.
 
 ## Deploys
 

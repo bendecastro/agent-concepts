@@ -46,4 +46,4 @@ Deployed 2026-08-17 via `scripts/deploy-local-skills.py`, all three relative sym
 - Pi: `~/.pi/agent/skills/minimal-solution-ladder` → `body/`.
 - Claude Code: `~/.claude/skills/minimal-solution-ladder` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.

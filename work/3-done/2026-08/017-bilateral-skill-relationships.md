@@ -1,7 +1,12 @@
 # Bilateral skill relationships
 
+Why: A skill could not see which other skills depend on it.
+Done when: One forward relationship graph exists with generated per-concept views showing incoming callers, checked by lint.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-08-30
-Status: implemented
 Verification: Tasks 1-7 run. 39 fixture tests green, `python3 scripts/lint.py` exits 0, seven generated views match the rendering contract, and the Task 5 rule held a pressure run in a clean clone (2026-08-30).
 
 **Goal:** Declare each skill-to-skill relationship once in a machine-checked graph and generate per-concept views so a maintainer opening any concept sees both its outgoing relationships and its incoming callers.
@@ -25,7 +30,7 @@ The current problem is that composition facts are scattered between prose, conce
 - `AGENTS.md:24-29` defines `concepts/<name>/` as the canonical layer: `CONCEPT.md` holds design and provenance, while `body/` is "the actual instruction content an agent consumes."
 - **concepts/bc-drain-issues/body/execute-issue.md:23** says: "For feature/enhancement work, load and follow the repo-available `tdd` discipline."
 - **concepts/bc-drain-issues/body/SKILL.md:18** says minimal roles "do not inherit the broad skill catalog" and that worker disciplines must be passed explicitly.
-- **docs/plans/implemented/portability.md:43-49** records: "No `requires:` key in `SKILL.md` frontmatter. No harness reads it, so it would imply enforcement that does not exist."
+- **work/3-done/2026-08/012-portability.md:43-49** records: "No `requires:` key in `SKILL.md` frontmatter. No harness reads it, so it would imply enforcement that does not exist."
 - **concepts/prompting-agents/body/SKILL.md:18** requires the smallest set of high-signal tokens and progressive disclosure; automatic transitive loading would work against that constraint.
 - **scripts/lint.py:262-370** provides the existing generated-output pattern: a source of truth is rendered deterministically, and stale output fails normal lint.
 
@@ -288,7 +293,7 @@ At minimum, test:
 - Do not infer relationships from every prose mention, slash command, provenance citation, or example.
 - Do not replace source-body execution clauses, worker packets, acceptance matrices, or caller authority with graph metadata.
 - Do not redesign invocation classes, dependency conditions into an executable policy language, or deployment topology in v1.
-- Do not create a second pipeline composition map that duplicates `docs/pipeline.md`.
+- Do not create a second pipeline composition map that duplicates `docs/guides/pipeline.md`.
 - Do not treat a generated relationship view as an authorization or approval record.
 - Do not require transitive impact traversal until direct views demonstrate a real gap.
 
@@ -427,7 +432,7 @@ Task 5 changes an always-loaded instruction, so it gets a pressure run before th
 - [ ] Append the implementation and verification record below, including which relationships were deliberately excluded from the pilot and why (negative `plain-language` boundaries, optional retrieval/tooling paths, provenance-only mentions).
 - [ ] State plainly that no skill body changed, that runtime loading and authority are unchanged, and that structural lint is schema evidence rather than proof the graph is complete.
 - [ ] Confirm no `CONCEPT.md` status frontmatter needed a change, since this plan adds metadata and tooling rather than concept behavior.
-- [ ] Set `Status: implemented` and update the `Verification:` line, then `git mv docs/plans/active/bilateral-skill-relationships.md docs/plans/implemented/bilateral-skill-relationships.md`.
+- [ ] Set `Status: implemented` and update the `Verification:` line, then `git mv docs/plans/active/bilateral-skill-relationships.md work/3-done/2026-08/017-bilateral-skill-relationships.md`.
 - [ ] Move this plan's `index.md` entry from Active to Implemented and append the `log.md` entries for the implement, test, and lint operations.
 - [ ] Run `python3 scripts/lint.py`; expect no ERROR line.
 - [ ] `git add -A && git commit -m "implement | bilateral skill relationship graph"`
@@ -520,3 +525,7 @@ were left out on purpose:
   classification.
 - **No `CONCEPT.md` status frontmatter needed a change**, since this plan adds metadata and tooling
   rather than concept behavior.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

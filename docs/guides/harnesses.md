@@ -67,7 +67,7 @@ Use `~` rather than hardcoded home paths; this directory syncs across machines.
 - Grok/Composer auto-invocation pressure runs for discipline concepts (discovery verified 2026-07-04; gate adherence not yet re-tested on these harnesses).
 - Muse user-rules load was installed 2026-11-02; a live session recap/`git` clash pressure run has not been done.
 
-Copied kernel-delta drift (including Muse) is WARN-only in lint when pairs are configured in private `~/.config/agent-concepts/kernel-copies.json`; see [example](kernel-copies.example.json).
-Project skill-copy drift is also WARN-only when repositories are configured in private `~/.config/agent-concepts/skill-copies.json`; see [example](skill-copies.example.json) for plain paths and per-repo `intentional` skill-name allowlists. Comparisons prefer private overrides over public canon and ignore OS/Syncthing debris.
+Copied kernel-delta drift (including Muse) is WARN-only in lint when pairs are configured in private `~/.config/agent-concepts/kernel-copies.json`; see [example](../examples/kernel-copies.example.json).
+Project skill-copy drift is also WARN-only when repositories are configured in private `~/.config/agent-concepts/skill-copies.json`; see [example](../examples/skill-copies.example.json) for plain paths and per-repo `intentional` skill-name allowlists. Comparisons prefer private overrides over public canon and ignore OS/Syncthing debris.
 
-UI design deploy targets and current status: [ui-design](../concepts/ui-design/CONCEPT.md).
+UI design deploy targets and current status: [ui-design](../../concepts/ui-design/CONCEPT.md).

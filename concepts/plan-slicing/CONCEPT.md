@@ -36,4 +36,4 @@ Model-invoked discipline that breaks a plan/spec/PRD into independently-grabbabl
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/plan-slicing` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.

@@ -17,7 +17,7 @@ Where a different family still clearly earns its place: **grading and evaluation
 
 ## Evidence
 
-Numbers marked ✔ were checked against fetched source text (Song and Zhang by targeted text search, the others also by an independent reviewer); the rest come from the researcher reports in [evidence/](cross-provider-code-review/evidence/) and are unverified.
+Numbers marked ✔ were checked against fetched source text (Song and Zhang by targeted text search, the others also by an independent reviewer); the rest come from the researcher reports in [evidence/](evidence/) and are unverified.
 
 ### Why the assumption was plausible
 
@@ -61,5 +61,5 @@ Global agent instructions now require fresh context, withheld builder reasoning,
 
 ## Evidence files
 
-- [evidence/self-preference-and-self-correction.md](cross-provider-code-review/evidence/self-preference-and-self-correction.md) — researcher report: self-preference, self-correction, sycophancy.
-- [evidence/correlated-errors-and-cross-model-review.md](cross-provider-code-review/evidence/correlated-errors-and-cross-model-review.md) — researcher report: correlated errors, debate/ensembles, code-review studies, lever comparison.
+- [evidence/self-preference-and-self-correction.md](evidence/self-preference-and-self-correction.md) — researcher report: self-preference, self-correction, sycophancy.
+- [evidence/correlated-errors-and-cross-model-review.md](evidence/correlated-errors-and-cross-model-review.md) — researcher report: correlated errors, debate/ensembles, code-review studies, lever comparison.

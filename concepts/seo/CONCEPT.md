@@ -33,4 +33,4 @@ A two-part SEO operator: `body/SKILL.md` is the site-wide strategist (diagnosis-
 - Claude Code: `~/.claude/skills/seo` → relative symlink to `body/` (deployed 2026-06-12 after pressure test).
 - Pi: `~/.pi/agent/skills/seo` → relative symlink to `body/` (deployed 2026-06-12 after narrowing trigger and adding citation map).
 - The project B work repo currently loads its own copies; migrating its `.claude/agents/` wrappers to point at this canon is a candidate follow-up — decide in that repo, not here.
-- Other harnesses: manual bootstrap (`../../docs/bootstrap.md`); `IMAGE-SEO.md` additionally requires a vision-capable model.
+- Other harnesses: manual bootstrap (`../../docs/guides/bootstrap.md`); `IMAGE-SEO.md` additionally requires a vision-capable model.

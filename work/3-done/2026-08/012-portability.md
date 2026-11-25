@@ -1,7 +1,12 @@
 # Portability — make the workspace installable by anyone
 
+Why: The workspace assumed one person's machine, so a stranger could not install it.
+Done when: A fresh clone installs and deploys, checked by `scripts/portability-check.py`.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-08-02
-Status: implemented
 Verification: passing `scripts/portability-check.py` (2026-08-02)
 
 ## Problem
@@ -21,7 +26,7 @@ Beyond that:
 - `~/.config/agent-concepts/publish.yaml` is one person's authorization rules for five private repos, shipped as
   if it were canon.
 - 85 references outside `log.md` point at `<private-config>/...`, including the copy-paste bootstrap
-  prompts in `docs/harnesses.md` that a new user is told to run.
+  prompts in `docs/guides/harnesses.md` that a new user is told to run.
 - Five concepts are environment-coupled (`qmd`, `omarchy`, `herdr`, `notebooklm`, `last30days`)
   with nothing marking them as such.
 - `index.md` embeds deploy status inside each description, so a stranger reads about someone
@@ -87,7 +92,7 @@ Settled by grilling, 2026-08-02.
 4. **Concept labelling** — record requirements in `CONCEPT.md` for `qmd`, `omarchy`, `herdr`,
    `notebooklm`, `last30days`.
 5. **Deploy script** — fix the stale docstring; add `--skip`.
-6. **Docs** — `<agent-concepts>` placeholder through `docs/harnesses.md` and `docs/bootstrap.md`; install
+6. **Docs** — `<agent-concepts>` placeholder through `docs/guides/harnesses.md` and `docs/guides/bootstrap.md`; install
    section in `README.md`; `AGENTS.md` documenting the personal-layer seam.
 7. **Portability smoke test** — clone to a scratch directory under a fake `HOME`, run
    `deploy --dry-run` and `lint`, and assert both pass with no reference to the author's tree.
@@ -117,3 +122,7 @@ On 2026-08-20, the `notebooklm` and `last30days` reference concepts and their ra
 provenance snapshots moved to the private `~/.config/agent-concepts/` layer. This
 supersedes resolved design item 3 for those two environment-coupled concepts; the
 public catalog continues to label the remaining environment-coupled concepts.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

@@ -1,7 +1,12 @@
 # Agent vault write/read contract — make the scaffold and the maintainer agree
 
+Why: The vault scaffold and the vault maintainer disagreed about how knowledge is written and read.
+Done when: The generator, detector, runner and live vaults share one write/read contract (W1–W7).
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-08-29, updated 2026-08-30
-Status: implemented
 Verification: W1–W7 done; W5 promotion pressure **PASS 5/5** after one Gate 3 tune and contradiction rerun (2026-08-30)
 
 ## Progress (2026-08-30)
@@ -33,7 +38,7 @@ and produced a null result. W5's runner prompt is present and the post-`6794ee3`
 pressure is **PASS 5/5** after one targeted tune and contradiction rerun. The original 2026-08-29 findings
 below remain as baseline rationale and are labeled where their current state changed.
 
-Successor to [`agent-vault-read-path.md`](../active/agent-vault-read-path.md), which resolved the retrieval
+Successor to [`agent-vault-read-path`](../../../docs/research/2026-08-27-agent-vault-read-path/README.md), which resolved the retrieval
 question and left the write side untouched. That plan proved ranked search beats every
 alternative it measured: 171 median output tokens at a 0.15 miss rate, against 4,543 for an
 `index.md` load (`agent-vault-read-path.md:346-348`). This plan addresses the other half of the
@@ -349,3 +354,7 @@ is live.
 - If a vault crosses a few hundred pages, the growth non-goals reopen as a measured question.
 - If the owner decides the scaffold's page taxonomy should change — the open decision the
   predecessor deferred at `:441-465` — W1 should land inside that change rather than before it.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

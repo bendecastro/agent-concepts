@@ -29,4 +29,4 @@ User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbab
 
 - Canonical deploy: `to-tickets`; the former `to-issues` compatibility alias was removed 2026-09-27.
 - Claude Code: `~/.claude/skills/to-tickets` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.

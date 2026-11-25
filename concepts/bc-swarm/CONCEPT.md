@@ -190,7 +190,7 @@ the results.
 - Pi's `pi-subagents` extension skill — tool surface for `runs.all`,
   per-child `output`, `children.list`, `subagent_wait`, and async retention.
 - **Worktree durability incident and harness lifecycle, 2026-08-25.** The
-  [implemented plan](../../docs/plans/implemented/bc-swarm-worktree-durability.md) records
+  [implemented plan](../../work/3-done/2026-08/013-bc-swarm-worktree-durability.md) records
   the lost `d400723f-5e9a-4320-ac68-eb876b319957` worker result and recovery via
   the artifact's commit line. The accompanying teardown evidence and the
   installed `pi-subagents` 0.56.0 sources (`src/runs/shared/worktree.ts` and
@@ -338,7 +338,7 @@ Deployed 2026-08-18 via `scripts/deploy-local-skills.py` after the 4/5 pass:
 - Pi: `~/.pi/agent/skills/bc-swarm` → `body/`.
 - Claude Code: `~/.claude/skills/bc-swarm` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.
 
 **Dependency:** the thin-parent guard's consumption half lives in
 `agent-kernel`. Until that delta is propagated to a harness's always-on

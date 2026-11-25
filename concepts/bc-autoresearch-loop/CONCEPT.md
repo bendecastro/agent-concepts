@@ -30,7 +30,7 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 
 - Claude Code: `~/.claude/skills/bc-autoresearch-loop` → relative symlink to `body/` (deployed 2026-06-21).
 - Pi: `~/.agents/skills/bc-autoresearch-loop` and `~/.pi/agent/skills/bc-autoresearch-loop` → relative symlinks to `body/` (deployed 2026-06-21).
-- Other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+- Other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.
 
 ## Storage safety contract
 

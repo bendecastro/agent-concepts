@@ -8,7 +8,7 @@ The core bet resolved **against the design this plan proposed** — see
 [W4 result](#w4-result--what-the-benchmark-actually-decided).
 
 Derived from the council memo at
-[`docs/research/wiki-autonomy-council/03-memo.md`](../../research/wiki-autonomy-council/03-memo.md),
+[`docs/research/2026-08-27-wiki-autonomy-council/03-memo.md`](../2026-08-27-wiki-autonomy-council/03-memo.md),
 then widened on 2026-08-27 when the owner named the actual goal: **a lot of knowledge the agent
 can traverse cheaply and effectively.** Two concepts serve that goal and neither does it alone.
 `bc-init-agent` decides the shape knowledge is written into; `bc-wiki-maintain` keeps that shape
@@ -619,7 +619,7 @@ Blocked on W4 clearing its bars:
   `health-check-`, or `semantic-consolidation-`, and `_meta` is not in `SKIP_DIR_NAMES`. A
   `_meta/catalog.sync-conflict-*.md` would enter the page walk and be counted as a page. This is
   a direct argument for the cache location in decision 1, and **it is not hypothetical**: during
-  the session that wrote this plan, `docs/research/wiki-autonomy-council/` was renamed to `…_1`
+  the session that wrote this plan, `docs/research/2026-08-27-wiki-autonomy-council/` was renamed to `…_1`
   mid-session by exactly this class of event.
 - ~~**`mtime` reliability under Syncthing is unverified.**~~ **Retired: nothing is cached, so
   nothing needs invalidating.** This risk existed only because the design stored derived state.

@@ -1,7 +1,7 @@
 # Index
 
-Machine-local copied kernel deltas: lint warns on drift using optional private `~/.config/agent-concepts/kernel-copies.json`; see [example](docs/kernel-copies.example.json).
-Personal terms: lint errors or warns on hits from an optional private `~/.config/agent-concepts/personal-terms.txt`; see [example](docs/personal-terms.example.txt).
+Machine-local copied kernel deltas: lint warns on drift using optional private `~/.config/agent-concepts/kernel-copies.json`; see [example](docs/examples/kernel-copies.example.json).
+Personal terms: lint errors or warns on hits from an optional private `~/.config/agent-concepts/personal-terms.txt`; see [example](docs/examples/personal-terms.example.txt).
 
 ## Concepts
 
@@ -57,7 +57,7 @@ with the frontmatter, the frontmatter is correct.
 
 ### Workshop pipeline (Matt Pocock AI Engineer Workshop, ingested 2026-06-20)
 
-The plan→execute lifecycle as composable skills. User-invoked orchestrators coordinate; model-invoked disciplines hold reusable behavior. The two `bc-` orchestrators wire the lifecycle into one **loop** — `bc-plan-to-pipeline` (interactive planning front) → `bc-drain-issues` (AFK execution); see [docs/pipeline.md](docs/pipeline.md). `to-spec` and `to-tickets` remain available for one-phase-at-a-time publication; use `grilling` + `domain-modeling` directly for a standalone interview and domain capture. The former `grill-me` wrapper and compatibility aliases were removed 2026-09-27.
+The plan→execute lifecycle as composable skills. User-invoked orchestrators coordinate; model-invoked disciplines hold reusable behavior. The two `bc-` orchestrators wire the lifecycle into one **loop** — `bc-plan-to-pipeline` (interactive planning front) → `bc-drain-issues` (AFK execution); see [docs/guides/pipeline.md](docs/guides/pipeline.md). `to-spec` and `to-tickets` remain available for one-phase-at-a-time publication; use `grilling` + `domain-modeling` directly for a standalone interview and domain capture. The former `grill-me` wrapper and compatibility aliases were removed 2026-09-27.
 
 - [find-bugs](concepts/find-bugs/CONCEPT.md) — hunt an area for wrong behaviour, prove candidates with failing tests on a hunt branch, report Confirmed/Suspected and file `Kind: bug` items after the owner answers. Deployed.
 - [grilling](concepts/grilling/CONCEPT.md) — model-invoked relentless one-question-at-a-time interview loop; pair directly with `domain-modeling` when decisions and vocabulary should persist. Numbered answer options with one marked recommendation, numeric replies + free-text override, codebase-first, one-at-a-time gate with refuted excuses + a principled **bulk-delegation exit** (resolve all remaining branches with recommendations in one pass on blanket delegation); thin decision-first utterance clause (not a `plain-language` load).
@@ -118,9 +118,9 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 ## Tooling
 
 - [docs/status.md](docs/status.md) — generated board: what needs testing, what is undeployed, what passes with a known gap. Regenerate with `python3 scripts/lint.py --write-status`; lint fails while it is stale.
-- [docs/harnesses.md](docs/harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
-- [docs/pressure-test-harness.md](docs/pressure-test-harness.md) — Pi harness for pressure tests: hiding deployed skills, flags, headless pitfalls, dry runs for skills that launch subagents.
-- [docs/bootstrap.md](docs/bootstrap.md) — copy/paste session prompts per harness.
+- [docs/guides/harnesses.md](docs/guides/harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
+- [docs/guides/pressure-test-harness.md](docs/guides/pressure-test-harness.md) — Pi harness for pressure tests: hiding deployed skills, flags, headless pitfalls, dry runs for skills that launch subagents.
+- [docs/guides/bootstrap.md](docs/guides/bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene.
 - [concepts/relationships.json](concepts/relationships.json) — the one home for skill-to-skill relationships, declared once as forward edges and rendered into per-concept `RELATIONSHIPS.md` views carrying both outgoing relationships and incoming callers. Regenerate with `python3 scripts/lint.py --write-relationships`; lint fails while a view is stale. Maintainer metadata for change-impact review, never a runtime loader.
 - [scripts/deploy-local-skills.py](scripts/deploy-local-skills.py) — bulk deploys every local `concepts/*/body/SKILL.md` into relative symlinks under `~/.agents/skills/` (shared bus for Pi, Composer, Grok, OpenCode, and Codex), `~/.pi/agent/skills/`, and `~/.claude/skills/`, all pointing at canonical concept bodies. OpenCode's global `canonical-skill-commands.ts` plugin dynamically exposes the CONFIG-backed bus entries as slash commands.
@@ -128,35 +128,38 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 
 ## Plans
 
-Plan lifecycle is encoded in [docs/plans/README.md](docs/plans/README.md).
+Plans are work items under `work/`; [work/README.md](work/README.md) lists the open ones in order. The entries below are the former `docs/plans/` records.
 
-### Active
+### Open
 
+- [007-agent-vault-read-path](work/1-planned/007-agent-vault-read-path.md) — cheap vault traversal across `bc-init-agent` and `bc-wiki-maintain`. The benchmark resolved it against the plan's own design: ranked search over the vault (stdlib BM25, no stored artifact) beat both the generated catalog it proposed and the `index.md` it meant to replace, so W1 is dropped and the first move is now a keyword search in all eight live vaults. Remaining rollout steps are open; the full plan record is [docs/research/2026-08-27-agent-vault-read-path/](docs/research/2026-08-27-agent-vault-read-path/README.md).
+- [008-bc-drain-issues-v3-review-economy](work/1-planned/008-bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.
 
-- [bc-drain-issues-v3-review-economy.md](docs/plans/active/bc-drain-issues-v3-review-economy.md) — review-phase economy design with the real same-model/medium Gate B A/B still outstanding.
-- [bc-drain-issues-gate-b-deterministic-trace.md](docs/plans/active/bc-drain-issues-gate-b-deterministic-trace.md) — deterministic two-rework Gate B trace and exact-hash approval verification.
-- [bc-init-agent-visible-layout.md](docs/plans/implemented/bc-init-agent-visible-layout.md) — scaffold redesign agreed with the owner: visible `work/` lifecycle folders, knowledge under `docs/`, a per-project layout table that dependent concepts read; W1 scaffold implemented and unit-tested (not pressure-tested); dependent consumers and migration remain.
-- [agent-vault-read-path.md](docs/plans/active/agent-vault-read-path.md) — cheap vault traversal across `bc-init-agent` and `bc-wiki-maintain`. The benchmark resolved it against the plan's own design: ranked search over the vault (stdlib BM25, no stored artifact) beat both the generated catalog it proposed and the `index.md` it meant to replace, so W1 is dropped and the first move is now a keyword search in all eight live vaults.
+### Done
 
-### Implemented
-
-- [agent-vault-write-read-contract.md](docs/plans/implemented/agent-vault-write-read-contract.md) — write/read contract across the generator, detector, runner, and eight live vaults: W1–W7 done, W4 page-kind experiment a null result, W5 promotion pressure **PASS 5/5** after one Gate 3 tune and contradiction rerun.
-- [bilateral-skill-relationships.md](docs/plans/implemented/bilateral-skill-relationships.md) — one authoritative forward relationship graph with generated incoming views, so a callee can see its callers without a hand-maintained reverse list. Shipped with six pilot edges, seven generated views, and a clean pressure run of the upkeep rule on 2026-08-30.
-- [bc-init-agent-wiki-maintain.md](docs/plans/implemented/bc-init-agent-wiki-maintain.md) — `/bc-init-agent` close-out offers to install a per-vault `bc-wiki-maintain` promotion timer after confirm; pressure 4/4 on 2026-08-30.
-- [bc-wiki-maintain.md](docs/plans/implemented/bc-wiki-maintain.md) — project-wiki rot diagnosis (computed vs recorded triggers), the eleven resolved decisions with later supersessions marked, and the record of the eight-vault rollout, the Gate 2 test-drift inversion, and the 5/5 pressure re-run.
-- [bc-swarm-worktree-durability.md](docs/plans/implemented/bc-swarm-worktree-durability.md) — worktree-worker commit identity, guarded handoff/full-range recovery, pre-routing recovery trigger, and the FAIL→PASS pressure record.
-- [bc-grill-to-ship-loop.md](docs/plans/implemented/bc-grill-to-ship-loop.md) — the plan→execute loop design and its planner/executor implementation record.
-- [bc-drain-issues-v2-token-efficiency.md](docs/plans/implemented/bc-drain-issues-v2-token-efficiency.md) — the bounded-rework design shipped after Gate A and Gate B validation.
-- [bc-drain-issues-architecture-feedback.md](docs/plans/implemented/bc-drain-issues-architecture-feedback.md) — the bounded post-landing architecture-observation feedback edge and human-gated consumer handoff.
-- [portability.md](docs/plans/implemented/portability.md) — the portability design and its smoke-test evidence.
+- [021-bc-drain-issues-gate-b-deterministic-trace](work/3-done/2026-11/021-bc-drain-issues-gate-b-deterministic-trace.md) — deterministic two-rework Gate B trace and exact-hash approval verification.
+- [020-council-later-chains](work/3-done/2026-11/020-council-later-chains.md) — design for `bc-council-audit-security` and `bc-council-challenge-plan`, thin chains over `council-chain`.
+- [019-council-find-bugs](work/3-done/2026-11/019-council-find-bugs.md) — design for `council-chain`, `find-bugs` and `bc-council-find-bugs`.
+- [018-bc-init-agent-visible-layout](work/3-done/2026-11/018-bc-init-agent-visible-layout.md) — scaffold redesign agreed with the owner: visible `work/` lifecycle folders, knowledge under `docs/`, a per-project layout table that dependent concepts read; W1 scaffold implemented and unit-tested (not pressure-tested); dependent consumers and migration remain.
+- [017-bilateral-skill-relationships](work/3-done/2026-08/017-bilateral-skill-relationships.md) — one authoritative forward relationship graph with generated incoming views, so a callee can see its callers without a hand-maintained reverse list. Shipped with six pilot edges, seven generated views, and a clean pressure run of the upkeep rule on 2026-08-30.
+- [016-bc-init-agent-wiki-maintain](work/3-done/2026-08/016-bc-init-agent-wiki-maintain.md) — `/bc-init-agent` close-out offers to install a per-vault `bc-wiki-maintain` promotion timer after confirm; pressure 4/4 on 2026-08-30.
+- [015-agent-vault-write-read-contract](work/3-done/2026-08/015-agent-vault-write-read-contract.md) — write/read contract across the generator, detector, runner, and eight live vaults: W1–W7 done, W4 page-kind experiment a null result, W5 promotion pressure **PASS 5/5** after one Gate 3 tune and contradiction rerun.
+- [014-bc-wiki-maintain](work/3-done/2026-08/014-bc-wiki-maintain.md) — project-wiki rot diagnosis (computed vs recorded triggers), the eleven resolved decisions with later supersessions marked, and the record of the eight-vault rollout, the Gate 2 test-drift inversion, and the 5/5 pressure re-run.
+- [013-bc-swarm-worktree-durability](work/3-done/2026-08/013-bc-swarm-worktree-durability.md) — worktree-worker commit identity, guarded handoff/full-range recovery, pre-routing recovery trigger, and the FAIL→PASS pressure record.
+- [012-portability](work/3-done/2026-08/012-portability.md) — the portability design and its smoke-test evidence.
+- [011-bc-grill-to-ship-loop](work/3-done/2026-08/011-bc-grill-to-ship-loop.md) — the plan→execute loop design and its planner/executor implementation record.
+- [010-bc-drain-issues-v2-token-efficiency](work/3-done/2026-08/010-bc-drain-issues-v2-token-efficiency.md) — the bounded-rework design shipped after Gate A and Gate B validation.
+- [009-bc-drain-issues-architecture-feedback](work/3-done/2026-08/009-bc-drain-issues-architecture-feedback.md) — the bounded post-landing architecture-observation feedback edge and human-gated consumer handoff.
 
 ## Research
 
 Research reports and source evidence live under [docs/research/](docs/research/README.md). The top-level `docs/research/raw/` directory is the to-ingest inbox; `docs/research/raw/ingested/` holds sources whose ideas have been taken up (even partially — picking a couple of ideas counts).
 
-- [cross-provider-code-review.md](docs/research/cross-provider-code-review.md) — research report: whether a fresh code reviewer must come from a different model provider. Answer: second-order hedge; executed checks, withheld builder reasoning, reviewer capability, and a second independent review matter more. Two researcher reports under `evidence/`.
-- [iso-24495-1-operationalization.md](docs/research/iso-24495-1-operationalization.md) — research report on ISO 24495-1 operationalization and related plain-language standards.
-- [wiki-autonomy-council/](docs/research/wiki-autonomy-council/03-memo.md) — three-advisor council on making `bc-wiki-maintain` seamless and automatic while keeping traversal token-cheap. Diagnosis: the write path works and the read path barely exists — 0 broken links but up to 42% orphans, `index.md` alone costs 4,543 tokens in project B, and `qmd query` measured 67.1s. Unanimous resolution is filter-don't-read via a generated catalog. Records three verified defects (scaffolded `map.md` contributes zero graph edges because its targets are code spans; Gate 1 does *not* mechanically block link insertion; `scaffold.py` mints `## __DATE__` headings the detector cannot parse) and the `<owner-wiki>` prior art already achieving 0 orphans under daily unattended maintenance. Brief, claim matrix, supervisor findings, memo, and advisor evidence.
+- [cross-provider-code-review.md](docs/research/2026-10-26-cross-provider-code-review/README.md) — research report: whether a fresh code reviewer must come from a different model provider. Answer: second-order hedge; executed checks, withheld builder reasoning, reviewer capability, and a second independent review matter more. Two researcher reports under `evidence/`.
+- [iso-24495-1-operationalization.md](docs/research/2026-08-17-iso-24495-1-operationalization/README.md) — research report on ISO 24495-1 operationalization and related plain-language standards.
+- [2026-08-27-agent-vault-read-path/](docs/research/2026-08-27-agent-vault-read-path/README.md) — the full read-path plan record (formerly an active plan): problem, resolved decisions, W1–W5, the W4 benchmark result, deferred items and open risks. Open steps live in work item `007-agent-vault-read-path`.
+- [2026-11-10-front-end-design/](docs/research/2026-11-10-front-end-design/brief.md) — front-end design research: brief, principles and agent-skills research, and a UI hill-climb handoff.
+- [wiki-autonomy-council/](docs/research/2026-08-27-wiki-autonomy-council/03-memo.md) — three-advisor council on making `bc-wiki-maintain` seamless and automatic while keeping traversal token-cheap. Diagnosis: the write path works and the read path barely exists — 0 broken links but up to 42% orphans, `index.md` alone costs 4,543 tokens in project B, and `qmd query` measured 67.1s. Unanimous resolution is filter-don't-read via a generated catalog. Records three verified defects (scaffolded `map.md` contributes zero graph edges because its targets are code spans; Gate 1 does *not* mechanically block link insertion; `scaffold.py` mints `## __DATE__` headings the detector cannot parse) and the `<owner-wiki>` prior art already achieving 0 orphans under daily unattended maintenance. Brief, claim matrix, supervisor findings, memo, and advisor evidence.
 
 ### Raw sources
 
@@ -177,7 +180,7 @@ Research reports and source evidence live under [docs/research/](docs/research/R
 - [pocock-skills-upstream/](https://github.com/mattpocock/skills) — captured skill bodies behind Matt Pocock's workshop pipeline (grilling, grill-me, grill-with-docs, to-prd, to-issues, tdd + support files, codebase-design verbatim; domain-modeling summary-only). Ingested → grill-me, grilling, domain-modeling, to-prd, to-issues, tdd, codebase-design concepts (2026-06-20).
 - [pocock-engineering-extensions/](https://github.com/mattpocock/skills) — filed upstream Pocock workflow pieces that complement the bc loop: triage, Agent Briefs, out-of-scope KB, diagnosing-bugs, prototype, improve-codebase-architecture. Ingested → triage, diagnosing-bugs, prototype, improve-codebase-architecture, plus bc loop integration (2026-06-21).
 - [openai-gpt-5-2-prompting-guide.md](https://cookbook.openai.com/examples/gpt-5/gpt-5-2_prompting_guide) — OpenAI's latest flagship prompting guide: verbosity/output-shape control, scope-drift prevention, ambiguity & hallucination handling, compaction, agentic steerability, tool parallelism. Ingested → prompting-agents (2026-06-12).
-- [openai-codex-prompting-guide.md](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide) — how OpenAI prompts their own coding agent: autonomy/persistence, editing constraints, plan tool, final-message style, AGENTS.md usage, compaction. Ingested → prompting-agents + docs/bootstrap.md Codex quirks (2026-06-12).
+- [openai-codex-prompting-guide.md](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide) — how OpenAI prompts their own coding agent: autonomy/persistence, editing constraints, plan tool, final-message style, AGENTS.md usage, compaction. Ingested → prompting-agents + docs/guides/bootstrap.md Codex quirks (2026-06-12).
 - [obra-superpowers/](https://github.com/obra/superpowers) — snapshot of Jesse Vincent's 14 superpowers skills (commit 6fd4507, MIT). Ingested 2026-06-25: new concepts `brainstorming`, `writing-plans`, `executing-plans`, `subagent-driven-development`, `dispatching-parallel-agents`, `code-review`, `using-git-worktrees`, `finishing-development-branch`; existing concepts `tdd`, `diagnosing-bugs`, `agent-kernel`, and `prompting-agents` retain/absorb TDD, systematic-debugging, verification-before-completion, writing-skills, and using-superpowers lessons/provenance without duplicate runtime concepts.
 - [anthropic-claude-prompting-best-practices.md](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) — Anthropic's official prompting reference for current Claude models (clarity, examples, XML structuring, thinking, agentic systems). Ingested → prompting-agents altitude principles (2026-06-12); more remains extractable.
 - [anthropic-claude-code-best-practices.md](https://code.claude.com/docs/en/best-practices) — official Claude Code best practices (context management, plan/execute separation, constraints as guardrails). Ingested → prompting-agents (standing-instruction-file hygiene, verification ladder) + code-review (findings-are-not-obligations) (2026-07-12); harness-specific session/UI advice deliberately not canonized.

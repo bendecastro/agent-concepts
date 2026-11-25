@@ -1,7 +1,12 @@
 # Gap: the swarm durability contract does not cover a worktree child's commits
 
+Why: The swarm durability contract did not cover the commits a worktree child makes.
+Done when: `bc-swarm` records worker commit identity and recovers a full commit range, and its pressure check passes.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-08-25
-Status: implemented
 Verification: first pressure check 6 failed (producer half PASS; recovery half FAIL); trigger/safety tune then passed the three-fixture rerun (3/3)
 
 Hand this file to an agent. It is self-contained; you need no other context to act on it.
@@ -77,3 +82,7 @@ Judgment is yours; these are the constraints the evidence establishes, not a pre
 ## Scope guard
 
 Fix the durability contract. Do not redesign roles, routing, fan-out width, or turn budgets.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

@@ -21,7 +21,7 @@ import relationships
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", "log.md", "README.md", "docs/bootstrap.md", "docs/harnesses.md"]
+REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", "log.md", "README.md", "docs/guides/bootstrap.md", "docs/guides/harnesses.md"]
 
 # CONCEPT.md frontmatter. The test gate used to be honor-system prose spread
 # across 43 files in ~10 phrasings, so "what is untested" could not be answered
@@ -37,7 +37,6 @@ KNOWN_DEPLOY_DIRS = [
     Path.home() / ".claude" / "skills",
     Path.home() / ".pi" / "agent" / "skills",
 ]
-PLAN_LIFECYCLES = {"proposed", "active", "implemented", "rejected", "archived"}
 
 
 @dataclass
@@ -173,8 +172,8 @@ def lint_links(issues: list[Issue]) -> None:
 # and bare filenames are left alone.
 # Generic "docs/" is deliberately absent: concepts like codebase-docs discuss
 # docs/ trees in other repositories, so the prefix is not unambiguously
-# repo-relative. These two specific workspace subtrees are unambiguous.
-INLINE_PATH_PREFIXES = ("concepts/", "scripts/", "policies/", "docs/plans/", "docs/research/raw/")
+# repo-relative. These specific workspace subtrees are unambiguous.
+INLINE_PATH_PREFIXES = ("concepts/", "scripts/", "policies/", "docs/guides/", "docs/examples/", "docs/research/raw/")
 INLINE_CODE = re.compile(r"`([^`\n]+)`")
 
 
@@ -475,34 +474,6 @@ def lint_raw(issues: list[Issue], index: str) -> None:
         issues.append(Issue("WARN", f"raw inbox source not listed in index.md: docs/research/raw/{missing}"))
 
 
-def lint_plans(issues: list[Issue]) -> None:
-    plans_root = ROOT / "docs" / "plans"
-    if not plans_root.exists():
-        return
-
-    for lifecycle_dir in plans_root.iterdir():
-        if not lifecycle_dir.is_dir() or lifecycle_dir.name == "__pycache__":
-            continue
-        if lifecycle_dir.name not in PLAN_LIFECYCLES:
-            issues.append(Issue("ERROR", f"unknown plan lifecycle folder: {rel(lifecycle_dir)}"))
-            continue
-        for plan in lifecycle_dir.glob("*.md"):
-            if plan.name == "README.md":
-                continue
-            status = next((
-                line.partition(":")[2].strip()
-                for line in read(plan).splitlines()[:12]
-                if line.startswith("Status:")
-            ), None)
-            if status is None:
-                issues.append(Issue("ERROR", f"plan missing Status line: {rel(plan)}"))
-            elif status != lifecycle_dir.name:
-                issues.append(Issue(
-                    "ERROR",
-                    f"plan status does not match folder: {rel(plan)} says {status!r}",
-                ))
-
-
 def lint_policies(issues: list[Issue]) -> None:
     # The real policy is user-owned and lives outside the repo
     # (~/.config/agent-concepts/publish.yaml), so it is deliberately not linted here:
@@ -778,7 +749,6 @@ def main() -> int:
     lint_status(issues)
     lint_status_doc(issues)
     lint_relationships(issues)
-    lint_plans(issues)
     lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)

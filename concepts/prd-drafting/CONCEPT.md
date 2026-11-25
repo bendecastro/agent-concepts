@@ -29,4 +29,4 @@ Model-invoked discipline that drafts a PRD from the current conversation + codeb
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/prd-drafting` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.

@@ -31,4 +31,4 @@ The reusable, model-invokable interview loop: relentless, one-question-at-a-time
 ## Deploy targets
 
 - Claude Code: `~/.claude/skills/grilling` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.

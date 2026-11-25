@@ -31,7 +31,7 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
   and planning skills keep using the same file. The two maps differ only in that row; any other
   map is incomplete. Why: one project vocabulary instead of a second, teach-only glossary.
   Provenance: owner decision 2026-11-12 in
-  [the bc-init-agent visible-layout plan](../../docs/plans/implemented/bc-init-agent-visible-layout.md).
+  [the bc-init-agent visible-layout plan](../../work/3-done/2026-11/018-bc-init-agent-visible-layout.md).
 
 ## Provenance
 
@@ -78,4 +78,4 @@ Scenarios 1 and 4 have not been re-run against `afbb86b`, which changed hosted r
 - Claude Code: `~/.claude/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; pressure-tested in Claude Code).
 - Pi: `~/.pi/agent/skills/teach` → relative symlink to `body/` (deployed 2026-06-12; Pi pressure 2026-08-21 **MIXED**, Attack 1 still open).
 - Codex/Grok/Gemini: manual bootstrap only; read `body/SKILL.md` for the session and ignore YAML frontmatter if unsupported.
-- OpenCode: candidate native Agent Skills deploy; exact skills path not yet verified. Record in `../../docs/harnesses.md` after first real deploy.
+- OpenCode: candidate native Agent Skills deploy; exact skills path not yet verified. Record in `../../docs/guides/harnesses.md` after first real deploy.

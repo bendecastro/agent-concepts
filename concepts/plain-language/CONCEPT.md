@@ -147,4 +147,4 @@ symlinks verified to resolve:
 - Pi: `~/.pi/agent/skills/plain-language` → `body/`.
 - Claude Code: `~/.claude/skills/plain-language` → `body/`.
 
-Other harnesses: manual bootstrap; see `../../docs/harnesses.md`.
+Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.

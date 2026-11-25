@@ -83,7 +83,7 @@ Support is uneven. Claude Code and Pi are the tested paths. Composer and Grok re
 (Grok's bundled skills can shadow same-named concepts). OpenCode needs a small plugin to expose
 skills as slash commands. Codex runs the always-on kernel globally and reaches everything else
 through repo `AGENTS.md` pointers. Gemini is manual bootstrap. See
-[`docs/harnesses.md`](docs/harnesses.md) and [`docs/bootstrap.md`](docs/bootstrap.md).
+[`docs/guides/harnesses.md`](docs/guides/harnesses.md) and [`docs/guides/bootstrap.md`](docs/guides/bootstrap.md).
 
 ## Knowledge that grows without getting harder to use
 

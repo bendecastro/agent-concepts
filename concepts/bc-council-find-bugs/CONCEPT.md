@@ -10,7 +10,7 @@ Runs `find-bugs` through the advisor council (`council-chain` + `council-mode`):
 
 ## Design decisions
 
-All from the owner-approved [council bug hunt plan](../../docs/plans/implemented/council-find-bugs.md); numbers are that plan's decisions.
+All from the owner-approved [council bug hunt plan](../../work/3-done/2026-11/019-council-find-bugs.md); numbers are that plan's decisions.
 
 - **Thin chain (decisions 1, 6).** Loads `council-chain`, `find-bugs` and `council-mode` and defines only what `council-chain`'s "What a chain must define" list leaves open: pre-reading and map contents, focuses, candidate format, duplicate rule, verdict rule, report additions and filing. Scope, reproduction, report sections and filing stay in `find-bugs`.
 - **Agreement orders, never confirms (decision 3).** Pass 2 attacks; an unanswered code-evidenced dispute drops a candidate; agreement shares of N only order the reproduction queue and the suspected tier. Only a reproduction watched failing confirms.
@@ -25,7 +25,7 @@ All from the owner-approved [council bug hunt plan](../../docs/plans/implemented
 
 ## Provenance
 
-- [Council bug hunt plan](../../docs/plans/implemented/council-find-bugs.md), decisions 1–11 and step 3 of its build order.
+- [Council bug hunt plan](../../work/3-done/2026-11/019-council-find-bugs.md), decisions 1–11 and step 3 of its build order.
 - Composes [council-chain](../council-chain/CONCEPT.md), [find-bugs](../find-bugs/CONCEPT.md) and [council-mode](../council-mode/CONCEPT.md); shape copied from [bc-council-improve-codebase](../bc-council-improve-codebase/CONCEPT.md).
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 

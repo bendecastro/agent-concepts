@@ -38,8 +38,8 @@ PERSONAL = re.compile(re.escape(str(Path.home())) + r"(?![\w.-])|Sync/CONFIG")
 # falsify the record.
 EXEMPT = {
     "log.md",
-    "docs/plans/implemented/portability.md",  # quotes the problem it exists to solve
-    "docs/plans/implemented/bc-wiki-maintain.md",  # quotes a wrong path it records fixing
+    "work/3-done/2026-08/012-portability.md",  # quotes the problem it exists to solve
+    "work/3-done/2026-08/014-bc-wiki-maintain.md",  # quotes a wrong path it records fixing
     "concepts/agent-kernel/CONCEPT.md",  # dated per-harness deploy records
     "concepts/agent-kernel/tests/codex-smoke-2026-06-12.md",
     "scripts/portability-check.py",  # defines the pattern above

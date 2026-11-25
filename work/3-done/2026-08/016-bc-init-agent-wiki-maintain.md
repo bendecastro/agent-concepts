@@ -1,7 +1,12 @@
 # `/bc-init-agent` wiki-maintain timer offer
 
+Why: A new project wiki had no maintenance until someone installed a timer by hand.
+Done when: `/bc-init-agent` offers to install the vault's promotion timer and installs it only after the user confirms.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-08-29
-Status: implemented
 
 **Goal:** After scaffolding a project wiki, `/bc-init-agent` offers to install that vault’s promotion timer so maintenance can run overnight from day one, and installs it only after the user confirms.
 **Architecture:** Close-out instruction in `bc-init-agent`, modeled on the existing `publish.yaml` offer. `scaffold.py` stays timer-free. Install copies the existing `bc-wiki-maintain` runner templates to slug-suffixed user units; it does not vendor the runner into the project and does not treat qmd refresh as wiki promotion.
@@ -35,7 +40,7 @@ Modify:
 - `concepts/bc-init-agent/body/SKILL.md` — insert step 10 (timer offer); current close-out becomes step 11.
 - `concepts/bc-init-agent/tests/scenario.md` — deterministic assertion that the skill contains the offer/confirm gate and `scaffold.py` has no `systemctl`; process check for offer-then-confirm.
 - `concepts/bc-init-agent/CONCEPT.md` — design decision, provenance on `bc-wiki-maintain` runner, tests note. Do not flip `deployed` until the pressure run.
-- `docs/pipeline.md` — one sentence on the timer offer in Setup.
+- `docs/guides/pipeline.md` — one sentence on the timer offer in Setup.
 - `index.md` — catalog line for `bc-init-agent` and this plan’s lifecycle.
 - `log.md` — operation entry after the skill change lands.
 
@@ -252,7 +257,7 @@ In Provenance, add `concepts/bc-wiki-maintain/body/runner/` as the install sourc
 
 In Tests, name `tests/pressure-wiki-maintain-timer.md` and leave `test_status: partial` / `deployed` unchanged until Task 4.
 
-In `docs/pipeline.md` Setup paragraph, after the publish.yaml sentence, add:
+In `docs/guides/pipeline.md` Setup paragraph, after the publish.yaml sentence, add:
 
 ```markdown
 It also offers to install a per-vault `bc-wiki-maintain` systemd user timer
@@ -268,7 +273,7 @@ python3 scripts/lint.py
 Expected: no new ERROR for this plan’s `Status: proposed` or stale index/status pages. If `--write-status` is required by a stale `docs/status.md`, run it in the same commit.
 
 ```bash
-git add concepts/bc-init-agent/CONCEPT.md docs/pipeline.md index.md docs/status.md
+git add concepts/bc-init-agent/CONCEPT.md docs/guides/pipeline.md index.md docs/status.md
 git commit -m "implement | record bc-init-agent wiki-maintain timer offer"
 ```
 
@@ -301,4 +306,8 @@ git commit -m "test | bc-init-agent wiki-maintain timer offer pressure"
 - No installer script, no scaffold timer, no lint-timer install, no alias.
 - Paths and unit names are consistent (`bc-wiki-maintain-<slug>.*`).
 - Task 1 before Task 2; pressure before claiming the gate.
-- Neighboring plan `docs/plans/implemented/agent-vault-write-read-contract.md` is not in the file map.
+- Neighboring plan `work/3-done/2026-08/015-agent-vault-write-read-contract.md` is not in the file map.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.

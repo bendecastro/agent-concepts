@@ -29,4 +29,4 @@ User-invoked orchestrator that turns the current conversation + codebase underst
 
 - Canonical deploy: `to-spec`; the former `to-prd` compatibility alias was removed 2026-09-27.
 - Claude Code: `~/.claude/skills/to-spec` → relative symlink to `body/`.
-- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/harnesses.md`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.

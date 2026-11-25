@@ -7,7 +7,7 @@ scratch dir.
 
 ## Dry run
 
-Testing per the [design plan](../../../docs/plans/implemented/council-later-chains.md#testing): the
+Testing per the [design plan](../../../work/3-done/2026-11/020-council-later-chains.md#testing): the
 consumer writes `plan.md` stating exactly what it would do and launches nothing, graded from that
 file. The first real run is the live test.
 

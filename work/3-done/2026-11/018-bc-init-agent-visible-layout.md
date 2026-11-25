@@ -1,7 +1,12 @@
 # bc-init-agent visible layout — work folders the owner can browse
 
+Why: Projects kept their work and knowledge in a hidden vault the owner could not browse.
+Done when: `bc-init-agent` scaffolds visible `work/` lifecycle folders and a per-project layout table that dependent skills read.
+Stage: now
+Blocked by: nothing
+Source: docs/plans/implemented (migrated in 002-docs-reshape)
+
 Date: 2026-11-12
-Status: implemented
 Verification: none yet. Design agreed with the owner in a 22-question interview on 2026-11-12;
 no code has changed.
 
@@ -240,3 +245,7 @@ concepts and can follow in parallel.
 Recon reports for this plan were produced by four read-only scouts on 2026-11-12 and are not
 stored in this repository; the counts above were taken from them and spot-checked against the
 projects.
+
+## Outcome
+
+Implemented; this is the plan as it stood when it moved to `docs/plans/implemented/`.
