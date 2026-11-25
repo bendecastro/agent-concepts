@@ -2050,3 +2050,6 @@ Added `scripts/public_skills.py` and `lint.py --write-public-skills`, generating
 
 ## [2026-11-25] implement | 024 name references
 Bodies no longer link into other concepts: tdd/security-audit links became name references (new loads edges bc-swarm/code-review -> tdd), kernel Storage safety/Verification links became short inline rules naming agent-kernel. New lint ERROR rejects cross-concept body links.
+
+## [2026-11-25] implement | 024 add workflow guide step
+Owner asked for deeper workflow docs: a guide page with cadence (every task, at a moment, periodic upkeep) plus a README section, after the rename.
