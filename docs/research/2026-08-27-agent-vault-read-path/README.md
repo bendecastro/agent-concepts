@@ -324,7 +324,7 @@ from any inline path.
 - With the TSV deleted, following the prescribed first move regenerates the catalog and uses it.
 - `bc-wiki-maintain`'s `CONCEPT.md` records the change.
 - The existing `bc-wiki-maintain` pressure scenario is re-run and still holds, extended with one
-  case covering the new first move. This is a deployed discipline rule; the workspace test gate
+  case covering the new first move. This is a deployed discipline rule; the workspace test rule
   applies.
 
 ### W3 — Notify when a scheduled run fails
@@ -635,7 +635,7 @@ Blocked on W4 clearing its bars:
 - **W2 edits files in eight other repositories.** Necessary for W4 to mean anything, but a wider
   blast radius than a template change, and each vault is a working tree.
 - **W5 changes a concept with its own pressure tests and deploy targets.** `bc-init-agent` is
-  deployed; its test gate applies independently of `bc-wiki-maintain`'s.
+  deployed; its test rule applies independently of `bc-wiki-maintain`'s.
 - **Two Homeflix vaults are not scaffold-shaped.** They lack all four `conventions/` pages,
   ADR-0001 under its scaffold filename, `research/README.md`, and the `.obsidian/` metadata. Any
   work assuming a complete base vault will not find one there.

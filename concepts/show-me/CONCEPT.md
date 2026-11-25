@@ -45,7 +45,7 @@ including inside a comprehensive how-it-works document.
 ## Tests
 
 `tests/pressure-show-me.md` defines artifact-graded checks. Checks 1, 3, 4, 5 PASS 2026-11-04 (see the file); the pressure
-test gate applies before deployment.
+test rule applies before deployment.
 
 ## Deploy targets
 

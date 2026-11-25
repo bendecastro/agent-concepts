@@ -17,7 +17,7 @@ Identify the surface and host, users, task, input modes, states, constraints and
 - Fit targets to input, choices and density to the task, and layout to available space and settings.
 - Design interaction states, use purposeful motion with reduced-motion support, and keep patterns and tokens consistent.
 
-## Capture gate
+## Capture rule
 
 A visible change or review is not done until the report lists capture paths and a written critique **for each image** against every numbered screenshot checklist item below. Critique the whole captured surface, including pre-existing defects outside the change; report them even if left unfixed. Mark inapplicable items as such. Inspect at full resolution and use 1:1 crops before calling a detail a defect: downscaling can invent defects. Write each round’s critique beside its captures before editing for the next round, not only in the final report, so interruptions leave evidence. Follow the naming and retention scheme in [surfaces.md](surfaces.md).
 
@@ -25,7 +25,7 @@ A small change needs at least one capture after the change. A redesign or work s
 
 If capture is impossible, say why and report the work **visually unverified**, never visually verified. Screenshots do not prove keyboard handling, focus order, ARIA or behavior: check those separately using the non-visual checks in [principles.md](principles.md) and report what was and wasn't checked. A model score is never a ship criterion.
 
-When delegating any visible change, copy the capture gate and screenshot checklist into the worker’s task text, along with the owner’s screenshot if there is one.
+When delegating any visible change, copy the capture rule and screenshot checklist into the worker’s task text, along with the owner’s screenshot if there is one.
 
 When a dedicated UI-designer agent is available, it can run the loop on presentation-only scope and report behavior bugs rather than fix them; the orchestrator opens the final images. For redesigns, when delegation is available and authorized, a fresh independent reviewer sees the brief, checklist and captures, not the designer's reasoning, and returns located defects, no score. Without one, self-critique against the checklist and state that no independent review was done; never call self-critique independent.
 

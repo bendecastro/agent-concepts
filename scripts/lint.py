@@ -23,7 +23,7 @@ import relationships
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", ".bc-agent/log.md", "README.md", "docs/guides/bootstrap.md", "docs/guides/harnesses.md"]
 
-# CONCEPT.md frontmatter. The test gate used to be honor-system prose spread
+# CONCEPT.md frontmatter. The test rule used to be honor-system prose spread
 # across 43 files in ~10 phrasings, so "what is untested" could not be answered
 # without reading all of them. These four keys are the single home for that
 # state; index.md and the --status board read from here.
@@ -258,15 +258,15 @@ def lint_status(issues: list[Issue]) -> None:
                 allowed = " or ".join(repr(s) for s in sentinels)
                 issues.append(Issue("ERROR", f"{rel(concept)} {key}={value!r} must be YYYY-MM-DD or {allowed}"))
 
-        # The test gate, mechanically. Deploying something never run is exactly
-        # the drift the gate exists to prevent, and prose could not surface it.
+        # The test rule, mechanically. Deploying something never run is exactly
+        # the drift the rule exists to prevent, and prose could not surface it.
         deployed = fields.get("deployed", "no")
         test_status = fields.get("test_status", "not-run")
         if deployed != "no":
             if fields.get("tested") == "never" or test_status == "not-run":
-                issues.append(Issue("ERROR", f"test gate: {cdir.name} is deployed ({deployed}) but never run"))
+                issues.append(Issue("ERROR", f"test rule: {cdir.name} is deployed ({deployed}) but never run"))
             elif test_status == "fail":
-                issues.append(Issue("ERROR", f"test gate: {cdir.name} is deployed ({deployed}) with a failing test"))
+                issues.append(Issue("ERROR", f"test rule: {cdir.name} is deployed ({deployed}) with a failing test"))
         if test_status == "partial":
             issues.append(Issue("WARN", f"{cdir.name}: passes with a known gap (see its ## Tests section)"))
 
@@ -336,7 +336,7 @@ def render_status_doc() -> str:
     if untested:
         lines += [
             "Live in your agents right now with no run recorded. Each one violates the test",
-            "gate, so `lint.py` exits non-zero until it is tested or undeployed.",
+            "rule, so `lint.py` exits non-zero until it is tested or undeployed.",
             "",
             "| concept | kind | test status | deployed |",
             "|---|---|---|---|",

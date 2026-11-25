@@ -13,7 +13,7 @@ It composes `dispatching-parallel-agents`, which owns how to split work, what go
 
 Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before fan-out/worktree creation and after integration; copy guarded pytest and [Verification](../../agent-kernel/body/AGENT-KERNEL.md#verification) targeted-test rules into worker packets. Why: children do not inherit the kernel and retained worktrees consume storage.
 
-## Recovery gate — before routing
+## Recovery rule — before routing
 
 If a prompt names an interrupted, failed, empty, missing, or reaped prior run, treat it as recovery even when it says redo, relaunch, or start again. Stop before the Tooth or any replacement track, manifest, or dispatch decision and execute rule 4 for that prior run. Never stash, delete, move, or overwrite prior-run evidence merely to make a replacement launchable. Do not name or launch a replacement until recovery proves that track has no usable artifact, valid handoff patch, recorded Git object, or preserved worktree/ref.
 

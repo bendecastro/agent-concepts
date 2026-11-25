@@ -36,4 +36,4 @@ If `~/.config/agent-concepts/overlays/ui-design.md` exists, read it: it may name
 
 ## Capture scope
 
-The capture scope is in the [capture gate](SKILL.md#capture-gate); capture rules and naming are in [surfaces.md](surfaces.md).
+The capture scope is in the [capture rule](SKILL.md#capture-rule); capture rules and naming are in [surfaces.md](surfaces.md).

@@ -101,7 +101,7 @@ the results.
 - **Recovery triggers before routing (2026-08-25).** Pressure check 6's first
   low-thinking consumer saw a named stale interrupted run and an explicit
   immediate-relaunch demand, but delegation won before the later durability
-  rule fired. Recovery therefore has a high-salience gate before the Tooth in
+  rule fired. Recovery therefore has a high-salience rule before the Tooth in
   both the portable body and the injected swarm kernel: interrupted, failed,
   empty, missing, and reaped runs are recovery even when the user says redo or
   relaunch; prior evidence cannot be moved or hidden to make a replacement
@@ -243,7 +243,7 @@ wording, not an edit outside this repository. The session `todo` tool adds no
 concept edge; the existing outgoing kernel storage contract is unaffected,
 and there are no incoming relationships.
 
-`tests/pressure-bc-swarm.md` — discipline-enforcing, so the test gate
+`tests/pressure-bc-swarm.md` — discipline-enforcing, so the test rule
 applies before deploy. Six checks attack the predictable excuses: skip the
 manifest because it's only a few children, re-run the whole fan-out instead
 of recovering, accept a fluent unanchored child report, "just read it

@@ -146,7 +146,7 @@ read and left out: they build classifiers, not editing guidance.
 
 ## Tests
 
-`tests/pressure-unslop.md` — discipline-enforcing, so the test gate
+`tests/pressure-unslop.md` — discipline-enforcing, so the test rule
 applies before deploy. Attacks the three gates that convert this skill
 into a net harm: the agent-facing inversion, the strip-to-zero
 over-correction, and the report-does-not-rewrite boundary; plus the

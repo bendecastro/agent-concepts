@@ -52,7 +52,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 - [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — verbatim `tdd/SKILL.md`, `tests.md`, `mocking.md`; `refactoring.md` recovered as a summary and reconstructed. https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd
 - AI Engineer Workshop 2026 (Matt Pocock) — workshop's TDD execution step (agent writes failing test, then code, then commits).
 - [obra/superpowers `skills/test-driven-development/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/test-driven-development/) — strict red/green/refactor wording, “watched it fail” iron law, rationalization table, and testing anti-patterns; absorbed as reinforcement rather than a duplicate concept.
-- [obra/superpowers `skills/writing-skills/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/writing-skills/) — applies the same TDD loop to process documentation; informs workspace test-gate practice.
+- [obra/superpowers `skills/writing-skills/`](https://github.com/obra/superpowers/blob/6fd4507659784c351abbd2bc264c7162cfd386dc/skills/writing-skills/) — applies the same TDD loop to process documentation; informs workspace test-rule practice.
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — prompted the blocked-cycle clause (a test that cannot be executed is not a RED). The upstream `untested` result was considered for this skill and rejected (see design decisions). Restated; upstream has no root LICENSE. (2026-09-06)
 
 ## Tests

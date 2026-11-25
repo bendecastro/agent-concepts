@@ -173,7 +173,7 @@ for commits, licenses, and the verbatim MIT-licensed bodies.
 
 ## Tests
 
-`tests/pressure-handoff.md` — discipline-enforcing, so the test gate
+`tests/pressure-handoff.md` — discipline-enforcing, so the test rule
 applies. Seven checks; 1, 2, 3, and 5 are load-bearing (an injected
 document driving real actions, a briefing gate folding under one
 impatient sentence, a tree that no longer matches its document, and a

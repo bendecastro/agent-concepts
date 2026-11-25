@@ -275,4 +275,4 @@ Reaching for emphasis (ALWAYS, MUST, bold) is the reflex when the mechanism hasn
 
 **Prefer replacing over appending, and ask what to delete.** A tune that only ever adds is a bloat generator: every added line dilutes the ones already there, and the rule you are fixing may be failing *because* of what surrounds it. Not every finding has to become instruction weight — some belong in the concept's test notes.
 
-**Verify by re-running the check that failed**, never by asking the agent whether it feels better now, and keep that case as a regression check. The test gate applies before redeploy.
+**Verify by re-running the check that failed**, never by asking the agent whether it feels better now, and keep that case as a regression check. The test rule applies before redeploy.
