@@ -2147,3 +2147,6 @@ Item moved to work/3-done/2026-11 with its Outcome and Spent line. Version 0.3.0
 
 ## [2026-11-25] implement | work_spent test robust to an existing bytecode cache
 CI failed on test_work_spent: another test imports work_index in-process and creates body/__pycache__; the no-files assertion now counts only a cache this run created.
+
+## [2026-11-25] deploy | v0.3.0 released
+Tag v0.3.0 on 6ed38a4; release.yml passed (release-check, install-tag on ubuntu and macos); GitHub release created from the CHANGELOG entry.
