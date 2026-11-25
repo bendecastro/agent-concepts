@@ -2123,3 +2123,6 @@ npx example switched to Cursor (`-a cursor`, untested, flagged) at the owner's r
 
 ## [2026-11-25] implement | 025 JSON output step
 `work_index.py --json` prints every work item's header lines, steps with Notes and Outcome under a format version; reference page `concepts/bc-setup-project/body/work-data.md` lists each field (later records marked planned); repo copy refreshed.
+
+## [2026-11-25] implement | 025 item history step
+`work_index.py --json` gains per-item `history` (created, moved, ticked events with commit date and SHA) from `git log --follow`; work-data.md marks it best-effort; scratch-git-repo tests.

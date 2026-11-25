@@ -58,6 +58,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -401,6 +402,53 @@ def parse_steps(text: str) -> list[dict]:
     return steps
 
 
+LIFECYCLE = re.compile(r"(?:^|/)[1-4]-(planned|active|done|dropped)/")
+
+
+def step_key(line: str) -> str | None:
+    """The step text of a `- [ ]` diff line, without any inline Notes, so a tick that also edits the Notes still matches."""
+    match = STEP.match(line)
+    return re.split(r"(?:^|\s)Notes:", match.group(2), maxsplit=1)[0].strip() if match else None
+
+
+def item_history(path: Path) -> list[dict]:
+    """Folder moves and step ticks of one item file, oldest first, from one `git log --follow` call.
+
+    Empty when the file is uncommitted, outside a git repository, or git is missing."""
+    try:
+        result = subprocess.run(
+            ["git", "-c", "core.quotepath=off", "log", "--follow", "-M", "--format=%x01%H %cI",
+             "--raw", "-p", "--unified=0", "--no-color", "--", path.name],
+            cwd=path.parent, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    except OSError:
+        return []
+    if result.returncode != 0:
+        return []
+    history: list[dict] = []
+    folder = None
+    for chunk in reversed(result.stdout.split("\x01")[1:]):  # --reverse breaks --follow
+        lines = chunk.split("\n")
+        commit, date = lines[0].split(" ", 1)
+        stamp = {"date": date, "commit": commit}
+        unticked, ticked = set(), []
+        for line in lines[1:]:
+            if line.startswith(":"):
+                found = LIFECYCLE.search(line.split("\t")[-1])
+                if found and folder is None:
+                    history.append({"event": "created", "folder": found.group(1), **stamp})
+                elif found and found.group(1) != folder:
+                    history.append({"event": "moved", "from": folder, "to": found.group(1), **stamp})
+                folder = found.group(1) if found else folder
+            elif line.startswith("-") and not line.startswith("---") and (key := step_key(line[1:])) is not None:
+                if STEP.match(line[1:]).group(1) == " ":
+                    unticked.add(key)
+            elif line.startswith("+") and not line.startswith("+++") and (key := step_key(line[1:])) is not None:
+                if STEP.match(line[1:]).group(1) != " ":
+                    ticked.append(key)
+        history += [{"event": "ticked", "step": key, **stamp} for key in ticked if key in unticked]
+    return history
+
+
 def item_data(work: Path, folder: str, name: str) -> dict:
     rel = f"{folder}/{name}/plan.md" if (work / folder / name).is_dir() else f"{folder}/{name}"
     if not (work / rel).is_file():
@@ -417,6 +465,7 @@ def item_data(work: Path, folder: str, name: str) -> dict:
         "number": item[:3], "slug": item[4:], "name": item, "folder": folder.split("/")[0][2:], "path": rel,
         "title": title.group(1).strip() if title else None, "header": header, "steps": parse_steps(text),
         "outcome": outcome.strip() or None if outcome is not None else None,
+        "history": item_history(work / rel),
     }
 
 

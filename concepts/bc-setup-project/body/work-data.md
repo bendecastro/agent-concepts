@@ -29,7 +29,7 @@
 | `header` | the header lines below (an object) | stable keys, best-effort values |
 | `steps` | the `- [ ]` / `- [x]` lines under `## Steps` (a list) | stable keys, best-effort values |
 | `outcome` | the text under `## Outcome`, trimmed; `null` when the section is missing or empty (may still be the template placeholder) | best-effort |
-| `history` | folder moves and step ticks with their commit dates, from `git log` following renames | planned |
+| `history` | folder moves and step ticks, oldest first, from one `git log --follow` on the item file (renames followed); `[]` when the file is uncommitted, outside a git repository or git is missing. Uncommitted moves and ticks are not shown yet | best-effort |
 | `spent` | the `Spent:` line in the Outcome, parsed | planned |
 
 ## Header lines (`header`)
@@ -48,6 +48,16 @@ Each value is the text after the label on its line, trimmed, or `null` when the 
 | `ready_for_agent` | `Ready for agent:` (`yes` when set) | best-effort |
 | `waiting_on_owner` | `Waiting on owner:` (the owner question) | best-effort |
 | `held_by` | `Held by: <tool> <session> since <YYYY-MM-DD HH:MM>`, plus the line's age | planned |
+
+## History events (`history[]`)
+
+Every event has `event`, `date` (the commit's committer date, ISO 8601) and `commit` (the full SHA). Read from git, so a squashed or rewritten history shows fewer events, and a commit that splits a file below git's rename similarity breaks the trail.
+
+| `event` | Extra fields | Meaning |
+|---|---|---|
+| `created` | `folder` | the commit that first added the item file |
+| `moved` | `from`, `to` (lifecycle folders) | a commit that moved the item to another lifecycle folder (a move between month folders is not an event) |
+| `ticked` | `step` (the first line of the step, without inline Notes) | a commit that turned `- [ ]` into `- [x]` for that step; ticks already present when the file was added are not events |
 
 ## Steps (`steps[]`)
 
