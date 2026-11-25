@@ -98,7 +98,7 @@ When you want to be away, **`/bc-pipeline-to-done`** builds the same work withou
 
 How the planning skills fit together in more detail: [docs/guides/pipeline.md](docs/guides/pipeline.md).
 
-The other workflows, and the skills worth giving to subagents, are explained in [docs/guides/workflows.md](docs/guides/workflows.md); every concept is listed in [index.md](index.md).
+Every concept is listed in [index.md](index.md).
 
 ## Workflows
 
