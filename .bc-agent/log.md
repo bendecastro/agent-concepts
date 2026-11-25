@@ -2160,3 +2160,10 @@ commands, does not parse the README). Line count 318 → 480.
 
 ## [2026-11-25] implement | README review fixes
 Corrected the TDD description (fail first; planted bug only for working code; levels), the kernel install claim (methods do not install it), the agent table, the npx placeholder notes and the security-audit invocation.
+
+## [2026-11-25] implement | README restore lost content
+Restored consistency/guardrails principle, design-token and fitness-function details in Build,
+pipeline-to-done attended/unattended workflow, setup safety, planning safety, install caveats
+(council dep, upgrade untested, npx version drift). Install boxes are now one-paste per method;
+npx section has per-agent boxes for Cursor, Gemini CLI, GitHub Copilot, OpenCode plus a generic
+fallback. Checkout uses a one-paste box with shell detection.

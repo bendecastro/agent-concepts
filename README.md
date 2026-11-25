@@ -1,8 +1,9 @@
 # Agent concepts
 
-Skills and rules for coding agents — a way of working where questions get settled before code
-is written, every test is proved able to fail before it is trusted, and work lives in files so your project builds intrinsic long-term memory. The skills are kept once here and linked into whichever agent
-you use.
+Skills and rules for coding agents — a way of working where questions get settled before
+code is written, every test is proved able to fail before it is trusted, and work lives in
+files so your project builds intrinsic long-term memory. The skills are kept once here and
+linked into whichever agent you use.
 
 ## How these skills work
 
@@ -42,11 +43,21 @@ sends every step to a reviewer before landing. The
 have them cross-examine each other.
 
 **Work lives in files, not chat.** Work items, plans and handoffs are written to disk so they
-survive a crashed session and so another agent — or a dashboard — can read them.
+survive a crashed session and so another agent — or a dashboard — can read them. This is
+long-term project memory: durable facts in Git that any fresh agent can retrieve on demand.
 [bc-handoff](concepts/bc-handoff/body/SKILL.md) captures state for the next session.
 [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) writes every
 child's result to a file before the parent reads it. The
 [work-data format](concepts/bc-setup-project/body/work-data.md) is what a dashboard consumes.
+
+**Keep the project consistent, and stop it getting worse.**
+[bc-ui-design](concepts/bc-ui-design/body/SKILL.md) keeps every colour, size and wording
+pattern defined once as a design token or shared part, used only from there, never as a
+literal value.
+[bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md) adds guardrails
+— automated checks that stop speed, size or structure from getting worse: performance
+budgets (limits on time, size or memory) and fitness functions (checks for a structural
+rule, such as "the UI layer never imports the database").
 
 **The instructions themselves are sourced, pressure-tested and improved from use.** Every
 concept names where it came from ([hard rules](AGENTS.md)). A concept that enforces
@@ -60,11 +71,20 @@ instruction blocks the other skills adapt.
 ## The workflow
 
 Set up a project with `/bc-setup-project`, plan its work with `/bc-plan-to-pipeline`, then
-build it with your agent — or hand the settled items to `/bc-pipeline-to-done`, which builds
-them while you are away. `/bc-pipeline-to-done` takes only the items that
-`/bc-plan-to-pipeline` already settled, then sends every step through independent review
-before merging. Each skill writes its result to files or GitHub issues, so the next step
-does not need the same session. How the planning skills fit together:
+build it with your agent. The agent finishes what is in `work/2-active/`, then takes the
+next item in pipeline order and ticks each step as it lands. It asks you when something is
+unclear. This is the standard way.
+
+When you want to be away, `/bc-pipeline-to-done` builds the same work without you. It takes
+only the items marked `Ready for agent: yes`, which `/bc-plan-to-pipeline` marks for you, or
+GitHub issues labelled `ready-for-agent` — because the questions were already settled. It
+verifies the work before merging. It claims each item so two drivers cannot build the same
+thing. Each builder works in its own worktree, and independent reviewers check every step
+before it lands. When it needs a decision, it parks the item with your question and moves
+on.
+
+Each skill writes its result to files or GitHub issues, so the next step does not need the
+same session. How the planning skills fit together:
 [pipeline.md](docs/guides/pipeline.md).
 
 Skills marked `/name` are ones you type; the rest load on their own when they fit. Skills
@@ -76,7 +96,7 @@ with a link to [workflows.md](docs/guides/workflows.md) have a longer descriptio
 
 | Skill | What it does | Invocation |
 |---|---|---|
-| [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) | Scaffold a project's work layout, gate stub, CI workflow and agent mechanics so it is ready for the plan→build loop. | [`/bc-setup-project`](docs/guides/workflows.md#bc-setup-project) |
+| [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) | Scaffold a project's work layout, gate stub, CI workflow and agent mechanics. It only adds missing files; it overwrites existing files only with `--force` (files under `.bc-agent/`) or `--force-root` (the root `AGENTS.md`). Learning and knowledge projects get a `.bc-agent/` vault instead. | [`/bc-setup-project`](docs/guides/workflows.md#bc-setup-project) |
 | [bc-using-git-worktrees](concepts/bc-using-git-worktrees/body/SKILL.md) | Start, switch or clean up a git worktree for isolated feature work. | auto |
 
 </details>
@@ -92,7 +112,7 @@ with a link to [workflows.md](docs/guides/workflows.md) have a longer descriptio
 | [bc-prd-drafting](concepts/bc-prd-drafting/body/SKILL.md) | Synthesize an already-resolved conversation into a structured PRD. | auto |
 | [bc-writing-plans](concepts/bc-writing-plans/body/SKILL.md) | Turn an approved spec into a detailed implementation plan. | auto |
 | [bc-plan-slicing](concepts/bc-plan-slicing/body/SKILL.md) | Break a plan into dependency-ordered vertical slices an agent can grab independently. | auto |
-| [bc-plan-to-pipeline](concepts/bc-plan-to-pipeline/body/SKILL.md) | Run the full sequence — grill, requirements, slicing — in one pass. | `/bc-plan-to-pipeline` |
+| [bc-plan-to-pipeline](concepts/bc-plan-to-pipeline/body/SKILL.md) | Run the full sequence — grill, requirements, slicing — in one pass. For an already-settled design it asks only the open questions. Slices are thin pieces that each work end to end. It files GitHub issues only when the project already plans in issues or you ask. | `/bc-plan-to-pipeline` |
 | [bc-to-spec](concepts/bc-to-spec/body/SKILL.md) | Turn the current conversation into a GitHub issue spec. | [`/bc-to-spec`](docs/guides/workflows.md#bc-to-spec-and-bc-to-tickets) |
 | [bc-to-tickets](concepts/bc-to-tickets/body/SKILL.md) | Break a plan or spec into independently-grabbable GitHub issues. | [`/bc-to-tickets`](docs/guides/workflows.md#bc-to-spec-and-bc-to-tickets) |
 | [bc-triage](concepts/bc-triage/body/SKILL.md) | Move issues through intake: verify, grill, write agent briefs, mark ready or rejected. | [`/bc-triage`](docs/guides/workflows.md#bc-triage) |
@@ -113,6 +133,18 @@ with a link to [workflows.md](docs/guides/workflows.md) have a longer descriptio
 | [bc-ui-design](concepts/bc-ui-design/body/SKILL.md) | Create or change what users see — layout, styling, controls — with a design framework and capture rule. | auto |
 | [bc-minimal-solution-ladder](concepts/bc-minimal-solution-ladder/body/SKILL.md) | Climb an ordered ladder (already exists → stdlib → one line → …) and stop at the first rung that holds. | auto |
 | [bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md) | Set or protect speed, size and memory limits; add checks so regressions cannot come back. | auto |
+
+**Design consistency.** Each project keeps design pages under `docs/design/` that state its
+current choices. A new colour, size or wording pattern is defined once as a design token or
+shared part and used only from there, never as a literal value. A rule that text search can
+find becomes a check in the project's test runner. The capture rule says a visible change is
+not done until the report lists screenshots with a written critique of each one.
+
+**Guardrails and fitness functions.** Each project lists its limits and checks in
+`docs/guardrails/README.md`, and the checks run inside the project's gate. Agents set limits
+from today's measurement or a published guideline and mark each one as their choice so you
+can change it. A limit you set is never loosened without asking. After fixing a slowdown, the
+agent adds a check so the problem cannot come back.
 
 </details>
 
@@ -235,45 +267,35 @@ Before you start:
 
 - **Pick one method per agent.** Two methods install each skill twice. Several agents also read `~/.agents/skills/`; the contributor install and `npx skills -a pi` both write there.
 - **After installing, start a new agent session.** Open sessions do not see new skills.
-- **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. To install it: `pi install npm:pi-subagents`.
+- **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. Installing this repository does not install `pi-subagents`. To install it: `pi install npm:pi-subagents`. The other methods install the council skills too, but they will not run there.
 - **GitHub issues.** `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` need the GitHub CLI (`gh`) for issue flows.
 - **What has been tested.** On Linux and macOS: Pi 1.6.0, Claude Code 2.1.329, Codex 0.153.1, and `npx skills` 1.9.0 installing for Pi. `npx skills` for other agents, and Windows, have not been tested.
-- **To move to a newer release**, uninstall first, then install with the new tag.
+- **To move to a newer release**, uninstall first, then install with the new tag. Moving from one release to a newer one this way has not been tested yet.
+- **`npx` version drift.** `npx` downloads the newest `skills` tool, which may be newer than the tested 1.9.0.
 
 <a name="claude-code"></a>
 <details>
 <summary><b>Claude Code</b></summary>
 
-**Install**
-
-The first command adds this repository as a plugin source; the second installs the plugin.
+**Install** — adds this repository as a plugin source and installs the plugin:
 
 ```bash
-claude plugin marketplace add bendecastro/agent-concepts#v0.3.0
+claude plugin marketplace add bendecastro/agent-concepts#v0.3.0 && \
+  claude plugin install -y agent-concepts@agent-concepts
 ```
 
+**Refresh** (stays on the release you installed):
+
 ```bash
-claude plugin install agent-concepts@agent-concepts
+claude plugin marketplace update agent-concepts && \
+  claude plugin update agent-concepts@agent-concepts
 ```
 
-**Refresh** (stays on the release you installed)
+**Uninstall:**
 
 ```bash
-claude plugin marketplace update agent-concepts
-```
-
-```bash
-claude plugin update agent-concepts@agent-concepts
-```
-
-**Uninstall**
-
-```bash
-claude plugin uninstall agent-concepts@agent-concepts
-```
-
-```bash
-claude plugin marketplace remove agent-concepts
+claude plugin uninstall agent-concepts@agent-concepts && \
+  claude plugin marketplace remove agent-concepts
 ```
 
 </details>
@@ -282,34 +304,25 @@ claude plugin marketplace remove agent-concepts
 <details>
 <summary><b>Codex</b></summary>
 
-**Install**
+**Install:**
 
 ```bash
-codex plugin marketplace add bendecastro/agent-concepts --ref v0.3.0
+codex plugin marketplace add bendecastro/agent-concepts --ref v0.3.0 && \
+  codex plugin add agent-concepts@agent-concepts
 ```
 
+**Refresh** (stays on the release you installed):
+
 ```bash
-codex plugin add agent-concepts@agent-concepts
+codex plugin marketplace upgrade agent-concepts && \
+  codex plugin add agent-concepts@agent-concepts
 ```
 
-**Refresh** (stays on the release you installed)
+**Uninstall:**
 
 ```bash
-codex plugin marketplace upgrade agent-concepts
-```
-
-```bash
-codex plugin add agent-concepts@agent-concepts
-```
-
-**Uninstall**
-
-```bash
-codex plugin remove agent-concepts@agent-concepts
-```
-
-```bash
-codex plugin marketplace remove agent-concepts
+codex plugin remove agent-concepts@agent-concepts && \
+  codex plugin marketplace remove agent-concepts
 ```
 
 </details>
@@ -318,19 +331,19 @@ codex plugin marketplace remove agent-concepts
 <details>
 <summary><b>Pi</b></summary>
 
-**Install**
+**Install:**
 
 ```bash
 pi install git:github.com/bendecastro/agent-concepts@v0.3.0
 ```
 
-**Refresh** (stays on the release you installed)
+**Refresh** (stays on the release you installed):
 
 ```bash
 pi update --extensions
 ```
 
-**Uninstall** (use the same tag you installed)
+**Uninstall** (use the same tag you installed):
 
 ```bash
 pi remove git:github.com/bendecastro/agent-concepts@v0.3.0
@@ -344,33 +357,231 @@ pi remove git:github.com/bendecastro/agent-concepts@v0.3.0
 
 Use the [`skills` command-line tool](https://github.com/vercel-labs/skills) through `npx`.
 `npx` comes with [Node.js](https://nodejs.org); it downloads and runs a command-line tool in
-one step.
+one step. `-g` installs for you in every project; `-y` skips the tool's questions.
 
-[docs/guides/install-packs.md](docs/guides/install-packs.md) has the command for all skills and
-a smaller command for each pack (one skill plus the skills it needs). In those commands, replace
-`<source>` with `bendecastro/agent-concepts@v0.3.0` and `<agent>` with your agent's id from
-[the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md)
-(for example `pi`).
+Only `-a pi` has been tested. The other agents below are listed because the `skills` tool
+supports them, but they have not been verified.
 
-For example, this installs one skill, `bc-self-improve`, for Cursor (only `-a pi` has been
-tested). For another agent, change `cursor` to its id, for example `gemini-cli` or
-`github-copilot`. `-g` installs for you in every project; `-y` skips the tool's questions.
+[docs/guides/install-packs.md](docs/guides/install-packs.md) has a smaller command for each
+pack (one skill plus the skills it needs).
+
+**Cursor**
+
+Install all public skills:
 
 ```bash
-npx skills add bendecastro/agent-concepts@v0.3.0 -g -a cursor -y --skill bc-self-improve
+npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a cursor -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
-**Refresh** (stays on the release you installed)
+Uninstall:
 
 ```bash
-npx skills update -g -y
+npx -y skills remove -g -a cursor -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
-**Uninstall.** Before running it, replace `<agent>` with the agent id you installed for, and
-`<skill names>` with every name after `--skill` in the command you ran:
+**Gemini CLI**
+
+Install all public skills:
 
 ```bash
-npx skills remove -g -a <agent> -y <skill names>
+npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a gemini-cli -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
+```
+
+Uninstall:
+
+```bash
+npx -y skills remove -g -a gemini-cli -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
+```
+
+**GitHub Copilot**
+
+Install all public skills:
+
+```bash
+npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a github-copilot -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
+```
+
+Uninstall:
+
+```bash
+npx -y skills remove -g -a github-copilot -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
+```
+
+**OpenCode**
+
+Install all public skills:
+
+```bash
+npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a opencode -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
+```
+
+Uninstall:
+
+```bash
+npx -y skills remove -g -a opencode -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
+```
+
+**Any other agent**
+
+Change `<agent>` to your agent's id from
+[the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md).
+
+Install all public skills:
+
+```bash
+npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a <agent> -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
+```
+
+**Refresh** (stays on the release you installed):
+
+```bash
+npx -y skills update -g -y
+```
+
+Uninstall (use the same `-a <agent>` you installed for):
+
+```bash
+npx -y skills remove -g -a <agent> -y \
+  --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
+  bc-council-audit-security bc-council-chain bc-council-challenge-plan \
+  bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
+  bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents \
+  bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs \
+  bc-finishing-development-branch bc-grilling bc-handoff \
+  bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder \
+  bc-obsidian-bases bc-obsidian-markdown bc-optimize-code \
+  bc-performance-guardrails bc-pipeline-to-done bc-plain-language \
+  bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
+  bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
+  bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
+  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
 </details>
@@ -386,29 +597,31 @@ with a method above for the same agent.
 You need Git and Python 3. To run the repository's checks (`scripts/gate`), also install
 `pytest` and `hypothesis`, for example with `pip install pytest hypothesis`.
 
-```bash
-git clone https://github.com/bendecastro/agent-concepts.git agent-concepts
-cd agent-concepts
-export AGENT_CONCEPTS="$PWD"
-```
-
-Some skills run scripts from this folder, so your shell needs to know where it is in every new
-terminal. Save the path once:
-
-- On macOS (zsh): `echo "export AGENT_CONCEPTS=\"$PWD\"" >> ~/.zshrc`
-- On Linux (bash): `echo "export AGENT_CONCEPTS=\"$PWD\"" >> ~/.profile`
-
-Then link the skills:
+**Install** — clones the repository, saves the path for future terminals, and links the
+skills (requires bash or zsh as your login shell):
 
 ```bash
-python3 scripts/deploy-local-skills.py --dry-run
+case "$SHELL" in */bash) rc="$HOME/.bashrc" ;; */zsh) rc="$HOME/.zshrc" ;; *) echo "Set SHELL to bash or zsh first" >&2; false ;; esac && \
+  git clone https://github.com/bendecastro/agent-concepts.git agent-concepts && \
+  cd agent-concepts && \
+  export AGENT_CONCEPTS="$PWD" && \
+  printf 'export AGENT_CONCEPTS=%q\n' "$AGENT_CONCEPTS" >> "$rc" && \
+  python3 scripts/deploy-local-skills.py
 ```
+
+**Refresh** (from the checkout; `git pull` can fail on local changes):
 
 ```bash
-python3 scripts/deploy-local-skills.py
+cd "$AGENT_CONCEPTS" && git pull --ff-only && python3 scripts/deploy-local-skills.py
 ```
 
-The script makes symlinks. Its options:
+**Uninstall** (removes links only; keeps the checkout and shell setting):
+
+```bash
+cd "$AGENT_CONCEPTS" && python3 scripts/deploy-local-skills.py --uninstall
+```
+
+The script makes symlinks (shortcuts to a folder). Its options:
 
 - **`--uninstall`** removes only the links this script created; other skills are left alone.
   Add `--dry-run` to preview it.
