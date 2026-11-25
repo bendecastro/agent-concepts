@@ -390,6 +390,9 @@ pi remove git:github.com/bendecastro/agent-concepts@v0.3.0
 Use the [`skills` command-line tool](https://github.com/vercel-labs/skills) through `npx`.
 `npx` comes with [Node.js](https://nodejs.org); it downloads and runs a command-line tool in
 one step. `-g` installs for you in every project; `-y` skips the tool's questions.
+The skills go into `~/.agents/skills/`, which Codex and Pi also read. If either of those is
+installed, the skills show up there too, and removing them for one agent leaves them in place
+for the others.
 
 [docs/guides/install-packs.md](docs/guides/install-packs.md) has a smaller command for each
 pack (one skill plus the skills it needs).

@@ -2179,3 +2179,6 @@ Every skill description rewritten to say what it is for in plain words; principl
 
 ## [2026-11-25] implement | README example, licence, contributor fold
 Added a folded walk-through of one session, stated the MIT licence, folded the contributor section.
+
+## [2026-11-25] test | README install boxes
+Ran every install, refresh and uninstall box (Claude Code, Codex, Pi, npx for Cursor, contributor checkout) in a throwaway home; all pass. Noted that npx remove keeps skills while Codex or Pi share ~/.agents/skills.
