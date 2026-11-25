@@ -9,9 +9,11 @@ installed copy, update, check again, uninstall and check nothing is left listed.
 
 No logins, API keys or model calls. The agent CLIs come from PATH (CI installs pinned versions
 from npm). `--drop-needed SKILL` installs the pack without one of its needed skills, to show the
-check fails when a needed skill is missing.
+check fails when a needed skill is missing. `--ref REF` installs from the GitHub repository at
+that tag or commit instead of the local checkout, the way a stranger installs a release; the
+expected skill lists still come from the local checkout, so check out the same ref first.
 
-Usage: python3 scripts/fresh_install_test.py [--method M ...] [--scratch DIR] [--pack NAME]
+Usage: python3 scripts/fresh_install_test.py [--method M ...] [--ref REF] [--scratch DIR] [--pack NAME]
 """
 
 from __future__ import annotations
@@ -31,6 +33,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from install_packs import DOC_PATH, load_listing, packs  # noqa: E402
 
+GITHUB_REPO = "bendecastro/agent-concepts"
 PLUGIN_ID = "agent-concepts@agent-concepts"
 MARKETPLACE = "agent-concepts"
 NPX_AGENT = "pi"  # global skills dir ~/.agents/skills, real copies
@@ -64,6 +67,23 @@ class CheckFailed(Exception):
     pass
 
 
+def install_sources(ref: str | None) -> dict[str, list[str]]:
+    """What each method installs from: the local checkout, or the GitHub repository at `ref`.
+
+    Each pinned CLI takes the ref in its own syntax; all four were checked against a pushed
+    commit (Pi 1.6.0, Claude Code 2.1.329, Codex 0.153.1, skills 1.9.0).
+    """
+    if ref is None:
+        local = str(ROOT)
+        return {"pi": [local], "claude": [local], "codex": [local], "npx": [local]}
+    return {
+        "pi": [f"git:github.com/{GITHUB_REPO}@{ref}"],
+        "claude": [f"{GITHUB_REPO}#{ref}"],
+        "codex": [GITHUB_REPO, "--ref", ref],
+        "npx": [f"{GITHUB_REPO}@{ref}"],
+    }
+
+
 def expected_skills(listing: dict[str, list[str]], pack: str | None = None) -> set[str]:
     """All public skills, or one pack: the skill plus everything it needs, transitively."""
     if pack is None:
@@ -80,7 +100,7 @@ def list_problems(expected: set[str], listed: set[str]) -> list[str]:
     return problems
 
 
-def pack_command(pack: str, drop: str | None = None) -> list[str]:
+def pack_command(pack: str, drop: str | None = None, source: str = str(ROOT)) -> list[str]:
     """The documented `npx skills add` command for a pack (or `all`), read from the guide."""
     text = (ROOT / DOC_PATH).read_text(encoding="utf-8")
     commands = re.findall(r"^npx skills add .*$", text, re.MULTILINE)
@@ -95,7 +115,7 @@ def pack_command(pack: str, drop: str | None = None) -> list[str]:
             raise SystemExit(f"--drop-needed {drop}: not in the {pack} command")
         words.remove(drop)
     words = ["skills", *words[2:]]  # the pinned `skills` CLI on PATH, not whatever npx fetches
-    return [str(ROOT) if w == "<source>" else NPX_AGENT if w == "<agent>" else w for w in words]
+    return [source if w == "<source>" else NPX_AGENT if w == "<agent>" else w for w in words]
 
 
 class Sandbox:
@@ -139,13 +159,14 @@ def find_helper(base: Path) -> Path:
 
 
 class PiPackage:
-    def __init__(self, box: Sandbox):
+    def __init__(self, box: Sandbox, source: list[str]):
         self.box = box
+        self.source = source
         self.lister = box.root / "list-pi-skills.mjs"
         self.lister.write_text(PI_LISTER, encoding="utf-8")
 
     def install(self):
-        self.box.run("pi", "install", str(ROOT))
+        self.box.run("pi", "install", *self.source)
 
     def listed(self) -> dict[str, Path]:
         out = self.box.run("node", str(self.lister), shutil.which("pi") or "pi")
@@ -153,21 +174,23 @@ class PiPackage:
 
     def helper(self, listed: dict[str, Path]) -> Path:
         # A local-path Pi package is used in place, not copied: the helper runs from that path.
+        # A git package is cloned under ~/.pi/agent/git and runs from there.
         return listed[HELPER_SKILL] / HELPER_RELPATH
 
     def update(self):
         self.box.run("pi", "update", "--extensions")
 
     def uninstall(self):
-        self.box.run("pi", "remove", str(ROOT))
+        self.box.run("pi", "remove", *self.source)
 
 
 class ClaudePlugin:
-    def __init__(self, box: Sandbox):
+    def __init__(self, box: Sandbox, source: list[str]):
         self.box = box
+        self.source = source
 
     def install(self):
-        self.box.run("claude", "plugin", "marketplace", "add", str(ROOT))
+        self.box.run("claude", "plugin", "marketplace", "add", *self.source)
         self.box.run("claude", "plugin", "install", PLUGIN_ID)
 
     def listed(self) -> dict[str, Path]:
@@ -192,11 +215,12 @@ class ClaudePlugin:
 
 
 class CodexPlugin:
-    def __init__(self, box: Sandbox):
+    def __init__(self, box: Sandbox, source: list[str]):
         self.box = box
+        self.source = source
 
     def install(self):
-        self.box.run("codex", "plugin", "marketplace", "add", str(ROOT))
+        self.box.run("codex", "plugin", "marketplace", "add", *self.source)
         self.box.run("codex", "plugin", "add", PLUGIN_ID)
 
     def listed(self) -> dict[str, Path]:
@@ -209,7 +233,10 @@ class CodexPlugin:
         return find_helper(self.box.home / ".codex" / "plugins")
 
     def update(self):
-        # Codex has no plugin update for a local marketplace; installing again is the update.
+        # Codex has no plugin update command; installing again is the update. A Git
+        # marketplace is refreshed first (a local one is read in place).
+        if len(self.source) > 1:
+            self.box.run("codex", "plugin", "marketplace", "upgrade", MARKETPLACE)
         self.box.run("codex", "plugin", "add", PLUGIN_ID)
 
     def uninstall(self):
@@ -218,9 +245,9 @@ class CodexPlugin:
 
 
 class NpxSkills:
-    def __init__(self, box: Sandbox, pack: str, drop: str | None = None):
+    def __init__(self, box: Sandbox, source: list[str], pack: str, drop: str | None = None):
         self.box = box
-        self.command = pack_command(pack, drop)
+        self.command = pack_command(pack, drop, *source)
 
     @property
     def skills_dir(self) -> Path:
@@ -252,18 +279,20 @@ def check_listed(label: str, expected: set[str], listed: dict[str, Path]):
     print(f"  ok: {label}: {len(listed)} skills listed, as expected", flush=True)
 
 
-def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: str, drop: str | None):
+def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: str, drop: str | None,
+               ref: str | None = None):
     box = Sandbox(scratch, method)
+    sources = install_sources(ref)
     if method == "pi":
-        agent, expected = PiPackage(box), expected_skills(listing)
+        agent, expected = PiPackage(box, sources["pi"]), expected_skills(listing)
     elif method == "claude":
-        agent, expected = ClaudePlugin(box), expected_skills(listing)
+        agent, expected = ClaudePlugin(box, sources["claude"]), expected_skills(listing)
     elif method == "codex":
-        agent, expected = CodexPlugin(box), expected_skills(listing)
+        agent, expected = CodexPlugin(box, sources["codex"]), expected_skills(listing)
     elif method == "npx-all":
-        agent, expected = NpxSkills(box, "all"), expected_skills(listing)
+        agent, expected = NpxSkills(box, sources["npx"], "all"), expected_skills(listing)
     else:
-        agent, expected = NpxSkills(box, pack, drop), expected_skills(listing, pack)
+        agent, expected = NpxSkills(box, sources["npx"], pack, drop), expected_skills(listing, pack)
     print(f"== {method} (HOME={box.home})", flush=True)
     agent.install()
     listed = agent.listed()
@@ -285,6 +314,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="install method to test (repeatable; default: all)")
     parser.add_argument("--scratch", type=Path, default=None,
                         help="parent folder for the fresh HOMEs (default: the system temp folder)")
+    parser.add_argument("--ref", help=f"install from github.com/{GITHUB_REPO} at this tag or commit "
+                        "instead of the local checkout")
     parser.add_argument("--pack", default=DEFAULT_PACK, help="pack tested by npx-pack")
     parser.add_argument("--drop-needed", metavar="SKILL",
                         help="install the pack without this needed skill; the test must then fail")
@@ -298,7 +329,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         for method in args.method or METHODS:
             try:
-                run_method(method, scratch, listing, args.pack, args.drop_needed)
+                run_method(method, scratch, listing, args.pack, args.drop_needed, args.ref)
             except CheckFailed as exc:
                 print(f"FAIL {method}: {exc}", flush=True)
                 failures.append(method)

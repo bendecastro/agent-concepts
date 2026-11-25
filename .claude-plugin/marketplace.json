@@ -10,7 +10,8 @@
     {
       "name": "agent-concepts",
       "source": "./",
-      "description": "Every public agent-concepts skill: planning, TDD, code review, debugging, subagent workflows and upkeep, with bc- names."
+      "description": "Every public agent-concepts skill: planning, TDD, code review, debugging, subagent workflows and upkeep, with bc- names.",
+      "version": "0.1.0"
     }
   ]
 }

@@ -25,6 +25,7 @@ class PluginManifestsTests(unittest.TestCase):
         self.addCleanup(temp.cleanup)
         self.root = Path(temp.name)
         (self.root / "concepts").mkdir()
+        (self.root / "package.json").write_text(json.dumps({"version": "1.2.3"}), encoding="utf-8")
         self.listing({"bc-a": [], "bc-b": ["bc-a"]})
 
     def listing(self, skills: dict[str, list[str]]) -> None:
@@ -40,7 +41,7 @@ class PluginManifestsTests(unittest.TestCase):
         for path in (plugin_manifests.CLAUDE_PLUGIN, plugin_manifests.CODEX_PLUGIN):
             manifest = self.read(path)
             self.assertEqual(manifest["skills"], expected, path)
-            self.assertEqual(manifest["version"], plugin_manifests.PLUGIN_VERSION, path)
+            self.assertEqual(manifest["version"], "1.2.3", path)
             self.assertEqual(manifest["name"], plugin_manifests.PLUGIN_NAME, path)
 
     def test_marketplaces_point_at_the_repository_root_plugin(self):

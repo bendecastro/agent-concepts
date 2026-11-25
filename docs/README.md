@@ -7,6 +7,7 @@ bodies and `AGENTS.md`, not here. Plans and other pending work live in [`../work
 - [guides/bootstrap.md](guides/bootstrap.md) — prompts to paste into a session so a harness without native skill loading reads this workspace.
 - [guides/workflows.md](guides/workflows.md) — when to run each workflow skill, what it asks and what you get, and which skills to give subagents.
 - [guides/install-packs.md](guides/install-packs.md) — generated `npx skills` commands: every public skill, or one ready-made pack with the skills it needs.
+- [guides/releasing.md](guides/releasing.md) — release checklist: checks before tagging, the version's one home, tagging, and the tag's CI install test.
 - [guides/pipeline.md](guides/pipeline.md) — how the plan-to-ship skills fit together, from a grilled idea to landed code.
 - [guides/pressure-test-harness.md](guides/pressure-test-harness.md) — how to run a pressure test of a concept with Pi: hiding deployed skills, flags, headless pitfalls.
 - [examples/](examples/) — templates for the optional private config files under `~/.config/agent-concepts/` (kernel copies, skill copies, pressure-test model, personal-terms denylist). Copy one there and fill it in. The publish policy template stays in [`../policies/`](../policies/publish.example.yaml).

@@ -16,8 +16,8 @@ from pathlib import Path
 
 
 PLUGIN_NAME = "agent-concepts"
-# The Releases step sets this to the release tag's version.
-PLUGIN_VERSION = "0.1.0"
+# The release version has one home, `version` in package.json; the manifests copy it.
+VERSION_HOME = "package.json"
 DESCRIPTION = ("Every public agent-concepts skill: planning, TDD, code review, debugging, "
                "subagent workflows and upkeep, with bc- names.")
 AUTHOR = {"name": "agent-concepts contributors"}
@@ -35,11 +35,16 @@ def _skill_paths(root: Path) -> list[str]:
     return [f"./concepts/{name}/body" for name in sorted(listing["skills"])]
 
 
+def plugin_version(root: Path) -> str:
+    return json.loads((root / VERSION_HOME).read_text(encoding="utf-8"))["version"]
+
+
 def render_manifests(root: Path) -> dict[str, dict]:
     skills = _skill_paths(root)
+    version = plugin_version(root)
     plugin = {
         "name": PLUGIN_NAME,
-        "version": PLUGIN_VERSION,
+        "version": version,
         "description": DESCRIPTION,
         "author": AUTHOR,
         "license": LICENSE,
@@ -51,7 +56,8 @@ def render_manifests(root: Path) -> dict[str, dict]:
             "name": PLUGIN_NAME,
             "owner": AUTHOR,
             "metadata": {"description": DESCRIPTION},
-            "plugins": [{"name": PLUGIN_NAME, "source": "./", "description": DESCRIPTION}],
+            "plugins": [{"name": PLUGIN_NAME, "source": "./", "description": DESCRIPTION,
+                         "version": version}],
         },
         CODEX_PLUGIN: {
             **plugin,

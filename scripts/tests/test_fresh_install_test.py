@@ -45,6 +45,18 @@ class FreshInstallCheckTest(unittest.TestCase):
         self.assertNotIn(fit.HELPER_SKILL, dropped)
         self.assertEqual(len(dropped), len(command) - 1)
 
+    def test_local_install_uses_the_checkout(self):
+        self.assertEqual(set(map(tuple, fit.install_sources(None).values())), {(str(fit.ROOT),)})
+
+    def test_ref_install_pins_the_github_repository_in_each_cli_syntax(self):
+        sources = fit.install_sources("v0.1.0")
+        self.assertEqual(sources["pi"], ["git:github.com/bendecastro/agent-concepts@v0.1.0"])
+        self.assertEqual(sources["claude"], ["bendecastro/agent-concepts#v0.1.0"])
+        self.assertEqual(sources["codex"], ["bendecastro/agent-concepts", "--ref", "v0.1.0"])
+        self.assertEqual(sources["npx"], ["bendecastro/agent-concepts@v0.1.0"])
+        command = fit.pack_command(fit.DEFAULT_PACK, source=sources["npx"][0])
+        self.assertEqual(command[:3], ["skills", "add", "bendecastro/agent-concepts@v0.1.0"])
+
     def test_helper_exists_in_the_source(self):
         self.assertTrue((fit.ROOT / "concepts" / fit.HELPER_SKILL / "body" / fit.HELPER_RELPATH).is_file())
 

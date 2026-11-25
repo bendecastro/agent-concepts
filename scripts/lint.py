@@ -20,6 +20,7 @@ from pathlib import Path
 import install_packs
 import pi_package
 import plugin_manifests
+import release_check
 import public_skills
 import relationships
 
@@ -465,6 +466,11 @@ def lint_plugin_manifests(issues: list[Issue]) -> None:
         issues.append(Issue("ERROR", f"plugin manifests: {error}"))
 
 
+def lint_release_versions(issues: list[Issue]) -> None:
+    for error in release_check.version_problems(ROOT):
+        issues.append(Issue("ERROR", f"release versions: {error}"))
+
+
 def lint_public_skills(issues: list[Issue]) -> None:
     for error in (public_skills.check_list(ROOT) + public_skills.unlisted_load_references(ROOT)
                   + public_skills.unprefixed_names(ROOT)):
@@ -852,6 +858,7 @@ def main() -> int:
     lint_public_skills(issues)
     lint_pi_package(issues)
     lint_plugin_manifests(issues)
+    lint_release_versions(issues)
     lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)

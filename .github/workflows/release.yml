@@ -1,0 +1,39 @@
+# Checks a pushed release tag: versions match the tag, and every install method installs the
+# tag from GitHub (scripts/fresh_install_test.py --ref). Steps: docs/guides/releasing.md.
+name: release
+on:
+  push:
+    tags: ["v*"]
+jobs:
+  release-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python3 scripts/release_check.py "${{ github.ref_name }}"
+  install-tag:
+    needs: release-check
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      # The expected skill lists come from this checkout, which is the tag itself.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      # Same pinned agent CLIs as the fresh-install job in gate.yml; bump both together.
+      - run: >
+          npm install -g
+          @earendil-works/pi-coding-agent@1.6.0
+          @anthropic-ai/claude-code@2.1.329
+          @openai/codex@0.153.1
+          skills@1.9.0
+      - run: python3 scripts/fresh_install_test.py --ref "${{ github.ref_name }}"

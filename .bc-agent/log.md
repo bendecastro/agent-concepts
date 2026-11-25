@@ -2093,3 +2093,6 @@ Re-tested the inline storage/verification rules that replaced kernel links (guar
 
 ## [2026-11-25] implement | 025-dashboard-data planned
 Planned the dashboard data item from the owner's choices (Held by line, history from git, Review/Gate lines in step Notes, Spent line from session files, owner dashboard separate): six steps, decision 0003, three glossary terms.
+
+## [2026-11-25] implement | 024 release preparation
+CHANGELOG.md (0.1.0), docs/guides/releasing.md, one version home in package.json with a lint check and scripts/release_check.py, fresh_install_test.py --ref and a tag-triggered release workflow. All four install methods verified installing a pushed ref from GitHub; no tag created.
