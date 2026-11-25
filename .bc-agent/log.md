@@ -2111,3 +2111,6 @@ README Install section per agent (tag v0.2.0, update, uninstall, tested-scope no
 
 ## [2026-11-25] implement | 007 closed, 008 dropped
 Owner choices after a relevance check: 007-agent-vault-read-path closed in reduced scope (both per-vault promotion timers removed from the main machine, unit files archived outside the repo; heading measurement and map.md migration dropped; no retrieval-driven shape change). 008-bc-drain-issues-v3-review-economy dropped; bc-pipeline-to-done CONCEPT.md records that the v3 token saving was never measured.
+
+## [2026-11-25] implement | install section review fixes
+README `## Install` reworked from the install-section review: Update renamed Refresh (stays on the installed release) with a "To move to a newer release" line, `pi-subagents` named for council skills (`pi install npm:pi-subagents`, checked on its npm page), exact `npx skills` tested scope, real clone URL, zsh/bash path lines, gate command, options as a list, shared-folder note. `release_check.py` now requires README#install to name the released tag and no other (test watched failing first); releasing.md step added; glossary gains tag, checkout, symlink and the "agent" note.

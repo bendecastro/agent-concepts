@@ -5,7 +5,8 @@ The version has one home, `version` in package.json (the Pi package). The Claude
 Codex plugin manifests and the Claude Code marketplace copy it when regenerated
 (`scripts/lint.py --write-plugin-manifests`). Lint runs the no-tag check; a release runs
 `python3 scripts/release_check.py vMAJOR.MINOR.PATCH`, which also requires the tag to name the
-same version and CHANGELOG.md to have an entry for it. Exit 1 on any problem.
+same version, CHANGELOG.md to have an entry for it, and the README's Install section to name
+that tag and no other. Exit 1 on any problem.
 """
 
 from __future__ import annotations
@@ -21,7 +22,24 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import plugin_manifests  # noqa: E402
 
 CHANGELOG = "CHANGELOG.md"
+README = "README.md"
 TAG_PATTERN = re.compile(r"v(\d+\.\d+\.\d+)")
+ANY_TAG = re.compile(r"\bv\d+\.\d+\.\d+\b")
+
+
+def readme_install_problems(root: Path, tag: str) -> list[str]:
+    """README#install must name the tag being released, and no older or other tag."""
+    readme = root / README
+    text = readme.read_text(encoding="utf-8") if readme.is_file() else ""
+    section = re.search(r"^## Install\n(.*?)(?=^## |\Z)", text, re.MULTILINE | re.DOTALL)
+    body = section.group(1) if section else ""
+    problems = []
+    if tag not in ANY_TAG.findall(body):
+        problems.append(f"{README} section `## Install` does not name tag {tag}")
+    others = sorted(set(ANY_TAG.findall(body)) - {tag})
+    if others:
+        problems.append(f"{README} section `## Install` names other tags: {', '.join(others)}")
+    return problems
 
 
 def _read(root: Path, relative: str) -> dict:
@@ -59,6 +77,7 @@ def version_problems(root: Path, tag: str | None = None) -> list[str]:
         entry = re.compile(rf"^## \[{re.escape(match.group(1))}\]", re.MULTILINE)
         if not changelog.is_file() or not entry.search(changelog.read_text(encoding="utf-8")):
             problems.append(f"{CHANGELOG} has no `## [{match.group(1)}]` entry for tag {tag}")
+        problems.extend(readme_install_problems(root, tag))
     if not home:
         problems.append(f"{plugin_manifests.VERSION_HOME} has no version")
     for relative, version in versions.items():

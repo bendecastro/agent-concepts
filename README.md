@@ -27,30 +27,45 @@ Prompts for harnesses without skill loading: [docs/guides/bootstrap.md](docs/gui
 ## Install
 
 Install a release, not the newest code: the newest code changes many times a day and can hold
-unfinished work. Each command below names a release tag. The newest release is `v0.2.0`; check the
+unfinished work. A release is a fixed, named version of the skills; its name (such as `v0.2.0`)
+is called a tag. The newest release is `v0.2.0`; check the
 [releases page](https://github.com/bendecastro/agent-concepts/releases) and use the newest tag
-listed there.
+listed there in place of `v0.2.0` in the commands below.
 
 Before you start:
 
 - **Pick one method per agent.** Two methods for the same agent install each skill twice.
-- **The six `bc-council-*` skills work only in Pi.** They start helper agents through a Pi add-on.
-  The other methods install them too, but they will not run there.
-- **What has been tested.** These commands were tested on Linux and macOS with Pi 1.6.0,
-  Claude Code 2.1.329, Codex 0.153.1 and `skills` 1.9.0. Windows and other agents have not been
-  tested.
-- **Moving to a newer release has not been tested.** The update commands were tested only within
-  the same release. To move to a newer tag, the safe way is to uninstall, then install again with
-  the new tag.
+  Several agents (Pi, Cursor, Grok, OpenCode, Muse) also read the shared folder
+  `~/.agents/skills/`. The contributor install and `npx skills -a pi` both write there, so an
+  agent that already has the skills by another method will see them twice.
+- **After installing, start a new agent session.** Sessions that are already open do not see new
+  skills.
+- **The six `bc-council-*` skills work only in Pi, and only with the
+  [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) package installed.** They start
+  subagents (helper agents) through it, and installing this repository does not install it. To
+  install it: `pi install npm:pi-subagents`. The other methods install the council skills too,
+  but they will not run there.
+- **Two skills can work with GitHub issues.** For that, `/bc-plan-to-pipeline` and
+  `/bc-pipeline-to-done` need the GitHub CLI (`gh`).
+- **What has been tested.** On Linux and macOS: the Pi, Claude Code and Codex methods with
+  Pi 1.6.0, Claude Code 2.1.329 and Codex 0.153.1; and `npx skills` (version 1.9.0) installing
+  for Pi only. `npx skills` for any other agent, and Windows, have not been tested.
+- **To move to a newer release**, run the Uninstall commands for your agent, then the Install
+  commands with the new tag. The Refresh commands below do not change your release. Moving from
+  one release to a newer one this way has not been tested yet.
 
 ### Claude Code
+
+The first command adds this repository as a source of plugins (Claude Code calls it a
+marketplace); the second installs the plugin, the package that holds the skills. Codex uses the
+same words.
 
 ```bash
 # Install
 claude plugin marketplace add bendecastro/agent-concepts#v0.2.0
 claude plugin install agent-concepts@agent-concepts
 
-# Update
+# Refresh (stays on the release you installed)
 claude plugin marketplace update agent-concepts
 claude plugin update agent-concepts@agent-concepts
 
@@ -66,7 +81,7 @@ claude plugin marketplace remove agent-concepts
 codex plugin marketplace add bendecastro/agent-concepts --ref v0.2.0
 codex plugin add agent-concepts@agent-concepts
 
-# Update
+# Refresh (stays on the release you installed)
 codex plugin marketplace upgrade agent-concepts
 codex plugin add agent-concepts@agent-concepts
 
@@ -81,7 +96,7 @@ codex plugin marketplace remove agent-concepts
 # Install
 pi install git:github.com/bendecastro/agent-concepts@v0.2.0
 
-# Update
+# Refresh (stays on the release you installed)
 pi update --extensions
 
 # Uninstall (use the same tag you installed)
@@ -91,49 +106,65 @@ pi remove git:github.com/bendecastro/agent-concepts@v0.2.0
 ### Other agents (`npx skills`)
 
 For other agents, use the [`skills` command-line tool](https://github.com/vercel-labs/skills)
-through `npx`, which needs Node.js. [docs/guides/install-packs.md](docs/guides/install-packs.md)
-has the command for all skills and a smaller command for each pack (one skill plus the skills
-it needs). In those commands, replace `<source>` with `bendecastro/agent-concepts@v0.2.0`
-and `<agent>` with your agent's id from the tool's agent list.
+through `npx`. `npx` comes with [Node.js](https://nodejs.org); it downloads and runs a
+command-line tool in one step. It downloads the newest `skills` tool, which may be newer than
+the tested 1.9.0.
+
+[docs/guides/install-packs.md](docs/guides/install-packs.md) has the command for all skills and
+a smaller command for each pack (one skill plus the skills it needs). In those commands, replace
+`<source>` with `bendecastro/agent-concepts@v0.2.0` and `<agent>` with your agent's id from
+[the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md)
+(for example `pi`).
 
 ```bash
-# Update
+# Refresh (stays on the release you installed)
 npx skills update -g -y
 
-# Uninstall: list the skill names you installed
+# Uninstall: use the same <agent>, and copy every name after --skill from the install command you ran
 npx skills remove -g -a <agent> -y <skill names>
 ```
 
 ### Install from a checkout (contributors)
 
 This is the way to work on the skills themselves: it links the skills to a local copy of this
-repository, so your edits take effect at once. Do not combine it with a method above for the same
-agent.
+repository (a checkout), so your edits take effect at once. This installs the newest code, not a
+release, so expect unfinished work. Do not combine it with a method above for the same agent.
 
-You need Git and Python 3. The repository's own gate also needs `pytest` and `hypothesis`.
-The GitHub issue modes of `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` need the GitHub CLI (`gh`).
+You need Git and Python 3. To run the repository's checks (`scripts/gate`), also install
+`pytest` and `hypothesis`, for example with `pip install pytest hypothesis`.
 
 ```bash
-git clone <this-repository-url> agent-concepts
+git clone https://github.com/bendecastro/agent-concepts.git agent-concepts
 cd agent-concepts
-
-# Some skill bodies run scripts from the checkout, so the shell needs its location.
-echo "export AGENT_CONCEPTS=\"$PWD\"" >> ~/.profile   # saves this checkout's path; adjust for your shell
 export AGENT_CONCEPTS="$PWD"
+```
 
+Some skills run scripts from this folder, so your shell needs to know where it is in every new
+terminal. Save the path once:
+
+- On macOS (zsh): `echo "export AGENT_CONCEPTS=\"$PWD\"" >> ~/.zshrc`
+- On Linux (bash): `echo "export AGENT_CONCEPTS=\"$PWD\"" >> ~/.profile`
+
+Then link the skills:
+
+```bash
 python3 scripts/deploy-local-skills.py --dry-run
 python3 scripts/deploy-local-skills.py
 ```
 
-Options: `--dry-run`, `--force` (replaces existing non-symlink files, not directories),
-`--harness {all,pi,claude}`, `--skip NAME` (repeatable), `--uninstall` (removes only the links this
-script created; other skills are left alone, and `--dry-run` previews it). A symlink to a skill this
-checkout does not own is reported and left alone. The shared `~/.agents/skills/` folder is always
-written; `--harness` picks which of the Pi and Claude Code folders are written too. The links are
-relative, so the checkout can live anywhere. Concepts whose `CONCEPT.md` says `deployed: no` are not
-linked.
+The script makes symlinks (shortcuts to a folder). Its options:
 
-Start a new agent session afterwards so it sees the skills.
+- **`--uninstall`** removes only the links this script created; other skills are left alone.
+  Add `--dry-run` to preview it.
+- `--dry-run` shows what would change without changing anything.
+- `--force` replaces existing files that are not symlinks; it does not replace folders.
+- `--harness {all,pi,claude}` picks which of the Pi and Claude Code folders are written. The
+  shared `~/.agents/skills/` folder is always written.
+- `--skip NAME` leaves one skill out; repeat it for more.
+
+A symlink to a skill this checkout does not own is reported and left alone. The links are
+relative, so the checkout can live anywhere. Concepts whose `CONCEPT.md` says `deployed: no`
+are not linked.
 
 ## Where things are
 

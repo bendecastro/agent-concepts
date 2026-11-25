@@ -19,8 +19,11 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
 4. Add the release to `CHANGELOG.md`: move the `Unreleased` items under a new
    `## [MAJOR.MINOR.PATCH] - YYYY-MM-DD` heading, written for people who install the skills,
    and update the comparison links at the bottom.
+   Then replace the old tag with the new one everywhere in the
+   [Install section of the README](../../README.md#install), including "The newest release is".
 5. Run `python3 scripts/release_check.py vMAJOR.MINOR.PATCH`. It exits nonzero when any
-   description's version differs from the tag or `CHANGELOG.md` has no entry for it. Run
+   description's version differs from the tag, `CHANGELOG.md` has no entry for it, or the
+   README's Install section does not name the tag or still names another one. Run
    `python3 scripts/lint.py` too (0 ERROR).
 6. Commit and push these changes, and wait for the `gate` run on that commit to be green.
 

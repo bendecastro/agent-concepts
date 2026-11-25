@@ -27,6 +27,9 @@ class ReleaseCheckTests(unittest.TestCase):
         self.write_json("package.json", {"name": "agent-concepts", "version": "1.2.3"})
         plugin_manifests.write_manifests(self.root)
         (self.root / "CHANGELOG.md").write_text("# Changelog\n\n## [1.2.3] - 2026-11-25\n", encoding="utf-8")
+        (self.root / "README.md").write_text(
+            "# Readme\n\n## Install\n\npi install git:github.com/o/r@v1.2.3\n\n## Next\n\nv0.0.1\n",
+            encoding="utf-8")
 
     def write_json(self, relative: str, document: dict) -> None:
         (self.root / relative).write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
@@ -59,6 +62,15 @@ class ReleaseCheckTests(unittest.TestCase):
     def test_tag_must_look_like_vmajor_minor_patch(self):
         problems = release_check.version_problems(self.root, "1.2.3")
         self.assertIn("vMAJOR.MINOR.PATCH", problems[0])
+
+    def test_readme_install_must_name_the_tag(self):
+        (self.root / "README.md").write_text(
+            "# Readme\n\n## Install\n\npi install git:github.com/o/r@v1.2.2\n", encoding="utf-8")
+        self.assertEqual(release_check.version_problems(self.root), [])
+        problems = release_check.version_problems(self.root, "v1.2.3")
+        self.assertEqual(len(problems), 2)
+        self.assertIn("README.md", problems[0])
+        self.assertIn("v1.2.2", problems[1])
 
     def test_main_exits_nonzero_on_mismatch(self):
         self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)

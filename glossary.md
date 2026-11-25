@@ -20,8 +20,8 @@ same meaning.
 - **overlay** — an optional private file that adds the owner's own tool names to a public skill; it adds no rules.
 - **public skill** — a skill people outside this repository can install: any concept not marked `deployed: no`, except kernels; its name starts with `bc-`.
 - **needed skills** — the other skills a skill refers to by name and that every install method installs with it.
-- **install method** — one way to install the public skills into an agent: a Claude Code plugin, a Codex plugin, the Pi package, `npx skills`, or the contributors' clone-and-link script. Use one per agent.
-- **release** — a tagged version of the public skills (`vMAJOR.MINOR.PATCH`) that install methods point at; never `master`.
+- **install method** — one way to install the public skills into an agent: a Claude Code plugin, a Codex plugin, the Pi package, `npx skills`, or the contributors' clone-and-link script. Use one per agent. Install docs may say "agent" for the harness here, because the install tools do.
+- **release** — a fixed, named version of the public skills that install methods point at; never `master`. Its name, such as `v0.2.0` (`vMAJOR.MINOR.PATCH`), is a Git **tag**.
 - **fresh-install test** — the CI check that installs with each install method into an empty home folder and checks what a stranger would find.
 
 - **work data** — the records about work items that a dashboard can read: stage, steps, who holds an item, its history, review and gate results, and time and cost; the work index script prints them as JSON.
@@ -75,6 +75,8 @@ same meaning.
 - **orchestrator** — a skill the owner starts that runs a sequence of other skills, such as bc-plan-to-pipeline or bc-pipeline-to-done.
 - **council** — a group of read-only advisors whose findings the parent weighs.
 - **advisor** — one member of a council: a read-only subagent, ideally on its own model, whose profile name starts with `council-` (bc-council-mode).
+- **checkout** — a local copy of a repository on your machine.
+- **symlink** — a shortcut to a file or folder; deploying links each skill's `body/` into an agent's skills folder this way.
 - **worktree** — a separate checkout of the repository where a worker makes changes without touching the main one.
 
 ## Code design and testing
