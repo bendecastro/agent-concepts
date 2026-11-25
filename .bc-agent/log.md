@@ -2105,3 +2105,6 @@ Renamed seven public skills so a newcomer can guess what they do (docs/decisions
 
 ## [2026-11-25] deploy | v0.2.0 released
 Tagged v0.2.0 (seven skill renames, decision 0004); GitHub release from the CHANGELOG entry; the tag workflow installed it from GitHub on Linux and macOS. Redeployed local skills on all three machines; old names stay as aliases.
+
+## [2026-11-25] implement | install docs
+README Install section per agent (tag v0.2.0, update, uninstall, tested-scope notes), contributor install kept as a subsection; releasing.md points at it. bootstrap/harnesses point outside users to it; stale links fixed; glossary adds PRD, ADR, preflight, driver, orchestrator and the human-gate/baseline wording conflicts are resolved.

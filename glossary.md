@@ -51,6 +51,9 @@ same meaning.
 - **Waiting on owner** — the line `Waiting on owner: <question>` in a parked work item: the decision a drain needs before it can continue; the item loses its ready line until the owner answers.
 - **rework** — fixing the defects a gate or review sent back.
 - **landing** — the final merge, push and close of reviewed work, done by the run's driver.
+- **PRD** — a product requirements document: what to build and why, written before the work is split into slices (bc-prd-drafting).
+- **ADR** — an architecture decision record: a short note of one design decision and its reasons, kept in `docs/decisions/` (bc-domain-modeling).
+- **preflight** — the checks and owner decisions made before an unattended run starts (bc-pipeline-to-done).
 
 ## Agents and runs
 
@@ -68,6 +71,8 @@ same meaning.
 - **manifest** — the run folder's list of tracks: who does each, where its artifact goes, and what happened to it.
 - **artifact** — the file a subagent writes its result to as it goes; the durable record of that result.
 - **packet** — the written task given to a subagent: scope, goal, limits, evidence wanted and output format.
+- **driver** — the agent that runs a drain: it claims tickets, sends them to workers and reviewers, and does the landing (bc-pipeline-to-done).
+- **orchestrator** — a skill the owner starts that runs a sequence of other skills, such as bc-plan-to-pipeline or bc-pipeline-to-done.
 - **council** — a group of read-only advisors whose findings the parent weighs.
 - **advisor** — one member of a council: a read-only subagent, ideally on its own model, whose profile name starts with `council-` (bc-council-mode).
 - **worktree** — a separate checkout of the repository where a worker makes changes without touching the main one.

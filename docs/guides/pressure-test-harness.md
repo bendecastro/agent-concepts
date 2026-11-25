@@ -1,6 +1,6 @@
 # Pressure-test harness (Pi, headless)
 
-How to run a consuming agent for the Test operation in `AGENTS.md` with Pi, so it sees only the
+How to run a consuming agent for the Test operation in `AGENTS.md` with Pi headless (in a terminal, with no interactive chat), so it sees only the
 concept under test. This page records the mechanics; what to test and how to grade stay in each
 concept's `tests/`. Worked examples: `concepts/bc-council-find-bugs/tests/scenario.md`,
 `concepts/bc-council-audit-security/tests/scenario.md`.
@@ -26,8 +26,8 @@ bwrap --dev-bind / / \
   --session-dir <scratch>/sess-<run> '/skill:<name> <arguments, then harness notes>'
 ```
 
-- The `--tmpfs` mounts hide every deployed skill and private overlay, so the run sees only the
-  bodies passed with `--skill`. The baseline run (without the concept) keeps the mounts and
+- The `--tmpfs` mounts (empty temporary folders laid over the real ones for this run only) hide every deployed skill and private overlay, so the run sees only the
+  bodies passed with `--skill`. The comparison run (without the concept) keeps the mounts and
   omits that concept's `--skill`; search its transcript for reads of the concept path before
   grading (see the Test operation).
 - A skill with `disable-model-invocation: true` loads only through its slash command, so the
@@ -35,7 +35,7 @@ bwrap --dev-bind / / \
 - Headless `pi -p` ends the session at the first reply without a tool call. Say so in the
   harness notes, and give the owner's answers to any question the skill asks (for example
   "the owner answers `all` at the filing question").
-- Grade from the files the run produced and its session JSONL, never from its final reply.
+- Grade from the files the run produced and its session log (a JSONL file: one JSON record per line), never from its final reply.
 
 ## Dry runs for skills that launch subagents
 

@@ -1,10 +1,14 @@
 # Harness compatibility
 
-This workspace is canonical at `concepts/<name>/body/`. Harness-specific deployment should expose that canonical body without copying it. When a harness cannot consume an Agent Skills directory directly, point the session at the body file with an explicit bootstrap prompt.
+To install the skills as an outside user, follow the [Install section of the README](../../README.md#install); this page does not repeat it. This page records how each harness (the program that runs the agent) gets the skills with the contributor install from a checkout (`python3 scripts/deploy-local-skills.py`), and the known problems of each.
+
+The canonical copy of each concept (the one that is edited) is `concepts/<name>/body/`. Harness-specific deployment should expose that body through a relative symlink (a shortcut written as a path relative to itself) rather than a copy. When a harness cannot consume an Agent Skills directory directly, point the session at the body file with a [bootstrap prompt](bootstrap.md) (a message you paste to tell the agent which instructions to read).
 
 For always-on base instructions, use `concepts/agent-kernel/body/AGENT-KERNEL.md`; it is deliberately a small Markdown include, not an on-demand skill.
 
 ## Compatibility matrix
+
+A delta below is a shortened version of the kernel instructions, tailored to one harness. The shared bus is `~/.agents/skills/`, the folder that several agent programs read.
 
 | Harness | Current status | Discovery/deploy method | Frontmatter handling | Notes |
 |---|---|---|---|---|

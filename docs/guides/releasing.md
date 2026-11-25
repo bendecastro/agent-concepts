@@ -42,15 +42,10 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
 
 ## What the fresh-install test runs for a tag
 
-These are the commands a stranger uses. The test runs each one in an empty home folder with
-the pinned agent versions in `.github/workflows/release.yml`.
-
-| Method | Install | Update | Uninstall |
-| --- | --- | --- | --- |
-| Pi | `pi install git:github.com/bendecastro/agent-concepts@<tag>` | `pi update --extensions` | `pi remove git:github.com/bendecastro/agent-concepts@<tag>` |
-| Claude Code | `claude plugin marketplace add bendecastro/agent-concepts#<tag>`, then `claude plugin install agent-concepts@agent-concepts` | `claude plugin marketplace update agent-concepts`, then `claude plugin update agent-concepts@agent-concepts` | `claude plugin uninstall agent-concepts@agent-concepts`, then `claude plugin marketplace remove agent-concepts` |
-| Codex | `codex plugin marketplace add bendecastro/agent-concepts --ref <tag>`, then `codex plugin add agent-concepts@agent-concepts` | `codex plugin marketplace upgrade agent-concepts`, then `codex plugin add agent-concepts@agent-concepts` | `codex plugin remove agent-concepts@agent-concepts`, then `codex plugin marketplace remove agent-concepts` |
-| `npx skills` | the commands in [install-packs.md](install-packs.md), with `<source>` = `bendecastro/agent-concepts@<tag>` | `npx skills update -g -y` | `npx skills remove -g -a <agent> -y <skill names>` |
+The test runs each command in the [Install section of the README](../../README.md#install) in
+an empty home folder, with the pinned agent versions in `.github/workflows/release.yml`. For
+`npx skills` it runs the all-skills command and one pack command from
+[install-packs.md](install-packs.md).
 
 The test runs the update commands against the same tag. Moving an install from one tag to a
 newer one has not been tested yet; until it is, the safe way is to uninstall and install again

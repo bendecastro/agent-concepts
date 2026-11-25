@@ -7,7 +7,7 @@ change.
 
 ## Supported harnesses
 
-Deploying links concept bodies into `~/.agents/skills/` (the shared skill folder) and into the
+The contributor install (below) links concept bodies into `~/.agents/skills/` (the shared skill folder) and into the
 Pi and Claude Code skill folders.
 
 | Harness | How it gets the skills |
@@ -25,6 +25,90 @@ Details and known problems for each harness: [docs/guides/harnesses.md](docs/gui
 Prompts for harnesses without skill loading: [docs/guides/bootstrap.md](docs/guides/bootstrap.md).
 
 ## Install
+
+Install a release, not the newest code: the newest code changes many times a day and can hold
+unfinished work. Each command below names a release tag. The newest release is `v0.2.0`; check the
+[releases page](https://github.com/bendecastro/agent-concepts/releases) and use the newest tag
+listed there.
+
+Before you start:
+
+- **Pick one method per agent.** Two methods for the same agent install each skill twice.
+- **The six `bc-council-*` skills work only in Pi.** They start helper agents through a Pi add-on.
+  The other methods install them too, but they will not run there.
+- **What has been tested.** These commands were tested on Linux and macOS with Pi 1.6.0,
+  Claude Code 2.1.329, Codex 0.153.1 and `skills` 1.9.0. Windows and other agents have not been
+  tested.
+- **Moving to a newer release has not been tested.** The update commands were tested only within
+  the same release. To move to a newer tag, the safe way is to uninstall, then install again with
+  the new tag.
+
+### Claude Code
+
+```bash
+# Install
+claude plugin marketplace add bendecastro/agent-concepts#v0.2.0
+claude plugin install agent-concepts@agent-concepts
+
+# Update
+claude plugin marketplace update agent-concepts
+claude plugin update agent-concepts@agent-concepts
+
+# Uninstall
+claude plugin uninstall agent-concepts@agent-concepts
+claude plugin marketplace remove agent-concepts
+```
+
+### Codex
+
+```bash
+# Install
+codex plugin marketplace add bendecastro/agent-concepts --ref v0.2.0
+codex plugin add agent-concepts@agent-concepts
+
+# Update
+codex plugin marketplace upgrade agent-concepts
+codex plugin add agent-concepts@agent-concepts
+
+# Uninstall
+codex plugin remove agent-concepts@agent-concepts
+codex plugin marketplace remove agent-concepts
+```
+
+### Pi
+
+```bash
+# Install
+pi install git:github.com/bendecastro/agent-concepts@v0.2.0
+
+# Update
+pi update --extensions
+
+# Uninstall (use the same tag you installed)
+pi remove git:github.com/bendecastro/agent-concepts@v0.2.0
+```
+
+### Other agents (`npx skills`)
+
+For other agents, use the [`skills` command-line tool](https://github.com/vercel-labs/skills)
+through `npx`, which needs Node.js. [docs/guides/install-packs.md](docs/guides/install-packs.md)
+has the command for all skills and a smaller command for each pack (one skill plus the skills
+it needs). In those commands, replace `<source>` with `bendecastro/agent-concepts@v0.2.0`
+and `<agent>` with your agent's id from the tool's agent list.
+
+```bash
+# Update
+npx skills update -g -y
+
+# Uninstall: list the skill names you installed
+npx skills remove -g -a <agent> -y <skill names>
+```
+
+### Install from a checkout (contributors)
+
+This is the way to work on the skills themselves: it links the skills to a local copy of this
+repository, so your edits take effect at once. Do not combine it with a method above for the same
+agent.
 
 You need Git and Python 3. The repository's own gate also needs `pytest` and `hypothesis`.
 The GitHub issue modes of `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` need the GitHub CLI (`gh`).
@@ -116,7 +200,7 @@ When to run each one, what it asks and what you get, and which skills to give yo
 - [`/bc-triage`](docs/guides/workflows.md#bc-triage): sort incoming issues into ready for an agent, ready for a person, needs information, or rejected.
 - [`/bc-find-bugs` and `/bc-council-find-bugs`](docs/guides/workflows.md#bc-find-bugs-and-bc-council-find-bugs): hunt an area for bugs and prove each with a failing test.
 - [`/bc-council-audit-security`](docs/guides/workflows.md#bc-council-audit-security): a security audit where every finding is checked by a fresh reviewer.
-- [`/bc-improve-codebase-architecture` and `/bc-council-improve-architecture`](docs/guides/workflows.md#bc-improve-codebase-architecture-and-bc-council-improve-codebase): find modules worth reshaping and plan one.
+- [`/bc-improve-codebase-architecture` and `/bc-council-improve-architecture`](docs/guides/workflows.md#bc-improve-codebase-architecture-and-bc-council-improve-architecture): find modules worth reshaping and plan one.
 - [`/bc-work-sync`](docs/guides/workflows.md#bc-work-sync): bring work items in line with the project's documents.
 - [`/bc-wiki-maintain`](docs/guides/workflows.md#bc-wiki-maintain): health-check the agent's notes folder.
 - [`/bc-teach`](docs/guides/workflows.md#bc-teach): learn a subject over many sessions with spaced review.

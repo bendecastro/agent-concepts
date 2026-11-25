@@ -1,6 +1,6 @@
 # The plan→execute loop
 
-How the workshop-pipeline skills compose into one end-to-end loop: from a raw idea to shipped code. Two user-invoked orchestrators bracket the loop (building can also be done attended, without the second); model-invoked disciplines hold the reusable behavior underneath.
+How the workshop-pipeline skills compose into one end-to-end loop: from a raw idea to shipped code. Two user-invoked orchestrators (skills that run a sequence of other skills) bracket the loop (building can also be done attended, without the second); model-invoked disciplines (reusable instructions the agent applies to one kind of work) hold the reusable behavior underneath. Terms such as PRD, ADR, driver and preflight are defined in the [glossary](../../glossary.md).
 
 ```
   idea / issue / bug report
@@ -38,10 +38,10 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
 
 ```text
 bc-plan-to-pipeline → bc-pipeline-to-done → optional observation inbox
-                                      → human-gated bc-improve-codebase-architecture → bc-plan-to-pipeline
+                                      → human-approved bc-improve-codebase-architecture → bc-plan-to-pipeline
 ```
 
-After a landed issue, `bc-pipeline-to-done` may prepend at most one bounded structural observation to the project's declared context inbox. New entries are written in the consumer's current newest-first order, so bounded reads cannot hide new observations below older history. This is a separate context-only, non-authoritative update. `bc-improve-codebase-architecture` verifies the open evidence before exploration and keeps its existing human candidate-selection and grilling gates. This is feedback, not another autonomous drain phase or a direct issue-creation path: only the human-gated route back through `bc-plan-to-pipeline` can turn a verified runway candidate into planned issues.
+After a landed issue, `bc-pipeline-to-done` may prepend at most one bounded structural observation to the project's declared context inbox. New entries are written in the consumer's current newest-first order, so bounded reads cannot hide new observations below older history. This is a separate context-only, non-authoritative update. `bc-improve-codebase-architecture` verifies the open evidence before exploration and keeps its existing human decision points: choosing a candidate, and the grilling. This is feedback, not another autonomous drain phase or a direct issue-creation path: only the human-approved route back through `bc-plan-to-pipeline` can turn a verified runway candidate into planned issues.
 
 ## Setup (once per repo) — `/bc-setup-project`
 
@@ -53,7 +53,7 @@ Before the loop runs in a fresh project, `/bc-setup-project` scaffolds a repo-ro
 
 **Evidence / runway — `/bc-prototype` and `/bc-improve-codebase-architecture`** (interactive, optional). Use prototypes when a state/UI decision needs a throwaway artifact before the PRD. Use architecture review when a feature or bug exposes poor seams and needs a deep-module plan before slicing.
 
-**Planning — `/bc-plan-to-pipeline`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`glossary.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. One human gate: the grill; the agent finalizes the slices without an approval stop. Composes model-invoked disciplines only (`bc-grilling`, `bc-domain-modeling`, `bc-prd-drafting`, `bc-plan-slicing`) — never the user-invoked single-step orchestrators.
+**Planning — `/bc-plan-to-pipeline`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`glossary.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues (small pieces that each run the whole path from user action to result) and publishes them `ready-for-agent` in dependency order. One human decision point: the grill; the agent finalizes the slices without an approval stop. Composes model-invoked disciplines only (`bc-grilling`, `bc-domain-modeling`, `bc-prd-drafting`, `bc-plan-slicing`) — never the user-invoked single-step orchestrators.
 
 **Building — attended (the standard way).** Open a session and tell the agent to continue the work. It follows the project's work rules: it finishes what is in `work/2-active/`, then takes the next item in pipeline order and ticks the steps as they land, using your own agent, skills and checks, and it asks you when something is unclear.
 
@@ -61,8 +61,8 @@ Before the loop runs in a fresh project, `/bc-setup-project` scaffolds a repo-ro
 
 - **Claim.** The driver claims each unit before any work starts so two drivers cannot build the same thing: a no-force `bc-drain-claims/issue-<n>` or `bc-drain-claims/item-<slug>` branch on the remote. A work item is claimed whole; one builder works through its steps in order and ticks each as it lands. With no Git remote, only one driver may run, the committed move of the item to `work/2-active/` is the claim, and the run commits locally without pushing.
 - **Audit and build.** High-risk units get a read-only audit first. A **fresh builder** then builds the unit test-first (or runs `bc-diagnosing-bugs` for bugs) in its own worktree; it cannot commit, push, or change the issue or work item.
-- **Review and land.** A deterministic pre-review gate runs, then tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards). The driver lands (commit, push `master`, close the issue with a validation comment, or tick the step) only when every review approves the exact final diff. Material findings receive bounded same-worktree rework/re-review for up to three cycles. A finished work item gets its Outcome filled and moves to `work/3-done/`.
-- **Outcomes.** `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. A work item that needs a decision is parked: the driver adds `Waiting on owner: <question>`, removes its `Ready for agent:` line, releases the claim and moves on; when you answer, write the answer into the item, delete the waiting line and restore `Ready for agent: yes`. Preflight is the only planned human gate.
+- **Review and land.** A deterministic pre-review gate (an automated check with fixed rules, not an agent's judgment) runs, then tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards). The driver lands (commit, push `master`, close the issue with a validation comment, or tick the step) only when every review approves the exact final diff. Material findings receive bounded same-worktree rework/re-review for up to three cycles. A finished work item gets its Outcome filled and moves to `work/3-done/`.
+- **Outcomes.** `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. A work item that needs a decision is parked: the driver adds `Waiting on owner: <question>`, removes its `Ready for agent:` line, releases the claim and moves on; when you answer, write the answer into the item, delete the waiting line and restore `Ready for agent: yes`. Preflight (the checks and decisions made before a run starts) is the only planned human decision point.
 
 
 ## Composition map

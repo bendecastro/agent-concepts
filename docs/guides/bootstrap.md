@@ -1,6 +1,8 @@
 # Bootstrap lines per agent
 
-Use this file when a harness does not automatically discover a concept from `concepts/<name>/body/`. See [harnesses.md](harnesses.md) for the compatibility matrix and deploy status.
+To install the skills for Claude Code, Codex, Pi or another agent, use the [Install section of the README](../../README.md#install). This page is for two other cases: contributors who work from a local copy of this repository (a checkout), and agents that cannot load skills on their own.
+
+A bootstrap prompt is a message you paste to tell an agent which instructions to read. Use one when a harness (the program that runs the agent) does not automatically discover a concept from `concepts/<name>/body/`. See [harnesses.md](harnesses.md) for the compatibility matrix and deploy status. In the prompts below, replace `<agent-concepts>` with the path of your checkout.
 
 ## Generic prompts
 
@@ -9,7 +11,7 @@ Use this file when a harness does not automatically discover a concept from `con
 - **Workspace maintenance (any agent):**
   `Read <agent-concepts>/AGENTS.md and follow it. Then: <operation>, e.g. "ingest docs/research/raw/foo.md", "lint the workspace", or "implement the teach concept update".`
 - **Concept session (manual harness):**
-  `Read <agent-concepts>/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter if your harness does not support Agent Skills metadata. Follow the Markdown body as your instructions for this session.`
+  `Read <agent-concepts>/concepts/<name>/body/SKILL.md fully. Ignore any YAML frontmatter (the block of settings between `---` lines at the top of the file) if your harness does not support Agent Skills metadata. Follow the Markdown body as your instructions for this session.`
 - **Concept test (manual harness):**
   `Act as the consuming agent for <agent-concepts>/concepts/<name>/body/SKILL.md in a throwaway workspace. Run the scenario in <agent-concepts>/concepts/<name>/tests/<test>. Produce artifacts, then grade by file inspection, not self-report.`
 
@@ -17,15 +19,15 @@ Use this file when a harness does not automatically discover a concept from `con
 
 ### Claude Code
 
-Claude Code discovers deployed concepts automatically via relative symlinks:
+With the contributor install (`python3 scripts/deploy-local-skills.py`), Claude Code discovers deployed concepts automatically through relative symlinks (shortcuts to a folder, written as a path relative to the shortcut, so the checkout can live anywhere):
 
 `~/.claude/skills/<name>` → `<relative path to>/concepts/<name>/body`
 
-Current deploys are recorded in each concept's `CONCEPT.md` and summarized in `../../index.md` / `harnesses.md`.
+Current deploys are recorded in each concept's `CONCEPT.md` and summarized in [index.md](../../index.md) and [harnesses.md](harnesses.md).
 
 ### Pi
 
-Pi discovers global skills from `~/.pi/agent/skills/`. `bc-teach` is deployed there as a relative symlink to the canonical body, so future sessions can auto-load it when the user asks to learn something; use `/skill:teach` to force it.
+Pi discovers global skills from `~/.pi/agent/skills/`. The contributor install links each deployed concept there as a relative symlink to its body, so sessions can load a skill when a request matches it (for example `bc-teach` when the user asks to learn something); type `/skill:<name>` to load one directly.
 
 For concepts not yet deployed to Pi, use the generic concept-session bootstrap:
 
@@ -37,7 +39,7 @@ For workspace maintenance:
 
 ### Codex
 
-Codex has the `agent-kernel` delta in `~/.codex/AGENTS.md`, its documented global instruction layer. Prefer durable repo-level `AGENTS.md` references for specialized concepts when working inside a repo; manual bootstrap also works.
+Codex has the `agent-kernel` delta (a shortened version of the kernel instructions, tailored to that agent) in `~/.codex/AGENTS.md`, its documented global instruction layer. Prefer durable repo-level `AGENTS.md` references for specialized concepts when working inside a repo; manual bootstrap also works.
 
 Example task frame:
 
@@ -54,7 +56,7 @@ OpenCode has the `agent-kernel` delta in `~/.config/opencode/AGENTS.md`. If nati
 
 ### Composer (Cursor)
 
-Composer discovers deployed concepts automatically from the shared bus:
+Composer discovers deployed concepts automatically from the shared bus (the `~/.agents/skills/` folder that several agent programs read):
 
 `~/.agents/skills/<name>` → `<relative path to>/concepts/<name>/body`
 
