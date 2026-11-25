@@ -2185,3 +2185,6 @@ Ran every install, refresh and uninstall box (Claude Code, Codex, Pi, npx for Cu
 
 ## [2026-11-25] implement | README look
 Centred header with badges and quick links, emoji principle headings with Skills lines, workflow diagram, tip and important callouts, emoji stage summaries; contributor section unfolded.
+
+## [2026-11-25] implement | README without emoji
+Removed every emoji from headings, stage summaries and the diagram at the owner's request.

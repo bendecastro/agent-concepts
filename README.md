@@ -25,7 +25,7 @@ Install them once and they work in the coding agent you already use: **Claude Co
 
 Eight ideas run through the whole set.
 
-### 🎯 Settle questions before building
+### Settle questions before building
 
 An agent that guesses what you wanted builds the wrong thing quickly. So the agent asks you
 questions one at a time until every decision in a plan is made, explores ideas with you
@@ -33,7 +33,7 @@ before they become plans, and brings real choices to you instead of deciding for
 
 **Skills:** [bc-grilling](concepts/bc-grilling/body/SKILL.md) · [bc-brainstorming](concepts/bc-brainstorming/body/SKILL.md) · [bc-plan-to-pipeline](concepts/bc-plan-to-pipeline/body/SKILL.md) · the [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md), a short set of rules the agent reads in every session
 
-### 🧪 Test first, and prove the test can fail
+### Test first, and prove the test can fail
 
 The centre of the whole set. Write the test first and watch it fail, then write the code that
 makes it pass. A test that has never failed proves nothing, so when the code already works,
@@ -45,7 +45,7 @@ proof is off unless you turn it on, and the agent suggests it where a mistake wo
 
 **Skills:** [bc-tdd](concepts/bc-tdd/body/SKILL.md)
 
-### 🔎 Evidence before claims
+### Evidence before claims
 
 "It works" means nothing until it has been checked. The agent checks its own work, and other
 agents' reports, against the code itself before saying it is done. A bug is first made to
@@ -53,7 +53,7 @@ happen on demand, then its cause is looked for.
 
 **Skills:** [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md) · the agent kernel
 
-### 🪶 Build the least that works, and keep it simple to use
+### Build the least that works, and keep it simple to use
 
 Before writing code the agent asks: does this need to exist? Does the project already have
 it? Would one line do? It stops at the first yes. What does get built is shaped into parts
@@ -62,7 +62,7 @@ change.
 
 **Skills:** [bc-minimal-solution-ladder](concepts/bc-minimal-solution-ladder/body/SKILL.md) · [bc-codebase-design](concepts/bc-codebase-design/body/SKILL.md)
 
-### 👀 Independent checking
+### Independent checking
 
 The agent that wrote something is the worst one to judge it. A separate agent reviews every
 change with fresh eyes: does it do what was asked, and is it well made? For big questions,
@@ -70,7 +70,7 @@ several AI models answer and challenge each other's answers.
 
 **Skills:** [bc-code-review](concepts/bc-code-review/body/SKILL.md) · [bc-pipeline-to-done](concepts/bc-pipeline-to-done/body/SKILL.md) · the [council skills](#running-several-agents)
 
-### 🗂️ Work lives in files, not chat
+### Work lives in files, not chat
 
 A chat disappears when the session ends; files stay. Plans, work items and handoff notes are
 saved in the project, so they survive a crash and another agent, or a dashboard, can read
@@ -79,7 +79,7 @@ agent can look up when it needs them.
 
 **Skills:** [bc-handoff](concepts/bc-handoff/body/SKILL.md) · [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) · the [work-data format](concepts/bc-setup-project/body/work-data.md) a dashboard reads
 
-### 🧱 Keep the project consistent, and stop it getting worse
+### Keep the project consistent, and stop it getting worse
 
 Many short-lived agents working on one project will slowly pull it in different directions
 unless something holds it together. Every colour, size and wording pattern is defined once and
@@ -90,7 +90,7 @@ database directly".
 
 **Skills:** [bc-ui-design](concepts/bc-ui-design/body/SKILL.md) · [bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md)
 
-### 🔁 The instructions are sourced, tested and improved from use
+### The instructions are sourced, tested and improved from use
 
 Every skill records where its ideas came from ([hard rules](AGENTS.md)). A skill that makes the
 agent follow a discipline is published only after it holds up in a pressure test: an agent is
@@ -103,10 +103,10 @@ once with it. After a session, the agent can suggest better instructions.
 
 ```mermaid
 flowchart LR
-    A["🧰 Set up<br/><code>/bc-setup-project</code>"] --> B["🧭 Plan<br/><code>/bc-plan-to-pipeline</code><br/>you answer questions"]
-    B --> C["🔨 Build<br/>test first"]
-    C --> D["🔍 Review<br/>fresh eyes"]
-    D --> E["✅ Merged"]
+    A["Set up<br/><code>/bc-setup-project</code>"] --> B["Plan<br/><code>/bc-plan-to-pipeline</code><br/>you answer questions"]
+    B --> C["Build<br/>test first"]
+    C --> D["Review<br/>fresh eyes"]
+    D --> E["Merged"]
     D -- "changes needed" --> C
 ```
 
@@ -126,7 +126,7 @@ This is the standard way.
 > your question and moves on.
 
 <details>
-<summary><b>🎬 What a session looks like</b> — one idea, from first question to merged code</summary>
+<summary><b>What a session looks like</b> — one idea, from first question to merged code</summary>
 
 Say you want to add a dark mode to your app.
 
@@ -157,7 +157,7 @@ with a link to [workflows.md](docs/guides/workflows.md) have a longer descriptio
 (when to run, what it asks, what you get back).
 
 <details>
-<summary><b>🧰 Set up</b> — get a project ready for agents</summary>
+<summary><b>Set up</b> — get a project ready for agents</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
@@ -167,7 +167,7 @@ with a link to [workflows.md](docs/guides/workflows.md) have a longer descriptio
 </details>
 
 <details>
-<summary><b>🧭 Decide and plan</b> — turn an idea into settled, agent-ready work</summary>
+<summary><b>Decide and plan</b> — turn an idea into settled, agent-ready work</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
@@ -186,7 +186,7 @@ with a link to [workflows.md](docs/guides/workflows.md) have a longer descriptio
 </details>
 
 <details>
-<summary><b>🔨 Build</b> — write the code, test first, and keep it consistent</summary>
+<summary><b>Build</b> — write the code, test first, and keep it consistent</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
@@ -215,7 +215,7 @@ cannot come back.
 </details>
 
 <details>
-<summary><b>🔍 Check and review</b> — review changes, find bugs and security holes, speed things up</summary>
+<summary><b>Check and review</b> — review changes, find bugs and security holes, speed things up</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
@@ -228,7 +228,7 @@ cannot come back.
 </details>
 
 <details>
-<summary><b>✨ Improve the codebase</b> — make code simpler, writing clearer, and the next session better</summary>
+<summary><b>Improve the codebase</b> — make code simpler, writing clearer, and the next session better</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
@@ -240,7 +240,7 @@ cannot come back.
 </details>
 
 <details>
-<summary><b>📌 Keep track of the work</b> — pick up where you left off and see what is happening</summary>
+<summary><b>Keep track of the work</b> — pick up where you left off and see what is happening</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
@@ -258,7 +258,7 @@ these: [workflows.md § Building your own dashboard](docs/guides/workflows.md#bu
 </details>
 
 <details>
-<summary><b>📚 Writing, knowledge and learning</b> — docs, clear writing, research, notes and learning</summary>
+<summary><b>Writing, knowledge and learning</b> — docs, clear writing, research, notes and learning</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
@@ -280,7 +280,7 @@ these: [workflows.md § Building your own dashboard](docs/guides/workflows.md#bu
 
 <a name="running-several-agents"></a>
 <details>
-<summary><b>🤝 Running several agents</b> — split work across helpers, or have several AI models debate</summary>
+<summary><b>Running several agents</b> — split work across helpers, or have several AI models debate</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
