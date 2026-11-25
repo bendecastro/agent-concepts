@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [023-pipeline-to-done](1-planned/023-pipeline-to-done/plan.md) | planned | — | — | the loop's third skill only builds GitHub issues, so projects that plan in work items have no unattended builder. | 0/5 |
+| 1 | [023-pipeline-to-done](2-active/023-pipeline-to-done/plan.md) | active | — | — | the loop's third skill only builds GitHub issues, so projects that plan in work items have no unattended builder. | 0/5 |
 | 2 | [007-agent-vault-read-path](1-planned/007-agent-vault-read-path.md) | planned | — | — | the cheap read path across `bc-init-agent` and `bc-wiki-maintain` is built and its benchmark is settled, but two rollout steps still only exist in this reposit… | 0/4 |
 | 3 | [008-bc-drain-issues-v3-review-economy](1-planned/008-bc-drain-issues-v3-review-economy.md) | planned | — | — | v3's review-economy rules are live in the drain skill, but their token win is unmeasured; the deterministic Gate B harness exists and the real same-model/mediu… | 0/3 |
 
