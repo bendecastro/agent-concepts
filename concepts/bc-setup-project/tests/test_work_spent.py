@@ -108,6 +108,7 @@ def test_no_matching_session_gives_a_zero_line(tmp_path):
 
 
 def test_json_lists_the_period_and_matched_sessions(tmp_path):
+    cache_before = (SCRIPT.parent / "__pycache__").exists()
     proj = project(tmp_path)
     pi = tmp_path / "pi"
     pi_session(pi, "main", proj, ["2026-11-01T10:05:00Z", "2026-11-01T10:10:00Z"])
@@ -119,7 +120,8 @@ def test_json_lists_the_period_and_matched_sessions(tmp_path):
     [session] = data["sessions"]
     assert (session["tool"], session["active_seconds"], session["tokens"], session["cost"]) == ("pi", 300, 1000, 0.5)
     assert session["file"].endswith("main.jsonl")
-    assert not (SCRIPT.parent / "__pycache__").exists()
+    # Other tests may import work_index in-process; only a cache this run created counts.
+    assert cache_before or not (SCRIPT.parent / "__pycache__").exists()
 
 
 def test_uncommitted_item_has_no_active_period(tmp_path):

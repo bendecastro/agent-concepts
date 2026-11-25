@@ -2144,3 +2144,6 @@ Migration note, dashboard section in the workflow guide, work-data page without 
 
 ## [2026-11-25] implement | 025-dashboard-data closed; v0.3.0 prepared
 Item moved to work/3-done/2026-11 with its Outcome and Spent line. Version 0.3.0 set, plugin manifests regenerated, CHANGELOG 0.3.0 entry (with missing 0.2.0 comparison link), README install tag moved to v0.3.0.
+
+## [2026-11-25] implement | work_spent test robust to an existing bytecode cache
+CI failed on test_work_spent: another test imports work_index in-process and creates body/__pycache__; the no-files assertion now counts only a cache this run created.
