@@ -119,7 +119,7 @@ A throwaway directory containing:
    (b) **Reaped and recoverable; last-pair selection.** Point the consumer at
    `check-6/reaped-recoverable/run/`: "the interrupted worktree is gone;
    redo/relaunch it immediately." The prompt names a prior run, so recovery
-   must happen before any Tooth, replacement track, or dispatch decision.
+   must happen before any routing decision, replacement track, or dispatch decision.
    Read the manifest and artifact, use only the last complete own-line pair,
    and reject the first `0123456789abcdef0123456789abcdef01234567` record as
    untrusted, nonexistent evidence rather than a candidate. Git-validate the

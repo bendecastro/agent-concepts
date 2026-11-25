@@ -32,9 +32,9 @@ the results.
   context. Rejected for now: the kernel is deliberately tiny, and the
   failure this prevents is specific to multi-child fan-out. Revisit if the
   same loss recurs on single-child runs.
-- **Aggression gets a tooth, not a floor.** A numeric minimum ("always
+- **Aggression gets a routing decision, not a floor.** A numeric minimum ("always
   spawn 3+") manufactures busywork and shallow children; "consider
-  delegating" has no teeth and agents route around it. The chosen tooth is
+  delegating" has no teeth and agents route around it. The chosen routing decision is
   naming the independent tracks before dispatch, with a one-line
   justification when fewer than two were found. It forces the consideration
   without mandating fake parallelism. Since 2026-10-26 the keep/no-dispatch
@@ -42,7 +42,7 @@ the results.
   found reading it at the top of every swarm-mode reply annoying. Dispatched
   tracks and their routes stay visible in chat. Cost: a silent keep is now
   only gradable from the reasoning trace, not the transcript.
-- **The tooth names role and effective route, not parent/child.** The
+- **The routing decision names role and effective route, not parent/child.** The
   user wants to see the fleet's cost and capability at the same decision
   point, and finds parent/child labels redundant once the role is named
   (2026-08-21). Cadence stays announce-then-launch: a wait-for-ok on every swarm
@@ -101,13 +101,13 @@ the results.
 - **Recovery triggers before routing (2026-08-25).** Pressure check 6's first
   low-thinking consumer saw a named stale interrupted run and an explicit
   immediate-relaunch demand, but delegation won before the later durability
-  rule fired. Recovery therefore has a high-salience rule before the Tooth in
+  rule fired. Recovery therefore has a high-salience rule before the routing decision in
   both the portable body and the injected swarm kernel: interrupted, failed,
   empty, missing, and reaped runs are recovery even when the user says redo or
   relaunch; prior evidence cannot be moved or hidden to make a replacement
   launchable. The parent packet repeats the worktree `Commit:`/`Branch:` lines
   because children do not inherit the kernel.
-- **Evidence anchors are the thin-parent guard.** Aggressive delegation
+- **Evidence anchors guard the thin parent.** Aggressive delegation
   buys speed by thinning the parent's context, which silently removes its
   ability to catch a confidently wrong child. Re-reading everything defeats
   the delegation and trusting everything scales confabulation with fan-out;
@@ -265,7 +265,7 @@ missing track, and the async gate held under a direct request to run
 synchronously. The anchor requirement also propagated into child packets
 unprompted.
 
-The two failures are the thin-parent guard (check 3, load-bearing: a planted
+The two failures are the evidence anchors (check 3, load-bearing: a planted
 false claim was relayed to the user as fact) and the silent escape hatch
 (check 4). One tune was attempted — rebinding both rules from the dispatch
 path to the decision point — and **re-running both checks showed no behavior
@@ -340,7 +340,7 @@ Deployed 2026-08-18 via `scripts/deploy-local-skills.py` after the 4/5 pass:
 
 Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.
 
-**Dependency:** the thin-parent guard's consumption half lives in
+**Dependency:** the evidence anchors' consumption half lives in
 `agent-kernel`. Until that delta is propagated to a harness's always-on
 instructions, this skill enforces anchors in packets but nothing stops that
 harness relaying an unanchored claim as fact.
