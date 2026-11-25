@@ -2053,3 +2053,6 @@ Bodies no longer link into other concepts: tdd/security-audit links became name 
 
 ## [2026-11-25] implement | 024 add workflow guide step
 Owner asked for deeper workflow docs: a guide page with cadence (every task, at a moment, periodic upkeep) plus a README section, after the rename.
+
+## [2026-11-25] implement | 024 bc- rename
+Renamed the 40 public skills without the prefix to bc-<name> (decision 0001); old names are deploy aliases. Lint now errors on an unprefixed public skill and exempts dated research and recorded test results as historical records.
