@@ -1993,3 +1993,6 @@ Install line now saves the checkout's real path (it saved the literal `$PWD`); `
 
 ## [2026-11-25] implement | vocabulary renames (item 004)
 Discipline gates are now hard rules (canon, provenance, test, immutability; ui-design capture rule; bc-swarm recovery rule), including AGENTS.md heading and lint messages. bc-swarm: the tooth → routing decision, thin-parent guard → evidence anchors. to-tickets says GitHub issues, plan-slicing says tickets. Other "gate" uses left for a later decision; outside-repo copies listed in work/0-ideas.md.
+
+## [2026-11-25] implement | glossary (item 005)
+Wrote root `glossary.md`: 51 terms in five groups using the settled meanings (gate = automated command only, hard rule, ticket/work item/issue/slice, subagent/worker, run folder). Dropped budget chain and regression allowance (unused in the repo); linked from AGENTS.md.
