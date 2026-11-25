@@ -20,4 +20,6 @@ Planned: grilled with the owner 2026-11-25 (decisions in the bc-init-agent grill
 
 ## Outcome
 
+Done. Guides in `docs/guides/`, templates in `docs/examples/`, research in dated folders, `docs/README.md` added, `docs/plans/` removed. Active plans became 007-agent-vault-read-path and 008-bc-drain-issues-v3-review-economy (planned); the gate-B trace plan was already done and is filed in `3-done/2026-11/`. Gate green locally (468 passed, tree 8240e67f) and in GitHub CI.
+
 
