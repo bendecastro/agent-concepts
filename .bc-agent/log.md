@@ -2005,3 +2005,6 @@ Rewrote `README.md` as a plain reference: harness table (with Muse), install, re
 
 ## [2026-11-25] implement | plan 006 guardrails method
 Grilled with the owner and filed 006 as a large item (plan.md + requirements.md): a general `guardrails` concept, an empty `docs/guardrails/README.md` from `bc-init-agent`, agents set limits themselves (measured ratchet, targets from published guidelines), checks added at setup and after each fixed regression.
+
+## [2026-11-25] implement | guardrails concept (item 006 steps 1-3)
+New `guardrails` concept (method, measuring and targets pages, three pressure scenarios; not run, not deployed); `bc-init-agent` scaffolds `docs/guardrails/README.md` and its map line for code, ops and hybrid; `bc-autoresearch-loop` measures like the guardrails and tightens the matching limit. Pressure test, deploy and README line remain (steps 4-5).

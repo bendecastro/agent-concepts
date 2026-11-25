@@ -15,7 +15,7 @@ Use targeted correctness checks and guarded pytest under [kernel Storage safety]
 
 1. **Name one metric.** A single, objective, reproducible number (median wall-time on a fixed input, output bytes, peak RSS, allocation count, request count, …). **If you cannot name an objective metric, STOP — do not optimize blind.** Say so and return; "looks cleaner/faster" is not a metric.
 2. **Lock correctness.** Identify the check that must keep passing — the project's tests, or if they're thin, a concrete check you can re-run (output count, content hash, golden output, a regression test). **Fix any correctness bug first**, then establish the baseline against the corrected code.
-3. **Baseline it.** Measure the metric on a fixed, representative input, enough runs to be stable (take a median; watch for noise). Write the number down. If the runtime is dominated by external tools, paid APIs, GPUs, or large model files, build a **dry-run / shadow** measurement first so iterations stay cheap and deterministic.
+3. **Baseline it.** Measure the metric on a fixed, representative input, enough runs to be stable (take a median; watch for noise). Measure and judge noise the way the `guardrails` skill's `measuring.md` says, so a kept win means the same as a guardrail limit. Write the number down. If the runtime is dominated by external tools, paid APIs, GPUs, or large model files, build a **dry-run / shadow** measurement first so iterations stay cheap and deterministic.
 
 ## The loop — one bounded change per iteration
 
@@ -25,6 +25,7 @@ Use targeted correctness checks and guarded pytest under [kernel Storage safety]
 4. **Re-measure the metric.** If it didn't beat the baseline by your threshold → **revert**.
 5. **Keep only if BOTH passed.** Record baseline → current → delta and the *kind* of win.
 6. **Re-baseline** against the kept change and repeat while budget remains.
+7. **Tighten the guardrail.** If the project's `docs/guardrails/README.md` has a limit on this metric, tighten it to the new value plus its noise allowance in the same commit as the kept change (never one the page marks as the owner's choice; mention that one in the report instead).
 
 ## Guards — the failure modes this exists to prevent
 

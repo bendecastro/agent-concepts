@@ -11,6 +11,12 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `guardrails`'s contract — optional, when baselining a metric; keeping a change in a project with docs/guardrails/README.md.
+  Measures and judges noise per guardrails' measuring.md, and a kept change tightens the matching agent-chosen limit on the guardrails page.
+  Source: [body/SKILL.md](body/SKILL.md#before-you-touch-code)
+
 ## Incoming
 
-None.
+- incoming from [guardrails](../guardrails/RELATIONSHIPS.md): hands off to this concept — optional.
+  measuring.md names bc-autoresearch-loop as the improvement loop that uses the same method; a verified improvement tightens the limit.
+  Source: [guardrails/body/measuring.md](../guardrails/body/measuring.md)

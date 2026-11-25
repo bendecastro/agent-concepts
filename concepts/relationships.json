@@ -961,6 +961,23 @@
       "when": "visible-layout scaffold writes docs/guardrails/README.md",
       "source": "concepts/bc-init-agent/body/scaffold.py",
       "reason": "The generated guardrails README names the guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet)."
+    },
+    {
+      "from": "bc-autoresearch-loop",
+      "to": "guardrails",
+      "relation": "depends_on_contract",
+      "required": false,
+      "when": "baselining a metric; keeping a change in a project with docs/guardrails/README.md",
+      "source": "concepts/bc-autoresearch-loop/body/SKILL.md#before-you-touch-code",
+      "reason": "Measures and judges noise per guardrails' measuring.md, and a kept change tightens the matching agent-chosen limit on the guardrails page."
+    },
+    {
+      "from": "guardrails",
+      "to": "bc-autoresearch-loop",
+      "relation": "hands_off",
+      "required": false,
+      "source": "concepts/guardrails/body/measuring.md",
+      "reason": "measuring.md names bc-autoresearch-loop as the improvement loop that uses the same method; a verified improvement tightens the limit."
     }
   ]
 }
