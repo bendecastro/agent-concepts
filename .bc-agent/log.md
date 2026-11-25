@@ -2071,3 +2071,6 @@ New `scripts/install_packs.py` generates `docs/guides/install-packs.md` (all-ski
 
 ## [2026-11-25] implement | 024 Workflow guide
 New `docs/guides/workflows.md`: each newcomer workflow with timing, start, questions, result and example, plus the skills to attach to subagents and how in Pi, Claude Code and Codex (attach mechanisms checked against current docs). README gains a Workflows section linking each entry.
+
+## [2026-11-25] implement | 024 fresh-install test
+`scripts/fresh_install_test.py` installs, lists, runs a helper, updates and uninstalls via the Pi package, Claude Code and Codex plugins and `npx skills` (all + a pack) in a scratch HOME; CI job `fresh-install` on ubuntu and macos with pinned CLIs; a dropped needed skill fails the check.

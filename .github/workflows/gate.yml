@@ -18,3 +18,29 @@ jobs:
       - run: sudo apt-get install -y gnu-coreutils
       - run: pip install pytest hypothesis
       - run: scripts/gate
+  # Installs this checkout through each install method in a fresh HOME (scripts/fresh_install_test.py).
+  # macOS runs only this job: the gate needs Bash 4 (mapfile) and GNU tools.
+  fresh-install:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      # Pinned agent CLIs; bump deliberately and record the versions in the release notes.
+      - run: >
+          npm install -g
+          @earendil-works/pi-coding-agent@1.6.0
+          @anthropic-ai/claude-code@2.1.329
+          @openai/codex@0.153.1
+          skills@1.9.0
+      - run: python3 scripts/fresh_install_test.py
+      # A pack installed without one of its needed skills must fail the check.
+      - run: "! python3 scripts/fresh_install_test.py --method npx-pack --drop-needed bc-tdd"
