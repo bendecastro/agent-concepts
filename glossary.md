@@ -35,7 +35,7 @@ same meaning.
 - **ticket** — one unit of work in any tracker. Use it in text that does not depend on which tracker.
 - **work item** — a ticket in the project's own `work/` folders; its folder is its status.
 - **issue** — a ticket on GitHub. _Avoid_: issue, in text that works with any tracker (say ticket).
-- **slice** — an issue that implements one step of a work item.
+- **slice** — one thin piece of a plan that works end to end on its own; it becomes a step of a work item, a ticket, or both.
 - **drain** — a run that works through the eligible issues one by one until none are left or a stop condition fires.
 - **claim** — the marker an agent sets on an issue before working on it, so no other agent takes it.
 - **rework** — fixing the defects a gate or review sent back.
@@ -62,10 +62,11 @@ same meaning.
 
 ## Performance guardrails
 
-- **guardrail** — an automated check that stops a quality, such as speed, from getting worse. _Avoid_: fitness function (the industry term, same meaning).
+- **guardrail** — an automated check that stops a quality, such as speed, from getting worse.
+- **fitness function** — a guardrail for a property of the system's design or architecture, such as "the UI layer never calls the database"; the industry term.
 - **performance budget** — a fixed limit on a speed or size measure, such as time per frame or download size.
 - **hot path** — the code that runs so often (for example every frame) that small costs there add up.
 - **baseline** — the measured value that later measurements are compared against.
 - **ratchet** — a check that accepts existing shortfalls but rejects anything worse, and tightens its baseline after a real improvement.
 - **noise** — the natural variation between repeated measurements of the same thing.
-- **measurement harness** — the repeatable setup that runs a measurement the same way each time.
+- **measurement harness** — the repeatable setup that runs a measurement the same way each time; not the same thing as an agent's harness.
