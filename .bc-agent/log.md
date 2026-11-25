@@ -2173,3 +2173,6 @@ Owner pipeline wording restored (nobody there to answer; diligently verifies), n
 
 ## [2026-11-25] implement | README headings and wording
 Principles get their own headings; plainer opening sentence; install intro no longer claims the code changes many times a day.
+
+## [2026-11-25] implement | README plain-language pass
+Every skill description rewritten to say what it is for in plain words; principles and stage summaries de-jargoned; bc-research and bc-qmd added to the tables; repeated not-tested notes removed.
