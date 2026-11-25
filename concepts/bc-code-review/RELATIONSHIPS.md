@@ -29,10 +29,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-- incoming from [bc-reflect-on-sessions](../bc-reflect-on-sessions/RELATIONSHIPS.md): hands off to this concept — optional.
-  Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks.
-  Source: [bc-reflect-on-sessions/body/SKILL.md](../bc-reflect-on-sessions/body/SKILL.md#every-proposal-names-its-home)
-
 - incoming from [bc-security-audit](../bc-security-audit/RELATIONSHIPS.md): adapts this concept — required.
   Adapts fresh-context reviewer isolation and findings-are-not-obligations calibration, not the two-axis diff workflow.
   Source: [bc-security-audit/CONCEPT.md](../bc-security-audit/CONCEPT.md#design-decisions)
+
+- incoming from [bc-self-improve](../bc-self-improve/RELATIONSHIPS.md): hands off to this concept — optional.
+  Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks.
+  Source: [bc-self-improve/body/SKILL.md](../bc-self-improve/body/SKILL.md#every-proposal-names-its-home)

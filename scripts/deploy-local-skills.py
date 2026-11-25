@@ -64,10 +64,10 @@ PRIVATE_CONCEPTS = CONFIG_HOME / "agent-concepts" / "concepts"
 DEPLOY_ALIASES: dict[str, str] = {
     "bc-plan-to-issues": "bc-plan-to-pipeline",
     "issue-slicing": "bc-plan-slicing",
-    "bc-agent-reflect": "bc-reflect-on-sessions",
+    "bc-agent-reflect": "bc-self-improve",
     "bc-drain-issues": "bc-pipeline-to-done",
     # Names before release 0.2.0 (docs/decisions/0004-skill-names-say-what-they-do.md).
-    "bc-reflect": "bc-reflect-on-sessions",
+    "bc-reflect": "bc-self-improve",
     "bc-swarm": "bc-delegate-investigation",
     "bc-autoresearch-loop": "bc-optimize-code",
     "bc-show-me": "bc-explain-visually",

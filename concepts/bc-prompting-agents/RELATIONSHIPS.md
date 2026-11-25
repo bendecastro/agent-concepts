@@ -17,10 +17,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Adapts loading-is-not-authorization, scope discipline and examples-over-rules.
   Source: [bc-explain-visually/CONCEPT.md](../bc-explain-visually/CONCEPT.md#design-decisions)
 
-- incoming from [bc-reflect-on-sessions](../bc-reflect-on-sessions/RELATIONSHIPS.md): hands off to this concept — optional.
-  A proposal homed in a concept or kernel clause is worded per bc-prompting-agents and pressure-tested before deploy.
-  Source: [bc-reflect-on-sessions/body/SKILL.md](../bc-reflect-on-sessions/body/SKILL.md#every-proposal-names-its-home)
-
 - incoming from [bc-security-audit](../bc-security-audit/RELATIONSHIPS.md): adapts this concept — required.
   Adapts scope, ambiguity, evidence and enforced privileged-action phrasing for guidance versus explicit audit mode.
   Source: [bc-security-audit/CONCEPT.md](../bc-security-audit/CONCEPT.md#design-decisions)
+
+- incoming from [bc-self-improve](../bc-self-improve/RELATIONSHIPS.md): hands off to this concept — optional.
+  A proposal homed in a concept or kernel clause is worded per bc-prompting-agents and pressure-tested before deploy.
+  Source: [bc-self-improve/body/SKILL.md](../bc-self-improve/body/SKILL.md#every-proposal-names-its-home)

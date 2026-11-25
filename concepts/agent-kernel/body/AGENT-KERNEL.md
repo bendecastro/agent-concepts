@@ -135,7 +135,7 @@ this order, with no blank line between them:
   flight, no open question), say the work is done and the session can be
   closed — the reply that ends the work gets a recap even when it is a
   one-line answer; after a substantial session (long, several subagents, or
-  rework rounds) also offer `/bc-reflect-on-sessions`. Why: the owner closes sessions on this signal,
+  rework rounds) also offer `/bc-self-improve`. Why: the owner closes sessions on this signal,
   and a reflection pays off only where there was enough friction to learn from.
 - `🏁` followed by the session's goal in about five words — a label, not a restatement.
 Use the emoji as the line labels, not `Goal:`, `Next:` or `Status:`. The goal

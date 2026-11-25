@@ -110,7 +110,7 @@ When to run each one, what it asks and what you get, and which skills to give yo
 - [`/bc-delegate-investigation`](docs/guides/workflows.md#bc-delegate-investigation): hand independent parts of a task to parallel subagents without losing their results.
 - [`/bc-optimize-code`](docs/guides/workflows.md#bc-optimize-code): make code measurably faster or smaller, keeping only proven gains.
 - [`/bc-prototype`](docs/guides/workflows.md#bc-prototype): answer a design question with throwaway code.
-- [`/bc-reflect-on-sessions`](docs/guides/workflows.md#bc-reflect-on-sessions): after a session, propose changes that make the next one faster.
+- [`/bc-self-improve`](docs/guides/workflows.md#bc-self-improve): after a session, propose changes that make the next one faster.
 - [`/bc-council-challenge-plan`](docs/guides/workflows.md#bc-council-challenge-plan): have several models attack a plan before it is split into steps.
 - [`/bc-to-spec` and `/bc-to-tickets`](docs/guides/workflows.md#bc-to-spec-and-bc-to-tickets): turn a conversation into a GitHub spec and ready-to-build issues.
 - [`/bc-triage`](docs/guides/workflows.md#bc-triage): sort incoming issues into ready for an agent, ready for a person, needs information, or rejected.

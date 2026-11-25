@@ -4,7 +4,7 @@ test_status: partial # 2026-11-19 isolated stranger retest of final body (13b308
 tested: 2026-11-19
 deployed: yes
 ---
-# Concept: bc-reflect-on-sessions
+# Concept: bc-self-improve
 
 Renamed from `retro` on 2026-11-19 (owner choice; no alias). Tests below ran under the former name, so their recorded prompts and outputs keep `/retro`.
 
@@ -26,7 +26,7 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 - **`writing-for-agents` dropped.** Upstream's step 1 loads it. Here `bc-prompting-agents` owns instruction wording, so the body points there.
 - **Transcripts are data.** Not in upstream. Session logs hold tool output and fetched text; the body forbids saving instructions read from them into memory.
 
-- **Owner specifics in a private overlay.** The body names no owner tool or path; one line tells the agent to read `~/.config/agent-concepts/overlays/bc-reflect-on-sessions.md` if it exists, which names the owner's session time-report tool and report directory. Why: the repository must work as-is for a stranger (`AGENTS.md` § Conventions), while the owner's agents keep their tool names. Owner decision 2026-11-19.
+- **Owner specifics in a private overlay.** The body names no owner tool or path; one line tells the agent to read `~/.config/agent-concepts/overlays/bc-self-improve.md` if it exists, which names the owner's session time-report tool and report directory. Why: the repository must work as-is for a stranger (`AGENTS.md` § Conventions), while the owner's agents keep their tool names. Owner decision 2026-11-19.
 - **Report directory:** `BC_AGENT_REFLECT_REPORT_DIR` if set, otherwise the `--report` target's parent if given, otherwise `${XDG_STATE_HOME:-~/.local/state}/bc-agent-reflect/`. The open-report check needs one directory that every run reads and writes. A per-project `./bc-agent-reflect/` would split one cross-project batch history across repositories and drop files into working trees; `${TMPDIR:-/tmp}` (the earlier default) is wiped, losing undecided reports, and disagreed with where the check read. The XDG state directory is per-user, persistent and outside any repository.
 - **Two report-name forms.** Default batch reports are `YYYY-MM-DD-<scope>.md`; a scheduled job may pass a date-only `--report YYYY-MM-DD.md`, which external readers of that directory may rely on. The open-report check matches both by date prefix and excludes the run's own `--report` target, so a same-day rerun does not carry over its own report. The decided/proposals interface (`## Decisions` line; `1. ` items under `## Proposals`) is fixed, and the body now tells the writer to produce it.
 
@@ -48,4 +48,4 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 
 ## Deploy
 
-Deployed via `scripts/deploy-local-skills.py` to the shared bus (`~/.agents/skills/bc-reflect-on-sessions`, `~/.pi/agent/skills/bc-reflect-on-sessions`, `~/.claude/skills/bc-reflect-on-sessions`). Batch changes await a pressure re-test.
+Deployed via `scripts/deploy-local-skills.py` to the shared bus (`~/.agents/skills/bc-self-improve`, `~/.pi/agent/skills/bc-self-improve`, `~/.claude/skills/bc-self-improve`). Batch changes await a pressure re-test.

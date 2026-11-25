@@ -13,7 +13,7 @@ Seven skills have new names that say what they do
 
 ### Changed
 
-- `bc-reflect` is now `bc-reflect-on-sessions`.
+- `bc-reflect` is now `bc-self-improve`.
 - `bc-swarm` is now `bc-delegate-investigation`.
 - `bc-autoresearch-loop` is now `bc-optimize-code`.
 - `bc-show-me` is now `bc-explain-visually`.

@@ -5,7 +5,7 @@ Status: accepted
 
 ## Context
 
-Some public skill names made sense only to someone who already knew the skill: `bc-swarm`, `bc-show-me`, `bc-autoresearch-loop`, `bc-init-agent` and `bc-guardrails` do not tell a newcomer what they get, and `bc-reflect` and `bc-council-improve-codebase` leave out what is reflected on or improved. A newcomer picks a skill from a list of names, so a name they cannot guess is a skill they do not use.
+Some public skill names made sense only to someone who already knew the skill: `bc-swarm`, `bc-show-me`, `bc-autoresearch-loop`, `bc-init-agent` and `bc-guardrails` do not tell a newcomer what they get, `bc-reflect` does not say that its point is improving how the agent works, and `bc-council-improve-codebase` does not say what it improves. A newcomer picks a skill from a list of names, so a name they cannot guess is a skill they do not use.
 
 ## Decision
 
@@ -13,7 +13,7 @@ Seven skills are renamed, chosen by the owner:
 
 | Old name | New name |
 | --- | --- |
-| `bc-reflect` | `bc-reflect-on-sessions` |
+| `bc-reflect` | `bc-self-improve` |
 | `bc-swarm` | `bc-delegate-investigation` |
 | `bc-autoresearch-loop` | `bc-optimize-code` |
 | `bc-show-me` | `bc-explain-visually` |

@@ -20,7 +20,7 @@ Words with a set meaning here, such as gate, worktree and seam, are defined in t
 |---|---|
 | Once per project | [bc-setup-project](#bc-setup-project) |
 | During a task, when the need comes up | [bc-diagnosing-bugs](#bc-diagnosing-bugs), [bc-code-review](#bc-code-review), [bc-delegate-investigation](#bc-delegate-investigation), [bc-optimize-code](#bc-optimize-code), [bc-prototype](#bc-prototype) |
-| At a set point in your work | [bc-reflect-on-sessions](#bc-reflect-on-sessions) at the end of a session, and weekly over many sessions; [bc-council-challenge-plan](#bc-council-challenge-plan) before a plan is split into steps; [bc-to-spec and bc-to-tickets](#bc-to-spec-and-bc-to-tickets) after a planning conversation; [bc-triage](#bc-triage) when issues arrive; [bc-find-bugs](#bc-find-bugs-and-bc-council-find-bugs) and [bc-council-audit-security](#bc-council-audit-security) before a release |
+| At a set point in your work | [bc-self-improve](#bc-self-improve) at the end of a session, and weekly over many sessions; [bc-council-challenge-plan](#bc-council-challenge-plan) before a plan is split into steps; [bc-to-spec and bc-to-tickets](#bc-to-spec-and-bc-to-tickets) after a planning conversation; [bc-triage](#bc-triage) when issues arrive; [bc-find-bugs](#bc-find-bugs-and-bc-council-find-bugs) and [bc-council-audit-security](#bc-council-audit-security) before a release |
 | Every few weeks | [bc-improve-codebase-architecture](#bc-improve-codebase-architecture-and-bc-council-improve-codebase), [bc-work-sync](#bc-work-sync), [bc-wiki-maintain](#bc-wiki-maintain) |
 | Across many sessions | [bc-teach](#bc-teach) |
 
@@ -98,13 +98,13 @@ Every change report shows a **Test levels** block with one line per level, sayin
 
 ## At a set point in your work
 
-### bc-reflect-on-sessions
+### bc-self-improve
 
 - **When:** the skill sets no schedule. Suggested: at the end of a session that went slowly or wrong, and a batch run over many sessions about once a week. It reads Pi's session logs, so it works only with Pi.
-- **Start:** `/bc-reflect-on-sessions` (slash command only). Arguments: a session id, or `since 2026-11-01`, or `last 20`, optionally a project name.
+- **Start:** `/bc-self-improve` (slash command only). Arguments: a session id, or `since 2026-11-01`, or `last 20`, optionally a project name.
 - **What it asks:** which of its numbered proposals to act on. If an earlier report is still undecided, it shows that one first.
 - **What you get:** a list ordered by cost, each item naming what went wrong, the evidence in the session log, and a change that would prevent it: a new check, a review rule, a pointer in an instruction file, a cheaper tool call. It changes nothing until you pick. Batch mode also writes a report file and records what you decided.
-- **Example:** after a session spent rerunning a slow test suite, `/bc-reflect-on-sessions` proposes running only the affected tests while working, with the timestamps that show the wasted time.
+- **Example:** after a session spent rerunning a slow test suite, `/bc-self-improve` proposes running only the affected tests while working, with the timestamps that show the wasted time.
 
 ### bc-council-challenge-plan
 

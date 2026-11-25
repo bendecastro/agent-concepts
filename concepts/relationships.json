@@ -689,26 +689,26 @@
     },
     {
       "from": "agent-kernel",
-      "to": "bc-reflect-on-sessions",
+      "to": "bc-self-improve",
       "relation": "hands_off",
       "required": false,
       "source": "concepts/agent-kernel/body/AGENT-KERNEL.md",
-      "reason": "The recap's 👣 line offers /bc-reflect-on-sessions when a substantial session's deliverables are all ready; the owner decides."
+      "reason": "The recap's 👣 line offers /bc-self-improve when a substantial session's deliverables are all ready; the owner decides."
     },
     {
-      "from": "bc-reflect-on-sessions",
+      "from": "bc-self-improve",
       "to": "bc-prompting-agents",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-reflect-on-sessions/body/SKILL.md#every-proposal-names-its-home",
+      "source": "concepts/bc-self-improve/body/SKILL.md#every-proposal-names-its-home",
       "reason": "A proposal homed in a concept or kernel clause is worded per bc-prompting-agents and pressure-tested before deploy."
     },
     {
-      "from": "bc-reflect-on-sessions",
+      "from": "bc-self-improve",
       "to": "bc-code-review",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-reflect-on-sessions/body/SKILL.md#every-proposal-names-its-home",
+      "source": "concepts/bc-self-improve/body/SKILL.md#every-proposal-names-its-home",
       "reason": "Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks."
     },
     {
