@@ -3,7 +3,6 @@
 Why: the README opens with a pitch, overstates what lint and tests prove, and gives a stranger no map of the repository.
 Done when: `README.md` says what the repo is, how to install it, where things are, the loop, the hard rules, authorization and credits, with every claim matching the code and using the glossary's terms.
 Stage: next
-Blocked by: none
 Kind: docs
 Source: owner review of the README, 2026-11-25
 Planned: owner chose a plain-reference rewrite after the glossary, 2026-11-25
