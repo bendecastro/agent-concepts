@@ -1,6 +1,6 @@
 # The plan→execute loop
 
-How the workshop-pipeline skills compose into one end-to-end loop: from a raw idea to shipped code. Two user-invoked orchestrators bracket the loop; model-invoked disciplines hold the reusable behavior underneath.
+How the workshop-pipeline skills compose into one end-to-end loop: from a raw idea to shipped code. Two user-invoked orchestrators bracket the loop (building can also be done attended, without the second); model-invoked disciplines hold the reusable behavior underneath.
 
 ```
   idea / issue / bug report
@@ -17,10 +17,13 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
    │                                    (slices finalized by the agent)     │
    │     (no tracker: slices become the work item's steps; no issues)       │
    ▼                                                                        │
-  ready-for-agent issue queue  ◄──────────────────────────────────────────┘
+  ready queue: work items with `Ready for agent: yes` ◄────────────────────┘
+               or ready-for-agent issues
    │
-   ▼   /bc-pipeline-to-done ── autonomous execution (AFK) ──┐
-   │     loop: claim next unblocked issue (remote claim branch)       │
+   ├──► attended (standard): "continue the work" in a session
+   │
+   ▼   /bc-pipeline-to-done ── unattended execution (AFK) ──┐
+   │     loop: claim next ready item or issue                         │
    │       └► fresh worker: tdd OR diagnosing-bugs ─► validate        │
    │            └► deterministic gate ─► tiered review                │
    │                 (tier 1: combined; tier 2: Spec + Standards axes)
@@ -52,7 +55,15 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 
 **Planning — `/bc-plan-to-pipeline`** (interactive, run once per feature). Grills the idea one question at a time, captures the domain model inline (`glossary.md` + ADRs), drafts a PRD and publishes it as a parent issue, then slices it into vertical tracer-bullet issues and publishes them `ready-for-agent` in dependency order. One human gate: the grill; the agent finalizes the slices without an approval stop. Composes model-invoked disciplines only (`grilling`, `domain-modeling`, `prd-drafting`, `plan-slicing`) — never the user-invoked single-step orchestrators.
 
-**Execution — `/bc-pipeline-to-done`** (AFK, run after planning/triage). A preflight-gated driver loop atomically claims each unblocked issue, dispatches a **fresh worker** to build it test-first (or run `diagnosing-bugs` for bugs), runs a deterministic pre-review gate, then applies tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards) before trunk-based landing (commit → push `master` → close with a validation comment). Material findings receive bounded same-worktree rework/re-review for up to three cycles. Terminal outcomes stay distinct: `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable issue-local environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; and `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. Preflight is the only planned human gate; these outcomes are reported rather than collapsed into one parking state.
+**Building — attended (the standard way).** Open a session and tell the agent to continue the work. It follows the project's work rules: it finishes what is in `work/2-active/`, then takes the next item in pipeline order and ticks the steps as they land, using your own agent, skills and checks, and it asks you when something is unclear.
+
+**Building — unattended, `/bc-pipeline-to-done`** (AFK, the option for when you are away; the old name `/bc-drain-issues` still works as an alias). It builds the same queue from one of two sources: work items carrying `Ready for agent: yes` (which `/bc-plan-to-pipeline` writes only when every step states its done-criteria and what is out of scope), or GitHub issues labelled `ready-for-agent`. Because nobody is there to answer questions, it replaces the owner with checking, so it costs more tokens and takes longer than the same work done attended.
+
+- **Claim.** The driver claims each unit before any work starts so two drivers cannot build the same thing: a no-force `bc-drain-claims/issue-<n>` or `bc-drain-claims/item-<slug>` branch on the remote. A work item is claimed whole; one builder works through its steps in order and ticks each as it lands. With no Git remote, only one driver may run, the committed move of the item to `work/2-active/` is the claim, and the run commits locally without pushing.
+- **Audit and build.** High-risk units get a read-only audit first. A **fresh builder** then builds the unit test-first (or runs `diagnosing-bugs` for bugs) in its own worktree; it cannot commit, push, or change the issue or work item.
+- **Review and land.** A deterministic pre-review gate runs, then tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards). The driver lands (commit, push `master`, close the issue with a validation comment, or tick the step) only when every review approves the exact final diff. Material findings receive bounded same-worktree rework/re-review for up to three cycles. A finished work item gets its Outcome filled and moves to `work/3-done/`.
+- **Outcomes.** `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. A work item that needs a decision is parked: the driver adds `Waiting on owner: <question>`, removes its `Ready for agent:` line, releases the claim and moves on; when you answer, write the answer into the item, delete the waiting line and restore `Ready for agent: yes`. Preflight is the only planned human gate.
+
 
 ## Composition map
 
@@ -69,7 +80,7 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 ## Safety posture (execution)
 - **Push is authorization-gated.** `bc-pipeline-to-done` preflight runs `scripts/publish-check.py`; a repo with no allow rule in `~/.config/agent-concepts/publish.yaml` **blocks** the AFK push (abort, or opt-in commit-only-local). The loop never edits the policy to authorize itself.
 - **Trunk-based, not PR-per-slice** — so dependency-ordered slices see prior work, and it matches what `publish.yaml` authorizes.
-- **Parallel-safe claiming** — each drain runner creates a remote `bc-drain-claims/issue-<n>` branch before working an issue; concurrent runners skip issues they fail to claim.
+- **Parallel-safe claiming** — each drain runner creates a remote `bc-drain-claims/issue-<n>` or `bc-drain-claims/item-<slug>` branch before working a unit; concurrent runners skip units they fail to claim. Without a remote only one runner may work in the repository.
 - **Bounded outcome handling** — fixable material findings use same-worktree rework/re-review for up to three cycles and then `REWORK_DEFERRED`; `HUMAN_BLOCKED` and `SYSTEMIC_FAILURE` remain distinct classifications.
 - **Completion gate reads the project's own validation conventions**, not a hardcoded test command.
 - **Tiered review gates landings** — the deterministic gate runs first; tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec + Standards), with one-way escalation on gate rejection or a Critical finding.

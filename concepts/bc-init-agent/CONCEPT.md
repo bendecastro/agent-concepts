@@ -94,7 +94,7 @@ Later work packages and other skills read project paths through this contract, n
 - Existing user-maintained operations wiki pattern (sampled from `<music-library>/.ai/wiki`, 2026-06-26) — components, findings, decisions, open questions, plans, evidence-before-plan maintenance rules.
 - Existing user-maintained knowledge-graph pattern (sampled from `<owner-wiki>`, 2026-06-26) — immutable raw sources, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, index/log compounding pattern.
 - `concepts/teach` — future learning-agent archetype support: multi-session tutoring state should live project-locally when initialized for a specific learning workspace.
-- `../../work/3-done/2026-08/011-bc-grill-to-ship-loop.md` + `../../docs/guides/pipeline.md` — the loop this prepares a repo for; the vault's scaffolded `planning-workflow.md` (learning and knowledge only) documents the grill→issues→drain adapter and the `bc-drain-issues` execution phase.
+- `../../work/3-done/2026-08/011-bc-grill-to-ship-loop.md` + `../../docs/guides/pipeline.md` — the loop this prepares a repo for; the vault's scaffolded `planning-workflow.md` (learning and knowledge only) documents the grill→issues→drain adapter and the `bc-pipeline-to-done` execution phase.
 - `~/.config/agent-concepts/publish.yaml` — the existing allow-rule schema the publish.yaml offer follows.
 - `concepts/prompting-agents/body/SKILL.md` — composition + gate phrasing.
 - `concepts/qmd/` — the global-search layer the close-out registration step feeds (added 2026-07-13; reworked to global mode same day).

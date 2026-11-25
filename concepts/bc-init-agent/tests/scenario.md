@@ -51,7 +51,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
     `concepts/bc-wiki-maintain/body/runner/README.md`. Live
     `~/.config/systemd/user/` is untouched unless the user confirmed in that
     run.
-13. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, timer offer outcome, and the next steps (`/bc-plan-to-pipeline` → `/bc-drain-issues`); commits the scaffold staging only the new files.
+13. **Close-out.** Points at created files, `references/agent-skills.md`, any migration plan, timer offer outcome, and the next steps (`/bc-plan-to-pipeline` → `/bc-pipeline-to-done`); commits the scaffold staging only the new files.
 
 ## Pass criteria
 Script checks 1–7 plus 7a, 7b, and 7c pass on inspection of the generated tree; process checks 8–13 hold in the subagent transcript.

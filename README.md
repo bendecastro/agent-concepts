@@ -27,7 +27,7 @@ Prompts for harnesses without skill loading: [docs/guides/bootstrap.md](docs/gui
 ## Install
 
 You need Git and Python 3. The repository's own gate also needs `pytest` and `hypothesis`.
-`/bc-pipeline-to-done` and the issue mode of `/bc-plan-to-pipeline` need the GitHub CLI (`gh`).
+The GitHub issue modes of `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` need the GitHub CLI (`gh`).
 
 ```bash
 git clone <this-repository-url> agent-concepts
@@ -72,8 +72,8 @@ entries and status pages. For each deployed concept it also checks the recorded 
 
 ## The loop
 
-Three skills take a project from no structure to landed changes. Each one leaves its result in
-files or on GitHub, so the next step does not need the same session.
+Two skills set up a project and plan its work; you then build it with your agent, or hand it to a
+third skill to build while you are away. Each skill leaves its result in files or on GitHub, so the next step does not need the same session.
 
 **`/bc-init-agent`** sets up a project for agents. It inspects the repository, asks what it
 cannot work out, proposes a plan, then creates the layout: work items in `work/`, decisions and
@@ -90,11 +90,9 @@ The slices become the steps of a work item, GitHub issues labelled `ready-for-ag
 dependency order, or both. It files issues only when the project already plans in GitHub issues
 or you ask for them.
 
-**`/bc-pipeline-to-done`** works through a repository's `ready-for-agent` GitHub issues without you.
-The driver claims each issue with a Git ref before any work starts, so two drivers cannot build
-the same issue. High-risk issues get a read-only audit first. A worker writes the code in its own
-worktree; it cannot commit, push, or change the issue. Independent reviewers check the result.
-The driver lands the change only when every review approves the exact final diff.
+**Building the planned work.** Open a session and tell your agent to continue the work. It follows the project's work rules: it finishes what is in `work/2-active/`, then takes the next item in the pipeline order and ticks the steps as they land. It works the way your own setup does, with your agent, your skills and your checks, and it asks you when something is unclear. This is the standard way.
+
+When you want to be away, **`/bc-pipeline-to-done`** builds the same work without you. It takes the items marked `Ready for agent: yes`, which `/bc-plan-to-pipeline` marks for you, or the GitHub issues labelled `ready-for-agent`. Since nobody is there to answer, it makes up for that with checking. It claims each item so two drivers can't build the same thing. A builder works in its own worktree, and independent reviewers check every step before it lands. When it needs a decision, it parks the item with your question and moves on. That review costs extra tokens and takes longer than the same work done with you there.
 
 How the planning skills fit together in more detail: [docs/guides/pipeline.md](docs/guides/pipeline.md).
 

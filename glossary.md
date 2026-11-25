@@ -36,8 +36,10 @@ same meaning.
 - **work item** — a ticket in the project's own `work/` folders; its folder is its status.
 - **issue** — a ticket on GitHub. _Avoid_: issue, in text that works with any tracker (say ticket).
 - **slice** — one thin piece of a plan that works end to end on its own; it becomes a step of a work item, a ticket, or both.
-- **drain** — a run that works through the eligible issues one by one until none are left or a stop condition fires.
-- **claim** — the marker an agent sets on an issue before working on it, so no other agent takes it.
+- **drain** — an unattended run that works through the eligible tickets (ready work items or issues) one by one until none are left or a stop condition fires.
+- **claim** — the marker an agent sets on a ticket before working on it, so no other agent takes it: a claim branch on the Git remote, or, with no remote, the committed move of the work item to the active folder.
+- **Ready for agent** — the line `Ready for agent: yes` in a work item: the owner's consent that an unattended drain may build it; written only when every step states its done-criteria and what is out of scope.
+- **Waiting on owner** — the line `Waiting on owner: <question>` in a parked work item: the decision a drain needs before it can continue; the item loses its ready line until the owner answers.
 - **rework** — fixing the defects a gate or review sent back.
 - **landing** — the final merge, push and close of reviewed work, done by the run's driver.
 
