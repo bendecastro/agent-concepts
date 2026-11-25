@@ -98,6 +98,8 @@ The driver lands the change only when every review approves the exact final diff
 
 How the planning skills fit together in more detail: [docs/guides/pipeline.md](docs/guides/pipeline.md).
 
+The other concepts (code review, test-driven development, research, wiki maintenance, subagent routing and more) are listed in [index.md](index.md).
+
 ## Keeping projects consistent
 
 Design consistency is handled by the `ui-design` skill's
