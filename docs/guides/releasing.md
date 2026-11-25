@@ -45,10 +45,10 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
 
 ## What the fresh-install test runs for a tag
 
-The test runs each command in the [Install section of the README](../../README.md#install) in
-an empty home folder, with the pinned agent versions in `.github/workflows/release.yml`. For
-`npx skills` it runs the all-skills command and one pack command from
-[install-packs.md](install-packs.md).
+The test builds its own install commands in Python (it does not read or run the README's
+commands), using the pinned agent versions in `.github/workflows/release.yml`. For `npx skills`
+it runs the all-skills command and one pack command from [install-packs.md](install-packs.md).
+The README commands must be kept matching by hand; the test will not catch a drift between them.
 
 The test runs the update commands against the same tag. Moving an install from one tag to a
 newer one has not been tested yet; until it is, the safe way is to uninstall and install again

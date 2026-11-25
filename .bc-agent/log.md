@@ -2150,3 +2150,10 @@ CI failed on test_work_spent: another test imports work_index in-process and cre
 
 ## [2026-11-25] deploy | v0.3.0 released
 Tag v0.3.0 on 6ed38a4; release.yml passed (release-check, install-tag on ubuntu and macos); GitHub release created from the CHANGELOG entry.
+
+## [2026-11-25] implement | README restructured around the way of working
+Rewrote README.md: title+intro, philosophy (principles with linked skills),
+workflow stages (all collapsible), install (pick-your-agent table, one command
+per fenced block in collapsed per-method sections), working-on-this-repo.
+Fixed docs/guides/releasing.md fresh-install-test claim (it builds its own
+commands, does not parse the README). Line count 318 → 480.
