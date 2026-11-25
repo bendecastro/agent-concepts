@@ -15,7 +15,7 @@ Nothing. Every deployed concept has a recorded run.
 
 | concept | kind | test status | tested |
 |---|---|---|---|
-| [guardrails](../concepts/guardrails/CONCEPT.md) | pressure | not-run | never |
+| [guardrails](../concepts/guardrails/CONCEPT.md) | pressure | pass | 2026-11-25 |
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | not-run | never |
 
 ## Deployed with a known gap (33)

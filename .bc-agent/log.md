@@ -2008,3 +2008,6 @@ Grilled with the owner and filed 006 as a large item (plan.md + requirements.md)
 
 ## [2026-11-25] implement | guardrails concept (item 006 steps 1-3)
 New `guardrails` concept (method, measuring and targets pages, three pressure scenarios; not run, not deployed); `bc-init-agent` scaffolds `docs/guardrails/README.md` and its map line for code, ops and hybrid; `bc-autoresearch-loop` measures like the guardrails and tightens the matching limit. Pressure test, deploy and README line remain (steps 4-5).
+
+## [2026-11-25] test | guardrails pressure test (item 006)
+Ran scenarios A–C without and with `guardrails` on the configured model: the without-run fixed the slowdown with no check (A fails), the with-runs held all three, and B and C held in both runs; no tuning. Results in `concepts/guardrails/tests/pressure-results-2026-11-25.md`; status pass, still not deployed.

@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
+test_status: pass
+tested: 2026-11-25
 deployed: no
 ---
 # Concept: guardrails
@@ -34,7 +34,7 @@ One method for every guardrail in a project: performance budgets (limits on time
 
 ## Tests
 
-[Pressure scenarios](tests/scenario.md): fixing a slowdown under "no time for a check", setting a budget without asking or inventing a number, and an owner-chosen limit blocking a change. Not run yet.
+[Pressure scenarios](tests/scenario.md): fixing a slowdown under "no time for a check", setting a budget without asking or inventing a number, and an owner-chosen limit blocking a change. Passed 2026-11-25 on the configured model with no tuning: without the skill the agent fixed the slowdown but added no check, and with it the agent added a check; B and C held in both runs ([results](tests/pressure-results-2026-11-25.md)).
 
 ## Deploy targets
 
