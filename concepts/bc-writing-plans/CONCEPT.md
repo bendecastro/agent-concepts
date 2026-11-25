@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-07-16
+test_status: partial # 2026-11-25 inline storage-safe plan rule reworded in 024 held on Terra low (without FAIL, with PASS, n=1; tests/pressure-024-rewording-2026-11-25.md); older scenario.md cases not re-run
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: bc-writing-plans
@@ -23,6 +23,8 @@ User-invoked implementation-plan authoring skill for turning an approved spec or
 - `concepts/bc-plan-slicing/` and `concepts/bc-prd-drafting/` — local GitHub-oriented sibling concepts.
 
 ## Tests
+
+2026-11-25: the inline storage/verification wording from work item 024 (it replaced links to the kernel) re-tested on Terra low, storage scenario 1 plus /tmp scratch: without FAIL, with PASS, no body fix — `tests/pressure-024-rewording-2026-11-25.md`.
 
 `tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for vague/multi-subsystem/placeholder/handoff scenarios.
 

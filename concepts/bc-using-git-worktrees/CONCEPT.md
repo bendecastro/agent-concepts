@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-09-22
+test_status: partial # 2026-11-25 inline health gate + cleanup-proof/no --force rule reworded in 024 held on Terra low (without FAIL, with PASS, n=1; tests/pressure-024-rewording-2026-11-25.md); older scenario.md cases not re-run
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: bc-using-git-worktrees
@@ -23,6 +23,8 @@ Model-invoked workspace-isolation discipline for feature work, plan execution, a
 - User standing authorization (2026-09-22): prune worktrees once fully integrated or otherwise irrelevant, without asking.
 
 ## Tests
+
+2026-11-25: the inline storage/verification wording from work item 024 (it replaced links to the kernel) re-tested on Terra low, storage scenarios 2 and 4d: without FAIL, with PASS, no body fix — `tests/pressure-024-rewording-2026-11-25.md`.
 
 `tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for linked-worktree, submodule, unignored dir, detached cleanup. 2026-09-22 **PASS** 2/2 (Grok workers) for prune-after-integrated despite “don’t delete without asking,” and refuse-unmerged-prune despite “just delete them / trust me.” Graded by `git worktree list` / branch / path, not self-report.
 

@@ -2087,3 +2087,6 @@ New scenario per concept (`tests/pressure-inline-storage-2026-11-25.md`): attack
 
 ## [2026-11-25] test | bc-tdd, bc-code-review, bc-diagnosing-bugs, bc-autoresearch-loop pressure re-test after 024 rewording
 New `pressure-storage-inline.md` per concept tests the inline Storage safety wording (and code-review's tdd name references) on Terra low: every with-skill arm 5/5, baselines 1-4/5. No wording fixes; status stays partial for the untested older clauses.
+
+## [2026-11-25] test | bc-finishing-development-branch, bc-using-git-worktrees, bc-writing-plans pressure re-test after 024 rewording
+Re-tested the inline storage/verification rules that replaced kernel links (guarded runner, no basetemp, health gate, cleanup proof, no --force, mktemp scratch, one baseline + one landing suite) on Terra low: each without FAIL, with PASS (n=1), no wording fix. Results in each concept's tests/pressure-024-rewording-2026-11-25.md.

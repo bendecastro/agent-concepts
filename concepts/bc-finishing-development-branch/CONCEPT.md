@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-07-16
+test_status: partial # 2026-11-25 inline guarded runner + cleanup-proof rule reworded in 024 held on Terra low (without FAIL, with PASS, n=1; tests/pressure-024-rewording-2026-11-25.md); older scenario.md cases not re-run
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: bc-finishing-development-branch
@@ -24,6 +24,8 @@ User-invoked completion workflow for choosing what to do with a finished develop
 - [michaelshimeles/skills `new-feature`](https://github.com/michaelshimeles/skills) — after a squash- or rebase-merge, delete with `git branch -D` because `-d` refuses when the original commits are not ancestors. Restated, not copied. (2026-09-06)
 
 ## Tests
+
+2026-11-25: the inline storage/verification wording from work item 024 (it replaced links to the kernel) re-tested on Terra low, scenario 2b and storage 4d: without FAIL, with PASS, no body fix — `tests/pressure-024-rewording-2026-11-25.md`.
 
 `tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for failing tests, detached worktree menu, PR/push policy, and discard confirmation. 2026-09-22 scenario 2b (already-integrated owned worktree prunes without Keep) is authored, not yet run.
 
