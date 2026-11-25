@@ -52,6 +52,7 @@ Look for each of these; [PLAN.md](PLAN.md) gives the plan's format.
 1. Planned work in the docs with no item: a new item, with its proposed stage and the doc it comes from.
 2. Items whose steps are all checked but which are not in work-done.
 3. Active items untouched by any commit for a long time (`git log -1 --format=%cs -- <item>`; say what "long" was, default 60 days).
+   Also report stale `Held by:` lines: a line on an item no commit has touched for a day (say what "a day" was, from `git log -1 --format=%cI -- <item>`; `work_index.py --json` gives each line's own age as `held_by.age_seconds`), a line naming a session this machine's tools show as ended, a line `--check` calls malformed, and any line left in work-done or work-dropped. Propose removing each; never remove a line from a session that may still be live. Why: a line left behind by a crashed or finished agent shows the owner's dashboard work that is not happening.
 4. Planned items whose work already landed in commits: name the commits.
 5. Lines in the ideas file that became items: remove the line.
 6. Open items with no or an unknown `Stage:` line, and a missing `Stages:` line.

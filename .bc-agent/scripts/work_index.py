@@ -51,7 +51,9 @@ architecture; `none` turns top placement off).
 
 `--check` also warns, on stderr and without changing the exit code, about each
 item in 1-planned/ that has no `Planned:` line: it has not been through
-bc-plan-to-pipeline, so it must be planned before it moves to 2-active/.
+bc-plan-to-pipeline, so it must be planned before it moves to 2-active/. It also warns
+about a malformed `Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>`
+line, and about any `Held by:` line in a done or dropped item.
 Python 3.9 or later, standard library only.
 """
 from __future__ import annotations
@@ -60,6 +62,7 @@ import json
 import re
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_STAGES = ("now", "next", "later", "unscheduled")
@@ -76,7 +79,8 @@ WHY_LIMIT = 160
 JSON_FORMAT_VERSION = 1
 HEADER_LINES = {"why": "Why", "done_when": "Done when", "stage": "Stage", "blocked_by": "Blocked by",
                 "kind": "Kind", "source": "Source", "planned": "Planned", "ready_for_agent": "Ready for agent",
-                "waiting_on_owner": "Waiting on owner"}
+                "waiting_on_owner": "Waiting on owner", "held_by": "Held by"}
+HELD_BY = re.compile(r"^(\S+) (\S+) since (\d{4}-\d{2}-\d{2} \d{2}:\d{2} (?:UTC|[+-]\d{2}:\d{2}))$")
 STEP = re.compile(r"^- \[([ xX])\] ?(.*)$")
 
 
@@ -449,6 +453,42 @@ def item_history(path: Path) -> list[dict]:
     return history
 
 
+def held_by_data(path: Path, text: str | None) -> dict | None:
+    """The parsed `Held by:` line plus its age: seconds since the last commit that added the line (None when uncommitted)."""
+    if text is None:
+        return None
+    match = HELD_BY.match(text)
+    committed = age = None
+    try:
+        result = subprocess.run(["git", "log", "-1", "--format=%cI", "-S", f"Held by: {text}", "--", path.name],
+                                cwd=path.parent, capture_output=True, text=True, encoding="utf-8", errors="replace")
+        committed = result.stdout.strip() or None if result.returncode == 0 else None
+    except OSError:
+        pass
+    if committed:
+        age = int((datetime.now(timezone.utc) - datetime.fromisoformat(committed)).total_seconds())
+    tool, session, since = match.groups() if match else (None, None, None)
+    return {"tool": tool, "session": session, "since": since, "committed": committed, "age_seconds": age}
+
+
+def held_by_warnings(work: Path) -> list[str]:
+    """`--check` warnings: a malformed `Held by:` line, or one left in a done or dropped item."""
+    warnings = []
+    for folder in ["1-planned", "2-active"] + archive_folders(work, "3-done") + archive_folders(work, "4-dropped"):
+        for name in entries(work, folder):
+            rel = f"{folder}/{name}/plan.md" if (work / folder / name).is_dir() else f"{folder}/{name}"
+            if not (work / rel).is_file():
+                continue
+            match = re.search(r"^Held by:[ \t]*(.*)$", read_text(work / rel), re.M)
+            if not match:
+                continue
+            if folder[0] in "34":
+                warnings.append(f"{rel} has a Held by: line but is closed; remove it")
+            elif not HELD_BY.match(match.group(1).strip()):
+                warnings.append(f"{rel} has a malformed Held by: line; write `Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>`")
+    return warnings
+
+
 def item_data(work: Path, folder: str, name: str) -> dict:
     rel = f"{folder}/{name}/plan.md" if (work / folder / name).is_dir() else f"{folder}/{name}"
     if not (work / rel).is_file():
@@ -465,7 +505,7 @@ def item_data(work: Path, folder: str, name: str) -> dict:
         "number": item[:3], "slug": item[4:], "name": item, "folder": folder.split("/")[0][2:], "path": rel,
         "title": title.group(1).strip() if title else None, "header": header, "steps": parse_steps(text),
         "outcome": outcome.strip() or None if outcome is not None else None,
-        "history": item_history(work / rel),
+        "history": item_history(work / rel), "held_by": held_by_data(work / rel, header["held_by"]),
     }
 
 
@@ -504,6 +544,8 @@ def main(argv: list[str]) -> int:
             project = work.resolve().parent
             for rel in unplanned_items(work):
                 print(f"work-index: warning: {rel} has no Planned: line; run bc-plan-to-pipeline on it before it moves to 2-active/", file=sys.stderr)
+            for warning in held_by_warnings(work):
+                print(f"work-index: warning: {warning}", file=sys.stderr)
             errors = owner_order_errors(work, read_stages(project), read_top_kinds(project))
             if updated != readme:
                 errors.insert(0, f"work/README.md is out of date; run {COMMAND}")

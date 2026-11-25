@@ -809,3 +809,17 @@ def test_scaffold_documents_ready_and_waiting_lines(tmp_path, archetype):
         assert 'Waiting on owner:' in text
     assert 'bc-pipeline-to-done' in work
     assert 'bc-pipeline-to-done' in readme
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_work_item_rules_write_and_remove_held_by_line(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    text = (root / '.bc-agent/AGENTS.md').read_text()
+    rule = ' '.join(text[text.index('## Work items'):text.index('## Keep it current')].split())
+    assert 'Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>' in rule
+    keep = text.split('## Keep it current')[1].split('\n## ')[0]
+    rows = {row: next(line for line in keep.splitlines() if line.startswith(row))
+            for row in ('| Begin agreed work |', '| Stop working on an item |', '| Finish or drop an item |')}
+    assert 'add your `Held by:` line' in rows['| Begin agreed work |']
+    assert 'remove your `Held by:` line' in rows['| Stop working on an item |']
+    assert 'remove the `Held by:` line' in rows['| Finish or drop an item |']

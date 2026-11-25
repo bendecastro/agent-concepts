@@ -22,6 +22,9 @@ Stages: <the Stages: line, or "none; propose adding `Stages: now, next, later, u
 ### Stale active items
 - work item <NNN>: last commit <date> (<N> days) — <proposal>
 
+### Stale Held by lines
+- work item <NNN>: `Held by: <line>` — <why stale: no commit for <N> hours / session ended / malformed / item closed> — remove the line
+
 ### Ideas that became items
 - `<idea line>` → work item <NNN>: remove the line
 

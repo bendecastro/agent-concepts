@@ -541,7 +541,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-pipeline-to-done/CONCEPT.md",
-      "reason": "Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines and reruns the work index script."
+      "reason": "Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines, writes and removes the `Held by:` line in the format of its work-item rules, and reruns the work index script."
     },
     {
       "from": "bc-plan-to-pipeline",
@@ -676,7 +676,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-work-sync/body/SKILL.md",
-      "reason": "Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line and Blocked by lines, and runs the scaffolded .bc-agent/scripts/work_index.py."
+      "reason": "Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py."
     },
     {
       "from": "bc-delegate-investigation",

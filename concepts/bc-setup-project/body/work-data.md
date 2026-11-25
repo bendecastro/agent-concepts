@@ -30,6 +30,7 @@
 | `steps` | the `- [ ]` / `- [x]` lines under `## Steps` (a list) | stable keys, best-effort values |
 | `outcome` | the text under `## Outcome`, trimmed; `null` when the section is missing or empty (may still be the template placeholder) | best-effort |
 | `history` | folder moves and step ticks, oldest first, from one `git log --follow` on the item file (renames followed); `[]` when the file is uncommitted, outside a git repository or git is missing. Uncommitted moves and ticks are not shown yet | best-effort |
+| `held_by` | the `Held by:` line parsed (below); `null` when the item has none | best-effort |
 | `spent` | the `Spent:` line in the Outcome, parsed | planned |
 
 ## Header lines (`header`)
@@ -47,7 +48,17 @@ Each value is the text after the label on its line, trimmed, or `null` when the 
 | `planned` | `Planned:` | best-effort |
 | `ready_for_agent` | `Ready for agent:` (`yes` when set) | best-effort |
 | `waiting_on_owner` | `Waiting on owner:` (the owner question) | best-effort |
-| `held_by` | `Held by: <tool> <session> since <YYYY-MM-DD HH:MM>`, plus the line's age | planned |
+| `held_by` | `Held by:` (the raw line; parsed in the item's `held_by` field) | best-effort |
+
+## Held by (`held_by`)
+
+`Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>` names the agent working on the item: its tool (`pi`, `claude-code`, `codex`, ...), its session name or id (no spaces), and when it started, in UTC or local time with its offset (`Held by: pi swift-otter since 2026-11-25 14:05 +01:00`). The agent writes it when it starts or resumes the item and removes it when it stops or the item closes, so a crashed agent leaves a stale line; judge staleness from the age.
+
+| Field | Source | Reliability |
+|---|---|---|
+| `tool`, `session`, `since` | the parts of the line; all `null` when the line does not match the format (`--check` warns) | best-effort |
+| `committed` | committer date (ISO 8601) of the last commit that added or removed this exact line, from `git log -S`; `null` when the line is uncommitted or there is no git | best-effort |
+| `age_seconds` | seconds from `committed` to now; `null` with it | best-effort |
 
 ## History events (`history[]`)
 

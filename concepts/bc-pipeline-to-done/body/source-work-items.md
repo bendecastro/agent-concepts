@@ -18,9 +18,13 @@ An item already in work-active is either a live claim (see [Claim](#claim)) or i
 
 The claim unit is the whole item: one builder works through all its steps. Different items may run at the same time, one builder each.
 
-**With a Git remote**, claim the item with the same no-force protocol the core uses for issues, on `refs/heads/bc-drain-claims/item-<slug>`: create-if-absent without force, ownership proven by the push update plus `git ls-remote` equality, a lost race skipped before dispatch. Released Claim Marker reuse applies only to a valid marker whose body names `item=<slug>` in place of `issue=<n>`; any other existing tip is held. Then `git mv` the item to work-active, run the work index script, and commit and push the move before the builder starts. Why: the folder move shows the owner the item is running, but two drivers can both move it; only the ref is atomic.
+**With a Git remote**, claim the item with the same no-force protocol the core uses for issues, on `refs/heads/bc-drain-claims/item-<slug>`: create-if-absent without force, ownership proven by the push update plus `git ls-remote` equality, a lost race skipped before dispatch. Released Claim Marker reuse applies only to a valid marker whose body names `item=<slug>` in place of `issue=<n>`; any other existing tip is held. Then `git mv` the item to work-active, add the driver's `Held by:` line (below), run the work index script, and commit and push the move before the builder starts. Why: the folder move shows the owner the item is running, but two drivers can both move it; only the ref is atomic.
 
 **Without a Git remote**, only one driver may run in the repository: the committed move to work-active is the claim. The run commits locally and pushes nothing, so skip the core preflight's publish check and claim-ref authorization (steps 2 and 3) and run every other preflight step. Run with `max-parallel=1`: when parallel building is asked for, build one item at a time and say why in the report rather than stopping the run. Stop and report if another driver's session, worktree or branch for the item exists. Why: a local commit is not atomic across drivers, so a second driver could build the same item.
+
+## Held by line
+
+The driver holds the item, not its builder: in the commit that moves the item to work-active, or the first commit when it resumes an item already there, it writes `Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>` under the item's header lines (its agent tool, its session name or id without spaces, the time it started), replacing any line a stopped driver left. It removes the line in the commit that parks, defers or finishes the item, and before ending a run that leaves the item in work-active. The builder in its worktree never writes it. Why: the owner's dashboard shows who holds each active item and since when, and a line left behind looks like a live run.
 
 ## Build
 
@@ -31,7 +35,7 @@ The item gets one builder, which works its steps in order in one worktree for th
 3. on approval the driver lands the step (core landing): it commits the step's reviewed diff, and in the same commit ticks the step's checkbox in the item and reruns the project's work index script to regenerate the work index;
 4. the next step starts from that commit in the same worktree.
 
-A step whose `Blocked by:` names an earlier unfinished step waits for it; the order of the steps is the build order. A step deferred under the core's rework rules defers the whole item: record the Agent Rework Brief in the item under the step, keep the item in work-active, and release the claim only after the recovery bundle validates.
+A step whose `Blocked by:` names an earlier unfinished step waits for it; the order of the steps is the build order. A step deferred under the core's rework rules defers the whole item: record the Agent Rework Brief in the item under the step and remove its `Held by:` line, keep the item in work-active, and release the claim only after the recovery bundle validates.
 
 ## Park
 
@@ -41,6 +45,7 @@ When the item needs an owner decision (`HUMAN_BLOCKED`), park it in one commit. 
 - add the line `Waiting on owner: <question>`, phrased so the owner can answer it: the decision first, the options and what each leads to, then the evidence;
 - remove its `Ready for agent:` line;
 - tick only steps that landed and keep their commits;
+- remove its `Held by:` line;
 - run the work index script.
 
 File the question where the owner sees questions: the project's or the machine's instructions name the place, and the private overlay names the tool. Then release the claim and its worktree as the core says for a blocked unit without useful local work, or keep a recovery bundle when the step has useful work. Why: the dashboard reads the work folders and these lines, so a parked item shows as waiting on the owner instead of as running.
@@ -51,7 +56,7 @@ When the owner answers, write the answer into the item, next to the step it sett
 
 ## Finish
 
-After the last step lands, finish the item in one commit: fill its `## Outcome` with what landed (the step commits and the validation; this commit cannot cite its own SHA), `git mv` it into the work-done month folder `<YYYY-MM>/` (create it when missing), regenerate the work index, and commit and push as the core's landing does. Then release the claim and worktree.
+After the last step lands, finish the item in one commit: fill its `## Outcome` with what landed (the step commits and the validation; this commit cannot cite its own SHA), remove its `Held by:` line, `git mv` it into the work-done month folder `<YYYY-MM>/` (create it when missing), regenerate the work index, and commit and push as the core's landing does. Then release the claim and worktree.
 
 ## Report
 

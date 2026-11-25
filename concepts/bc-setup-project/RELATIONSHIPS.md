@@ -82,7 +82,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-performance-guardrails/body/SKILL.md](../bc-performance-guardrails/body/SKILL.md#start-from-the-projects-guardrails-page)
 
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines and reruns the work index script.
+  Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines, writes and removes the `Held by:` line in the format of its work-item rules, and reruns the work index script.
   Source: [bc-pipeline-to-done/CONCEPT.md](../bc-pipeline-to-done/CONCEPT.md)
 
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
@@ -110,5 +110,5 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-wiki-maintain/CONCEPT.md](../bc-wiki-maintain/CONCEPT.md)
 
 - incoming from [bc-work-sync](../bc-work-sync/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line and Blocked by lines, and runs the scaffolded .bc-agent/scripts/work_index.py.
+  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py.
   Source: [bc-work-sync/body/SKILL.md](../bc-work-sync/body/SKILL.md)
