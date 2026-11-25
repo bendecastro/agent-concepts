@@ -823,3 +823,15 @@ def test_work_item_rules_write_and_remove_held_by_line(tmp_path, archetype):
     assert 'add your `Held by:` line' in rows['| Begin agreed work |']
     assert 'remove your `Held by:` line' in rows['| Stop working on an item |']
     assert 'remove the `Held by:` line' in rows['| Finish or drop an item |']
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_work_item_rules_record_review_and_gate_lines(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    text = (root / '.bc-agent/AGENTS.md').read_text()
+    rule = ' '.join(text[text.index('## Work items'):text.index('## Keep it current')].split())
+    assert 'Review: <approved | changes requested> by <reviewer> <YYYY-MM-DD>' in rule
+    assert 'Gate: <pass | fail> <command> at <commit> <YYYY-MM-DD>' in rule
+    keep = text.split('## Keep it current')[1].split('\n## ')[0]
+    row = next(line for line in keep.splitlines() if line.startswith('| Finish a step |'))
+    assert '`Review:`' in row and '`Gate:`' in row

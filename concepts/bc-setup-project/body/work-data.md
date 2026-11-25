@@ -77,7 +77,20 @@ Every event has `event`, `date` (the commit's committer date, ISO 8601) and `com
 | `text` | the step line and its indented continuation lines (joined with newlines), without the `Notes:` part | best-effort |
 | `checked` | `[x]` or `[X]` is `true`, `[ ]` is `false` | stable |
 | `notes` | the text after `Notes:`, inline in the step or on an indented line below it; `null` when there is none | best-effort |
-| `review` | `Review: <approved \| changes requested> by <reviewer> <YYYY-MM-DD>` lines in the Notes | planned |
-| `gate` | `Gate: <pass \| fail> <command> at <commit> <YYYY-MM-DD>` lines in the Notes | planned |
+| `review` | the `Review:` lines in the Notes, parsed (below); `[]` when there are none | stable keys, best-effort values |
+| `gate` | the `Gate:` lines in the Notes, parsed (below); `[]` when there are none | stable keys, best-effort values |
+
+## Review and Gate (`steps[].review[]`, `steps[].gate[]`)
+
+Each result is one line in the step's Notes, starting its own line (an indented line under the step, or right after `Notes:`), oldest first; a later round adds a line rather than replacing one.
+
+- `Review: <approved | changes requested> by <reviewer> <YYYY-MM-DD>`: a review verdict and who gave it (a reviewer agent or role, or `owner`), for example `Review: approved by reviewer 2026-11-25`.
+- `Gate: <pass | fail> <command> at <commit> <YYYY-MM-DD>`: one run of the project's check command as run, and the short or full SHA the checked tree was built on, for example `Gate: pass make check at 3f2a9c1 2026-11-25`.
+
+| Field | Source | Reliability |
+|---|---|---|
+| `review[].result`, `reviewer`, `date` | the parts of a `Review:` line; all `null` when it does not match the format (`--check` warns) | best-effort |
+| `gate[].result`, `command`, `commit`, `date` | the parts of a `Gate:` line; all `null` when it does not match the format (`--check` warns) | best-effort |
+| `text` (both) | the line after its label, trimmed | best-effort |
 
 Why the records live in work-item lines and git history rather than in a separate store: the agent-concepts repository's decision record `docs/decisions/0003-work-data-lives-in-work-item-lines.md`.

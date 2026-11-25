@@ -82,6 +82,12 @@ HEADER_LINES = {"why": "Why", "done_when": "Done when", "stage": "Stage", "block
                 "waiting_on_owner": "Waiting on owner", "held_by": "Held by"}
 HELD_BY = re.compile(r"^(\S+) (\S+) since (\d{4}-\d{2}-\d{2} \d{2}:\d{2} (?:UTC|[+-]\d{2}:\d{2}))$")
 STEP = re.compile(r"^- \[([ xX])\] ?(.*)$")
+REVIEW = re.compile(r"^(approved|changes requested) by (\S.*?) (\d{4}-\d{2}-\d{2})$")
+GATE = re.compile(r"^(pass|fail) (\S.*?) at ([0-9a-f]{7,40}) (\d{4}-\d{2}-\d{2})$")
+STEP_RECORDS = {"review": ("Review", REVIEW, ("result", "reviewer", "date"),
+                           "Review: <approved | changes requested> by <reviewer> <YYYY-MM-DD>"),
+                "gate": ("Gate", GATE, ("result", "command", "commit", "date"),
+                         "Gate: <pass | fail> <command> at <commit> <YYYY-MM-DD>")}
 
 
 class WorkIndexError(Exception):
@@ -402,8 +408,36 @@ def parse_steps(text: str) -> list[dict]:
         found = re.search(r"(?:^|\s)Notes:[ \t]*", body)
         if found:
             body, notes = body[:found.start()].rstrip(), body[found.end():].strip() or None
-        steps.append({"text": body, "checked": checked, "notes": notes})
+        steps.append({"text": body, "checked": checked, "notes": notes, **step_records(notes)})
     return steps
+
+
+def step_records(notes: str | None) -> dict[str, list[dict]]:
+    """`Review:` and `Gate:` lines in a step's Notes, each starting a line; fields `None` when the line is malformed."""
+    records = {}
+    for key, (label, pattern, fields, _) in STEP_RECORDS.items():
+        records[key] = []
+        for text in re.findall(rf"^{label}:[ \t]*(.*)$", notes or "", re.M):
+            match = pattern.match(text.strip())
+            records[key].append({**dict(zip(fields, match.groups() if match else [None] * len(fields))),
+                                 "text": text.strip()})
+    return records
+
+
+def step_record_warnings(work: Path) -> list[str]:
+    """`--check` warnings: a malformed `Review:` or `Gate:` line in any item's step Notes."""
+    warnings = []
+    for folder in ["1-planned", "2-active"] + archive_folders(work, "3-done") + archive_folders(work, "4-dropped"):
+        for name in entries(work, folder):
+            rel = f"{folder}/{name}/plan.md" if (work / folder / name).is_dir() else f"{folder}/{name}"
+            if not (work / rel).is_file():
+                continue
+            for number, step in enumerate(parse_steps(read_text(work / rel)), 1):
+                for key, (label, _, fields, form) in STEP_RECORDS.items():
+                    for record in step[key]:
+                        if record[fields[0]] is None:
+                            warnings.append(f"{rel} step {number} has a malformed {label}: line; write `{form}`")
+    return warnings
 
 
 LIFECYCLE = re.compile(r"(?:^|/)[1-4]-(planned|active|done|dropped)/")
@@ -544,7 +578,7 @@ def main(argv: list[str]) -> int:
             project = work.resolve().parent
             for rel in unplanned_items(work):
                 print(f"work-index: warning: {rel} has no Planned: line; run bc-plan-to-pipeline on it before it moves to 2-active/", file=sys.stderr)
-            for warning in held_by_warnings(work):
+            for warning in held_by_warnings(work) + step_record_warnings(work):
                 print(f"work-index: warning: {warning}", file=sys.stderr)
             errors = owner_order_errors(work, read_stages(project), read_top_kinds(project))
             if updated != readme:

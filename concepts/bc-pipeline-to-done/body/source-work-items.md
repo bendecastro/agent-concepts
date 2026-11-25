@@ -32,10 +32,19 @@ The item gets one builder, which works its steps in order in one worktree for th
 
 1. the builder implements the step as the core's build contract says and returns `READY_FOR_REVIEW` for that step;
 2. the driver runs the deterministic pre-review gate and full review on the step's diff, with rework as the core says;
-3. on approval the driver lands the step (core landing): it commits the step's reviewed diff, and in the same commit ticks the step's checkbox in the item and reruns the project's work index script to regenerate the work index;
+3. on approval the driver lands the step (core landing): it commits the step's reviewed diff, and in the same commit ticks the step's checkbox in the item, records the step's `Review:` and `Gate:` lines (below) and reruns the project's work index script to regenerate the work index;
 4. the next step starts from that commit in the same worktree.
 
 A step whose `Blocked by:` names an earlier unfinished step waits for it; the order of the steps is the build order. A step deferred under the core's rework rules defers the whole item: record the Agent Rework Brief in the item under the step and remove its `Held by:` line, keep the item in work-active, and release the claim only after the recovery bundle validates.
+
+## Review and Gate lines
+
+Every review verdict and gate run on a step is one line in that step's Notes, each on its own indented line under the step, oldest first, kept when a later round passes:
+
+- `Review: <approved | changes requested> by <reviewer> <YYYY-MM-DD>`, one per reviewer verdict, where `<reviewer>` names who reviewed (the reviewer role or agent, `tier-1`, or `owner`);
+- `Gate: <pass | fail> <command> at <commit> <YYYY-MM-DD>`, one per run of the deterministic pre-review gate or the project's check command, where `<commit>` is the short SHA the checked tree was built on (`HEAD` when the gate ran).
+
+The driver writes them, in the landing commit for a passed step and in the deferring commit for a deferred one; reviewers and the builder never edit the item. Why: the owner's dashboard reads these lines to show whether each step passed review and the gate, and a result kept only in the run's artifacts is gone once the run is cleaned up.
 
 ## Park
 

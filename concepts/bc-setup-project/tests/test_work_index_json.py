@@ -80,9 +80,9 @@ def test_json_prints_every_item_with_header_steps_and_outcome(tmp_path):
             "held_by": None,
         },
         "steps": [
-            {"text": "First step: does a thing.", "checked": True, "notes": "done 2026-11-25; see the test."},
-            {"text": "Second step. Blocked by: First step.", "checked": False, "notes": "inline note here."},
-            {"text": "Third step\nspans two lines.", "checked": True, "notes": None},
+            {"text": "First step: does a thing.", "checked": True, "notes": "done 2026-11-25; see the test.", "review": [], "gate": []},
+            {"text": "Second step. Blocked by: First step.", "checked": False, "notes": "inline note here.", "review": [], "gate": []},
+            {"text": "Third step\nspans two lines.", "checked": True, "notes": None, "review": [], "gate": []},
         ],
         "outcome": "<Filled when the item is finished or dropped.>",
         "history": [], "held_by": None,

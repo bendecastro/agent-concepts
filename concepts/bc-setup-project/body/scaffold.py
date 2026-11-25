@@ -1481,6 +1481,17 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   malformed line and about one left in a done or dropped item.
   Why: the owner's dashboard shows who holds each active item and since when; a line left behind
   looks like live work, and a missing one looks abandoned.
+- **`Review:` and `Gate:` lines record a step's checks.** When a step is reviewed or the project's
+  check (gate) command runs on it, add one line per result in the step's Notes, each on its own
+  indented line under the step, oldest first, keeping earlier results:
+  `Review: <approved | changes requested> by <reviewer> <YYYY-MM-DD>` (who reviewed: a reviewer
+  agent or role, or `owner`) and `Gate: <pass | fail> <command> at <commit> <YYYY-MM-DD>` (the
+  command as run and the short SHA the checked tree was built on), for example
+  `Gate: pass make check at 3f2a9c1 2026-11-25`. Write them in the commit that ticks the step, or
+  in the next commit on the item when the step stays open. `work_index.py --check` warns about a
+  malformed line.
+  Why: the owner's dashboard shows whether each step passed review and the gate; a result left in
+  chat or a run log is lost.
 - **Several items may be active at once.**
 - **GitHub issues are optional.** When one exists, record its number on the item's `Issue:`
   line. Why: the folders are the source of truth; an issue is a pointer to them.
@@ -1502,7 +1513,7 @@ Top kinds: security, bug, build, architecture
 | Begin agreed work | Create the item from the template, or `git mv` it from `1-planned/` to `2-active/`, add your `Held by:` line in the same commit (see Work items), then run `python3 .bc-agent/scripts/work_index.py`. A planned item without a `Planned:` line is planned first (see Work items). |
 | Resume an active item | Replace or add the `Held by:` line with your own in your first commit on it. |
 | Stop working on an item | Even with steps left: remove your `Held by:` line and commit. |
-| Finish a step | Check its box in the item, then run `python3 .bc-agent/scripts/work_index.py`. |
+| Finish a step | Check its box in the item, add its `Review:` and `Gate:` lines (see Work items), then run `python3 .bc-agent/scripts/work_index.py`. |
 | Finish or drop an item | Only once the work is on the main branch and its full checks passed (until then the remaining review fixes and checks stay unticked steps; a worker in a worktree never moves an item). Fill `## Outcome`, remove the `Held by:` line, then `git mv` it to its done month folder or to `4-dropped/`, then run `python3 .bc-agent/scripts/work_index.py`. |
 | Make an architectural or hard-to-reverse choice | Add a numbered record under `docs/decisions/` from [templates/adr.md](templates/adr.md). |
 | Investigate something at length | Write it up in a dated folder under `docs/research/`. |

@@ -74,6 +74,10 @@ A tier-1 combined reviewer adds `"axis": "spec | standards"` to each finding and
 
 A named check the axis could not run is recorded, not omitted: put the word `untested` and the reason in that finding's `evidence`. Same word as `bc-code-review`. Why: silent omission reads as coverage.
 
+## Record in the work item
+
+On the work-item source the driver records each verdict as a `Review:` line in the step's Notes, `approved` or `changes requested` by the reviewer (the format is in [source-work-items.md](source-work-items.md#review-and-gate-lines)). The reviewer returns only the JSON above and never writes it. Why: the verdict JSON lives in the run's artifacts, which cleanup removes; the dashboard reads the item.
+
 ## Standing approval and selective re-review
 
 An approval is a durable record bound to the exact diff it examined, not a one-time event:

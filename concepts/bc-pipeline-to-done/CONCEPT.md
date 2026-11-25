@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-25 Held by line wording not run (scaffolded rule held); 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B dropped 2026-11-25 (v3 saving never measured); the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
+test_status: partial # 2026-11-25 Review and Gate lines wording not run (scaffolded rule held 3/3); 2026-11-25 Held by line wording not run (scaffolded rule held); 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B dropped 2026-11-25 (v3 saving never measured); the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
 tested: 2026-11-25
 deployed: 2026-11-25
 ---
@@ -91,6 +91,8 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
+
+2026-11-25 (Review and Gate lines, 025): `source-work-items.md` gains a "Review and Gate lines" section (the driver writes one `Review:` line per verdict and one `Gate:` line per gate run in the step's Notes, in the landing or deferring commit; reviewers and builder never edit the item) and its landing step names them; `review-contract.md` gains "Record in the work item". Gate A passes. Not run as a consuming-model scenario; the same rule in the scaffolded work-item rules held on Terra low (bc-setup-project's `tests/pressure-review-gate-results-2026-11-25.md`).
 
 2026-11-25 (Held by line, 025): `source-work-items.md` gains a "Held by line" section: the driver writes the line in the claim move (or its first commit on a resumed item) and removes it when it parks, defers or finishes the item or ends a run leaving it active; the builder never writes it. Not run as a consuming-model scenario; the same rule in the scaffolded work-item rules held on Terra low (bc-setup-project's `tests/pressure-held-by-results-2026-11-25.md`).
 

@@ -2129,3 +2129,6 @@ npx example switched to Cursor (`-a cursor`, untested, flagged) at the owner's r
 
 ## [2026-11-25] implement | 025 Held by line step
 `work_index.py` parses `Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>` (JSON adds its age; `--check` warns on malformed or closed-item lines); the scaffolded work-item rules and the drain's work-item source write and remove it, bc-work-sync reports stale ones. Pressure test on Terra low: baseline never wrote it, with the rule 3/3 wrote and removed it.
+
+## [2026-11-25] implement | 025 Review and Gate lines step
+`Review:`/`Gate:` step-Notes lines: parser, `--json` per-step lists, `--check` warnings in `work_index.py`; writers in the scaffolded rules, drain work-item source and review contract. Pressure on Terra low: baseline 0, with rule 3/3.
