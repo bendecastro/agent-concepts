@@ -1999,3 +1999,6 @@ Wrote root `glossary.md`: 51 terms in five groups using the settled meanings (ga
 
 ## [2026-11-25] implement | glossary design terms; README plan for consistency
 Glossary gains a Design consistency group (design framework, design token, design page, capture rule). 022-readme-rewrite gains a "Keeping projects consistent" part; 006 extends its guardrails line when the method page lands.
+
+## [2026-11-25] implement | README rewrite (item 022)
+Rewrote `README.md` as a plain reference: harness table (with Muse), install, repository map, the three-skill loop checked against each body, "Keeping projects consistent", hard rules as `AGENTS.md` states them. Dropped the uncaveated wiki-search benchmark and the stale slicing-quiz gate claim; lint now described as checking recorded status.

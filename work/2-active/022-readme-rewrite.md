@@ -10,12 +10,12 @@ Planned: owner chose a plain-reference rewrite after the glossary, 2026-11-25
 
 ## Steps
 
-- [ ] Order for a stranger: what it is, prerequisites and supported harnesses (including Muse), install, repository map (`index.md`, `docs/README.md`, `docs/status.md`, `work/`, `scripts/gate`, CI, `.bc-agent/`, `glossary.md`), then the loop.
-- [ ] Qualify claims: lint checks each concept's recorded test status, not that every rule was attacked; the wiki-search benchmark's token counts are bytes ÷ 4 estimates on one 20-question set.
-- [ ] Describe the hard rules as `AGENTS.md` states them (canon covers derived outputs too; immutability covers all of `docs/research/raw/`), with the names item 004 settles.
-- [ ] Add a "Keeping projects consistent" part: design consistency (tokens, design pages, capture rule; link the ui-design design framework) and one guardrails line (automated checks that stop speed, size or structure from getting worse; the gate command exists today). Describe only what exists; item 006 extends the guardrails line.
-- [ ] Cut promotional phrasing ("while you sleep", "makes you discover the loophole"); keep authorization, private concepts and provenance, shortened.
-- [ ] Fact-check every remaining claim against the code (the 2026-11-25 scout check was partial), lint and gate green.
+- [x] Order for a stranger: what it is, prerequisites and supported harnesses (including Muse), install, repository map (`index.md`, `docs/README.md`, `docs/status.md`, `work/`, `scripts/gate`, CI, `.bc-agent/`, `glossary.md`), then the loop.
+- [x] Qualify claims: lint checks each concept's recorded test status, not that every rule was attacked; the wiki-search benchmark's token counts are bytes ÷ 4 estimates on one 20-question set.
+- [x] Describe the hard rules as `AGENTS.md` states them (canon covers derived outputs too; immutability covers all of `docs/research/raw/`), with the names item 004 settles.
+- [x] Add a "Keeping projects consistent" part: design consistency (tokens, design pages, capture rule; link the ui-design design framework) and one guardrails line (automated checks that stop speed, size or structure from getting worse; the gate command exists today). Describe only what exists; item 006 extends the guardrails line.
+- [x] Cut promotional phrasing ("while you sleep", "makes you discover the loophole"); keep authorization, private concepts and provenance, shortened.
+- [x] Fact-check every remaining claim against the code (the 2026-11-25 scout check was partial), lint and gate green.
 
 ## Outcome
 
