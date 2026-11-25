@@ -17,6 +17,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import pi_package
 import public_skills
 import relationships
 
@@ -453,6 +454,11 @@ def lint_relationships(issues: list[Issue]) -> None:
         issues.append(Issue("ERROR", f"relationship graph: {error}"))
 
 
+def lint_pi_package(issues: list[Issue]) -> None:
+    for error in pi_package.check_manifest(ROOT):
+        issues.append(Issue("ERROR", f"pi package: {error}"))
+
+
 def lint_public_skills(issues: list[Issue]) -> None:
     for error in (public_skills.check_list(ROOT) + public_skills.unlisted_load_references(ROOT)
                   + public_skills.unprefixed_names(ROOT)):
@@ -769,7 +775,16 @@ def main() -> int:
         action="store_true",
         help=f"regenerate {public_skills.LIST_PATH} and exit",
     )
+    parser.add_argument(
+        "--write-pi-package",
+        action="store_true",
+        help=f"regenerate `pi.skills` in {pi_package.MANIFEST_PATH} and exit",
+    )
     args = parser.parse_args()
+
+    if args.write_pi_package:
+        print(f"wrote {rel(pi_package.write_manifest(ROOT))}")
+        return 0
 
     if args.write_public_skills:
         print(f"wrote {rel(public_skills.write_list(ROOT))}")
@@ -808,6 +823,7 @@ def main() -> int:
     lint_status_doc(issues)
     lint_relationships(issues)
     lint_public_skills(issues)
+    lint_pi_package(issues)
     lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)

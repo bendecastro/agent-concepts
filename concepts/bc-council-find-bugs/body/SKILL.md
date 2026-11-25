@@ -1,6 +1,6 @@
 ---
 name: bc-council-find-bugs
-description: "Run bc-find-bugs through the advisor council: one scout maps the area, every council advisor hunts it with a dealt focus, they attack each other's candidates, then one worker reproduces the strongest as failing tests on a hunt branch before the normal two-tier report and filing. Use when the user says bc-council-find-bugs or asks the council to hunt for bugs."
+description: "Run bc-find-bugs through the advisor council: one scout maps the area, every council advisor hunts it with a dealt focus, they attack each other's candidates, then one worker reproduces the strongest as failing tests on a hunt branch before the normal two-tier report and filing. Use when the user says bc-council-find-bugs or asks the council to hunt for bugs. Pi only: runs on bc-council-mode, which needs the pi-subagents `subagent` tool."
 disable-model-invocation: true
 argument-hint: "[area] [--since <ref>] [--max-repro N]"
 ---

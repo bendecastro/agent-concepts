@@ -1,6 +1,6 @@
 ---
 name: bc-council-audit-security
-description: "Run a bc-security-audit full audit through the advisor council: this session does recon and the threat model, every council advisor hunts the trust boundaries dealt to it, they attack each other's candidates, then every candidate still goes to its own fresh refuting reviewer before the normal records, validator and report, and confirmed findings can be filed. Use when the user says bc-council-audit-security or asks the council to audit a repository's security."
+description: "Run a bc-security-audit full audit through the advisor council: this session does recon and the threat model, every council advisor hunts the trust boundaries dealt to it, they attack each other's candidates, then every candidate still goes to its own fresh refuting reviewer before the normal records, validator and report, and confirmed findings can be filed. Use when the user says bc-council-audit-security or asks the council to audit a repository's security. Pi only: runs on bc-council-mode, which needs the pi-subagents `subagent` tool."
 disable-model-invocation: true
 argument-hint: "[scope] [--max-verify N]"
 ---

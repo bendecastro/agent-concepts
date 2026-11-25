@@ -1,6 +1,6 @@
 ---
 name: bc-council-challenge-plan
-description: "Challenge a plan or PRD through the advisor council before it is sliced: one scout maps the code the plan touches, every council advisor attacks a dealt part of the plan for wrong premises, missing cases, cheaper paths and risky order, they attack each other's objections, the owner is grilled only on the surviving ones, the answers are written into the plan, then bc-plan-to-pipeline slices it as a settled source. Use when the user says bc-council-challenge-plan or asks the council to challenge a plan."
+description: "Challenge a plan or PRD through the advisor council before it is sliced: one scout maps the code the plan touches, every council advisor attacks a dealt part of the plan for wrong premises, missing cases, cheaper paths and risky order, they attack each other's objections, the owner is grilled only on the surviving ones, the answers are written into the plan, then bc-plan-to-pipeline slices it as a settled source. Use when the user says bc-council-challenge-plan or asks the council to challenge a plan. Pi only: runs on bc-council-mode, which needs the pi-subagents `subagent` tool."
 disable-model-invocation: true
 argument-hint: "<plan or PRD path>"
 ---

@@ -1,6 +1,6 @@
 ---
 name: bc-council-improve-codebase
-description: "Run bc-improve-codebase-architecture through the advisor council: one scout maps the codebase, every available council advisor proposes and cross-examines deep-module candidates, and candidates are ranked by evidence-backed agreement before the normal report and grilling. Use when the user says bc-council-improve-codebase, council architecture review, or asks the council to review the codebase architecture."
+description: "Run bc-improve-codebase-architecture through the advisor council: one scout maps the codebase, every available council advisor proposes and cross-examines deep-module candidates, and candidates are ranked by evidence-backed agreement before the normal report and grilling. Use when the user says bc-council-improve-codebase, council architecture review, or asks the council to review the codebase architecture. Pi only: runs on bc-council-mode, which needs the pi-subagents `subagent` tool."
 ---
 
 # Council architecture review
