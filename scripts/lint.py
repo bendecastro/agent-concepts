@@ -17,6 +17,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import install_packs
 import pi_package
 import plugin_manifests
 import public_skills
@@ -468,6 +469,8 @@ def lint_public_skills(issues: list[Issue]) -> None:
     for error in (public_skills.check_list(ROOT) + public_skills.unlisted_load_references(ROOT)
                   + public_skills.unprefixed_names(ROOT)):
         issues.append(Issue("ERROR", f"public skills: {error}"))
+    for error in install_packs.check_doc(ROOT):
+        issues.append(Issue("ERROR", f"install packs: {error}"))
 
 
 def print_status_board() -> int:
@@ -790,6 +793,11 @@ def main() -> int:
         action="store_true",
         help="regenerate the Claude Code and Codex plugin manifests and marketplaces and exit",
     )
+    parser.add_argument(
+        "--write-install-packs",
+        action="store_true",
+        help=f"regenerate {install_packs.DOC_PATH} and exit",
+    )
     args = parser.parse_args()
 
     if args.write_pi_package:
@@ -799,6 +807,10 @@ def main() -> int:
     if args.write_plugin_manifests:
         for path in plugin_manifests.write_manifests(ROOT):
             print(f"wrote {path}")
+        return 0
+
+    if args.write_install_packs:
+        print(f"wrote {rel(install_packs.write_doc(ROOT))}")
         return 0
 
     if args.write_public_skills:

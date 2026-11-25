@@ -2065,3 +2065,6 @@ Root package.json exposes every public skill body to `pi install` via `pi.skills
 
 ## [2026-11-25] implement | 024 Claude Code plugin and Codex plugin
 Repository root is one `agent-concepts` plugin for both agents; `scripts/plugin_manifests.py` generates both manifests and marketplaces from the public skill list (paths, not symlinks: Codex drops symlinked skill folders). Verified install, listing and uninstall with both CLIs in a scratch HOME.
+
+## [2026-11-25] implement | 024 npx skills packs
+New `scripts/install_packs.py` generates `docs/guides/install-packs.md` (all-skills and per-pack `npx skills add` commands, closure over public-skills.json needs) with a lint sync check; each command verified in a scratch HOME against a local checkout with `-a pi`.
