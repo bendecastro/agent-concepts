@@ -13,6 +13,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): loads this concept — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
+  Reviewers check source-tree documentation against the diff.
+  Source: [bc-pipeline-to-done/body/review-contract.md](../bc-pipeline-to-done/body/review-contract.md#independent-scopes)
+
+- incoming from [code-review](../code-review/RELATIONSHIPS.md): loads this concept — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
+  The standards reviewer flags stale or change-narrating docs.
+  Source: [code-review/body/SKILL.md](../code-review/body/SKILL.md#2-review-independently)
+
 - incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when durable source-tree docs.
   Placement, current-state maintenance and one home per fact remain doc contracts.
   Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)

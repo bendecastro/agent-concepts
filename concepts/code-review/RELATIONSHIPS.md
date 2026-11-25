@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- loads `codebase-docs` — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
+  The standards reviewer flags stale or change-narrating docs.
+  Source: [body/SKILL.md](body/SKILL.md#2-review-independently)
+
 - depends on `tdd`'s contract — required, when Spec review of property-based tests, the Test levels block, or a Level 3 proof.
   Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical.
   Source: [body/SKILL.md](body/SKILL.md#2-review-independently)

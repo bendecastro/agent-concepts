@@ -23,6 +23,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope.
   Source: [body/source-work-items.md](body/source-work-items.md#eligibility)
 
+- loads `codebase-docs` — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
+  Reviewers check source-tree documentation against the diff.
+  Source: [body/review-contract.md](body/review-contract.md#independent-scopes)
+
 - depends on `improve-codebase-architecture`'s contract — required, when architecture observation after landing.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
   Source: [CONCEPT.md](CONCEPT.md)

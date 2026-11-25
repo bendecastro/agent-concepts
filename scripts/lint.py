@@ -17,6 +17,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import public_skills
 import relationships
 
 
@@ -414,6 +415,11 @@ def lint_relationships(issues: list[Issue]) -> None:
         issues.append(Issue("ERROR", f"relationship graph: {error}"))
 
 
+def lint_public_skills(issues: list[Issue]) -> None:
+    for error in public_skills.check_list(ROOT) + public_skills.unlisted_load_references(ROOT):
+        issues.append(Issue("ERROR", f"public skills: {error}"))
+
+
 def print_status_board() -> int:
     concepts_dir = ROOT / "concepts"
     rows = []
@@ -719,7 +725,16 @@ def main() -> int:
         action="store_true",
         help="regenerate concepts/*/RELATIONSHIPS.md and exit",
     )
+    parser.add_argument(
+        "--write-public-skills",
+        action="store_true",
+        help=f"regenerate {public_skills.LIST_PATH} and exit",
+    )
     args = parser.parse_args()
+
+    if args.write_public_skills:
+        print(f"wrote {rel(public_skills.write_list(ROOT))}")
+        return 0
 
     if args.status:
         return print_status_board()
@@ -752,6 +767,7 @@ def main() -> int:
     lint_status(issues)
     lint_status_doc(issues)
     lint_relationships(issues)
+    lint_public_skills(issues)
     lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)

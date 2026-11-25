@@ -2041,3 +2041,6 @@ Planned how people outside the repository install the skills (grill with the own
 
 ## [2026-11-25] implement | 024 generic wording for owner tools
 Publish policy check described generically in agent-kernel, bc-pipeline-to-done, bc-work-sync and bc-init-agent scaffold; overlay line added to bc-init-agent, bc-wiki-maintain, bc-work-sync, tdd. Overlay tool names listed in the 024 step notes.
+
+## [2026-11-25] implement | 024 public skill list
+Added `scripts/public_skills.py` and `lint.py --write-public-skills`, generating `concepts/public-skills.json` (public skills and the public skills each loads); lint now fails on a stale list or a body that says to load a public skill without a `loads` edge. Added the three missing edges it found.

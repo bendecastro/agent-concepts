@@ -987,6 +987,33 @@
       "required": false,
       "source": "concepts/guardrails/body/measuring.md",
       "reason": "measuring.md names bc-autoresearch-loop as the improvement loop that uses the same method; a verified improvement tightens the limit."
+    },
+    {
+      "from": "bc-init-agent",
+      "to": "teach",
+      "relation": "loads",
+      "required": false,
+      "when": "learning workspace and the owner wants tutoring records",
+      "source": "concepts/bc-init-agent/body/SKILL.md",
+      "reason": "Multi-session tutoring records come from the teach skill."
+    },
+    {
+      "from": "bc-pipeline-to-done",
+      "to": "codebase-docs",
+      "relation": "loads",
+      "required": false,
+      "when": "the diff touches a README, docs page, architecture page or contract JSDoc",
+      "source": "concepts/bc-pipeline-to-done/body/review-contract.md#independent-scopes",
+      "reason": "Reviewers check source-tree documentation against the diff."
+    },
+    {
+      "from": "code-review",
+      "to": "codebase-docs",
+      "relation": "loads",
+      "required": false,
+      "when": "the diff touches a README, docs page, architecture page or contract JSDoc",
+      "source": "concepts/code-review/body/SKILL.md#2-review-independently",
+      "reason": "The standards reviewer flags stale or change-narrating docs."
     }
   ]
 }

@@ -43,6 +43,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [body/SKILL.md](body/SKILL.md#learning-archetype-adapter)
 
+- loads `teach` — optional, when learning workspace and the owner wants tutoring records.
+  Multi-session tutoring records come from the teach skill.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - depends on `ui-design`'s contract — required, when visible-layout scaffold writes docs/design/README.md.
   The generated design README names ui-design's design-framework.md as its method and restates only the project-facing summary.
   Source: [body/scaffold.py](body/scaffold.py)
