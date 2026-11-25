@@ -1,0 +1,16 @@
+{
+  "name": "agent-concepts",
+  "owner": {
+    "name": "agent-concepts contributors"
+  },
+  "metadata": {
+    "description": "Every public agent-concepts skill: planning, TDD, code review, debugging, subagent workflows and upkeep, with bc- names."
+  },
+  "plugins": [
+    {
+      "name": "agent-concepts",
+      "source": "./",
+      "description": "Every public agent-concepts skill: planning, TDD, code review, debugging, subagent workflows and upkeep, with bc- names."
+    }
+  ]
+}

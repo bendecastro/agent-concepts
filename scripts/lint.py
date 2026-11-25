@@ -18,6 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pi_package
+import plugin_manifests
 import public_skills
 import relationships
 
@@ -458,6 +459,10 @@ def lint_pi_package(issues: list[Issue]) -> None:
     for error in pi_package.check_manifest(ROOT):
         issues.append(Issue("ERROR", f"pi package: {error}"))
 
+def lint_plugin_manifests(issues: list[Issue]) -> None:
+    for error in plugin_manifests.check_manifests(ROOT):
+        issues.append(Issue("ERROR", f"plugin manifests: {error}"))
+
 
 def lint_public_skills(issues: list[Issue]) -> None:
     for error in (public_skills.check_list(ROOT) + public_skills.unlisted_load_references(ROOT)
@@ -780,10 +785,20 @@ def main() -> int:
         action="store_true",
         help=f"regenerate `pi.skills` in {pi_package.MANIFEST_PATH} and exit",
     )
+    parser.add_argument(
+        "--write-plugin-manifests",
+        action="store_true",
+        help="regenerate the Claude Code and Codex plugin manifests and marketplaces and exit",
+    )
     args = parser.parse_args()
 
     if args.write_pi_package:
         print(f"wrote {rel(pi_package.write_manifest(ROOT))}")
+        return 0
+
+    if args.write_plugin_manifests:
+        for path in plugin_manifests.write_manifests(ROOT):
+            print(f"wrote {path}")
         return 0
 
     if args.write_public_skills:
@@ -824,6 +839,7 @@ def main() -> int:
     lint_relationships(issues)
     lint_public_skills(issues)
     lint_pi_package(issues)
+    lint_plugin_manifests(issues)
     lint_raw(issues, index)
     lint_policies(issues)
     lint_deploy_symlinks(issues)
