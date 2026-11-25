@@ -935,6 +935,23 @@
       "when": "project has a Where things go table",
       "source": "concepts/bc-init-agent/body/scaffold.py",
       "reason": "The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode."
+    },
+    {
+      "from": "guardrails",
+      "to": "ui-design",
+      "relation": "adapts",
+      "required": true,
+      "source": "concepts/guardrails/CONCEPT.md#design-decisions-2026-11-25",
+      "reason": "Copies design-framework.md's page model (read the project page first, copy the scaffold text when missing, agent's choice the owner may change, page line in the same commit) for limits and checks; design-consistency checks stay on the design page."
+    },
+    {
+      "from": "guardrails",
+      "to": "bc-init-agent",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "project has no docs/guardrails/README.md",
+      "source": "concepts/guardrails/body/SKILL.md#start-from-the-projects-guardrails-page",
+      "reason": "A missing guardrails page is copied from the GUARDRAILS_README text the scaffold writes; the skill does not keep its own copy."
     }
   ]
 }

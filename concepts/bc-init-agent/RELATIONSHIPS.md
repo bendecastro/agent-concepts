@@ -77,6 +77,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Relies on the work-item template, Kind placement in order.md and work_index.py --check.
   Source: [find-bugs/CONCEPT.md](../find-bugs/CONCEPT.md)
 
+- incoming from [guardrails](../guardrails/RELATIONSHIPS.md): depends on this concept's contract — required, when project has no docs/guardrails/README.md.
+  A missing guardrails page is copied from the GUARDRAILS_README text the scaffold writes; the skill does not keep its own copy.
+  Source: [guardrails/body/SKILL.md](../guardrails/body/SKILL.md#start-from-the-projects-guardrails-page)
+
 - incoming from [handoff](../handoff/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves work-active, decisions, research, glossary, ideas and work-dropped in the scaffolded table, with its earlier paths as fallback.
   Source: [handoff/CONCEPT.md](../handoff/CONCEPT.md)

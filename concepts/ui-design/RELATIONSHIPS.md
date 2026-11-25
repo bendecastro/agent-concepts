@@ -21,6 +21,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The generated design README names ui-design's design-framework.md as its method and restates only the project-facing summary.
   Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
 
+- incoming from [guardrails](../guardrails/RELATIONSHIPS.md): adapts this concept — required.
+  Copies design-framework.md's page model (read the project page first, copy the scaffold text when missing, agent's choice the owner may change, page line in the same commit) for limits and checks; design-consistency checks stay on the design page.
+  Source: [guardrails/CONCEPT.md](../guardrails/CONCEPT.md#design-decisions-2026-11-25)
+
 - incoming from [show-me](../show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when UI redesign.
   Product UI design is not an explanation sketch.
   Source: [show-me/body/SKILL.md](../show-me/body/SKILL.md)
