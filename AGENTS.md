@@ -4,6 +4,8 @@ This directory is the canonical, agent-agnostic home for the skills/concepts tha
 
 ## Quick start for agents
 
+Project mechanics (work items, decisions, validation, the Where things go table) live in [.bc-agent/AGENTS.md](.bc-agent/AGENTS.md); read it before non-trivial work. This file stays the operating manual for concepts.
+
 1. Read this file, then `index.md`, then the last few `log.md` entries.
 2. Identify the requested operation: ingest, implement/update, tune, test, deploy, or lint.
 3. Open only the concept/source files the index points you to; don't dump the whole workspace.

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Full gate: every check the integrated tree must pass, run directly (no offload wrapper here) so
+# CI runs this file unchanged. Agents run it through the machine's offload wrapper if its agent
+# instructions name one.
+# Stages and owners: .bc-agent/conventions/validation.md
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+# PYTEST_CMD: set it to the machine's guarded pytest runner when its agent instructions name one.
+read -r -a pytest_cmd <<< "${PYTEST_CMD:-python3 -m pytest}"
+
+python3 scripts/lint.py
+python3 scripts/portability-check.py
+# Real tests only: the practice projects under find-bugs and bc-council-challenge-plan fail on
+# purpose (skills train on them), so they are never collected here.
+mapfile -t tests < <(git ls-files 'scripts/tests/test_*.py' 'concepts/*/tests/test_*.py' | grep -v '/practice')
+"${pytest_cmd[@]}" -q "${tests[@]}"

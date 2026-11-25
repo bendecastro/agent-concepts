@@ -1959,3 +1959,6 @@ Owner decision: every item in work-planned is planned by bc-plan-to-pipeline bef
 
 ## [2026-11-24] test | plan every planned item (bc-plan-to-pipeline, find-bugs, bc-init-agent pickup rule)
 Three Terra-low pressure rounds, two wording fixes between them. No new-rule run started an unplanned item, guessed, or asked a seam question; the find-bugs filing handoff passes 3/3; the carry-on and absent-owner scenarios still end text-only before planning (0/3 each in round 3). Statuses stay partial; results in concepts/bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md.
+
+## [2026-11-25] implement | bc-agent scaffold for this workspace
+Ran `bc-init-agent` (code archetype): `.bc-agent/`, `work/` with items 001–006 from the owner's grill (tidy, docs reshape, journal move, vocabulary renames, glossary, performance guardrails method), `scripts/gate` (lint, portability check, real Python tests) and its CI workflow. Gate starts red on four pre-existing failures that item 001 fixes.
