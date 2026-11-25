@@ -1990,3 +1990,6 @@ Moved the root journal here with `git mv` so history follows, merged the scaffol
 
 ## [2026-11-25] implement | README quick fixes
 Install line now saves the checkout's real path (it saved the literal `$PWD`); `/bc-init-agent` and `/bc-plan-to-pipeline` descriptions match the current layout. Full rewrite filed as 022-readme-rewrite, after the glossary.
+
+## [2026-11-25] implement | vocabulary renames (item 004)
+Discipline gates are now hard rules (canon, provenance, test, immutability; ui-design capture rule; bc-swarm recovery rule), including AGENTS.md heading and lint messages. bc-swarm: the tooth → routing decision, thin-parent guard → evidence anchors. to-tickets says GitHub issues, plan-slicing says tickets. Other "gate" uses left for a later decision; outside-repo copies listed in work/0-ideas.md.
