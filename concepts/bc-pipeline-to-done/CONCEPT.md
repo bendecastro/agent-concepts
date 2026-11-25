@@ -1,8 +1,8 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-25 rename, source split and work-item source: Gate A re-passed, consuming-model scenarios for the work-item source not yet run; work items and role lookup added 2026-11-12 (visible layout) and plan-every-item skip-unplanned rule 2026-11-24 not run as consuming-model scenarios
-tested: 2026-10-08
-deployed: 2026-07-25
+test_status: partial # 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B and the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
+tested: 2026-11-25
+deployed: 2026-11-25
 ---
 # Concept: bc-pipeline-to-done
 
@@ -89,6 +89,8 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
+
+2026-11-25 (work-item source, dry run): [scenarios](tests/scenario-work-items.md), [results](tests/pressure-work-items-results-2026-11-25.md). Terra low, without and with the skill, three scenarios: eligibility and no remote (A), park instead of guess (B), issue-source regression (C). Three wording fixes in `source-work-items.md`: a repository without a remote skips the core's publish and claim-ref preflight; a parallel request builds one item at a time instead of stopping the run; a decision that blocks only a later step still lets the earlier steps land. Final body: A 8/9 with one partial (fresh builder per step), B 6/6 in two runs, C 5/5; the blind runs failed all three (worker committed and no per-step review; no park or filed question; ready-line rule applied to issues). Gate A stays green (check 32's no-remote phrase updated). The first real drain of a work-item project is the live test.
 
 2026-11-19 (generic runner wording): Terra low, text-only, with body, n=2, a stand-in machine instruction naming invented tools; non-regression only, no without-body arm. 2/2 ran the named guarded runner on the targeted test only (`/tmp/bc-swarm/2026-11-19-retro-skill/pt-drain/`).
 

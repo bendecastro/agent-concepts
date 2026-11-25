@@ -1174,7 +1174,7 @@ def work_item_source_scenarios(core,items):
         'source-work-items.md::claim_with_remote': all(r in claim for r in (
             'whole item','`refs/heads/bc-drain-claims/item-<slug>`','same no-force','Released Claim Marker')),
         'source-work-items.md::claim_without_remote': all(r in claim for r in (
-            'Without a Git remote','only one driver','committed move to work-active is the claim','refuse parallel mode')),
+            'Without a Git remote','only one driver','committed move to work-active is the claim','build one item at a time')),
         'source-work-items.md::build_steps_in_order': all(r in build for r in (
             'one builder','steps in order','one worktree','each step','full review','tick','regenerate the work index')),
         'source-work-items.md::park': all(r in park for r in (
@@ -1194,7 +1194,7 @@ wi_mutations={
     'ready-line-removed':('`Ready for agent: yes`','','source-work-items.md::eligibility'),
     'blockers-removed':('every item named on its `Blocked by:` line is in work-done','','source-work-items.md::eligibility'),
     'remote-ref-removed':('`refs/heads/bc-drain-claims/item-<slug>`','','source-work-items.md::claim_with_remote'),
-    'single-driver-removed':('refuse parallel mode','','source-work-items.md::claim_without_remote'),
+    'single-driver-removed':('build one item at a time','','source-work-items.md::claim_without_remote'),
     'step-order-removed':('steps in order','','source-work-items.md::build_steps_in_order'),
     'index-regen-removed':('regenerate the work index','','source-work-items.md::build_steps_in_order'),
     'waiting-line-removed':('`Waiting on owner: <question>`','','source-work-items.md::park'),

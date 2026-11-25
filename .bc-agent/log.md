@@ -2023,3 +2023,9 @@ Renamed `bc-drain-issues` to `bc-pipeline-to-done` (old name a deploy alias); sp
 
 ## [2026-11-25] implement | bc-pipeline-to-done job skills wording
 The three jobs are described as not inheriting the broad skill catalog and getting only the skills the contract passes, replacing "no extra skills", which read as "no skills". Owner kept the hand-picked skills after reviewing them against the local roles.
+
+## [2026-11-25] test | bc-pipeline-to-done work-item source dry run
+Terra low dry runs of the work-item source (eligibility and no remote, park instead of guess) and an issue-source regression, without and with the skill: the blind runs failed all three, the skill held after three wording fixes in `source-work-items.md` (no-remote preflight, parallel request, park after earlier steps land). Results in `concepts/bc-pipeline-to-done/tests/pressure-work-items-results-2026-11-25.md`.
+
+## [2026-11-25] deploy | bc-pipeline-to-done
+The skill is linked through the shared skill folders (`bc-drain-issues` stays an alias); `deployed` set after the work-item dry run held.
