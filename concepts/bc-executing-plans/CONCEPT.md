@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-07-16
+test_status: partial # 2026-11-25 inline storage/verification rules PASS on Terra low (without FAIL); rest of the shared storage matrix unrun
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: bc-executing-plans
@@ -23,6 +23,8 @@ Model-invoked inline executor for a written implementation plan when the user wa
 - `concepts/bc-finishing-development-branch/` — completion workflow referenced at the end.
 
 ## Tests
+
+2026-11-25: [`tests/pressure-inline-storage-2026-11-25.md`](tests/pressure-inline-storage-2026-11-25.md) — re-test after 024's inline rewording of the kernel Storage safety / Verification rules: without FAIL, with PASS (Terra low, one run each).
 
 `tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for ambiguous plan steps, failing verification, main-branch safety, and completion handoff.
 

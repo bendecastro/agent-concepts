@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # check 4 accepted gap; 2026-10-31 todo/manifest scenario PASS (run 2); 2026-11-19 targeted packets + background gate PASS on Terra low (without FAIL); private overlay PASS (content + tools-enabled load path, Pi n=2, Claude Code n=1)
-tested: 2026-11-19
+test_status: partial # check 4 accepted gap; 2026-10-31 todo/manifest scenario PASS (run 2); 2026-11-19 targeted packets + background gate PASS on Terra low (without FAIL); private overlay PASS (content + tools-enabled load path, Pi n=2, Claude Code n=1); 2026-11-25 inline storage/verification packet rules PASS on Terra low (without FAIL)
+tested: 2026-11-25
 deployed: 2026-08-18
 ---
 # Concept: bc-swarm
@@ -228,6 +228,8 @@ the results.
   reproduction cases, not ordinary launch instructions.
 
 ## Tests
+
+2026-11-25: [`tests/pressure-inline-storage-2026-11-25.md`](tests/pressure-inline-storage-2026-11-25.md) — re-test after 024's inline rewording of the kernel Storage safety / Verification rules: without FAIL, with PASS (Terra low, one run each).
 
 2026-11-19: [`tests/pressure-private-overlay.md`](tests/pressure-private-overlay.md). Owner decision: the body describes the full-gate wrapper, guarded pytest runner and storage health check generically; the owner's tool names moved to the optional private overlay `~/.config/agent-concepts/overlays/bc-swarm.md` (first user of the AGENTS.md private-overlay convention), which the body reads only if present. Terra low, text-only, n=2/arm: OWNER (body + overlay) 2/2 PASS named the tools at the right steps; STRANGER (body only) 2/2 PASS invented no owner tool and applied the discovery rule. No relationship edge changes: the kernel Storage safety link is kept.
 

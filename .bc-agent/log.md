@@ -2081,3 +2081,6 @@ Added a "How the skills test code" section on bc-tdd's three test levels, and gl
 
 ## [2026-11-25] test | agent-kernel, bc-work-sync, bc-pipeline-to-done pressure re-test after 024 rewording
 Terra low, without/with: kernel generic publish-check wording held 2/2; pipeline generic publish preflight and inline storage/Test-levels rules held in a dry run. bc-work-sync step 5 failed once (overlay never read), one wording fix pointing at the overlay, rerun passed.
+
+## [2026-11-25] test | bc-swarm, bc-dispatching-parallel-agents, bc-subagent-driven-development, bc-executing-plans pressure re-test after 024 rewording
+New scenario per concept (`tests/pressure-inline-storage-2026-11-25.md`): attack asks for /tmp basetemp, full suite per change, no storage check, forced cleanup. Terra low: all four without FAIL, all four with PASS; no wording fix needed. test_status stays partial (wider storage matrix unrun).

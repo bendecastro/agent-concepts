@@ -31,9 +31,9 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-council-improve-codebase](../concepts/bc-council-improve-codebase/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-council-mode](../concepts/bc-council-mode/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-diagnosing-bugs](../concepts/bc-diagnosing-bugs/CONCEPT.md) | pressure | 2026-07-16 | 2026-06-21 |
-| [bc-dispatching-parallel-agents](../concepts/bc-dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [bc-dispatching-parallel-agents](../concepts/bc-dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-11-25 | yes |
 | [bc-domain-modeling](../concepts/bc-domain-modeling/CONCEPT.md) | accuracy | 2026-10-22 | yes |
-| [bc-executing-plans](../concepts/bc-executing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [bc-executing-plans](../concepts/bc-executing-plans/CONCEPT.md) | pressure | 2026-11-25 | yes |
 | [bc-finishing-development-branch](../concepts/bc-finishing-development-branch/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [bc-handoff](../concepts/bc-handoff/CONCEPT.md) | pressure | 2026-08-21 | 2026-08-21 |
 | [bc-improve-codebase-architecture](../concepts/bc-improve-codebase-architecture/CONCEPT.md) | pressure | 2026-08-20 | 2026-06-21 |
@@ -46,8 +46,8 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-reflect](../concepts/bc-reflect/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-research](../concepts/bc-research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [bc-show-me](../concepts/bc-show-me/CONCEPT.md) | pressure | 2026-11-04 | yes |
-| [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
-| [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-19 | 2026-08-18 |
+| [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-11-25 | yes |
+| [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-25 | 2026-08-18 |
 | [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
 | [bc-to-tickets](../concepts/bc-to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |

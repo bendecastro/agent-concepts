@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-07-16
+test_status: partial # 2026-11-25 inline storage/verification rules PASS on Terra low (without FAIL); rest of the shared storage matrix unrun
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: bc-dispatching-parallel-agents
@@ -24,6 +24,8 @@ Model-invoked coordination pattern for splitting independent investigations or r
 - [bun-in-rust-zig-port-writeup.md](https://bun.com/blog/bun-in-rust) — Bun's Zig→Rust rewrite (Jarred Sumner, 2026-07-08): pilot-then-scale trial run (3 of 1,448 files), task-class guides (`PORTING.md`/`LIFETIMES.tsv`, adversarially reviewed before use), and the shared-git-state fleet collision + atomic-command fallback. (ingested 2026-07-16)
 
 ## Tests
+
+2026-11-25: [`tests/pressure-inline-storage-2026-11-25.md`](tests/pressure-inline-storage-2026-11-25.md) — re-test after 024's inline rewording of the kernel Storage safety / Verification rules: without FAIL, with PASS (Terra low, one run each).
 
 `tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for independent vs related failures, over-broad prompt rejection, and parent-side verification.
 

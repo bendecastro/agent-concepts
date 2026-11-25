@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-07-16
+test_status: partial # 2026-11-25 inline storage/verification rules PASS on Terra low (without FAIL); rest of the shared storage matrix unrun
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: bc-subagent-driven-development
@@ -24,6 +24,8 @@ User-invoked plan execution pattern where a controller dispatches fresh implemen
 - `concepts/bc-dispatching-parallel-agents/` — related but for independent parallel domains, not sequential plan tasks.
 
 ## Tests
+
+2026-11-25: [`tests/pressure-inline-storage-2026-11-25.md`](tests/pressure-inline-storage-2026-11-25.md) — re-test after 024's inline rewording of the kernel Storage safety / Verification rules: without FAIL, with PASS (Terra low, one run each).
 
 `tests/scenario.md` — pressure-tested 2026-07-16 **PASS** (Grok) for skipped review, parallel implementer temptation, broad plan-file handoff, and blocked-subagent handling.
 
