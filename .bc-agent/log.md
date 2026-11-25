@@ -2114,3 +2114,6 @@ Owner choices after a relevance check: 007-agent-vault-read-path closed in reduc
 
 ## [2026-11-25] implement | install section review fixes
 README `## Install` reworked from the install-section review: Update renamed Refresh (stays on the installed release) with a "To move to a newer release" line, `pi-subagents` named for council skills (`pi install npm:pi-subagents`, checked on its npm page), exact `npx skills` tested scope, real clone URL, zsh/bash path lines, gate command, options as a list, shared-folder note. `release_check.py` now requires README#install to name the released tag and no other (test watched failing first); releasing.md step added; glossary gains tag, checkout, symlink and the "agent" note.
+
+## [2026-11-25] implement | npx install example in README
+Owner could not follow the npx instructions; added a worked one-skill example (bc-self-improve for Pi) with each part of the command explained.
