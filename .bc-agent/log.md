@@ -2182,3 +2182,6 @@ Added a folded walk-through of one session, stated the MIT licence, folded the c
 
 ## [2026-11-25] test | README install boxes
 Ran every install, refresh and uninstall box (Claude Code, Codex, Pi, npx for Cursor, contributor checkout) in a throwaway home; all pass. Noted that npx remove keeps skills while Codex or Pi share ~/.agents/skills.
+
+## [2026-11-25] implement | README look
+Centred header with badges and quick links, emoji principle headings with Skills lines, workflow diagram, tip and important callouts, emoji stage summaries; contributor section unfolded.
