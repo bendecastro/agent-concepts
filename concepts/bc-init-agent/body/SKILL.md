@@ -9,6 +9,8 @@ argument-hint: "[project-slug] (defaults to the repo directory name)"
 
 Adaptively initialize project-local agent context.
 
+If `~/.config/agent-concepts/overlays/bc-init-agent.md` exists, read it for this machine's tool names.
+
 - **Code, ops and hybrid use the visible layout.** Work items live in `work/` (`0-ideas.md`, then
   `1-planned/`, `2-active/`, `3-done/<year>-<month>/`, `4-dropped/`), decisions and research in
   `docs/decisions/` and `docs/research/`, the vocabulary in root `glossary.md`; `.bc-agent/` holds

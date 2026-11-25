@@ -642,7 +642,7 @@ Once planning leaves a `ready-for-agent` queue, `/bc-pipeline-to-done` executes 
 (AFK): per unblocked issue it dispatches a fresh subagent that builds the slice test-first and
 lands it **trunk-based**, then moves on.
 
-- **Authorization.** The executor's preflight runs `publish-check.py`. This repo must have an
+- **Authorization.** The executor's preflight runs the machine's publish policy check. This repo must have an
   allow rule in `policies/publish.yaml` (push + issue-close on `master`) and authorization for
   `bc-drain-claims/issue-<n>` coordination branches, or AFK/parallel push is blocked.
   **TODO:** confirm this repo is authorized before the first AFK run.

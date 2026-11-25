@@ -12,6 +12,8 @@ in that vault's append-only `log.md`; this pass separates capture from synthesis
 only durable evidence into the smallest appropriate page. It works with `.bc-agent/`, `.agent/`,
 or `agent/wiki/` roots. Do not assume the directory name: the vault-root argument is required.
 
+If `~/.config/agent-concepts/overlays/bc-wiki-maintain.md` exists, read it for this machine's tool names.
+
 ## Two layouts
 
 The detector decides which layout the target uses and prints it as `Layout:`. Follow the

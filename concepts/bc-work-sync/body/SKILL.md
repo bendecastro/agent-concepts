@@ -9,6 +9,8 @@ argument-hint: "[optional focus, e.g. a stage or a doc]"
 
 The project's docs say what is planned; `work/` should show the same. This skill finds where they disagree, shows the owner one plan, and changes `work/` only after the owner answers it.
 
+If `~/.config/agent-concepts/overlays/bc-work-sync.md` exists, read it for this machine's tool names.
+
 ## Gate: plan first, write nothing until the owner answers
 
 ```
@@ -63,6 +65,6 @@ Look for each of these; [PLAN.md](PLAN.md) gives the plan's format.
 2. Run `python3 .bc-agent/scripts/work_index.py`, then `python3 .bc-agent/scripts/work_index.py --check` and the project's own lint.
 3. Commit only your own changes, with a subject naming the sync.
 4. Get an independent review of the diff (a fresh reviewer subagent, or the owner when none is available), apply the fixes, re-run step 2 and commit them.
-5. Publishing: run the owner's publish check, `python3 "$AGENT_CONCEPTS/scripts/publish-check.py" --repo "$PWD" --remote "$(git remote get-url origin)" --branch "$(git branch --show-current)"`. Then check the matched rule's `when:` conditions yourself. If there is no matching rule, or the check is not available, ask. Do not restate the policy.
+5. Publishing: run the publish policy check for this repo, its remote and the current branch, if the machine has one. Then check the matched rule's `when:` conditions yourself. If there is no matching rule, or the check is not available, ask. Do not restate the policy.
 
 A project scaffolded before the work index has no `.bc-agent/scripts/work_index.py`: see the "Work index" note in bc-init-agent's `MIGRATIONS.md`, and propose adopting it in the plan rather than doing it unasked.

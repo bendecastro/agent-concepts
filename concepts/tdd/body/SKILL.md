@@ -7,6 +7,8 @@ description: Use when writing new tests or behaviour-changing assertions, includ
 
 Use targeted RED/GREEN checks through guarded pytest under [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety); health-check before a full suite, not each cycle. Why: fast feedback does not require repeated full suites.
 
+If `~/.config/agent-concepts/overlays/tdd.md` exists, read it for this machine's tool names.
+
 These rules apply to new tests and behaviour-changing assertions, including regression tests added during bug fixes or feature work. Reading, running or mechanical test edits (such as import renames) do not require a watched fail or a new plan. For bugs without a tight repro, `diagnosing-bugs` owns diagnosis; this concept owns the regression-test RED/GREEN cycle once the behaviour is identified.
 
 ## Test levels

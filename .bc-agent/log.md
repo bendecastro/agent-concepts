@@ -2038,3 +2038,6 @@ All five steps landed; Outcome filled and the item moved to done.
 
 ## [2026-11-25] implement | plan 024-skill-delivery
 Planned how people outside the repository install the skills (grill with the owner): Claude Code and Codex plugins, Pi package and `npx skills`, from tagged releases; `bc-` names; name references instead of path links; a fresh-install test on Linux and macOS. Decision records 0001 and 0002, five glossary terms, twelve steps.
+
+## [2026-11-25] implement | 024 generic wording for owner tools
+Publish policy check described generically in agent-kernel, bc-pipeline-to-done, bc-work-sync and bc-init-agent scaffold; overlay line added to bc-init-agent, bc-wiki-maintain, bc-work-sync, tdd. Overlay tool names listed in the 024 step notes.
