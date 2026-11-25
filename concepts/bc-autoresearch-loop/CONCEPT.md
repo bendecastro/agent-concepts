@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial
-tested: 2026-06-21
+test_status: partial # 2026-11-25 inline Storage safety PASS on Terra low (without 2/5, with 5/5); guardrails measuring step not pressure-tested
+tested: 2026-11-25
 deployed: 2026-06-21
 ---
 # Concept: bc-autoresearch-loop

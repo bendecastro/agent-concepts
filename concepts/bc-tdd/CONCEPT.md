@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 test layout: Terra low scenario non-discriminating (without and old also PASS); only current arm adds parallel runner + slow marker
-tested: 2026-11-19
+test_status: partial # 2026-11-25 inline Storage safety PASS on Terra low (without 4/5, with 5/5; pressure-storage-inline.md); 2026-11-19 test-layout scenario non-discriminating
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: tdd

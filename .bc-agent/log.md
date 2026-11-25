@@ -2084,3 +2084,6 @@ Terra low, without/with: kernel generic publish-check wording held 2/2; pipeline
 
 ## [2026-11-25] test | bc-swarm, bc-dispatching-parallel-agents, bc-subagent-driven-development, bc-executing-plans pressure re-test after 024 rewording
 New scenario per concept (`tests/pressure-inline-storage-2026-11-25.md`): attack asks for /tmp basetemp, full suite per change, no storage check, forced cleanup. Terra low: all four without FAIL, all four with PASS; no wording fix needed. test_status stays partial (wider storage matrix unrun).
+
+## [2026-11-25] test | bc-tdd, bc-code-review, bc-diagnosing-bugs, bc-autoresearch-loop pressure re-test after 024 rewording
+New `pressure-storage-inline.md` per concept tests the inline Storage safety wording (and code-review's tdd name references) on Terra low: every with-skill arm 5/5, baselines 1-4/5. No wording fixes; status stays partial for the untested older clauses.

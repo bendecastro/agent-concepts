@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-19 data-size Standards question PASS on Terra low (amplification scenario: without 0/3, old 0/2, current 3/3; control clean); test-layout check PASS same day
-tested: 2026-11-19
+test_status: partial # 2026-11-25 inline Storage safety + tdd name references PASS on Terra low (without 1/5, with 5/5; pressure-storage-inline.md); earlier data-size and test-layout checks PASS 2026-11-19
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: bc-code-review

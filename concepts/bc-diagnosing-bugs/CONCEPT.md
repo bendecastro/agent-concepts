@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # role lookup and ideas-file seam note changed 2026-11-12; not yet pressure-tested
-tested: 2026-07-16
+test_status: partial # 2026-11-25 inline Storage safety PASS on Terra low (without 3/5, with 5/5); role lookup and ideas-file seam note (2026-11-12) still not pressure-tested
+tested: 2026-11-25
 deployed: 2026-06-21
 ---
 # Concept: bc-diagnosing-bugs
