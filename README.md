@@ -2,55 +2,63 @@
 
 Skills and rules for coding agents — a way of working where questions get settled before
 code is written, every test is proved able to fail before it is trusted, and work lives in
-files so your project builds intrinsic long-term memory. The skills are kept once here and
-linked into whichever agent you use.
+files so your project builds intrinsic long-term memory. Install them once and they work in
+the coding agent you already use: Claude Code, Codex or Pi. Other agents, such as Cursor, can
+install them too, but that has not been tested yet.
 
 ## How these skills work
 
 The set encodes a handful of principles. Each one names the skills that carry it.
 
-**Settle questions before building.** [bc-grilling](concepts/bc-grilling/body/SKILL.md)
-interviews you one question at a time until a plan has no open branches.
+### Settle questions before building
+
+[bc-grilling](concepts/bc-grilling/body/SKILL.md) interviews you one question at a time until a plan has no open branches.
 [bc-brainstorming](concepts/bc-brainstorming/body/SKILL.md) explores an idea before it
 becomes a plan. [bc-plan-to-pipeline](concepts/bc-plan-to-pipeline/body/SKILL.md) runs the
 full sequence — grill, requirements, slicing — so nothing is built on a guess. The
 [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md) (always-on rules every session
 loads) requires the agent to surface judgment calls and let the owner decide.
 
-**Test first, and prove the test can fail.** [bc-tdd](concepts/bc-tdd/body/SKILL.md) is
-central: write the test first and watch it fail for the reason it names, then write the code
+### Test first, and prove the test can fail
+
+[bc-tdd](concepts/bc-tdd/body/SKILL.md) is central to the whole set: write the test first and watch it fail for the reason it names, then write the code
 that makes it pass. A test that has never failed proves nothing, so when the code already works
 the agent plants a bug, watches the test catch it, and reverts. Every change gets example
 tests; logic with a rule that can be stated (parsers, calculations, state changes) also gets
 property tests; formal proof is off unless you turn it on for a component, and the agent
 suggests it where the risk calls for it.
 
-**Evidence before claims.** The kernel's verification rules require checking work against the
-codebase, not trusting a report. [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md)
+### Evidence before claims
+
+The kernel's verification rules require checking work against the codebase, not trusting a report. [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md)
 reproduces a bug as a failing command before guessing at the cause.
 
-**Smallest solution that works, shaped as deep modules.**
+### Smallest solution that works, shaped as deep modules
+
 [bc-minimal-solution-ladder](concepts/bc-minimal-solution-ladder/body/SKILL.md) climbs an
 ordered ladder — does it already exist? stdlib? one line? — and stops at the first rung that
 holds. [bc-codebase-design](concepts/bc-codebase-design/body/SKILL.md) shapes what remains
 as deep modules: a small interface hiding a lot of behaviour.
 
-**Independent checking.** [bc-code-review](concepts/bc-code-review/body/SKILL.md) reviews a
-diff on two axes (does it match the spec? does it meet standards?) with enough context for
+### Independent checking
+
+[bc-code-review](concepts/bc-code-review/body/SKILL.md) reviews a diff on two axes (does it match the spec? does it meet standards?) with enough context for
 someone who was not there. [bc-pipeline-to-done](concepts/bc-pipeline-to-done/body/SKILL.md)
 sends every step to a reviewer before landing. The
 [council skills](#running-several-agents) run several models against the same question and
 have them cross-examine each other.
 
-**Work lives in files, not chat.** Work items, plans and handoffs are written to disk so they
-survive a crashed session and so another agent — or a dashboard — can read them. This is
+### Work lives in files, not chat
+
+Work items, plans and handoffs are written to disk so they survive a crashed session and so another agent — or a dashboard — can read them. This is
 long-term project memory: durable facts in Git that any fresh agent can retrieve on demand.
 [bc-handoff](concepts/bc-handoff/body/SKILL.md) captures state for the next session.
 [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) writes every
 child's result to a file before the parent reads it. The
 [work-data format](concepts/bc-setup-project/body/work-data.md) is what a dashboard consumes.
 
-**Keep the project consistent, and stop it getting worse.**
+### Keep the project consistent, and stop it getting worse
+
 [bc-ui-design](concepts/bc-ui-design/body/SKILL.md) keeps every colour, size and wording
 pattern defined once as a design token or shared part, used only from there, never as a
 literal value.
@@ -59,7 +67,9 @@ literal value.
 budgets (limits on time, size or memory) and fitness functions (checks for a structural
 rule, such as "the UI layer never imports the database").
 
-**The instructions themselves are sourced, pressure-tested and improved from use.** Every
+### The instructions themselves are sourced, pressure-tested and improved from use
+
+Every
 concept names where it came from ([hard rules](AGENTS.md)). A concept that enforces
 discipline is not deployed until it has held under a pressure test — an agent run against
 scripted temptations, once without the concept and once with it.
@@ -246,8 +256,7 @@ Every concept is listed in [index.md](index.md). How agents test the code they c
 
 ## Install
 
-Install a release, not the newest code: the newest code changes many times a day and can hold
-unfinished work. A release is a fixed, named version of the skills; its name (such as `v0.3.0`)
+Install a release, not the newest code: the newest code can hold unfinished work. A release is a fixed, named version of the skills; its name (such as `v0.3.0`)
 is called a tag. The newest release is `v0.3.0`; check the
 [releases page](https://github.com/bendecastro/agent-concepts/releases) and use the newest tag
 listed there in place of `v0.3.0` in the commands below.

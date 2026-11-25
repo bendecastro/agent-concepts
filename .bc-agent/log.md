@@ -2170,3 +2170,6 @@ fallback. Checkout uses a one-paste box with shell detection.
 
 ## [2026-11-25] implement | README review fixes after restore
 Owner pipeline wording restored (nobody there to answer; diligently verifies), npx agents folded one per section with a shared refresh, guardrail regression wording matched to the skill.
+
+## [2026-11-25] implement | README headings and wording
+Principles get their own headings; plainer opening sentence; install intro no longer claims the code changes many times a day.
