@@ -179,6 +179,7 @@ these: [workflows.md § Building your own dashboard](docs/guides/workflows.md#bu
 
 </details>
 
+<a name="running-several-agents"></a>
 <details>
 <summary><b>Running several agents</b> — delegation, dispatching, council cross-examination</summary>
 
@@ -240,6 +241,7 @@ Before you start:
 - **What has been tested.** On Linux and macOS: Pi 1.6.0, Claude Code 2.1.329, Codex 0.153.1, and `npx skills` 1.9.0 installing for Pi. `npx skills` for other agents, and Windows, have not been tested.
 - **To move to a newer release**, uninstall first, then install with the new tag.
 
+<a name="claude-code"></a>
 <details>
 <summary><b>Claude Code</b></summary>
 
@@ -277,6 +279,7 @@ claude plugin marketplace remove agent-concepts
 
 </details>
 
+<a name="codex"></a>
 <details>
 <summary><b>Codex</b></summary>
 
@@ -312,6 +315,7 @@ codex plugin marketplace remove agent-concepts
 
 </details>
 
+<a name="pi"></a>
 <details>
 <summary><b>Pi</b></summary>
 
@@ -335,6 +339,7 @@ pi remove git:github.com/bendecastro/agent-concepts@v0.3.0
 
 </details>
 
+<a name="other-agents-npx-skills"></a>
 <details>
 <summary><b>Other agents (<code>npx skills</code>)</b></summary>
 
@@ -371,6 +376,7 @@ npx skills remove -g -a <agent> -y <skill names>
 
 </details>
 
+<a name="install-from-a-checkout-contributors"></a>
 <details>
 <summary><b>Install from a checkout (contributors)</b></summary>
 
