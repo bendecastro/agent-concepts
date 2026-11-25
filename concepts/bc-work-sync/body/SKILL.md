@@ -65,6 +65,6 @@ Look for each of these; [PLAN.md](PLAN.md) gives the plan's format.
 2. Run `python3 .bc-agent/scripts/work_index.py`, then `python3 .bc-agent/scripts/work_index.py --check` and the project's own lint.
 3. Commit only your own changes, with a subject naming the sync.
 4. Get an independent review of the diff (a fresh reviewer subagent, or the owner when none is available), apply the fixes, re-run step 2 and commit them.
-5. Publishing: run the publish policy check for this repo, its remote and the current branch, if the machine has one. Then check the matched rule's `when:` conditions yourself. If there is no matching rule, or the check is not available, ask. Do not restate the policy.
+5. Publishing: run the publish policy check for this repo, its remote and the current branch, if the machine has one; the overlay named at the top of this skill names it, so read that file now if you have not. Then check the matched rule's `when:` conditions yourself. If there is no matching rule, or the check is not available, ask. Do not restate the policy.
 
 A project scaffolded before the work index has no `.bc-agent/scripts/work_index.py`: see the "Work index" note in bc-init-agent's `MIGRATIONS.md`, and propose adopting it in the plan rather than doing it unasked.

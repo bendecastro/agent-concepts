@@ -24,7 +24,7 @@ tested. See the concept's `## Tests` section for what is missing.
 
 | concept | kind | tested | deployed |
 |---|---|---|---|
-| [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-19 | 2026-11-15 |
+| [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-25 | 2026-11-15 |
 | [bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md) | pressure | 2026-06-21 | 2026-06-21 |
 | [bc-code-review](../concepts/bc-code-review/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-council-chain](../concepts/bc-council-chain/CONCEPT.md) | pressure | 2026-11-24 | yes |
@@ -55,7 +55,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-ui-design](../concepts/bc-ui-design/CONCEPT.md) | pressure | 2026-11-21 | yes |
 | [bc-using-git-worktrees](../concepts/bc-using-git-worktrees/CONCEPT.md) | pressure | 2026-09-22 | yes |
 | [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-09-05 | 2026-08-23 |
-| [bc-work-sync](../concepts/bc-work-sync/CONCEPT.md) | pressure | 2026-11-16 | 2026-11-16 |
+| [bc-work-sync](../concepts/bc-work-sync/CONCEPT.md) | pressure | 2026-11-25 | 2026-11-16 |
 | [bc-writing-plans](../concepts/bc-writing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
 
 ## Passing and deployed (21)

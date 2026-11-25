@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B and the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
+test_status: partial # 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B and the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
 tested: 2026-11-25
 deployed: 2026-11-25
 ---
@@ -91,6 +91,8 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
+
+2026-11-25 (024 rewording, dry run): [results](tests/pressure-publish-storage-2026-11-25.md). Scenario C variant with an overlay naming stub publish check, guarded runner and storage check. Check denies: the skill ran the overlay's check and stopped before claims (3/3). Check allows: check run, storage check run and repeated before worktrees/launches, guarded runner without `--basetemp`, `mktemp -d` outside `/tmp`, L1/L2/L3 gate, landing proof before release (6/6, `mktemp` stated for the artifact root only). Without the skill: no check (once read `publish.yaml` itself), none of the storage or gate rules. No wording change.
 
 2026-11-25 (work-item source, dry run): [scenarios](tests/scenario-work-items.md), [results](tests/pressure-work-items-results-2026-11-25.md). Terra low, without and with the skill, three scenarios: eligibility and no remote (A), park instead of guess (B), issue-source regression (C). Three wording fixes in `source-work-items.md`: a repository without a remote skips the core's publish and claim-ref preflight; a parallel request builds one item at a time instead of stopping the run; a decision that blocks only a later step still lets the earlier steps land. Final body: A 8/9 with one partial (fresh builder per step), B 6/6 in two runs, C 5/5; the blind runs failed all three (worker committed and no per-step review; no park or filed question; ready-line rule applied to issues). Gate A stays green (check 32's no-remote phrase updated). The first real drain of a work-item project is the live test.
 

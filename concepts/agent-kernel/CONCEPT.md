@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-24 bulky-scratch rule (scenario 6) reworded: location 1/2, deletion 0/2 on Terra low (baseline 0/2), deployed by owner choice despite the partial result; 2026-11-19 generic storage-safety wording PASS 4/4 (with-kernel only); full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL); concurrent-sessions: discovery 4/4 vs 0/4 (s1+s2 after no-tools prompt fix), visible exchange 1.5/2 vs 0.5/2 (partial scores), control 4/4
-tested: 2026-11-19
+test_status: partial # 2026-11-25 generic publish-check wording (024) PASS 2/2 on Terra low (baseline 0/2); 2026-11-24 bulky-scratch rule (scenario 6) reworded: location 1/2, deletion 0/2 on Terra low (baseline 0/2), deployed by owner choice despite the partial result; 2026-11-19 generic storage-safety wording PASS 4/4 (with-kernel only); full-suite rule PASS on Terra low (worker + reviewer scenarios; without FAIL); session-close 👣 rule PASS 4/4 per scenario (without and pre-change FAIL); concurrent-sessions: discovery 4/4 vs 0/4 (s1+s2 after no-tools prompt fix), visible exchange 1.5/2 vs 0.5/2 (partial scores), control 4/4
+tested: 2026-11-25
 deployed: 2026-11-15
 ---
 # Concept: agent-kernel
@@ -63,6 +63,8 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 `tests/pressure-scenarios.md` — compact checks for the kernel's main failure modes: over-planning, scope creep, context dumping, unverified completion, dirty-worktree damage, unsafe publishing, off-vault stalls, missing concept loads, and informational questions triggering edits. Scenario 9's answer-first boundary passed a full two-turn Pi pressure run on 2026-08-12 after two failed phrasings were strengthened.
 
 Scenario 15 (test evidence, 2026-11-05) in `tests/pressure-scenarios.md`: kernel-only, tdd hidden by `bwrap`; with the kernel the consumer watched RED before fixing 2/2 vs 0/2 without.
+
+`tests/pressure-publish-generic-2026-11-25.md` — scenario 5 policy-allow and scenario 8 rerun against the generic "machine's publish policy check" wording from 024-skill-delivery: with the kernel 2/2 (check run, push only on match), without 0/2 full passes. No wording change.
 
 `tests/pressure-storage-generic.md` — generic storage wording, with-kernel 4/4 on Terra low (2026-11-19); non-regression only.
 

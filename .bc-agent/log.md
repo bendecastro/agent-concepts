@@ -2078,3 +2078,6 @@ New `docs/guides/workflows.md`: each newcomer workflow with timing, start, quest
 ## [2026-11-25] implement | 024 workflow guide copy review, test levels, glossary terms
 Applied the independent copy review to docs/guides/workflows.md and the README Workflows list (four skill-body contradictions fixed, clearer row names, jargon explained in place).
 Added a "How the skills test code" section on bc-tdd's three test levels, and glossary sections for code design and testing terms plus "advisor".
+
+## [2026-11-25] test | agent-kernel, bc-work-sync, bc-pipeline-to-done pressure re-test after 024 rewording
+Terra low, without/with: kernel generic publish-check wording held 2/2; pipeline generic publish preflight and inline storage/Test-levels rules held in a dry run. bc-work-sync step 5 failed once (overlay never read), one wording fix pointing at the overlay, rerun passed.
