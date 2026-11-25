@@ -2090,3 +2090,6 @@ New `pressure-storage-inline.md` per concept tests the inline Storage safety wor
 
 ## [2026-11-25] test | bc-finishing-development-branch, bc-using-git-worktrees, bc-writing-plans pressure re-test after 024 rewording
 Re-tested the inline storage/verification rules that replaced kernel links (guarded runner, no basetemp, health gate, cleanup proof, no --force, mktemp scratch, one baseline + one landing suite) on Terra low: each without FAIL, with PASS (n=1), no wording fix. Results in each concept's tests/pressure-024-rewording-2026-11-25.md.
+
+## [2026-11-25] implement | 025-dashboard-data planned
+Planned the dashboard data item from the owner's choices (Held by line, history from git, Review/Gate lines in step Notes, Spent line from session files, owner dashboard separate): six steps, decision 0003, three glossary terms.

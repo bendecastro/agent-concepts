@@ -24,6 +24,10 @@ same meaning.
 - **release** — a tagged version of the public skills (`vMAJOR.MINOR.PATCH`) that install methods point at; never `master`.
 - **fresh-install test** — the CI check that installs with each install method into an empty home folder and checks what a stranger would find.
 
+- **work data** — the records about work items that a dashboard can read: stage, steps, who holds an item, its history, review and gate results, and time and cost; the work index script prints them as JSON.
+- **Held by line** — the `Held by:` line in a work item naming the agent working on it and since when; written when the agent starts and removed when it stops.
+- **Spent line** — the `Spent:` line in a finished work item's Outcome giving its estimated time, tokens and cost, read from the agent tools' session files.
+
 ## Gates, checks and rules
 
 - **gate** — an automated command that must pass before work counts as done, such as the project's full gate. _Avoid_: gate, for a rule an agent must follow (say hard rule).
