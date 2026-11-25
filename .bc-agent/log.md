@@ -2032,3 +2032,6 @@ The skill is linked through the shared skill folders (`bc-drain-issues` stays an
 
 ## [2026-11-25] implement | 023 docs: README loop, pipeline guide, glossary
 README loop now presents attended "continue the work" as the standard and `/bc-pipeline-to-done` as the unattended option for work items or issues; pipeline guide and glossary (drain, claim, Ready for agent, Waiting on owner) describe both sources; two living `bc-drain-issues` references renamed.
+
+## [2026-11-25] implement | close 023-pipeline-to-done
+All five steps landed; Outcome filled and the item moved to done.
