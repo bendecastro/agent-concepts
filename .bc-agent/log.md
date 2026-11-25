@@ -2056,3 +2056,6 @@ Owner asked for deeper workflow docs: a guide page with cadence (every task, at 
 
 ## [2026-11-25] implement | 024 bc- rename
 Renamed the 40 public skills without the prefix to bc-<name> (decision 0001); old names are deploy aliases. Lint now errors on an unprefixed public skill and exempts dated research and recorded test results as historical records.
+
+## [2026-11-25] implement | 024 workflow guide scope
+Guide step now lists the full workflow set with bc- names, cadence, and a section on skills worth attaching to subagent roles.
