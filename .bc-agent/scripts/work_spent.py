@@ -5,7 +5,8 @@ Usage: python3 .bc-agent/scripts/work_spent.py <item-name> [--json] [work-dir]
 
 A session counts when it has an entry inside the item's active period (from its first committed move into
 work/2-active/ to its move out, or now), its working folder is the project or one of its git worktrees, and
-its file mentions the item name. Active time sums the gaps between a session's entries in the period, each
+its file mentions the item name; a Pi child (subagent) session whose parent counts is counted too,
+whatever its folder and whether or not it mentions the item. Active time sums the gaps between a session's entries in the period, each
 gap capped at IDLE_CAP. Session roots default to each tool's standard folder; tests and dry runs override
 them with WORK_SPENT_PI_SESSIONS, WORK_SPENT_CLAUDE_SESSIONS and WORK_SPENT_CODEX_SESSIONS.
 """
@@ -118,32 +119,57 @@ def inside(cwd: str | None, folders: list[Path]) -> bool:
     return any(here == f or f in here.parents for f in folders)
 
 
+def parent_file(path: Path, root: Path) -> Path | None:
+    """The Pi session file whose folder holds this child session (`<parent-id>.jsonl` beside `<parent-id>/`)."""
+    for folder in path.parents:
+        if folder == root or root not in folder.parents:
+            return None
+        if folder.with_suffix(".jsonl").is_file():
+            return folder.with_suffix(".jsonl")
+    return None
+
+
 def spent(work: Path, name: str) -> dict:
     start, end = active_period(find_item(work, name))
     folders = project_folders(work.resolve().parent)
     tools, sessions = {}, []
+
+    def count(tool: str, label: str, path: Path, cwd: str | None, within: list, via: str) -> None:
+        active = sum((min(b[0] - a[0], IDLE_CAP) for a, b in zip(within, within[1:])), timedelta())
+        tools[tool] += 1
+        sessions.append({"tool": label, "file": str(path), "cwd": cwd, "via": via,
+                         "active_seconds": int(active.total_seconds()), "tokens": sum(e[1] for e in within),
+                         "cost": round(sum(e[2] for e in within), 6) if tool in COSTED else None})
+
     for tool, (label, env, default) in TOOLS.items():
         root = Path(os.environ.get(env) or default)
         if not root.is_dir():
             tools[tool] = None
             continue
         tools[tool] = 0
+        matched, rest = set(), []
         for path in sorted(root.rglob("*.jsonl")):
             try:
-                if datetime.fromtimestamp(path.stat().st_mtime, timezone.utc) < start or name not in path.read_text(
-                        encoding="utf-8", errors="replace"):
+                if datetime.fromtimestamp(path.stat().st_mtime, timezone.utc) < start:
                     continue
+                mentions = name in path.read_text(encoding="utf-8", errors="replace")
             except OSError:
                 continue
             cwd, entries = read_session(tool, path)
             within = sorted((e for e in entries if e[0] and start <= e[0] <= end), key=lambda e: e[0])
-            if not within or not inside(cwd, folders):
+            if not within:
                 continue
-            active = sum((min(b[0] - a[0], IDLE_CAP) for a, b in zip(within, within[1:])), timedelta())
-            tools[tool] += 1
-            sessions.append({"tool": label, "file": str(path), "cwd": cwd, "active_seconds": int(active.total_seconds()),
-                             "tokens": sum(e[1] for e in within),
-                             "cost": round(sum(e[2] for e in within), 6) if tool in COSTED else None})
+            if mentions and inside(cwd, folders):
+                matched.add(path)
+                count(tool, label, path, cwd, within, "match")
+            elif tool == "pi":
+                rest.append((path, cwd, within))
+        # A Pi child session (a subagent, often in a since-removed worktree) counts when its parent counted,
+        # whatever its folder and even when its task names only a step of the item.
+        for path, cwd, within in rest:
+            parent = parent_file(path, root)
+            if parent in matched:
+                count(tool, label, path, cwd, within, f"child of {parent.name}")
     return {"item": name, "period": {"start": start.isoformat(), "end": end.isoformat()},
             "line": spent_line(tools, sessions), "sessions": sessions}
 

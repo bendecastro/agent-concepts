@@ -160,3 +160,26 @@ def test_work_index_json_parses_the_spent_line_and_check_warns_on_a_malformed_on
     assert check.returncode == 0, check.stderr
     assert "3-done/2026-11/002-bad.md has a malformed Spent: line" in check.stderr
     assert "001-good" not in check.stderr
+
+
+def test_pi_child_sessions_of_a_matched_parent_count_in_any_folder_within_the_period(tmp_path):
+    proj = project(tmp_path)
+    pi = tmp_path / "pi"
+    pi_session(pi, "main", proj, ["2026-11-01T10:05:00Z", "2026-11-01T10:10:00Z"])
+    gone = tmp_path / "worktrees/removed"  # a worker's worktree, removed after integration
+    children = pi / "sessions/main/main"  # Pi keeps children in a folder named after the parent file
+    pi_session(children, "step", gone, ["2026-11-01T10:20:00Z", "2026-11-01T10:30:00Z"], mention="the step")
+    (children / "sessions/step/step.jsonl").rename(children / "sessions/step/run-0.jsonl")
+    pi_session(children, "own", proj, ["2026-11-01T11:00:00Z", "2026-11-01T11:05:00Z"])
+    pi_session(children, "late", gone, ["2026-11-02T10:20:00Z", "2026-11-02T10:30:00Z"], mention="the step")
+    pi_session(pi, "orphan", gone, ["2026-11-01T10:20:00Z", "2026-11-01T10:30:00Z"], mention="the step")
+    roots = {"pi": pi, "claude": tmp_path / "n", "codex": tmp_path / "n"}
+    result = run(proj, roots)
+    assert result.returncode == 0, result.stderr
+    # main 5m + step 10m + own 5m; late is outside the period, orphan has no matched parent.
+    assert result.stdout.strip() == ("Spent: 20m active, 3k tokens, $1.50 (estimated; pi 3 sessions, "
+                                     "claude-code no files, codex no files; other tools not counted)")
+    sessions = {Path(s["file"]).name: s for s in json.loads(run(proj, roots, "--json").stdout)["sessions"]}
+    assert sessions["run-0.jsonl"]["via"] == "child of main.jsonl"
+    assert sessions["main.jsonl"]["via"] == "match"
+    assert sessions["own.jsonl"]["via"] == "match"  # counted once, on its own match
