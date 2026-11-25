@@ -22,12 +22,19 @@ Some concepts assume software that may not be installed (see "Requires" in
 index.md). They self-gate through their descriptions, so deploying them is
 harmless; use --skip to leave them out anyway.
 
-Non-symlink destinations are skipped unless --force is supplied.
+Non-symlink destinations are skipped unless --force is supplied. A symlink that
+points anywhere other than a concept body this script deploys (this repository's
+concepts/ or the private concepts folder) is someone else's skill: it is reported
+and left alone, never replaced.
+
+--uninstall removes only the symlinks this script created, from the same folders,
+and leaves every other entry alone. Use --dry-run first to see what would go.
 
 Examples:
   deploy-local-skills.py --dry-run
   deploy-local-skills.py --harness claude
   deploy-local-skills.py --skip teach --skip seo
+  deploy-local-skills.py --uninstall --dry-run
 """
 
 from __future__ import annotations
@@ -64,11 +71,24 @@ def rel_target(target: Path, link_parent: Path) -> str:
     return os.path.relpath(target.resolve(), start=link_parent.resolve())
 
 
+def is_own_link(link: Path) -> bool:
+    """True when a symlink points at a concept body this script deploys.
+
+    That is a body under this repository's concepts/ or the private concepts folder,
+    even when the concept no longer exists (a renamed concept's stale link is still
+    ours). Any other symlink belongs to someone else.
+    """
+    target = Path(os.path.normpath(link.parent.resolve() / os.readlink(link)))
+    return target.name == "body" and target.parent.parent in {CONCEPTS.resolve(), PRIVATE_CONCEPTS.resolve()}
+
+
 def link_dir(link: Path, target: Path, *, force: bool, dry_run: bool) -> str:
     target_text = rel_target(target, link.parent)
 
     if link.is_symlink():
         current = os.readlink(link)
+        if not is_own_link(link):
+            return f"skip     {link} is a symlink this script did not create (-> {current}); left as is"
         if current == target_text:
             return f"ok       {link} -> {current}"
         action = f"update   {link} -> {target_text} (was {current})"
@@ -117,6 +137,24 @@ def marked_undeployed(body: Path) -> bool:
     return False
 
 
+def uninstall_dir(folder: Path, *, dry_run: bool) -> list[str]:
+    """Remove the symlinks in folder that this script created; keep every other entry."""
+    if not folder.is_dir():
+        return []
+    lines = []
+    for link in sorted(folder.iterdir()):
+        if not link.is_symlink():
+            continue
+        current = os.readlink(link)
+        if not is_own_link(link):
+            lines.append(f"keep     {link} is a symlink this script did not create (-> {current})")
+            continue
+        lines.append(f"remove   {link} (-> {current})")
+        if not dry_run:
+            link.unlink()
+    return lines
+
+
 def discover() -> tuple[list[tuple[str, Path]], list[str], list[str]]:
     """Concepts to deploy, plus the private names and any that shadowed a public one."""
     canonical = {
@@ -150,7 +188,25 @@ def main() -> int:
     parser.add_argument("--harness", choices=["all", "pi", "claude"], default="all", help="which harness-specific skill dir to update (default: all)")
     parser.add_argument("--skip", action="append", default=[], metavar="NAME",
                         help="concept to leave undeployed (repeatable)")
+    parser.add_argument("--uninstall", action="store_true",
+                        help="remove the symlinks this script created; other entries are kept (with --dry-run, only show them)")
     args = parser.parse_args()
+
+    if args.uninstall:
+        if args.force or args.skip:
+            parser.error("--uninstall takes --dry-run and --harness only, not --force or --skip")
+        folders = [GLOBAL_SKILLS]
+        if args.harness in {"all", "pi"}:
+            folders.append(PI_SKILLS)
+        if args.harness in {"all", "claude"}:
+            folders.append(CLAUDE_SKILLS)
+        lines = [line for folder in folders for line in uninstall_dir(folder, dry_run=args.dry_run)]
+        for line in lines:
+            print(line)
+        removed = sum(line.startswith("remove") for line in lines)
+        verb = "Would remove" if args.dry_run else "Removed"
+        print(f"{verb} {removed} link(s).")
+        return 0
 
     skills, private, shadowed = discover()
     if not skills:

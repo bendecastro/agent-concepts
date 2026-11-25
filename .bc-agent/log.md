@@ -2044,3 +2044,6 @@ Publish policy check described generically in agent-kernel, bc-pipeline-to-done,
 
 ## [2026-11-25] implement | 024 public skill list
 Added `scripts/public_skills.py` and `lint.py --write-public-skills`, generating `concepts/public-skills.json` (public skills and the public skills each loads); lint now fails on a stale list or a body that says to load a public skill without a `loads` edge. Added the three missing edges it found.
+
+## [2026-11-25] implement | 024 contributor installer
+`deploy-local-skills.py` now skips and reports a symlink that does not point at a concept body it deploys (this repo's `concepts/` or the private concepts folder), instead of replacing it. `--uninstall` (with `--dry-run`, `--harness`) removes only its own links, aliases included. Six tests in `scripts/tests/test_deploy_local_skills.py`; README options line updated.

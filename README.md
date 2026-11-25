@@ -42,10 +42,12 @@ python3 scripts/deploy-local-skills.py
 ```
 
 Options: `--dry-run`, `--force` (replaces existing non-symlink files, not directories),
-`--harness {all,pi,claude}`, `--skip NAME` (repeatable). The shared `~/.agents/skills/` folder is
-always written; `--harness` picks which of the Pi and Claude Code folders are written too. The
-links are relative, so the checkout can live anywhere. Concepts whose `CONCEPT.md` says
-`deployed: no` are not linked.
+`--harness {all,pi,claude}`, `--skip NAME` (repeatable), `--uninstall` (removes only the links this
+script created; other skills are left alone, and `--dry-run` previews it). A symlink to a skill this
+checkout does not own is reported and left alone. The shared `~/.agents/skills/` folder is always
+written; `--harness` picks which of the Pi and Claude Code folders are written too. The links are
+relative, so the checkout can live anywhere. Concepts whose `CONCEPT.md` says `deployed: no` are not
+linked.
 
 Start a new agent session afterwards so it sees the skills.
 
