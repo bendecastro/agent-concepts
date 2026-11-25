@@ -16,4 +16,6 @@ Planned: grilled with the owner 2026-11-25 (decisions in the bc-init-agent grill
 
 ## Outcome
 
+Done. The journal is `.bc-agent/log.md` with history following (`git log --follow`); lint and portability check point at it; mentions of other projects' `log.md` were left alone. Gate green locally (468 passed, tree d6014365) and in GitHub CI.
+
 
