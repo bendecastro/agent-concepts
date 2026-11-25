@@ -65,7 +65,20 @@ same meaning.
 - **artifact** — the file a subagent writes its result to as it goes; the durable record of that result.
 - **packet** — the written task given to a subagent: scope, goal, limits, evidence wanted and output format.
 - **council** — a group of read-only advisors whose findings the parent weighs.
+- **advisor** — one member of a council: a read-only subagent, ideally on its own model, whose profile name starts with `council-` (bc-council-mode).
 - **worktree** — a separate checkout of the repository where a worker makes changes without touching the main one.
+
+## Code design and testing
+
+- **module** — anything with an interface and an implementation, at any scale: a function, a class, a package or a slice across layers (bc-codebase-design). _Avoid_: unit, component, service.
+- **interface** — everything a caller must know to use a module correctly: its types, but also its rules, ordering, errors, required settings and performance (bc-codebase-design). _Avoid_: API, signature.
+- **depth** — how much behaviour a caller or test gets per piece of interface it has to learn; a **deep module** hides a lot of behaviour behind a small interface (bc-codebase-design).
+- **shallow module** — a module whose interface is nearly as complex as its implementation, close to a pass-through (bc-codebase-design).
+- **seam** — a place where behaviour can be changed without editing at that place; where a module's interface sits (bc-codebase-design). _Avoid_: boundary.
+- **adapter** — a concrete thing that fills an interface at a seam; the word names its role, not what is inside it (bc-codebase-design).
+- **test level** — one of three kinds of testing a change must account for: example tests, property-based tests and formal verification (bc-tdd).
+- **property-based test** — a test that states a rule that must always hold and lets a tool try many generated inputs to break it; Level 2 (bc-tdd).
+- **formal verification** — a machine-checked proof that code meets its rule for every input; Level 3, off unless the owner turns it on for a component (bc-tdd).
 
 ## Design consistency
 

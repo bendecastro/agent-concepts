@@ -102,7 +102,7 @@ The other workflows, and the skills worth giving to subagents, are explained in 
 
 ## Workflows
 
-When to run each one, what it asks and what you get: [docs/guides/workflows.md](docs/guides/workflows.md).
+When to run each one, what it asks and what you get, and which skills to give your subagents: [docs/guides/workflows.md](docs/guides/workflows.md).
 
 - [`/bc-init-agent`](docs/guides/workflows.md#bc-init-agent): set up a project for agents, once.
 - [`/bc-diagnosing-bugs`](docs/guides/workflows.md#bc-diagnosing-bugs): find a bug's cause from a failing command, then fix it with a test.
@@ -113,13 +113,15 @@ When to run each one, what it asks and what you get: [docs/guides/workflows.md](
 - [`/bc-reflect`](docs/guides/workflows.md#bc-reflect): after a session, propose changes that make the next one faster.
 - [`/bc-council-challenge-plan`](docs/guides/workflows.md#bc-council-challenge-plan): have several models attack a plan before it is split into steps.
 - [`/bc-to-spec` and `/bc-to-tickets`](docs/guides/workflows.md#bc-to-spec-and-bc-to-tickets): turn a conversation into a GitHub spec and ready-to-build issues.
-- [`/bc-triage`](docs/guides/workflows.md#bc-triage): sort incoming issues into ready, needs information or rejected.
+- [`/bc-triage`](docs/guides/workflows.md#bc-triage): sort incoming issues into ready for an agent, ready for a person, needs information, or rejected.
 - [`/bc-find-bugs` and `/bc-council-find-bugs`](docs/guides/workflows.md#bc-find-bugs-and-bc-council-find-bugs): hunt an area for bugs and prove each with a failing test.
 - [`/bc-council-audit-security`](docs/guides/workflows.md#bc-council-audit-security): a security audit where every finding is checked by a fresh reviewer.
 - [`/bc-improve-codebase-architecture` and `/bc-council-improve-codebase`](docs/guides/workflows.md#bc-improve-codebase-architecture-and-bc-council-improve-codebase): find modules worth reshaping and plan one.
 - [`/bc-work-sync`](docs/guides/workflows.md#bc-work-sync): bring work items in line with the project's documents.
 - [`/bc-wiki-maintain`](docs/guides/workflows.md#bc-wiki-maintain): health-check the agent's notes folder.
 - [`/bc-teach`](docs/guides/workflows.md#bc-teach): learn a subject over many sessions with spaced review.
+
+How agents test the code they change, at three levels: [How the skills test code](docs/guides/workflows.md#how-the-skills-test-code).
 
 ## Keeping projects consistent
 

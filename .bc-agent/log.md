@@ -2074,3 +2074,7 @@ New `docs/guides/workflows.md`: each newcomer workflow with timing, start, quest
 
 ## [2026-11-25] implement | 024 fresh-install test
 `scripts/fresh_install_test.py` installs, lists, runs a helper, updates and uninstalls via the Pi package, Claude Code and Codex plugins and `npx skills` (all + a pack) in a scratch HOME; CI job `fresh-install` on ubuntu and macos with pinned CLIs; a dropped needed skill fails the check.
+
+## [2026-11-25] implement | 024 workflow guide copy review, test levels, glossary terms
+Applied the independent copy review to docs/guides/workflows.md and the README Workflows list (four skill-body contradictions fixed, clearer row names, jargon explained in place).
+Added a "How the skills test code" section on bc-tdd's three test levels, and glossary sections for code design and testing terms plus "advisor".

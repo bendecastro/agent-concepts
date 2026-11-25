@@ -10,7 +10,9 @@ Type a slash command with the skill's name, for example `/bc-find-bugs src/billi
 
 Some skills also start when you ask for them by name or describe the job ("diagnose this crash", "swarm this"). Others start only from the slash command, because they write reports or files you should ask for on purpose. The entries below say which.
 
-Most of these skills use the folders that `/bc-init-agent` creates: work items in `work/`, decisions and research in `docs/`, and a "Where things go" table in `.bc-agent/AGENTS.md`. Without that setup they still run, but they leave their results in a report and file nothing.
+Most of these skills use the folders that `/bc-init-agent` creates: work items in `work/`, decisions and research in `docs/`, and a "Where things go" table in `.bc-agent/AGENTS.md`. Without that setup most of them still run and report what they found, but they do not create work items. `bc-work-sync` needs the setup and stops without it.
+
+Words with a set meaning here, such as gate, worktree and seam, are defined in the [glossary](../../glossary.md).
 
 ## When to run what
 
@@ -18,17 +20,29 @@ Most of these skills use the folders that `/bc-init-agent` creates: work items i
 |---|---|
 | Once per project | [bc-init-agent](#bc-init-agent) |
 | During a task, when the need comes up | [bc-diagnosing-bugs](#bc-diagnosing-bugs), [bc-code-review](#bc-code-review), [bc-swarm](#bc-swarm), [bc-autoresearch-loop](#bc-autoresearch-loop), [bc-prototype](#bc-prototype) |
-| At a moment | [bc-reflect](#bc-reflect) at the end of a session; [bc-council-challenge-plan](#bc-council-challenge-plan) before a plan is split into steps; [bc-to-spec and bc-to-tickets](#bc-to-spec-and-bc-to-tickets) after a planning conversation; [bc-triage](#bc-triage) when issues arrive; [bc-find-bugs](#bc-find-bugs-and-bc-council-find-bugs) and [bc-council-audit-security](#bc-council-audit-security) before a release |
-| From time to time | [bc-improve-codebase-architecture](#bc-improve-codebase-architecture-and-bc-council-improve-codebase), [bc-work-sync](#bc-work-sync), [bc-wiki-maintain](#bc-wiki-maintain), [bc-reflect](#bc-reflect) over many sessions |
+| At a set point in your work | [bc-reflect](#bc-reflect) at the end of a session, and weekly over many sessions; [bc-council-challenge-plan](#bc-council-challenge-plan) before a plan is split into steps; [bc-to-spec and bc-to-tickets](#bc-to-spec-and-bc-to-tickets) after a planning conversation; [bc-triage](#bc-triage) when issues arrive; [bc-find-bugs](#bc-find-bugs-and-bc-council-find-bugs) and [bc-council-audit-security](#bc-council-audit-security) before a release |
+| Every few weeks | [bc-improve-codebase-architecture](#bc-improve-codebase-architecture-and-bc-council-improve-codebase), [bc-work-sync](#bc-work-sync), [bc-wiki-maintain](#bc-wiki-maintain) |
 | Across many sessions | [bc-teach](#bc-teach) |
 
 Where a skill states its own timing, the entry gives it. Where it does not, the entry gives a suggested cadence and labels it as a suggestion.
 
 ## Council skills
 
-Skills whose names start with `bc-council-` run another skill through a council: two to four advisor subagents, ideally on different models, each working on a share of the job and then attacking each other's results. The council costs more tokens and time than the plain skill and finds what a single model misses.
+Skills whose names start with `bc-council-` run another skill through a council: two to four advisor subagents, ideally on different models, each working on a share of the job and then attacking each other's results.
 
-They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents) extension and at least two advisor agent profiles whose names start with `council-`. The `bc-council-mode` skill ships example profiles in its `examples/agents/` folder. With fewer than two such profiles, the council falls back to the general `oracle` and `reviewer` agents.
+They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents) extension. Advisors are agent profiles whose names start with `council-`. With fewer than two, the council fills in with the general `oracle` and `reviewer` agents. The `bc-council-mode` skill ships example profiles in its `examples/agents/` folder. If you have more than four advisor profiles, each council skill first asks which four to use. A council run costs more tokens and time than the plain skill.
+
+## How the skills test code
+
+When an agent changes code with these skills, the `bc-tdd` skill decides how it is tested. There are three levels, each catching more than the one before:
+
+- **Level 1: example tests.** Tests that check chosen inputs give the expected result. Every change gets them.
+- **Level 2: property-based tests.** A test states a rule that must always hold, such as "sorting never loses an item", and a tool tries many generated inputs to break it. Required when the change touches logic with a rule you can state, such as calculations, parsers or filters.
+- **Level 3: formal verification.** A machine-checked proof that the code meets its rule for every possible input. Off unless you, the project owner, turn it on for a particular part of the project. When a change touches risky code such as money, permissions or stored data, the agent suggests it instead.
+
+Why: examples cover the inputs someone thought of, a property searches for the ones nobody thought of, and a proof covers them all.
+
+Every change report shows a **Test levels** block with one line per level, saying what was added or why it was not needed. A `bc-code-review` review checks those lines against the change and reports a missing block, so a level cannot be skipped quietly. Only the project owner can waive a required level. The full rules are in the `bc-tdd` skill.
 
 ## One-time setup
 
@@ -46,7 +60,7 @@ They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents)
 
 - **When:** each time something is broken, throws, fails or got slower and the cause is not obvious.
 - **Start:** `/bc-diagnosing-bugs`, or say "diagnose" or "debug" and describe the symptom.
-- **What it asks:** how to reproduce the problem, and which of its ranked guesses at the cause to try first when you are there to answer.
+- **What it asks:** steps to reproduce, only if it cannot build them itself. It shows its ranked guesses at the cause so you can redirect it.
 - **What you get:** first a command that fails on this exact bug. The agent will not change code on a guessed cause until that command exists. Then three to five testable hypotheses, a fix, a regression test written before the fix where the code allows one, and removal of temporary debug logging. If no good place for the test exists, it recommends an architecture review of that spot.
 - **Example:** "Diagnose: exporting a report with an empty date range crashes." The agent writes a test that reproduces the crash, ranks causes, checks them one at a time, fixes the bug and keeps the test.
 
@@ -63,14 +77,14 @@ They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents)
 - **When:** a task has several independent parts (reading many files, comparing options, reviewing several areas) and you want them done in parallel.
 - **Start:** say "swarm", "go wide" or "fan out", or `/bc-swarm`.
 - **What it asks:** nothing up front. It shows you each part it hands out, which kind of helper gets it and on which model.
-- **What you get:** parallel subagents, each writing its results to a file as it works, in a run folder whose path the agent states. If the session dies, the agent can recover from those files instead of starting again. Code changes are made in separate git worktrees and merged back after checks. The dispatch instructions are written for Pi with pi-subagents.
+- **What you get:** parallel subagents, each writing its results to a file as it works, in a run folder whose path the agent states. If the session dies, the agent can recover from those files instead of starting again. It is meant for reading, comparing and reviewing. For code changes in parallel, the agent hands over to `/bc-pipeline-to-done`. The dispatch instructions are written for Pi with pi-subagents.
 - **Example:** "Swarm this: find every place we parse dates and how each one handles time zones." Three scouts each read part of the codebase and write findings; the agent merges them into one answer.
 
 ### bc-autoresearch-loop
 
 - **When:** you want something measurably faster, smaller or cheaper without changing what it does.
 - **Start:** ask the agent to optimize something by a number, or `/bc-autoresearch-loop`.
-- **What it asks:** which number to improve, if that is unclear. Without a measurable number it stops rather than guess.
+- **What it asks:** nothing, as long as the number to improve is clear. If it is not, it stops and says so.
 - **What you get:** a baseline measurement, then one small change at a time. A change is kept only when the tests still pass and the number improved; otherwise it is reverted. Each kept change records the number before and after and the check that held.
 - **Example:** "Make the import of a 10,000-row CSV faster." The agent times the import, tries changes one by one, and reports, for example, the median time going from 4.1 s to 1.3 s with the import tests still passing.
 
@@ -82,14 +96,14 @@ They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents)
 - **What you get:** throwaway code marked as such: a small terminal program that runs the logic through hard cases, or several very different versions of a screen you can switch between. Once you have chosen, it writes a short note with the question, your verdict and the rejected options, then deletes the prototype or folds the decision into real work.
 - **Example:** `/bc-prototype Should the filter panel be a sidebar, a top bar or a popover?` gives three switchable versions on one page.
 
-## At a moment
+## At a set point in your work
 
 ### bc-reflect
 
-- **When:** at the end of a session in which something went slowly or wrong, for one session. Its batch mode was built for a regular run over many sessions; once a week is a suggestion.
+- **When:** the skill sets no schedule. Suggested: at the end of a session that went slowly or wrong, and a batch run over many sessions about once a week. It reads Pi's session logs, so it works only with Pi.
 - **Start:** `/bc-reflect` (slash command only). Arguments: a session id, or `since 2026-11-01`, or `last 20`, optionally a project name.
 - **What it asks:** which of its numbered proposals to act on. If an earlier report is still undecided, it shows that one first.
-- **What you get:** a list ordered by cost, each item naming what went wrong, the evidence in the session log, and a change that would prevent it: a new check, a review rule, a pointer in an instruction file, a cheaper tool call. It changes nothing until you pick. Batch mode also writes a report file and records what you decided. Batch mode reads Pi's session logs.
+- **What you get:** a list ordered by cost, each item naming what went wrong, the evidence in the session log, and a change that would prevent it: a new check, a review rule, a pointer in an instruction file, a cheaper tool call. It changes nothing until you pick. Batch mode also writes a report file and records what you decided.
 - **Example:** after a session spent rerunning a slow test suite, `/bc-reflect` proposes running only the affected tests while working, with the timestamps that show the wasted time.
 
 ### bc-council-challenge-plan
@@ -104,9 +118,9 @@ They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents)
 
 - **When:** after you have talked a feature through with the agent and want it on GitHub. They need the `gh` command-line tool. If you want the full guided path instead, use `/bc-plan-to-pipeline` ([pipeline.md](pipeline.md)).
 - **Start:** `/bc-to-spec`, then `/bc-to-tickets` (both slash command only).
-- **What it asks:** nothing; both work from the conversation and the code. `bc-to-spec` asks you to confirm the test seams it sketches.
+- **What it asks:** `bc-to-tickets` asks nothing. `bc-to-spec` asks you to confirm where the tests will plug into the code, and asks questions first if the conversation left the scope unclear.
 - **What you get:** `bc-to-spec` publishes a requirements document as a GitHub issue. `bc-to-tickets` splits a plan or that issue into small issues that each work end to end, published blockers first with the `ready-for-agent` label.
-- **Example:** after discussing a CSV export, `/bc-to-spec` opens "PRD: CSV export" and `/bc-to-tickets` opens four issues, each linked to the ones it waits on.
+- **Example:** after discussing a CSV export, `/bc-to-spec` opens "PRD: CSV export" (PRD: product requirements document) and `/bc-to-tickets` opens four issues, each linked to the ones it waits on.
 
 ### bc-triage
 
@@ -129,14 +143,14 @@ They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents)
 - **When:** the skill sets no schedule. Suggested: before a first public release, and after changes to login, permissions or input handling.
 - **Start:** `/bc-council-audit-security` (slash command only), optionally with a scope and `--max-verify N`. Needs the council setup above.
 - **What it asks:** which findings to file, after the report. Confirmed findings are pre-selected.
-- **What you get:** a run folder `.security-audit/run-N/` with an architecture note listing the trust boundaries, a coverage record, machine-checked findings and `REPORT.md`. Advisors hunt the boundaries dealt to them; every candidate is then checked by a fresh reviewer, because advisors agreeing is not proof. For a single-model audit, ask for a full audit with the `bc-security-audit` skill.
+- **What you get:** a run folder `.security-audit/run-N/` with an architecture note listing the places where input from a less-trusted user or system enters the code (trust boundaries), a coverage record, a findings file whose format is checked by a script, and `REPORT.md`. Advisors hunt the boundaries dealt to them; every candidate is then checked by a fresh reviewer, because advisors agreeing is not proof. For a single-model audit, ask for a full audit with the `bc-security-audit` skill.
 - **Example:** the audit confirms that a file-upload route lets a signed-in user overwrite another user's file, with the code path from request to file write.
 
-## From time to time
+## Every few weeks
 
 ### bc-improve-codebase-architecture and bc-council-improve-codebase
 
-- **When:** in a project set up with `bc-init-agent`, agents suggest a review once three or more planning commits have landed since the last architecture review, or when the code shows structural trouble (unclear module boundaries, code that is hard to test, repeated bugs in the same place). `bc-diagnosing-bugs` also suggests one when a bug had no good place for a test.
+- **When:** in a project set up with `bc-init-agent`, agents suggest a review once three or more plans have been committed since the last architecture review, or when the code shows structural trouble (unclear module boundaries, code that is hard to test, repeated bugs in the same place). `bc-diagnosing-bugs` also suggests one when a bug had no good place for a test.
 - **Start:** `/bc-improve-codebase-architecture` (slash command only), optionally with an area or problem. `/bc-council-improve-codebase` runs the same review through the council.
 - **What it asks:** "Which of these would you like to explore?", then questions about the chosen change one at a time.
 - **What you get:** an HTML report you can open in a browser, with one card per candidate: the files involved, the problem, the suggested direction, the benefit, a before-and-after diagram and how strongly it is recommended. It changes no code. The change you choose becomes a planned work item, a rejected one is recorded with your reason so it is not suggested again, and the rest stay in the ideas list. The council version adds how many advisors agreed with each card.
@@ -154,9 +168,9 @@ They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents)
 
 - **When:** the skill sets no schedule. Suggested: when the project's agent notes have grown by many log entries since the last pass, or about once a month in an active project.
 - **Start:** `/bc-wiki-maintain .bc-agent` (slash command only); the folder is required.
-- **What it asks:** nothing for the health check; it flags contradictions for you instead of resolving them.
-- **What you get:** a health report on the agent's notes folder: broken links, orphan pages and missing search setup. In the older single-folder layout it also moves lasting facts from the log into the right page. It never silently rewrites what is recorded.
-- **Example:** the report finds two pages that state different default ports and a page nothing links to.
+- **What it asks:** nothing. In a project set up by `bc-init-agent` it reports problems and fixes none of them.
+- **What you get:** a health report on the agent's notes folder: broken links, orphan pages and missing search setup. In the older single-folder layout it also moves lasting facts from the log into the right page, and records any log entry that conflicts with a page as an open question instead of choosing one.
+- **Example:** the report lists a link to a page that was renamed and a page that nothing links to.
 
 ## Across many sessions
 
@@ -170,7 +184,7 @@ They need Pi with the [pi-subagents](https://github.com/nicobailon/pi-subagents)
 
 ## Skills to give every subagent of a role
 
-When an agent hands work to subagents, each subagent starts with a clean context. It does not see your conversation, and in Pi it does not even see the installed skills unless you say so. Attaching a skill to a subagent role gives every subagent of that role the same habits.
+When an agent hands work to subagents, each subagent starts with a clean context. It does not see your conversation, and in Pi it may not see the installed skills unless you say so. Attaching a skill to a subagent role gives every subagent of that role the same habits.
 
 Skills worth attaching to most roles that read or write code:
 
@@ -194,7 +208,7 @@ Skills worth attaching to one role:
 
 ### Pi (pi-subagents)
 
-Agent definitions are Markdown files in `~/.pi/agent/agents/` (yours) or `.pi/agents/` (one project). In the frontmatter, `skills` lists the skills the subagent receives, whatever `inheritSkills` says:
+Agent definitions are Markdown files in `~/.pi/agent/agents/` (yours) or `.pi/agents/` (one project). In the frontmatter (the settings block between `---` lines at the top of the file), `skills` lists the skills the subagent receives, whatever `inheritSkills` says:
 
 ```yaml
 ---
