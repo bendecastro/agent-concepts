@@ -94,6 +94,27 @@ thing. Each builder works in its own separate copy of the project, and other age
 every step before it is merged. When it needs a decision, it sets the item aside with your question and
 moves on.
 
+<details>
+<summary><b>What a session looks like</b> — one idea, from first question to merged code</summary>
+
+Say you want to add a dark mode to your app.
+
+1. You type `/bc-plan-to-pipeline add a dark mode`. The agent asks you questions one at a
+   time: should it follow the system setting? Is there a switch, and where? Which screens
+   matter most? You answer each with a word or two.
+2. It writes down what you decided as requirements, then cuts the work into small pieces
+   that each work on their own: "colours defined in one place", "the switch", "remember the
+   choice". These land as planned work items in the project's `work/` folder.
+3. You tell the agent to carry on, or type `/bc-pipeline-to-done` and walk away. For each
+   piece it writes a test first, watches it fail, then writes the code that makes it pass.
+4. Before a piece is merged, it is checked: the tests pass, a separate review looks at it
+   with fresh eyes, and, because this is something users see, the agent takes screenshots
+   and critiques them.
+5. Anything it could not decide waits for you with a question attached. Everything else is
+   done, and the work items show what happened.
+
+</details>
+
 Each skill writes its result to files or GitHub issues, so the next step does not need the
 same session. How the planning skills fit together:
 [pipeline.md](docs/guides/pipeline.md).
@@ -662,7 +683,13 @@ are not linked.
 
 ## Working on this repository
 
-### Where things are
+How this repository is organised and the rules for changing it. You need this only if you want
+to change the skills themselves.
+
+<details>
+<summary><b>Where things are, hard rules, publishing, private concepts and licensing</b></summary>
+
+#### Where things are
 
 | Path | What it holds |
 |---|---|
@@ -683,7 +710,7 @@ are not linked.
 entries and status pages. For each deployed concept it also checks the recorded test status in
 `CONCEPT.md`. It reads that record; it does not rerun the pressure tests.
 
-### Hard rules
+#### Hard rules
 
 [`AGENTS.md`](AGENTS.md) names four hard rules. They are harder to change than other rules
 because breaking them is most tempting when they get in the way. Each can be changed
@@ -696,7 +723,7 @@ deliberately, with the change logged, but not skipped quietly.
   pressure test.
 - **Immutability rule** — files in `docs/research/raw/` are never edited.
 
-### Publishing and authorisation
+#### Publishing and authorisation
 
 Agents publish (push, open pull requests, release) only on your explicit instruction or a
 matching rule in `~/.config/agent-concepts/publish.yaml`. That file is yours, lives outside the
@@ -705,7 +732,7 @@ files can restrict publishing but cannot grant it. A change to the policy file i
 publishable under the policy itself. `scripts/publish-check.py` checks whether a rule matches.
 See [policies/README.md](policies/README.md).
 
-### Private concepts
+#### Private concepts
 
 For guidance that cannot be published (infrastructure details, employer process, or an upstream
 text whose licence forbids redistribution), put a concept in
@@ -713,9 +740,11 @@ text whose licence forbids redistribution), put a concept in
 deploy script links it alongside the public ones. A private concept overrides a public one of the
 same name, and the script reports the override.
 
-### Provenance and licensing
+#### Provenance and licensing
 
-Built by reading other people's work and adapting it: Jesse Vincent's
+This repository is released under the [MIT licence](LICENSE): you may use, copy and change it
+freely, as long as you keep the copyright notice. It was built by reading other people's work
+and adapting it: Jesse Vincent's
 [superpowers](https://github.com/obra/superpowers) (MIT), [Matt Pocock's
 skills](https://github.com/mattpocock/skills), and published guidance from Anthropic, OpenAI and
 Google. `docs/research/raw/ingested/CITATIONS.md` indexes the sources.
@@ -724,3 +753,5 @@ Concept bodies are rewritten and specialised, not copies of upstream. Where a bo
 written independently, the concept points upstream instead of copying it; the public `herdr`
 concept works this way because upstream states no licence. Some licensed upstream snapshots remain
 under `docs/research/raw/ingested/` as immutable evidence, under their own terms.
+
+</details>

@@ -2176,3 +2176,6 @@ Principles get their own headings; plainer opening sentence; install intro no lo
 
 ## [2026-11-25] implement | README plain-language pass
 Every skill description rewritten to say what it is for in plain words; principles and stage summaries de-jargoned; bc-research and bc-qmd added to the tables; repeated not-tested notes removed.
+
+## [2026-11-25] implement | README example, licence, contributor fold
+Added a folded walk-through of one session, stated the MIT licence, folded the contributor section.
