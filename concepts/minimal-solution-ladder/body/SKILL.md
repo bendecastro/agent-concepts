@@ -116,5 +116,5 @@ Passed at invocation; **full** if unspecified.
 ## Where this stops
 
 - **Shape, once you've decided to build → `codebase-design`.** This skill governs *whether and how much* to build; it does not argue for shallow code. A deep module — small interface, substantial implementation — is fully compatible with the ladder. "Fewest files" never overrides a real seam.
-- **Test discipline → `tdd` and `bc-drain-issues` when either is active; theirs wins.** Outside them, non-trivial logic (a branch, a loop, a parser, a money or security path) leaves ONE runnable check behind: the smallest thing that fails if the logic breaks. No frameworks, no fixtures, no per-function suites unless asked. Trivial one-liners need no test — YAGNI applies to tests too.
+- **Test discipline → `tdd` and `bc-pipeline-to-done` when either is active; theirs wins.** Outside them, non-trivial logic (a branch, a loop, a parser, a money or security path) leaves ONE runnable check behind: the smallest thing that fails if the logic breaks. No frameworks, no fixtures, no per-function suites unless asked. Trivial one-liners need no test — YAGNI applies to tests too.
 - **This skill governs what you build, not how you talk.** Terseness of prose is a separate setting.

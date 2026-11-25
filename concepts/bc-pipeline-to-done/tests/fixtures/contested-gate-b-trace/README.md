@@ -1,6 +1,6 @@
 # Contested Gate B deterministic trace
 
-This fixture is the deployment Gate B for the `bc-drain-issues` v3 review-economy change. It compares the pinned v2 skill with v3 under a locked S0 → S1 → S2 trace that always contains exactly two Standards-only rework rounds.
+This fixture is the deployment Gate B for the `bc-pipeline-to-done` v3 review-economy change. It compares the pinned v2 skill with v3 under a locked S0 → S1 → S2 trace that always contains exactly two Standards-only rework rounds.
 
 It measures review/rework token cost under controlled topology. It does **not** replace the natural contested fixture's autonomous discovery pressure.
 

@@ -42,7 +42,7 @@ A property must be seen failing for the rule it states.
 
 - **New logic:** write the property first and watch it fail, as with any RED.
 - **Code that already works:** plant a bug that breaks the stated rule (a mutation, for example dropping the last element or flipping a comparison), watch the property catch it, then revert. Use a disposable copy, as for other tests written after the code.
-- **Record the evidence** where you already report validation: the mutation, the failing property and its shrunk counterexample, and the green run after revert. Under `bc-drain-issues` that is `validation.json`; otherwise your report. Do not create a new evidence file.
+- **Record the evidence** where you already report validation: the mutation, the failing property and its shrunk counterexample, and the green run after revert. Under `bc-pipeline-to-done` that is `validation.json`; otherwise your report. Do not create a new evidence file.
 
 ## Pin every failure you find
 

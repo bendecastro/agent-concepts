@@ -11,7 +11,7 @@ Model-invoked inline executor for a written implementation plan when the user wa
 ## Design decisions
 
 - **Critical review first.** A plan is not blindly executed; the agent checks for blockers, ambiguity, and unsafe branch state before changing code.
-- **Inline fallback.** Existing `bc-drain-issues` is the AFK/GitHub queue executor and `subagent-driven-development` handles fresh-agent task execution; this concept is for direct execution in the current session.
+- **Inline fallback.** Existing `bc-pipeline-to-done` is the AFK/GitHub queue executor and `subagent-driven-development` handles fresh-agent task execution; this concept is for direct execution in the current session.
 - **Stop on real blockers.** The upstream stop rules are preserved because guessing during plan execution compounds errors.
 
 ## Provenance

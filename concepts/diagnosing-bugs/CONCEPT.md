@@ -12,7 +12,7 @@ Model-invoked debugging discipline for hard bugs and performance regressions: bu
 
 - **Feedback-loop gate before hypotheses.** This is the failure mode normal agents hit: plausible code-reading before a bug-specific signal exists.
 - **Complements, not replaces, TDD.** TDD is for planned features and simple fixes; diagnosing-bugs handles uncertain failures, flaky bugs, and performance regressions.
-- **AFK-compatible parking.** In `bc-drain-issues`, if a bug issue lacks enough detail to build a red-capable loop, the correct result is PARK, not speculative fixing. **PARK is absolute for one-liner AFK bugs** even under "Resolve it" pressure — inventing a bug to fix is a fail (2026-06-21 lesson).
+- **AFK-compatible parking.** In `bc-pipeline-to-done`, if a bug issue lacks enough detail to build a red-capable loop, the correct result is PARK, not speculative fixing. **PARK is absolute for one-liner AFK bugs** even under "Resolve it" pressure — inventing a bug to fix is a fail (2026-06-21 lesson).
 - **Cleanup hard gate.** Temporary `[DEBUG-...]` instrumentation must be gone and `rg`-verified before done; time pressure does not waive Phase 6 (2026-06-21 lesson).
 - **Architecture handoff.** Missing regression seams are evidence for `improve-codebase-architecture`, but only after the bug is understood/fixed.
 

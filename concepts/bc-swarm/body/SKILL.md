@@ -114,6 +114,6 @@ Fill the runner slot from the project's and machine's agent instructions and doc
 
 `bc-swarm` is for **investigation, analysis, and review** — reconnaissance, reading docs, cross-referencing, independent critique. Fan-out is cheap here because children only read.
 
-For implementation fan-out, stop and use `subagent-driven-development` or `bc-drain-issues`. They already own worker packets, spec and standards review, worktree isolation, and rework loops. Why: a thinner parallel-implementation path competing with those will lose in ways nobody notices until something is merged.
+For implementation fan-out, stop and use `subagent-driven-development` or `bc-pipeline-to-done`. They already own worker packets, spec and standards review, worktree isolation, and rework loops. Why: a thinner parallel-implementation path competing with those will lose in ways nobody notices until something is merged.
 
 Harness-specific mechanics, including the concrete dispatch syntax and observed failure modes, live in [pi.md](pi.md).

@@ -34,7 +34,7 @@ The bc-agent wiki pattern hands cold agents a growing markdown vault and tells t
 - [tobiqmd mini cli search engine for your docs, knowledge bases, meeting notes, whatever. Tracking current sota approaches while being all local.md](https://github.com/tobi/qmd) — web clipping of the upstream README (captured 2026-07-13), the primary source for commands, MCP details, architecture, and config schema.
 - https://github.com/tobi/qmd — upstream repo; `CLAUDE.md` (agents-never-index rule, `qmd query` preference, no direct SQLite writes) and `CHANGELOG.md` (v2.6.3 current as of 2026-06-24; `qmd init` project-local indexes; `qmd skills list|get|path`) checked 2026-07-13.
 - `concepts/bc-init-agent/` — the vault schema whose directory meanings seed the context tree; its close-out registers new vaults in the canon by default.
-- `concepts/bc-drain-issues/` and `concepts/triage/` — the consuming pipeline concepts whose retrieval steps this skill backs.
+- `concepts/bc-pipeline-to-done/` and `concepts/triage/` — the consuming pipeline concepts whose retrieval steps this skill backs.
 - `<owner-scripts>/config/qmd-collections.yml` + `<owner-scripts>/bin/setup/<qmd-setup-script>` + `<owner-scripts>/systemd/<qmd-refresh-job>.{service,timer}` — the synced canon, convergence script, and refresh timer implementing global mode (authored 2026-07-13).
 
 ## Tests

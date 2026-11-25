@@ -6,7 +6,7 @@ deployed: 2026-06-21
 ---
 # Concept: bc-autoresearch-loop
 
-Model-invoked discipline for objective, bounded code improvement: pick one reproducible metric, lock a correctness check, and iterate one bounded change at a time — keeping a change only when correctness still holds **and** the metric provably improved, reverting otherwise. Self-contained (works in any repo). The conditional optimization step the `bc-drain-issues` per-issue agent runs when a slice targets a measurable improvement. The `bc-` prefix is the user's personal namespace.
+Model-invoked discipline for objective, bounded code improvement: pick one reproducible metric, lock a correctness check, and iterate one bounded change at a time — keeping a change only when correctness still holds **and** the metric provably improved, reverting otherwise. Self-contained (works in any repo). The conditional optimization step the `bc-pipeline-to-done` per-issue agent runs when a slice targets a measurable improvement. The `bc-` prefix is the user's personal namespace.
 
 ## Design decisions
 
@@ -15,7 +15,7 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 - **Don't optimize blind.** If no objective metric can be named, the skill stops rather than chasing "looks faster." This is what makes it safe to wire into an autonomous loop conditionally — no metric ⇒ it doesn't run.
 - **One bounded change per iteration** so regressions are attributable and reverts are clean; **correctness before performance**; **no win-by-deleting-output**. These are the named failure modes from the source playbook, kept as guards.
 - **Measures like the guardrails (2026-11-25).** Baselining points to the `guardrails` skill's `measuring.md` for runs and noise, and a kept change tightens the matching limit on the project's guardrails page when it has one, so an improvement is locked in rather than lost to the next regression (item 006). Owner-chosen limits are left to the owner. Not pressure-tested.
-- **Model-invoked discipline.** Like `tdd`, it's reachable by an orchestrator (the `bc-drain-issues` per-issue agent inlines it) and by the user mid-task. Not a user-only orchestrator.
+- **Model-invoked discipline.** Like `tdd`, it's reachable by an orchestrator (the `bc-pipeline-to-done` per-issue agent inlines it) and by the user mid-task. Not a user-only orchestrator.
 
 ## Provenance
 

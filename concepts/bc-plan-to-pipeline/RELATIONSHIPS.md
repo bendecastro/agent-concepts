@@ -7,13 +7,13 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- hands off to `bc-drain-issues` — optional.
-  Close-out recommends draining the published queue; the user decides.
-  Source: [body/SKILL.md](body/SKILL.md#pipeline)
-
 - depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
   Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
   Source: [CONCEPT.md](CONCEPT.md)
+
+- hands off to `bc-pipeline-to-done` — optional.
+  Close-out recommends draining the published queue; the user decides.
+  Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - depends on `domain-modeling`'s contract — required, when visible-layout hybrid project.
   The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; planning points to it.
@@ -49,13 +49,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill.
   Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md)
 
-- incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner.
-  Source: [bc-drain-issues/body/SKILL.md](../bc-drain-issues/body/SKILL.md#select-classify-and-claim)
-
 - incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode.
   Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
+
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner.
+  Source: [bc-pipeline-to-done/body/source-issues.md](../bc-pipeline-to-done/body/source-issues.md#select)
+
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when work-item source.
+  Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope.
+  Source: [bc-pipeline-to-done/body/source-work-items.md](../bc-pipeline-to-done/body/source-work-items.md#eligibility)
 
 - incoming from [find-bugs](../find-bugs/RELATIONSHIPS.md): hands off to this concept — required, when after filing into a project work pipeline.
   Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through find-bugs §5.

@@ -52,8 +52,8 @@ Both arms run the identical fixture, model, and effort; only the canon differs.
 
 - **v2 arm** — canon at commit `745fe01` (pre-v3). Retrieve with
   `git worktree add --detach <dir> 745fe01`, then point the drain at
-  `<dir>/agents/concepts/bc-drain-issues/body/`.
-- **v3 arm** — current canon at `agents/concepts/bc-drain-issues/body/`.
+  `<dir>/agents/concepts/bc-pipeline-to-done/body/`.
+- **v3 arm** — current canon at `agents/concepts/bc-pipeline-to-done/body/`.
 
 Verify the arms differ before spending tokens: the v2 `review-contract.md` contains no
 `do not re-derive it`; the v3 one does.

@@ -11,26 +11,26 @@
       "reason": "Test evidence requires a watched behavioural fail; mechanical test edits are excluded."
     },
     {
-      "from": "bc-drain-issues",
+      "from": "bc-pipeline-to-done",
       "to": "tdd",
       "relation": "loads",
       "required": true,
       "when": "feature/enhancement work",
-      "source": "concepts/bc-drain-issues/body/execute-issue.md#build-loop",
+      "source": "concepts/bc-pipeline-to-done/body/execute-issue.md#build-loop",
       "reason": "Feature workers follow red-green-refactor."
     },
     {
-      "from": "bc-drain-issues",
+      "from": "bc-pipeline-to-done",
       "to": "tdd",
       "relation": "depends_on_contract",
       "required": true,
       "when": "deterministic pre-review gate",
-      "source": "concepts/bc-drain-issues/body/SKILL.md#build-and-deterministic-pre-review-gate",
+      "source": "concepts/bc-pipeline-to-done/body/SKILL.md#build-and-deterministic-pre-review-gate",
       "reason": "The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review."
     },
     {
       "from": "bc-init-agent",
-      "to": "bc-drain-issues",
+      "to": "bc-pipeline-to-done",
       "relation": "depends_on_contract",
       "required": true,
       "when": "generated execution guidance for vault archetypes",
@@ -125,7 +125,7 @@
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "bc-drain-issues",
+      "to": "bc-pipeline-to-done",
       "relation": "hands_off",
       "required": false,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
@@ -312,12 +312,12 @@
       "reason": "Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule."
     },
     {
-      "from": "bc-drain-issues",
+      "from": "bc-pipeline-to-done",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-drain-issues/body/SKILL.md",
+      "source": "concepts/bc-pipeline-to-done/body/SKILL.md",
       "reason": "Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule."
     },
     {
@@ -500,7 +500,7 @@
     },
     {
       "from": "tdd",
-      "to": "bc-drain-issues",
+      "to": "bc-pipeline-to-done",
       "relation": "depends_on_contract",
       "required": true,
       "when": "recording property fail-first evidence inside a drain",
@@ -535,13 +535,13 @@
       "reason": "Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules."
     },
     {
-      "from": "bc-drain-issues",
+      "from": "bc-pipeline-to-done",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/bc-drain-issues/CONCEPT.md",
-      "reason": "Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules."
+      "source": "concepts/bc-pipeline-to-done/CONCEPT.md",
+      "reason": "Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines and reruns the work index script."
     },
     {
       "from": "bc-plan-to-pipeline",
@@ -607,12 +607,12 @@
       "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; domain-modeling asks before removing or redefining terms it did not add."
     },
     {
-      "from": "bc-drain-issues",
+      "from": "bc-pipeline-to-done",
       "to": "improve-codebase-architecture",
       "relation": "depends_on_contract",
       "required": true,
       "when": "architecture observation after landing",
-      "source": "concepts/bc-drain-issues/CONCEPT.md",
+      "source": "concepts/bc-pipeline-to-done/CONCEPT.md",
       "reason": "Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates."
     },
     {
@@ -919,13 +919,22 @@
       "reason": "Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through find-bugs \u00a75."
     },
     {
-      "from": "bc-drain-issues",
+      "from": "bc-pipeline-to-done",
       "to": "bc-plan-to-pipeline",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/bc-drain-issues/body/SKILL.md#select-classify-and-claim",
+      "source": "concepts/bc-pipeline-to-done/body/source-issues.md#select",
       "reason": "Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner."
+    },
+    {
+      "from": "bc-pipeline-to-done",
+      "to": "bc-plan-to-pipeline",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "work-item source",
+      "source": "concepts/bc-pipeline-to-done/body/source-work-items.md#eligibility",
+      "reason": "Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope."
     },
     {
       "from": "bc-init-agent",

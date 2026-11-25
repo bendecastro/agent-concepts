@@ -66,7 +66,7 @@ Before calling it done (hard gate — "done" claims without this are false):
 
 **Pressure refusal (skip cleanup).** User: "add whatever logging you need" / "just ship the fix" / time pressure → still strip every `[DEBUG-...]` marker and prove it with `rg` before finishing. Temporary instrumentation is not optional cleanup.
 
-## AFK adaptation inside `/bc-drain-issues`
+## AFK adaptation inside `/bc-pipeline-to-done`
 
 For bug issues, the issue's Agent Brief/acceptance criteria replaces the interactive user checkpoint.
 

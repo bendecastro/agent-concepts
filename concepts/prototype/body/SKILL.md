@@ -7,7 +7,7 @@ argument-hint: "What question should the prototype answer?"
 
 # Prototype
 
-A prototype is throwaway code that answers one design question. It feeds the bc planning loop: learn fast, record the answer, then delete/absorb before `/bc-drain-issues` executes production slices.
+A prototype is throwaway code that answers one design question. It feeds the bc planning loop: learn fast, record the answer, then delete/absorb before `/bc-pipeline-to-done` executes production slices.
 
 ## Pick the branch
 
@@ -37,4 +37,4 @@ Before moving to `/bc-plan-to-pipeline` or implementation, capture:
 
 Save this writeup as a dated `<YYYY-MM-DD>-prototype-<slug>/` folder in the project's research role; a costly-to-reverse verdict also gets a record in the decisions role, and a product-level requirement goes to the requirements role. Look each role up in the "Where things go" table in `.bc-agent/AGENTS.md`. Why: one table per project means a project that keeps something elsewhere changes one place, and a writeup in the research folder is where the work item that follows will cite it. Without that table, use the earlier homes: `.bc-agent/project/<feature>-notes.md`, an ADR under `docs/adr/`, or the PRD. The research role is the default home and the one to recommend. If the user explicitly names another place for the writeup, save it there, say in your report that the research role is where later work will look for it, and offer to move it. Why: the writeup is the only part of a prototype that survives and a scratch folder is where files get deleted, but where the user's own file goes is the user's call.
 
-Do not send prototype files to `/bc-drain-issues` as production acceptance criteria; the writeup is the evidence, and the prototype code is throwaway.
+Do not send prototype files to `/bc-pipeline-to-done` as production acceptance criteria; the writeup is the evidence, and the prototype code is throwaway.

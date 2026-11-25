@@ -11,7 +11,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage safety owns guarded pytest, health preflight and proven integration cleanup; Verification owns shared full-suite evidence and the workers-never-run-the-full-suite rule.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `bc-drain-issues`'s contract — required, when recording property fail-first evidence inside a drain.
+- depends on `bc-pipeline-to-done`'s contract — required, when recording property fail-first evidence inside a drain.
   Mutation evidence goes in the drain’s existing validation.json, not a new evidence file.
   Source: [body/properties.md](body/properties.md#fail-first-for-properties)
 
@@ -29,17 +29,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Test evidence requires a watched behavioural fail; mechanical test edits are excluded.
   Source: [agent-kernel/body/AGENT-KERNEL.md](../agent-kernel/body/AGENT-KERNEL.md#verification)
 
-- incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when deterministic pre-review gate.
-  The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review.
-  Source: [bc-drain-issues/body/SKILL.md](../bc-drain-issues/body/SKILL.md#build-and-deterministic-pre-review-gate)
-
-- incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): loads this concept — required, when feature/enhancement work.
-  Feature workers follow red-green-refactor.
-  Source: [bc-drain-issues/body/execute-issue.md](../bc-drain-issues/body/execute-issue.md#build-loop)
-
 - incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when generated visible-layout validation page.
   The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats.
   Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
+
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when deterministic pre-review gate.
+  The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review.
+  Source: [bc-pipeline-to-done/body/SKILL.md](../bc-pipeline-to-done/body/SKILL.md#build-and-deterministic-pre-review-gate)
+
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): loads this concept — required, when feature/enhancement work.
+  Feature workers follow red-green-refactor.
+  Source: [bc-pipeline-to-done/body/execute-issue.md](../bc-pipeline-to-done/body/execute-issue.md#build-loop)
 
 - incoming from [bc-swarm](../bc-swarm/RELATIONSHIPS.md): depends on this concept's contract — required, when worker and review packets for code changes, and parent commits.
   Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit.

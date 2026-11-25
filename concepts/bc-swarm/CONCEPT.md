@@ -115,7 +115,7 @@ the results.
   *all* anchors was considered and rejected as the same cost as re-reading.
 - **Read-shaped by default, with a handoff.** The skill itself covers
   investigation, analysis, and review. `subagent-driven-development` and
-  `bc-drain-issues` already own implementation *fan-out* with worker
+  `bc-pipeline-to-done` already own implementation *fan-out* with worker
   packets, spec/standards review, worktree isolation, and rework loops. A
   thinner competing path would lose in ways nobody notices until something
   is merged, and read-only children keep the durability contract simple:
@@ -157,7 +157,7 @@ the results.
   disclosure keeps the skill honest in other harnesses instead of teaching
   syntax that is wrong there.
 - **`bc-` prefix.** Follows the workspace convention marking the user's own
-  originals (`bc-init-agent`, `bc-drain-issues`, `bc-triage`) against
+  originals (`bc-init-agent`, `bc-pipeline-to-done`, `bc-triage`) against
   upstream-derived concepts. The shorter `swarm` was considered for typing
   ergonomics and rejected for consistency.
 
@@ -185,7 +185,7 @@ the results.
   — right altitude, explain-the-why, gates reserved for in-the-moment
   rationalization, progressive disclosure.
 - [`concepts/subagent-driven-development/CONCEPT.md`](../subagent-driven-development/CONCEPT.md)
-  and [`concepts/bc-drain-issues/CONCEPT.md`](../bc-drain-issues/CONCEPT.md)
+  and [`concepts/bc-pipeline-to-done/CONCEPT.md`](../bc-pipeline-to-done/CONCEPT.md)
   — the implementation-fan-out boundary this concept hands off to.
 - Pi's `pi-subagents` extension skill — tool surface for `runs.all`,
   per-child `output`, `children.list`, `subagent_wait`, and async retention.

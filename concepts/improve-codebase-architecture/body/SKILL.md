@@ -73,7 +73,7 @@ Observations you make outside a review, in any later task, are also single lines
 
 ## Projects without the table
 
-These projects keep the older observation inbox and disposition ledger, written by `bc-drain-issues`.
+These projects keep the older observation inbox and disposition ledger, written by `bc-pipeline-to-done`.
 
 At the beginning of Explore, locate the project's architecture-observation inbox and, when inline inbox edits are forbidden, its durable fallback disposition ledger:
 

@@ -53,7 +53,7 @@ When the reviewer's role or harness prompt defines its own output format and pri
 
 ### Untested is a result
 
-A check you could not run — missing runner, expired auth, unbuildable environment — is recorded `untested` with the reason, never omitted. Why: in a findings table a skipped check and an inapplicable one look identical to the reader, so silent omission reads as coverage. This is a result state, not a severity: Critical/Important/Minor still classify defects you observed. In a human-facing review, report an unconfirmed hypothesis as a question to check, naming what would settle it and assigning no severity—not as a weak finding. Machine-gated contracts without a question channel (`bc-drain-issues` review-contract) retain their existing rule: settle the hypothesis within the reproduction budget, or report it as a finding whose evidence says `untested`. Missing evidence needed to assess the change remains blocking.
+A check you could not run — missing runner, expired auth, unbuildable environment — is recorded `untested` with the reason, never omitted. Why: in a findings table a skipped check and an inapplicable one look identical to the reader, so silent omission reads as coverage. This is a result state, not a severity: Critical/Important/Minor still classify defects you observed. In a human-facing review, report an unconfirmed hypothesis as a question to check, naming what would settle it and assigning no severity—not as a weak finding. Machine-gated contracts without a question channel (`bc-pipeline-to-done` review-contract) retain their existing rule: settle the hypothesis within the reproduction budget, or report it as a finding whose evidence says `untested`. Missing evidence needed to assess the change remains blocking.
 
 A finding’s severity cannot exceed the impact demonstrated by an executed check, bounded reproduction, or complete source trace—not a worst-case imagined outcome. This ceiling also applies to machine-gated reports.
 
@@ -81,9 +81,9 @@ This does not license adding defensive code for impossible states — see *Findi
 
 ## AFK slice gate
 
-Inside `/bc-drain-issues`, the reviewed artifact is a worker’s uncommitted, GREEN worktree, and nothing lands until every axis stands approved on the exact diff being landed. A rebase that changes that diff invalidates the approval it carried, so the driver obtains fresh approval before retrying push or close.
+Inside `/bc-pipeline-to-done`, the reviewed artifact is a worker’s uncommitted, GREEN worktree, and nothing lands until every axis stands approved on the exact diff being landed. A rebase that changes that diff invalidates the approval it carried, so the driver obtains fresh approval before retrying push or close.
 
-**The drain owns its own parameters and this section does not restate them.** Which tier applies, how many reviewers a round dispatches, which axes a rework round re-runs, and how many rework cycles are permitted all live in `bc-drain-issues`' review contract, and reading them from there is not optional politeness — an earlier version of this section carried its own copy of the cycle budget and dispatch rule, both of which silently went stale when that loop changed. One home per fact applies to canon describing canon.
+**The drain owns its own parameters and this section does not restate them.** Which tier applies, how many reviewers a round dispatches, which axes a rework round re-runs, and how many rework cycles are permitted all live in `bc-pipeline-to-done`' review contract, and reading them from there is not optional politeness — an earlier version of this section carried its own copy of the cycle budget and dispatch rule, both of which silently went stale when that loop changed. One home per fact applies to canon describing canon.
 
 What this skill contributes inside that loop is the part that is genuinely its own: the two scopes stay distinct, reviewers work from the fixed packet and never from implementation reasoning, and evidence a reviewer lacks is blocking rather than an invitation to guess.
 

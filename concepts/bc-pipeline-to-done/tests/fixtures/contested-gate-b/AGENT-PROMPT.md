@@ -4,12 +4,12 @@ This prompt preserves the autonomous contested A/B as ecological evidence. It is
 deterministic deployment Gate B; use `../contested-gate-b-trace/AGENT-PROMPT.md` for that gate.
 
 Hand the block below to the agent that will run this natural pressure test. It assumes that agent
-has a shell, can run `bc-drain-issues`, and can report per-child token usage. Replace nothing
+has a shell, can run `bc-pipeline-to-done`, and can report per-child token usage. Replace nothing
 except the two bracketed values in step 0 if your harness differs.
 
 ---
 
-You are running the **natural ecological-pressure A/B** for `bc-drain-issues`: an autonomous
+You are running the **natural ecological-pressure A/B** for `bc-pipeline-to-done`: an autonomous
 measurement of whether the v3 review-economy revision costs fewer child tokens on a naturally
 contested issue without losing correctness. This run cannot authorize deployment because its
 rework topology is probabilistic. This is a measurement, not a feature task. Produce trustworthy
@@ -18,7 +18,7 @@ results, including invalid topology or numbers that make v3 look bad.
 ## 0. Setup
 
 - Canon workspace: `$AGENT_CONCEPTS`
-- Fixture generator: `$AGENT_CONCEPTS/concepts/bc-drain-issues/tests/fixtures/contested-gate-b/make-fixture.py`
+- Fixture generator: `$AGENT_CONCEPTS/concepts/bc-pipeline-to-done/tests/fixtures/contested-gate-b/make-fixture.py`
 - Read `<that dir>/README.md` first — it describes the fixture, the isolation guarantees, its
   residual risks, and the pass criteria. Read `../../pressure-drain.md` for the inherited v2
   Gate B outcomes.
@@ -39,15 +39,15 @@ before doing anything else, and verify `command -v gh git publish-check.py` all 
 ## 2. Pin the two arms
 
 - **v2 arm:** `cd "$AGENT_CONCEPTS" && git worktree add --detach /tmp/gateb-v2 745fe01`, then run the
-  drain against `/tmp/gateb-v2/agents/concepts/bc-drain-issues/body/`.
-- **v3 arm:** run against `$AGENT_CONCEPTS/concepts/bc-drain-issues/body/`.
+  drain against `/tmp/gateb-v2/agents/concepts/bc-pipeline-to-done/body/`.
+- **v3 arm:** run against `$AGENT_CONCEPTS/concepts/bc-pipeline-to-done/body/`.
 
 Before spending tokens, prove the arms differ:
 `grep -c 'do not re-derive it' <arm>/review-contract.md` must be `0` for v2 and `1` for v3.
 
 ## 3. Run each arm
 
-Run `bc-drain-issues` against the fixture repo (`<root>/repo`) with the canon for that arm. The
+Run `bc-pipeline-to-done` against the fixture repo (`<root>/repo`) with the canon for that arm. The
 queue holds #102 (the contested slice) and #103 (which depends on it). Let the drain do its own
 thing — do **not** coach the workers, hint at the omitted `reload`/`apply-change` commands, or
 correct a reviewer. Coaching invalidates the measurement.
@@ -88,7 +88,7 @@ the fixture, the caps, or the criteria to produce a pass.
 
 ## 6. Write the result
 
-Create `$AGENT_CONCEPTS/concepts/bc-drain-issues/tests/results/<YYYY-MM-DD>-gate-b-contested.md`
+Create `$AGENT_CONCEPTS/concepts/bc-pipeline-to-done/tests/results/<YYYY-MM-DD>-gate-b-contested.md`
 following the shape of `2026-07-25-gate-b.md`: locked comparison table (fixture base, model,
 effort, per-arm totals, delta), per-phase breakdown, correctness section, and a measurement-notes
 section recording limitations. Add machine totals as a sibling `.json`. Then update

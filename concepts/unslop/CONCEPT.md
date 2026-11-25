@@ -51,7 +51,7 @@ contradicts it.
 - **Artifacts are a first-class class.** Placeholders, vendor paste junk,
   `utm_source=`, curly quotes, and canned assurance in commit messages
   and PR bodies. Wikipedia keeps a whole edit-summary section that maps
-  onto agent commit messages, and `bc-drain-issues` writes those here.
+  onto agent commit messages, and `bc-pipeline-to-done` writes those here.
   These tells are mechanical and do not decay, unlike vocabulary.
 - **An `rg` block, not a scanner.** The exact-string class is pure
   mechanism, and one `rg` alternation is the lowest rung that holds.

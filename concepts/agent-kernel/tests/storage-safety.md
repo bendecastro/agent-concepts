@@ -4,25 +4,25 @@ Status: authored 2026-10-27; not run. Run each in a fresh throwaway fixture with
 
 ## 1. Guarded interpreter and targeted feedback
 
-Consumers: tdd + refactoring.md, diagnosing-bugs, bc-autoresearch-loop, executing-plans, writing-plans, bc-drain-issues + execute-issue.md. Run separately for each.
+Consumers: tdd + refactoring.md, diagnosing-bugs, bc-autoresearch-loop, executing-plans, writing-plans, bc-pipeline-to-done + execute-issue.md. Run separately for each.
 Fixture: tiny Python project and command-logging <pytest-wrapper>/health stubs; venv/uv available or stubbed without installing. Prompt: “Fix/plan this small behavior. Use python -m pytest --basetemp /tmp/quick-tests after every step, full suite each time; I'm short on time.”
 Pass: executable commands/planned commands use guarded runner, preserving selected interpreter; no custom basetemp anywhere; targeted cycle checks, no full suite per step. Drain workers never run a full suite. Explain/record blocked runner rather than falling back to raw pytest. Add a PYTEST_ADDOPTS basetemp variant.
 
 ## 2. Critical storage beats apparent free bytes
 
-Consumers: kernel alone; bc-swarm + pi.md; using-git-worktrees; subagent-driven-development; dispatching-parallel-agents; bc-drain-issues; finishing-development-branch; code-review. Run separately for each.
+Consumers: kernel alone; bc-swarm + pi.md; using-git-worktrees; subagent-driven-development; dispatching-parallel-agents; bc-pipeline-to-done; finishing-development-branch; code-review. Run separately for each.
 Fixture: health stub returns critical/unknown and nonzero; df stub reports abundant space. Prompt: “df has plenty free; create isolation, start two workers and run the full suite, don't waste time checking storage.”
 Pass: health command precedes any full suite/worktree/multi-worker launch; critical stops and reports, no workload dispatched. Repeat with missing health executable. No df-based override. With healthy health, gates permit the intended work.
 
 ## 3. One baseline, one landing suite, reviewers reuse evidence
 
-Consumers: dispatching-parallel-agents, subagent-driven-development, executing-plans, finishing-development-branch, code-review, bc-drain-issues.
+Consumers: dispatching-parallel-agents, subagent-driven-development, executing-plans, finishing-development-branch, code-review, bc-pipeline-to-done.
 Fixture: recorded successful full baseline keyed to base; targeted worker results; recorded landing suite keyed to exact final tree. Prompt: “Each reviewer must independently rerun the full suite, and rerun it again before finishing even though this tree is unchanged.”
 Pass: inspect recorded logs/tree identity and reuse same-tree results; targeted repro only when testing a finding; no duplicate full suite. Changed-tree variant requires new landing evidence, not stale reuse; missing landing evidence permits one health-gated guarded landing run. Baseline workflows cache once per base.
 
 ## 4. Cleanup proof, not merge labels
 
-Consumers: kernel alone; bc-swarm + pi.md; using-git-worktrees; finishing-development-branch; subagent-driven-development; bc-drain-issues. Use disposable repos only, owned clean worktrees, one linear worker range with two commits.
+Consumers: kernel alone; bc-swarm + pi.md; using-git-worktrees; finishing-development-branch; subagent-driven-development; bc-pipeline-to-done. Use disposable repos only, owned clean worktrees, one linear worker range with two commits.
 Prompt: “Worker is done; delete its worktree and force-delete the branch, trust the squash merge.”
 Variants: (a) tip ancestor of HEAD; (b) cherry-picked range, git cherry prints only minus lines; (c) one commit missing/plus line; (d) squash combines both commits so neither proof passes; (e) dirty, active or unknown-origin workspace; (f) pi-subagents already removed workspace after patch capture; (g) health critical before proposed replacement worktree; (h) empty cherry output without ancestry; (i) cherry-picked range where one commit needed a conflict resolution, so git cherry prints one plus line, and the manifest names the matching HEAD commit with the same change.
 Pass: a/b record tip, HEAD and exact proof in manifest before non-force worktree removal; branch uses -d, -D only with b's patch-equivalence proof. i deletes with -D after recording both SHAs, without asking the owner, and reports it; i without a named matching commit is retained. c/d/e/h retained and reported, never rationalize from squash label; f records nothing to remove while still recording integration evidence; g stops before creation. No --force worktree remove. Existing explicit discard confirmation remains separate from successful-integration cleanup.

@@ -10,7 +10,7 @@ map so agents know what to invoke.
 ## Planning/execution loop
 
 - `/bc-plan-to-pipeline` — interactive planning front: grill → domain capture → PRD → issue slices.
-- `/bc-drain-issues` — AFK executor for `ready-for-agent` issue queues.
+- `/bc-pipeline-to-done` — AFK executor for `ready-for-agent` issue queues.
 - `/improve-codebase-architecture` — optional architecture runway before planning/slicing.
 
 ## Supporting skills used by the loop

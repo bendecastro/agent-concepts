@@ -10,7 +10,7 @@ User-invoked intake gate for the bc loop. It moves issues/PRs through a small st
 
 ## Design decisions
 
-- **Intake, not execution.** `triage` produces better work for `bc-plan-to-pipeline` or `bc-drain-issues`; it does not build the feature itself.
+- **Intake, not execution.** `triage` produces better work for `bc-plan-to-pipeline` or `bc-pipeline-to-done`; it does not build the feature itself.
 - **Agent Brief as AFK contract.** A `ready-for-agent` label alone is too weak. The latest Agent Brief comment is the spec the drain subagent can rely on.
 - **Out-of-scope is project memory.** Rejections belong in the work-dropped folder only when they are durable enhancement decisions, not temporary deferrals or already-built features.
 - **qmd-assisted prior-art check, gated on a covering global collection.** The redundancy/prior-rejection step uses `qmd query` when qmd is installed and a global collection covers the repo's vault (`qmd collection list` path match), because semantic search catches prior ADRs/rejections that exact-name greps miss; with no coverage the manual reading path is unchanged. See `concepts/qmd/` (added 2026-07-13; global-mode rework same day).
@@ -20,7 +20,7 @@ User-invoked intake gate for the bc loop. It moves issues/PRs through a small st
 ## Provenance
 
 - [mattpocock/skills](https://github.com/mattpocock/skills) — upstream Matt Pocock `triage`, `AGENT-BRIEF.md`, and `OUT-OF-SCOPE.md` captured 2026-06-21.
-- `concepts/bc-drain-issues/` — Agent Brief requirements are tightened so drainable issues are self-contained.
+- `concepts/bc-pipeline-to-done/` — Agent Brief requirements are tightened so drainable issues are self-contained.
 - `concepts/grilling/` and `concepts/domain-modeling/` — used when triage needs to resolve missing decisions.
 
 ## Tests

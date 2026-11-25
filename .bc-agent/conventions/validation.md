@@ -1,6 +1,6 @@
 # Validation
 
-Run from the repository root. `bc-drain-issues` reads this page to know what "validated" means.
+Run from the repository root. `bc-pipeline-to-done` reads this page to know what "validated" means.
 Each stage has one owner.
 
 ## While working

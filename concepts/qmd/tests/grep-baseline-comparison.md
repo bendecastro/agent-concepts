@@ -20,7 +20,7 @@ Two fresh general-purpose subagents, identical question, ground truth verified b
 ## Round 2 — paraphrase question, zero keyword overlap ("stop two machines doing duplicate work on the same ticket")
 
 - grep, five natural phrasings, all corpora: **0 hits**. Failure mode is silent — an agent reports "nothing recorded" and re-decides settled questions, or burns unbounded tokens brute-reading directories.
-- `qmd query --no-rerank`, first attempt, 20.7s: ground truth (`bc-drain-issues` claim-branch/worktree section) at rank 3, plus `dispatching-parallel-agents` at rank 4. `Context:` authority labels present on all hits.
+- `qmd query --no-rerank`, first attempt, 20.7s: ground truth (`bc-pipeline-to-done` claim-branch/worktree section) at rank 3, plus `dispatching-parallel-agents` at rank 4. `Context:` authority labels present on all hits.
 
 ## Conclusions (encoded in body/SKILL.md)
 

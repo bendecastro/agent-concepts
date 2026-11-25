@@ -7,15 +7,19 @@ from pathlib import Path
 # different repository. Assuming the two were siblings broke the runner when this
 # workspace moved out of CONFIG.
 WORKSPACE=Path(os.environ.get('BC_DRAIN_WORKSPACE') or Path(__file__).resolve().parents[3]).expanduser().resolve()
-CONCEPT=WORKSPACE/'concepts/bc-drain-issues'
+CONCEPT=WORKSPACE/'concepts/bc-pipeline-to-done'
+# The issue drain's rules are the shared core plus the issue source page; checks read both.
+SOURCE_SPLIT='\n<!-- source-issues.md -->\n'
+def issue_skill_text():
+    return (CONCEPT/'body/SKILL.md').read_text()+SOURCE_SPLIT+(CONCEPT/'body/source-issues.md').read_text()
 PI_DIR=Path(os.environ.get('BC_DRAIN_PI_DIR') or Path.home()/'.pi'/'agent').expanduser()
 if not (CONCEPT/'body/SKILL.md').is_file():
     raise SystemExit(f'concept body not found under {CONCEPT}\nset BC_DRAIN_WORKSPACE to the agents workspace root')
 MARKERS_ONLY=sys.argv[1:]==['--markers-only']
 if sys.argv[1:] and not MARKERS_ONLY:
     raise SystemExit('usage: run-pressure.py [--markers-only]')
-if not MARKERS_ONLY and not (PI_DIR/'agents').is_dir():
-    raise SystemExit(f'Pi role directory not found at {PI_DIR/"agents"}\nset BC_DRAIN_PI_DIR to the Pi agent directory (the one containing agents/ and extensions/)')
+if not MARKERS_ONLY and not (PI_DIR/'extensions/subagent/config.json').is_file():
+    raise SystemExit(f'Pi subagent config not found under {PI_DIR}\nset BC_DRAIN_PI_DIR to the Pi agent directory (the one containing extensions/)')
 ROOT=Path(tempfile.mkdtemp(prefix='bc-drain-v2-gate-a-'))
 REAL_GIT=shutil.which('git')
 if not REAL_GIT:
@@ -109,7 +113,7 @@ realgit('--git-dir',str(REMOTE),'fetch',str(REPO),f'{BASE}:refs/heads/master',cw
 
 # Released-marker pressure uses real Git only against the disposable local remote.
 def check_released_markers():
-    skill=(CONCEPT/'body/SKILL.md').read_text()
+    skill=issue_skill_text()
     for required in ('bc-drain-claim released', 'issue=<n>', 'run=<run-id>', 'claim=<claim sha>',
                      'exactly one parent', 'FREE', 'held/unaccounted',
                      '--force-with-lease=refs/heads/bc-drain-claims/issue-<n>:<marker sha>',
@@ -301,17 +305,18 @@ assert_(not staged and complete['raw_log_outside_worktree'],'gate')
 
 # Fresh independent packets, installed minimal Pi roles, strict outputs, and top-level harness controls.
 minimal_keys=['worktree','base_sha','issue','acceptance_matrix','changed_files','diff_range','targeted_validation','baseline_delta','raw_logs']
-role_dir=PI_DIR/'agents'
+# The skill names jobs, not roles; the shipped example profiles must meet the job limits.
+role_dir=CONCEPT/'body/examples/agents'
 role_names=['bc-drain-auditor','bc-drain-worker','bc-drain-reviewer']
 role_audit={}
 for name in role_names:
- rp=role_dir/f'{name}.md'; assert_(rp.is_file(),f'missing Pi role {name}')
+ rp=role_dir/f'{name}.md'; assert_(rp.is_file(),f'missing example role {name}')
  rt=rp.read_text()
  for required in ('systemPromptMode: replace','inheritProjectContext: false','inheritSkills: false','defaultContext: fresh','defaultProgress: false'):
   assert_(required in rt,f'{name} missing {required}')
  assert_('glossary.md' not in rt and 'load all skills' not in rt.lower(),f'{name} inherits generic context')
  role_audit[name]={'path':str(rp),'minimal':True,'replace_system_prompt':True,'inherit_project_context':False,'inherit_skills':False,'generic_plan_progress_reads':False}
-skill_text=(CONCEPT/'body/SKILL.md').read_text()
+skill_text=issue_skill_text()
 assert_('four assistant turns and 12 tool calls' in skill_text,'read-only cap absent from SKILL')
 assert_('pass the worker disciplines explicitly' in skill_text,'explicit worker discipline selection absent from SKILL')
 assert_(skill_text.index('Atomically claim') < skill_text.index('After the claim/worktree'),'auditor may dispatch before atomic claim')
@@ -732,7 +737,7 @@ dump('27/resume.json',{'claims':CLAIMS,'dispositions':plan,'adopted':{'issue':ad
 # This case is intentionally contract-driven: the fixture models the producer and sink
 # boundaries, while the assertions below make the non-authoritative handoff inspectable.
 for required in (
- 'at most one optional structural `architecture_observation` field per issue',
+ 'at most one optional structural `architecture_observation` field per unit',
  'Its exact fields are `source`, `module`, `interface_or_seam`, `friction`, `deletion_test`, `evidence`, and `status: open`.',
  'The observation records evidence and friction only; it must never contain a proposed refactor, interface design, or implementation direction.',
  '`codebase-design` vocabulary (`module`, `interface`, `depth`, `seam`, `adapter`)',
@@ -1026,10 +1031,13 @@ dump('29/shared-deferral-recovery.json',{'triggers':['three rework/re-review cyc
 # There is no runtime selector here: do not model a second queue algorithm and
 # mistake its ledger for evidence that a consuming driver obeyed these rules.
 def automated_isolation_scenarios(skill):
-    scope=skill.split('## States',1)[0]
-    resume=skill.split('## Resuming an interrupted run',1)[1].split('## Select, classify, and claim',1)[0]
-    select=skill.split('## Select, classify, and claim',1)[1].split('## Build and deterministic pre-review gate',1)[0]
-    landing=skill.split('## Driver-owned landing',1)[1].split('## Recurring-defect tune',1)[0]
+    core,issues=skill.split(SOURCE_SPLIT,1)
+    def section(text,start,end):
+        return text.split(start,1)[1].split(end,1)[0]
+    scope=issues.split('## States',1)[0]
+    resume=section(issues,'## Resuming an interrupted run','## Select')+section(core,'## Resuming an interrupted run','## Select, classify, and claim')
+    select=section(issues,'## Select','## Claim marks')+section(core,'## Select, classify, and claim','## Build and deterministic pre-review gate')
+    landing=section(core,'## Driver-owned landing','## Recurring-defect tune')+section(issues,'## Landing','## Blocked')
     provenance='Apply the cloud-lane provenance gate above \u2014 labels, then the read-only claim-tip body, then comments and PRs \u2014 before marker classification and before any adoption, restore, release, or cleanup.'
     return {
         'SKILL.md::fresh_automated_skipped': all(rule in scope for rule in (
@@ -1105,7 +1113,7 @@ def automated_isolation_scenarios(skill):
         ),
     }
 
-lane_skill=(CONCEPT/'body/SKILL.md').read_text()
+lane_skill=issue_skill_text()
 lane_scenarios=automated_isolation_scenarios(lane_skill)
 for name,passed in lane_scenarios.items():
     assert_(passed,f'automated isolation contract failed: {name}')
@@ -1143,11 +1151,73 @@ assert_(mutation_results['provenance-after-marker-inspection'],'late provenance 
 dump('31/automated-isolation.json',{'source':'body/SKILL.md','scenarios':lane_scenarios,'mutations_rejected':mutation_results,
     'models_launched':0,'network_used':False,'limitation':'Static contract/order checks, not consuming-model behavior or a live mutation ledger. Existing Git and recovery/landing sandbox checks cover non-automated mechanics.'})
 
-checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,32)}
+
+# Check 32: the work-item source. Static contract checks on the live source page and the
+# core's source selection, each with a rule-removal mutation that must flip its scenario.
+def work_item_source_scenarios(core,items):
+    def section(text,start,end=None):
+        if start not in text:return ''
+        rest=text.split(start,1)[1]
+        return rest.split(end,1)[0] if end and end in rest else rest
+    choose=section(core,'## Choose the source','\n## ')
+    elig=section(items,'## Eligibility','\n## ')
+    claim=section(items,'## Claim','\n## ')
+    build=section(items,'## Build','\n## ')
+    park=section(items,'## Park','\n## ')
+    resume=section(items,'## Resume','\n## ')
+    finish=section(items,'## Finish','\n## ')
+    return {
+        'source-work-items.md::source_selection': all(r in choose for r in (
+            '[source-work-items.md](source-work-items.md)','`Ready for agent: yes`','`ready-for-agent`','If both do, ask the owner')),
+        'source-work-items.md::eligibility': all(r in elig for r in (
+            '`Ready for agent: yes`','every item named on its `Blocked by:` line is in work-done','pipeline order','`work/README.md`')),
+        'source-work-items.md::claim_with_remote': all(r in claim for r in (
+            'whole item','`refs/heads/bc-drain-claims/item-<slug>`','same no-force','Released Claim Marker')),
+        'source-work-items.md::claim_without_remote': all(r in claim for r in (
+            'Without a Git remote','only one driver','committed move to work-active is the claim','refuse parallel mode')),
+        'source-work-items.md::build_steps_in_order': all(r in build for r in (
+            'one builder','steps in order','one worktree','each step','full review','tick','regenerate the work index')),
+        'source-work-items.md::park': all(r in park for r in (
+            'back to work-planned','`Waiting on owner: <question>`','remove its `Ready for agent:` line','where the owner sees questions','overlay')),
+        'source-work-items.md::resume': all(r in resume for r in (
+            'answer','into the item','`Waiting on owner:` line','restore `Ready for agent: yes`')),
+        'source-work-items.md::finish': all(r in finish for r in (
+            '`## Outcome`','work-done month folder `<YYYY-MM>/`','regenerate the work index','commit')),
+    }
+items_path=CONCEPT/'body/source-work-items.md'
+items_text=items_path.read_text() if items_path.is_file() else ''
+core_text=(CONCEPT/'body/SKILL.md').read_text()
+wi_scenarios=work_item_source_scenarios(core_text,items_text)
+for name,passed in wi_scenarios.items():
+    assert_(passed,f'work-item source contract failed: {name}')
+wi_mutations={
+    'ready-line-removed':('`Ready for agent: yes`','','source-work-items.md::eligibility'),
+    'blockers-removed':('every item named on its `Blocked by:` line is in work-done','','source-work-items.md::eligibility'),
+    'remote-ref-removed':('`refs/heads/bc-drain-claims/item-<slug>`','','source-work-items.md::claim_with_remote'),
+    'single-driver-removed':('refuse parallel mode','','source-work-items.md::claim_without_remote'),
+    'step-order-removed':('steps in order','','source-work-items.md::build_steps_in_order'),
+    'index-regen-removed':('regenerate the work index','','source-work-items.md::build_steps_in_order'),
+    'waiting-line-removed':('`Waiting on owner: <question>`','','source-work-items.md::park'),
+    'ready-restore-removed':('restore `Ready for agent: yes`','','source-work-items.md::resume'),
+    'outcome-removed':('`## Outcome`','','source-work-items.md::finish'),
+}
+wi_mutation_results={}
+for mutation,(old,new,scenario) in wi_mutations.items():
+    assert_(old in items_text,f'work-item mutation target absent: {mutation}')
+    wi_mutation_results[mutation]=not work_item_source_scenarios(core_text,items_text.replace(old,new))[scenario]
+    assert_(wi_mutation_results[mutation],f'work-item mutation not caught: {mutation}')
+wi_without=work_item_source_scenarios(core_text,'')
+assert_(not any(v for k,v in wi_without.items() if k!='source-work-items.md::source_selection'),'work-item checks pass without the source page')
+dump('32/work-item-source.json',{'source':'body/source-work-items.md','scenarios':wi_scenarios,'mutations_rejected':wi_mutation_results,
+    'without_source_page':wi_without,'models_launched':0,'network_used':False,
+    'limitation':'Static contract checks, not consuming-model behaviour; the dry-run pressure scenarios grade behaviour.'})
+
+checks={i:{'status':'PASS','artifact':str(ART/f'{i:02d}') if i else '', 'evidence':''} for i in range(1,33)}
 ev={1:'unauthorized rc=2; parallel blocked; four labels; stub log',2:'claim rc 0 then 1; dependency skipped; main/sibling clean',3:'medium high-risk fresh audit includes omitted old-hidden; actual hostile-cwd/module-shadow and installed-symlink launcher checks; authoritative external semantics beat misleading repo prose',4:'actual RED/GREEN plus bug red and post-GREEN metric artifact',5:'six seeded blocker classes rejected, including harness session/artifact directories, then complete deterministic packet',6:'actual minimal Pi role files audited; 4-turn/12-tool caps from SKILL; generic plan/progress absence nonblocking; initial/resume artifacts external/disabled; strict JSON',7:'same worktree fresh reworker; focused review; max 3; minor nonblocking',8:'changed class continues; identical finding twice defers with useful diff',9:'taxonomy labels and systemic classifications',10:'live skill excludes the three retired token controls and retains review/round/launch gates; injected legacy controls are rejected; no real dispatch exercised',11:'instrumented validation.log has one baseline FULL + one landing FULL',12:f'six-entry bundle; exact changed set and tree OID {treeoid}',13:'actual git apply --3way; full diff; approval invalidation; fail-safe table',14:'portable exact heading/fields; no absolute/secret; scheduling',15:f'driver commit {LANDSHA}; auth, stub push/close, release/PRD rules',16:'first stub NFF; changed diff; validation and fresh dual approval before retry',17:'child-run list-API costs in the end-report; no token totals; additive run-local tune',18:f'six-entry packet outside every worktree; diff_sha256 {h1[:12]} equals reviewed diff bytes; no reviewer re-derivation command',19:'13 invalidation triggers exercised; two Standards-only existing-helper reworks skip intermediate Spec; stale Spec hashes block landing until final focused exact-hash sync',20:'8 tier cases including both escalations and no lowering; tier-1 schema carries axis/axes_covered',21:'no reproduction before a formed finding; <=2 per finding; refuted hypothesis unreported; no full suite',22:'narrowed rework re-evidences implicated+touched+failing rows only; gate rejects a skipped touched row; latent regression caught by final full validation',23:'all rows pass the deterministic presence gate; Spec flags the implicated row whose evidence would not differ if the criterion were false; untouched row not audited; remedy is discriminating evidence, not more evidence',24:'driver dispatches the ladder on every implementation packet; rung 2 stops on existing prior art after a qmd/tree search; a forwarding wrapper is not reuse; no acceptance row or never-simplify class is trimmed; READY_FOR_REVIEW and the in-code ceiling marker survive',25:'structural findings use codebase-design vocabulary and pass the deletion test; duplication and untestability are material; shape preference stays Minor and does not block; deepening routes to improve-codebase-architecture',26:'stale owning page, change-narration, and invented docs tree are material; an undocumented surface and an accurate page are not; remedy is the owning hunk, not a docs rewrite',27:'remote claims are the resume index; adopt/restore/release/report-and-skip dispositions hold; no standing approval crosses a run boundary and an adopted worktree re-runs the gate plus both axes; an unaccountable claim is reported, never released or deleted',28:'candidate counts 101=2 and ordinary/shape-only/deferred=0; report counts 101=1 and ordinary/shape-only/deferred=0; exact evidence/friction-only fields persist only to the declared sink after landing via a header-preserving newest-first prepend whose new heading/index precedes the older entry, while the explicit handoff returns the observation and leaves review/rework dispatches, packet, tier, approvals, landing, post-landing labels, and closed issue state unchanged'}
 ev[29]='both textual deferral triggers share recovery-before-release; one validated six-entry bundle and portable brief from checks 12/14, not two distinct captures'
 ev[30]='real local bare remote: absent/valid marker free; malformed markers held; correct lease update and ls-remote ownership proof; stale lease and existing no-force create rejected; up-to-date not ownership; leased marker cleanup; installed Git push help'
 ev[31]='source-named fresh/deferred/rework/restart lane-isolation plus cloud-claim-provenance (held tip, in-progress+comment, open cloud PR; marker-alone history carve-out; when-any-of connective) and untouched-excludes-cloud scenarios; gate-first then read-only tip/comments/PRs before marker classification and any recovery/mutation; single specific fail-closed; valid marker FREE but open PR/comment-backed in-progress still cloud-lane; never-release scoped to cloud-lane issues under the three live signals (history-only comment follows the owner path); 19 lane mutations + provenance-after-marker-inspection ordering tripwire = 20 rejected (static, not consuming-model pressure)'
+ev[32]='work-item source: source selection, eligibility, claim with and without a remote, steps in order with per-step review and ticks, park, resume and finish each present in the live page; 9 rule-removal mutations rejected; all item checks fail without the page (static, not consuming-model pressure)'
 for i in checks:checks[i]['evidence']=ev[i]
 dump('checks.json',checks)
 summary={'sandbox':str(ROOT),'base_sha':BASE,'new_base':NEWBASE,'checks':len(checks),'all_checks_pass':all(v['status']=='PASS' for v in checks.values()),'no_real_mutation':True,'gate_b':'NOT RUN','candidate_source':str(CONCEPT)}

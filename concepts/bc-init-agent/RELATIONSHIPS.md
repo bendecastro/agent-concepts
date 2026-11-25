@@ -7,7 +7,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `bc-drain-issues`'s contract — required, when generated execution guidance for vault archetypes.
+- depends on `bc-pipeline-to-done`'s contract — required, when generated execution guidance for vault archetypes.
   Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
   Source: [body/scaffold.py](body/scaffold.py)
 
@@ -53,9 +53,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Relies on the work-item template, Kind placement in order.md and work_index.py --check.
   Source: [bc-council-audit-security/body/SKILL.md](../bc-council-audit-security/body/SKILL.md)
 
-- incoming from [bc-drain-issues](../bc-drain-issues/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves work stage folders and the ideas file in the scaffolded table and moves work items under its work-item rules.
-  Source: [bc-drain-issues/CONCEPT.md](../bc-drain-issues/CONCEPT.md)
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines and reruns the work index script.
+  Source: [bc-pipeline-to-done/CONCEPT.md](../bc-pipeline-to-done/CONCEPT.md)
 
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.

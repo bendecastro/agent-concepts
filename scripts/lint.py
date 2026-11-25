@@ -185,6 +185,9 @@ def lint_inline_paths(issues: list[Issue]) -> None:
         # log.md is a historical journal; its paths were true when written.
         if md.name == "log.md":
             continue
+        # Finished and dropped work items are historical: accurate when written.
+        if parts[:2] in {("work", "3-done"), ("work", "4-dropped")}:
+            continue
         # Captured evidence quotes other repositories' trees; its paths were true in their own context.
         if parts[:2] == ("docs", "research") and "evidence" in parts[2:-1]:
             continue

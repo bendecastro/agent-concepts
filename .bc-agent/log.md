@@ -2017,3 +2017,6 @@ Deployed the `guardrails` skill after its pressure test held; README "Keeping pr
 
 ## [2026-11-25] implement | ready and waiting lines in the work pipeline
 `bc-plan-to-pipeline` writes `Ready for agent: yes` only when every step states done-criteria and out of scope; `bc-init-agent` scaffold documents `Ready for agent:` and `Waiting on owner:`, and `work_index.py` marks both and rejects an item with both. References renamed to `bc-pipeline-to-done`.
+
+## [2026-11-25] implement | bc-pipeline-to-done: rename, source split, work-item source
+Renamed `bc-drain-issues` to `bc-pipeline-to-done` (old name a deploy alias); split the body into a shared core plus `source-issues.md` (issue text moved verbatim) and added `source-work-items.md` (ready line, item claim with and without a remote, steps in order, park, resume, finish). Jobs with limits and a private overlay replace fixed Pi role names. Gate A reads core plus issue page and gains check 32; lint exempts inline paths in finished and dropped work items.

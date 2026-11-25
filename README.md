@@ -27,7 +27,7 @@ Prompts for harnesses without skill loading: [docs/guides/bootstrap.md](docs/gui
 ## Install
 
 You need Git and Python 3. The repository's own gate also needs `pytest` and `hypothesis`.
-`/bc-drain-issues` and the issue mode of `/bc-plan-to-pipeline` need the GitHub CLI (`gh`).
+`/bc-pipeline-to-done` and the issue mode of `/bc-plan-to-pipeline` need the GitHub CLI (`gh`).
 
 ```bash
 git clone <this-repository-url> agent-concepts
@@ -90,7 +90,7 @@ The slices become the steps of a work item, GitHub issues labelled `ready-for-ag
 dependency order, or both. It files issues only when the project already plans in GitHub issues
 or you ask for them.
 
-**`/bc-drain-issues`** works through a repository's `ready-for-agent` GitHub issues without you.
+**`/bc-pipeline-to-done`** works through a repository's `ready-for-agent` GitHub issues without you.
 The driver claims each issue with a Git ref before any work starts, so two drivers cannot build
 the same issue. High-risk issues get a read-only audit first. A worker writes the code in its own
 worktree; it cannot commit, push, or change the issue. Independent reviewers check the result.

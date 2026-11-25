@@ -1,7 +1,7 @@
 # bc-drain-issues v3 — review-phase economy: run the real Gate B A/B
 
 Why: v3's review-economy rules are live in the drain skill, but their token win is unmeasured; the deterministic Gate B harness exists and the real same-model/medium A/B has never run.
-Done when: the v2/v3 A/B on `concepts/bc-drain-issues/tests/fixtures/contested-gate-b-trace/` has run with real Pi lifecycle token evidence, `run-trace.py --verify-result` accepts both results, and the outcome (v3 fewer child tokens with no correctness regression, or not) is recorded in `concepts/bc-drain-issues/CONCEPT.md` and its test status.
+Done when: the v2/v3 A/B on `concepts/bc-pipeline-to-done/tests/fixtures/contested-gate-b-trace/` has run with real Pi lifecycle token evidence, `run-trace.py --verify-result` accepts both results, and the outcome (v3 fewer child tokens with no correctness regression, or not) is recorded in `concepts/bc-pipeline-to-done/CONCEPT.md` and its test status.
 Stage: later
 Blocked by: nothing
 Kind: tests
@@ -13,7 +13,7 @@ Already done: the four v3 levers are in the canonical body, Gate A covers them (
 
 - [ ] Run the v2 and v3 arms of the deterministic trace with the same model at medium effort, following the trace's `AGENT-PROMPT.md`.
 - [ ] Verify both result envelopes with `run-trace.py --verify-result` (dispatch topology, two-rework fidelity, final exact-hash approvals, token evidence).
-- [ ] Record the result under `concepts/bc-drain-issues/tests/results/`, update the Gate B lines in `CONCEPT.md` and its status frontmatter, and regenerate `docs/status.md`.
+- [ ] Record the result under `concepts/bc-pipeline-to-done/tests/results/`, update the Gate B lines in `CONCEPT.md` and its status frontmatter, and regenerate `docs/status.md`.
 
 ## Design (original plan, 2026-07-26)
 

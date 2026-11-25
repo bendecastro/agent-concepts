@@ -7,7 +7,7 @@ argument-hint: "[issue/PR number or natural-language triage request]"
 
 # Triage for the bc loop
 
-Turn messy issues, PRs, and bug reports into one of: needs more info, ready for a human, ready for `/bc-drain-issues`, or rejected with durable rationale. This is the intake gate before the plan→issues→drain loop.
+Turn messy issues, PRs, and bug reports into one of: needs more info, ready for a human, ready for `/bc-pipeline-to-done`, or rejected with durable rationale. This is the intake gate before the plan→issues→drain loop.
 
 Every tracker comment you post during triage starts with:
 
@@ -58,7 +58,7 @@ Include external PRs only if the repo says PRs are a request surface. Let the us
 4. **Recommend.** Tell the maintainer: category, state, what you verified, and why. Wait for direction unless the user explicitly asked for autonomous triage.
 5. **Grill if needed.** If the issue is close but underspecified, run `grilling` + `domain-modeling` to resolve missing decisions one question at a time. If it is broad enough to need a PRD/slices, send it to `/bc-plan-to-pipeline` instead of pretending one issue is enough.
 6. **Apply outcome.**
-   - `ready-for-agent`: post an Agent Brief using [AGENT-BRIEF.md](AGENT-BRIEF.md); make acceptance criteria concrete enough for `/bc-drain-issues`.
+   - `ready-for-agent`: post an Agent Brief using [AGENT-BRIEF.md](AGENT-BRIEF.md); make acceptance criteria concrete enough for `/bc-pipeline-to-done`.
    - `ready-for-human`: post the same structure, plus why it cannot be delegated.
    - `needs-info`: post triage notes with established facts and specific questions.
    - `wontfix` already implemented: close with a pointer to the existing behavior; do **not** record it in work-dropped. Why: that folder holds decisions not to build something, and an implemented feature recorded there would later read as a rejection.
@@ -66,9 +66,9 @@ Include external PRs only if the repo says PRs are a request surface. Let the us
 
 ## Quick override
 
-If the maintainer says "move #42 to ready-for-agent", trust them about state, but still offer to write an Agent Brief if none exists. Do not send a bare, vague issue to `/bc-drain-issues` without an explicit maintainer override.
+If the maintainer says "move #42 to ready-for-agent", trust them about state, but still offer to write an Agent Brief if none exists. Do not send a bare, vague issue to `/bc-pipeline-to-done` without an explicit maintainer override.
 
-## Handoff rules for `/bc-drain-issues`
+## Handoff rules for `/bc-pipeline-to-done`
 
 A `ready-for-agent` issue is drainable only when the latest Agent Brief has:
 

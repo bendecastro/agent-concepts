@@ -1,6 +1,6 @@
 # Writing Agent Briefs
 
-An Agent Brief is the authoritative contract for `/bc-drain-issues`. The original issue body and comments are context; the brief is what the AFK agent should be able to execute.
+An Agent Brief is the authoritative contract for `/bc-pipeline-to-done`. The original issue body and comments are context; the brief is what the AFK agent should be able to execute.
 
 ## Principles
 
