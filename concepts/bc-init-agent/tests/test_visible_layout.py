@@ -89,8 +89,10 @@ def _base_scaffold(tmp_path):
     base = tmp_path / 'base_scaffold.py'
     # Skills renamed after the base commit are the only intended changes to learning and knowledge
     # output: the planning skill (2026-11-22) and issue-slicing to plan-slicing (2026-11-24); the
-    # workspace's pipeline guide moved to docs/guides/ (2026-11-25).
+    # workspace's pipeline guide moved to docs/guides/ (2026-11-25); bc-drain-issues became
+    # bc-pipeline-to-done (2026-11-25).
     renamed = shown.stdout.replace(b'bc-plan-to-' + b'issues', b'bc-plan-to-pipeline')
+    renamed = renamed.replace(b'bc-drain-' + b'issues', b'bc-pipeline-to-done')
     renamed = renamed.replace(b'$AGENT_CONCEPTS/docs/' + b'pipeline.md', b'$AGENT_CONCEPTS/docs/guides/pipeline.md')
     base.write_bytes(renamed.replace(b'issue-' + b'slicing', b'plan-slicing'))
     return base
