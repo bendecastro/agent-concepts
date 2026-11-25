@@ -18,9 +18,12 @@ full sequence — grill, requirements, slicing — so nothing is built on a gues
 loads) requires the agent to surface judgment calls and let the owner decide.
 
 **Test first, and prove the test can fail.** [bc-tdd](concepts/bc-tdd/body/SKILL.md) is
-central: write a test, plant a bug, watch the test catch it, revert, then write the code. A
-test that has never failed proves nothing. Three test levels — example-based, property-based,
-and formal verification — are chosen per change, not per project.
+central: write the test first and watch it fail for the reason it names, then write the code
+that makes it pass. A test that has never failed proves nothing, so when the code already works
+the agent plants a bug, watches the test catch it, and reverts. Every change gets example
+tests; logic with a rule that can be stated (parsers, calculations, state changes) also gets
+property tests; formal proof is off unless you turn it on for a component, and the agent
+suggests it where the risk calls for it.
 
 **Evidence before claims.** The kernel's verification rules require checking work against the
 codebase, not trusting a report. [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md)
@@ -103,7 +106,7 @@ with a link to [workflows.md](docs/guides/workflows.md) have a longer descriptio
 
 | Skill | What it does | Invocation |
 |---|---|---|
-| [bc-tdd](concepts/bc-tdd/body/SKILL.md) | Write a test, prove it fails, write the code. Three levels: example-based, property-based, formal. | auto |
+| [bc-tdd](concepts/bc-tdd/body/SKILL.md) | Write the test first and watch it fail, then the code. Example tests always, property tests for rule-bearing logic, formal proof when you turn it on. | auto |
 | [bc-executing-plans](concepts/bc-executing-plans/body/SKILL.md) | Execute a written plan task by task in the current session. | auto |
 | [bc-subagent-driven-development](concepts/bc-subagent-driven-development/body/SKILL.md) | Execute a plan with fresh agents for individual tasks and review checkpoints. | auto |
 | [bc-pipeline-to-done](concepts/bc-pipeline-to-done/body/SKILL.md) | Build the settled work queue while you are away: isolated worktrees, independent review, driver-owned landing. | `/bc-pipeline-to-done` |
@@ -122,7 +125,7 @@ with a link to [workflows.md](docs/guides/workflows.md) have a longer descriptio
 | [bc-code-review](concepts/bc-code-review/body/SKILL.md) | Review a diff for spec fidelity and standards quality, independently. | auto |
 | [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md) | Reproduce a bug as a failing command, then fix it with a test. | [`/bc-diagnosing-bugs`](docs/guides/workflows.md#bc-diagnosing-bugs) |
 | [bc-find-bugs](concepts/bc-find-bugs/body/SKILL.md) | Hunt an area for wrong behaviour and prove each find with a failing test. | [`/bc-find-bugs`](docs/guides/workflows.md#bc-find-bugs-and-bc-council-find-bugs) |
-| [bc-security-audit](concepts/bc-security-audit/body/SKILL.md) | Source security review or a full repository audit with evidence-calibrated findings. | [`/bc-council-audit-security`](docs/guides/workflows.md#bc-council-audit-security) |
+| [bc-security-audit](concepts/bc-security-audit/body/SKILL.md) | Source security review or a full repository audit with evidence-calibrated findings. Council version: [`/bc-council-audit-security`](docs/guides/workflows.md#bc-council-audit-security). | auto |
 | [bc-optimize-code](concepts/bc-optimize-code/body/SKILL.md) | Improve code against an objective metric, keeping only proven gains. | [`/bc-optimize-code`](docs/guides/workflows.md#bc-optimize-code) |
 
 </details>
@@ -200,8 +203,10 @@ council skill wraps a parent skill through the advisor council.
 </details>
 
 The always-on [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md) loads in every session
-and carries the base rules (operating posture, verification, context economy). It is installed
-separately by each method below.
+and carries the base rules (operating posture, verification, context economy). The install
+methods below do not add it: copy it into your agent's always-on instructions file
+(`AGENTS.md`, `CLAUDE.md` or similar); [harnesses.md](docs/guides/harnesses.md) says where
+each agent reads that file.
 
 Every concept is listed in [index.md](index.md). How agents test the code they change:
 [workflows.md § How the skills test code](docs/guides/workflows.md#how-the-skills-test-code).
@@ -218,9 +223,9 @@ listed there in place of `v0.3.0` in the commands below.
 |---|---|
 | Claude Code | [Claude Code plugin](#claude-code) |
 | Codex | [Codex plugin](#codex) |
-| Pi | [Pi extension](#pi) |
-| Cursor, Grok, OpenCode, Muse, Gemini CLI, GitHub Copilot | [`npx skills`](#other-agents-npx-skills) (reads `~/.agents/skills/`) |
-| Gemini | untested; [bootstrap prompt](docs/guides/bootstrap.md) |
+| Pi | [Pi package](#pi) |
+| Any other agent (Cursor, Gemini CLI, GitHub Copilot, …) | [`npx skills`](#other-agents-npx-skills); tested only for Pi so far |
+| An agent that cannot load skills | [bootstrap prompt](docs/guides/bootstrap.md) |
 | Contributors | [install from a checkout](#install-from-a-checkout-contributors) |
 
 Details and known problems for each agent: [harnesses.md](docs/guides/harnesses.md).
@@ -343,14 +348,13 @@ a smaller command for each pack (one skill plus the skills it needs). In those c
 [the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md)
 (for example `pi`).
 
-For example, this installs one skill for Cursor (only `-a pi` has been tested):
+For example, this installs one skill, `bc-self-improve`, for Cursor (only `-a pi` has been
+tested). For another agent, change `cursor` to its id, for example `gemini-cli` or
+`github-copilot`. `-g` installs for you in every project; `-y` skips the tool's questions.
 
 ```bash
 npx skills add bendecastro/agent-concepts@v0.3.0 -g -a cursor -y --skill bc-self-improve
 ```
-
-`<agent>` is your agent's id from the list (for example `gemini-cli` or `github-copilot`).
-`<skill names>` is the list of skill names from your install command.
 
 **Refresh** (stays on the release you installed)
 
@@ -358,7 +362,8 @@ npx skills add bendecastro/agent-concepts@v0.3.0 -g -a cursor -y --skill bc-self
 npx skills update -g -y
 ```
 
-**Uninstall** — use the same `<agent>`, and copy every name after `--skill` from your install command:
+**Uninstall.** Before running it, replace `<agent>` with the agent id you installed for, and
+`<skill names>` with every name after `--skill` in the command you ran:
 
 ```bash
 npx skills remove -g -a <agent> -y <skill names>

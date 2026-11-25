@@ -2157,3 +2157,6 @@ workflow stages (all collapsible), install (pick-your-agent table, one command
 per fenced block in collapsed per-method sections), working-on-this-repo.
 Fixed docs/guides/releasing.md fresh-install-test claim (it builds its own
 commands, does not parse the README). Line count 318 → 480.
+
+## [2026-11-25] implement | README review fixes
+Corrected the TDD description (fail first; planted bug only for working code; levels), the kernel install claim (methods do not install it), the agent table, the npx placeholder notes and the security-audit invocation.
