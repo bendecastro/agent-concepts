@@ -2108,3 +2108,6 @@ Tagged v0.2.0 (seven skill renames, decision 0004); GitHub release from the CHAN
 
 ## [2026-11-25] implement | install docs
 README Install section per agent (tag v0.2.0, update, uninstall, tested-scope notes), contributor install kept as a subsection; releasing.md points at it. bootstrap/harnesses point outside users to it; stale links fixed; glossary adds PRD, ADR, preflight, driver, orchestrator and the human-gate/baseline wording conflicts are resolved.
+
+## [2026-11-25] implement | 007 closed, 008 dropped
+Owner choices after a relevance check: 007-agent-vault-read-path closed in reduced scope (both per-vault promotion timers removed from the main machine, unit files archived outside the repo; heading measurement and map.md migration dropped; no retrieval-driven shape change). 008-bc-drain-issues-v3-review-economy dropped; bc-pipeline-to-done CONCEPT.md records that the v3 token saving was never measured.

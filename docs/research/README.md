@@ -11,7 +11,7 @@ Current investigations:
 
 - [2026-08-17-iso-24495-1-operationalization/](2026-08-17-iso-24495-1-operationalization/README.md) — how to apply ISO 24495-1 plain-language principles.
 - [2026-08-27-wiki-autonomy-council/](2026-08-27-wiki-autonomy-council/03-memo.md) — three-advisor council on cheap, automatic project-wiki traversal.
-- [2026-08-27-agent-vault-read-path/](2026-08-27-agent-vault-read-path/README.md) — the read-path plan that followed the council, with its benchmark result; open steps are work item `007-agent-vault-read-path`.
+- [2026-08-27-agent-vault-read-path/](2026-08-27-agent-vault-read-path/README.md) — the read-path plan that followed the council, with its benchmark result; work item `007-agent-vault-read-path` closed it in reduced scope (2026-11-25).
 - [2026-10-26-cross-provider-code-review/](2026-10-26-cross-provider-code-review/README.md) — whether a fresh code reviewer must come from a different model provider.
 - [2026-11-10-front-end-design/](2026-11-10-front-end-design/brief.md) — front-end design principles and agent-skill research.
 - [2026-11-25-performance-guardrails/](2026-11-25-performance-guardrails/README.md) — 60 fps and performance guardrails.

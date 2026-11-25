@@ -2,7 +2,7 @@
 
 Why: v3's review-economy rules are live in the drain skill, but their token win is unmeasured; the deterministic Gate B harness exists and the real same-model/medium A/B has never run.
 Done when: the v2/v3 A/B on `concepts/bc-pipeline-to-done/tests/fixtures/contested-gate-b-trace/` has run with real Pi lifecycle token evidence, `run-trace.py --verify-result` accepts both results, and the outcome (v3 fewer child tokens with no correctness regression, or not) is recorded in `concepts/bc-pipeline-to-done/CONCEPT.md` and its test status.
-Stage: later
+Stage: dropped
 Blocked by: nothing
 Kind: tests
 Source: docs/plans/active (migrated in 002-docs-reshape)
@@ -198,4 +198,6 @@ invalid ecological evidence after only one rework. v3 is not token-validated unt
 trace A/B runs.
 
 ## Outcome
+
+Dropped 2026-11-25 by the owner after a relevance check. The A/B would cost 15 model sessions (several hundred thousand to about a million child tokens) and measure only one locked high-risk issue trace, not today's work-item drains or the single-reviewer tier. The v3 rules stay in the skill unchanged; their token saving is recorded as never measured in `concepts/bc-pipeline-to-done/CONCEPT.md`. Real per-item cost will come from the `Spent:` line planned in `025-dashboard-data`. The trace harness stays in the fixture if review cost or missed findings become a live concern.
 

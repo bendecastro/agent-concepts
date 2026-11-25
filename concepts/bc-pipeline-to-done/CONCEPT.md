@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B and the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
+test_status: partial # 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B dropped 2026-11-25 (v3 saving never measured); the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
 tested: 2026-11-25
 deployed: 2026-11-25
 ---
@@ -76,7 +76,7 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - `../bc-minimal-solution-ladder/CONCEPT.md` and `../bc-codebase-design/body/SKILL.md` — the sizing discipline the worker now loads and the shape vocabulary the Standards axis now speaks; arbitration 1 in the former is the reason they compose instead of conflicting (2026-08-20).
 - [unclebob/Acceptance-Pipeline-Specification](https://github.com/unclebob/Acceptance-Pipeline-Specification) — acceptance mutation: an example value earns credit only if the suite fails when it changes. Transposed here from spec example values to acceptance-matrix evidence. See [`docs/research/raw/ingested/unclebob-quality-tools/`](../../docs/research/raw/ingested/unclebob-quality-tools/SOURCE.md). (2026-08-20)
 
-- `work/1-planned/008-bc-drain-issues-v3-review-economy.md` — review-phase economy design: standing approvals, materialized packet, tiers, gated reproduction (2026-07-26).
+- `work/4-dropped/008-bc-drain-issues-v3-review-economy.md` — review-phase economy design: standing approvals, materialized packet, tiers, gated reproduction (2026-07-26).
 - `work/3-done/2026-08/010-bc-drain-issues-v2-token-efficiency.md` — approved bounded-rework design and #29 evidence (2026-07-25).
 - `work/3-done/2026-08/011-bc-grill-to-ship-loop.md` — original build plan (2026-06-20).
 - Matt Pocock `triage`, `AGENT-BRIEF`, `implement`, and `code-review` skills — label/brief workflow and independent review intent; no atomic claim mechanism, hence claim branches.
@@ -119,6 +119,8 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 The 2026-07-27 guard-row addition has **no Gate A check yet**: `run-pressure.py` asserts the driver's deterministic rules, and "the audit inventoried every guard the diff touches" is a model-behaviour property, so it belongs in a Gate-B-style run or a dedicated fixture rather than the deterministic runner. The rule is live (symlinked body) and untested; its field basis is one observed drain where a reviewer caught the defect but the audit did not look for it.
 
 Historical v2 Gate A passed 17/17 in a disposable no-network Git/stub/recovery sandbox. The historical same-model/medium Gate B compared an identical fixture base: v1b 315,474 child tokens versus v2d 277,012 (12.2% fewer); both reviews approved and the final full suite retained only the known baseline failure. That candidate passed its then-applicable ≤500k benchmark gate and fell below the provisional 300k boundary; neither figure is a current drain control. Cost rose in the fixture, so the measured win was tokens, not cost. Historical v1 runs remain provenance only.
+
+2026-11-25: **Gate B for v3 dropped by the owner, not run.** v3's token saving was never measured: the deterministic trace A/B would cost 15 model sessions and cover only one locked high-risk issue trace, not work-item drains or the single-reviewer tier. The rules stay in force; real per-item cost is planned to come from `025-dashboard-data`'s `Spent:` line. The trace harness remains in `tests/fixtures/contested-gate-b-trace/` if review cost or missed findings become a concern ([dropped item](../../work/4-dropped/008-bc-drain-issues-v3-review-economy.md)).
 
 ## Deploy targets
 
