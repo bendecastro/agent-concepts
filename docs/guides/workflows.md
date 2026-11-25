@@ -54,6 +54,15 @@ Every change report shows a **Test levels** block with one line per level, sayin
 - **What you get:** `work/` for work items, `docs/` for decisions and research, a root `glossary.md` and `AGENTS.md`, a `scripts/gate` check script that fails until you fill in your project's checks, a CI workflow that runs it, and agent rules in `.bc-agent/`. Existing files are kept unless you pass `--force` (files in `.bc-agent/`) or `--force-root` (the root `AGENTS.md`).
 - **Example:** in a new repository, run `/bc-setup-project`, answer that it is a code project, approve the plan, then fill in `scripts/gate` with your test command.
 
+### Building your own dashboard
+
+The setup gives you what a dashboard needs, but no dashboard. Build your own on these two commands:
+
+- `python3 .bc-agent/scripts/work_index.py --json` prints every work item as JSON: its stage, steps, what it waits for, which agent holds it, its history from git, review and gate results, and its time and cost once finished. It changes no files, so a dashboard can run it as often as it likes.
+- `python3 .bc-agent/scripts/work_spent.py <item-name>` estimates the time, tokens and cost of one item from the agent tools' session files; add `--json` for the list of sessions it counted. It is a rough estimate: read its limits first.
+
+Every field, where it comes from and how far you can rely on it are listed in the [work data reference](../../concepts/bc-setup-project/body/work-data.md). An older project picks these up with the steps in [MIGRATIONS.md](../../concepts/bc-setup-project/MIGRATIONS.md#work-data).
+
 ## During a task
 
 ### bc-diagnosing-bugs

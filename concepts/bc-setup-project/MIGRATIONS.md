@@ -369,3 +369,25 @@ skill or review that produced the item (for example `bc-plan-to-pipeline` or
 `bc-improve-codebase-architecture`). The scaffold does not rewrite an existing template; to adopt it,
 copy the line from a fresh scaffold's `.bc-agent/templates/work-item.md`. Existing items need no
 change: the line is optional.
+
+## Work data
+
+Since 2026-11-25 `work_index.py --json` prints every work item's data for a dashboard (fields in
+the skill's [work-data.md](body/work-data.md)), the scaffold also writes
+`.bc-agent/scripts/work_spent.py`, which estimates an item's time, tokens and cost from the agent
+tools' session files, and the Work items rules in `.bc-agent/AGENTS.md` tell agents to write four
+lines: `Held by:` while an agent works on an item, `Review:` and `Gate:` in a step's Notes, and
+`Spent:` at the end of a finished item's Outcome. To adopt it in an existing project:
+
+1. Copy both scripts: `cp "$AGENT_CONCEPTS"/concepts/bc-setup-project/body/{work_index,work_spent}.py .bc-agent/scripts/`.
+   A scaffold re-run (`--dry-run` first) creates `work_spent.py` when missing but leaves an existing
+   `work_index.py` alone; `--force` refreshes both, along with every other `.bc-agent/` file.
+2. In `.bc-agent/AGENTS.md`, copy the `Held by:`, `Review:`/`Gate:` and `Spent:` rules from the
+   Work items section of a fresh scaffold, and its "Begin agreed work", "Finish a step" and
+   "Finish or drop an item" rows. Without them agents keep working as before and the lines are
+   simply not written.
+
+Existing items need no change. All four lines are optional: an item without them gets `null` for
+`held_by` and `spent` and empty `review` and `gate` lists in the JSON, and `--check` does not
+warn. Items get a `history` from git with no change at all. Only a malformed line, or a `Held by:`
+line left in a done item, gives a `--check` warning.

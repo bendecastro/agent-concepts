@@ -4,7 +4,6 @@
 
 - **Stable**: the field exists in every output with this format version, and its meaning does not change. A missing source line gives `null` (or an empty list), never a missing key.
 - **Best-effort**: the field is read from text people and agents write by hand, so it can be missing, stale or loosely formatted. Show it, but do not build logic that breaks when it is odd.
-- **Planned**: a later step of the dashboard-data work adds it; it is not in the output yet.
 
 `format_version` changes only on a breaking change (a field removed, renamed or given a new meaning). New fields are added without a version change, so ignore keys you do not know.
 
@@ -98,6 +97,12 @@ Each result is one line in the step's Notes, starting its own line (an indented 
 `Spent: <active time> active, <tokens> tokens, <cost> (estimated; <sources>)` is the last line of a finished item's `## Outcome`, for example `Spent: 2h 10m active, 3.4M tokens, $5.20 (estimated; pi 3 sessions, claude-code no files, codex 0 sessions; other tools not counted)`. The agent that finishes the item pastes it from `python3 .bc-agent/scripts/work_spent.py <item-name>` (`--json` lists the counted sessions).
 
 The script takes the item's active period from its history (first move into `2-active/` to its move out, or now) and counts every session with an entry in that period whose working folder is the project or one of its git worktrees and whose file mentions the item name. Active time sums the gaps between a session's entries in the period, each capped at 15 minutes, so parallel sessions add up. Tokens include cache reads and writes. It reads Pi (`~/.pi/agent/sessions`, with cost), Claude Code (`~/.claude/projects`, tokens only) and Codex (`~/.codex/sessions`, tokens only); `<sources>` gives each tool's session count, or `no files` when its folder is missing, and other tools are not counted. A session that mentions the item only in passing is counted; a worktree removed before the item closes is not matched, but a Pi child (subagent) session, kept under its parent's folder (`<parent-id>/.../*.jsonl` beside `<parent-id>.jsonl`), counts when its parent counts, whatever its folder and whether or not it names the item, as long as it has an entry in the period; a child that matches on its own is counted once, and `--json` gives each session's `via` (`match` or `child of <parent file>`). `WORK_SPENT_PI_SESSIONS`, `WORK_SPENT_CLAUDE_SESSIONS` and `WORK_SPENT_CODEX_SESSIONS` override the folders.
+
+Read the estimate as a rough size, not a bill. Its known limits:
+
+- **Parallel sessions add up.** Two sessions working at the same time count twice, so active time can be longer than the time that passed.
+- **Child sessions count whole.** A child (subagent) session of a counted session is counted for its time in the period, even if that child worked on a different item.
+- **Some sessions are missed or counted wrongly.** A session that only mentions the item in passing is counted; a session in a git worktree that was removed before the item closed is not found (unless it is a child of a counted session); Claude Code and Codex give no cost; other tools are not read at all.
 
 | Field | Source | Reliability |
 |---|---|---|

@@ -2138,3 +2138,6 @@ npx example switched to Cursor (`-a cursor`, untested, flagged) at the owner's r
 
 ## [2026-11-25] implement | 025 Spent counts child sessions
 `work_spent.py` counts Pi child (subagent) sessions of a counted parent inside the active period whatever their folder, so workers in removed worktrees are no longer missed; `--json` gives `via`. Test in `test_work_spent.py`.
+
+## [2026-11-25] implement | 025 docs and migration step
+Migration note, dashboard section in the workflow guide, work-data page without planned fields and with Spent limits, Review and Gate lines in the glossary; every documented field checked against real --json output.

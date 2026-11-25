@@ -27,6 +27,8 @@ same meaning.
 - **work data** — the records about work items that a dashboard can read: stage, steps, who holds an item, its history, review and gate results, and time and cost; the work index script prints them as JSON.
 - **Held by line** — the `Held by:` line in a work item naming the agent working on it and since when; written when the agent starts and removed when it stops.
 - **Spent line** — the `Spent:` line in a finished work item's Outcome giving its estimated time, tokens and cost, read from the agent tools' session files.
+- **Review line** — a `Review:` line in a work-item step's Notes recording one review verdict (approved or changes requested), who gave it and when.
+- **Gate line** — a `Gate:` line in a work-item step's Notes recording one run of the project's check command: pass or fail, the command, the commit checked and the date.
 
 ## Gates, checks and rules
 
