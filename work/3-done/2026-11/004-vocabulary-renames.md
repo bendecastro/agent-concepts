@@ -21,4 +21,6 @@ Planned: grilled with the owner 2026-11-25 (decisions in the bc-init-agent grill
 
 ## Outcome
 
+Done. Discipline gates are hard rules (AGENTS.md `## Hard rules`, lint messages, ui-design's capture rule, bc-swarm's recovery rule); bc-swarm says routing decision and evidence anchors; to-tickets and plan-slicing follow the ticket/issue rule. Other uses of "gate" are listed in the worker's report for a later decision. Gate green locally (468 passed, tree 4104298f) and in GitHub CI.
+
 
