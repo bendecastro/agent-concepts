@@ -31,7 +31,7 @@ def test_fresh_scaffold_creates_guardrails_readme(tmp_path, archetype):
     text = (tmp_path / 'docs/guardrails/README.md').read_text()
     for heading in ('## Targets', '## Budgets', '## Checks', '## Where a rule lives', '## How to measure'):
         assert heading in text
-    assert '`guardrails` skill' in text
+    assert '`bc-guardrails` skill' in text
     assert "the agent's choice" in text
     assert 'docs/design/README.md' in text
     assert 'scripts/gate' in text

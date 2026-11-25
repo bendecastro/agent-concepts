@@ -3,7 +3,7 @@
 Date: 2026-11-25
 
 This page gives a computed, optional signal for when to offer
-`/improve-codebase-architecture`. The signal comes from Git history; do not maintain a
+`/bc-improve-codebase-architecture`. The signal comes from Git history; do not maintain a
 counter in this file. The goal is to refresh architecture runway after enough durable project
 work has accumulated, not after a calendar interval.
 
@@ -54,7 +54,7 @@ not pretend to compute that judgment from filenames or commit messages.
 
 Do **not** block concrete fixes. The nudge is advisory:
 
-> Optional architecture runway nudge: Git shows multiple planning-surface changes since the last recognized architecture review. Before planning more work, do you want to run `/improve-codebase-architecture` to look for seams and testability improvements?
+> Optional architecture runway nudge: Git shows multiple planning-surface changes since the last recognized architecture review. Before planning more work, do you want to run `/bc-improve-codebase-architecture` to look for seams and testability improvements?
 
 ## Review record
 
@@ -67,7 +67,7 @@ counts more history and may nudge again.
 
 - Run the computed check when the request is planning/refactor/seam-adjacent; do not edit this
   page to record the result.
-- When `/improve-codebase-architecture` runs, commit its review artifact with an explicit
+- When `/bc-improve-codebase-architecture` runs, commit its review artifact with an explicit
   `architecture review` subject so future checks can establish a new boundary.
-- If `references/agent-skills.md` no longer lists `/improve-codebase-architecture`, remove the
+- If `references/agent-skills.md` no longer lists `/bc-improve-codebase-architecture`, remove the
   nudge and explain why here.

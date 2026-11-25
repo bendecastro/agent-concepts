@@ -25,7 +25,7 @@ Current deploys are recorded in each concept's `CONCEPT.md` and summarized in `.
 
 ### Pi
 
-Pi discovers global skills from `~/.pi/agent/skills/`. `teach` is deployed there as a relative symlink to the canonical body, so future sessions can auto-load it when the user asks to learn something; use `/skill:teach` to force it.
+Pi discovers global skills from `~/.pi/agent/skills/`. `bc-teach` is deployed there as a relative symlink to the canonical body, so future sessions can auto-load it when the user asks to learn something; use `/skill:teach` to force it.
 
 For concepts not yet deployed to Pi, use the generic concept-session bootstrap:
 
@@ -62,7 +62,7 @@ Populate that bus with `python3 scripts/deploy-local-skills.py` from this worksp
 
 ### Grok
 
-Grok discovers the same `~/.agents/skills/<name>` symlinks (verified 2026-07-04 via `grok inspect`). Run `python3 scripts/deploy-local-skills.py` to refresh them. Avoid placing same-named skills in `~/.grok/skills/` — that directory outranks the shared bus and will shadow canonical concepts (e.g. the bundled `code-review` maintainability skill vs the obra concept).
+Grok discovers the same `~/.agents/skills/<name>` symlinks (verified 2026-07-04 via `grok inspect`). Run `python3 scripts/deploy-local-skills.py` to refresh them. Avoid placing same-named skills in `~/.grok/skills/` — that directory outranks the shared bus and will shadow canonical concepts (e.g. the bundled `bc-code-review` maintainability skill vs the obra concept).
 
 For stale sessions or one-off use, the generic concept-session bootstrap still works:
 

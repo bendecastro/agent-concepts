@@ -51,15 +51,15 @@ TEACH_ADAPTER_MARKER = "<!-- teach-host-adapter: v1 -->"
 TEACH_ADAPTER = """<!-- teach-host-adapter: v1 -->
 # Teach Skill Host Adapter
 
-This file is the explicit opt-in marker for the standalone `teach` skill to use this
+This file is the explicit opt-in marker for the standalone `bc-teach` skill to use this
 existing `.bc-agent` vault. It is a thin adapter, not a copy of teach's instructions,
 a generic configuration framework, or a migration command. `bc-init-agent` owns the
-host schema and orientation; `teach` owns the mapped pedagogy, evidence, and spaced
+host schema and orientation; `bc-teach` owns the mapped pedagogy, evidence, and spaced
 review state.
 
 Read the canonical teach instructions and formats from
-`<agent-concepts>/concepts/teach/body/`. Resolve those paths against this vault root.
-Do not invoke `bc-init-agent` from `teach`, move standalone files, or create a second
+`<agent-concepts>/concepts/bc-teach/body/`. Resolve those paths against this vault root.
+Do not invoke `bc-init-agent` from `bc-teach`, move standalone files, or create a second
 learning/knowledge home. If a standalone teach workspace and this host both contain
 state, stop and ask the user which home to use; preserve the standalone home by default.
 A valid adapter has this exact first line and the complete hosted path table below; a
@@ -73,22 +73,22 @@ to `<teach-root>`:
 
 | Teach surface | Hosted path | Owner |
 |---|---|---|
-| Mission | `learning/plan.md` (no hosted `MISSION.md`) | `teach` |
-| Review queue | `learning/review.md` | `teach` |
-| Learning records | `learning/records/` | `teach` |
-| Lessons and session artifacts | existing `sessions/` (never `learning/sessions/`) | `teach` |
-| Notes | `learning/notes.md` | `teach` |
-| Raw sources | existing `sources/` | `teach` |
-| Compiled knowledge / wiki concepts | existing `concepts/` | `teach` |
-| Resource catalog | `references/teach-resources.md` | `teach` |
-| Glossary | the existing Glossary section of `project/overview.md` | `teach` |
-| Catalog and history | shared `index.md` and `log.md` | `bc-init-agent` host schema; `teach` updates teach entries |
+| Mission | `learning/plan.md` (no hosted `MISSION.md`) | `bc-teach` |
+| Review queue | `learning/review.md` | `bc-teach` |
+| Learning records | `learning/records/` | `bc-teach` |
+| Lessons and session artifacts | existing `sessions/` (never `learning/sessions/`) | `bc-teach` |
+| Notes | `learning/notes.md` | `bc-teach` |
+| Raw sources | existing `sources/` | `bc-teach` |
+| Compiled knowledge / wiki concepts | existing `concepts/` | `bc-teach` |
+| Resource catalog | `references/teach-resources.md` | `bc-teach` |
+| Glossary | the existing Glossary section of `project/overview.md` | `bc-teach` |
+| Catalog and history | shared `index.md` and `log.md` | `bc-init-agent` host schema; `bc-teach` updates teach entries |
 
 With a valid marker, host search-first retrieval is for knowledge pages and learning records:
-use the host's canonical search path, never the index as a lookup. `teach` may directly read
+use the host's canonical search path, never the index as a lookup. `bc-teach` may directly read
 mapped known state (mission, review queue, and notes) plus shared `index.md`/recent `log.md`
 for session orientation and bookkeeping; those are not knowledge lookups. When this marker is
-valid, `teach` owns the Glossary section of `project/overview.md`; planning and maintenance
+valid, `bc-teach` owns the Glossary section of `project/overview.md`; planning and maintenance
 skills must leave that section alone, while non-glossary host sections remain available to
 host maintenance.
 
@@ -145,15 +145,15 @@ def _hybrid_teach_adapter() -> str:
     """
     text = TEACH_ADAPTER
     for old, new in (
-        ("| Glossary | the existing Glossary section of `project/overview.md` | `teach` |",
-         "| Glossary | the project's root `glossary.md` (`../glossary.md`), shared with the project | the project; `teach` adds and refines learner terms |"),
-        ("""valid, `teach` owns the Glossary section of `project/overview.md`; planning and maintenance
+        ("| Glossary | the existing Glossary section of `project/overview.md` | `bc-teach` |",
+         "| Glossary | the project's root `glossary.md` (`../glossary.md`), shared with the project | the project; `bc-teach` adds and refines learner terms |"),
+        ("""valid, `bc-teach` owns the Glossary section of `project/overview.md`; planning and maintenance
 skills must leave that section alone, while non-glossary host sections remain available to
 host maintenance.""",
          """valid, the Glossary is `glossary.md` at the project root, one level above `<teach-root>`,
-shared with the project: `teach` adds and refines the terms the learner needs there, in the
+shared with the project: `bc-teach` adds and refines the terms the learner needs there, in the
 file's one-line format, and does not remove or redefine project terms without asking;
-`domain-modeling` and planning skills keep using the same file."""),
+`bc-domain-modeling` and planning skills keep using the same file."""),
         ("| `GLOSSARY.md` | Glossary section of `project/overview.md` | every term and definition represented |",
          "| `GLOSSARY.md` | the project's root `glossary.md` (`../glossary.md`) | every term represented in the one-line format; no project term removed or redefined without asking |"),
         ("may search host context and promote ordinary host evidence,",
@@ -233,10 +233,10 @@ If the human's request sounds like planning future codebase work — feature ide
 architecture direction, implementation strategy, slicing, or "what should we build/change" —
 pause before implementing and ask whether they want to enter `/bc-plan-to-pipeline`.
 If they are already asking for a concrete edit/fix, proceed normally. If the request is
-about architectural runway, offer `/improve-codebase-architecture` first. For code/hybrid
+about architectural runway, offer `/bc-improve-codebase-architecture` first. For code/hybrid
 wikis, also check `.bc-agent/conventions/architecture-runway.md`: if enough PRD-sized
 changes have landed since the last architecture review, give a brief optional nudge to run
-`/improve-codebase-architecture` before more planning.
+`/bc-improve-codebase-architecture` before more planning.
 
 See `.bc-agent/references/agent-skills.md` for the local skill map and
 `.bc-agent/conventions/planning-workflow.md` for the loop.
@@ -247,7 +247,7 @@ See `.bc-agent/references/agent-skills.md` for the local skill map and
 - Do not use or update `~/Wiki` for this project unless the human explicitly asks.
 - Put all agent-created research, plans, scratch, and generated docs under `.bc-agent/`;
   do not create `docs/`-style notes in source folders or the repo root unless asked.
-- Source-tree README, existing `docs/`, and JSDoc follow `codebase-docs` (one home,
+- Source-tree README, existing `docs/`, and JSDoc follow `bc-codebase-docs` (one home,
   current state, same-change). Do not apply that skill to this vault.
 - Do not store personal, cross-project, or machine-global knowledge here.
 
@@ -380,7 +380,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 | When you… | Do this |
 |---|---|
 | Start non-trivial work | Follow the canonical search-first read path above, then read the relevant returned pages and any in-flight plan. |
-| Hear planning intent for codebase work | Before implementing, ask whether to enter `/bc-plan-to-pipeline`; offer `/improve-codebase-architecture` first for architecture runway. For code/hybrid wikis, check `conventions/architecture-runway.md` and nudge if the PRD-count threshold has been reached. |
+| Hear planning intent for codebase work | Before implementing, ask whether to enter `/bc-plan-to-pipeline`; offer `/bc-improve-codebase-architecture` first for architecture runway. For code/hybrid wikis, check `conventions/architecture-runway.md` and nudge if the PRD-count threshold has been reached. |
 | Verify/learn a durable fact | Update the smallest relevant `project/` or `references/` page (dated); append a line to `log.md`. |
 | Find a recurring command / path / gotcha | Put it in `references/commands.md` / `paths.md` / `gotchas.md`. |
 | Learn something that contradicts a page | Fix the page; note it in `log.md`. Never leave a stale claim. |
@@ -395,7 +395,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 ## Plans & the live layer
 
 - A multi-step effort gets a **plan page** under `project/` from `templates/plan.md`.
-- For `grilling` + `domain-modeling` or `bc-plan-to-pipeline` → `bc-pipeline-to-done` work, apply
+- For `bc-grilling` + `bc-domain-modeling` or `bc-plan-to-pipeline` → `bc-pipeline-to-done` work, apply
   `conventions/planning-workflow.md`: it maps generic `glossary.md`/`docs/adr/` persistence
   into this vault's pages.
 - Use `references/agent-skills.md` as the local map of required loop skills and where their
@@ -413,8 +413,8 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 - `decisions/` — ADRs (numbered, with `## Status`).
 - `tasks/` — `active.md`, `parking-lot.md`, `completed.md`.
 - `log.md` — append-only journal. `index.md` — catalog. `map.md` — context picker.
-- When `references/teach-skill.md` exists, read it before using `teach`: it is the
-  explicit adapter for the host's learning paths. `teach` owns the mapped pedagogy,
+- When `references/teach-skill.md` exists, read it before using `bc-teach`: it is the
+  explicit adapter for the host's learning paths. `bc-teach` owns the mapped pedagogy,
   evidence, review state, and the Glossary section of `project/overview.md`; this vault
   owns host schema/orientation. Host search-first is for knowledge and learning-record
   retrieval. Teach may directly read mapped known mission/review/notes state and the shared
@@ -556,9 +556,9 @@ OVERVIEW = """# Project Overview
 ## Glossary
 
 The project's shared vocabulary — canonical names for the domain concepts, no implementation
-detail. When `references/teach-skill.md` is a valid adapter, `teach` owns this Glossary section
+detail. When `references/teach-skill.md` is a valid adapter, `bc-teach` owns this Glossary section
 and `bc-plan-to-pipeline` and maintenance leave it unchanged. Without that adapter,
-`domain-modeling` (paired with `grilling` directly or used through `bc-plan-to-pipeline`) maintains
+`bc-domain-modeling` (paired with `bc-grilling` directly or used through `bc-plan-to-pipeline`) maintains
 this as the project's `glossary.md`-equivalent. Keep it a pure glossary.
 
 <!-- Term — one-line canonical definition. -->
@@ -591,15 +591,15 @@ adapter so planning persistence lands in `.bc-agent/` instead of generic
 When the human sounds like they are planning codebase work — feature ideas, refactor
 direction, architecture strategy, implementation approach, or issue slicing — ask whether
 they want to enter `/bc-plan-to-pipeline` before writing implementation code. If the request is
-architectural runway rather than a settled feature, offer `/improve-codebase-architecture`
+architectural runway rather than a settled feature, offer `/bc-improve-codebase-architecture`
 first. If they clearly ask for a concrete edit/fix, proceed normally.
 
 ## Canonical repo-local planning surfaces
 
 - **Glossary / domain facts:** the Glossary section of `project/overview.md` (or a dedicated
   `project/glossary.md` if it grows). Without a valid teach adapter, this is this project's
-  `glossary.md`-equivalent and `domain-modeling` / `bc-plan-to-pipeline` maintain it. With the adapter,
-  `teach` owns the Glossary section; planning and maintenance skills leave that section alone.
+  `glossary.md`-equivalent and `bc-domain-modeling` / `bc-plan-to-pipeline` maintain it. With the adapter,
+  `bc-teach` owns the Glossary section; planning and maintenance skills leave that section alone.
 - **ADRs:** numbered files under `decisions/` using `templates/adr.md`.
 - **Plans / actual PRDs:** durable planning artifacts under `project/`, linked from `index.md`. Only call it a PRD when the PRD drafting/publishing step actually happened; exploratory notes stay under `research/` or as plans.
 - **Research / evidence:** exploratory reports, architecture-review HTML summaries, and investigation writeups under `research/` (or temp storage if intentionally throwaway), with durable conclusions summarized back to `project/` / `decisions/`.
@@ -610,17 +610,17 @@ first. If they clearly ask for a concrete edit/fix, proceed normally.
   parked work uses `needs-human`; durable rejections use `wontfix` plus `.bc-agent/out-of-scope/`.
 - **Session log:** short durable notes appended to `log.md`.
 
-## Intake and evidence — `/triage`, `/prototype`, `/improve-codebase-architecture`
+## Intake and evidence — `/bc-triage`, `/bc-prototype`, `/bc-improve-codebase-architecture`
 
-- Use `/triage` for existing GitHub issues/PRs before they enter the loop: verify, ask for
+- Use `/bc-triage` for existing GitHub issues/PRs before they enter the loop: verify, ask for
   missing info, write an Agent Brief, mark `ready-for-agent`, or record durable rejections in
   `.bc-agent/out-of-scope/`.
-- Use `/prototype` when a state model or UI direction needs a throwaway artifact before the
+- Use `/bc-prototype` when a state model or UI direction needs a throwaway artifact before the
   PRD. Capture the verdict in `project/` or an ADR; don't send prototype code to the drain.
-- Use `/improve-codebase-architecture` when a feature or bug needs a deep-module runway before
+- Use `/bc-improve-codebase-architecture` when a feature or bug needs a deep-module runway before
   slicing. Its report lives in temp storage; durable decisions go into `decisions/` or a plan.
 - For code/hybrid wikis, also follow `conventions/architecture-runway.md`: nudge the human to
-  consider `/improve-codebase-architecture` after enough PRD-sized implementation work has
+  consider `/bc-improve-codebase-architecture` after enough PRD-sized implementation work has
   landed since the last review.
 
 ## Planning — `/bc-plan-to-pipeline`
@@ -673,7 +673,7 @@ ARCHITECTURE_RUNWAY = """# Architecture Runway Cadence
 Date: __DATE__
 
 For code/hybrid wikis, this page gives a computed, optional signal for when to offer
-`/improve-codebase-architecture`. The signal comes from Git history; do not maintain a
+`/bc-improve-codebase-architecture`. The signal comes from Git history; do not maintain a
 counter in this file. The goal is to refresh architecture runway after enough durable project
 work has accumulated, not after a calendar interval.
 
@@ -719,7 +719,7 @@ not pretend to compute that judgment from filenames or commit messages.
 
 Do **not** block concrete fixes. The nudge is advisory:
 
-> Optional architecture runway nudge: Git shows multiple planning-surface changes since the last recognized architecture review. Before planning more work, do you want to run `/improve-codebase-architecture` to look for seams and testability improvements?
+> Optional architecture runway nudge: Git shows multiple planning-surface changes since the last recognized architecture review. Before planning more work, do you want to run `/bc-improve-codebase-architecture` to look for seams and testability improvements?
 
 ## Review record
 
@@ -732,9 +732,9 @@ counts more history and may nudge again.
 
 - Run the computed check when the request is planning/refactor/seam-adjacent; do not edit this
   page to record the result.
-- When `/improve-codebase-architecture` runs, commit its review artifact with an explicit
+- When `/bc-improve-codebase-architecture` runs, commit its review artifact with an explicit
   `architecture review` subject so future checks can establish a new boundary.
-- If `references/agent-skills.md` no longer lists `/improve-codebase-architecture`, remove the
+- If `references/agent-skills.md` no longer lists `/bc-improve-codebase-architecture`, remove the
   nudge and explain why here.
 """
 
@@ -829,7 +829,7 @@ git status --short
 
 ## Test levels
 
-The `tdd` skill defines these levels.
+The `bc-tdd` skill defines these levels.
 
 - Level 1: unit (example-based) tests — on.
 - Level 2: property-based tests — required for logic with a statable rule. They run inside the
@@ -1064,20 +1064,20 @@ map so agents know what to invoke.
 
 - `/bc-plan-to-pipeline` — interactive planning front: grill → domain capture → PRD → issue slices.
 - `/bc-pipeline-to-done` — AFK executor for `ready-for-agent` issue queues.
-- `/improve-codebase-architecture` — optional architecture runway before planning/slicing.
+- `/bc-improve-codebase-architecture` — optional architecture runway before planning/slicing.
 
 ## Supporting skills used by the loop
 
-- Intake/evidence: `/triage`, `/prototype`.
-- Planning disciplines: `grilling`, `domain-modeling`, `prd-drafting`, `plan-slicing`, `codebase-design`.
-- Source-tree docs: `codebase-docs` — README / existing `docs/` / JSDoc only; not this vault.
-- Execution disciplines: `tdd`, `diagnosing-bugs`, `bc-autoresearch-loop`.
+- Intake/evidence: `/bc-triage`, `/bc-prototype`.
+- Planning disciplines: `bc-grilling`, `bc-domain-modeling`, `bc-prd-drafting`, `bc-plan-slicing`, `bc-codebase-design`.
+- Source-tree docs: `bc-codebase-docs` — README / existing `docs/` / JSDoc only; not this vault.
+- Execution disciplines: `bc-tdd`, `bc-diagnosing-bugs`, `bc-autoresearch-loop`.
 - Wiki maintenance: `/bc-wiki-maintain` — compute vault health, find index/search drift, and promote durable log entries without silently resolving contradictions.
 
 ## Agent behavior
 
 If the user's request sounds like planning future codebase work, ask whether to enter
-`/bc-plan-to-pipeline` before implementing. Offer `/improve-codebase-architecture` first when
+`/bc-plan-to-pipeline` before implementing. Offer `/bc-improve-codebase-architecture` first when
 the main uncertainty is architecture/seams. In code/hybrid wikis, run the computed check in
 `conventions/architecture-runway.md` and give the optional architecture-runway nudge when its
 planning-surface signal reaches the threshold.
@@ -1100,7 +1100,7 @@ Use this archetype when the workspace tracks a real system, service, host, workf
 Use this archetype when bc agents are helping the human learn a subject over time.
 
 The generated `references/teach-skill.md` is an explicit, thin adapter for the
-standalone `teach` skill. It maps teach's mission to `learning/plan.md`, its review
+standalone `bc-teach` skill. It maps teach's mission to `learning/plan.md`, its review
 queue to `learning/review.md`, records to `learning/records/`, notes to
 `learning/notes.md`, raw sources to `sources/`, compiled knowledge to `concepts/`,
 resources to `references/teach-resources.md`, the glossary to the existing Glossary
@@ -1162,16 +1162,16 @@ def archetype_files(archetype: str) -> dict[str, str]:
         }
     if archetype == "learning":
         return common | {
-            "learning/plan.md": "# Mission: TODO\n\nThis is the hosted mission surface for `teach`; the skill owns its pedagogy and keeps the mission concrete. Use `<agent-concepts>/concepts/teach/body/MISSION-FORMAT.md` for the format.\n\n## Why\n\nTODO.\n\n## Success looks like\n\n- TODO.\n\n## Constraints\n\n- TODO.\n\n## Out of scope\n\n- TODO.\n\nThe hosted review queue lives at `learning/review.md`; do not create a second `REVIEW.md`.\n",
-            "learning/review.md": "# Review Queue\n\nThe `teach` skill owns this spaced-repetition queue. Use `<agent-concepts>/concepts/teach/body/REVIEW-FORMAT.md` and its `due.py` script; keep review state here rather than in `questions/` or a root `REVIEW.md`.\n",
-            "learning/notes.md": "# Teach Notes\n\nThe `teach` skill owns learner preferences and session notes here. This is the hosted counterpart of standalone `NOTES.md`; do not create a duplicate root notes file.\n",
+            "learning/plan.md": "# Mission: TODO\n\nThis is the hosted mission surface for `bc-teach`; the skill owns its pedagogy and keeps the mission concrete. Use `<agent-concepts>/concepts/bc-teach/body/MISSION-FORMAT.md` for the format.\n\n## Why\n\nTODO.\n\n## Success looks like\n\n- TODO.\n\n## Constraints\n\n- TODO.\n\n## Out of scope\n\n- TODO.\n\nThe hosted review queue lives at `learning/review.md`; do not create a second `REVIEW.md`.\n",
+            "learning/review.md": "# Review Queue\n\nThe `bc-teach` skill owns this spaced-repetition queue. Use `<agent-concepts>/concepts/bc-teach/body/REVIEW-FORMAT.md` and its `due.py` script; keep review state here rather than in `questions/` or a root `REVIEW.md`.\n",
+            "learning/notes.md": "# Teach Notes\n\nThe `bc-teach` skill owns learner preferences and session notes here. This is the hosted counterpart of standalone `NOTES.md`; do not create a duplicate root notes file.\n",
             "learning/records/.gitkeep": "",
-            "sources/README.md": "# Sources\n\nImmutable raw source material for the hosted `teach` knowledge layer. The `teach` skill owns ingestion and citations; preserve source files once saved.\n",
-            "concepts/README.md": "# Concepts\n\nCompiled knowledge pages for the hosted `teach` knowledge layer. Cite the existing `sources/` material; do not create a parallel `wiki/` for this learning workspace.\n",
+            "sources/README.md": "# Sources\n\nImmutable raw source material for the hosted `bc-teach` knowledge layer. The `bc-teach` skill owns ingestion and citations; preserve source files once saved.\n",
+            "concepts/README.md": "# Concepts\n\nCompiled knowledge pages for the hosted `bc-teach` knowledge layer. Cite the existing `sources/` material; do not create a parallel `wiki/` for this learning workspace.\n",
             "questions/README.md": "# Questions\n\nOpen questions only. Teach review prompts and scheduling belong in `learning/review.md`; all learning evidence belongs in `learning/records/`.\n",
-            "sessions/README.md": "# Sessions\n\nThe existing shared directory for dated tutoring/session notes and lesson artifacts from `teach`. Do not create `learning/sessions/`.\n",
+            "sessions/README.md": "# Sessions\n\nThe existing shared directory for dated tutoring/session notes and lesson artifacts from `bc-teach`. Do not create `learning/sessions/`.\n",
             "references/teach-skill.md": TEACH_ADAPTER,
-            "references/teach-resources.md": "# Teach Resources\n\nThe hosted resource catalog for `teach`. Use `<agent-concepts>/concepts/teach/body/RESOURCES-FORMAT.md`; raw material belongs in the existing `sources/` directory.\n",
+            "references/teach-resources.md": "# Teach Resources\n\nThe hosted resource catalog for `bc-teach`. Use `<agent-concepts>/concepts/bc-teach/body/RESOURCES-FORMAT.md`; raw material belongs in the existing `sources/` directory.\n",
             "templates/learning-session.md": "# YYYY-MM-DD — Session\n\n## Goal\n\nTODO.\n\n## What changed\n\nTODO.\n\n## Misconceptions / review items\n\nTODO.\n\n## Next\n\nTODO.\n",
         }
     if archetype == "knowledge":
@@ -1275,7 +1275,7 @@ _OPS_ROWS = (
     ("components", "docs/components/", "verified state of real systems, hosts, tools and services"),
 )
 _TEACH_ROWS = (
-    ("teach-workspace", ".bc-agent/references/teach-skill.md", "path map of the hosted `teach` workspace; `teach` owns `learning/`, `sources/`, `concepts/`, `sessions/`, `questions/` and `index.md` under `.bc-agent/`, and shares the project's `glossary.md`"),
+    ("teach-workspace", ".bc-agent/references/teach-skill.md", "path map of the hosted `bc-teach` workspace; `bc-teach` owns `learning/`, `sources/`, `concepts/`, `sessions/`, `questions/` and `index.md` under `.bc-agent/`, and shares the project's `glossary.md`"),
 )
 
 
@@ -1348,12 +1348,12 @@ If the request sounds like planning future work (feature ideas, architecture dir
 slicing, "what should we build"), pause and ask whether to enter `/bc-plan-to-pipeline`
 before implementing. A concrete edit or fix proceeds normally. When the question is
 architectural runway, check `.bc-agent/conventions/architecture-runway.md` and offer
-`/improve-codebase-architecture` first. Skill map: `.bc-agent/references/agent-skills.md`.
+`/bc-improve-codebase-architecture` first. Skill map: `.bc-agent/references/agent-skills.md`.
 
 ## Scope rules
 
 - Project knowledge goes where the table says, in the same commit as the work it describes.
-- Source-tree README files, other `docs/` pages and JSDoc follow `codebase-docs`. It does
+- Source-tree README files, other `docs/` pages and JSDoc follow `bc-codebase-docs`. It does
   not apply to the paths named in the "Where things go" table: those are records.
 - Keep personal, cross-project and machine-global knowledge out of this repository.
 - No secrets or `.env` values anywhere in tracked files.
@@ -1508,11 +1508,11 @@ __OPS_KEEP_CURRENT__| Sharpen domain vocabulary | Update `glossary.md`. |
 HYBRID_TEACH_SECTION = """
 ## Hosted teach workspace
 
-This project also hosts a `teach` learning workspace inside `.bc-agent/`. Read
-[references/teach-skill.md](references/teach-skill.md) before using `teach`: it is the
-explicit adapter for the host's learning paths. `teach` owns the mapped pedagogy,
+This project also hosts a `bc-teach` learning workspace inside `.bc-agent/`. Read
+[references/teach-skill.md](references/teach-skill.md) before using `bc-teach`: it is the
+explicit adapter for the host's learning paths. `bc-teach` owns the mapped pedagogy,
 evidence and review state. There is one glossary: `glossary.md` at the repository root,
-shared with the project. `teach` adds and refines the terms the learner needs there and
+shared with the project. `bc-teach` adds and refines the terms the learner needs there and
 does not remove or redefine project terms without asking.
 Host search-first is for knowledge and learning-record retrieval. Teach may directly read
 mapped known mission/review/notes state and the shared catalog/recent history for session
@@ -1646,7 +1646,7 @@ _None captured yet._
 
 HYBRID_INDEX = """# __SLUG__ — teach workspace catalog
 
-Catalog of the hosted `teach` workspace in this folder. `teach` adds its entries here.
+Catalog of the hosted `bc-teach` workspace in this folder. `bc-teach` adds its entries here.
 Project work, decisions and research are not catalogued here; see the "Where things go"
 table in [AGENTS.md](AGENTS.md).
 
@@ -1673,12 +1673,12 @@ VISIBLE_OPS_KEEP_CURRENT = """| Check the state of a real system | Update its pa
 """
 
 # The project's design framework entry page: current truth only, no fixed page list.
-# Its generic method lives in the ui-design skill's design-framework.md.
+# Its generic method lives in the bc-ui-design skill's design-framework.md.
 DESIGN_README = """# Design
 
 This folder says how this product looks and behaves **now**. Agents and people
 read it before adding or changing anything a user sees or operates. The
-generic method behind it is `design-framework.md` in the `ui-design` skill.
+generic method behind it is `design-framework.md` in the `bc-ui-design` skill.
 
 <!-- Optional: if the project has a page for its screenshot and review conventions, link it here. -->
 
@@ -1727,14 +1727,14 @@ or any case listed under **Stricter ask-cases**; never for taste calls.
 """
 
 # The project's guardrails page: its limits and checks, current values only.
-# Its generic method lives in the guardrails skill; no measuring script is scaffolded.
+# Its generic method lives in the bc-guardrails skill; no measuring script is scaffolded.
 GUARDRAILS_README = """# Guardrails
 
 This page lists the limits this project must stay within: how fast, how small,
 how lean and how well-structured it is. Every limit has a check in
 `scripts/gate` that fails when a change breaks it. Agents read this page before
 changing anything that could make the project slower, bigger or more tangled.
-The generic method behind it is the `guardrails` skill.
+The generic method behind it is the `bc-guardrails` skill.
 
 Design-consistency checks live on the design page, `docs/design/README.md`,
 not here.
@@ -1819,8 +1819,8 @@ def _visible_log() -> str:
 
 def _visible_agent_skills() -> str:
     return _guarded(AGENT_SKILLS, (
-        ("`codebase-docs` — README / existing `docs/` / JSDoc only; not this vault.",
-         "`codebase-docs` — README files, other `docs/` pages and JSDoc; not `.bc-agent/` and not the paths named in the \"Where things go\" table in `.bc-agent/AGENTS.md`, which are records."),
+        ("`bc-codebase-docs` — README / existing `docs/` / JSDoc only; not this vault.",
+         "`bc-codebase-docs` — README files, other `docs/` pages and JSDoc; not `.bc-agent/` and not the paths named in the \"Where things go\" table in `.bc-agent/AGENTS.md`, which are records."),
         ("- Wiki maintenance: `/bc-wiki-maintain` — compute vault health, find index/search drift, and promote durable log entries without silently resolving contradictions.\n",
          ""),
         ("In code/hybrid wikis, run", "Run"),
@@ -2050,17 +2050,17 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
 
     checks = [
         (root / "AGENTS.md", "architecture-runway.md",
-         "root AGENTS.md should point coding/planning requests at `.bc-agent/conventions/architecture-runway.md` for the optional `/improve-codebase-architecture` nudge"),
+         "root AGENTS.md should point coding/planning requests at `.bc-agent/conventions/architecture-runway.md` for the optional `/bc-improve-codebase-architecture` nudge"),
         (vault / "AGENTS.md", "architecture-runway.md",
          "`.bc-agent/AGENTS.md` should mention the architecture-runway cadence in its planning-intent/update triggers"),
         (vault / "references" / "agent-skills.md", "architecture-runway.md",
-         "`references/agent-skills.md` should tell agents to check the architecture-runway cadence when `/improve-codebase-architecture` is relevant"),
+         "`references/agent-skills.md` should tell agents to check the architecture-runway cadence when `/bc-improve-codebase-architecture` is relevant"),
         (vault / "index.md", "architecture-runway.md",
          "`index.md` should link to `conventions/architecture-runway.md`"),
-        (root / "AGENTS.md", "codebase-docs",
-         "root AGENTS.md should point source-tree README/docs/JSDoc at `codebase-docs` and keep that skill off `.bc-agent/`"),
-        (vault / "references" / "agent-skills.md", "codebase-docs",
-         "`references/agent-skills.md` should list `codebase-docs` for source-tree docs, not the vault"),
+        (root / "AGENTS.md", "bc-codebase-docs",
+         "root AGENTS.md should point source-tree README/docs/JSDoc at `bc-codebase-docs` and keep that skill off `.bc-agent/`"),
+        (vault / "references" / "agent-skills.md", "bc-codebase-docs",
+         "`references/agent-skills.md` should list `bc-codebase-docs` for source-tree docs, not the vault"),
         (vault / "references" / "agent-skills.md", "bc-wiki-maintain",
          "`references/agent-skills.md` should list `/bc-wiki-maintain` as the canonical project-vault maintenance skill"),
     ]

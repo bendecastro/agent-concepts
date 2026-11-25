@@ -15,7 +15,7 @@ Use targeted correctness checks, run pytest through the guarded test runner the 
 
 1. **Name one metric.** A single, objective, reproducible number (median wall-time on a fixed input, output bytes, peak RSS, allocation count, request count, …). **If you cannot name an objective metric, STOP — do not optimize blind.** Say so and return; "looks cleaner/faster" is not a metric.
 2. **Lock correctness.** Identify the check that must keep passing — the project's tests, or if they're thin, a concrete check you can re-run (output count, content hash, golden output, a regression test). **Fix any correctness bug first**, then establish the baseline against the corrected code.
-3. **Baseline it.** Measure the metric on a fixed, representative input, enough runs to be stable (take a median; watch for noise). Measure and judge noise the way the `guardrails` skill's `measuring.md` says, so a kept win means the same as a guardrail limit. Write the number down. If the runtime is dominated by external tools, paid APIs, GPUs, or large model files, build a **dry-run / shadow** measurement first so iterations stay cheap and deterministic.
+3. **Baseline it.** Measure the metric on a fixed, representative input, enough runs to be stable (take a median; watch for noise). Measure and judge noise the way the `bc-guardrails` skill's `measuring.md` says, so a kept win means the same as a guardrail limit. Write the number down. If the runtime is dominated by external tools, paid APIs, GPUs, or large model files, build a **dry-run / shadow** measurement first so iterations stay cheap and deterministic.
 
 ## The loop — one bounded change per iteration
 

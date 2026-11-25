@@ -3,7 +3,7 @@
   "edges": [
     {
       "from": "agent-kernel",
-      "to": "tdd",
+      "to": "bc-tdd",
       "relation": "loads",
       "required": true,
       "when": "new tests or behaviour-changing assertions",
@@ -12,7 +12,7 @@
     },
     {
       "from": "bc-pipeline-to-done",
-      "to": "tdd",
+      "to": "bc-tdd",
       "relation": "loads",
       "required": true,
       "when": "feature/enhancement work",
@@ -21,7 +21,7 @@
     },
     {
       "from": "bc-pipeline-to-done",
-      "to": "tdd",
+      "to": "bc-tdd",
       "relation": "depends_on_contract",
       "required": true,
       "when": "deterministic pre-review gate",
@@ -39,7 +39,7 @@
     },
     {
       "from": "bc-init-agent",
-      "to": "tdd",
+      "to": "bc-tdd",
       "relation": "depends_on_contract",
       "required": true,
       "when": "generated visible-layout validation page",
@@ -66,7 +66,7 @@
     },
     {
       "from": "bc-init-agent",
-      "to": "teach",
+      "to": "bc-teach",
       "relation": "adapts",
       "required": true,
       "when": "learning or hybrid scaffold",
@@ -75,7 +75,7 @@
     },
     {
       "from": "bc-wiki-maintain",
-      "to": "teach",
+      "to": "bc-teach",
       "relation": "depends_on_contract",
       "required": true,
       "when": "teach adapter marker present",
@@ -83,17 +83,17 @@
       "reason": "Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue."
     },
     {
-      "from": "teach",
+      "from": "bc-teach",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "valid teach-host-adapter marker",
-      "source": "concepts/teach/body/SKILL.md#hosted-bc-agent-adapter",
+      "source": "concepts/bc-teach/body/SKILL.md#hosted-bc-agent-adapter",
       "reason": "Hosted teach mode relies on the initializer's explicit vault marker and host schema while remaining standalone by default."
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "grilling",
+      "to": "bc-grilling",
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
@@ -101,7 +101,7 @@
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "domain-modeling",
+      "to": "bc-domain-modeling",
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
@@ -109,7 +109,7 @@
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "prd-drafting",
+      "to": "bc-prd-drafting",
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
@@ -117,7 +117,7 @@
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "plan-slicing",
+      "to": "bc-plan-slicing",
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
@@ -132,85 +132,85 @@
       "reason": "Close-out recommends draining the published queue; the user decides."
     },
     {
-      "from": "triage",
-      "to": "domain-modeling",
+      "from": "bc-triage",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/triage/body/SKILL.md",
-      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+      "source": "concepts/bc-triage/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "handoff",
-      "to": "domain-modeling",
+      "from": "bc-handoff",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/handoff/body/SKILL.md",
-      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+      "source": "concepts/bc-handoff/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "prd-drafting",
-      "to": "domain-modeling",
+      "from": "bc-prd-drafting",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/prd-drafting/body/SKILL.md",
-      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+      "source": "concepts/bc-prd-drafting/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "tdd",
-      "to": "diagnosing-bugs",
+      "from": "bc-tdd",
+      "to": "bc-diagnosing-bugs",
       "relation": "hands_off",
       "required": true,
       "when": "bugs without a tight repro",
-      "source": "concepts/tdd/body/SKILL.md",
-      "reason": "Diagnosis belongs to diagnosing-bugs before the regression-test RED/GREEN cycle."
+      "source": "concepts/bc-tdd/body/SKILL.md",
+      "reason": "Diagnosis belongs to bc-diagnosing-bugs before the regression-test RED/GREEN cycle."
     },
     {
-      "from": "tdd",
-      "to": "domain-modeling",
+      "from": "bc-tdd",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/tdd/body/SKILL.md",
-      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+      "source": "concepts/bc-tdd/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "diagnosing-bugs",
-      "to": "domain-modeling",
+      "from": "bc-diagnosing-bugs",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/diagnosing-bugs/body/SKILL.md",
-      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+      "source": "concepts/bc-diagnosing-bugs/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "plan-slicing",
-      "to": "domain-modeling",
+      "from": "bc-plan-slicing",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/plan-slicing/body/SKILL.md",
-      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+      "source": "concepts/bc-plan-slicing/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "improve-codebase-architecture",
-      "to": "domain-modeling",
+      "from": "bc-improve-codebase-architecture",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/improve-codebase-architecture/body/SKILL.md",
-      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+      "source": "concepts/bc-improve-codebase-architecture/body/SKILL.md",
+      "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
       "from": "bc-init-agent",
-      "to": "domain-modeling",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
       "source": "concepts/bc-init-agent/body/SKILL.md",
-      "reason": "Legacy glossary discovery and rename proposals have one home in domain-modeling."
+      "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
       "from": "bc-swarm",
@@ -222,57 +222,57 @@
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "using-git-worktrees",
+      "from": "bc-using-git-worktrees",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/using-git-worktrees/body/SKILL.md",
+      "source": "concepts/bc-using-git-worktrees/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "subagent-driven-development",
+      "from": "bc-subagent-driven-development",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/subagent-driven-development/body/SKILL.md",
+      "source": "concepts/bc-subagent-driven-development/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "dispatching-parallel-agents",
+      "from": "bc-dispatching-parallel-agents",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/dispatching-parallel-agents/body/SKILL.md",
+      "source": "concepts/bc-dispatching-parallel-agents/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "executing-plans",
+      "from": "bc-executing-plans",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/executing-plans/body/SKILL.md",
+      "source": "concepts/bc-executing-plans/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "finishing-development-branch",
+      "from": "bc-finishing-development-branch",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/finishing-development-branch/body/SKILL.md",
+      "source": "concepts/bc-finishing-development-branch/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "tdd",
+      "from": "bc-tdd",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/tdd/body/SKILL.md",
+      "source": "concepts/bc-tdd/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
@@ -285,30 +285,30 @@
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "diagnosing-bugs",
+      "from": "bc-diagnosing-bugs",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/diagnosing-bugs/body/SKILL.md",
+      "source": "concepts/bc-diagnosing-bugs/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "code-review",
+      "from": "bc-code-review",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/code-review/body/SKILL.md",
+      "source": "concepts/bc-code-review/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "writing-plans",
+      "from": "bc-writing-plans",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/writing-plans/body/SKILL.md",
+      "source": "concepts/bc-writing-plans/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
@@ -321,12 +321,12 @@
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "brainstorming",
+      "from": "bc-brainstorming",
       "to": "naming-things",
       "relation": "loads",
       "required": true,
       "when": "choosing domain or public code names",
-      "source": "concepts/brainstorming/body/SKILL.md",
+      "source": "concepts/bc-brainstorming/body/SKILL.md",
       "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
     },
     {
@@ -339,12 +339,12 @@
       "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
     },
     {
-      "from": "writing-plans",
+      "from": "bc-writing-plans",
       "to": "naming-things",
       "relation": "loads",
       "required": true,
       "when": "choosing domain or public code names",
-      "source": "concepts/writing-plans/body/SKILL.md",
+      "source": "concepts/bc-writing-plans/body/SKILL.md",
       "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
     },
     {
@@ -358,7 +358,7 @@
     },
     {
       "from": "naming-things",
-      "to": "domain-modeling",
+      "to": "bc-domain-modeling",
       "relation": "loads",
       "required": true,
       "when": "glossary persistence, conflicts or ADR decisions",
@@ -366,155 +366,155 @@
       "reason": "Domain-modeling owns glossary purity, discovery, reconciliation and ADR rules; naming-things supplies criteria and conceptual persistence categories only."
     },
     {
-      "from": "improve-codebase-architecture",
-      "to": "codebase-design",
+      "from": "bc-improve-codebase-architecture",
+      "to": "bc-codebase-design",
       "relation": "depends_on_contract",
       "required": true,
       "when": "organic exploration",
-      "source": "concepts/improve-codebase-architecture/body/SKILL.md#1-explore",
-      "reason": "The friction-signal list and deletion test have one home in codebase-design, so builder roles that load it get the same signals the review uses."
+      "source": "concepts/bc-improve-codebase-architecture/body/SKILL.md#1-explore",
+      "reason": "The friction-signal list and deletion test have one home in bc-codebase-design, so builder roles that load it get the same signals the review uses."
     },
     {
-      "from": "security-audit",
-      "to": "prompting-agents",
+      "from": "bc-security-audit",
+      "to": "bc-prompting-agents",
       "relation": "adapts",
       "required": true,
-      "source": "concepts/security-audit/CONCEPT.md#design-decisions",
+      "source": "concepts/bc-security-audit/CONCEPT.md#design-decisions",
       "reason": "Adapts scope, ambiguity, evidence and enforced privileged-action phrasing for guidance versus explicit audit mode."
     },
     {
-      "from": "security-audit",
-      "to": "code-review",
+      "from": "bc-security-audit",
+      "to": "bc-code-review",
       "relation": "adapts",
       "required": true,
-      "source": "concepts/security-audit/CONCEPT.md#design-decisions",
+      "source": "concepts/bc-security-audit/CONCEPT.md#design-decisions",
       "reason": "Adapts fresh-context reviewer isolation and findings-are-not-obligations calibration, not the two-axis diff workflow."
     },
     {
-      "from": "prompting-agents",
-      "to": "security-audit",
+      "from": "bc-prompting-agents",
+      "to": "bc-security-audit",
       "relation": "depends_on_contract",
       "required": false,
       "when": "authoring broad-trigger skills with costly workflows",
-      "source": "concepts/prompting-agents/body/SKILL.md#loading-is-not-authorization",
+      "source": "concepts/bc-prompting-agents/body/SKILL.md#loading-is-not-authorization",
       "reason": "Points to the guidance-default and explicit-audit mode gate as an in-workspace example."
     },
     {
-      "from": "show-me",
-      "to": "prompting-agents",
+      "from": "bc-show-me",
+      "to": "bc-prompting-agents",
       "relation": "adapts",
       "required": true,
       "when": "authoring the skill",
-      "source": "concepts/show-me/CONCEPT.md#design-decisions",
+      "source": "concepts/bc-show-me/CONCEPT.md#design-decisions",
       "reason": "Adapts loading-is-not-authorization, scope discipline and examples-over-rules."
     },
     {
-      "from": "show-me",
+      "from": "bc-show-me",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "any invocation",
-      "source": "concepts/show-me/body/SKILL.md",
+      "source": "concepts/bc-show-me/body/SKILL.md",
       "reason": "Informational questions do not authorize edits; final-response rules remain kernel-owned."
     },
     {
-      "from": "show-me",
-      "to": "plain-language",
+      "from": "bc-show-me",
+      "to": "bc-plain-language",
       "relation": "depends_on_contract",
       "required": true,
       "when": "words around visuals",
-      "source": "concepts/show-me/body/SKILL.md",
-      "reason": "Reader-outcome prose stays with plain-language, not visual-form selection."
+      "source": "concepts/bc-show-me/body/SKILL.md",
+      "reason": "Reader-outcome prose stays with bc-plain-language, not visual-form selection."
     },
     {
-      "from": "show-me",
-      "to": "codebase-docs",
+      "from": "bc-show-me",
+      "to": "bc-codebase-docs",
       "relation": "depends_on_contract",
       "required": true,
       "when": "durable source-tree docs",
-      "source": "concepts/show-me/body/SKILL.md",
+      "source": "concepts/bc-show-me/body/SKILL.md",
       "reason": "Placement, current-state maintenance and one home per fact remain doc contracts."
     },
     {
-      "from": "show-me",
-      "to": "unslop",
+      "from": "bc-show-me",
+      "to": "bc-unslop",
       "relation": "depends_on_contract",
       "required": true,
       "when": "shipped wrapping prose",
-      "source": "concepts/show-me/body/SKILL.md",
+      "source": "concepts/bc-show-me/body/SKILL.md",
       "reason": "Shipped prose is unslopped without rewriting code-shaped visuals."
     },
     {
-      "from": "show-me",
-      "to": "improve-codebase-architecture",
+      "from": "bc-show-me",
+      "to": "bc-improve-codebase-architecture",
       "relation": "depends_on_contract",
       "required": true,
       "when": "architecture-review reports",
-      "source": "concepts/show-me/body/SKILL.md",
+      "source": "concepts/bc-show-me/body/SKILL.md",
       "reason": "Architecture-review report artifacts retain their own contract."
     },
     {
-      "from": "show-me",
-      "to": "teach",
+      "from": "bc-show-me",
+      "to": "bc-teach",
       "relation": "depends_on_contract",
       "required": true,
       "when": "teaching sessions",
-      "source": "concepts/show-me/body/SKILL.md",
+      "source": "concepts/bc-show-me/body/SKILL.md",
       "reason": "Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts."
     },
     {
-      "from": "show-me",
-      "to": "ui-design",
+      "from": "bc-show-me",
+      "to": "bc-ui-design",
       "relation": "depends_on_contract",
       "required": true,
       "when": "UI redesign",
-      "source": "concepts/show-me/body/SKILL.md",
+      "source": "concepts/bc-show-me/body/SKILL.md",
       "reason": "Product UI design is not an explanation sketch."
     },
     {
-      "from": "codebase-docs",
-      "to": "show-me",
+      "from": "bc-codebase-docs",
+      "to": "bc-show-me",
       "relation": "loads",
       "required": false,
       "when": "how-it-works pages",
-      "source": "concepts/codebase-docs/body/SKILL.md",
+      "source": "concepts/bc-codebase-docs/body/SKILL.md",
       "reason": "Use a smallest current-state visual on the owning page; placement rules still win."
     },
     {
-      "from": "code-review",
-      "to": "tdd",
+      "from": "bc-code-review",
+      "to": "bc-tdd",
       "relation": "depends_on_contract",
       "required": true,
       "when": "Standards review of new or changed tests",
-      "source": "concepts/code-review/body/SKILL.md#2-review-independently",
+      "source": "concepts/bc-code-review/body/SKILL.md#2-review-independently",
       "reason": "Standards uses tdd’s tests-that-lie definitions to assess behavioral coverage, and checks new test files against tdd’s Test layout norms."
     },
     {
-      "from": "code-review",
-      "to": "tdd",
+      "from": "bc-code-review",
+      "to": "bc-tdd",
       "relation": "depends_on_contract",
       "required": true,
       "when": "Spec review of property-based tests, the Test levels block, or a Level 3 proof",
-      "source": "concepts/code-review/body/SKILL.md#2-review-independently",
+      "source": "concepts/bc-code-review/body/SKILL.md#2-review-independently",
       "reason": "Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical."
     },
     {
-      "from": "tdd",
+      "from": "bc-tdd",
       "to": "bc-pipeline-to-done",
       "relation": "depends_on_contract",
       "required": true,
       "when": "recording property fail-first evidence inside a drain",
-      "source": "concepts/tdd/body/properties.md#fail-first-for-properties",
+      "source": "concepts/bc-tdd/body/properties.md#fail-first-for-properties",
       "reason": "Mutation evidence goes in the drain’s existing validation.json, not a new evidence file."
     },
     {
-      "from": "ui-design",
-      "to": "show-me",
+      "from": "bc-ui-design",
+      "to": "bc-show-me",
       "relation": "hands_off",
       "required": true,
       "when": "explanation diagrams",
-      "source": "concepts/ui-design/body/SKILL.md",
-      "reason": "Explanation diagrams belong to show-me, not product UI design."
+      "source": "concepts/bc-ui-design/body/SKILL.md",
+      "reason": "Explanation diagrams belong to bc-show-me, not product UI design."
     },
     {
       "from": "bc-wiki-maintain",
@@ -526,12 +526,12 @@
       "reason": "The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ. Its agent-mechanics check allows the .bc-agent/ entries the hybrid scaffold writes and the optional agent-extras role; a test compares the hybrid list with the scaffold's output."
     },
     {
-      "from": "triage",
+      "from": "bc-triage",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/triage/CONCEPT.md",
+      "source": "concepts/bc-triage/CONCEPT.md",
       "reason": "Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules."
     },
     {
@@ -553,121 +553,121 @@
       "reason": "Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template."
     },
     {
-      "from": "improve-codebase-architecture",
+      "from": "bc-improve-codebase-architecture",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/improve-codebase-architecture/CONCEPT.md",
+      "source": "concepts/bc-improve-codebase-architecture/CONCEPT.md",
       "reason": "Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject."
     },
     {
-      "from": "diagnosing-bugs",
+      "from": "bc-diagnosing-bugs",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/diagnosing-bugs/CONCEPT.md",
+      "source": "concepts/bc-diagnosing-bugs/CONCEPT.md",
       "reason": "Resolves glossary, decisions and ideas in the scaffolded table, with its earlier paths as fallback."
     },
     {
-      "from": "prototype",
+      "from": "bc-prototype",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/prototype/CONCEPT.md",
+      "source": "concepts/bc-prototype/CONCEPT.md",
       "reason": "Resolves research, decisions and requirements in the scaffolded table, with its earlier paths as fallback."
     },
     {
-      "from": "handoff",
+      "from": "bc-handoff",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/handoff/CONCEPT.md",
+      "source": "concepts/bc-handoff/CONCEPT.md",
       "reason": "Resolves work-active, decisions, research, glossary, ideas and work-dropped in the scaffolded table, with its earlier paths as fallback."
     },
     {
-      "from": "domain-modeling",
+      "from": "bc-domain-modeling",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/domain-modeling/CONCEPT.md",
+      "source": "concepts/bc-domain-modeling/CONCEPT.md",
       "reason": "Resolves glossary and decisions in the scaffolded table, with its earlier paths as fallback."
     },
     {
-      "from": "domain-modeling",
-      "to": "teach",
+      "from": "bc-domain-modeling",
+      "to": "bc-teach",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout hybrid project",
-      "source": "concepts/domain-modeling/body/SKILL.md",
-      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; domain-modeling asks before removing or redefining terms it did not add."
+      "source": "concepts/bc-domain-modeling/body/SKILL.md",
+      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; bc-domain-modeling asks before removing or redefining terms it did not add."
     },
     {
       "from": "bc-pipeline-to-done",
-      "to": "improve-codebase-architecture",
+      "to": "bc-improve-codebase-architecture",
       "relation": "depends_on_contract",
       "required": true,
       "when": "architecture observation after landing",
       "source": "concepts/bc-pipeline-to-done/CONCEPT.md",
-      "reason": "Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates."
+      "reason": "Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates."
     },
     {
-      "from": "diagnosing-bugs",
-      "to": "improve-codebase-architecture",
+      "from": "bc-diagnosing-bugs",
+      "to": "bc-improve-codebase-architecture",
       "relation": "depends_on_contract",
       "required": true,
       "when": "bug fixed without a correct test seam",
-      "source": "concepts/diagnosing-bugs/body/SKILL.md",
-      "reason": "Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates."
+      "source": "concepts/bc-diagnosing-bugs/body/SKILL.md",
+      "reason": "Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates."
     },
     {
-      "from": "triage",
-      "to": "teach",
+      "from": "bc-triage",
+      "to": "bc-teach",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout hybrid project",
-      "source": "concepts/triage/body/SKILL.md",
-      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; triage edits it under domain-modeling's shared-glossary rule."
+      "source": "concepts/bc-triage/body/SKILL.md",
+      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; triage edits it under bc-domain-modeling's shared-glossary rule."
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "teach",
+      "to": "bc-teach",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout hybrid project",
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md",
-      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under domain-modeling's shared-glossary rule."
+      "reason": "In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under bc-domain-modeling's shared-glossary rule."
     },
     {
-      "from": "triage",
-      "to": "domain-modeling",
+      "from": "bc-triage",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout hybrid project",
-      "source": "concepts/triage/body/SKILL.md",
-      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; triage points to it."
+      "source": "concepts/bc-triage/body/SKILL.md",
+      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in bc-domain-modeling; triage points to it."
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "domain-modeling",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout hybrid project",
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md",
-      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; planning points to it."
+      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in bc-domain-modeling; planning points to it."
     },
     {
       "from": "bc-wiki-maintain",
-      "to": "domain-modeling",
+      "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout hybrid project",
       "source": "concepts/bc-wiki-maintain/body/SKILL.md",
-      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in domain-modeling; maintenance points to it."
+      "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in bc-domain-modeling; maintenance points to it."
     },
     {
       "from": "bc-work-sync",
@@ -680,7 +680,7 @@
     },
     {
       "from": "bc-swarm",
-      "to": "tdd",
+      "to": "bc-tdd",
       "relation": "depends_on_contract",
       "required": true,
       "when": "worker and review packets for code changes, and parent commits",
@@ -697,163 +697,163 @@
     },
     {
       "from": "bc-reflect",
-      "to": "prompting-agents",
+      "to": "bc-prompting-agents",
       "relation": "hands_off",
       "required": false,
       "source": "concepts/bc-reflect/body/SKILL.md#every-proposal-names-its-home",
-      "reason": "A proposal homed in a concept or kernel clause is worded per prompting-agents and pressure-tested before deploy."
+      "reason": "A proposal homed in a concept or kernel clause is worded per bc-prompting-agents and pressure-tested before deploy."
     },
     {
       "from": "bc-reflect",
-      "to": "code-review",
+      "to": "bc-code-review",
       "relation": "hands_off",
       "required": false,
       "source": "concepts/bc-reflect/body/SKILL.md#every-proposal-names-its-home",
-      "reason": "Judgement-call standards findings are proposed as code-review standards; mechanical ones become checks."
+      "reason": "Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks."
     },
     {
-      "from": "ui-design",
+      "from": "bc-ui-design",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has no docs/design/README.md",
-      "source": "concepts/ui-design/body/design-framework.md#start-from-the-projects-design-readme",
+      "source": "concepts/bc-ui-design/body/design-framework.md#start-from-the-projects-design-readme",
       "reason": "A missing design README is created from the template the scaffold writes; the companion does not keep its own copy."
     },
     {
       "from": "bc-init-agent",
-      "to": "ui-design",
+      "to": "bc-ui-design",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout scaffold writes docs/design/README.md",
       "source": "concepts/bc-init-agent/body/scaffold.py",
-      "reason": "The generated design README names ui-design's design-framework.md as its method and restates only the project-facing summary."
+      "reason": "The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary."
     },
     {
       "from": "bc-council-improve-codebase",
-      "to": "improve-codebase-architecture",
+      "to": "bc-improve-codebase-architecture",
       "relation": "loads",
       "required": true,
       "when": "every council architecture review",
       "source": "concepts/bc-council-improve-codebase/body/SKILL.md",
-      "reason": "Inputs, card fields, report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map contents, card format and agreement rule."
+      "reason": "Inputs, card fields, report, grilling and filing have one home in bc-improve-codebase-architecture; this skill adds only the map contents, card format and agreement rule."
     },
     {
       "from": "bc-council-improve-codebase",
-      "to": "council-mode",
+      "to": "bc-council-mode",
       "relation": "loads",
       "required": true,
       "when": "every council architecture review",
       "source": "concepts/bc-council-improve-codebase/body/SKILL.md",
-      "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode."
+      "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in bc-council-mode."
     },
     {
       "from": "bc-council-improve-codebase",
-      "to": "council-chain",
+      "to": "bc-council-chain",
       "relation": "loads",
       "required": true,
       "when": "every council architecture review",
       "source": "concepts/bc-council-improve-codebase/body/SKILL.md",
-      "reason": "Roster, shared map, pass 1, merge, pass 2, fallbacks and sandbox cleanup have one home in council-chain; this skill defines only the chain parts."
+      "reason": "Roster, shared map, pass 1, merge, pass 2, fallbacks and sandbox cleanup have one home in bc-council-chain; this skill defines only the chain parts."
     },
     {
-      "from": "council-chain",
-      "to": "council-mode",
+      "from": "bc-council-chain",
+      "to": "bc-council-mode",
       "relation": "loads",
       "required": true,
       "when": "every chain run",
-      "source": "concepts/council-chain/body/SKILL.md",
-      "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode."
+      "source": "concepts/bc-council-chain/body/SKILL.md",
+      "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in bc-council-mode."
     },
     {
-      "from": "find-bugs",
-      "to": "tdd",
+      "from": "bc-find-bugs",
+      "to": "bc-tdd",
       "relation": "adapts",
       "required": true,
       "when": "every reproduction",
-      "source": "concepts/find-bugs/body/SKILL.md#3-reproduce",
+      "source": "concepts/bc-find-bugs/body/SKILL.md#3-reproduce",
       "reason": "A reproduction counts only when it fails for the stated reason, tdd's watched-fail rule."
     },
     {
-      "from": "find-bugs",
-      "to": "security-audit",
+      "from": "bc-find-bugs",
+      "to": "bc-security-audit",
       "relation": "hands_off",
       "required": false,
       "when": "a security hole is seen in passing",
-      "source": "concepts/find-bugs/body/SKILL.md#2-hunt",
-      "reason": "Security holes are reported with a pointer and audited by security-audit, not here."
+      "source": "concepts/bc-find-bugs/body/SKILL.md#2-hunt",
+      "reason": "Security holes are reported with a pointer and audited by bc-security-audit, not here."
     },
     {
-      "from": "find-bugs",
-      "to": "improve-codebase-architecture",
+      "from": "bc-find-bugs",
+      "to": "bc-improve-codebase-architecture",
       "relation": "adapts",
       "required": true,
       "when": "filing after the owner answers",
-      "source": "concepts/find-bugs/CONCEPT.md",
-      "reason": "Report-then-owner filing, roles and the no-pipeline fallback mirror improve-codebase-architecture."
+      "source": "concepts/bc-find-bugs/CONCEPT.md",
+      "reason": "Report-then-owner filing, roles and the no-pipeline fallback mirror bc-improve-codebase-architecture."
     },
     {
-      "from": "find-bugs",
+      "from": "bc-find-bugs",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "filing into a work pipeline",
-      "source": "concepts/find-bugs/CONCEPT.md",
+      "source": "concepts/bc-find-bugs/CONCEPT.md",
       "reason": "Relies on the work-item template, Kind placement in order.md and work_index.py --check."
     },
     {
       "from": "bc-council-find-bugs",
-      "to": "council-chain",
+      "to": "bc-council-chain",
       "relation": "loads",
       "required": true,
       "when": "every council bug hunt",
       "source": "concepts/bc-council-find-bugs/body/SKILL.md",
-      "reason": "Roster, map, passes, merge, fallbacks and cleanup have one home in council-chain."
+      "reason": "Roster, map, passes, merge, fallbacks and cleanup have one home in bc-council-chain."
     },
     {
       "from": "bc-council-find-bugs",
-      "to": "find-bugs",
+      "to": "bc-find-bugs",
       "relation": "loads",
       "required": true,
       "when": "every council bug hunt",
       "source": "concepts/bc-council-find-bugs/body/SKILL.md",
-      "reason": "Scope, hunted kinds, candidate block, reproduction, report and filing have one home in find-bugs."
+      "reason": "Scope, hunted kinds, candidate block, reproduction, report and filing have one home in bc-find-bugs."
     },
     {
       "from": "bc-council-find-bugs",
-      "to": "council-mode",
+      "to": "bc-council-mode",
       "relation": "loads",
       "required": true,
       "when": "every council bug hunt",
       "source": "concepts/bc-council-find-bugs/body/SKILL.md",
-      "reason": "Briefing, launch, relay, resume and the pass cap have one home in council-mode."
+      "reason": "Briefing, launch, relay, resume and the pass cap have one home in bc-council-mode."
     },
     {
       "from": "bc-council-audit-security",
-      "to": "council-chain",
+      "to": "bc-council-chain",
       "relation": "loads",
       "required": true,
       "when": "every council security audit",
       "source": "concepts/bc-council-audit-security/body/SKILL.md",
-      "reason": "Roster, passes, merge, fallbacks and cleanup have one home in council-chain."
+      "reason": "Roster, passes, merge, fallbacks and cleanup have one home in bc-council-chain."
     },
     {
       "from": "bc-council-audit-security",
-      "to": "security-audit",
+      "to": "bc-security-audit",
       "relation": "loads",
       "required": true,
       "when": "every council security audit",
       "source": "concepts/bc-council-audit-security/body/SKILL.md",
-      "reason": "Recon, Output gate, execution boundary, fresh verification, JSON records, validator and report have one home in security-audit."
+      "reason": "Recon, Output gate, execution boundary, fresh verification, JSON records, validator and report have one home in bc-security-audit."
     },
     {
       "from": "bc-council-audit-security",
-      "to": "council-mode",
+      "to": "bc-council-mode",
       "relation": "loads",
       "required": true,
       "when": "every council security audit",
       "source": "concepts/bc-council-audit-security/body/SKILL.md",
-      "reason": "Briefing, launch, relay, resume and the pass cap have one home in council-mode."
+      "reason": "Briefing, launch, relay, resume and the pass cap have one home in bc-council-mode."
     },
     {
       "from": "bc-council-audit-security",
@@ -866,25 +866,25 @@
     },
     {
       "from": "bc-council-challenge-plan",
-      "to": "council-chain",
+      "to": "bc-council-chain",
       "relation": "loads",
       "required": true,
       "when": "every council plan challenge",
       "source": "concepts/bc-council-challenge-plan/body/SKILL.md",
-      "reason": "Roster, map, passes, merge, fallbacks and cleanup have one home in council-chain."
+      "reason": "Roster, map, passes, merge, fallbacks and cleanup have one home in bc-council-chain."
     },
     {
       "from": "bc-council-challenge-plan",
-      "to": "council-mode",
+      "to": "bc-council-mode",
       "relation": "loads",
       "required": true,
       "when": "every council plan challenge",
       "source": "concepts/bc-council-challenge-plan/body/SKILL.md",
-      "reason": "Briefing, launch, relay, resume and the pass cap have one home in council-mode."
+      "reason": "Briefing, launch, relay, resume and the pass cap have one home in bc-council-mode."
     },
     {
       "from": "bc-council-challenge-plan",
-      "to": "grilling",
+      "to": "bc-grilling",
       "relation": "loads",
       "required": true,
       "when": "every council plan challenge",
@@ -901,22 +901,22 @@
       "reason": "Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill."
     },
     {
-      "from": "improve-codebase-architecture",
+      "from": "bc-improve-codebase-architecture",
       "to": "bc-plan-to-pipeline",
       "relation": "hands_off",
       "required": true,
       "when": "after filing chosen findings in a project with a Where things go table",
-      "source": "concepts/improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table",
+      "source": "concepts/bc-improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table",
       "reason": "Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-codebase inherits this through its filing step."
     },
     {
-      "from": "find-bugs",
+      "from": "bc-find-bugs",
       "to": "bc-plan-to-pipeline",
       "relation": "hands_off",
       "required": true,
       "when": "after filing into a project work pipeline",
-      "source": "concepts/find-bugs/body/SKILL.md#5-file-after-the-owner-answers",
-      "reason": "Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through find-bugs §5."
+      "source": "concepts/bc-find-bugs/body/SKILL.md#5-file-after-the-owner-answers",
+      "reason": "Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through bc-find-bugs §5."
     },
     {
       "from": "bc-pipeline-to-done",
@@ -946,34 +946,34 @@
       "reason": "The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode."
     },
     {
-      "from": "guardrails",
-      "to": "ui-design",
+      "from": "bc-guardrails",
+      "to": "bc-ui-design",
       "relation": "adapts",
       "required": true,
-      "source": "concepts/guardrails/CONCEPT.md#design-decisions-2026-11-25",
+      "source": "concepts/bc-guardrails/CONCEPT.md#design-decisions-2026-11-25",
       "reason": "Copies design-framework.md's page model (read the project page first, copy the scaffold text when missing, agent's choice the owner may change, page line in the same commit) for limits and checks; design-consistency checks stay on the design page."
     },
     {
-      "from": "guardrails",
+      "from": "bc-guardrails",
       "to": "bc-init-agent",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has no docs/guardrails/README.md",
-      "source": "concepts/guardrails/body/SKILL.md#start-from-the-projects-guardrails-page",
+      "source": "concepts/bc-guardrails/body/SKILL.md#start-from-the-projects-guardrails-page",
       "reason": "A missing guardrails page is copied from the GUARDRAILS_README text the scaffold writes; the skill does not keep its own copy."
     },
     {
       "from": "bc-init-agent",
-      "to": "guardrails",
+      "to": "bc-guardrails",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout scaffold writes docs/guardrails/README.md",
       "source": "concepts/bc-init-agent/body/scaffold.py",
-      "reason": "The generated guardrails README names the guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet)."
+      "reason": "The generated guardrails README names the bc-guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet)."
     },
     {
       "from": "bc-autoresearch-loop",
-      "to": "guardrails",
+      "to": "bc-guardrails",
       "relation": "depends_on_contract",
       "required": false,
       "when": "baselining a metric; keeping a change in a project with docs/guardrails/README.md",
@@ -981,25 +981,25 @@
       "reason": "Measures and judges noise per guardrails' measuring.md, and a kept change tightens the matching agent-chosen limit on the guardrails page."
     },
     {
-      "from": "guardrails",
+      "from": "bc-guardrails",
       "to": "bc-autoresearch-loop",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/guardrails/body/measuring.md",
+      "source": "concepts/bc-guardrails/body/measuring.md",
       "reason": "measuring.md names bc-autoresearch-loop as the improvement loop that uses the same method; a verified improvement tightens the limit."
     },
     {
       "from": "bc-init-agent",
-      "to": "teach",
+      "to": "bc-teach",
       "relation": "loads",
       "required": false,
       "when": "learning workspace and the owner wants tutoring records",
       "source": "concepts/bc-init-agent/body/SKILL.md",
-      "reason": "Multi-session tutoring records come from the teach skill."
+      "reason": "Multi-session tutoring records come from the bc-teach skill."
     },
     {
       "from": "bc-pipeline-to-done",
-      "to": "codebase-docs",
+      "to": "bc-codebase-docs",
       "relation": "loads",
       "required": false,
       "when": "the diff touches a README, docs page, architecture page or contract JSDoc",
@@ -1007,17 +1007,17 @@
       "reason": "Reviewers check source-tree documentation against the diff."
     },
     {
-      "from": "code-review",
-      "to": "codebase-docs",
+      "from": "bc-code-review",
+      "to": "bc-codebase-docs",
       "relation": "loads",
       "required": false,
       "when": "the diff touches a README, docs page, architecture page or contract JSDoc",
-      "source": "concepts/code-review/body/SKILL.md#2-review-independently",
+      "source": "concepts/bc-code-review/body/SKILL.md#2-review-independently",
       "reason": "The standards reviewer flags stale or change-narrating docs."
     },
     {
       "from": "bc-swarm",
-      "to": "tdd",
+      "to": "bc-tdd",
       "relation": "loads",
       "required": true,
       "when": "worker and review packets for code changes",
@@ -1025,12 +1025,12 @@
       "reason": "Packets carry tdd's Test levels rules; the body names the skill instead of linking into its folder."
     },
     {
-      "from": "code-review",
-      "to": "tdd",
+      "from": "bc-code-review",
+      "to": "bc-tdd",
       "relation": "loads",
       "required": true,
       "when": "reviewing tests, the Test levels block or a Level 3 proof",
-      "source": "concepts/code-review/body/SKILL.md#2-review-independently",
+      "source": "concepts/bc-code-review/body/SKILL.md#2-review-independently",
       "reason": "Spec and Standards review apply tdd's Test levels, Tests that lie, Test layout and formal.md; the body names the skill instead of linking into its folder."
     }
   ]

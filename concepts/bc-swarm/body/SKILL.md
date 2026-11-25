@@ -9,7 +9,7 @@ If `~/.config/agent-concepts/overlays/bc-swarm.md` exists, read it: it supplies 
 
 Go wide. While this skill is active, delegating is the default and **keeping** work is what needs a reason.
 
-It composes `dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
+It composes `bc-dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
 
 Before fan-out or worktree creation, run the machine's storage health check if one exists, and stop and report on critical or unknown health. After integrating a worker, prove its commits are in `HEAD` (its tip is an ancestor, or every commit is patch-equivalent), record that proof, and only then remove its worktree and branch. Copy into worker packets: run pytest through the guarded test runner the project's or machine's instructions name, never with a custom `--basetemp`; make scratch folders with `mktemp -d`, never under `/tmp`; run targeted tests only, never the full suite or gate. The `agent-kernel` concept's Storage safety and Verification sections hold the full rules, when loaded. Why: children do not inherit the kernel and retained worktrees consume storage.
 
@@ -84,7 +84,7 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
 
 ## What every child packet adds
 
-`dispatching-parallel-agents` defines the packet (scope, goal, constraints, evidence, output contract). Under `bc-swarm`, add these bullets:
+`bc-dispatching-parallel-agents` defines the packet (scope, goal, constraints, evidence, output contract). Under `bc-swarm`, add these bullets:
 
 ```
 - Write your findings to <artifact path>. Append them as you establish them; do not hold
@@ -104,7 +104,7 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
 
 Fill the runner slot from the project's and machine's agent instructions and docs (drop it to plain pytest only when none exists). Fill the targeted checks with named test files or IDs; never paste the project's full gate into a packet, even when its validation page lists the gate. Why: a pasted gate is a full run per worker. The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
 
-**Test levels travel with the code** (load the `tdd` skill, section Test levels):
+**Test levels travel with the code** (load the `bc-tdd` skill, section Test levels):
 
 - A worker packet never waives, narrows or forbids a tdd test level or its property library ("examples are enough", "no new dependency") unless it quotes the owner's approval. A parent that thinks a level is wrong for the task asks the owner. Why: a packet that overrides a level is a skip nobody approved, and the worker follows the packet.
 - A review packet includes the worker's Test levels block, or the commits' `Test-levels:` trailers, and asks the reviewer to audit it against the diff. Why: a reviewer given only diff and spec never sees the levels, so nobody audits them.
@@ -114,6 +114,6 @@ Fill the runner slot from the project's and machine's agent instructions and doc
 
 `bc-swarm` is for **investigation, analysis, and review** — reconnaissance, reading docs, cross-referencing, independent critique. Fan-out is cheap here because children only read.
 
-For implementation fan-out, stop and use `subagent-driven-development` or `bc-pipeline-to-done`. They already own worker packets, spec and standards review, worktree isolation, and rework loops. Why: a thinner parallel-implementation path competing with those will lose in ways nobody notices until something is merged.
+For implementation fan-out, stop and use `bc-subagent-driven-development` or `bc-pipeline-to-done`. They already own worker packets, spec and standards review, worktree isolation, and rework loops. Why: a thinner parallel-implementation path competing with those will lose in ways nobody notices until something is merged.
 
 Harness-specific mechanics, including the concrete dispatch syntax and observed failure modes, live in [pi.md](pi.md).

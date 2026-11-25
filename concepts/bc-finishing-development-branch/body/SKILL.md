@@ -1,0 +1,73 @@
+---
+name: bc-finishing-development-branch
+description: Use when implementation is complete and the user needs options for merging, creating a PR, keeping a branch, or discarding branch work.
+---
+
+# Finishing Development Branch
+
+Finish work by verifying first, then presenting clear options. Do not publish, merge, or discard by implication.
+
+Run pytest through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`). Before deleting a branch or worktree, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof; keep anything dirty, unmerged or unclear. Reuse recorded full-suite evidence for the same tree instead of running the suite again. The `agent-kernel` concept's Storage safety and Verification sections hold the full rules, when loaded. Why: completion is not a reason to duplicate suites or delete unproven work.
+
+## 1. Verify before offering completion
+
+Inspect recorded checks for the exact tree, or run missing relevant checks under kernel Storage safety, and read the output. If checks fail, stop and report failures; do not offer merge/PR options until the user chooses to proceed despite them.
+
+Also inspect:
+
+```bash
+git status --short
+git branch --show-current
+git rev-parse --git-dir
+git rev-parse --git-common-dir
+git log --oneline --decorate -5
+```
+
+Separate agent-authored changes from unrelated user drift before any commit/merge/push.
+
+## 2. Detect workspace and branch state
+
+- Normal repo on a named branch: standard options.
+- Linked worktree on a named branch: standard options, but cleanup only if this agent created/owns it.
+- Detached or harness-owned workspace: no local merge option unless a branch is created intentionally.
+
+Determine likely base branch (`main`, `master`, or project instruction), but ask if uncertain.
+
+## 3. Present options
+
+Named branch:
+
+1. Merge back to `<base>` locally.
+2. Push/create PR, only if user explicitly chooses and publish policy allows or user authorizes.
+3. Keep branch/worktree as-is.
+4. Discard this work.
+
+Detached/harness-owned workspace:
+
+1. Create/push a branch and PR, only with explicit authorization.
+2. Keep as-is.
+3. Discard this work.
+
+Do not add a hidden default. Ask the user to pick.
+
+## 4. Execute safely
+
+- Merge locally: update base, merge, verify the merged tree before cleanup (reuse recorded same-tree evidence; do not duplicate the full landing suite).
+- PR/push: check publish policy or ask; preserve worktree for review iteration.
+- Keep: report branch/path and stop.
+- Discard: require typed confirmation after listing branch, commits, and path. Never discard unrelated user changes.
+
+## Cleanup rules
+
+After a successful local merge, prune the owned worktree without asking. Keep is only for work that is not yet integrated. If you arrive and the unique work is already on the base branch, prune rather than offering Keep.
+
+Only remove a worktree if all are true:
+
+- It was created for this task or is under a known project-local worktree directory.
+- The chosen option is merge-local or confirmed discard, or the unique work is already on the base branch.
+- Merge/discard completed successfully, or integration is already proven.
+- No unrelated user changes are present.
+
+Never force-push. Never delete unmerged work without explicit confirmation. Integrated owned worktrees do not need a second confirmation.
+
+For integrated work, record the kernel ancestry/patch-equivalence proof in the manifest, remove the clean inactive owned worktree with `git worktree remove` (no `--force`), then use `git branch -d`. Use `-D` only after the kernel patch-equivalence or resolved-pick proof, and then without asking; squash/rebase alone is not proof. Keep dirty, active, unmerged or unclear work. Explicit discard remains a separately confirmed destructive action, not integration proof.

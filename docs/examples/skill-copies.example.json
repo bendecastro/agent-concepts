@@ -1,6 +1,6 @@
 {
   "repos": [
     "~/Projects/example-repo",
-    {"path": "~/Projects/adapted-repo", "intentional": ["tdd"]}
+    {"path": "~/Projects/adapted-repo", "intentional": ["bc-tdd"]}
   ]
 }

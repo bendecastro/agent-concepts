@@ -7,11 +7,15 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- loads `domain-modeling` — required, when glossary persistence, conflicts or ADR decisions.
+- loads `bc-domain-modeling` — required, when glossary persistence, conflicts or ADR decisions.
   Domain-modeling owns glossary purity, discovery, reconciliation and ADR rules; naming-things supplies criteria and conceptual persistence categories only.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
+
+- incoming from [bc-brainstorming](../bc-brainstorming/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
+  Apply shared naming criteria without changing the surrounding workflow gates.
+  Source: [bc-brainstorming/body/SKILL.md](../bc-brainstorming/body/SKILL.md)
 
 - incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
   Apply shared naming criteria without changing the surrounding workflow gates.
@@ -21,10 +25,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Apply shared naming criteria without changing the surrounding workflow gates.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md)
 
-- incoming from [brainstorming](../brainstorming/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
+- incoming from [bc-writing-plans](../bc-writing-plans/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
   Apply shared naming criteria without changing the surrounding workflow gates.
-  Source: [brainstorming/body/SKILL.md](../brainstorming/body/SKILL.md)
-
-- incoming from [writing-plans](../writing-plans/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
-  Apply shared naming criteria without changing the surrounding workflow gates.
-  Source: [writing-plans/body/SKILL.md](../writing-plans/body/SKILL.md)
+  Source: [bc-writing-plans/body/SKILL.md](../bc-writing-plans/body/SKILL.md)

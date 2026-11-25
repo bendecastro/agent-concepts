@@ -41,7 +41,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   Path cell lists `.bc-agent/` entries comma-separated; that cell is read raw, because the shared
   parser keeps only the first backticked path. Hidden entries are skipped except `.obsidian/`,
   which is retired in this layout. `scratch/` is seen here although page scanning skips it. Why:
-  a pressure test showed `prototype` following a user's explicit scratch path over the skill's
+  a pressure test showed `bc-prototype` following a user's explicit scratch path over the skill's
   wording three times, so the backstop is deterministic, not more wording
   ([results](../bc-init-agent/tests/pressure-dependent-skills-results-2026-11-12.md)).
 - **The table parser is a checked copy, not an import.** `bc-init-agent/body/scaffold.py` owns
@@ -51,7 +51,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   is deployed as a copy without its sibling concept, and the detector must stay a standalone
   stdlib script.
 - **Shared glossary and visible read path (W3 review, 2026-11-12).** In a hybrid project the body
-  points to `domain-modeling`'s shared-glossary rule instead of restating it, and the read-path
+  points to `bc-domain-modeling`'s shared-glossary rule instead of restating it, and the read-path
   and stale-page instructions name the visible-layout equivalents (`.bc-agent/AGENTS.md` for
   orientation, the `ideas` role for a leftover-sentence note).
 - **Promotion is retired for the visible layout (owner decision 2026-11-12).** Promotion existed
@@ -148,7 +148,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   so the classification gate still forces a verdict on them, and the report names them under a
   warning. A set with *no* datable heading still yields an invalid range and still fails closed.
   The old `all(date is not None)` guard meant one malformed heading nullified the range for the
-  whole set: `codebase-design` had exactly one bare `## 2026-06-28` at line 6 of its log among
+  whole set: `bc-codebase-design` had exactly one bare `## 2026-06-28` at line 6 of its log among
   otherwise textbook headings, and it blocked 18 valid ones permanently, with no path to
   self-recovery. The cost accepted here is audit precision — an undatable heading is retired by a
   commit whose subject range does not span it, though the commit body still carries its verdict.
@@ -224,10 +224,10 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   index entries) — ported into `body/wiki_lint.py`, not vendored from a private path.
 - `concepts/bc-init-agent/` — the additive, idempotent, never-deletes project-vault scaffold
   this concept extends.
-- `concepts/qmd/` — the global search overlay whose collection coverage the detector reports.
-- `concepts/prompting-agents/body/SKILL.md` — adapted scope-discipline, gate, evidence, and
+- `concepts/bc-qmd/` — the global search overlay whose collection coverage the detector reports.
+- `concepts/bc-prompting-agents/body/SKILL.md` — adapted scope-discipline, gate, evidence, and
   verification instruction blocks used in the body.
-- `concepts/teach/` — the hosted learning owner and explicit adapter path map whose evidence and
+- `concepts/bc-teach/` — the hosted learning owner and explicit adapter path map whose evidence and
   review state this maintenance pass must not fabricate or advance.
 - `tests/retrieval-results.md` (commit `166437c3c0919862a41379bfc1f4dd253cf7db62`) — the
   pre-registered project B comparison that exposed the sentence-versus-keyword query-shape
@@ -252,7 +252,7 @@ hybrid and learning projects: each work-folder check, the table path being honou
 visible-layout routing in `body/SKILL.md` has not had a consumer pressure run.
 
 `tests/pressure-promotion.md` defines the promotion-gate pressure scenarios. The teach-owned
-adapter boundary is covered by `../teach/tests/pressure-host-integration.md`. Its cross-skill
+adapter boundary is covered by `../bc-teach/tests/pressure-host-integration.md`. Its cross-skill
 scenario 4 ran 2026-09-05 against `ea49123` and **PASSED**: a fresh consumer told to promote every
 durable log claim, including "Ben understood the consensus concept", promoted only the ordinary
 project fact, classified the learner claim as teach-owned and skipped, refused to bump the review
@@ -306,7 +306,7 @@ heading list instead of passing vacuously.
 **2026-08-25 — PASS — range narrowing (19 tests).** A mixed set narrows the range to its datable
 headings while keeping the undatable one in the heading list and naming it in the report; a
 wholly undatable set still yields `PROMOTION_RANGE=invalid`. Verified read-only against the four
-live vaults: `codebase-design` moved from `invalid` to `2026-06-28..2026-07-14` with 18 headings,
+live vaults: `bc-codebase-design` moved from `invalid` to `2026-06-28..2026-07-14` with 18 headings,
 `sql` and `Scripts` stayed `invalid`, and `Music` was unchanged at `2026-05-29..2026-08-05`.
 
 **2026-08-30 — PASS — tracked-only visibility regression.** `tests/test_wiki_search.py` now

@@ -153,11 +153,30 @@ def workspace_markdown() -> list[Path]:
     return [f for f in files if f not in skip]
 
 
+DATED = re.compile(r"\d{4}-\d{2}-\d{2}")
+
+
+def historical_record(md: Path) -> bool:
+    """A file whose paths and links were true when written and are never rewritten."""
+    parts = md.relative_to(ROOT).parts
+    # Raw sources are immutable; log.md is the append-only journal.
+    if "raw" in parts or md.name == "log.md":
+        return True
+    # Finished and dropped work items.
+    if parts[:2] in {("work", "3-done"), ("work", "4-dropped")}:
+        return True
+    # Dated research: captured evidence quotes other trees; dated studies cite the tree of their day.
+    if parts[:2] == ("docs", "research") and ("evidence" in parts[2:-1] or DATED.match(parts[2] if len(parts) > 3 else "")):
+        return True
+    # Recorded test results in a concept's tests/ folder (results-<date>.md, results/, pressure-results-<date>.md).
+    if parts[0] == "concepts" and len(parts) > 3 and parts[2] == "tests" and any("results" in p for p in parts[3:]):
+        return True
+    return False
+
+
 def lint_links(issues: list[Issue]) -> None:
     for md in workspace_markdown():
-        # Raw sources and the append-only journal are not workspace-owned docs
-        # whose links can be rewritten during a structural migration.
-        if "raw" in md.relative_to(ROOT).parts or md.name == "log.md":
+        if historical_record(md):
             continue
         text = read(md)
         for link in markdown_links(text):
@@ -171,7 +190,7 @@ def lint_links(issues: list[Issue]) -> None:
 # during the 2026-08 extraction. Only prefixes that unambiguously mean
 # "repo-relative path" are checked, so external paths like `~/.claude/skills`
 # and bare filenames are left alone.
-# Generic "docs/" is deliberately absent: concepts like codebase-docs discuss
+# Generic "docs/" is deliberately absent: concepts like bc-codebase-docs discuss
 # docs/ trees in other repositories, so the prefix is not unambiguously
 # repo-relative. These specific workspace subtrees are unambiguous.
 INLINE_PATH_PREFIXES = ("concepts/", "scripts/", "policies/", "docs/guides/", "docs/examples/", "docs/research/raw/")
@@ -180,17 +199,7 @@ INLINE_CODE = re.compile(r"`([^`\n]+)`")
 
 def lint_inline_paths(issues: list[Issue]) -> None:
     for md in workspace_markdown():
-        parts = md.relative_to(ROOT).parts
-        if "raw" in parts:
-            continue
-        # log.md is a historical journal; its paths were true when written.
-        if md.name == "log.md":
-            continue
-        # Finished and dropped work items are historical: accurate when written.
-        if parts[:2] in {("work", "3-done"), ("work", "4-dropped")}:
-            continue
-        # Captured evidence quotes other repositories' trees; its paths were true in their own context.
-        if parts[:2] == ("docs", "research") and "evidence" in parts[2:-1]:
+        if historical_record(md):
             continue
         for match in INLINE_CODE.findall(read(md)):
             ref = match.strip().split()[0] if match.strip() else ""
@@ -445,7 +454,8 @@ def lint_relationships(issues: list[Issue]) -> None:
 
 
 def lint_public_skills(issues: list[Issue]) -> None:
-    for error in public_skills.check_list(ROOT) + public_skills.unlisted_load_references(ROOT):
+    for error in (public_skills.check_list(ROOT) + public_skills.unlisted_load_references(ROOT)
+                  + public_skills.unprefixed_names(ROOT)):
         issues.append(Issue("ERROR", f"public skills: {error}"))
 
 

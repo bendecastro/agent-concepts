@@ -56,7 +56,7 @@ Pass (graded from `plan.md` and the checkout):
 4. The claim is the committed `git mv` of the item to work-active (with the index regenerated)
    before any builder starts; no claim ref is pushed.
 5. One builder for the item, in a worktree outside the checkout, working step 1 then step 2, with
-   `minimal-solution-ladder` (and `tdd`) passed and an explicit effort.
+   `bc-minimal-solution-ladder` (and `bc-tdd`) passed and an explicit effort.
 6. Each step gets an independent read-only review before it lands; the builder does not commit.
 7. Each landing commit carries the step's diff, its ticked checkbox and the regenerated index.
 8. Finish: `## Outcome` filled, `git mv` into `work/3-done/<YYYY-MM>/`, index regenerated, in one

@@ -21,10 +21,10 @@ If `~/.config/agent-concepts/overlays/bc-init-agent.md` exists, read it for this
 - **The "Where things go" table in `.bc-agent/AGENTS.md` is the single home for these paths.**
   When you or another skill need a location, look the role up there instead of assuming it. Why:
   a project with a justified exception then changes one table, not every skill.
-- **Learning and knowledge keep the `.bc-agent/` vault.** Why: `teach` reads exact vault paths;
+- **Learning and knowledge keep the `.bc-agent/` vault.** Why: `bc-teach` reads exact vault paths;
   changing them is a separate plan.
-- **Hybrid also keeps the paths the hosted `teach` adapter maps under `.bc-agent/`**, except the
-  glossary: its adapter maps `teach`'s glossary to the project's root `glossary.md`, so a hybrid
+- **Hybrid also keeps the paths the hosted `bc-teach` adapter maps under `.bc-agent/`**, except the
+  glossary: its adapter maps `bc-teach`'s glossary to the project's root `glossary.md`, so a hybrid
   project has one glossary, shared by the project and the learner.
 
 ## Operating modes and wiki archetypes
@@ -45,7 +45,7 @@ Archetypes:
 
 - **learning** — bc agents helping the human learn. The generated
   `.bc-agent/references/teach-skill.md` is an explicit thin adapter for the existing
-  standalone `teach` skill: mission → `learning/plan.md`, review queue →
+  standalone `bc-teach` skill: mission → `learning/plan.md`, review queue →
   `learning/review.md`, records → `learning/records/`, notes → `learning/notes.md`,
   raw sources → `sources/`, compiled knowledge → `concepts/`, resources →
   `references/teach-resources.md`, glossary → the existing Glossary section of
@@ -59,14 +59,14 @@ Archetypes:
   destructive and verifies every destination before deleting standalone originals. `questions/`
   is for open questions only, not a second review queue or evidence store.
 - **knowledge** — LLM-maintained knowledge graph: immutable `raw/`, compiled `wiki/sources`, `wiki/entities`, `wiki/concepts`, `wiki/syntheses`, and a wiki log.
-- **hybrid** — the ops layout plus a hosted `teach` workspace, for a folder that both ships or operates something and supports learning. The scaffold adds exactly the paths the teach adapter maps under `.bc-agent/` (`learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, and the teach catalog `index.md`); do not add a parallel learning state tree. Its adapter maps `teach`'s glossary to the project's root `glossary.md`, shared: `teach` adds the terms the learner needs and does not remove or redefine project terms without asking. Project work still goes where the table says, not into the teach paths.
+- **hybrid** — the ops layout plus a hosted `bc-teach` workspace, for a folder that both ships or operates something and supports learning. The scaffold adds exactly the paths the teach adapter maps under `.bc-agent/` (`learning/`, `sources/`, `concepts/`, `questions/`, `sessions/`, and the teach catalog `index.md`); do not add a parallel learning state tree. Its adapter maps `bc-teach`'s glossary to the project's root `glossary.md`, shared: `bc-teach` adds the terms the learner needs and does not remove or redefine project terms without asking. Project work still goes where the table says, not into the teach paths.
 
 ## Process
 
 1. **Locate the project.** Find the repo root (`git rev-parse --show-toplevel`). If choosing a new root, read the user's preferences file when one exists and names a default project location, and suggest that location; otherwise ask. Why: the user decides where projects live, and their preferences file is that decision's one home. If the chosen root is inside a folder replicated by a file-sync tool, warn before scaffolding: the tool replicates `.git` file by file, so two machines can corrupt the repository or leave conflict copies inside it. If not a git repo, ask whether to initialize here, use the folder, or choose another root. Pick the slug from the argument or directory name; confirm ambiguity.
 
 2. **Recon before grilling.** Inspect the environment before asking questions. Keep it bounded; do not crawl huge dependency/build output directories. Check at least:
-   - Git state: repo root, branch, dirty status, remotes, existing `AGENTS.md`, existing `.bc-agent/`, `glossary.md`, docs/plans/ADRs. For legacy glossary discovery, follow `domain-modeling`’s legacy glossary rule.
+   - Git state: repo root, branch, dirty status, remotes, existing `AGENTS.md`, existing `.bc-agent/`, `glossary.md`, docs/plans/ADRs. For legacy glossary discovery, follow `bc-domain-modeling`’s legacy glossary rule.
    - GitHub readiness: whether `gh` exists/auths and whether `gh repo view` works when an origin exists.
    - Project shape: empty/near-empty vs active vs old/messy; package/build/deploy markers (`package.json`, lockfiles, `pyproject.toml`, `Cargo.toml`, `go.mod`, Docker/Compose, CI, infra, scripts, Makefile/justfile, README).
    - Existing knowledge to seed: README, docs, issue templates, architecture notes, validation commands, deployment notes, old plans/specs.
@@ -80,7 +80,7 @@ Archetypes:
 
    For an **operational/system workspace**, identify components, findings/evidence, decisions, open questions, and planned work. Ask what real-world actions agents may do vs only document for the human.
 
-   For a **learning workspace**, ask the subject, desired outcome, current level, preferred learning cadence, source material, and whether to invoke the `teach` skill for multi-session tutoring records.
+   For a **learning workspace**, ask the subject, desired outcome, current level, preferred learning cadence, source material, and whether to invoke the `bc-teach` skill for multi-session tutoring records.
 
    For a **knowledge-graph workspace**, ask the domain boundary, source-ingest policy, raw immutability expectations, entity/concept granularity, and whether this is personal cross-project knowledge or project-local knowledge.
 
@@ -97,7 +97,7 @@ Archetypes:
    ```
    python3 <skill-dir>/scaffold.py --root "<repo-root>" --slug "<slug>" --archetype "<code|ops|learning|knowledge|hybrid>"
    ```
-   Code, ops and hybrid create root `glossary.md`, lifecycle folders under `work/` with a `work/README.md` whose item table `.bc-agent/scripts/work_index.py` generates from each open item's `Blocked by:` line (no item before what it waits for; three tiers: active, then planned items an active item waits on, then other planned items; within a tier the owner's ranking in an optional `work/order.md`, then ready, then most work unblocked) with the `Stages:` line as the tiebreak (an optional `Kind:` line names what an item is; `work_index.py --check` places a new item of a kind on the `Top kinds:` line, default security, bug, build, architecture or `none`, directly below the top-kind run at the top of `order.md`, never above its blocker), `docs/decisions/`, `docs/research/`, `docs/design/README.md` (the entry page of the project's design framework, with empty Pages and Checks lists the project fills; method in the `ui-design` skill's `design-framework.md`) with a `.bc-agent/map.md` line routing design, UI and CLI wording work to it, `docs/guardrails/README.md` (the project's speed, size, memory and structure limits and their checks, with empty Targets, Budgets and Checks lists; method in the `guardrails` skill; no measuring script) with a map line routing guardrail work to it, and `.bc-agent/` mechanics with a Where things go table and work-item template. They also create an executable `./scripts/gate` stub (the full gate; it exits non-zero until its steps are filled), a CI workflow `.github/workflows/gate.yml` that runs it on a clean checkout, and a staged `conventions/validation.md` (while working, full gate, release; one owner each). Hybrid also retains the hosted teach adapter and its mapped paths and catalog; its teach glossary is the root `glossary.md`. Learning and knowledge keep the existing vault including Obsidian metadata. Existing files remain untouched unless forced; no project is migrated by this step.
+   Code, ops and hybrid create root `glossary.md`, lifecycle folders under `work/` with a `work/README.md` whose item table `.bc-agent/scripts/work_index.py` generates from each open item's `Blocked by:` line (no item before what it waits for; three tiers: active, then planned items an active item waits on, then other planned items; within a tier the owner's ranking in an optional `work/order.md`, then ready, then most work unblocked) with the `Stages:` line as the tiebreak (an optional `Kind:` line names what an item is; `work_index.py --check` places a new item of a kind on the `Top kinds:` line, default security, bug, build, architecture or `none`, directly below the top-kind run at the top of `order.md`, never above its blocker), `docs/decisions/`, `docs/research/`, `docs/design/README.md` (the entry page of the project's design framework, with empty Pages and Checks lists the project fills; method in the `bc-ui-design` skill's `design-framework.md`) with a `.bc-agent/map.md` line routing design, UI and CLI wording work to it, `docs/guardrails/README.md` (the project's speed, size, memory and structure limits and their checks, with empty Targets, Budgets and Checks lists; method in the `bc-guardrails` skill; no measuring script) with a map line routing guardrail work to it, and `.bc-agent/` mechanics with a Where things go table and work-item template. They also create an executable `./scripts/gate` stub (the full gate; it exits non-zero until its steps are filled), a CI workflow `.github/workflows/gate.yml` that runs it on a clean checkout, and a staged `conventions/validation.md` (while working, full gate, release; one owner each). Hybrid also retains the hosted teach adapter and its mapped paths and catalog; its teach glossary is the root `glossary.md`. Learning and knowledge keep the existing vault including Obsidian metadata. Existing files remain untouched unless forced; no project is migrated by this step.
 
 7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. On an existing project, fill `./scripts/gate` with the verified commands its CI already runs before the scaffold commit; keep `gate.yml`, since a scaffold re-run recreates it. On a new project the stub stays red until the first test or build command lands; filling `./scripts/gate` is that green-making change. Why: the stub gate fails by design, and red trunk CI blocks landing except for the change that makes it green. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, or `references/agent-skills.md`). When the notes report earlier-layout paths under `.bc-agent/` (only possible with `--allow-earlier-layout`), leave them in place and say so in the close-out: moving them to the visible layout is a separate migration the user approves.
 
@@ -105,7 +105,7 @@ Archetypes:
 
 Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip both for code, ops and hybrid. Why: qmd registration and `bc-wiki-maintain` expect a vault with an index, which visible-layout projects no longer have; a later work package of the visible-layout plan revisits them.
 
-9. **Register the project for global search (default yes, opt-out).** New projects are searchable by default; append to the qmd collections file and apply it with the setup command — see the `qmd` concept. Ask only if the user wants this project **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos — and then record a line containing "excluded from the global qmd index" and the reason in `.bc-agent/AGENTS.md` (learning/knowledge: `project/overview.md`), which `bc-wiki-maintain`'s lint reads. Skip the setup command if qmd is not installed, but append to the synced YAML anyway so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `qmd` skill).
+9. **Register the project for global search (default yes, opt-out).** New projects are searchable by default; append to the qmd collections file and apply it with the setup command — see the `bc-qmd` concept. Ask only if the user wants this project **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos — and then record a line containing "excluded from the global qmd index" and the reason in `.bc-agent/AGENTS.md` (learning/knowledge: `project/overview.md`), which `bc-wiki-maintain`'s lint reads. Skip the setup command if qmd is not installed, but append to the synced YAML anyway so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `bc-qmd` skill).
    - **Code, ops and hybrid:** two collections, printed from the project's own table by
      `python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_lint.py" "<repo-root>/.bc-agent" --qmd-entry <slug>`.
      Append its output under `collections:` unchanged. `<slug>` is rooted at `.bc-agent/` (agent
@@ -205,7 +205,7 @@ Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip bot
     do not install `bc-wiki-lint.timer`.
 
 11. **Close out.** Point at the created files, the wiki-maintain timer offer
-    outcome, and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-pipeline-to-done` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
+    outcome, and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/bc-triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/bc-prototype` or `/bc-improve-codebase-architecture` when planning needs evidence/runway; then `/bc-pipeline-to-done` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 
 ## Migrate an existing project
 

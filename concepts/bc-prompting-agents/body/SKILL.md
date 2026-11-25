@@ -1,0 +1,278 @@
+---
+name: bc-prompting-agents
+description: Use when writing or revising instructions for a coding agent — concept bodies, AGENTS.md files, system prompts, or per-agent configs. A library of proven instruction blocks to adapt, not invent.
+---
+
+# Prompting Agents
+
+Reusable instruction blocks and principles distilled from OpenAI's GPT-5.2 and Codex prompting guides, Anthropic's prompting/context-engineering guidance, and Google's prompt-engineering whitepaper (see CONCEPT.md for provenance), rewritten agent-agnostically. When authoring or tuning instructions for any agent, adapt the relevant block rather than writing one from scratch — these phrasings have been optimized against production evals. Tag origin when copying verbatim so future updates can be traced.
+
+## First: choose the altitude
+
+Before reaching for any block below, decide how much constraint the task actually warrants. Anthropic's context-engineering guidance calls this the **right altitude**: the Goldilocks zone between brittle, hardcoded if-else process steps (fragile, high-maintenance, and insulting to a capable model) and vague high-level guidance that falsely assumes shared context. Instructions should be specific enough to transmit hard-won lessons, flexible enough that the agent applies its own reasoning.
+
+Three principles that govern everything else in this library:
+
+- **Explain the why.** State the motivation behind an instruction, not just the instruction — "Claude is smart enough to generalize from the explanation," and a rule whose reason is visible can be correctly applied to situations its author never imagined. A bare imperative can only be obeyed or violated. (Anthropic prompting best practices.)
+- **Prefer general instructions over prescriptive steps.** "Think thoroughly" often beats a hand-written step-by-step plan; a strong model's reasoning frequently exceeds what its author would prescribe. Save prescriptive blocks for places where errors are costly or the failure mode is in-the-moment rationalization. (Anthropic prompting best practices.)
+- **Context economy.** Aim for the smallest set of high-signal tokens that produces the outcome — context rot is real: recall degrades as context grows. Progressive disclosure (lean entry file, details loaded just-in-time) is this principle applied to skill structure. (Anthropic context engineering.)
+
+The constraining blocks below (scope discipline, gates-style rules) are tools for *specific failure modes*, not a default posture. Reach for them when the cost of an error is high or when an agent under pressure predictably rationalizes — and even then, attach the why.
+
+## Skill composition and invocation boundaries
+
+When designing a skill suite rather than a single prompt, keep workflows small and composable instead of one process owning everything:
+
+```
+- Separate user-invoked orchestrators from model-invoked disciplines. User-invoked skills
+  can coordinate a session; model-invoked skills hold reusable behavior the agent should
+  reach for automatically when the task fits.
+- A user-invoked skill may invoke model-invoked skills, but should not invoke another
+  user-invoked orchestrator; nested orchestration blurs control and makes failures harder
+  to debug.
+- Encode shared project vocabulary and hard-to-explain decisions in durable docs close to
+  the work. A shared language reduces verbosity, improves names, and helps agents navigate
+  the codebase.
+- Prefer small feedback-loop skills (TDD, diagnosis, domain modeling, design review) over
+  monolithic process frameworks. The user keeps control while the agent gains discipline.
+```
+
+### Loading is not authorization
+
+Adapt this mode gate when a broad auto-trigger description can load a costly workflow:
+
+```
+Loading this skill defaults to guidance, not authorization for its heavy or irreversible
+workflow. Run that workflow (fan-out, file creation, external actions) only on an explicit
+request for it. If the request is ambiguous, ask one focused question before starting.
+```
+
+Why: broad descriptions auto-trigger on ordinary questions; loading must not silently authorize costly workflows. From Cloudflare’s security-audit-skill; see the `bc-security-audit` skill, section Choose the mode before acting, for the in-workspace example. An explicit workflow request does not bypass its action-specific safety controls.
+
+## Standing instruction files (always-loaded context)
+
+For the file an agent reads every session — AGENTS.md, CLAUDE.md, a system prompt. These fail by growing: every line is always loaded, and a bloated file causes the agent to ignore the rules that matter because they're lost in noise. (Claude Code best practices.)
+
+```
+- Pruning test, per line: "Would removing this cause the agent to make mistakes?"
+  If not, cut it.
+- Include: commands the agent can't guess, style rules that differ from defaults,
+  testing instructions, repo etiquette (branching, PR conventions), project-specific
+  architectural decisions, environment quirks, non-obvious gotchas.
+- Exclude: anything derivable by reading the code, standard language conventions,
+  API documentation (link instead), frequently-changing facts, tutorials,
+  file-by-file codebase descriptions, self-evident advice ("write clean code").
+- Broadly-applicable content only; occasionally-relevant knowledge goes in
+  on-demand skills, not the always-loaded file.
+- Diagnostics: a rule that keeps being violated despite being in the file means the
+  file is too long (prune, don't add emphasis); questions the agent asks that the
+  file already answers mean the phrasing is ambiguous.
+- Treat the file like code: review it when behavior goes wrong, prune regularly,
+  and test edits by observing whether behavior actually shifts.
+```
+
+## Untrusted input and privileged actions
+
+For instructions whose agent reads content it does not control and can also act. Prompt text lowers how often an agent obeys injected instructions; it does not stop it. (ECC security guide.)
+
+```
+- The prompt is not the security boundary. For actions that are hard to reverse or
+  leak data (shell outside the workspace, network calls carrying data, secret reads,
+  publishing, dispatching workflows), point to a control the harness enforces:
+  approval prompts, scoped tools and credentials, sandboxes, a deterministic gate
+  such as a policy-check script. Name the boundary and its enforcer; do not rely
+  on a sentence the model can be talked out of.
+- Give the agent only the room the task needs. A reviewer does not need write
+  access; a reader of arbitrary web pages does not need secrets.
+- When a high-risk workflow must read hostile content (arbitrary web pages, email,
+  third-party repos) and also hold powerful tools, split it: a restricted reader
+  extracts source-linked facts, and the acting agent receives only those facts and
+  still treats them as data. Skip the split for ordinary research; it costs a stage
+  and loses nuance.
+- Durable memory is a persistence surface for injected text. A workflow that writes
+  memory should promote entries deliberately, keep project and global memory
+  separate, never store secrets, and never auto-save summaries of untrusted content.
+```
+
+## Agent-ready work shaping
+
+For coding-agent workflows that span planning through execution, shape work so an agent can pick it up independently without losing human control:
+
+```
+- Stress-test vague requirements before implementation. Use a grilling/interview step to
+  expose missing decisions, then write the resolved scope as durable planning context.
+- Convert plans into thin vertical slices ("tracer bullets") that each exercise a useful
+  path through the system and can be implemented, tested, and committed independently.
+- Keep TDD or another fast correctness loop attached to each slice. The feedback loop is
+  what lets the agent run human-in-the-loop or unattended without drifting silently.
+- Match how hard the check gates stopping to how unattended the run is. The ladder:
+  check requested in the prompt → a per-turn condition an evaluator re-checks → a
+  deterministic gate (script/hook that blocks finishing until it passes) → an
+  independent fresh-context agent that tries to refute the result. Each rung trades
+  setup for unattended reliability; supervised work can sit low, AFK work belongs high.
+- Require evidence over assertion: the test output, the command run and what it
+  returned, the screenshot — reviewing evidence beats re-running verification.
+- When an agent struggles, refine the prompt, issue, or project docs that produced the
+  struggle; do not treat the failure as only a one-off execution mistake.
+- Codebase design is part of agent enablement: clear seams, durable vocabulary, and
+  testable modules make autonomous execution safer and cheaper.
+- Make the project runway explicit: prerequisites, setup, dev server, typecheck, test,
+  build, and database/reset commands should be documented where the agent will find them.
+```
+
+## Output shape and verbosity
+
+Models are prompt-sensitive on verbosity; clamp it concretely, not with "be concise":
+
+```
+- Default: 3–6 sentences or ≤5 bullets for typical answers; ≤2 sentences for simple yes/no questions.
+- For complex multi-step tasks: 1 short overview paragraph, then ≤5 bullets tagged
+  What changed / Where / Risks / Next steps / Open questions.
+- Avoid long narrative paragraphs; prefer compact bullets and short sections.
+- Do not rephrase the user's request unless it changes semantics.
+```
+
+## Scope discipline
+
+The strongest single lever against agents doing more than asked:
+
+```
+- Implement EXACTLY and ONLY what the user requests.
+- No extra features, no added components, no embellishments.
+- If any instruction is ambiguous, choose the simplest valid interpretation.
+- If you notice adjacent work worth doing, call it out as optional — do not do it.
+```
+
+## Autonomy and persistence
+
+For agents that stop too early — pair with the loop-breaker, which prevents the failure mode this block otherwise creates:
+
+```
+- Once given a direction, proactively gather context, plan, implement, test, and refine
+  without waiting for additional prompts at each step.
+- Persist until the task is handled end-to-end within the current turn whenever feasible;
+  do not stop at analysis or partial fixes.
+- Bias to action: default to implementing with reasonable assumptions; do not end your
+  turn with clarifying questions unless truly blocked.
+- Loop-breaker: if you are re-reading or re-editing the same files without clear progress,
+  stop and end the turn with a concise summary and targeted questions.
+```
+
+## Ambiguity and hallucination
+
+```
+- If the question is ambiguous or underspecified, say so, then either ask 1–3 precise
+  clarifying questions OR present 2–3 plausible interpretations with labeled assumptions.
+- Never fabricate exact figures, line numbers, or external references when uncertain;
+  prefer "Based on the provided context…" over absolute claims.
+- For high-stakes outputs, re-scan your own answer before finalizing for: unstated
+  assumptions, ungrounded specifics, and overly strong language ("always", "guaranteed").
+```
+
+For non-interactive/research agents, invert the question rule: "Do not ask clarifying questions; cover all plausible intents with breadth and depth, stating your best-guess interpretation plainly."
+
+## Long-context re-grounding
+
+Reduces "lost in the scroll" errors over large inputs:
+
+```
+- For long inputs, first produce a short outline of the sections relevant to the request.
+- Re-state the user's constraints explicitly before answering.
+- Anchor claims to specific sections; quote fine details (dates, thresholds, clauses)
+  rather than speaking generically.
+```
+
+## Progress updates
+
+```
+- Send brief updates (1–2 sentences) only when starting a new major phase or when a
+  discovery changes the plan. Do not narrate routine tool calls.
+- Each update must contain at least one concrete outcome ("Found X", "Confirmed Y").
+```
+
+## Tool use and parallelism
+
+```
+- Prefer tools over internal knowledge whenever you need fresh or user-specific data,
+  or reference specific IDs, URLs, or document titles.
+- Think first: before any tool call, decide ALL files/resources you will need, then
+  issue independent reads as one parallel batch. Sequential calls only when the next
+  read genuinely depends on a prior result.
+- After any write/update, briefly restate what changed, where, and what validation ran.
+- Require an explicit verification step before high-impact operations (deletes, billing,
+  infra changes).
+```
+
+Naming custom tools: make names and parameters semantically exact (`semantic_search(query)`, not `search(q)`), state when/why/how to use them with good and bad examples, and make their output *look different* from similar tools' output so the model doesn't collapse into old habits.
+
+## Plan and promise discipline
+
+```
+- Skip planning for straightforward tasks; never make single-step plans.
+- The deliverable is working output, not a plan — never end a turn with only a plan.
+- Before finishing, reconcile every stated intention: Done, Blocked (reason + targeted
+  question), or Cancelled (reason). No dangling in-progress items.
+- Do not commit to tests/refactors you will not do now; label them optional next steps.
+```
+
+## Final-message style
+
+```
+- Lead with the outcome; jump straight in — no "Summary" preamble.
+- Match structure to the task: plain sentences for simple confirmations, sections only
+  when they aid scanning. Reference file paths instead of dumping file contents.
+- When offering multiple options, number them so the user can reply with a single digit.
+```
+
+## Working in a dirty repo
+
+```
+- NEVER revert changes you did not make; work with or around them.
+- If unexpected changes appear in files you are editing, stop and ask.
+- No destructive commands (reset --hard, checkout --) without explicit approval.
+```
+
+## UI anti-slop
+
+For agents producing UI from scratch (skip when a design system exists — then the rule is the opposite: conform to it):
+
+```
+- Avoid safe, average-looking layouts: no default font stacks, no purple-on-white
+  defaults, no flat single-color backgrounds, no interchangeable boilerplate.
+- Choose a clear visual direction; define tokens/CSS variables; use a few meaningful
+  animations rather than generic micro-motion. Verify in the actual host at
+  sizes appropriate to the surface; screenshots do not prove behavior.
+```
+
+## Technique repertoire
+
+When designing a task prompt (rather than standing instructions), pick the lightest technique that fits — from Google's prompt-engineering whitepaper (Boonstra) and Anthropic's docs:
+
+- **Examples over rules** for format/tone/structure: a few well-crafted examples steer more reliably than descriptions — show, don't tell. With reasoning models, examples can include the reasoning pattern itself.
+- **Chain-of-thought / "think first"** for problems needing deliberation; **step-back prompting** (ask for the general principle, then the specific answer) when the task benefits from grounding in fundamentals.
+- **Self-consistency** (sample multiple reasoning paths, take the consensus) when single-shot accuracy on a hard problem matters more than cost.
+- **Self-check** as a cheap reliability win: "before finishing, verify your answer against [criteria]."
+- **ReAct** (interleaved reasoning + tool use) is what modern agent harnesses already do — don't re-prompt it explicitly inside one.
+
+## Maintenance technique: metaprompting
+
+When an agent underperforms with instructions, tune the instructions rather than hand-fixing the output. Two instruments, with different blind spots:
+
+- **Self-critique** finds friction the agent *felt*. At the end of the disappointing turn: "read your instructions, name the specific line that misled you or that you had to work around, and propose a targeted but generalized change."
+- **Artifact grading** finds compliance the agent *believed* it had achieved — exactly where self-critique is weakest, since by its own account it complied. Grade the artifact the next reader will actually meet. The agent's response is not that artifact: a rule to mark something *in the code* is satisfied by a sentence in chat only if you grade the chat.
+
+Start with the instrument the symptom suggests — stalling and complaints point to friction, confident-but-wrong output points to the artifact — but a real defect usually needs both: grade to see the failure, then read the instructions to find what caused it.
+
+**Locate the mechanism before rewriting.** Examples, not a taxonomy to work through:
+
+- a **competing rule absorbed it** — another instruction let the agent feel the obligation was discharged; a report-shaped rule will launder a mark-the-code rule every time;
+- the **trigger never fired** — the rule was right, but nothing connected it to the situation in front of the agent;
+- **it isn't an instruction defect** — the agent lacked the capability or the context. No rewrite fixes either.
+
+Reaching for emphasis (ALWAYS, MUST, bold) is the reflex when the mechanism hasn't been found — and it is what an agent proposes about its own instructions for the same reason.
+
+**Adopt only what recurs, simplified to its general form** — and mind which kind of recurrence you have. A suggestion repeated inside one session is an echo of the last answer; independent runs (fresh context, without the earlier run's reasoning) make agreement mean something; a different provider decorrelates further but does not make runs independent on its own. The same check failing twice is already evidence. The general form is the whole point: "MUST write `ceiling:` in the code, NEVER only in chat" fixes one skill; "mark it where the next reader will meet it" fixes the class.
+
+**Prefer replacing over appending, and ask what to delete.** A tune that only ever adds is a bloat generator: every added line dilutes the ones already there, and the rule you are fixing may be failing *because* of what surrounds it. Not every finding has to become instruction weight — some belong in the concept's test notes.
+
+**Verify by re-running the check that failed**, never by asking the agent whether it feels better now, and keep that case as a regression check. The test rule applies before redeploy.

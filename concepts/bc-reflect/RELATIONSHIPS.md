@@ -7,12 +7,12 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- hands off to `code-review` — optional.
-  Judgement-call standards findings are proposed as code-review standards; mechanical ones become checks.
+- hands off to `bc-code-review` — optional.
+  Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks.
   Source: [body/SKILL.md](body/SKILL.md#every-proposal-names-its-home)
 
-- hands off to `prompting-agents` — optional.
-  A proposal homed in a concept or kernel clause is worded per prompting-agents and pressure-tested before deploy.
+- hands off to `bc-prompting-agents` — optional.
+  A proposal homed in a concept or kernel clause is worded per bc-prompting-agents and pressure-tested before deploy.
   Source: [body/SKILL.md](body/SKILL.md#every-proposal-names-its-home)
 
 ## Incoming

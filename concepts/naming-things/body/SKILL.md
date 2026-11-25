@@ -9,7 +9,7 @@ Apply this advisory checklist, choose names, and list the chosen names in your r
 
 ## New names
 
-Read the project's glossary before choosing words. Apply the rules below and the cold-read test before the first persisted write. Load `domain-modeling` for glossary persistence, conflicting terms and ADR decisions; its reconciliation contract still applies, rather than silently overriding an established term.
+Read the project's glossary before choosing words. Apply the rules below and the cold-read test before the first persisted write. Load `bc-domain-modeling` for glossary persistence, conflicting terms and ADR decisions; its reconciliation contract still applies, rather than silently overriding an established term.
 
 | Rule | Bad → good | Why |
 |---|---|---|
@@ -22,11 +22,11 @@ Read the project's glossary before choosing words. Apply the rules below and the
 | Use the same word in code, config, timers, docs and UI labels. | `sync` / `pull` / `import` for one job → `import-orders` everywhere | Parallel vocabularies break discoverability. |
 | List and settle persisted names before the first write; avoid mutable names in derived ids/hashes unless an alias reader is planned. | hash input `current-step-name` → stable `step-id` | Persisted spellings are expensive to change, not cosmetic labels. |
 
-**Cold-read test:** can a newcomer guess the input, output and verdict/result from the name alone? Bad `triage` → good `classify-tickets`. Why: this catches names that sound plausible only after an explanation.
+**Cold-read test:** can a newcomer guess the input, output and verdict/result from the name alone? Bad `bc-triage` → good `classify-tickets`. Why: this catches names that sound plausible only after an explanation.
 
 ## Record the choice
 
-Each new name gets a glossary entry through `domain-modeling`'s rules, with its meaning and a `Saved in:` line. List conceptual surface categories only: `job ids; ledger filename; config key; state value; hash input`, or `none` if not persisted. Mark persisted names **expensive to change**. No file paths, module names or literal keys in the glossary: its purity rule still owns the boundary. If exact locations are useful, put them in a code comment beside the name's single source of truth, not in the glossary.
+Each new name gets a glossary entry through `bc-domain-modeling`'s rules, with its meaning and a `Saved in:` line. List conceptual surface categories only: `job ids; ledger filename; config key; state value; hash input`, or `none` if not persisted. Mark persisted names **expensive to change**. No file paths, module names or literal keys in the glossary: its purity rule still owns the boundary. If exact locations are useful, put them in a code comment beside the name's single source of truth, not in the glossary.
 
 Example: **Draft replies** — Turn customer messages into suggested reply drafts. **Saved in:** job ids; ledger filename. **Expensive to change.**
 

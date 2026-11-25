@@ -7,16 +7,16 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- loads `council-chain` — required, when every council architecture review.
-  Roster, shared map, pass 1, merge, pass 2, fallbacks and sandbox cleanup have one home in council-chain; this skill defines only the chain parts.
+- loads `bc-council-chain` — required, when every council architecture review.
+  Roster, shared map, pass 1, merge, pass 2, fallbacks and sandbox cleanup have one home in bc-council-chain; this skill defines only the chain parts.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- loads `council-mode` — required, when every council architecture review.
-  Briefing, launch, relay, resume and the pass and roster caps have one home in council-mode.
+- loads `bc-council-mode` — required, when every council architecture review.
+  Briefing, launch, relay, resume and the pass and roster caps have one home in bc-council-mode.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- loads `improve-codebase-architecture` — required, when every council architecture review.
-  Inputs, card fields, report, grilling and filing have one home in improve-codebase-architecture; this skill adds only the map contents, card format and agreement rule.
+- loads `bc-improve-codebase-architecture` — required, when every council architecture review.
+  Inputs, card fields, report, grilling and filing have one home in bc-improve-codebase-architecture; this skill adds only the map contents, card format and agreement rule.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming

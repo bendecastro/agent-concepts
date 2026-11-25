@@ -1,5 +1,7 @@
 """Visible work layout emitted by the scaffold CLI."""
+import json
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -88,7 +90,7 @@ def _base_scaffold(tmp_path):
         pytest.skip(f'base commit {BASE_COMMIT} is not available (shallow clone or export)')
     base = tmp_path / 'base_scaffold.py'
     # Skills renamed after the base commit are the only intended changes to learning and knowledge
-    # output: the planning skill (2026-11-22) and issue-slicing to plan-slicing (2026-11-24); the
+    # output: the planning skill (2026-11-22) and issue-slicing to bc-plan-slicing (2026-11-24); the
     # workspace's pipeline guide moved to docs/guides/ (2026-11-25); bc-drain-issues became
     # bc-pipeline-to-done (2026-11-25); the owner's publish-check tool became a generic description
     # (2026-11-25).
@@ -96,7 +98,14 @@ def _base_scaffold(tmp_path):
     renamed = renamed.replace(b'bc-drain-' + b'issues', b'bc-pipeline-to-done')
     renamed = renamed.replace(b'$AGENT_CONCEPTS/docs/' + b'pipeline.md', b'$AGENT_CONCEPTS/docs/guides/pipeline.md')
     renamed = renamed.replace(b"runs `publish-" + b"check.py`.", b"runs the machine's publish policy check.")
-    base.write_bytes(renamed.replace(b'issue-' + b'slicing', b'plan-slicing'))
+    renamed = renamed.replace(b'issue-' + b'slicing', b'bc-plan-slicing')
+    # Every public skill gained the bc- prefix (2026-11-25, decision 0001).
+    public = json.loads((SCAFFOLD.parents[3] / 'concepts/public-skills.json').read_text())['skills']
+    names = b'|'.join(re.escape(n[3:].encode()) for n in sorted(public, key=len, reverse=True))
+    renamed = re.sub(rb'(`/?|\[)(' + names + rb')(?=[`\]])', rb'\1bc-\2', renamed)
+    renamed = re.sub(rb'(concepts/)(' + names + rb')(?=/)', rb'\1bc-\2', renamed)
+    renamed = re.sub(rb'the (guardrails|teach|handoff) skill', rb'the bc-\1 skill', renamed)
+    base.write_bytes(renamed)
     return base
 
 
@@ -385,7 +394,7 @@ def test_stage_folders_keep_gitkeep_permanently(tmp_path, archetype):
 def test_codebase_docs_scope_excludes_table_records(tmp_path, archetype):
     root = _scaffold(tmp_path, archetype)
     root_agents = ' '.join((root / 'AGENTS.md').read_text().split())
-    assert 'follow `codebase-docs`' in root_agents
+    assert 'follow `bc-codebase-docs`' in root_agents
     assert 'does not apply to the paths named in the "Where things go" table' in root_agents
     skills = ' '.join((root / '.bc-agent/references/agent-skills.md').read_text().split())
     assert 'not the paths named in the "Where things go" table' in skills

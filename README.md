@@ -102,8 +102,8 @@ The other concepts (code review, test-driven development, research, wiki mainten
 
 ## Keeping projects consistent
 
-Design consistency is handled by the `ui-design` skill's
-[design framework](concepts/ui-design/body/design-framework.md). Each project keeps design pages
+Design consistency is handled by the `bc-ui-design` skill's
+[design framework](concepts/bc-ui-design/body/design-framework.md). Each project keeps design pages
 under `docs/design/` that state its current choices. A new colour, size or wording pattern is
 defined once as a design token or shared part and used only from there, never as a literal value.
 A rule that text search can find becomes a check in the project's test runner. The capture rule
@@ -112,7 +112,7 @@ each one.
 
 Guardrails are automated checks that stop speed, size or structure from getting worse: performance
 budgets (limits on time, size or memory) and fitness functions (checks for a structural rule).
-The [`guardrails`](concepts/guardrails/body/SKILL.md) skill is the method. Each project lists its
+The [`bc-guardrails`](concepts/bc-guardrails/body/SKILL.md) skill is the method. Each project lists its
 limits and checks on `docs/guardrails/README.md`, and the checks run inside the project's gate.
 Agents set limits themselves, from today's measurement or a published guideline, and mark each
 one as their choice so you can change it; a limit you set is never loosened without asking.
@@ -133,7 +133,7 @@ deliberately, with the change logged, but not skipped quietly.
   with it.
 - **Immutability rule** — files in `docs/research/raw/` are never edited.
 
-Some skills carry their own hard rules, such as the capture rule in `ui-design` and the recovery
+Some skills carry their own hard rules, such as the capture rule in `bc-ui-design` and the recovery
 rule in `bc-swarm`.
 
 ## Publishing and authorisation

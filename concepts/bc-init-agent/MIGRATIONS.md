@@ -82,9 +82,9 @@ that holds the synced qmd collections file:
   If the project already has a `<slug>` collection rooted at `.bc-agent/`, keep it (the setup
   command will not re-point an existing name at a new path) and append only the printed
   `<slug>-project` block; drop stale contexts from the old entry that name vault folders the
-  migration moved (`/decisions`, `/research`, `/project`, `/components`, ...), since their files
+  migration moved (`/decisions`, `/bc-research`, `/project`, `/components`, ...), since their files
   now live in `<slug>-project`. Otherwise append both blocks. Then run the setup command (see the
-  `qmd` concept). `wiki_lint.py "<repo>/.bc-agent"` then reports `qmd registration: registered`.
+  `bc-qmd` concept). `wiki_lint.py "<repo>/.bc-agent"` then reports `qmd registration: registered`.
 - **Project agents row.** Edit the one table row in `.bc-agent/AGENTS.md` from
   `` | project-agents | — | not yet decided; ask the owner before creating project-specific agents | ``
   to
@@ -138,7 +138,7 @@ outside path literally creates a broken-link finding, while a corrected parent-r
 cannot add an edge to this vault.
 
 Both Homeflix maps have 15 out-of-vault source-tree rows. Leave those rows inline code. The six
-non-Homeflix maps (Music, Scripts, project B, CV, codebase-design, and sql) have in-vault targets
+non-Homeflix maps (Music, Scripts, project B, CV, bc-codebase-design, and sql) have in-vault targets
 that can become links.
 
 ### Per-vault procedure
@@ -232,7 +232,7 @@ vault directory.
    | CV | 12 → 8 |
    | sql | 17 → 13 |
    | Music | 12 → 9 |
-   | codebase-design | 21 → 18 |
+   | bc-codebase-design | 21 → 18 |
    | project B | 15 → 13 |
 
    Both Homeflix maps carry 15 out-of-vault source-tree rows that stay inline code. Do not force
@@ -341,7 +341,7 @@ a project without one is unaffected.
 
 Since 2026-11-21 the code, ops and hybrid scaffold also writes `docs/design/README.md`, the entry
 page of the project's design framework (how the product looks and behaves now; its method is the
-`ui-design` skill's `design-framework.md`), and a line in `.bc-agent/map.md` routing design, UI and
+`bc-ui-design` skill's `design-framework.md`), and a line in `.bc-agent/map.md` routing design, UI and
 CLI wording work to it. Learning and knowledge vaults do not get it. To adopt it in an existing
 project, one project at a time on its next scaffold run:
 
@@ -356,9 +356,9 @@ project, one project at a time on its next scaffold run:
 
 Since 2026-11-25 the code, ops and hybrid scaffold also writes `docs/guardrails/README.md`, the
 page listing the project's speed, size, memory and structure limits and their checks (its method is
-the `guardrails` skill), and a line in `.bc-agent/map.md` routing guardrail work to it. Learning and
+the `bc-guardrails` skill), and a line in `.bc-agent/map.md` routing guardrail work to it. Learning and
 knowledge vaults do not get it, and no measuring script is scaffolded. Existing projects are not
-swept: the `guardrails` skill copies the page text the first time guardrail work comes up. A
+swept: the `bc-guardrails` skill copies the page text the first time guardrail work comes up. A
 scaffold re-run also creates it when missing (never overwriting one) and prints an upgrade note
 while the map lacks the line; copy the line from a fresh scaffold's map into "Outside this folder".
 
@@ -366,6 +366,6 @@ while the map lacks the line; copy the line from a fresh scaffold's map into "Ou
 
 Since 2026-11-22 the work-item template has an optional `Source:` line under `Issue:`, naming the
 skill or review that produced the item (for example `bc-plan-to-pipeline` or
-`improve-codebase-architecture`). The scaffold does not rewrite an existing template; to adopt it,
+`bc-improve-codebase-architecture`). The scaffold does not rewrite an existing template; to adopt it,
 copy the line from a fresh scaffold's `.bc-agent/templates/work-item.md`. Existing items need no
 change: the line is optional.

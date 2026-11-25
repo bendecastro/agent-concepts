@@ -40,6 +40,17 @@ class PublicSkillsTests(unittest.TestCase):
         (self.root / "concepts" / "relationships.json").write_text(
             json.dumps({"schema": 1, "edges": self.edges}), encoding="utf-8")
 
+    def test_public_skill_without_bc_prefix_is_reported(self):
+        self.concept("bc-alpha")
+        self.concept("beta")
+        self.concept("hidden", deployed="no")
+        self.concept("kernel", skill=False)
+
+        errors = public_skills.unprefixed_names(self.root)
+
+        self.assertEqual(len(errors), 1)
+        self.assertIn("`beta`", errors[0])
+
     def test_list_excludes_kernels_and_undeployed_and_keeps_public_needs(self):
         self.concept("alpha", "load `beta`\n")
         self.concept("beta")

@@ -51,7 +51,7 @@ Verbatim except backticks removed around one project A path (repo lint reads it 
 ~~~~
 The previous report is undecided: `<report-dir>/2026-11-19.md`.
 
-1. **[Recommended] Review data growth at boundaries** — Add a `code-review` prompt to trace maximum size, duplication, growth and limit behavior across changed boundaries. Seen in 3 of 20 sampled sessions; two boundaries blocked work.
+1. **[Recommended] Review data growth at boundaries** — Add a `bc-code-review` prompt to trace maximum size, duplication, growth and limit behavior across changed boundaries. Seen in 3 of 20 sampled sessions; two boundaries blocked work.
 2. **Make the delivery check’s claim match what it verifies** — In project A’s scripts/delivery-check.mjs, narrow the success message and state that the loaded browser revision is unverified. One confirmed and one suspected version confusion across 2 of 20 sampled sessions.
 
 Reply with the numbers to act on, e.g. `1 2`. I’ll start the new review after your answer.
@@ -61,7 +61,7 @@ Reply with the numbers to act on, e.g. `1 2`. I’ll start the new review after 
 ~~~~
 The latest report is still undecided: `<report-dir>/2026-11-19.md`.
 
-1. **[Recommended] Review data growth at boundaries.** Add a `code-review` prompt to trace maximum data size, duplication, growth and behavior at limits across changed boundaries. Two sampled boundaries blocked work; a third showed substantial serialization amplification. Seen in **3 of 20 sampled sessions**. The proposed concept change needs a workspace pressure test before deployment.
+1. **[Recommended] Review data growth at boundaries.** Add a `bc-code-review` prompt to trace maximum data size, duplication, growth and behavior at limits across changed boundaries. Two sampled boundaries blocked work; a third showed substantial serialization amplification. Seen in **3 of 20 sampled sessions**. The proposed concept change needs a workspace pressure test before deployment.
 
 2. **Make the delivery check’s claim match what it verifies.** In project A’s scripts/delivery-check.mjs, narrow “Everything is delivered” to the helper release and build-manifest checks performed, and state that the loaded browser revision is unverified. One confirmed and one suspected delivery/version confusion across **2 of 20 sampled sessions**. Verify the integrated tree before acting.
 

@@ -609,7 +609,7 @@ def work_findings(project: Path, table: dict[str, str], agents_text: str) -> lis
     return found
 
 
-# `.bc-agent/` holds agent mechanics only (owner decision 2026-11-12, after `prototype`
+# `.bc-agent/` holds agent mechanics only (owner decision 2026-11-12, after `bc-prototype`
 # kept writing to a scratch folder the user named). Every other direct entry is an error.
 AGENT_MECHANICS_ENTRIES = {"AGENTS.md", "map.md", "log.md", "conventions", "references", "templates", "scripts"}
 # Folders a hosted teach workspace owns under `.bc-agent/` (bc-init-agent's

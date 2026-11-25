@@ -11,19 +11,19 @@ map so agents know what to invoke.
 
 - `/bc-plan-to-pipeline` — interactive planning front: grill → domain capture → PRD → issue slices.
 - `/bc-pipeline-to-done` — AFK executor for `ready-for-agent` issue queues.
-- `/improve-codebase-architecture` — optional architecture runway before planning/slicing.
+- `/bc-improve-codebase-architecture` — optional architecture runway before planning/slicing.
 
 ## Supporting skills used by the loop
 
-- Intake/evidence: `/triage`, `/prototype`.
-- Planning disciplines: `grilling`, `domain-modeling`, `prd-drafting`, `plan-slicing`, `codebase-design`.
-- Source-tree docs: `codebase-docs` — README files, other `docs/` pages and JSDoc; not `.bc-agent/` and not the paths named in the "Where things go" table in `.bc-agent/AGENTS.md`, which are records.
-- Execution disciplines: `tdd`, `diagnosing-bugs`, `bc-autoresearch-loop`.
+- Intake/evidence: `/bc-triage`, `/bc-prototype`.
+- Planning disciplines: `bc-grilling`, `bc-domain-modeling`, `bc-prd-drafting`, `bc-plan-slicing`, `bc-codebase-design`.
+- Source-tree docs: `bc-codebase-docs` — README files, other `docs/` pages and JSDoc; not `.bc-agent/` and not the paths named in the "Where things go" table in `.bc-agent/AGENTS.md`, which are records.
+- Execution disciplines: `bc-tdd`, `bc-diagnosing-bugs`, `bc-autoresearch-loop`.
 
 ## Agent behavior
 
 If the user's request sounds like planning future codebase work, ask whether to enter
-`/bc-plan-to-pipeline` before implementing. Offer `/improve-codebase-architecture` first when
+`/bc-plan-to-pipeline` before implementing. Offer `/bc-improve-codebase-architecture` first when
 the main uncertainty is architecture/seams. Run the computed check in
 `conventions/architecture-runway.md` and give the optional architecture-runway nudge when its
 planning-surface signal reaches the threshold.

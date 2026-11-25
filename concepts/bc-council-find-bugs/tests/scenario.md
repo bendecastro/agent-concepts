@@ -6,7 +6,7 @@ low), headless `pi -p`. Never use real council advisors.
 
 ## Setup
 
-1. `scratch=$(mktemp -d)`. Per run, copy `../../find-bugs/tests/practice-project/` (never
+1. `scratch=$(mktemp -d)`. Per run, copy `../../bc-find-bugs/tests/practice-project/` (never
    `answer-key.md`) to `$scratch/<run>`, `git init -b main`, scaffold a work pipeline with
    `python3 concepts/bc-init-agent/body/scaffold.py --root . --slug shopkit --archetype code`,
    add a `work/order.md` holding only a heading, commit.
@@ -17,8 +17,8 @@ low), headless `pi -p`. Never use real council advisors.
 3. Run from `$scratch/<run>`:
    `bwrap --dev-bind / / --tmpfs <overlays folder> --bind $scratch/agents <user agents folder>
    pi -p --model <model> --thinking low --no-swarm -nc -ns --no-prompt-templates
-   --skill <bc-council-find-bugs/body> --skill <council-chain/body> --skill <find-bugs/body>
-   --skill <council-mode/body> --session-dir $scratch/sess-<run> "<prompt>"`.
+   --skill <bc-council-find-bugs/body> --skill <bc-council-chain/body> --skill <bc-find-bugs/body>
+   --skill <bc-council-mode/body> --session-dir $scratch/sess-<run> "<prompt>"`.
    The skill has `disable-model-invocation`, so the prompt must start with the slash command.
 
 Prompt: `/skill:bc-council-find-bugs whole repository`, then harness notes: every subagent runs on
@@ -26,7 +26,7 @@ the pressure-test model at low thinking; headless, so run subagents in the foreg
 them; the owner is away and answers the filing question with `all`, so file in the same session,
 then clean up.
 
-## Pass (each run), graded from artifacts against `../../find-bugs/tests/answer-key.md`
+## Pass (each run), graded from artifacts against `../../bc-find-bugs/tests/answer-key.md`
 
 - transcript: a map scout, then three advisors with focuses dealt round-robin from the five-focus
   list, then a pass 2 in which advisors attack candidates they did not propose;
@@ -42,7 +42,7 @@ then clean up.
 ## Dry run
 
 The live run above asks Terra low to carry the whole chain; it stopped early (see the results). The
-dry run checks the instructions instead, the way `council-chain` and `bc-council-improve-codebase`
+dry run checks the instructions instead, the way `bc-council-chain` and `bc-council-improve-codebase`
 were tested: the consumer writes `plan.md` stating exactly what it would do and launches nothing.
 
 Setup: per run, a `mktemp -d` scratch copy of the practice project (no `answer-key.md`), `git init
@@ -50,7 +50,7 @@ Setup: per run, a `mktemp -d` scratch copy of the practice project (no `answer-k
 copied with `cp -rL` into scratch. Unset every `PI_SUBAGENT*` variable, then run from the copy:
 `bwrap --dev-bind / / --tmpfs ~/.agents/skills --tmpfs ~/.pi/agent/skills --tmpfs ~/.claude/skills
 --tmpfs <overlays folder> pi -p --model <pressure-test model> --thinking low --no-swarm -nc -ns
---no-prompt-templates --no-skills --skill <council-chain> --skill <find-bugs> --skill <council-mode>
+--no-prompt-templates --no-skills --skill <bc-council-chain> --skill <bc-find-bugs> --skill <bc-council-mode>
 --skill <bc-council-find-bugs> --session-dir <scratch>/sess-<run> "<prompt>"`.
 
 Prompt: `/skill:bc-council-find-bugs whole repository`, then: dry run; launch no subagent, create
@@ -72,8 +72,8 @@ Pass (each run, graded from `plan.md`, not the reply; the checkout must have no 
    narrower direction, sharper reproduction, with `file:line`), carried onto candidates under the
    advisor's name.
 7. Agreement only orders the reproduction queue and the suspected tier; it never confirms.
-8. ONE reproducing `worker`, skill list `["find-bugs","minimal-solution-ladder","codebase-design",
-   "codebase-docs","diagnosing-bugs","tdd"]`, own worktree, branch `find-bugs/<hunt>`, top 12.
+8. ONE reproducing `worker`, skill list `["bc-find-bugs","bc-minimal-solution-ladder","bc-codebase-design",
+   "bc-codebase-docs","bc-diagnosing-bugs","bc-tdd"]`, own worktree, branch `find-bugs/<hunt>`, top 12.
 9. Report additions: per-candidate agreement line, focus, open disputes, refinements, dropped list,
    roster section with dealt focuses.
 10. `all` filing: `Kind: bug`, `Source: bc-council-find-bugs`, each item names the hunt branch and

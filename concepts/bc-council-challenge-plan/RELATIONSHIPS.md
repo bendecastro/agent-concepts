@@ -7,20 +7,20 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- loads `bc-council-chain` — required, when every council plan challenge.
+  Roster, map, passes, merge, fallbacks and cleanup have one home in bc-council-chain.
+  Source: [body/SKILL.md](body/SKILL.md)
+
+- loads `bc-council-mode` — required, when every council plan challenge.
+  Briefing, launch, relay, resume and the pass cap have one home in bc-council-mode.
+  Source: [body/SKILL.md](body/SKILL.md)
+
+- loads `bc-grilling` — required, when every council plan challenge.
+  Asking the owner one question at a time, recommended answer first, has one home in grilling.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - hands off to `bc-plan-to-pipeline` — required, when after the owner's answers are written into the plan.
   Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill.
-  Source: [body/SKILL.md](body/SKILL.md)
-
-- loads `council-chain` — required, when every council plan challenge.
-  Roster, map, passes, merge, fallbacks and cleanup have one home in council-chain.
-  Source: [body/SKILL.md](body/SKILL.md)
-
-- loads `council-mode` — required, when every council plan challenge.
-  Briefing, launch, relay, resume and the pass cap have one home in council-mode.
-  Source: [body/SKILL.md](body/SKILL.md)
-
-- loads `grilling` — required, when every council plan challenge.
-  Asking the owner one question at a time, recommended answer first, has one home in grilling.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming

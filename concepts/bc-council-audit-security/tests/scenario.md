@@ -7,7 +7,7 @@ council advisors; the roster is fictional.
 
 ## Fixture
 
-`../../security-audit/tests/fixture/` (`api.py`, `README.md`): token-authenticated document read,
+`../../bc-security-audit/tests/fixture/` (`api.py`, `README.md`): token-authenticated document read,
 an unauthenticated health response, and a handle claim that gates an admin export. Recon finds
 at least three trust boundaries, enough to deal across three advisors. The dry run executes
 nothing, so the fixture only needs recon-able boundaries.
@@ -18,8 +18,8 @@ nothing, so the fixture only needs recon-able boundaries.
    work pipeline with `python3 concepts/bc-init-agent/body/scaffold.py --root . --slug docapi
    --archetype code`, add a `work/order.md` holding only a heading, add `.security-audit/` to
    `.git/info/exclude`, commit.
-2. Copy the bodies of `bc-council-audit-security`, `council-chain`, `security-audit` and
-   `council-mode` into `$scratch/skills/` with `cp -rL`.
+2. Copy the bodies of `bc-council-audit-security`, `bc-council-chain`, `bc-security-audit` and
+   `bc-council-mode` into `$scratch/skills/` with `cp -rL`.
 3. Unset every `PI_SUBAGENT*` variable, then from `$scratch/<run>`:
    `bwrap --dev-bind / / --tmpfs ~/.agents/skills --tmpfs ~/.pi/agent/skills --tmpfs
    ~/.claude/skills --tmpfs <overlays folder> pi -p --model <model> --thinking low --no-swarm -nc

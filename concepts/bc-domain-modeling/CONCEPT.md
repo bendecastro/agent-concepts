@@ -1,0 +1,42 @@
+---
+test_kind: accuracy
+test_status: partial # role lookup and hybrid shared glossary changed 2026-11-12; not yet checked or pressure-tested
+tested: 2026-10-22
+deployed: yes
+---
+# Concept: bc-domain-modeling
+
+Model-invoked discipline for actively building and sharpening a project's domain model: challenge vague/conflicting terms into canonical names, stress-test with edge cases, cross-check claims against code, and persist the result into `glossary.md` (a pure glossary) and — at a high bar — ADRs. Pair it with `bc-grilling` for an interview that captures decisions as they resolve; the former stateful `grill-me` wrapper was removed 2026-09-27.
+
+## Design decisions
+
+- **Glossary stays pure.** `glossary.md` holds concepts and canonical names only — no file paths, schema, or specs. Mixing implementation in is the failure mode that makes the glossary rot and stop being a shared *language*; it's enforced as a rule with a refuted excuse in the pressure tests.
+- **ADR three-part bar.** An ADR is written only when the decision is costly to reverse AND would puzzle a future reader AND reflects a real trade-off. Without the bar, agents emit trivial ADRs that bury the load-bearing ones.
+- **Inline, not batched.** Capture the moment a term crystallizes; batching to session end loses early decisions. This is the persistence discipline formerly provided by the `grill-me` wrapper (removed 2026-09-27).
+- **Body is an adaptation, not a copy.** The upstream `domain-modeling/SKILL.md` was only recoverable as a faithful summary (see provenance); this body is reconstructed from that summary plus the catalog description, re-voiced to match this workspace.
+- **Alternatives and supersede, not a notes-every-change gate (2026-08-18).** From DeepSeek Agent Notes, grilled and cut to two ideas: when an ADR *is* written, record genuine alternatives and why they lost; never rewrite an accepted ADR into a different decision — supersede and cross-link. The three-part bar is unchanged. Why: the code reconstructs the winner; only the record can carry what was given up, and a silent rewrite hides the reversal.
+
+- **Glossary filename (2026-10-22).** The owner renamed the canonical root file to `glossary.md` because it says what it is. Owner-confirmed defaults (2026-10-22): lowercase `glossary-map.md` points to bounded-context `glossary.md` files; legacy discovery and explicit rename proposals live only in this concept. Consumers refer here rather than copying the rule. The initializer vault adapter remains unchanged. Incoming planning capture and all vocabulary consumers are updated together; ADR, issue handoff, TDD, teach and vault-maintenance contracts are unaffected because only the generic glossary filename/discovery changes.
+
+- **Glossary and decisions by role; hybrid shares one glossary (2026-11-12).** Vocabulary goes to the glossary role and decision records to the decisions role from the project's "Where things go" table, with root `glossary.md` and `docs/adr/` as the stated fallback. In a visible-layout hybrid project the glossary is the shared root `glossary.md`, where `bc-teach` also adds learner terms, so this skill asks before removing or redefining terms it did not add. This body is the one home of that shared-glossary rule; `bc-triage`, `bc-plan-to-pipeline` and `bc-wiki-maintain` point to it (W3 review, 2026-11-12). The vault rule that `bc-teach` owns the Glossary section named by a valid `references/teach-skill.md` adapter lives in the `bc-init-agent` vault adapter; this body points to it rather than restating it. Scenario C in `tests/pressure-legacy-glossary.md` covers the shared glossary and has not been run. Source: [visible-layout plan](../../work/3-done/2026-11/018-bc-init-agent-visible-layout.md), decisions 20 and 25.
+
+## Provenance
+
+- [mattpocock/skills](https://github.com/mattpocock/skills) `captured-skills.md` — `bc-domain-modeling` section (**summary only**, not verbatim) + the verbatim `grill-with-docs` body that composes it. https://github.com/mattpocock/skills/blob/main/skills/engineering/domain-modeling/SKILL.md
+- [skillsskillsproductivityteach at main.md](https://github.com/mattpocock/skills/tree/main) — catalog #2 "shared language" failure mode and the `CONTEXT.md` before/after example (materialization cascade).
+- [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) `.agents/notes/README.md` at commit `99f6f02` — alternatives-mandatory and supersede-don't-rewrite; the required-every-change gate was inspected and rejected. See `docs/research/raw/ingested/deepseek-harness/SOURCE.md`.
+
+- Owner decision, 2026-10-22: canonical glossary filename; layout and legacy defaults owner-confirmed the same day.
+
+## Tests
+
+`tests/accuracy-check.md` — checks the body faithfully encodes the three disciplines (challenge / stress-test / cross-reference), the pure-glossary rule, the multi-context `glossary-map.md` layout, the ADR three-part bar, and the 2026-08-18 alternatives / supersede clauses. Accuracy-checked 2026-08-21 **PASS** (including the 2026-08-18 ADR alternatives/supersede clauses, flagged in CONCEPT.md as not-upstream). Historical discipline pressure evidence came transitively through the `grill-me` wrapper, removed 2026-09-27.
+
+2026-10-22: local accuracy review confirms canonical filenames, bounded-context layout, single-home legacy guidance, and unchanged ADR rules. The first two legacy pressure runs were **INVALID** because consumers had `inheritSkills:false` and no skill text or skills list in context; neither establishes a failure of the earlier wording. The wording was tightened before any valid run. The third run against dbdddb6 wording **PASS** in both scenarios, with per-child skill attachment and confirmed skill text in both contexts. Both commits changed only `CONTEXT.md`, created no `glossary.md`, performed no rename, and both replies proposed a rename pending approval. [Reusable scenarios and artifact facts](tests/pressure-legacy-glossary.md) preserve the history and setup requirement. Reviewer: xai/grok-4.6 high, verdict OK. No deploy scripts run.
+
+Relationship impact: no outgoing edges. Incoming `bc-init-agent`, `bc-diagnosing-bugs`, `bc-handoff`, `bc-improve-codebase-architecture`, `bc-plan-slicing`, `bc-prd-drafting`, `bc-tdd`, and `bc-triage` already delegate legacy discovery to this rule; `bc-plan-to-pipeline` loads it for inline capture. Their body pointers remain valid and inherit this clarified proposal/consent contract without restating it; no relationship edges change.
+
+## Deploy targets
+
+- Claude Code: `~/.claude/skills/bc-domain-modeling` → relative symlink to `body/`.
+- Pi / other harnesses: manual bootstrap until a real deploy is tested; record in `../../docs/guides/harnesses.md`.

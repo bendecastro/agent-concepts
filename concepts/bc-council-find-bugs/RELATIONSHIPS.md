@@ -7,16 +7,16 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- loads `council-chain` — required, when every council bug hunt.
-  Roster, map, passes, merge, fallbacks and cleanup have one home in council-chain.
+- loads `bc-council-chain` — required, when every council bug hunt.
+  Roster, map, passes, merge, fallbacks and cleanup have one home in bc-council-chain.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- loads `council-mode` — required, when every council bug hunt.
-  Briefing, launch, relay, resume and the pass cap have one home in council-mode.
+- loads `bc-council-mode` — required, when every council bug hunt.
+  Briefing, launch, relay, resume and the pass cap have one home in bc-council-mode.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- loads `find-bugs` — required, when every council bug hunt.
-  Scope, hunted kinds, candidate block, reproduction, report and filing have one home in find-bugs.
+- loads `bc-find-bugs` — required, when every council bug hunt.
+  Scope, hunted kinds, candidate block, reproduction, report and filing have one home in bc-find-bugs.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming

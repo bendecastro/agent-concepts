@@ -61,7 +61,53 @@ PRIVATE_CONCEPTS = CONFIG_HOME / "agent-concepts" / "concepts"
 
 # Public vocabulary can evolve without breaking existing user muscle memory. Alias
 # destinations must be canonical concept names; aliases never gain their own body.
-DEPLOY_ALIASES: dict[str, str] = {"bc-plan-to-issues": "bc-plan-to-pipeline", "issue-slicing": "plan-slicing", "bc-agent-reflect": "bc-reflect", "bc-drain-issues": "bc-pipeline-to-done"}
+DEPLOY_ALIASES: dict[str, str] = {
+    "bc-plan-to-issues": "bc-plan-to-pipeline",
+    "issue-slicing": "bc-plan-slicing",
+    "bc-agent-reflect": "bc-reflect",
+    "bc-drain-issues": "bc-pipeline-to-done",
+    # Names before the bc- prefix (docs/decisions/0001-bc-prefix-for-public-skill-names.md).
+    "brainstorming": "bc-brainstorming",
+    "code-review": "bc-code-review",
+    "codebase-design": "bc-codebase-design",
+    "codebase-docs": "bc-codebase-docs",
+    "council-chain": "bc-council-chain",
+    "council-mode": "bc-council-mode",
+    "diagnosing-bugs": "bc-diagnosing-bugs",
+    "dispatching-parallel-agents": "bc-dispatching-parallel-agents",
+    "domain-modeling": "bc-domain-modeling",
+    "executing-plans": "bc-executing-plans",
+    "find-bugs": "bc-find-bugs",
+    "finishing-development-branch": "bc-finishing-development-branch",
+    "grilling": "bc-grilling",
+    "guardrails": "bc-guardrails",
+    "handoff": "bc-handoff",
+    "improve-codebase-architecture": "bc-improve-codebase-architecture",
+    "json-canvas": "bc-json-canvas",
+    "minimal-solution-ladder": "bc-minimal-solution-ladder",
+    "obsidian-bases": "bc-obsidian-bases",
+    "obsidian-markdown": "bc-obsidian-markdown",
+    "plain-language": "bc-plain-language",
+    "plan-slicing": "bc-plan-slicing",
+    "prd-drafting": "bc-prd-drafting",
+    "prompting-agents": "bc-prompting-agents",
+    "prototype": "bc-prototype",
+    "qmd": "bc-qmd",
+    "research": "bc-research",
+    "security-audit": "bc-security-audit",
+    "seo": "bc-seo",
+    "show-me": "bc-show-me",
+    "subagent-driven-development": "bc-subagent-driven-development",
+    "tdd": "bc-tdd",
+    "teach": "bc-teach",
+    "to-spec": "bc-to-spec",
+    "to-tickets": "bc-to-tickets",
+    "triage": "bc-triage",
+    "ui-design": "bc-ui-design",
+    "unslop": "bc-unslop",
+    "using-git-worktrees": "bc-using-git-worktrees",
+    "writing-plans": "bc-writing-plans",
+}
 
 
 def rel_target(target: Path, link_parent: Path) -> str:

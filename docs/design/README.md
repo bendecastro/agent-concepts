@@ -2,7 +2,7 @@
 
 This folder says how this product looks and behaves **now**. Agents and people
 read it before adding or changing anything a user sees or operates. The
-generic method behind it is `design-framework.md` in the `ui-design` skill.
+generic method behind it is `design-framework.md` in the `bc-ui-design` skill.
 
 <!-- Optional: if the project has a page for its screenshot and review conventions, link it here. -->
 

@@ -1,0 +1,49 @@
+---
+name: bc-ui-design
+description: >-
+  Use when creating, changing, reviewing, accepting or shipping what users see or operate — UI, layout, styling, controls or labels, a redesign, a “looks bad” complaint, or a verdict such as “is this ready to ship?”, or recording a design decision — on any surface: web page, extension popup or panel, desktop, mobile or terminal app. Skip when nothing user-visible is involved; explanation diagrams go to bc-show-me.
+---
+# UI design
+
+Make the interface understandable and operable before polishing it. Scale the work to the change: one control in an established application needs the existing system and a capture, not a new art direction.
+
+## Frame and design
+
+Identify the surface and host, users, task, input modes, states, constraints and existing visual system. Preserve user references and established patterns. For an existing app read [existing-app.md](existing-app.md); for a new visual system read [new-work.md](new-work.md). Consult [surfaces.md](surfaces.md) for platform conventions and capture. When adding or restyling a control, or recording a design decision, read [design-framework.md](design-framework.md). Apply the ranked checks and evidence in [principles.md](principles.md) as relevant:
+
+- Make actions discoverable, show status and results, prevent errors and support recovery.
+- Support keyboard operation, visible focus, semantic names, contrast and distinctions beyond color.
+- Group related things; give importance, alignment and typography a clear hierarchy.
+- Fit targets to input, choices and density to the task, and layout to available space and settings.
+- Design interaction states, use purposeful motion with reduced-motion support, and keep patterns and tokens consistent.
+
+## Capture rule
+
+A visible change or review is not done until the report lists capture paths and a written critique **for each image** against every numbered screenshot checklist item below. Critique the whole captured surface, including pre-existing defects outside the change; report them even if left unfixed. Mark inapplicable items as such. Inspect at full resolution and use 1:1 crops before calling a detail a defect: downscaling can invent defects. Write each round’s critique beside its captures before editing for the next round, not only in the final report, so interruptions leave evidence. Follow the naming and retention scheme in [surfaces.md](surfaces.md).
+
+A small change needs at least one capture after the change. A redesign or work starting with a “looks bad” complaint needs a baseline plus at least two subsequent rounds; start from the owner’s screenshot when provided. Never overwrite the owner’s screenshot: copy it as the baseline round, and if asked to overwrite it, write a separate final file and keep the round files. Capture every surface the changed part, token or selector reaches, with its neighbours, not only the surface you worked on (a shared selector once changed a surface nobody captured), in the relevant host, size and states; use the relevant recipe in [surfaces.md](surfaces.md). Fix located material defects and recapture rather than trusting code or narration.
+
+If capture is impossible, say why and report the work **visually unverified**, never visually verified. Screenshots do not prove keyboard handling, focus order, ARIA or behavior: check those separately using the non-visual checks in [principles.md](principles.md) and report what was and wasn't checked. A model score is never a ship criterion.
+
+When delegating any visible change, copy the capture rule and screenshot checklist into the worker’s task text, along with the owner’s screenshot if there is one.
+
+When a dedicated UI-designer agent is available, it can run the loop on presentation-only scope and report behavior bugs rather than fix them; the orchestrator opens the final images. For redesigns, when delegation is available and authorized, a fresh independent reviewer sees the brief, checklist and captures, not the designer's reasoning, and returns located defects, no score. Without one, self-critique against the checklist and state that no independent review was done; never call self-critique independent.
+
+## Screenshot checklist
+
+For each image, check the applicable items; capture focus and other states separately when needed.
+
+1. Nothing is unintentionally clipped, cut off or overflowing at the captured size; deliberately scrollable content stays reachable.
+2. No label or key wraps mid-phrase; a short label or key wrapping when its row has room is a defect wherever the break falls. Keys and short tokens stay on one line.
+3. One primary action stands out; secondary actions are grouped, quieter and look like controls, not loose text.
+4. Spacing follows the theme scale; controls align with neighbouring fields.
+5. Type, colour and contrast match the existing theme; inspect each supported theme separately.
+6. No unstyled native controls appear anywhere on the captured surface. A request to use a native control covers that control only; other unstyled controls are still defects to report.
+7. Focus is visible in the focus-state capture.
+8. Overlays are anchored, do not shift layout and are not clipped by their container.
+
+## Report
+
+In a non-interactive run, when no one can answer a question, take the recommended option, record the assumption in the report and continue rather than stopping.
+
+List each image path, surface/host, dimensions and state, then its written checklist critique and any fixes or remaining defects. State separate interaction/accessibility checks and results, unverified items, and whether visual verification was possible. Give the user enough evidence to inspect the result independently.

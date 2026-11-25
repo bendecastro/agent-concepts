@@ -24,7 +24,7 @@ All agreed with the owner on 2026-11-16.
 ## Provenance
 
 - The 2026-11-16 tidy-up of one of the owner's projects' work pipeline, done with the owner: its `work/README.md` table, its work-index script (ported to bc-init-agent's `body/work_index.py`), the `Stage:` rule in its `.bc-agent/AGENTS.md`, and the owner's decisions about sources, conflicts and the plan gate recorded above.
-- Gate phrasing adapted from [prompting-agents](../prompting-agents/body/SKILL.md) (Scope discipline and Loading is not authorization). The gate deliberately ends the turn on a plan.
+- Gate phrasing adapted from [bc-prompting-agents](../bc-prompting-agents/body/SKILL.md) (Scope discipline and Loading is not authorization). The gate deliberately ends the turn on a plan.
 - Work-item rules (status folders, numbering in the main checkout, ideas file) from the scaffold in [bc-init-agent](../bc-init-agent/CONCEPT.md).
 
 ## Tests

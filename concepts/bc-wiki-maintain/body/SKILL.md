@@ -55,7 +55,7 @@ When the target vault contains a structurally valid explicit `references/teach-s
 read its path map before classifying candidates. Valid means the first line is exactly
 `<!-- teach-host-adapter: v1 -->` and the complete `## Hosted teach path map` table matches the
 approved map in that adapter; a prefix-only, missing-row, or altered-map file is not a contract.
-The standalone `teach` skill remains the authority for the mapped learning state: mission
+The standalone `bc-teach` skill remains the authority for the mapped learning state: mission
 (`learning/plan.md`), review queue (`learning/review.md`), learning records
 (`learning/records/`), session/lesson artifacts (`sessions/`), notes (`learning/notes.md`),
 raw sources (`sources/`), compiled concepts (`concepts/`), the teach resource catalog
@@ -67,16 +67,16 @@ a learning record, alter a review prompt/date/interval, advance the review queue
 session-log claim into evidence, or edit the teach-owned Glossary section. It may edit
 non-glossary sections of `project/overview.md` when ordinary host evidence supports that edit.
 If log evidence appears to target a teach-owned path, classify it as `skip` with a reason and
-leave the edit to `teach`; raw source files remain immutable. Do not infer this boundary from
+leave the edit to `bc-teach`; raw source files remain immutable. Do not infer this boundary from
 directory names alone when the explicit marker is absent.
 
 In a visible-layout hybrid project the glossary is the shared root glossary (the table's
-`glossary` role, `glossary.md` by default), not a section of `project/overview.md`. `teach`
-adds learner terms to it; follow the shared-glossary rule in `domain-modeling` (ask before
+`glossary` role, `glossary.md` by default), not a section of `project/overview.md`. `bc-teach`
+adds learner terms to it; follow the shared-glossary rule in `bc-domain-modeling` (ask before
 removing or redefining a term you did not add this session). A hosted teach workspace keeps its own `index.md` in the vault root: it catalogs only
-teach's folders, so leave it to `teach` and never extend it to agent-mechanics pages.
+teach's folders, so leave it to `bc-teach` and never extend it to agent-mechanics pages.
 
-<!-- Adapted from prompting-agents: scope discipline. -->
+<!-- Adapted from bc-prompting-agents: scope discipline. -->
 **Implement EXACTLY and ONLY what the log evidence supports.** No extra pages, cleanup, or
 reorganization. If adjacent work looks useful, report it as optional; do not do it in this pass.
 Skipping a heading still requires classifying it; silence is not a skip.

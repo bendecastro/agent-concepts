@@ -1,0 +1,150 @@
+---
+test_kind: pressure
+test_status: pass
+tested: 2026-10-17
+deployed: 2026-10-17
+---
+# Concept: bc-plain-language
+
+Model-invoked discipline for human-facing prose, with a user-invoked
+review/rewrite trigger. It applies the publicly documented reader-outcome
+principles behind ISO 24495-1:2023 so intended readers can get what they
+need, find it, understand it, and use it. It is unofficial and does not
+claim ISO conformance.
+
+## Design decisions
+
+- **Named `bc-plain-language`, not `iso-24495`.** Naming the concept after
+  the standard would imply conformance we cannot honestly claim. The ISO
+  catalog number stays in provenance and in the skill description so the
+  words people actually say still fire it.
+- **Human-facing only.** This workspace already writes a different
+  audience in skill bodies, kernels, and gates. IPLF itself distinguishes
+  plain language (human readers) from controlled languages (restricted
+  grammar for particular purposes, including human-facing technical manuals). Applying reader-outcome
+  "familiar words" to agent instructions would strip the why those
+  documents exist. The inversion is the load-bearing rule.
+- **Not always-on, not in the kernel.** Chat already has answer-first and
+  verbosity clamps. An always-on rewrite would fight agent-instruction
+  authoring and spend scarce always-on budget on a task that is only
+  sometimes the job. Escalate to a kernel pointer only if drift shows
+  after deploy.
+- **Review default, rewrite on request.** Silent rewrites hide meaning
+  changes. The predictable failure mode is an agent "helpfully" editing
+  a source file the user only asked it to judge.
+- **Principles, not numeric proxies.** Unofficial skills in the wild
+  encode 20-word sentences and "ISO-aligned" stamps. Those are author
+  proxies, not ISO clauses, and they punish necessary terms. The body
+  stays at the four public outcomes plus a few rationalization gates.
+- **Public sources only.** The ISO text is sold. The body paraphrases
+  IPLF's freely published definition and four principles plus ISO's
+  public abstract/scope. It does not vendor standard clauses or leaked
+  previews.
+- **Unofficial prior art considered, not vendored.**
+  `danyuchn/iso-24495-skill` is the closest structural match
+  (principle/technique split, fact-preservation, no conformance claim,
+  agent-facing exclusion). `GaZmagik/iso-24495` is the most engineered
+  (five skills, linter, always-on style) and the cautionary tale
+  (hard caps, "Aligned" stamps, unpublished Parts 4–5). Neither body
+  is copied; both are cited so the rejections stay auditable.
+- **No Parts 2–5 skills.** Legal, science, organizational certification,
+  and document-design parts are either specialist or unpublished. A
+  later concept can extend this one if the user actually writes those
+  documents. CAN-ASC-3.1:2025 is a free Canadian accessibility standard
+  that is ISO-aware and conformity-assessable; it is out of scope until
+  that audience is in play.
+- **Composes, does not merge.** `bc-ui-design` still owns visual UI;
+  `bc-prompting-agents` still owns agent-instruction authoring; `bc-research`
+  still owns evidence. This skill may make the human-facing words in
+  those artifacts scannable.
+- **Thin clauses on speakers, not a skill load (2026-08-18).** Live grill
+  questions, the architecture-review HTML report, and a drain
+  `needs-human` comment each carry a 2–4 line reader-outcome delta in
+  the skill that actually speaks. Loading this body there would bring
+  review-default into a write-plain-first turn and risk "familiar words"
+  stripping deep-module vocabulary or evidence. Issue-slicing quizzes,
+  teach HTML, PRDs, and Agent Briefs were considered and left unwired.
+
+- **Selective STE adoption (2026-10-17).** ASD-STE100 serves human readers,
+  notably non-native maintenance technicians, not machines. Adopt only
+  general procedure and warning conventions: reader-addressed actions,
+  conditions before actions, informational notes, consequence-specific
+  warnings, and unpacked noun stacks. These support safe use without
+  turning general documentation into a domain controlled language.
+  Reject the 20/25-word caps: they contradict principles, not numeric
+  proxies. Reject the approved dictionary: its licence bars reproduction
+  and it is the wrong tool for general docs. Semicolon, -ing, and spelling
+  rules are too domain-specific. The AI white paper offers generic
+  governance, nothing new for this skill. All guidance here is independently
+  worded from public summaries; no specification text or dictionary is copied.
+- **Relationship impact.** No incoming or outgoing edges for this concept
+  exist in `concepts/relationships.json`, and no generated relationship
+  view exists. This change adds no loads or handoffs; the existing
+  composition boundaries and thin speaker clauses remain unchanged.
+
+## Provenance
+
+- [ISO 24495-1:2023 catalog](https://www.iso.org/standard/78907.html) —
+  official title, scope, language-neutrality, text-primary limit.
+- [ISO 24495-2:2025](https://www.iso.org/standard/85774.html) and
+  [ISO 24495-3:2026](https://www.iso.org/standard/86938.html) — later
+  parts noted as out of scope, not implemented.
+- [International Plain Language Federation — ISO standard](https://www.iplfederation.org/iso-standard/)
+  — four principles, language-neutrality, "guidance only / not for
+  certification," Parts 2–4 status.
+- [IPLF — what is involved in writing plain language](https://www.iplfederation.org/plain-language/)
+  — 2014 definition; wording / structure / design; reader testing;
+  distinction from Easy Language and controlled languages.
+- [IPLF — word choice](https://www.iplfederation.org/word-choice) —
+  ~7% of the standard's ideas concern word choice; readability formulas
+  are not the measure.
+- [`docs/research/raw/ingested/iso-24495-iplf/`](../../docs/research/raw/ingested/iso-24495-iplf/SOURCE.md)
+  — citation record of the public sources above; no ISO text.
+- [danyuchn/iso-24495-skill](https://github.com/danyuchn/iso-24495-skill)
+  — unofficial MIT prior art; structural influence only.
+- [GaZmagik/iso-24495](https://github.com/GaZmagik/iso-24495) —
+  unofficial MIT prior art; rejected as a body (always-on, numeric
+  proxies, conformance-flavored examples).
+- `concepts/bc-prompting-agents/body/SKILL.md` — altitude, explain-the-why,
+  gates only for rationalization.
+
+- [Simplified Technical English overview](https://en.wikipedia.org/wiki/Simplified_Technical_English)
+  — public, non-exhaustive account of the approach; general principles only.
+- [ASD-STE100 FAQ](https://www.asd-ste100.org/STE_faq.html)
+  — public context for condition-first writing and imperative procedures.
+- [ASD-STE100 downloads](https://www.asd-ste100.org/STE_downloads.html)
+  — specification is request-gated; copyright bars reproduction in whole
+  or in part. Not vendored, quoted, or closely paraphrased here.
+
+## Tests
+
+`tests/pressure-plain-language.md` — discipline-enforcing, so the test
+gate applies before deploy. Attacks the predictable excuses: simplify a
+skill under time pressure, stamp ISO compliance, ship on a Flesch score,
+drop a condition to sound simpler, rewrite when asked only to review.
+
+**Run 2026-08-18 in headless Pi (Grok 4.6, low thinking) against isolated
+fixture copies: PASS 6/6.** All four load-bearing checks held (inversion,
+no stamp, condition survival, review-does-not-rewrite). Soft note in the
+test file: the rewrite refusal slightly mislabeled the standard as
+“unofficial.”
+
+Checks 7–9 cover the new procedure/warning clauses and numeric-cap pressure.
+Two runs on 2026-10-17 (see the test file): run 1 failed check 8, a
+warning-example tune fixed the opening, run 2 left check 7 partial on the
+noun stack. After the fixture's noun stack was made unambiguously
+descriptive, run 3 held all three. The deploy symlinks point at `body/`,
+so the clauses went live when committed (2026-10-17), before the tests
+finished; no separate deploy step was needed. The historical deployment date is retained, not renewed.
+
+## Deploy targets
+
+Deployed 2026-08-18 via `scripts/deploy-local-skills.py`, all three relative
+symlinks verified to resolve:
+
+- Shared bus: `~/.agents/skills/bc-plain-language` → `body/` (also reaches
+  Composer and Grok).
+- Pi: `~/.pi/agent/skills/bc-plain-language` → `body/`.
+- Claude Code: `~/.claude/skills/bc-plain-language` → `body/`.
+
+Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.

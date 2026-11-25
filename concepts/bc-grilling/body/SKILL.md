@@ -1,0 +1,22 @@
+---
+name: bc-grilling
+description: Interview the user relentlessly about a plan or design until every branch of the decision tree is resolved. Use when the user wants to stress-test a plan before building, or uses any "grill" trigger phrase.
+---
+
+# Grilling
+
+The reusable interview discipline for a plan or design. Interview the user relentlessly about every aspect until you reach a *genuinely shared* understanding — not polite agreement that papers over open decisions. Pair with `bc-domain-modeling` when resolved vocabulary and decisions should persist.
+
+Walk down each branch of the design tree, resolving dependencies between decisions one at a time. For every question, put the **decision first**, then list the plausible answers as numbered options. Put your recommended answer first, mark exactly one option **Recommended**, and give it a brief reason; number the alternatives too. End with an explicit numeric reply example that maps the displayed choices, such as: “Reply `1` for the recommendation, `2` for the alternative, or describe another answer in your own words.” Include each displayed number when there are more than two options. This keeps replies quick without ruling out an override. Why: the reader is a busy owner deciding now, not reading a brief — a buried question wastes the turn. Keep a term they already use; do not invent a simpler synonym, and do not load `bc-plain-language` for this utterance.
+
+**One question at a time — this is the gate.** Ask a single question, wait for the answer, then ask the next. Batching questions is bewildering and lets decisions slip through unresolved. Do not move on, and do not start writing code or a plan, while any branch is still open. Don't drop the gate just because pushing for an answer feels slow. If the user is in a hurry but has not delegated the remaining decisions, offer one numbered choice: continue one question at a time, or let you resolve the rest with your recommendations and present them for confirmation. Do not silently treat time pressure as delegation. A demand for the whole list still does not license batching.
+
+**Delegation is a principled exit, not a failure of the gate.** Delegating is the user's call to make, and you honor it:
+- *Single decision* ("you pick") — record your recommended answer as that branch's resolution and move to the next branch. Don't skip the branch.
+- *The rest, in bulk* ("you decide everything", "I don't have the time to go one by one, just go with your recommendations") — take the **bulk exit**: resolve every remaining open branch with your recommended answer in one pass and present the fully-resolved plan for confirmation, instead of continuing to ask one at a time.
+
+The exit trades the one-at-a-time *cadence*, never the *resolution*: every branch still gets an explicit, recorded answer, you still never silently skip a branch, and you flag any resolution you're genuinely unsure about so the user can override it before the plan is locked.
+
+If a question can be answered by reading the codebase, **read the codebase instead of asking.** Don't spend the user's attention on things you can find out yourself.
+
+Stop when every open branch is resolved and you could restate the plan back without hand-waving. Then summarize the resolved scope so the user can confirm it.

@@ -11,12 +11,12 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `guardrails`'s contract — optional, when baselining a metric; keeping a change in a project with docs/guardrails/README.md.
+- depends on `bc-guardrails`'s contract — optional, when baselining a metric; keeping a change in a project with docs/guardrails/README.md.
   Measures and judges noise per guardrails' measuring.md, and a kept change tightens the matching agent-chosen limit on the guardrails page.
   Source: [body/SKILL.md](body/SKILL.md#before-you-touch-code)
 
 ## Incoming
 
-- incoming from [guardrails](../guardrails/RELATIONSHIPS.md): hands off to this concept — optional.
+- incoming from [bc-guardrails](../bc-guardrails/RELATIONSHIPS.md): hands off to this concept — optional.
   measuring.md names bc-autoresearch-loop as the improvement loop that uses the same method; a verified improvement tightens the limit.
-  Source: [guardrails/body/measuring.md](../guardrails/body/measuring.md)
+  Source: [bc-guardrails/body/measuring.md](../bc-guardrails/body/measuring.md)

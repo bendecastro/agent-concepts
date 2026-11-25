@@ -26,38 +26,38 @@ tested. See the concept's `## Tests` section for what is missing.
 |---|---|---|---|
 | [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-19 | 2026-11-15 |
 | [bc-autoresearch-loop](../concepts/bc-autoresearch-loop/CONCEPT.md) | pressure | 2026-06-21 | 2026-06-21 |
+| [bc-code-review](../concepts/bc-code-review/CONCEPT.md) | pressure | 2026-11-19 | yes |
+| [bc-council-chain](../concepts/bc-council-chain/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-council-improve-codebase](../concepts/bc-council-improve-codebase/CONCEPT.md) | pressure | 2026-11-24 | yes |
+| [bc-council-mode](../concepts/bc-council-mode/CONCEPT.md) | pressure | 2026-11-24 | yes |
+| [bc-diagnosing-bugs](../concepts/bc-diagnosing-bugs/CONCEPT.md) | pressure | 2026-07-16 | 2026-06-21 |
+| [bc-dispatching-parallel-agents](../concepts/bc-dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [bc-domain-modeling](../concepts/bc-domain-modeling/CONCEPT.md) | accuracy | 2026-10-22 | yes |
+| [bc-executing-plans](../concepts/bc-executing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [bc-finishing-development-branch](../concepts/bc-finishing-development-branch/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [bc-handoff](../concepts/bc-handoff/CONCEPT.md) | pressure | 2026-08-21 | 2026-08-21 |
+| [bc-improve-codebase-architecture](../concepts/bc-improve-codebase-architecture/CONCEPT.md) | pressure | 2026-08-20 | 2026-06-21 |
 | [bc-init-agent](../concepts/bc-init-agent/CONCEPT.md) | pressure | 2026-11-24 | 2026-06-21 |
 | [bc-pipeline-to-done](../concepts/bc-pipeline-to-done/CONCEPT.md) | pressure | 2026-11-25 | 2026-11-25 |
+| [bc-plan-slicing](../concepts/bc-plan-slicing/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-plan-to-pipeline](../concepts/bc-plan-to-pipeline/CONCEPT.md) | pressure | 2026-11-24 | 2026-06-21 |
+| [bc-prompting-agents](../concepts/bc-prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
+| [bc-prototype](../concepts/bc-prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-reflect](../concepts/bc-reflect/CONCEPT.md) | pressure | 2026-11-19 | yes |
+| [bc-research](../concepts/bc-research/CONCEPT.md) | pressure | 2026-08-21 | yes |
+| [bc-show-me](../concepts/bc-show-me/CONCEPT.md) | pressure | 2026-11-04 | yes |
+| [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-19 | 2026-08-18 |
+| [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-19 | yes |
+| [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
+| [bc-to-tickets](../concepts/bc-to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [bc-triage](../concepts/bc-triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
+| [bc-ui-design](../concepts/bc-ui-design/CONCEPT.md) | pressure | 2026-11-21 | yes |
+| [bc-using-git-worktrees](../concepts/bc-using-git-worktrees/CONCEPT.md) | pressure | 2026-09-22 | yes |
 | [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-09-05 | 2026-08-23 |
 | [bc-work-sync](../concepts/bc-work-sync/CONCEPT.md) | pressure | 2026-11-16 | 2026-11-16 |
-| [code-review](../concepts/code-review/CONCEPT.md) | pressure | 2026-11-19 | yes |
-| [council-chain](../concepts/council-chain/CONCEPT.md) | pressure | 2026-11-24 | yes |
-| [council-mode](../concepts/council-mode/CONCEPT.md) | pressure | 2026-11-24 | yes |
-| [diagnosing-bugs](../concepts/diagnosing-bugs/CONCEPT.md) | pressure | 2026-07-16 | 2026-06-21 |
-| [dispatching-parallel-agents](../concepts/dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-07-16 | yes |
-| [domain-modeling](../concepts/domain-modeling/CONCEPT.md) | accuracy | 2026-10-22 | yes |
-| [executing-plans](../concepts/executing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
-| [finishing-development-branch](../concepts/finishing-development-branch/CONCEPT.md) | pressure | 2026-07-16 | yes |
-| [handoff](../concepts/handoff/CONCEPT.md) | pressure | 2026-08-21 | 2026-08-21 |
-| [improve-codebase-architecture](../concepts/improve-codebase-architecture/CONCEPT.md) | pressure | 2026-08-20 | 2026-06-21 |
-| [plan-slicing](../concepts/plan-slicing/CONCEPT.md) | pressure | 2026-11-24 | yes |
-| [prompting-agents](../concepts/prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
-| [prototype](../concepts/prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
-| [research](../concepts/research/CONCEPT.md) | pressure | 2026-08-21 | yes |
-| [show-me](../concepts/show-me/CONCEPT.md) | pressure | 2026-11-04 | yes |
-| [subagent-driven-development](../concepts/subagent-driven-development/CONCEPT.md) | pressure | 2026-07-16 | yes |
-| [tdd](../concepts/tdd/CONCEPT.md) | pressure | 2026-11-19 | yes |
-| [teach](../concepts/teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
-| [to-tickets](../concepts/to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |
-| [triage](../concepts/triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
-| [ui-design](../concepts/ui-design/CONCEPT.md) | pressure | 2026-11-21 | yes |
-| [using-git-worktrees](../concepts/using-git-worktrees/CONCEPT.md) | pressure | 2026-09-22 | yes |
-| [writing-plans](../concepts/writing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
+| [bc-writing-plans](../concepts/bc-writing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
 
 ## Passing and deployed (21)
 
-[bc-council-audit-security](../concepts/bc-council-audit-security/CONCEPT.md), [bc-council-challenge-plan](../concepts/bc-council-challenge-plan/CONCEPT.md), [bc-council-find-bugs](../concepts/bc-council-find-bugs/CONCEPT.md), [brainstorming](../concepts/brainstorming/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [find-bugs](../concepts/find-bugs/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [guardrails](../concepts/guardrails/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [security-audit](../concepts/security-audit/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md)
+[bc-brainstorming](../concepts/bc-brainstorming/CONCEPT.md), [bc-codebase-design](../concepts/bc-codebase-design/CONCEPT.md), [bc-codebase-docs](../concepts/bc-codebase-docs/CONCEPT.md), [bc-council-audit-security](../concepts/bc-council-audit-security/CONCEPT.md), [bc-council-challenge-plan](../concepts/bc-council-challenge-plan/CONCEPT.md), [bc-council-find-bugs](../concepts/bc-council-find-bugs/CONCEPT.md), [bc-find-bugs](../concepts/bc-find-bugs/CONCEPT.md), [bc-grilling](../concepts/bc-grilling/CONCEPT.md), [bc-guardrails](../concepts/bc-guardrails/CONCEPT.md), [bc-json-canvas](../concepts/bc-json-canvas/CONCEPT.md), [bc-minimal-solution-ladder](../concepts/bc-minimal-solution-ladder/CONCEPT.md), [bc-obsidian-bases](../concepts/bc-obsidian-bases/CONCEPT.md), [bc-obsidian-markdown](../concepts/bc-obsidian-markdown/CONCEPT.md), [bc-plain-language](../concepts/bc-plain-language/CONCEPT.md), [bc-prd-drafting](../concepts/bc-prd-drafting/CONCEPT.md), [bc-qmd](../concepts/bc-qmd/CONCEPT.md), [bc-security-audit](../concepts/bc-security-audit/CONCEPT.md), [bc-seo](../concepts/bc-seo/CONCEPT.md), [bc-to-spec](../concepts/bc-to-spec/CONCEPT.md), [bc-unslop](../concepts/bc-unslop/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md)

@@ -106,3 +106,12 @@ def unlisted_load_references(root: Path) -> list[str]:
                     "without a `loads` edge in concepts/relationships.json"
                 )
     return errors
+
+
+def unprefixed_names(root: Path) -> list[str]:
+    """Name each public skill without the `bc-` prefix (decision 0001: no install-time clashes)."""
+    return [
+        f"public skill `{name}` must be named `bc-{name}` (docs/decisions/0001-bc-prefix-for-public-skill-names.md)"
+        for name in public_skills(root)
+        if not name.startswith("bc-")
+    ]

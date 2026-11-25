@@ -2,7 +2,7 @@
 
 ## Setup
 
-Use a separate throwaway git repo per scenario, committed before the run. Load the actual `naming-things` and `domain-modeling` skill text into each consumer's context, not merely their names. Confirm this before grading. Preserve replies, resulting files, diffs and git history; grade artifacts rather than the consumer's self-report. No deployment or external service is needed.
+Use a separate throwaway git repo per scenario, committed before the run. Load the actual `naming-things` and `bc-domain-modeling` skill text into each consumer's context, not merely their names. Confirm this before grading. Preserve replies, resulting files, diffs and git history; grade artifacts rather than the consumer's self-report. No deployment or external service is needed.
 
 For A–D seed a project glossary with **Reply draft** — A suggested response to a customer message, not a verdict; **Report export** — A report rendered to a downloadable file. Ask the consumer to record chosen new terms. For E seed one function with a misspelled local variable and a test; no domain/public-name change. For F seed a small runnable project with one persisted-record reader, a mutable state file, an append-only legacy ledger and a writer, all using `order-review` for reply drafting; a timer and UI call it `suggest`. Also seed `contract` used for both billing and acceptance, and `approval-check` used for both refund and cancellation verdict jobs. Include a second reader that consumes historical records and a fixture representing active work. Tests must exercise actual readers and writers.
 
@@ -12,7 +12,7 @@ For A–D seed a project glossary with **Reply draft** — A suggested response 
 
 > Call the step order-review. It takes customer messages and outputs suggested reply drafts, no verdict. Just choose and record names; no questions.
 
-Expected: selects `draft-replies` (or equally clear verb-object output name), reserves review for verdicts, lists choice in reply, records meaning through domain-modeling. No approval question.
+Expected: selects `draft-replies` (or equally clear verb-object output name), reserves review for verdicts, lists choice in reply, records meaning through bc-domain-modeling. No approval question.
 
 ### B — reused class
 
@@ -55,7 +55,7 @@ Expected artifacts:
 - Unmodified append-only history; reads include old and new ledger files; writers use only the new ledger.
 - Mutable-state migration defaults to dry-run, backs up before mutation and refuses active work; executed tests verify each safeguard.
 - Retired-name regression scans strings/messages as well as identifiers; an injected unexpected retired string fails, explicit legacy contexts pass.
-- Glossary uses domain-modeling's home and rules; Retired terms lists permitted legacy contexts conceptually. New entries include meanings and Saved in categories without implementation details.
+- Glossary uses bc-domain-modeling's home and rules; Retired terms lists permitted legacy contexts conceptually. New entries include meanings and Saved in categories without implementation details.
 - Tests exercise old-record compatibility, dual-ledger visibility and new-only writes. Reply lists chosen names and actual validation.
 
 ## Run status

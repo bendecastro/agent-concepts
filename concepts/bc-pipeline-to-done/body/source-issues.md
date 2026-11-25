@@ -79,7 +79,7 @@ Close a parent PRD only when every child is completed and none is open, blocked,
 
 ## Blocked
 
-For `HUMAN_BLOCKED`, post a comment the human who will unblock can act on: the decision or missing access first, the options and what happens if they pick each, then the exact evidence. Leave SHAs, paths, and commands untouched. Do not load `plain-language`. Then remove ready/in-progress and add `needs-human`. For `SYSTEMIC_FAILURE`, stop new launches, let active children reach a safe boundary, preserve/classify each issue, and report stale resources rather than guessing or destructive cleanup.
+For `HUMAN_BLOCKED`, post a comment the human who will unblock can act on: the decision or missing access first, the options and what happens if they pick each, then the exact evidence. Leave SHAs, paths, and commands untouched. Do not load `bc-plain-language`. Then remove ready/in-progress and add `needs-human`. For `SYSTEMIC_FAILURE`, stop new launches, let active children reach a safe boundary, preserve/classify each issue, and report stale resources rather than guessing or destructive cleanup.
 
 ## Report
 

@@ -16,14 +16,14 @@ Model-invoked discipline for objective, bounded code improvement: pick one repro
 - **Both-gates-or-revert is the whole point.** A change survives only if correctness still passes *and* the metric beats the threshold; failing either reverts. Without the dual gate, an AFK agent "optimizing" is a regression generator. This is the discipline's load-bearing rule.
 - **Don't optimize blind.** If no objective metric can be named, the skill stops rather than chasing "looks faster." This is what makes it safe to wire into an autonomous loop conditionally — no metric ⇒ it doesn't run.
 - **One bounded change per iteration** so regressions are attributable and reverts are clean; **correctness before performance**; **no win-by-deleting-output**. These are the named failure modes from the source playbook, kept as guards.
-- **Measures like the guardrails (2026-11-25).** Baselining points to the `guardrails` skill's `measuring.md` for runs and noise, and a kept change tightens the matching limit on the project's guardrails page when it has one, so an improvement is locked in rather than lost to the next regression (item 006). Owner-chosen limits are left to the owner. Not pressure-tested.
-- **Model-invoked discipline.** Like `tdd`, it's reachable by an orchestrator (the `bc-pipeline-to-done` per-issue agent inlines it) and by the user mid-task. Not a user-only orchestrator.
+- **Measures like the guardrails (2026-11-25).** Baselining points to the `bc-guardrails` skill's `measuring.md` for runs and noise, and a kept change tightens the matching limit on the project's guardrails page when it has one, so an improvement is locked in rather than lost to the next regression (item 006). Owner-chosen limits are left to the owner. Not pressure-tested.
+- **Model-invoked discipline.** Like `bc-tdd`, it's reachable by an orchestrator (the `bc-pipeline-to-done` per-issue agent inlines it) and by the user mid-task. Not a user-only orchestrator.
 
 ## Provenance
 
 - `<owner-scripts>/bin/utils/<improve-script>` + `<owner-scripts>/AI/autoresearch-loop.md` + `<owner-scripts>/docs/utils/<improve-script>.md` — the AutoResearch principle and its agent rules (one bounded change, correctness+metric, dry-run/shadow for expensive runtimes, record baseline/current/speedup). **Inspiration only — deliberately not a runtime dependency.**
-- `concepts/tdd/` — sibling model-invoked discipline; same composition pattern (inlined by the executor).
-- `concepts/prompting-agents/body/SKILL.md` — gate/guard phrasing.
+- `concepts/bc-tdd/` — sibling model-invoked discipline; same composition pattern (inlined by the executor).
+- `concepts/bc-prompting-agents/body/SKILL.md` — gate/guard phrasing.
 
 ## Tests
 

@@ -9,8 +9,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[3]
 SCAFFOLD = ROOT / "concepts/bc-init-agent/body/scaffold.py"
-DUE = ROOT / "concepts/teach/body/scripts/due.py"
-TEACH_SKILL = ROOT / "concepts/teach/body/SKILL.md"
+DUE = ROOT / "concepts/bc-teach/body/scripts/due.py"
+TEACH_SKILL = ROOT / "concepts/bc-teach/body/SKILL.md"
 
 
 def hosted_map(marker: str) -> list[tuple[str, str, str]]:
@@ -50,21 +50,21 @@ def hosted_maps(text: str) -> list[list[tuple[str, str, str]]]:
 
 
 EXPECTED_HOST_MAP = [
-    ("Mission", "`learning/plan.md` (no hosted `MISSION.md`)", "`teach`"),
-    ("Review queue", "`learning/review.md`", "`teach`"),
-    ("Learning records", "`learning/records/`", "`teach`"),
-    ("Lessons and session artifacts", "existing `sessions/` (never `learning/sessions/`)", "`teach`"),
-    ("Notes", "`learning/notes.md`", "`teach`"),
-    ("Raw sources", "existing `sources/`", "`teach`"),
-    ("Compiled knowledge / wiki concepts", "existing `concepts/`", "`teach`"),
-    ("Resource catalog", "`references/teach-resources.md`", "`teach`"),
-    ("Glossary", "the existing Glossary section of `project/overview.md`", "`teach`"),
-    ("Catalog and history", "shared `index.md` and `log.md`", "`bc-init-agent` host schema; `teach` updates teach entries"),
+    ("Mission", "`learning/plan.md` (no hosted `MISSION.md`)", "`bc-teach`"),
+    ("Review queue", "`learning/review.md`", "`bc-teach`"),
+    ("Learning records", "`learning/records/`", "`bc-teach`"),
+    ("Lessons and session artifacts", "existing `sessions/` (never `learning/sessions/`)", "`bc-teach`"),
+    ("Notes", "`learning/notes.md`", "`bc-teach`"),
+    ("Raw sources", "existing `sources/`", "`bc-teach`"),
+    ("Compiled knowledge / wiki concepts", "existing `concepts/`", "`bc-teach`"),
+    ("Resource catalog", "`references/teach-resources.md`", "`bc-teach`"),
+    ("Glossary", "the existing Glossary section of `project/overview.md`", "`bc-teach`"),
+    ("Catalog and history", "shared `index.md` and `log.md`", "`bc-init-agent` host schema; `bc-teach` updates teach entries"),
 ]
 HYBRID_GLOSSARY_ROW = (
     "Glossary",
     "the project's root `glossary.md` (`../glossary.md`), shared with the project",
-    "the project; `teach` adds and refines learner terms",
+    "the project; `bc-teach` adds and refines learner terms",
 )
 EXPECTED_HYBRID_HOST_MAP = [
     HYBRID_GLOSSARY_ROW if row[0] == "Glossary" else row for row in EXPECTED_HOST_MAP

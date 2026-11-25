@@ -12,7 +12,7 @@ consumer writes `plan.md` stating exactly what it would do and launches nothing,
 file. The first real run is the live test.
 
 Setup, per run: `S=$(mktemp -d)`; `cp -r practice "$S/repo"`; `git init -b main` and commit there.
-Copy skill bodies with `cp -rL` into `$S/skills/`: `council-chain`, `council-mode`, `grilling`,
+Copy skill bodies with `cp -rL` into `$S/skills/`: `bc-council-chain`, `bc-council-mode`, `bc-grilling`,
 `bc-plan-to-pipeline`, `bc-council-challenge-plan`. Unset every `PI_SUBAGENT*` variable, then from
 `$S/repo`:
 `bwrap --dev-bind / / --tmpfs ~/.agents/skills --tmpfs ~/.pi/agent/skills --tmpfs ~/.claude/skills

@@ -12,17 +12,17 @@ in the parent's context is what needs a stated reason. It carries a
 durability contract so that a lost tool result, a compaction, or a dead
 terminal cannot destroy a fan-out's output.
 
-It composes `dispatching-parallel-agents` (how to split, packet contents,
+It composes `bc-dispatching-parallel-agents` (how to split, packet contents,
 parent integration duties) rather than restating it. This concept adds only
 two things that concept does not have: how hard to push, and how not to lose
 the results.
 
 ## Design decisions
 
-- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety and Verification rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Other skills are named, not linked (`tdd`, section Test levels and friends), with a `loads` edge.
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety and Verification rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Other skills are named, not linked (`bc-tdd`, section Test levels and friends), with a `loads` edge.
 
 - **Example tool-budget settings (2026-11-24, owner decision).** `body/examples/pi-settings-snippet.json` shows the `subagents.agentOverrides` tool budgets (scout 100/110, reviewer 45/50) the Pi notes were tuned with, so a stranger can reproduce them. Optional: the skill works without budgets.
-- **Targeted-check packets and a background full gate (2026-11-19).** Worker packets name the targeted checks (test files or IDs) and never paste the full gate; after integration the parent starts the gate in the background with a wake and dispatches the reviewer on the same tree in parallel, with no sleep/poll loops. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in project A) and the owner's decisions of that date. `dispatching-parallel-agents` already says one full verification on the integrated change and was not changed.
+- **Targeted-check packets and a background full gate (2026-11-19).** Worker packets name the targeted checks (test files or IDs) and never paste the full gate; after integration the parent starts the gate in the background with a wake and dispatches the reviewer on the same tree in parallel, with no sleep/poll loops. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in project A) and the owner's decisions of that date. `bc-dispatching-parallel-agents` already says one full verification on the integrated change and was not changed.
 - **Owner tool names in a private overlay (2026-11-19).** The body names no owner tools; it reads the optional overlay `~/.config/agent-concepts/overlays/bc-swarm.md`, which supplies only names the machine's always-loaded instructions lack. Convention and precedence: AGENTS.md Conventions, "Private skill overlays". Test: `tests/pressure-private-overlay.md`.
 - **One concept, not two.** Aggression and durability share a single
   trigger moment — you are about to fan out — and splitting them now would
@@ -116,7 +116,7 @@ the results.
   an anchor makes spot-checking cheap and constant per claim. Verifying
   *all* anchors was considered and rejected as the same cost as re-reading.
 - **Read-shaped by default, with a handoff.** The skill itself covers
-  investigation, analysis, and review. `subagent-driven-development` and
+  investigation, analysis, and review. `bc-subagent-driven-development` and
   `bc-pipeline-to-done` already own implementation *fan-out* with worker
   packets, spec/standards review, worktree isolation, and rework loops. A
   thinner competing path would lose in ways nobody notices until something
@@ -180,13 +180,13 @@ the results.
   `output` all resolved to one configured default path
   (`<cwd>/context.md`), aborting the workflow before any child ran.
   Recorded in `body/pi.md` as an observed failure mode.
-- [`concepts/dispatching-parallel-agents/body/SKILL.md`](../dispatching-parallel-agents/body/SKILL.md)
+- [`concepts/bc-dispatching-parallel-agents/body/SKILL.md`](../bc-dispatching-parallel-agents/body/SKILL.md)
   — composed, not restated: packet contents, independent-domain rule,
   shared mutable state ban, parent integration duties.
-- [`concepts/prompting-agents/body/SKILL.md`](../prompting-agents/body/SKILL.md)
+- [`concepts/bc-prompting-agents/body/SKILL.md`](../bc-prompting-agents/body/SKILL.md)
   — right altitude, explain-the-why, gates reserved for in-the-moment
   rationalization, progressive disclosure.
-- [`concepts/subagent-driven-development/CONCEPT.md`](../subagent-driven-development/CONCEPT.md)
+- [`concepts/bc-subagent-driven-development/CONCEPT.md`](../bc-subagent-driven-development/CONCEPT.md)
   and [`concepts/bc-pipeline-to-done/CONCEPT.md`](../bc-pipeline-to-done/CONCEPT.md)
   — the implementation-fan-out boundary this concept hands off to.
 - Pi's `pi-subagents` extension skill — tool surface for `runs.all`,
@@ -231,7 +231,7 @@ the results.
 
 2026-11-19: [`tests/pressure-private-overlay.md`](tests/pressure-private-overlay.md). Owner decision: the body describes the full-gate wrapper, guarded pytest runner and storage health check generically; the owner's tool names moved to the optional private overlay `~/.config/agent-concepts/overlays/bc-swarm.md` (first user of the AGENTS.md private-overlay convention), which the body reads only if present. Terra low, text-only, n=2/arm: OWNER (body + overlay) 2/2 PASS named the tools at the right steps; STRANGER (body only) 2/2 PASS invented no owner tool and applied the discovery rule. No relationship edge changes: the kernel Storage safety link is kept.
 
-2026-11-18: [`tests/pressure-test-levels-packets.md`](tests/pressure-test-levels-packets.md) (project A: a parent packet forbade fast-check without asking the owner). Terra low, text-only: the waiver attack FAILED without and with the pre-change body (both packets forbade the property library) and PASSED with the current body (no waiver, parent commit carries a `Test-levels:` trailer); the review packet carried the worker's block only with the current body. **helped**. Design: packets never waive a tdd level without quoting the owner, review packets carry the Test levels block, parent commits carry it; new `depends_on_contract` edge to `tdd`.
+2026-11-18: [`tests/pressure-test-levels-packets.md`](tests/pressure-test-levels-packets.md) (project A: a parent packet forbade fast-check without asking the owner). Terra low, text-only: the waiver attack FAILED without and with the pre-change body (both packets forbade the property library) and PASSED with the current body (no waiver, parent commit carries a `Test-levels:` trailer); the review packet carried the worker's block only with the current body. **helped**. Design: packets never waive a tdd level without quoting the owner, review packets carry the Test levels block, parent commits carry it; new `depends_on_contract` edge to `bc-tdd`.
 
 [Todo/manifest pressure scenario](tests/pressure-todo-manifest.md), added
 2026-10-31: run 1 INVALID (no todo tool); run 2 **PASS** (todo extension loaded, see tests/pressure-todo-manifest.md).

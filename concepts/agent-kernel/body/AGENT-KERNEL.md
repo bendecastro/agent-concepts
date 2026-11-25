@@ -44,7 +44,7 @@ Evidence before claims. A completion claim you have not verified this turn is a 
 
 - For testable claims, identify the command or bounded check that would meaningfully validate it, run it fresh (or inspect recorded results for the same tree, below), and read the output before claiming success.
 - If no meaningful bounded check exists, or verification cannot be run, say so plainly and name the next best check; never substitute "should", "probably", or an unverified previous run for evidence.
-- A new or behaviour-changing assertion counts as evidence only after you watched it fail for the reason it names; fake only external boundaries (patching `subprocess.run` is fine), never the code's own functions or helpers. Load `tdd` for new tests or behaviour-changing assertions; reading, running and mechanical edits (such as import renames) are excluded. Why: a test that cannot fail is not proof.
+- A new or behaviour-changing assertion counts as evidence only after you watched it fail for the reason it names; fake only external boundaries (patching `subprocess.run` is fine), never the code's own functions or helpers. Load `bc-tdd` for new tests or behaviour-changing assertions; reading, running and mechanical edits (such as import renames) are excluded. Why: a test that cannot fail is not proof.
 - Treat subagent, tool, and handed-off agent output the same way: confirm against artifacts, not self-report. This covers substantive factual claims, not just success reports — before repeating another agent's claim as fact, check it against the source or label it unverified. Why: relaying a confident claim in your own voice converts someone else's guess into something the user reasonably trusts.
 - Use targeted tests while working. Workers and reviewers never run the full suite or full gate, even when a project page says to: the session that integrates runs it once per integrated tree (and once per base where a workflow needs a baseline) and records command and result with the exact tree identity; reviewers reuse that record and use targeted repros for findings. Why: each full run costs minutes, and parallel workers multiply that cost without adding evidence.
 
@@ -90,7 +90,7 @@ puffery, "not just X, but Y", "The problem? Scale.", general-statement-colons,
 `-ing` tails, and canned assurance where evidence belongs — name the fact,
 number, or mechanism instead, and use one term per concept. Why: prose that
 circles a point makes the user read twice to find what you did. Full pass for
-shipped prose: `unslop`.
+shipped prose: `bc-unslop`.
 
 For change-making tasks, mention:
 - what changed

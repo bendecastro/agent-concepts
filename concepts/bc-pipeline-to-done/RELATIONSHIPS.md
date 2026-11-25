@@ -11,6 +11,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- loads `bc-codebase-docs` — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
+  Reviewers check source-tree documentation against the diff.
+  Source: [body/review-contract.md](body/review-contract.md#independent-scopes)
+
+- depends on `bc-improve-codebase-architecture`'s contract — required, when architecture observation after landing.
+  Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
+  Source: [CONCEPT.md](CONCEPT.md)
+
 - depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
   Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines and reruns the work index script.
   Source: [CONCEPT.md](CONCEPT.md)
@@ -23,19 +31,11 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope.
   Source: [body/source-work-items.md](body/source-work-items.md#eligibility)
 
-- loads `codebase-docs` — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
-  Reviewers check source-tree documentation against the diff.
-  Source: [body/review-contract.md](body/review-contract.md#independent-scopes)
-
-- depends on `improve-codebase-architecture`'s contract — required, when architecture observation after landing.
-  Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields improve-codebase-architecture parses to seed review candidates.
-  Source: [CONCEPT.md](CONCEPT.md)
-
-- depends on `tdd`'s contract — required, when deterministic pre-review gate.
+- depends on `bc-tdd`'s contract — required, when deterministic pre-review gate.
   The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review.
   Source: [body/SKILL.md](body/SKILL.md#build-and-deterministic-pre-review-gate)
 
-- loads `tdd` — required, when feature/enhancement work.
+- loads `bc-tdd` — required, when feature/enhancement work.
   Feature workers follow red-green-refactor.
   Source: [body/execute-issue.md](body/execute-issue.md#build-loop)
 
@@ -49,6 +49,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Close-out recommends draining the published queue; the user decides.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)
 
-- incoming from [tdd](../tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when recording property fail-first evidence inside a drain.
+- incoming from [bc-tdd](../bc-tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when recording property fail-first evidence inside a drain.
   Mutation evidence goes in the drain’s existing validation.json, not a new evidence file.
-  Source: [tdd/body/properties.md](../tdd/body/properties.md#fail-first-for-properties)
+  Source: [bc-tdd/body/properties.md](../bc-tdd/body/properties.md#fail-first-for-properties)

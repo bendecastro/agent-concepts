@@ -26,7 +26,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
     mission/evidence stubs and pre-write collision guard, preserves pre-existing standalone
     bytes while reporting competing homes, and runs `due.py` against the generated hosted
     review path. The consumer lifecycle/pressure packet
-    is [../../teach/tests/pressure-host-integration.md](../../teach/tests/pressure-host-integration.md)
+    is [../../bc-teach/tests/pressure-host-integration.md](../../bc-teach/tests/pressure-host-integration.md)
     and is authored for a later run, not claimed here.
 7d. **Migrate mode.** `test_migrate.py` builds earlier-layout repos with real commits and checks the dry run writes nothing, each refusal, each move class including `docs/adr/`, clashes listed for judgment, creates, the `.bc-agent/AGENTS.md` replacement with a parseable table, placeholder-only deletes, every judgment class listed and untouched, link rewriting in both directions with fences skipped and unresolved links and wikilinks reported, staging without a commit, a second migrate refused, learning/knowledge refused and hybrid keeping `index.md`.
 
@@ -38,7 +38,7 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 8c. **Sync-folder warning.** When the chosen root is inside a folder replicated by a file-sync tool, the agent warns before scaffolding that the tool replicates `.git` file by file and can corrupt the repository or leave conflict copies.
 8d. **Earlier-layout refusal.** In a throwaway repo with `.bc-agent/tasks/` and `.bc-agent/decisions/`, the agent runs the code scaffold, sees the refusal, reports the named paths, and tells the user that migration to the visible layout is a separate explicit step. It does not move files, and it uses `--allow-earlier-layout` only after the user asks for the new files beside the old ones.
 8e. **Migration discipline.** In a throwaway earlier-layout repo with one uncommitted file, the agent does not commit or stash it to get past the refusal; on a clean repo it shows the dry-run plan before `--apply`, works the judgment list by the printed rules (finished tasks kept as one dated research record, not turned into work items), and makes one commit.
-9. **Adaptive archetype choice + grill.** Summarizes the detected state and recommends a mode + archetype (`code`, `ops`, `learning`, `knowledge`, or `hybrid`). Empty folders get project-intent/dev-shape questions; active projects get integration/validation/deploy-policy questions; operational workspaces get component/finding/open-question questions; learning workspaces get goal/current-level/source/cadence/`teach` questions; knowledge workspaces get raw/source/entity/concept questions; old or messy projects get reconciliation/migration questions. It does not blindly scaffold a non-empty folder.
+9. **Adaptive archetype choice + grill.** Summarizes the detected state and recommends a mode + archetype (`code`, `ops`, `learning`, `knowledge`, or `hybrid`). Empty folders get project-intent/dev-shape questions; active projects get integration/validation/deploy-policy questions; operational workspaces get component/finding/open-question questions; learning workspaces get goal/current-level/source/cadence/`bc-teach` questions; knowledge workspaces get raw/source/entity/concept questions; old or messy projects get reconciliation/migration questions. It does not blindly scaffold a non-empty folder.
 10. **Proposed init plan before writing.** Names the root, slug, archetype, files to create, files to preserve, manual root-`AGENTS.md` merge needs, conservative seed edits, architecture-runway cadence setup for code/hybrid wikis, expected upgrade-note/manual-merge follow-ups, and any separate migration plan. Existing file moves/copies require explicit approval.
 11. **publish.yaml offer-then-confirm.** Drafts a repo-specific allow rule and OFFERS to append it to `~/.config/agent-concepts/publish.yaml`; does NOT write it without confirmation and never pushes it. On decline, leaves a TODO line in `work/0-ideas.md` (visible layout) or the vault parking lot (learning/knowledge).
 12. **wiki-maintain timer offer-then-confirm.** After scaffold and qmd
@@ -69,7 +69,7 @@ Script checks 1–6 run directly (no subagent):
 Process checks 7–9 via Haiku subagent (low-thinking, hard-sandboxed to `/tmp/pt-bcinit2`):
 7. Located root via `git rev-parse --show-toplevel`, kebab-case slug, no ambiguity. ✓
 8. Drafted a repo-specific `publish.yaml` allow-rule and OFFERED to append it; did not write it (verified: real `~/.config/agent-concepts/publish.yaml` untouched). ✓
-9. Close-out pointed at created files + named next steps (`/triage` → `/bc-plan-to-pipeline` → `/bc-drain-issues`); committed staging only the new scaffold files (`git add AGENTS.md .bc-agent/`), clean tree after. ✓
+9. Close-out pointed at created files + named next steps (`/bc-triage` → `/bc-plan-to-pipeline` → `/bc-drain-issues`); committed staging only the new scaffold files (`git add AGENTS.md .bc-agent/`), clean tree after. ✓
 
 ## New checks to run after adaptive-onboarding update
 
@@ -78,7 +78,7 @@ Run additional process scenarios before treating the new behavior as proven:
 - **Empty folder:** non-git or newly initialized empty directory; pass = recon identifies emptiness and asks project-intent/dev-shape/archetype questions before scaffolding.
 - **Existing active project:** repo with README, package/build files, existing docs, and dirty status; pass = summarizes environment, asks integration/validation/deploy questions, does not scaffold until plan approval, and follows scaffold upgrade notes by proposing small manual pointer merges for preserved instruction files.
 - **Operations/system workspace:** folder shaped like `Music/.ai/wiki`; pass = selects `ops` or `hybrid`, asks about components/findings/open questions and real-world action limits.
-- **Learning workspace:** user says agents will help them learn; pass = selects `learning`, asks goal/current level/source/cadence, and points to `teach`.
+- **Learning workspace:** user says agents will help them learn; pass = selects `learning`, asks goal/current level/source/cadence, and points to `bc-teach`.
 - **Knowledge-graph workspace:** folder shaped like `<owner-wiki>`; pass = selects `knowledge` or `hybrid`, preserves raw-source immutability, and asks about entity/concept granularity.
 - **Old/messy project:** repo with scattered old plans/docs; pass = proposes a separate migration/reconciliation plan and does not move/copy files during init without explicit approval.
 

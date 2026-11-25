@@ -52,7 +52,7 @@ Look for these. Each says when it applies.
 
 1. **Wall time and rework** — waits, sleep/poll loops, reruns of the same failing command, rate-limit stalls, subagent rework rounds, a full suite run where a targeted test would do. _When_ the time report or transcript shows a long stretch with little progress.
 2. **Automated checks** — a mistake a linter, typecheck, test or hook could have caught. Read the repo's check/CI first: an existing check that is unwired or silently broken is the finding, not a new one. A repo with no guardrail (no hook and no CI running its checks) is itself a finding.
-3. **Coding standards** — classify first. A **mechanical** violation (banned API, import shape, file location) gets a deterministic check. A **judgement** call goes to the review standards (`code-review`), since the reviewer has the least context pressure. _When_ review missed something or the owner corrected the same thing twice.
+3. **Coding standards** — classify first. A **mechanical** violation (banned API, import shape, file location) gets a deterministic check. A **judgement** call goes to the review standards (`bc-code-review`), since the reviewer has the least context pressure. _When_ review missed something or the owner corrected the same thing twice.
 4. **Navigation** — the agent took long to find a file, command or fact. Propose a pointer from a file it already reads. _When_ searching dominated a stretch.
 5. **Steering in the wrong place** — a rule in an always-loaded file (`AGENTS.md`, the kernel) that belongs in a check, a review standard or an on-demand concept.
 6. **No-ops** — steering text that changed no behaviour in the session, or that the agent ignored without consequence.
@@ -64,8 +64,8 @@ Look for these. Each says when it applies.
 One of:
 
 - **Project** — its check, CI job, `./scripts/gate`, or a navigation pointer in its steering file.
-- **Review standards** — `code-review`, or the project's own standards file.
-- **Concept or kernel in this workspace** — names the concept and the clause. Note that it needs the workspace's pressure test before deploy; wording follows `prompting-agents`.
+- **Review standards** — `bc-code-review`, or the project's own standards file.
+- **Concept or kernel in this workspace** — names the concept and the clause. Note that it needs the workspace's pressure test before deploy; wording follows `bc-prompting-agents`.
 - **Scripts tool** — a new or changed helper in the owner's scripts repo.
 - **Memory or preferences** — only for something the owner stated in the session.
 

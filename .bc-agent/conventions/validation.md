@@ -56,7 +56,7 @@ git status --short
 
 ## Test levels
 
-The `tdd` skill defines these levels.
+The `bc-tdd` skill defines these levels.
 
 - Level 1: unit (example-based) tests — on.
 - Level 2: property-based tests — required for logic with a statable rule. They run inside the
