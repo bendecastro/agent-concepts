@@ -2068,3 +2068,6 @@ Repository root is one `agent-concepts` plugin for both agents; `scripts/plugin_
 
 ## [2026-11-25] implement | 024 npx skills packs
 New `scripts/install_packs.py` generates `docs/guides/install-packs.md` (all-skills and per-pack `npx skills add` commands, closure over public-skills.json needs) with a lint sync check; each command verified in a scratch HOME against a local checkout with `-a pi`.
+
+## [2026-11-25] implement | 024 Workflow guide
+New `docs/guides/workflows.md`: each newcomer workflow with timing, start, questions, result and example, plus the skills to attach to subagents and how in Pi, Claude Code and Codex (attach mechanisms checked against current docs). README gains a Workflows section linking each entry.

@@ -98,7 +98,28 @@ When you want to be away, **`/bc-pipeline-to-done`** builds the same work withou
 
 How the planning skills fit together in more detail: [docs/guides/pipeline.md](docs/guides/pipeline.md).
 
-The other concepts (code review, test-driven development, research, wiki maintenance, subagent routing and more) are listed in [index.md](index.md).
+The other workflows, and the skills worth giving to subagents, are explained in [docs/guides/workflows.md](docs/guides/workflows.md); every concept is listed in [index.md](index.md).
+
+## Workflows
+
+When to run each one, what it asks and what you get: [docs/guides/workflows.md](docs/guides/workflows.md).
+
+- [`/bc-init-agent`](docs/guides/workflows.md#bc-init-agent): set up a project for agents, once.
+- [`/bc-diagnosing-bugs`](docs/guides/workflows.md#bc-diagnosing-bugs): find a bug's cause from a failing command, then fix it with a test.
+- [`/bc-code-review`](docs/guides/workflows.md#bc-code-review): review a change for what was asked and for project standards, separately.
+- [`/bc-swarm`](docs/guides/workflows.md#bc-swarm): hand independent parts of a task to parallel subagents without losing their results.
+- [`/bc-autoresearch-loop`](docs/guides/workflows.md#bc-autoresearch-loop): make code measurably faster or smaller, keeping only proven gains.
+- [`/bc-prototype`](docs/guides/workflows.md#bc-prototype): answer a design question with throwaway code.
+- [`/bc-reflect`](docs/guides/workflows.md#bc-reflect): after a session, propose changes that make the next one faster.
+- [`/bc-council-challenge-plan`](docs/guides/workflows.md#bc-council-challenge-plan): have several models attack a plan before it is split into steps.
+- [`/bc-to-spec` and `/bc-to-tickets`](docs/guides/workflows.md#bc-to-spec-and-bc-to-tickets): turn a conversation into a GitHub spec and ready-to-build issues.
+- [`/bc-triage`](docs/guides/workflows.md#bc-triage): sort incoming issues into ready, needs information or rejected.
+- [`/bc-find-bugs` and `/bc-council-find-bugs`](docs/guides/workflows.md#bc-find-bugs-and-bc-council-find-bugs): hunt an area for bugs and prove each with a failing test.
+- [`/bc-council-audit-security`](docs/guides/workflows.md#bc-council-audit-security): a security audit where every finding is checked by a fresh reviewer.
+- [`/bc-improve-codebase-architecture` and `/bc-council-improve-codebase`](docs/guides/workflows.md#bc-improve-codebase-architecture-and-bc-council-improve-codebase): find modules worth reshaping and plan one.
+- [`/bc-work-sync`](docs/guides/workflows.md#bc-work-sync): bring work items in line with the project's documents.
+- [`/bc-wiki-maintain`](docs/guides/workflows.md#bc-wiki-maintain): health-check the agent's notes folder.
+- [`/bc-teach`](docs/guides/workflows.md#bc-teach): learn a subject over many sessions with spaced review.
 
 ## Keeping projects consistent
 

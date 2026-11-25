@@ -5,6 +5,7 @@ bodies and `AGENTS.md`, not here. Plans and other pending work live in [`../work
 
 - [guides/harnesses.md](guides/harnesses.md) — which agent harnesses can use the concepts, and how each one is deployed or bootstrapped.
 - [guides/bootstrap.md](guides/bootstrap.md) — prompts to paste into a session so a harness without native skill loading reads this workspace.
+- [guides/workflows.md](guides/workflows.md) — when to run each workflow skill, what it asks and what you get, and which skills to give subagents.
 - [guides/install-packs.md](guides/install-packs.md) — generated `npx skills` commands: every public skill, or one ready-made pack with the skills it needs.
 - [guides/pipeline.md](guides/pipeline.md) — how the plan-to-ship skills fit together, from a grilled idea to landed code.
 - [guides/pressure-test-harness.md](guides/pressure-test-harness.md) — how to run a pressure test of a concept with Pi: hiding deployed skills, flags, headless pitfalls.
