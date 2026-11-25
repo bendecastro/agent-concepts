@@ -77,7 +77,7 @@ entries and status pages. For each deployed concept it also checks the recorded 
 Two skills set up a project and plan its work; you then build it with your agent, or hand it to a
 third skill to build while you are away. Each skill leaves its result in files or on GitHub, so the next step does not need the same session.
 
-**`/bc-init-agent`** sets up a project for agents. It inspects the repository, asks what it
+**`/bc-setup-project`** sets up a project for agents. It inspects the repository, asks what it
 cannot work out, proposes a plan, then creates the layout: work items in `work/`, decisions and
 research in `docs/`, a root `glossary.md`, a `scripts/gate` stub that fails until you fill in the
 project's checks, a CI workflow that runs it, and agent mechanics in `.bc-agent/`. It only adds
@@ -104,19 +104,19 @@ Every concept is listed in [index.md](index.md).
 
 When to run each one, what it asks and what you get, and which skills to give your subagents: [docs/guides/workflows.md](docs/guides/workflows.md).
 
-- [`/bc-init-agent`](docs/guides/workflows.md#bc-init-agent): set up a project for agents, once.
+- [`/bc-setup-project`](docs/guides/workflows.md#bc-setup-project): set up a project for agents, once.
 - [`/bc-diagnosing-bugs`](docs/guides/workflows.md#bc-diagnosing-bugs): find a bug's cause from a failing command, then fix it with a test.
 - [`/bc-code-review`](docs/guides/workflows.md#bc-code-review): review a change for what was asked and for project standards, separately.
-- [`/bc-swarm`](docs/guides/workflows.md#bc-swarm): hand independent parts of a task to parallel subagents without losing their results.
-- [`/bc-autoresearch-loop`](docs/guides/workflows.md#bc-autoresearch-loop): make code measurably faster or smaller, keeping only proven gains.
+- [`/bc-delegate-investigation`](docs/guides/workflows.md#bc-delegate-investigation): hand independent parts of a task to parallel subagents without losing their results.
+- [`/bc-optimize-code`](docs/guides/workflows.md#bc-optimize-code): make code measurably faster or smaller, keeping only proven gains.
 - [`/bc-prototype`](docs/guides/workflows.md#bc-prototype): answer a design question with throwaway code.
-- [`/bc-reflect`](docs/guides/workflows.md#bc-reflect): after a session, propose changes that make the next one faster.
+- [`/bc-reflect-on-sessions`](docs/guides/workflows.md#bc-reflect-on-sessions): after a session, propose changes that make the next one faster.
 - [`/bc-council-challenge-plan`](docs/guides/workflows.md#bc-council-challenge-plan): have several models attack a plan before it is split into steps.
 - [`/bc-to-spec` and `/bc-to-tickets`](docs/guides/workflows.md#bc-to-spec-and-bc-to-tickets): turn a conversation into a GitHub spec and ready-to-build issues.
 - [`/bc-triage`](docs/guides/workflows.md#bc-triage): sort incoming issues into ready for an agent, ready for a person, needs information, or rejected.
 - [`/bc-find-bugs` and `/bc-council-find-bugs`](docs/guides/workflows.md#bc-find-bugs-and-bc-council-find-bugs): hunt an area for bugs and prove each with a failing test.
 - [`/bc-council-audit-security`](docs/guides/workflows.md#bc-council-audit-security): a security audit where every finding is checked by a fresh reviewer.
-- [`/bc-improve-codebase-architecture` and `/bc-council-improve-codebase`](docs/guides/workflows.md#bc-improve-codebase-architecture-and-bc-council-improve-codebase): find modules worth reshaping and plan one.
+- [`/bc-improve-codebase-architecture` and `/bc-council-improve-architecture`](docs/guides/workflows.md#bc-improve-codebase-architecture-and-bc-council-improve-codebase): find modules worth reshaping and plan one.
 - [`/bc-work-sync`](docs/guides/workflows.md#bc-work-sync): bring work items in line with the project's documents.
 - [`/bc-wiki-maintain`](docs/guides/workflows.md#bc-wiki-maintain): health-check the agent's notes folder.
 - [`/bc-teach`](docs/guides/workflows.md#bc-teach): learn a subject over many sessions with spaced review.
@@ -135,7 +135,7 @@ each one.
 
 Guardrails are automated checks that stop speed, size or structure from getting worse: performance
 budgets (limits on time, size or memory) and fitness functions (checks for a structural rule).
-The [`bc-guardrails`](concepts/bc-guardrails/body/SKILL.md) skill is the method. Each project lists its
+The [`bc-performance-guardrails`](concepts/bc-performance-guardrails/body/SKILL.md) skill is the method. Each project lists its
 limits and checks on `docs/guardrails/README.md`, and the checks run inside the project's gate.
 Agents set limits themselves, from today's measurement or a published guideline, and mark each
 one as their choice so you can change it; a limit you set is never loosened without asking.
@@ -157,7 +157,7 @@ deliberately, with the change logged, but not skipped quietly.
 - **Immutability rule** — files in `docs/research/raw/` are never edited.
 
 Some skills carry their own hard rules, such as the capture rule in `bc-ui-design` and the recovery
-rule in `bc-swarm`.
+rule in `bc-delegate-investigation`.
 
 ## Publishing and authorisation
 

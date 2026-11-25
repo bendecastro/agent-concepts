@@ -11,6 +11,6 @@ None.
 
 ## Incoming
 
-- incoming from [bc-show-me](../bc-show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when words around visuals.
+- incoming from [bc-explain-visually](../bc-explain-visually/RELATIONSHIPS.md): depends on this concept's contract — required, when words around visuals.
   Reader-outcome prose stays with bc-plain-language, not visual-form selection.
-  Source: [bc-show-me/body/SKILL.md](../bc-show-me/body/SKILL.md)
+  Source: [bc-explain-visually/body/SKILL.md](../bc-explain-visually/body/SKILL.md)

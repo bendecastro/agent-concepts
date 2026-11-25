@@ -29,7 +29,7 @@ Before reading or writing any teaching state, resolve `<teach-root>` and both ca
    line is exactly `<!-- teach-host-adapter: v1 -->` and its complete `## Hosted teach path map`
    table exactly matches one of the two approved maps below (they differ only in the Glossary
    row). A prefix-only, missing-row, or altered-map file is incomplete and is not a host contract. Read a valid marker before using host paths; it is
-   the opt-in adapter for an existing initializer host, not an instruction to run `bc-init-agent`.
+   the opt-in adapter for an existing initializer host, not an instruction to run `bc-setup-project`.
 2. Check standalone state (`MISSION.md`, `REVIEW.md`, `GLOSSARY.md`, `RESOURCES.md`, `NOTES.md`,
    `learning-records/`, or `lessons/`) in the current directory first. When a marker candidate is
    found, also inspect its marker-owning project root for those same paths. This second check is
@@ -51,7 +51,7 @@ Before reading or writing any teaching state, resolve `<teach-root>` and both ca
    An incomplete marker is not a host contract: report the missing adapter and remain standalone
    until the user explicitly chooses and repairs the host.
 
-The host's schema and orientation remain owned by `bc-init-agent`; `bc-teach` owns the mapped
+The host's schema and orientation remain owned by `bc-setup-project`; `bc-teach` owns the mapped
 pedagogy, evidence, source/knowledge content, spaced-repetition state, and the glossary terms
 the learner needs (in a hybrid host the glossary is shared with the project; see below).
 The marker is intentionally a thin path adapter, not a generic config framework or copied
@@ -74,7 +74,7 @@ are relative to `<teach-root>`. A vault host (the `learning` archetype) uses thi
 | Compiled knowledge / wiki concepts | existing `concepts/` | `bc-teach` |
 | Resource catalog | `references/teach-resources.md` | `bc-teach` |
 | Glossary | the existing Glossary section of `project/overview.md` | `bc-teach` |
-| Catalog and history | shared `index.md` and `log.md` | `bc-init-agent` host schema; `bc-teach` updates teach entries |
+| Catalog and history | shared `index.md` and `log.md` | `bc-setup-project` host schema; `bc-teach` updates teach entries |
 
 A visible-layout hybrid host (code or operations work plus learning) uses the same map except
 for the Glossary row, which names the project's root `glossary.md`, one level above `<teach-root>`:
@@ -212,7 +212,7 @@ For *acquiring* knowledge, difficulty is the enemy — it eats working memory. F
 
 ### Lessons (the default)
 
-A smallest inline `bc-show-me` visual is fine mid-lesson; do not write or open HTML
+A smallest inline `bc-explain-visually` visual is fine mid-lesson; do not write or open HTML
 mid-lesson, and the after-lesson artifact remains owned by this skill.
 
 The primary unit of teaching is an **in-conversation lesson**, not a generated file. The agent grading free-form answers in real time is a tighter feedback loop than any static quiz. A lesson:

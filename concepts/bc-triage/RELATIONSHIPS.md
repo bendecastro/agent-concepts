@@ -15,7 +15,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The shared-glossary rule for a hybrid project's root glossary.md has one home in bc-domain-modeling; triage points to it.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+- depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules.
   Source: [CONCEPT.md](CONCEPT.md)
 

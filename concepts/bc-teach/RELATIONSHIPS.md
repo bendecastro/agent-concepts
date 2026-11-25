@@ -7,7 +7,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `bc-init-agent`'s contract — required, when valid teach-host-adapter marker.
+- depends on `bc-setup-project`'s contract — required, when valid teach-host-adapter marker.
   Hosted teach mode relies on the initializer's explicit vault marker and host schema while remaining standalone by default.
   Source: [body/SKILL.md](body/SKILL.md#hosted-bc-agent-adapter)
 
@@ -17,21 +17,21 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   In a visible-layout hybrid project the root glossary.md is shared with teach; bc-domain-modeling asks before removing or redefining terms it did not add.
   Source: [bc-domain-modeling/body/SKILL.md](../bc-domain-modeling/body/SKILL.md)
 
-- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): adapts this concept — required, when learning or hybrid scaffold.
-  The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
-  Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md#learning-archetype-adapter)
-
-- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): loads this concept — optional, when learning workspace and the owner wants tutoring records.
-  Multi-session tutoring records come from the bc-teach skill.
-  Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md)
+- incoming from [bc-explain-visually](../bc-explain-visually/RELATIONSHIPS.md): depends on this concept's contract — required, when teaching sessions.
+  Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts.
+  Source: [bc-explain-visually/body/SKILL.md](../bc-explain-visually/body/SKILL.md)
 
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
   In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under bc-domain-modeling's shared-glossary rule.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md)
 
-- incoming from [bc-show-me](../bc-show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when teaching sessions.
-  Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts.
-  Source: [bc-show-me/body/SKILL.md](../bc-show-me/body/SKILL.md)
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): adapts this concept — required, when learning or hybrid scaffold.
+  The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
+  Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md#learning-archetype-adapter)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): loads this concept — optional, when learning workspace and the owner wants tutoring records.
+  Multi-session tutoring records come from the bc-teach skill.
+  Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md)
 
 - incoming from [bc-triage](../bc-triage/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout hybrid project.
   In a visible-layout hybrid project the root glossary.md is shared with teach; triage edits it under bc-domain-modeling's shared-glossary rule.

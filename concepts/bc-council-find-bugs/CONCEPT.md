@@ -26,7 +26,7 @@ All from the owner-approved [council bug hunt plan](../../work/3-done/2026-11/01
 ## Provenance
 
 - [Council bug hunt plan](../../work/3-done/2026-11/019-council-find-bugs.md), decisions 1–11 and step 3 of its build order.
-- Composes [bc-council-chain](../bc-council-chain/CONCEPT.md), [bc-find-bugs](../bc-find-bugs/CONCEPT.md) and [bc-council-mode](../bc-council-mode/CONCEPT.md); shape copied from [bc-council-improve-codebase](../bc-council-improve-codebase/CONCEPT.md).
+- Composes [bc-council-chain](../bc-council-chain/CONCEPT.md), [bc-find-bugs](../bc-find-bugs/CONCEPT.md) and [bc-council-mode](../bc-council-mode/CONCEPT.md); shape copied from [bc-council-improve-architecture](../bc-council-improve-architecture/CONCEPT.md).
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests

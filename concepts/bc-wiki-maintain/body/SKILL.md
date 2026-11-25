@@ -22,7 +22,7 @@ detector rather than guessing from folder names, because both layouts use `.bc-a
 - **vault** — the classic wiki: `index.md` catalog, `tasks/`, `project/overview.md`,
   `findings/`, `decisions/`, `open-questions/` all inside the vault root.
 - **visible** — the vault root's `AGENTS.md` has a parseable "Where things go" table
-  (`bc-init-agent` code, ops and hybrid projects). Project knowledge lives in ordinary folders
+  (`bc-setup-project` code, ops and hybrid projects). Project knowledge lives in ordinary folders
   at the repository root; the vault root holds agent mechanics only (`AGENTS.md`, `map.md`,
   `log.md`, `conventions/`, `references/`, `templates/`, `scripts/`). There is no vault catalog, so never
   create `index.md`, `tasks/`, `project/overview.md`, `findings/` or `open-questions/` there:

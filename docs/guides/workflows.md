@@ -2,7 +2,7 @@
 
 This page is for people who have installed these skills and want to know which ones to run, when, and what each run gives back. It covers the workflows you start yourself. The skills that steer an agent's everyday work, such as test-driven development, load on their own and are listed in [index.md](../../index.md).
 
-The planning loop (`/bc-init-agent`, `/bc-plan-to-pipeline`, `/bc-pipeline-to-done`) has its own page: [pipeline.md](pipeline.md).
+The planning loop (`/bc-setup-project`, `/bc-plan-to-pipeline`, `/bc-pipeline-to-done`) has its own page: [pipeline.md](pipeline.md).
 
 ## How to start a skill
 
@@ -10,7 +10,7 @@ Type a slash command with the skill's name, for example `/bc-find-bugs src/billi
 
 Some skills also start when you ask for them by name or describe the job ("diagnose this crash", "swarm this"). Others start only from the slash command, because they write reports or files you should ask for on purpose. The entries below say which.
 
-Most of these skills use the folders that `/bc-init-agent` creates: work items in `work/`, decisions and research in `docs/`, and a "Where things go" table in `.bc-agent/AGENTS.md`. Without that setup most of them still run and report what they found, but they do not create work items. `bc-work-sync` needs the setup and stops without it.
+Most of these skills use the folders that `/bc-setup-project` creates: work items in `work/`, decisions and research in `docs/`, and a "Where things go" table in `.bc-agent/AGENTS.md`. Without that setup most of them still run and report what they found, but they do not create work items. `bc-work-sync` needs the setup and stops without it.
 
 Words with a set meaning here, such as gate, worktree and seam, are defined in the [glossary](../../glossary.md).
 
@@ -18,9 +18,9 @@ Words with a set meaning here, such as gate, worktree and seam, are defined in t
 
 | When | Workflows |
 |---|---|
-| Once per project | [bc-init-agent](#bc-init-agent) |
-| During a task, when the need comes up | [bc-diagnosing-bugs](#bc-diagnosing-bugs), [bc-code-review](#bc-code-review), [bc-swarm](#bc-swarm), [bc-autoresearch-loop](#bc-autoresearch-loop), [bc-prototype](#bc-prototype) |
-| At a set point in your work | [bc-reflect](#bc-reflect) at the end of a session, and weekly over many sessions; [bc-council-challenge-plan](#bc-council-challenge-plan) before a plan is split into steps; [bc-to-spec and bc-to-tickets](#bc-to-spec-and-bc-to-tickets) after a planning conversation; [bc-triage](#bc-triage) when issues arrive; [bc-find-bugs](#bc-find-bugs-and-bc-council-find-bugs) and [bc-council-audit-security](#bc-council-audit-security) before a release |
+| Once per project | [bc-setup-project](#bc-setup-project) |
+| During a task, when the need comes up | [bc-diagnosing-bugs](#bc-diagnosing-bugs), [bc-code-review](#bc-code-review), [bc-delegate-investigation](#bc-delegate-investigation), [bc-optimize-code](#bc-optimize-code), [bc-prototype](#bc-prototype) |
+| At a set point in your work | [bc-reflect-on-sessions](#bc-reflect-on-sessions) at the end of a session, and weekly over many sessions; [bc-council-challenge-plan](#bc-council-challenge-plan) before a plan is split into steps; [bc-to-spec and bc-to-tickets](#bc-to-spec-and-bc-to-tickets) after a planning conversation; [bc-triage](#bc-triage) when issues arrive; [bc-find-bugs](#bc-find-bugs-and-bc-council-find-bugs) and [bc-council-audit-security](#bc-council-audit-security) before a release |
 | Every few weeks | [bc-improve-codebase-architecture](#bc-improve-codebase-architecture-and-bc-council-improve-codebase), [bc-work-sync](#bc-work-sync), [bc-wiki-maintain](#bc-wiki-maintain) |
 | Across many sessions | [bc-teach](#bc-teach) |
 
@@ -46,13 +46,13 @@ Every change report shows a **Test levels** block with one line per level, sayin
 
 ## One-time setup
 
-### bc-init-agent
+### bc-setup-project
 
 - **When:** once per project, before you plan work in it. Running it again is safe: it only adds missing files.
-- **Start:** `/bc-init-agent` (slash command only). Optional argument: the project's short name.
+- **Start:** `/bc-setup-project` (slash command only). Optional argument: the project's short name.
 - **What it asks:** what it could not work out from the repository, such as the kind of project (code, operations, learning, knowledge or a mix). It shows a plan before writing anything.
 - **What you get:** `work/` for work items, `docs/` for decisions and research, a root `glossary.md` and `AGENTS.md`, a `scripts/gate` check script that fails until you fill in your project's checks, a CI workflow that runs it, and agent rules in `.bc-agent/`. Existing files are kept unless you pass `--force` (files in `.bc-agent/`) or `--force-root` (the root `AGENTS.md`).
-- **Example:** in a new repository, run `/bc-init-agent`, answer that it is a code project, approve the plan, then fill in `scripts/gate` with your test command.
+- **Example:** in a new repository, run `/bc-setup-project`, answer that it is a code project, approve the plan, then fill in `scripts/gate` with your test command.
 
 ## During a task
 
@@ -72,18 +72,18 @@ Every change report shows a **Test levels** block with one line per level, sayin
 - **What you get:** two separate reports. **Spec** says whether the change does what the issue or plan asked, with nothing missing and nothing extra. **Standards** says whether it follows the project's conventions and avoids quality, test, security and documentation problems. Each finding is Critical, Important or Minor with the file and lines; Critical and Important block merging. The reviewers see the diff and the requirements, never the author's explanation.
 - **Example:** "Review this branch against main for issue 42." You get the Spec and Standards findings and a line saying whether a mistake would be easy to undo.
 
-### bc-swarm
+### bc-delegate-investigation
 
 - **When:** a task has several independent parts (reading many files, comparing options, reviewing several areas) and you want them done in parallel.
-- **Start:** say "swarm", "go wide" or "fan out", or `/bc-swarm`.
+- **Start:** say "swarm", "go wide" or "fan out", or `/bc-delegate-investigation`.
 - **What it asks:** nothing up front. It shows you each part it hands out, which kind of helper gets it and on which model.
 - **What you get:** parallel subagents, each writing its results to a file as it works, in a run folder whose path the agent states. If the session dies, the agent can recover from those files instead of starting again. It is meant for reading, comparing and reviewing. For code changes in parallel, the agent hands over to `/bc-pipeline-to-done`. The dispatch instructions are written for Pi with pi-subagents.
 - **Example:** "Swarm this: find every place we parse dates and how each one handles time zones." Three scouts each read part of the codebase and write findings; the agent merges them into one answer.
 
-### bc-autoresearch-loop
+### bc-optimize-code
 
 - **When:** you want something measurably faster, smaller or cheaper without changing what it does.
-- **Start:** ask the agent to optimize something by a number, or `/bc-autoresearch-loop`.
+- **Start:** ask the agent to optimize something by a number, or `/bc-optimize-code`.
 - **What it asks:** nothing, as long as the number to improve is clear. If it is not, it stops and says so.
 - **What you get:** a baseline measurement, then one small change at a time. A change is kept only when the tests still pass and the number improved; otherwise it is reverted. Each kept change records the number before and after and the check that held.
 - **Example:** "Make the import of a 10,000-row CSV faster." The agent times the import, tries changes one by one, and reports, for example, the median time going from 4.1 s to 1.3 s with the import tests still passing.
@@ -98,13 +98,13 @@ Every change report shows a **Test levels** block with one line per level, sayin
 
 ## At a set point in your work
 
-### bc-reflect
+### bc-reflect-on-sessions
 
 - **When:** the skill sets no schedule. Suggested: at the end of a session that went slowly or wrong, and a batch run over many sessions about once a week. It reads Pi's session logs, so it works only with Pi.
-- **Start:** `/bc-reflect` (slash command only). Arguments: a session id, or `since 2026-11-01`, or `last 20`, optionally a project name.
+- **Start:** `/bc-reflect-on-sessions` (slash command only). Arguments: a session id, or `since 2026-11-01`, or `last 20`, optionally a project name.
 - **What it asks:** which of its numbered proposals to act on. If an earlier report is still undecided, it shows that one first.
 - **What you get:** a list ordered by cost, each item naming what went wrong, the evidence in the session log, and a change that would prevent it: a new check, a review rule, a pointer in an instruction file, a cheaper tool call. It changes nothing until you pick. Batch mode also writes a report file and records what you decided.
-- **Example:** after a session spent rerunning a slow test suite, `/bc-reflect` proposes running only the affected tests while working, with the timestamps that show the wasted time.
+- **Example:** after a session spent rerunning a slow test suite, `/bc-reflect-on-sessions` proposes running only the affected tests while working, with the timestamps that show the wasted time.
 
 ### bc-council-challenge-plan
 
@@ -148,10 +148,10 @@ Every change report shows a **Test levels** block with one line per level, sayin
 
 ## Every few weeks
 
-### bc-improve-codebase-architecture and bc-council-improve-codebase
+### bc-improve-codebase-architecture and bc-council-improve-architecture
 
-- **When:** in a project set up with `bc-init-agent`, agents suggest a review once three or more plans have been committed since the last architecture review, or when the code shows structural trouble (unclear module boundaries, code that is hard to test, repeated bugs in the same place). `bc-diagnosing-bugs` also suggests one when a bug had no good place for a test.
-- **Start:** `/bc-improve-codebase-architecture` (slash command only), optionally with an area or problem. `/bc-council-improve-codebase` runs the same review through the council.
+- **When:** in a project set up with `bc-setup-project`, agents suggest a review once three or more plans have been committed since the last architecture review, or when the code shows structural trouble (unclear module boundaries, code that is hard to test, repeated bugs in the same place). `bc-diagnosing-bugs` also suggests one when a bug had no good place for a test.
+- **Start:** `/bc-improve-codebase-architecture` (slash command only), optionally with an area or problem. `/bc-council-improve-architecture` runs the same review through the council.
 - **What it asks:** "Which of these would you like to explore?", then questions about the chosen change one at a time.
 - **What you get:** an HTML report you can open in a browser, with one card per candidate: the files involved, the problem, the suggested direction, the benefit, a before-and-after diagram and how strongly it is recommended. It changes no code. The change you choose becomes a planned work item, a rejected one is recorded with your reason so it is not suggested again, and the rest stay in the ideas list. The council version adds how many advisors agreed with each card.
 - **Example:** the report suggests merging three thin wrappers around the payment API into one module with a single interface; you pick it, answer five questions, and get a planned work item.
@@ -159,7 +159,7 @@ Every change report shows a **Test levels** block with one line per level, sayin
 ### bc-work-sync
 
 - **When:** the skill sets no schedule. Suggested: once a month, or after you change a requirements document or record decisions. It treats active items untouched for 60 days as stale.
-- **Start:** `/bc-work-sync` (slash command only), optionally with a focus such as a stage or one document. Needs the `bc-init-agent` layout.
+- **Start:** `/bc-work-sync` (slash command only), optionally with a focus such as a stage or one document. Needs the `bc-setup-project` layout.
 - **What it asks:** approval of one plan, plus numbered questions where your documents disagree with each other.
 - **What you get:** a plan listing planned work with no work item, finished items not yet moved to done, stale items, work that already landed, and missing stage or blocker lines. It writes nothing until you approve, then commits the approved changes and has them reviewed.
 - **Example:** the plan shows a requirement added last week with no work item and an item whose steps are all ticked; you approve both fixes.
@@ -168,7 +168,7 @@ Every change report shows a **Test levels** block with one line per level, sayin
 
 - **When:** the skill sets no schedule. Suggested: when the project's agent notes have grown by many log entries since the last pass, or about once a month in an active project.
 - **Start:** `/bc-wiki-maintain .bc-agent` (slash command only); the folder is required.
-- **What it asks:** nothing. In a project set up by `bc-init-agent` it reports problems and fixes none of them.
+- **What it asks:** nothing. In a project set up by `bc-setup-project` it reports problems and fixes none of them.
 - **What you get:** a health report on the agent's notes folder: broken links, orphan pages and missing search setup. In the older single-folder layout it also moves lasting facts from the log into the right page, and records any log entry that conflicts with a page as an open question instead of choosing one.
 - **Example:** the report lists a link to a page that was renamed and a page that nothing links to.
 

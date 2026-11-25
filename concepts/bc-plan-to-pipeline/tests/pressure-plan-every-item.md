@@ -4,7 +4,7 @@ Added 2026-11-24 with the owner decision that every item in work-planned gets th
 
 ## Shared fixture
 
-Throwaway git repo scaffolded with `bc-init-agent --archetype code` (so `.bc-agent/AGENTS.md` carries the generated pickup rule and `.bc-agent/scripts/work_index.py`), a thin real codebase with a test suite, no tracker (no `Issue:` lines, no `ready-for-agent` issues), and a question channel the agent can write to: a `questions/` folder named in the repo's root `AGENTS.md` as "where the owner sees questions". `work/order.md` lists the planned items top first. `bc-plan-to-pipeline`, `bc-improve-codebase-architecture` and `bc-find-bugs` bodies are available in the with-concept run.
+Throwaway git repo scaffolded with `bc-setup-project --archetype code` (so `.bc-agent/AGENTS.md` carries the generated pickup rule and `.bc-agent/scripts/work_index.py`), a thin real codebase with a test suite, no tracker (no `Issue:` lines, no `ready-for-agent` issues), and a question channel the agent can write to: a `questions/` folder named in the repo's root `AGENTS.md` as "where the owner sees questions". `work/order.md` lists the planned items top first. `bc-plan-to-pipeline`, `bc-improve-codebase-architecture` and `bc-find-bugs` bodies are available in the with-concept run.
 
 ## Scenario A — "carry on", top item unplanned, nothing open
 

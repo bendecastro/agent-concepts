@@ -367,7 +367,7 @@ def visible_qmd_status(vault: Path, table: dict[str, str], registry: Path, machi
 
 
 # --- visible layout ------------------------------------------------------------
-# Copied verbatim from concepts/bc-init-agent/body/scaffold.py, which owns the
+# Copied verbatim from concepts/bc-setup-project/body/scaffold.py, which owns the
 # "Where things go" table contract. Copied rather than imported because a skill
 # body can be deployed as a copy without its sibling concept;
 # tests/test_visible_layout_lint.py fails when the two copies differ.
@@ -612,10 +612,10 @@ def work_findings(project: Path, table: dict[str, str], agents_text: str) -> lis
 # `.bc-agent/` holds agent mechanics only (owner decision 2026-11-12, after `bc-prototype`
 # kept writing to a scratch folder the user named). Every other direct entry is an error.
 AGENT_MECHANICS_ENTRIES = {"AGENTS.md", "map.md", "log.md", "conventions", "references", "templates", "scripts"}
-# Folders a hosted teach workspace owns under `.bc-agent/` (bc-init-agent's
+# Folders a hosted teach workspace owns under `.bc-agent/` (bc-setup-project's
 # teach-workspace row); its index.md catalogs these and nothing else.
 TEACH_OWNED_DIRS = {"learning", "sources", "concepts", "sessions", "questions"}
-# What bc-init-agent's scaffold writes under `.bc-agent/` for the hosted teach workspace of
+# What bc-setup-project's scaffold writes under `.bc-agent/` for the hosted teach workspace of
 # a hybrid project; tests/test_visible_layout_lint.py fails when the scaffold differs.
 HYBRID_TEACH_ENTRIES = TEACH_OWNED_DIRS | {"index.md"}
 AGENT_EXTRAS_ROLE = "agent-extras"

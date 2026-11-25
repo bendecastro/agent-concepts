@@ -1,6 +1,6 @@
 ---
 name: bc-council-chain
-description: "Shared recipe loaded by bc-council-* chain skills (for example bc-council-improve-codebase) that run a parent skill through the advisor council: roster, one shared map, pass 1 independent candidates, citation-checked merge, pass 2 cross-examination, advisor fallbacks and sandbox-copy cleanup. Not run directly: a chain loads it and supplies the job-specific parts. Pi only: needs the pi-subagents `subagent` tool."
+description: "Shared recipe loaded by bc-council-* chain skills (for example bc-council-improve-architecture) that run a parent skill through the advisor council: roster, one shared map, pass 1 independent candidates, citation-checked merge, pass 2 cross-examination, advisor fallbacks and sandbox-copy cleanup. Not run directly: a chain loads it and supplies the job-specific parts. Pi only: needs the pi-subagents `subagent` tool."
 ---
 
 # Council chain recipe

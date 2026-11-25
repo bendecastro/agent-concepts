@@ -15,7 +15,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 ## Design decisions
 
 - **Two layouts, chosen by the detector.** A vault root whose `AGENTS.md` has a parseable
-  "Where things go" table is a visible-layout project (`bc-init-agent` code, ops and hybrid);
+  "Where things go" table is a visible-layout project (`bc-setup-project` code, ops and hybrid);
   anything else is a classic vault and keeps its checks unchanged. In visible mode the detector
   drops every vault demand (no `index.md` coverage, no `tasks/active.md` staleness), keeps link
   health for the vault root (`map.md` included), and checks the work folders through the
@@ -33,7 +33,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   those and not agent mechanics. Nothing recreates a vault catalog there.
 - **`.bc-agent/` holds agent mechanics only, checked (owner decision 2026-11-12).** In visible
   mode every entry directly under the vault root other than `AGENTS.md`, `map.md`, `log.md`,
-  `conventions/`, `references/`, `templates/` and `scripts/` (bc-init-agent's `work_index.py`, added 2026-11-16) is an `agent-mechanics` error naming where
+  `conventions/`, `references/`, `templates/` and `scripts/` (bc-setup-project's `work_index.py`, added 2026-11-16) is an `agent-mechanics` error naming where
   project knowledge belongs. A hybrid project (table has `teach-workspace`) also may keep the
   teach paths its scaffold writes there (`learning/`, `sources/`, `concepts/`, `sessions/`,
   `questions/`, `index.md`); a test scaffolds a hybrid project and compares the two lists. A
@@ -43,8 +43,8 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   which is retired in this layout. `scratch/` is seen here although page scanning skips it. Why:
   a pressure test showed `bc-prototype` following a user's explicit scratch path over the skill's
   wording three times, so the backstop is deterministic, not more wording
-  ([results](../bc-init-agent/tests/pressure-dependent-skills-results-2026-11-12.md)).
-- **The table parser is a checked copy, not an import.** `bc-init-agent/body/scaffold.py` owns
+  ([results](../bc-setup-project/tests/pressure-dependent-skills-results-2026-11-12.md)).
+- **The table parser is a checked copy, not an import.** `bc-setup-project/body/scaffold.py` owns
   `parse_where_things_go`; `wiki_lint.py` carries a verbatim copy, and
   `tests/test_visible_layout_lint.py` fails when the two differ. Importing through
   `Path(__file__).resolve()` would work for today's symlink deploys but breaks when a skill body
@@ -213,7 +213,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
 ## Provenance
 
 - `work/3-done/2026-11/018-bc-init-agent-visible-layout.md` ("Resolved decisions") and the
-  `bc-init-agent` "Where things go" table contract — the visible layout this detector and
+  `bc-setup-project` "Where things go" table contract — the visible layout this detector and
   promotion routing now recognize.
 - Perplexity Brain distillation captured in the run artifact `brain.md` — separate capture from
   synthesis, deterministic verification, contradiction handling, and Git-backed audit:
@@ -222,7 +222,7 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   https://www.perplexity.ai/hub/blog/brain-agentic-memory-as-a-knowledge-wiki
 - A maintained personal-wiki lint script (broken links, ambiguous links, orphan pages, missing
   index entries) — ported into `body/wiki_lint.py`, not vendored from a private path.
-- `concepts/bc-init-agent/` — the additive, idempotent, never-deletes project-vault scaffold
+- `concepts/bc-setup-project/` — the additive, idempotent, never-deletes project-vault scaffold
   this concept extends.
 - `concepts/bc-qmd/` — the global search overlay whose collection coverage the detector reports.
 - `concepts/bc-prompting-agents/body/SKILL.md` — adapted scope-discipline, gate, evidence, and
@@ -313,7 +313,7 @@ live vaults: `bc-codebase-design` moved from `invalid` to `2026-06-28..2026-07-1
 creates a new Markdown page, verifies that the direct reader excludes it before `git add`, then
 verifies that the same page is searchable after it is registered in Git. The generated copy of
 the canonical vault block is checked byte-for-byte against `body/SKILL.md` by
-`../bc-init-agent/tests/test_read_contract.py`; both checks preserve the tracked-only boundary.
+`../bc-setup-project/tests/test_read_contract.py`; both checks preserve the tracked-only boundary.
 
 **2026-08-25 — PASS — regression suite extended (18 tests).** Gate 1 became mechanically
 enforceable: a purely additive append commits, an in-place rewrite of an existing line fails

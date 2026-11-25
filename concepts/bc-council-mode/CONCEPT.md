@@ -12,7 +12,7 @@ Model-invoked protocol for a bounded, parent-supervised advisor council on a dec
 
 - **Adopted from the `pi-subagents` package (2026-11-24, owner decision).** The owner is making the council a central part of the workflow. Left in the package, it changed with every unpinned `pi-subagents` update and could not be edited; the owner's private skills also depend on its roster cap, fallback and relay rules. Changes from upstream are listed below; everything else is verbatim.
 - **Pi-specific mechanics stay.** The steps rely on `pi-subagents` workflow scripts (`runs.all`), resumable runs and `outputSchema`. When upstream changes those, compare against the version recorded under Provenance and update this copy.
-- **Launch with `options.script`, not `workflow: true` (2026-11-24).** Upstream told the parent to write a separate `js workflow` block plus `subagent({ workflow: true })`. In pressure runs the parent model lost the block in 2 of 3 runs, so no advisor ran. Putting the script inside the call fixed it (0 failures in 4 runs). Same lesson as `bc-swarm`'s Pi notes.
+- **Launch with `options.script`, not `workflow: true` (2026-11-24).** Upstream told the parent to write a separate `js workflow` block plus `subagent({ workflow: true })`. In pressure runs the parent model lost the block in 2 of 3 runs, so no advisor ran. Putting the script inside the call fixed it (0 failures in 4 runs). Same lesson as `bc-delegate-investigation`'s Pi notes.
 - **Resume entry shape spelled out (2026-11-24).** Upstream said a resume "needs a retained run id" without naming the field; one run passed the id as `id` and the whole cross-examination failed. The skill now gives `{ key, resume: <runId>, task, output: false }`.
 - **`/council` prompt lives here (`council-prompt.md`).** The package's prompt loaded the protocol through `subagent({action: "guide", options: {topic: "council"}})`, which always serves the package copy, so owning the skill alone would have left `/council` on upstream. This copy loads the skill instead. In Pi the package's own skill and prompt are excluded with a package filter in `settings.json` so only this copy loads.
 - **Example advisors with distinct stances (`body/examples/agents/`, owner decision).** The upstream template had one stance-neutral profile. In the first pressure run two neutral advisors agreed in round 1 and the cross-examination never ran; giving them opposing stances produced a real dispute every time. The examples (change, compatibility, risk) carry a placeholder model so a stranger swaps in their own; they replace the inline template in `pass-contracts.md` so the profile format has one home.
@@ -20,7 +20,7 @@ Model-invoked protocol for a bounded, parent-supervised advisor council on a dec
 ## Provenance
 
 - `pi-subagents` 0.90.0 (npm; https://github.com/nicobailon/pi-subagents), MIT, © 2026 Nico Bailon — `skills/bc-council-mode/SKILL.md` (sha256 `12d4b7f8e8e1cc1770e85f8c511a690b9f18b23bae3250149602c04ca7575943`), `skills/bc-council-mode/references/pass-contracts.md` (sha256 `f2eb16d989d4396e0fc3147ba2108db08e4e89b9020ab68629a86cb2957836a3`) and `prompts/council.md`. License text kept in [LICENSE-upstream](LICENSE-upstream).
-- [bc-swarm Pi notes](../bc-swarm/body/pi.md) — `options.script` as the reliable fan-out form.
+- [bc-delegate-investigation Pi notes](../bc-delegate-investigation/body/pi.md) — `options.script` as the reliable fan-out form.
 
 ## Tests
 

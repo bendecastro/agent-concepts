@@ -18,7 +18,7 @@ map so agents know what to invoke.
 - Intake/evidence: `/bc-triage`, `/bc-prototype`.
 - Planning disciplines: `bc-grilling`, `bc-domain-modeling`, `bc-prd-drafting`, `bc-plan-slicing`, `bc-codebase-design`.
 - Source-tree docs: `bc-codebase-docs` — README files, other `docs/` pages and JSDoc; not `.bc-agent/` and not the paths named in the "Where things go" table in `.bc-agent/AGENTS.md`, which are records.
-- Execution disciplines: `bc-tdd`, `bc-diagnosing-bugs`, `bc-autoresearch-loop`.
+- Execution disciplines: `bc-tdd`, `bc-diagnosing-bugs`, `bc-optimize-code`.
 
 ## Agent behavior
 

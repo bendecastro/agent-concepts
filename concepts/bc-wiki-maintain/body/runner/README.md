@@ -482,7 +482,7 @@ passes. If any unpromoted heading is non-standard, the detector keeps promotion 
 `PROMOTION_RANGE=invalid`; the wrapper fails closed instead of guessing a range. It may emit a
 human-readable report around the contract lines. Missing, duplicate, or malformed results fail closed.
 `PROMOTION_REQUIRED=0` exits before Pi is checked or invoked.
-When the report contains the line `Layout: visible` (a `bc-init-agent` visible-layout project),
+When the report contains the line `Layout: visible` (a `bc-setup-project` visible-layout project),
 the wrapper logs that promotion is not applicable and exits 0 before the clean-tree gate, any
 model call or write, whatever the detector's own exit status. Promotion moved log entries into
 vault pages; in the visible layout agents write to the role folders directly and `log.md` is a

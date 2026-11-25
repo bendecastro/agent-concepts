@@ -2,16 +2,16 @@
 
 These are clean consumer scenarios for the explicit `.bc-agent/references/teach-skill.md`
 adapter. Run each against a fresh throwaway Git repository with the canonical `bc-teach`,
-`bc-init-agent`, and `bc-wiki-maintain` instructions available. Do not tell the consumer the
+`bc-setup-project`, and `bc-wiki-maintain` instructions available. Do not tell the consumer the
 expected paths or gate wording; grade the resulting files and Git diff, not its report.
 
 The scenarios are authored for a parent consumer/review run. They were **not run in this
 implementation pass**. Deterministic scaffold/layout/contract checks live in
-`../bc-init-agent/tests/test_teach_adapter.py`.
+`../bc-setup-project/tests/test_teach_adapter.py`.
 
 ## 1. Initialize → hosted teach → resume
 
-**Setup:** An otherwise empty repository. Run `bc-init-agent`'s deterministic scaffold with
+**Setup:** An otherwise empty repository. Run `bc-setup-project`'s deterministic scaffold with
 `--archetype learning`, then invoke `bc-teach` first from the project root and again from the
 `.bc-agent/` vault context. Seed a concrete mission and one due review item through the teach
 conversation.
@@ -99,7 +99,7 @@ actual maintenance output.
 
 ## 5. Hybrid host: one shared glossary (written 2026-11-12; not yet run)
 
-**Setup:** Scaffold a fresh `hybrid` project with `bc-init-agent`. Put two project terms in the
+**Setup:** Scaffold a fresh `hybrid` project with `bc-setup-project`. Put two project terms in the
 root `glossary.md` in its one-line format (for example `Order — a customer's confirmed purchase.`),
 and a mission in `.bc-agent/learning/plan.md`. Invoke `bc-teach` once from the project root and once
 from inside `.bc-agent`.

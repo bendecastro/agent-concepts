@@ -7,7 +7,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+- depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves glossary and decisions in the scaffolded table, with its earlier paths as fallback.
   Source: [CONCEPT.md](CONCEPT.md)
 
@@ -29,10 +29,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [bc-improve-codebase-architecture/body/SKILL.md](../bc-improve-codebase-architecture/body/SKILL.md)
 
-- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
-  Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
-  Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md)
-
 - incoming from [bc-plan-slicing](../bc-plan-slicing/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [bc-plan-slicing/body/SKILL.md](../bc-plan-slicing/body/SKILL.md)
@@ -48,6 +44,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-prd-drafting](../bc-prd-drafting/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [bc-prd-drafting/body/SKILL.md](../bc-prd-drafting/body/SKILL.md)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
+  Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
+  Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md)
 
 - incoming from [bc-tdd](../bc-tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.

@@ -123,7 +123,7 @@ they matter.
 
 ## Where this stops
 
-- Visual form of how-it-works explanations → `bc-show-me`; this skill owns the
+- Visual form of how-it-works explanations → `bc-explain-visually`; this skill owns the
   words around the visual.
 - Agent-instruction authoring → `bc-prompting-agents`.
 - Visual UI beyond the words → `bc-ui-design`.

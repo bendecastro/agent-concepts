@@ -8,7 +8,7 @@ low), headless `pi -p`. Never use real council advisors.
 
 1. `scratch=$(mktemp -d)`. Per run, copy `../../bc-find-bugs/tests/practice-project/` (never
    `answer-key.md`) to `$scratch/<run>`, `git init -b main`, scaffold a work pipeline with
-   `python3 concepts/bc-init-agent/body/scaffold.py --root . --slug shopkit --archetype code`,
+   `python3 concepts/bc-setup-project/body/scaffold.py --root . --slug shopkit --archetype code`,
    add a `work/order.md` holding only a heading, commit.
 2. Stand-in advisors: copy the user agent profiles except `council-*` into `$scratch/agents`, add
    three read-only profiles `council-standin-1..3` (tools read/grep/find/ls, model the
@@ -42,7 +42,7 @@ then clean up.
 ## Dry run
 
 The live run above asks Terra low to carry the whole chain; it stopped early (see the results). The
-dry run checks the instructions instead, the way `bc-council-chain` and `bc-council-improve-codebase`
+dry run checks the instructions instead, the way `bc-council-chain` and `bc-council-improve-architecture`
 were tested: the consumer writes `plan.md` stating exactly what it would do and launches nothing.
 
 Setup: per run, a `mktemp -d` scratch copy of the practice project (no `answer-key.md`), `git init

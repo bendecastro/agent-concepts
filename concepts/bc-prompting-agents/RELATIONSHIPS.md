@@ -13,14 +13,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-- incoming from [bc-reflect](../bc-reflect/RELATIONSHIPS.md): hands off to this concept — optional.
+- incoming from [bc-explain-visually](../bc-explain-visually/RELATIONSHIPS.md): adapts this concept — required, when authoring the skill.
+  Adapts loading-is-not-authorization, scope discipline and examples-over-rules.
+  Source: [bc-explain-visually/CONCEPT.md](../bc-explain-visually/CONCEPT.md#design-decisions)
+
+- incoming from [bc-reflect-on-sessions](../bc-reflect-on-sessions/RELATIONSHIPS.md): hands off to this concept — optional.
   A proposal homed in a concept or kernel clause is worded per bc-prompting-agents and pressure-tested before deploy.
-  Source: [bc-reflect/body/SKILL.md](../bc-reflect/body/SKILL.md#every-proposal-names-its-home)
+  Source: [bc-reflect-on-sessions/body/SKILL.md](../bc-reflect-on-sessions/body/SKILL.md#every-proposal-names-its-home)
 
 - incoming from [bc-security-audit](../bc-security-audit/RELATIONSHIPS.md): adapts this concept — required.
   Adapts scope, ambiguity, evidence and enforced privileged-action phrasing for guidance versus explicit audit mode.
   Source: [bc-security-audit/CONCEPT.md](../bc-security-audit/CONCEPT.md#design-decisions)
-
-- incoming from [bc-show-me](../bc-show-me/RELATIONSHIPS.md): adapts this concept — required, when authoring the skill.
-  Adapts loading-is-not-authorization, scope discipline and examples-over-rules.
-  Source: [bc-show-me/CONCEPT.md](../bc-show-me/CONCEPT.md#design-decisions)

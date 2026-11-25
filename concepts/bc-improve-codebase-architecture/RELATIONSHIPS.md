@@ -15,23 +15,27 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+- hands off to `bc-plan-to-pipeline` — required, when after filing chosen findings in a project with a Where things go table.
+  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-architecture inherits this through its filing step.
+  Source: [body/SKILL.md](body/SKILL.md#4-record-every-finding-projects-with-the-table)
+
+- depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject.
   Source: [CONCEPT.md](CONCEPT.md)
 
-- hands off to `bc-plan-to-pipeline` — required, when after filing chosen findings in a project with a Where things go table.
-  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-codebase inherits this through its filing step.
-  Source: [body/SKILL.md](body/SKILL.md#4-record-every-finding-projects-with-the-table)
-
 ## Incoming
 
-- incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
+- incoming from [bc-council-improve-architecture](../bc-council-improve-architecture/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
   Inputs, card fields, report, grilling and filing have one home in bc-improve-codebase-architecture; this skill adds only the map contents, card format and agreement rule.
-  Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md)
+  Source: [bc-council-improve-architecture/body/SKILL.md](../bc-council-improve-architecture/body/SKILL.md)
 
 - incoming from [bc-diagnosing-bugs](../bc-diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when bug fixed without a correct test seam.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
   Source: [bc-diagnosing-bugs/body/SKILL.md](../bc-diagnosing-bugs/body/SKILL.md)
+
+- incoming from [bc-explain-visually](../bc-explain-visually/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture-review reports.
+  Architecture-review report artifacts retain their own contract.
+  Source: [bc-explain-visually/body/SKILL.md](../bc-explain-visually/body/SKILL.md)
 
 - incoming from [bc-find-bugs](../bc-find-bugs/RELATIONSHIPS.md): adapts this concept — required, when filing after the owner answers.
   Report-then-owner filing, roles and the no-pipeline fallback mirror bc-improve-codebase-architecture.
@@ -40,7 +44,3 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture observation after landing.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
   Source: [bc-pipeline-to-done/CONCEPT.md](../bc-pipeline-to-done/CONCEPT.md)
-
-- incoming from [bc-show-me](../bc-show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture-review reports.
-  Architecture-review report artifacts retain their own contract.
-  Source: [bc-show-me/body/SKILL.md](../bc-show-me/body/SKILL.md)

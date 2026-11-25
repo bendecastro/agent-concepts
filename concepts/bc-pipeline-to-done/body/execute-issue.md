@@ -22,7 +22,7 @@ For bug/performance-regression issues, load and follow the repo-available `bc-di
 
 For feature/enhancement work, load and follow the repo-available `bc-tdd` discipline in thin observable increments: one public behavior per test, RED, minimal GREEN, then refactor only while GREEN. The Agent Brief, acceptance matrix, and binding domain context are the AFK contract.
 
-For metric-bearing work only, load and follow `bc-autoresearch-loop` after GREEN: establish a correctness-bearing baseline, make one bounded refinement, and keep it only when correctness holds and the named metric improves. Do not optimize without an objective metric. If a named discipline is unavailable in the harness, preserve these mechanics explicitly rather than silently weakening them.
+For metric-bearing work only, load and follow `bc-optimize-code` after GREEN: establish a correctness-bearing baseline, make one bounded refinement, and keep it only when correctness holds and the named metric improves. Do not optimize without an objective metric. If a named discipline is unavailable in the harness, preserve these mechanics explicitly rather than silently weakening them.
 
 When the change alters behavior that a README, an existing `docs/` page, an architecture page, or contract-stating JSDoc already describes, update that owning page in the same diff and follow the repo-available `bc-codebase-docs` for placement. Do not invent a new `docs/` tree, do not restate a contract that already has a home, and do not narrate this issue in a documentation page — the acceptance matrix records what the slice did, and a docs page that narrates a change is stale the moment the next one lands. A repository that keeps no documentation for this surface needs none written to satisfy this rule.
 

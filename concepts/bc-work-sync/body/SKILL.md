@@ -55,7 +55,7 @@ Look for each of these; [PLAN.md](PLAN.md) gives the plan's format.
 4. Planned items whose work already landed in commits: name the commits.
 5. Lines in the ideas file that became items: remove the line.
 6. Open items with no or an unknown `Stage:` line, and a missing `Stages:` line.
-7. Open items with no `Blocked by:` line, and `Blocked by:` names that are unknown, dropped (in work-dropped), the item itself or part of a cycle: propose the real blockers, or a changed plan for a dropped one. A project whose items have no `Blocked by:` lines at all needs the "Blocked by" note in bc-init-agent's `MIGRATIONS.md`; propose it.
+7. Open items with no `Blocked by:` line, and `Blocked by:` names that are unknown, dropped (in work-dropped), the item itself or part of a cycle: propose the real blockers, or a changed plan for a dropped one. A project whose items have no `Blocked by:` lines at all needs the "Blocked by" note in bc-setup-project's `MIGRATIONS.md`; propose it.
 8. Links to items by path in docs or other items: docs refer to items by number ("work item 012"); only the generated `work/README.md` links paths.
 9. Questions for the owner, each with numbered options and the recommended one first.
 
@@ -67,4 +67,4 @@ Look for each of these; [PLAN.md](PLAN.md) gives the plan's format.
 4. Get an independent review of the diff (a fresh reviewer subagent, or the owner when none is available), apply the fixes, re-run step 2 and commit them.
 5. Publishing: run the publish policy check for this repo, its remote and the current branch, if the machine has one; the overlay named at the top of this skill names it, so read that file now if you have not. Then check the matched rule's `when:` conditions yourself. If there is no matching rule, or the check is not available, ask. Do not restate the policy.
 
-A project scaffolded before the work index has no `.bc-agent/scripts/work_index.py`: see the "Work index" note in bc-init-agent's `MIGRATIONS.md`, and propose adopting it in the plan rather than doing it unasked.
+A project scaffolded before the work index has no `.bc-agent/scripts/work_index.py`: see the "Work index" note in bc-setup-project's `MIGRATIONS.md`, and propose adopting it in the plan rather than doing it unasked.

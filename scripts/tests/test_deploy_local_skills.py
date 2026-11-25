@@ -15,7 +15,7 @@ import pytest
 
 SCRIPT = Path(__file__).resolve().parents[1] / "deploy-local-skills.py"
 REPO = SCRIPT.parents[1]
-NAME = "bc-guardrails"  # a deployed public concept
+NAME = "bc-performance-guardrails"  # a deployed public concept
 
 
 @pytest.fixture

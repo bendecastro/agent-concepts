@@ -27,6 +27,6 @@ None.
   Briefing, launch, relay, resume and the pass cap have one home in bc-council-mode.
   Source: [bc-council-find-bugs/body/SKILL.md](../bc-council-find-bugs/body/SKILL.md)
 
-- incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
+- incoming from [bc-council-improve-architecture](../bc-council-improve-architecture/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
   Briefing, launch, relay, resume and the pass and roster caps have one home in bc-council-mode.
-  Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md)
+  Source: [bc-council-improve-architecture/body/SKILL.md](../bc-council-improve-architecture/body/SKILL.md)

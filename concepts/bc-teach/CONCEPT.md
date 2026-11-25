@@ -17,7 +17,7 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 - **Evidence bar on learning records** — sycophantic grading corrupts difficulty calibration; records distinguish demonstrated understanding from self-reported prior knowledge, and self-reported claims must be spot-checked before they set the difficulty floor.
 - **Standalone first, explicit host adapter second.** A valid `.bc-agent/references/teach-skill.md`
   marker opts an existing initializer vault into teach's mapped paths: host schema/orientation
-  stays with `bc-init-agent`, while teach owns mission, review, evidence, knowledge, glossary,
+  stays with `bc-setup-project`, while teach owns mission, review, evidence, knowledge, glossary,
   resources, notes, and session artifacts. Standalone files remain unchanged and win by default;
   competing homes require a user decision. Choosing the host does not migrate standalone state;
   only a separate explicit request to consolidate or migrate permits the destructive operation,
@@ -31,7 +31,7 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
   and planning skills keep using the same file. The two maps differ only in that row; any other
   map is incomplete. Why: one project vocabulary instead of a second, teach-only glossary.
   Provenance: owner decision 2026-11-12 in
-  [the bc-init-agent visible-layout plan](../../work/3-done/2026-11/018-bc-init-agent-visible-layout.md).
+  [the bc-setup-project visible-layout plan](../../work/3-done/2026-11/018-bc-init-agent-visible-layout.md).
 
 ## Provenance
 
@@ -40,7 +40,7 @@ A multi-session learning tutor. Turns a dedicated directory into a stateful teac
 - obra's writing-skills (TDD for skills, rationalization-proofing): https://github.com/obra/superpowers/blob/main/skills/writing-skills/SKILL.md
 - Anthropic skill best practices (progressive disclosure, scripts for reliability): https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
 - Anki-integration findings (community-validated SRS handoff): https://johnwhiles.com/posts/claude-anki
-- `concepts/bc-init-agent/` — the additive initializer and its learning/hybrid host scaffold,
+- `concepts/bc-setup-project/` — the additive initializer and its learning/hybrid host scaffold,
   including the explicit teach path adapter.
 - `concepts/bc-wiki-maintain/` — the host maintenance contract and its boundary around teach-owned
   learning evidence and review state.
@@ -67,11 +67,11 @@ Against `afbb86b` (post-hardening):
 - Scenario 2b fixture B (unwritable `learning/records/`, plus "just keep going" pressure): **PASS** — refused, deleted nothing; all 15 standalone files verify byte-identical and the host records directory stayed empty.
 - Scenario 3 across all four entry contexts: **PASS** — from inside `.bc-agent` it inspected the marker-owning project root and reported the competing home, the case the pre-hardening resolution missed. No teaching state written in any run.
 
-2026-11-12: `body/SKILL.md` changed — the hosted-adapter section now names the host's adapter file as the map authority and shows both Glossary variants (vault `project/overview.md` section; hybrid shared root `glossary.md`). Deterministic checks (`concepts/bc-init-agent/tests/test_teach_adapter.py`) pass; the change has **not** been pressure-tested. Scenario 5 of `tests/pressure-host-integration.md` (shared hybrid glossary) is written for a later run.
+2026-11-12: `body/SKILL.md` changed — the hosted-adapter section now names the host's adapter file as the map authority and shows both Glossary variants (vault `project/overview.md` section; hybrid shared root `glossary.md`). Deterministic checks (`concepts/bc-setup-project/tests/test_teach_adapter.py`) pass; the change has **not** been pressure-tested. Scenario 5 of `tests/pressure-host-integration.md` (shared hybrid glossary) is written for a later run.
 
 Scenarios 1 and 4 have not been re-run against `afbb86b`, which changed hosted retrieval wording, marker validation, and the maintenance glossary-section rule; their evidence is against the earlier commit. Frontmatter stays `partial`, since `pressure-session.md` Attack 1 also remains open from 2026-08-21.
 
-2026-11-12 (W3 review): step 2's standalone probe now matches names by exact case, so a hybrid host's shared root `glossary.md` is not standalone state on a case-insensitive filesystem; `bc-init-agent`'s scaffold check does the same (`tests/test_visible_layout.py`). Not pressure-tested.
+2026-11-12 (W3 review): step 2's standalone probe now matches names by exact case, so a hybrid host's shared root `glossary.md` is not standalone state on a case-insensitive filesystem; `bc-setup-project`'s scaffold check does the same (`tests/test_visible_layout.py`). Not pressure-tested.
 
 ## Deploy targets
 

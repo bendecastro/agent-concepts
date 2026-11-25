@@ -21,14 +21,14 @@ The work index script gains a JSON output carrying every work-data field, docume
 
 ## Implementation Decisions
 
-- The canonical script is `concepts/bc-init-agent/body/work_index.py`; projects get it as `.bc-agent/scripts/work_index.py` through `bc-init-agent`, and this repository's own copy is refreshed from it.
+- The canonical script is `concepts/bc-setup-project/body/work_index.py`; projects get it as `.bc-agent/scripts/work_index.py` through `bc-setup-project`, and this repository's own copy is refreshed from it.
 - JSON output: `work_index.py --json` prints one object with a format version, the project's stages, and one entry per item: number, slug, folder (stage of the pipeline), path, title, header lines (Why, Done when, Stage, Blocked by, Kind, Source, Planned, Ready for agent, Waiting on owner, Held by), steps (text, ticked, Notes, parsed Review and Gate lines), Outcome, parsed Spent line, and history. It writes no files. The format version changes only on a breaking change.
 - History: from `git log` of the item's path(s), following renames: the commit date of each folder move and of each step tick. Uncommitted changes have no history entry.
 - `Held by:` format: `Held by: <tool> <session name or id> since <YYYY-MM-DD HH:MM>` (local time with offset or UTC, stated on the reference page). Written in the same commit that moves an item to work-active or resumes it; removed when the agent stops or the item moves to done. JSON adds the line's age from its last commit; staleness is the reader's judgment.
 - `Review:` format: `Review: <approved | changes requested> by <reviewer role or name> <YYYY-MM-DD>`. `Gate:` format: `Gate: <pass | fail> <command> at <commit> <YYYY-MM-DD>`. Both go in the step's Notes; a step may carry several (one per round).
 - `Spent:` format: `Spent: <active time> active, <tokens> tokens, <cost> (estimated; <sources>)`. A script (shipped beside `work_index.py`) finds the sessions of the item's active period (from history) whose working folder is the project or one of its worktrees and that mention the item's slug, and sums them. Pi first; Claude Code and Codex where their session files allow; a tool without usable files is named as not counted. It prints the line; the closing instructions call it and paste the line.
 - `work_index.py --check` warns (no exit change) on malformed `Held by:`, `Review:`, `Gate:` and `Spent:` lines, and on a `Held by:` line in a done item.
-- Skills that write the records: the work-item rules scaffolded by `bc-init-agent` (start, stop, close), `bc-pipeline-to-done`'s work-item source (claim, review, gate, landing), `bc-work-sync` (repairs and reports stale or malformed records). Each change keeps the generic wording and overlay rule of these skills.
+- Skills that write the records: the work-item rules scaffolded by `bc-setup-project` (start, stop, close), `bc-pipeline-to-done`'s work-item source (claim, review, gate, landing), `bc-work-sync` (repairs and reports stale or malformed records). Each change keeps the generic wording and overlay rule of these skills.
 
 ## Testing Decisions
 

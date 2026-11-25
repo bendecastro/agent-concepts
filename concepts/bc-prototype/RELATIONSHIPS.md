@@ -7,7 +7,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+- depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves research, decisions and requirements in the scaffolded table, with its earlier paths as fallback.
   Source: [CONCEPT.md](CONCEPT.md)
 

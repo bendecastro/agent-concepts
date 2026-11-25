@@ -19,10 +19,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Step 1 interviews the idea before any artifact is written.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
-- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
-  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
-  Source: [CONCEPT.md](CONCEPT.md)
-
 - hands off to `bc-pipeline-to-done` — optional.
   Close-out recommends draining the published queue; the user decides.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
@@ -34,6 +30,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - loads `bc-prd-drafting` — required.
   Step 3 synthesizes the PRD from the grill and the codebase.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
+
+- depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
+  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
+  Source: [CONCEPT.md](CONCEPT.md)
 
 - depends on `bc-teach`'s contract — required, when visible-layout hybrid project.
   In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under bc-domain-modeling's shared-glossary rule.
@@ -54,12 +54,8 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-find-bugs/body/SKILL.md](../bc-find-bugs/body/SKILL.md#5-file-after-the-owner-answers)
 
 - incoming from [bc-improve-codebase-architecture](../bc-improve-codebase-architecture/RELATIONSHIPS.md): hands off to this concept — required, when after filing chosen findings in a project with a Where things go table.
-  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-codebase inherits this through its filing step.
+  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-architecture inherits this through its filing step.
   Source: [bc-improve-codebase-architecture/body/SKILL.md](../bc-improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table)
-
-- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode.
-  Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
 
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner.
@@ -68,3 +64,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when work-item source.
   Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope.
   Source: [bc-pipeline-to-done/body/source-work-items.md](../bc-pipeline-to-done/body/source-work-items.md#eligibility)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
+  The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode.
+  Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)

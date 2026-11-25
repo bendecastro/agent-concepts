@@ -23,7 +23,7 @@ Write project-specific notes outside the markers; the script keeps them.
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | [024-skill-delivery](2-active/024-skill-delivery/plan.md) | active, ready for agent | — | 025-dashboard-data | people outside this repository cannot install its skills reliably. | 12/13 |
-| 2 | [007-agent-vault-read-path](1-planned/007-agent-vault-read-path.md) | planned | — | — | the cheap read path across `bc-init-agent` and `bc-wiki-maintain` is built and its benchmark is settled, but two rollout steps still only exist in this reposit… | 0/4 |
+| 2 | [007-agent-vault-read-path](1-planned/007-agent-vault-read-path.md) | planned | — | — | the cheap read path across `bc-setup-project` and `bc-wiki-maintain` is built and its benchmark is settled, but two rollout steps still only exist in this repo… | 0/4 |
 | 3 | [008-bc-drain-issues-v3-review-economy](1-planned/008-bc-drain-issues-v3-review-economy.md) | planned | — | — | v3's review-economy rules are live in the drain skill, but their token win is unmeasured; the deterministic Gate B harness exists and the real same-model/mediu… | 0/3 |
 | 4 | [025-dashboard-data](1-planned/025-dashboard-data/plan.md) | planned, ready for agent | [024-skill-delivery](2-active/024-skill-delivery/plan.md) | — | people want a dashboard of their projects' work, but who holds an item, its history, review and gate results, and its time and cost are free text, only in git,… | 0/6 |
 

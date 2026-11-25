@@ -31,7 +31,7 @@ user's word.
   Every upstream implementation that widened past *capture and carry*
   became a generic work protocol (`Lutren/agent-handoff-protocol` is the
   finished form of that drift). The wrong-tool table routes to `/compact`,
-  `bc-swarm`, `intercom`, and `AGENTS.md`/ADRs. It began as an
+  `bc-delegate-investigation`, `intercom`, and `AGENTS.md`/ADRs. It began as an
   informational table and **failed the pressure test as an inert guard** —
   nothing in the routing consulted it. It is now routing step 1.
 - **File-first; delivery is out of scope.** Pocock ships a second skill
@@ -39,7 +39,7 @@ user's word.
   and djhyes seeds a fresh Codex thread. Both were rejected because the
   same-machine delivery is already covered by existing tools (a
   live-session messaging channel, terminal-multiplexer panes,
-  `bc-swarm`'s spawn-with-a-packet). Pocock's own docs concede the file's value is portability, not
+  `bc-delegate-investigation`'s spawn-with-a-packet). Pocock's own docs concede the file's value is portability, not
   summarising. Delivery is one pointer row in the wrong-tool table.
 - **Project-local store, anchored to the main checkout.** Pocock uses OS
   temp and his docs list it as the skill's most-reported friction: long
@@ -114,7 +114,7 @@ user's word.
   store exists, the skill says the relay will decay rather than creating
   a file.
 - **Not crash insurance.** Tempting, given the incident behind
-  `bc-swarm`, and rejected on the user's confirmation. That contract
+  `bc-delegate-investigation`, and rejected on the user's confirmation. That contract
   (manifest before dispatch, per-child artifacts checkpointed
   incrementally) survives without anyone remembering to act, where a
   handoff needs a live agent that notices in time. And speculative
@@ -127,15 +127,15 @@ user's word.
   routes; `writing.md` and `pickup.md` load only on the branch taken.
 - **No per-harness bodies.** Once delivery was out of scope, nothing
   varied by harness: store resolution is git, the format is Markdown, and
-  pickup is "read this file". `bc-swarm`'s `body/pi.md` split exists
+  pickup is "read this file". `bc-delegate-investigation`'s `body/pi.md` split exists
   because its mechanics genuinely differ; this one's do not.
 - **Name kept as `bc-handoff`.** What every upstream calls it and what the
   user asked for. No `bc-` prefix: that marks the user's own composite
-  orchestrators (`bc-plan-to-pipeline`, `bc-pipeline-to-done`, `bc-swarm`),
+  orchestrators (`bc-plan-to-pipeline`, `bc-pipeline-to-done`, `bc-delegate-investigation`),
   and this is an adaptation of external work, like `bc-grilling` and
   `bc-code-review`.
 
-- **Work items and ledgers by role (2026-11-12).** The Goal names the work item by number and folder, and the Ledgers homes are looked up by role (work-active, decisions, research, glossary, ideas, work-dropped) in the project's "Where things go" table, with the earlier homes (`glossary.md`, ADRs, `.bc-agent/out-of-scope/`, `docs/changes/`, `docs/specs/`) as the fallback for projects without one. The `.handoffs/` store and the guard block are not layout roles and are unchanged. Check 8 in `tests/pressure-handoff.md` covers it and has not been run. Source: [visible-layout plan](../../work/3-done/2026-11/018-bc-init-agent-visible-layout.md), decision 20. The table and its role keys are the contract of `bc-init-agent` (see its `CONCEPT.md`, "Interface").
+- **Work items and ledgers by role (2026-11-12).** The Goal names the work item by number and folder, and the Ledgers homes are looked up by role (work-active, decisions, research, glossary, ideas, work-dropped) in the project's "Where things go" table, with the earlier homes (`glossary.md`, ADRs, `.bc-agent/out-of-scope/`, `docs/changes/`, `docs/specs/`) as the fallback for projects without one. The `.handoffs/` store and the guard block are not layout roles and are unchanged. Check 8 in `tests/pressure-handoff.md` covers it and has not been run. Source: [visible-layout plan](../../work/3-done/2026-11/018-bc-init-agent-visible-layout.md), decision 20. The table and its role keys are the contract of `bc-setup-project` (see its `CONCEPT.md`, "Interface").
 
 ## Provenance
 

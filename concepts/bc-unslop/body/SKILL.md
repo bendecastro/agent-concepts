@@ -258,7 +258,7 @@ skill ignored.
 
 ## Where this stops
 
-- Visual form of how-it-works explanations → `bc-show-me`; this skill owns the
+- Visual form of how-it-works explanations → `bc-explain-visually`; this skill owns the
   words around the visual.
 - Reader outcomes — can this reader find, understand and act on it →
   `bc-plain-language`. That skill owns filler, hedging, dense sentences,

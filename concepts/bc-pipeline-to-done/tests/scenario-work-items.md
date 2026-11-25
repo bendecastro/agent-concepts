@@ -12,7 +12,7 @@ scenario runs once without and once with the skill.
 
 1. `scratch=$(mktemp -d)`; `cp -rL concepts/bc-pipeline-to-done/body $scratch/bc-pipeline-to-done`.
 2. Practice project in `$scratch/<run>`: `git init -b master`, scaffold the pipeline with
-   `python3 concepts/bc-init-agent/body/scaffold.py --root . --slug tempconv --archetype code`, add
+   `python3 concepts/bc-setup-project/body/scaffold.py --root . --slug tempconv --archetype code`, add
    `tempconv/__init__.py` (`c_to_f`) with one unittest, the scenario's items in `work/1-planned/`,
    run `.bc-agent/scripts/work_index.py`, commit. Each item has `Stage:`, `Blocked by:` and
    `Planned:` lines and steps with `Done when` and `Out of scope`.

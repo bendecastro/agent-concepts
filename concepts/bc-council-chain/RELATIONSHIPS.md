@@ -25,6 +25,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Roster, map, passes, merge, fallbacks and cleanup have one home in bc-council-chain.
   Source: [bc-council-find-bugs/body/SKILL.md](../bc-council-find-bugs/body/SKILL.md)
 
-- incoming from [bc-council-improve-codebase](../bc-council-improve-codebase/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
+- incoming from [bc-council-improve-architecture](../bc-council-improve-architecture/RELATIONSHIPS.md): loads this concept — required, when every council architecture review.
   Roster, shared map, pass 1, merge, pass 2, fallbacks and sandbox cleanup have one home in bc-council-chain; this skill defines only the chain parts.
-  Source: [bc-council-improve-codebase/body/SKILL.md](../bc-council-improve-codebase/body/SKILL.md)
+  Source: [bc-council-improve-architecture/body/SKILL.md](../bc-council-improve-architecture/body/SKILL.md)

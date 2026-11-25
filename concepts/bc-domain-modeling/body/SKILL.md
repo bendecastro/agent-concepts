@@ -18,7 +18,7 @@ When stated domain logic contradicts how the code actually behaves, flag the con
 
 ## Capture decisions immediately — don't batch
 
-Vocabulary goes to the project's glossary role and decision records to its decisions role. Look both up in the "Where things go" table in the project's `.bc-agent/AGENTS.md`. Why: each project has one table, so a project that keeps either elsewhere changes one place. Without that table, the glossary is `glossary.md` at the repo root and decision records go under `docs/adr/`; in a `bc-init-agent` vault, follow the vault's own `.bc-agent/AGENTS.md` and, where its `references/teach-skill.md` adapter is valid, the Glossary section that adapter names, which `bc-teach` owns.
+Vocabulary goes to the project's glossary role and decision records to its decisions role. Look both up in the "Where things go" table in the project's `.bc-agent/AGENTS.md`. Why: each project has one table, so a project that keeps either elsewhere changes one place. Without that table, the glossary is `glossary.md` at the repo root and decision records go under `docs/adr/`; in a `bc-setup-project` vault, follow the vault's own `.bc-agent/AGENTS.md` and, where its `references/teach-skill.md` adapter is valid, the Glossary section that adapter names, which `bc-teach` owns.
 
 In a hybrid project with the table, the glossary is the shared root `glossary.md`, where `bc-teach` also adds the terms a learner needs. Add and sharpen project terms there, but ask before removing or redefining a term you did not add this session. Why: a learner term may look redundant to the project and still be one the owner is studying; one shared file keeps one vocabulary only if neither side silently overwrites the other.
 

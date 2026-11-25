@@ -7,24 +7,24 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `bc-init-agent`'s contract — required, when project has no docs/design/README.md.
+- hands off to `bc-explain-visually` — required, when explanation diagrams.
+  Explanation diagrams belong to bc-explain-visually, not product UI design.
+  Source: [body/SKILL.md](body/SKILL.md)
+
+- depends on `bc-setup-project`'s contract — required, when project has no docs/design/README.md.
   A missing design README is created from the template the scaffold writes; the companion does not keep its own copy.
   Source: [body/design-framework.md](body/design-framework.md#start-from-the-projects-design-readme)
 
-- hands off to `bc-show-me` — required, when explanation diagrams.
-  Explanation diagrams belong to bc-show-me, not product UI design.
-  Source: [body/SKILL.md](body/SKILL.md)
-
 ## Incoming
 
-- incoming from [bc-guardrails](../bc-guardrails/RELATIONSHIPS.md): adapts this concept — required.
-  Copies design-framework.md's page model (read the project page first, copy the scaffold text when missing, agent's choice the owner may change, page line in the same commit) for limits and checks; design-consistency checks stay on the design page.
-  Source: [bc-guardrails/CONCEPT.md](../bc-guardrails/CONCEPT.md#design-decisions-2026-11-25)
-
-- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout scaffold writes docs/design/README.md.
-  The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary.
-  Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
-
-- incoming from [bc-show-me](../bc-show-me/RELATIONSHIPS.md): depends on this concept's contract — required, when UI redesign.
+- incoming from [bc-explain-visually](../bc-explain-visually/RELATIONSHIPS.md): depends on this concept's contract — required, when UI redesign.
   Product UI design is not an explanation sketch.
-  Source: [bc-show-me/body/SKILL.md](../bc-show-me/body/SKILL.md)
+  Source: [bc-explain-visually/body/SKILL.md](../bc-explain-visually/body/SKILL.md)
+
+- incoming from [bc-performance-guardrails](../bc-performance-guardrails/RELATIONSHIPS.md): adapts this concept — required.
+  Copies design-framework.md's page model (read the project page first, copy the scaffold text when missing, agent's choice the owner may change, page line in the same commit) for limits and checks; design-consistency checks stay on the design page.
+  Source: [bc-performance-guardrails/CONCEPT.md](../bc-performance-guardrails/CONCEPT.md#design-decisions-2026-11-25)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout scaffold writes docs/design/README.md.
+  The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary.
+  Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)

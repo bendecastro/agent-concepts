@@ -2099,3 +2099,6 @@ CHANGELOG.md (0.1.0), docs/guides/releasing.md, one version home in package.json
 
 ## [2026-11-25] deploy | v0.1.0 released
 Tagged v0.1.0 on the commit whose gate and fresh-install CI passed; GitHub release from the CHANGELOG entry; the tag workflow installed it from GitHub with every method on Linux and macOS.
+
+## [2026-11-25] implement | skill renames for v0.2.0
+Renamed seven public skills so a newcomer can guess what they do (docs/decisions/0004-skill-names-say-what-they-do.md); old names are local deploy aliases. Version 0.2.0 in package.json and manifests, CHANGELOG entry; no tag.

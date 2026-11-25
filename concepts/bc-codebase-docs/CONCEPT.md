@@ -18,10 +18,10 @@ delta over this workspace.
   corpus (source-tree maintainer docs), not a vendor skill name.
   Parallel to `bc-codebase-design`.
 - **Source-tree only.** README, existing `docs/`, architecture pages,
-  JSDoc. `.bc-agent/` already has placement via `bc-init-agent`. One
+  JSDoc. `.bc-agent/` already has placement via `bc-setup-project`. One
   skill over both trees would recreate the duplication this concept
   exists to stop.
-- **No new `docs/` tree.** `bc-init-agent` already tells agents not to
+- **No new `docs/` tree.** `bc-setup-project` already tells agents not to
   invent `docs/`-style notes unless asked. This skill must not become
   the excuse that creates one.
 - **High ADR bar kept.** DeepSeek requires an Agent Note on every
@@ -44,7 +44,7 @@ delta over this workspace.
 - **"User asked" is not `docs/foo.md` (2026-08-18).** First pressure run created `docs/cli.md` because the body said "or the user asks." Tightened to: a single-file / short-on-time ask updates the existing owner; a docs *tree* request names more than one page. Same run deleted a vault page to satisfy one-home; the inversion now forbids edit/move/delete of `.bc-agent/`.
 - **Pointers and note ideas unparked 2026-08-18.** `bc-code-review` Standards
   loads this skill when the diff touches source-tree docs.
-  `bc-init-agent` points new/upgraded code wikis at it and keeps it off
+  `bc-setup-project` points new/upgraded code wikis at it and keeps it off
   the vault. `bc-domain-modeling` took the two note ideas (alternatives +
   supersede) without adopting notes-every-change.
 - **Citation, not a vendored clone.** The harness is MIT, but the
@@ -76,7 +76,7 @@ delta over this workspace.
   — citation record; no skill bodies vendored.
 - `concepts/bc-prompting-agents/body/SKILL.md` — altitude, explain-the-why,
   gates only for rationalization.
-- Local overlaps that were *not* duplicated: `bc-init-agent` (wiki
+- Local overlaps that were *not* duplicated: `bc-setup-project` (wiki
   placement), `bc-domain-modeling` (ADR bar), `bc-plain-language`
   (human-facing prose).
 

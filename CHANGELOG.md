@@ -6,6 +6,25 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-25
+
+Seven skills have new names that say what they do
+([decision record](docs/decisions/0004-skill-names-say-what-they-do.md)).
+
+### Changed
+
+- `bc-reflect` is now `bc-reflect-on-sessions`.
+- `bc-swarm` is now `bc-delegate-investigation`.
+- `bc-autoresearch-loop` is now `bc-optimize-code`.
+- `bc-show-me` is now `bc-explain-visually`.
+- `bc-init-agent` is now `bc-setup-project`.
+- `bc-council-improve-codebase` is now `bc-council-improve-architecture`.
+- `bc-guardrails` is now `bc-performance-guardrails`.
+
+The old names keep working only on installs made with this repository's local deploy script
+(`scripts/deploy-local-skills.py`). The Claude Code and Codex plugins, the Pi package and
+`npx skills` install only the new names: after updating, call these skills by their new names.
+
 ## [0.1.0] - 2026-11-25
 
 The first release you can install without cloning this repository.

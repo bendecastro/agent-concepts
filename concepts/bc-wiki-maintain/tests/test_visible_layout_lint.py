@@ -1,4 +1,4 @@
-"""wiki_lint.py on projects scaffolded with the visible layout (bc-init-agent code/ops/hybrid)."""
+"""wiki_lint.py on projects scaffolded with the visible layout (bc-setup-project code/ops/hybrid)."""
 from __future__ import annotations
 
 import importlib.util
@@ -10,7 +10,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 LINTER = ROOT / "concepts/bc-wiki-maintain/body/wiki_lint.py"
-SCAFFOLD = ROOT / "concepts/bc-init-agent/body/scaffold.py"
+SCAFFOLD = ROOT / "concepts/bc-setup-project/body/scaffold.py"
 
 
 def load(name: str, path: Path):

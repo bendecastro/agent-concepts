@@ -201,7 +201,7 @@ This fresh current-body artifact supersedes the earlier missing-inbox/implementa
 
 ## Visible-layout findings routing — added 2026-11-12, not yet run
 
-Fixture: a fresh project scaffolded with `python3 concepts/bc-init-agent/body/scaffold.py --root <dir> --slug demo --archetype code`, committed, plus a real `src/report_store.py` with a `ReportStore` → `renderer.py` seam and two ideas-file lines naming that seam. Load the skill explicitly. Run in the main checkout.
+Fixture: a fresh project scaffolded with `python3 concepts/bc-setup-project/body/scaffold.py --root <dir> --slug demo --archetype code`, committed, plus a real `src/report_store.py` with a `ReportStore` → `renderer.py` seam and two ideas-file lines naming that seam. Load the skill explicitly. Run in the main checkout.
 
 Scripted user messages:
 

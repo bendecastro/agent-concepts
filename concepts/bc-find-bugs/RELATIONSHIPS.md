@@ -11,10 +11,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Report-then-owner filing, roles and the no-pipeline fallback mirror bc-improve-codebase-architecture.
   Source: [CONCEPT.md](CONCEPT.md)
 
-- depends on `bc-init-agent`'s contract — required, when filing into a work pipeline.
-  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
-  Source: [CONCEPT.md](CONCEPT.md)
-
 - hands off to `bc-plan-to-pipeline` — required, when after filing into a project work pipeline.
   Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through bc-find-bugs §5.
   Source: [body/SKILL.md](body/SKILL.md#5-file-after-the-owner-answers)
@@ -22,6 +18,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - hands off to `bc-security-audit` — optional, when a security hole is seen in passing.
   Security holes are reported with a pointer and audited by bc-security-audit, not here.
   Source: [body/SKILL.md](body/SKILL.md#2-hunt)
+
+- depends on `bc-setup-project`'s contract — required, when filing into a work pipeline.
+  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
+  Source: [CONCEPT.md](CONCEPT.md)
 
 - adapts `bc-tdd` — required, when every reproduction.
   A reproduction counts only when it fails for the stated reason, tdd's watched-fail rule.

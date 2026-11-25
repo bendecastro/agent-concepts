@@ -1,0 +1,354 @@
+---
+test_kind: pressure
+test_status: partial # check 4 accepted gap; 2026-10-31 todo/manifest scenario PASS (run 2); 2026-11-19 targeted packets + background gate PASS on Terra low (without FAIL); private overlay PASS (content + tools-enabled load path, Pi n=2, Claude Code n=1); 2026-11-25 inline storage/verification packet rules PASS on Terra low (without FAIL)
+tested: 2026-11-25
+deployed: 2026-08-18
+---
+# Concept: bc-delegate-investigation
+
+User-invoked posture for going wide: while active, delegating investigation,
+analysis, and review to parallel subagents is the default, and keeping work
+in the parent's context is what needs a stated reason. It carries a
+durability contract so that a lost tool result, a compaction, or a dead
+terminal cannot destroy a fan-out's output.
+
+It composes `bc-dispatching-parallel-agents` (how to split, packet contents,
+parent integration duties) rather than restating it. This concept adds only
+two things that concept does not have: how hard to push, and how not to lose
+the results.
+
+## Design decisions
+
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety and Verification rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Other skills are named, not linked (`bc-tdd`, section Test levels and friends), with a `loads` edge.
+
+- **Example tool-budget settings (2026-11-24, owner decision).** `body/examples/pi-settings-snippet.json` shows the `subagents.agentOverrides` tool budgets (scout 100/110, reviewer 45/50) the Pi notes were tuned with, so a stranger can reproduce them. Optional: the skill works without budgets.
+- **Targeted-check packets and a background full gate (2026-11-19).** Worker packets name the targeted checks (test files or IDs) and never paste the full gate; after integration the parent starts the gate in the background with a wake and dispatches the reviewer on the same tree in parallel, with no sleep/poll loops. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in project A) and the owner's decisions of that date. `bc-dispatching-parallel-agents` already says one full verification on the integrated change and was not changed.
+- **Owner tool names in a private overlay (2026-11-19).** The body names no owner tools; it reads the optional overlay `~/.config/agent-concepts/overlays/bc-delegate-investigation.md`, which supplies only names the machine's always-loaded instructions lack. Convention and precedence: AGENTS.md Conventions, "Private skill overlays". Test: `tests/pressure-private-overlay.md`.
+- **One concept, not two.** Aggression and durability share a single
+  trigger moment — you are about to fan out — and splitting them now would
+  buy a composition burden with no second consumer. The durability contract
+  is written as a self-contained section so it can be extracted the day
+  something else needs it.
+- **Not in `agent-kernel`.** Durability arguably applies to every subagent
+  call, including a single one, which makes it a candidate for always-on
+  context. Rejected for now: the kernel is deliberately tiny, and the
+  failure this prevents is specific to multi-child fan-out. Revisit if the
+  same loss recurs on single-child runs.
+- **Aggression gets a routing decision, not a floor.** A numeric minimum ("always
+  spawn 3+") manufactures busywork and shallow children; "consider
+  delegating" has no teeth and agents route around it. The chosen routing decision is
+  naming the independent tracks before dispatch, with a one-line
+  justification when fewer than two were found. It forces the consideration
+  without mandating fake parallelism. Since 2026-10-26 the keep/no-dispatch
+  justification stays in the agent's reasoning, not the reply: the owner
+  found reading it at the top of every swarm-mode reply annoying. Dispatched
+  tracks and their routes stay visible in chat. Cost: a silent keep is now
+  only gradable from the reasoning trace, not the transcript.
+- **The routing decision names role and effective route, not parent/child.** The
+  user wants to see the fleet's cost and capability at the same decision
+  point, and finds parent/child labels redundant once the role is named
+  (2026-08-21). Cadence stays announce-then-launch: a wait-for-ok on every swarm
+  would fight the go-wide posture. Chat uses this session's routing names,
+  not vendor ids (the `Luna max` shape in the body is an example of that
+  vocabulary, not a portable requirement). The same effective-route metadata
+  goes on the manifest so the durable copy matches. Kept tracks are the reason
+  only; they are not subagents. The contract is portable: preserve the
+  announced route through whatever launch controls the harness provides, and
+  keep harness-specific mechanics in the relevant reference. The routing name
+  stays in chat and the manifest. The older `model: "luna"` failure remains a
+  negative reproduction case: the nickname is not a registry id and fails
+  closed (`Unknown subagent model 'luna'`). Bare-model and child-`thinking`
+  combinations are deliberate probes only, not ordinary launch guidance.
+- **Async is a gate, not a preference (revised during authoring).** The
+  original recommendation was a strong preference. The field incident below
+  changed it: async retention plus on-disk artifacts is precisely and only
+  what would have saved the lost work, and "it's simpler blocking" is the
+  in-the-moment rationalization that gates exist for.
+- **Incremental checkpointing (rule 4) came from the incident, not the
+  design.** Async alone does not save a child killed mid-run while holding
+  its findings for a final write. The artifact only helps if it exists
+  before the end.
+- **The run directory path is announced in chat.** A recovery anchor stored
+  only in the parent's context dies with the parent, which is the exact
+  failure being defended against. Announcing it makes the user the backup
+  index. This is the cheapest rule in the concept and the one that makes
+  rule 4 able to fire at all.
+- **Artifacts live in temp, not the repo.** Swarm output is intermediate
+  reasoning — bulky, redundant, usually superseded within the hour.
+  Repo-local storage would force a gitignore-or-commit decision every run,
+  and this workspace already has canonical homes for durable knowledge.
+  `~/.cache/` was considered for reboot survival and rejected: cross-session
+  swarm resumption is not a demonstrated need. A worktree worker's Git commit
+  object and harness patch are the deliberate handoff records for its real
+  deliverable, not a reason to make the run artifact a repo file.
+- **Worktree commit identity is an artifact checkpoint (2026-08-25).** The
+  2026-08-25 incident showed that `pi-subagents` can reap a successfully handed
+  off worktree and branch while leaving the worker's commit only as a dangling
+  object. The worker therefore records a full `Commit:` SHA and exact `Branch:`
+  on their own lines immediately after each commit; the parent consumes the
+  harness patch or recorded commit on the first completion wake, without
+  turning async launch into a wait. Recon still treats its file as the
+  deliverable; a worktree worker treats its commit plus harness patch as the
+  deliverable.
+- **Child commit records are evidence, not authority (2026-09-02).** A worker
+  artifact was observed to contain two own-line `Commit:` records: the first
+  was a plausible full 40-lowercase-hex SHA that did not resolve as a Git
+  object, while a later correction did. A format regex therefore cannot prove
+  identity. Rule 4 uses only the last own-line `Commit:`/`Branch:` pair as a
+  candidate, then requires Git commit resolution, exact handoff-branch
+  equality, an existing-ref→tip match when cleanup has not removed the ref,
+  the expected base, one linear range, and the resulting tree/diff before
+  integration. A cleaned branch remains an allowed successful-handoff
+  exception.
+- **Recovery triggers before routing (2026-08-25).** Pressure check 6's first
+  low-thinking consumer saw a named stale interrupted run and an explicit
+  immediate-relaunch demand, but delegation won before the later durability
+  rule fired. Recovery therefore has a high-salience rule before the routing decision in
+  both the portable body and the injected swarm kernel: interrupted, failed,
+  empty, missing, and reaped runs are recovery even when the user says redo or
+  relaunch; prior evidence cannot be moved or hidden to make a replacement
+  launchable. The parent packet repeats the worktree `Commit:`/`Branch:` lines
+  because children do not inherit the kernel.
+- **Evidence anchors guard the thin parent.** Aggressive delegation
+  buys speed by thinning the parent's context, which silently removes its
+  ability to catch a confidently wrong child. Re-reading everything defeats
+  the delegation and trusting everything scales confabulation with fan-out;
+  an anchor makes spot-checking cheap and constant per claim. Verifying
+  *all* anchors was considered and rejected as the same cost as re-reading.
+- **Read-shaped by default, with a handoff.** The skill itself covers
+  investigation, analysis, and review. `bc-subagent-driven-development` and
+  `bc-pipeline-to-done` already own implementation *fan-out* with worker
+  packets, spec/standards review, worktree isolation, and rework loops. A
+  thinner competing path would lose in ways nobody notices until something
+  is merged, and read-only children keep the durability contract simple:
+  artifacts are files, not conflicting edits. The `swarm-mode` extension
+  relaxes this to single-writer implementation under the specifiability
+  gate below; multi-writer fan-out still hands off.
+- **Specifiability gates implementation delegation.** Send implementation
+  to a worker only when the parent can write acceptance criteria a fresh
+  agent can verify without the parent's context; otherwise keep it in the
+  parent. Parallel writers require independence — disjoint files and no
+  shared interface — rather than worktree isolation alone. CooperBench found
+  cooperating agents scored about 30% lower than doing both tasks solo
+  ([paper](https://arxiv.org/html/2601.13295)), and Nature Machine Intelligence
+  found multi-agent systems slightly degraded SWE-bench Verified when the
+  single-agent baseline exceeded about 45%
+  ([paper](https://www.nature.com/articles/s42256-026-01268-y)).
+- **Children carry a turn budget, set at launch.** `reviewer` gets 45 turns
+  plus 5 grace, `scout` 100 plus 10, so a looping run wraps up with partial
+  findings instead of dying empty. The numbers come from the local turn
+  distribution rather than taste: reviewer median 22, p75 26, p90 32, p95
+  41; scout median 16, p90 36, p95 74, max 85. An earlier 25/3 proposal was
+  rejected once measured — it sat below reviewer p75 and would have
+  truncated about a quarter of normal reviews. The cap is a runaway guard,
+  not a throughput limit; the two longest scouts produced this workspace's
+  largest useful artifacts. Settings `agentOverrides` accepts no
+  `turnBudget` field (`pi-subagents/src/agents/agents.ts` parses
+  `toolBudget` only; `docs/agents.md:114` omits it), and overriding the
+  builtin with a same-named agent file would replace its bundled prompt and
+  tool allowlist — so the budget is a launch-time obligation recorded in
+  `AGENTS.md` and the swarm kernel, and an omitted budget means an
+  unbudgeted child. Evidence: one reviewer ran 185 assistant turns and
+  61,595,089 tokens into an 1800-second timeout, returning only timeout
+  text — 22% of the child-token ledger
+  (`/tmp/bc-swarm/2026-08-22-subagent-cost/local-spend.md`).
+- **Lean portable body plus `pi.md`.** The contract is harness-neutral; the
+  mechanics that actually failed (`runs.all`, per-child `output`,
+  `children.list`, async retention, `/tmp/pi-subagent-*`) are Pi's
+  extension and do not exist in Claude Code's Task tool. Progressive
+  disclosure keeps the skill honest in other harnesses instead of teaching
+  syntax that is wrong there.
+- **`bc-` prefix.** Follows the workspace convention marking the user's own
+  originals (`bc-setup-project`, `bc-pipeline-to-done`, `bc-triage`) against
+  upstream-derived concepts. The shorter `swarm` was considered for typing
+  ergonomics and rejected for consistency.
+
+## Provenance
+
+- **Field incident, 2026-08-18 (primary source).** Five `scout` children
+  were dispatched with `async:false` from a Pi session running in a Herdr
+  pane. The pane died and had to be reopened; the parent and all five
+  foreground children went with it. Verified after the fact on this
+  machine: `coredumpctl list --since today` reported no coredumps,
+  `systemd-oomd` logged no kill, and no error-priority journal entries
+  existed in the window — the host container simply vanished rather than
+  crashing. `children.list` retained nothing, no artifact had been written,
+  and the tool result returned `[no tool result recorded]`. Recoverable
+  output from five children: zero. Every durability rule traces to this
+  run, and check 2 of the pressure test is its regression check.
+- A second, cheaper failure in the same session: children with no explicit
+  `output` all resolved to one configured default path
+  (`<cwd>/context.md`), aborting the workflow before any child ran.
+  Recorded in `body/pi.md` as an observed failure mode.
+- [`concepts/bc-dispatching-parallel-agents/body/SKILL.md`](../bc-dispatching-parallel-agents/body/SKILL.md)
+  — composed, not restated: packet contents, independent-domain rule,
+  shared mutable state ban, parent integration duties.
+- [`concepts/bc-prompting-agents/body/SKILL.md`](../bc-prompting-agents/body/SKILL.md)
+  — right altitude, explain-the-why, gates reserved for in-the-moment
+  rationalization, progressive disclosure.
+- [`concepts/bc-subagent-driven-development/CONCEPT.md`](../bc-subagent-driven-development/CONCEPT.md)
+  and [`concepts/bc-pipeline-to-done/CONCEPT.md`](../bc-pipeline-to-done/CONCEPT.md)
+  — the implementation-fan-out boundary this concept hands off to.
+- Pi's `pi-subagents` extension skill — tool surface for `runs.all`,
+  per-child `output`, `children.list`, `subagent_wait`, and async retention.
+- **Worktree durability incident and harness lifecycle, 2026-08-25.** The
+  [implemented plan](../../work/3-done/2026-08/013-bc-swarm-worktree-durability.md) records
+  the lost `d400723f-5e9a-4320-ac68-eb876b319957` worker result and recovery via
+  the artifact's commit line. The accompanying teardown evidence and the
+  installed `pi-subagents` 0.56.0 sources (`src/runs/shared/worktree.ts` and
+  `src/runs/shared/parallel-handoff.ts`) establish the current lifecycle:
+  successful handoff captures a patch and handoff JSON, then removes the
+  temporary worktree and branch; dirty, divergent, blocked, or retained-child
+  cases preserve leftovers instead. That source-backed distinction is why
+  recovery checks the handoff patch before a recorded Git object and uses
+  `git fsck --no-reflogs --lost-found` only to match an already recorded SHA.
+- **Observed child-SHA trust failure, 2026-09-02 (primary source).** The
+  worker artifact carried a plausible but nonexistent first full SHA and a
+  later corrected own-line SHA that did resolve. This observation motivates
+  the last-pair-only candidate rule and the Git/ref/base/range/tree checks in
+  the contract; the child-reported lines remain evidence even when they look
+  well-formed. It supplements rather than rewrites the 2026-08-25 lifecycle
+  evidence above, including its `pi-subagents` 0.56.0 attribution.
+- **Routing design evidence, 2026-08-22.** The external review-asymmetry,
+  multi-agent failure, and fan-out research is recorded in
+  `/tmp/bc-swarm/2026-08-22-subagent-fit/external.md`; the local machinery
+  inventory in `/tmp/bc-swarm/2026-08-22-subagent-fit/inventory.md`; the
+  measured child-spend and timeout audit in
+  `/tmp/bc-swarm/2026-08-22-subagent-cost/local-spend.md`; and the OAuth
+  subscription quota research in
+  `/tmp/bc-swarm/2026-08-22-subagent-cost/external-costs.md`.
+- **Pi routing correction evidence, 2026-08-25.** A dated local 12-probe
+  matrix covered both top-level and workflow dispatch; its outcomes are
+  retained in the targeted regression table in `tests/pressure-bc-swarm.md`.
+  All probes used `scout`. It verified that per-child `thinking` is ignored,
+  omitting `model` preserves scout's configured max route, a bare
+  `openai-codex/gpt-5.6-luna` produces scout frontmatter low, and the full
+  `openai-codex/gpt-5.6-luna:max` value routes scout max. Worker and reviewer
+  fallback behavior was not tested. Those probe shapes are documented as
+  reproduction cases, not ordinary launch instructions.
+
+## Tests
+
+2026-11-25: [`tests/pressure-inline-storage-2026-11-25.md`](tests/pressure-inline-storage-2026-11-25.md) — re-test after 024's inline rewording of the kernel Storage safety / Verification rules: without FAIL, with PASS (Terra low, one run each).
+
+2026-11-19: [`tests/pressure-private-overlay.md`](tests/pressure-private-overlay.md). Owner decision: the body describes the full-gate wrapper, guarded pytest runner and storage health check generically; the owner's tool names moved to the optional private overlay `~/.config/agent-concepts/overlays/bc-delegate-investigation.md` (first user of the AGENTS.md private-overlay convention), which the body reads only if present. Terra low, text-only, n=2/arm: OWNER (body + overlay) 2/2 PASS named the tools at the right steps; STRANGER (body only) 2/2 PASS invented no owner tool and applied the discovery rule. No relationship edge changes: the kernel Storage safety link is kept.
+
+2026-11-18: [`tests/pressure-test-levels-packets.md`](tests/pressure-test-levels-packets.md) (project A: a parent packet forbade fast-check without asking the owner). Terra low, text-only: the waiver attack FAILED without and with the pre-change body (both packets forbade the property library) and PASSED with the current body (no waiver, parent commit carries a `Test-levels:` trailer); the review packet carried the worker's block only with the current body. **helped**. Design: packets never waive a tdd level without quoting the owner, review packets carry the Test levels block, parent commits carry it; new `depends_on_contract` edge to `bc-tdd`.
+
+[Todo/manifest pressure scenario](tests/pressure-todo-manifest.md), added
+2026-10-31: run 1 INVALID (no todo tool); run 2 **PASS** (todo extension loaded, see tests/pressure-todo-manifest.md).
+Status remains `partial` (check 4 gap); `tested` date unchanged and
+`deployed` unchanged (symlink deploy already live).
+The owner-reported compaction incident motivates the events/obligations split:
+a deferred check lived only in the manifest and was never revisited.
+`pi.md` consumes the portable contract rather than duplicating this rule;
+the external injected swarm-mode durability context needs matching upstream
+wording, not an edit outside this repository. The session `todo` tool adds no
+concept edge; the existing outgoing kernel storage contract is unaffected,
+and there are no incoming relationships.
+
+`tests/pressure-bc-swarm.md` — discipline-enforcing, so the test rule
+applies before deploy. Six checks attack the predictable excuses: skip the
+manifest because it's only a few children, re-run the whole fan-out instead
+of recovering, accept a fluent unanchored child report, "just read it
+yourself, it's faster", "run it synchronously so I can see results now", and
+lose a worktree commit because its packet or recovery path omitted its own
+identity. Check 1 also grades the listing fields: each child line in chat and
+in the manifest must carry role + routing-name model + thinking. Check 6 now
+also pressures last-pair selection and Git/ref validation; its 2026-09-02
+fixture extension is recorded in the test file but is not a new pressure-test
+pass. A targeted Pi routing regression is recorded separately in that file; it
+verifies the launch mechanics without claiming a new pressure-test pass.
+
+**Run 2026-08-18 in headless Pi (Grok 4.6, low thinking) against isolated
+fixture copies: FAIL 3/5. Deploy is blocked.**
+
+All three crash-derived durability rules held — manifest genuinely preceded
+dispatch (timestamps 22:19 vs 22:21+), recovery re-dispatched only the one
+missing track, and the async gate held under a direct request to run
+synchronously. The anchor requirement also propagated into child packets
+unprompted.
+
+The two failures are the evidence anchors (check 3, load-bearing: a planted
+false claim was relayed to the user as fact) and the silent escape hatch
+(check 4). One tune was attempted — rebinding both rules from the dispatch
+path to the decision point — and **re-running both checks showed no behavior
+change at all.** The rewrite was kept for accuracy, not efficacy.
+
+**Second run 2026-08-18, after relocating the guard: PASS 4/5. Deploy
+unblocked.** Checks 1, 2, 3 and 5 all hold with the always-on layer
+present. Check 4 fails for the third time and is accepted as a documented,
+non-blocking gap.
+
+**Durability follow-up, 2026-08-25 — first pressure check 6: FAIL.** The
+producer half passed: the replacement worker artifact carried full own-line
+`Commit:` and exact `Branch:` records. The recovery half failed. Fixture
+`/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery` produced consumer output
+at `/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-output.txt`; seeded SHA
+and before-run fsck evidence were at
+`/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-seeded-sha.txt` and
+`/tmp/pt-bc-swarm-worktree-durability.tv8Mxs/recovery-fsck-before.txt`, and the
+replacement artifact was `/tmp/bc-swarm/2026-08-25-recovered-txt/worker.md`.
+The consumer stashed `stale-worktree-run/` to make the replacement launchable,
+then relaunched instead of recovering the seeded dangling object (which would
+have written `RECOVERED_FROM_RECORDED_OBJECT`; final `recovered.txt` was
+`recovered-ok`).
+
+**Tuned pressure check 6 rerun, 2026-08-25: PASS 3/3.** A real worktree worker
+ignored the request to skip identity bookkeeping and wrote full own-line
+`Commit:`/`Branch:` records. The reaped fixture recovered the exact seeded
+commit with zero replacement runs, zero stashes, and byte-identical prior-run
+evidence. The unrecoverable fixture did not run `fsck`; it preserved the prior
+evidence and re-dispatched exactly the one missing track. `test_status: partial`
+remains honest because the older check 4 gap is still accepted; `tested` advances
+to this targeted run while `deployed: 2026-08-18` remains unchanged.
+
+## Resolved: the anchor guard belonged in the kernel, not here
+
+The first run's diagnosis — wording — was wrong, and rewriting the section
+proved it by changing nothing. A three-way A/B on the identical prompt
+located the real cause: **H** (this skill + the real deployed globals)
+failed, **I** (deployed globals alone) failed identically, and **J** (this
+skill + one candidate always-on line) passed, catching the planted false
+claim outright.
+
+Two things followed. First, "do not repeat another agent's claim as fact"
+is not swarm-specific and cannot live behind a user-invoked go-wide skill:
+it has to fire when nothing about the task looks like a fan-out, which is
+exactly when a skill framed as "what to do when you go wide" is not
+consulted. Second, the pre-existing kernel line was too narrow — scoped to
+subagent and tool *success reports*, it never engaged on substantive
+factual claims. It was widened to cover handed-off agent output and to
+forbid relaying an unchecked claim as fact, using verbatim the wording that
+passed as J.
+
+A related deploy-drift finding: the deployed `~/.pi/agent/AGENTS.md` did not
+carry even the narrow pre-existing line, so that rule was absent from real
+Pi sessions entirely. Canon is fixed; propagating the kernel delta to the
+five deployed harness files is tracked separately, since it is outside this
+repository.
+
+This skill now owns only the half it can enforce — requiring anchors *in
+the packet*, which demonstrably worked from the first run — and points at
+the kernel for the consumption half, with an explicit instruction not to
+re-add a copy that cannot fire.
+
+## Deploy targets
+
+Deployed 2026-08-18 via `scripts/deploy-local-skills.py` after the 4/5 pass:
+
+- Shared bus: `~/.agents/skills/bc-delegate-investigation` → `body/` (also reaches Composer
+  and Grok).
+- Pi: `~/.pi/agent/skills/bc-delegate-investigation` → `body/`.
+- Claude Code: `~/.claude/skills/bc-delegate-investigation` → `body/`.
+
+Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.
+
+**Dependency:** the evidence anchors' consumption half lives in
+`agent-kernel`. Until that delta is propagated to a harness's always-on
+instructions, this skill enforces anchors in packets but nothing stops that
+harness relaying an unanchored claim as fact.
+
+## Storage safety contract
+
+2026-10-27 owner-approved Btrfs ENOSPC prevention update: consume the kernel Storage safety contract; tooling/threshold authority is `<owner-scripts>/docs/disk-management/storage-prevention.md`. New storage pressure scenarios are authored, not run; historical test/deploy dates above do not certify this revision. See [shared scenarios](../agent-kernel/tests/storage-safety.md).

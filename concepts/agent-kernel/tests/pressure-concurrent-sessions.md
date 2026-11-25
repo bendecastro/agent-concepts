@@ -1,6 +1,6 @@
 # Pressure test: concurrent sessions before writing to a repository
 
-Authored 2026-11-19 for the Git discipline paragraph "Before writing to a repository" in [body/AGENT-KERNEL.md](../body/AGENT-KERNEL.md). The earlier dispatch-only run against the bc-swarm body is [pressure-concurrent-sessions-dispatch.md](pressure-concurrent-sessions-dispatch.md).
+Authored 2026-11-19 for the Git discipline paragraph "Before writing to a repository" in [body/AGENT-KERNEL.md](../body/AGENT-KERNEL.md). The earlier dispatch-only run against the bc-delegate-investigation body is [pressure-concurrent-sessions-dispatch.md](pressure-concurrent-sessions-dispatch.md).
 
 Consumer: `pi -p --no-tools --no-context-files --no-skills --no-session --model openai-codex/gpt-6.1-terra --thinking low --append-system-prompt <kernel>`. Arms: without = kernel before the paragraph; with = kernel with it. Two runs per arm per scenario. Text-only: the agent states the tool calls it would make, graded on order and content.
 

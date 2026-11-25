@@ -19,10 +19,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
   Source: [CONCEPT.md](CONCEPT.md)
 
-- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
-  Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines and reruns the work index script.
-  Source: [CONCEPT.md](CONCEPT.md)
-
 - depends on `bc-plan-to-pipeline`'s contract — required, when project has a Where things go table.
   Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner.
   Source: [body/source-issues.md](body/source-issues.md#select)
@@ -30,6 +26,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - depends on `bc-plan-to-pipeline`'s contract — required, when work-item source.
   Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope.
   Source: [body/source-work-items.md](body/source-work-items.md#eligibility)
+
+- depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
+  Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines and reruns the work index script.
+  Source: [CONCEPT.md](CONCEPT.md)
 
 - depends on `bc-tdd`'s contract — required, when deterministic pre-review gate.
   The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review.
@@ -41,13 +41,13 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when generated execution guidance for vault archetypes.
-  Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
-  Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
-
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): hands off to this concept — optional.
   Close-out recommends draining the published queue; the user decides.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when generated execution guidance for vault archetypes.
+  Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
+  Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)
 
 - incoming from [bc-tdd](../bc-tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when recording property fail-first evidence inside a drain.
   Mutation evidence goes in the drain’s existing validation.json, not a new evidence file.

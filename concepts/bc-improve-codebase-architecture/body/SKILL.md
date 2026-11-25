@@ -13,7 +13,7 @@ Use `bc-codebase-design` vocabulary exactly: **module**, **interface**, **depth*
 
 ## Find the project's paths
 
-This skill names roles — glossary, decisions, research, ideas, work-planned, work-dropped — not paths. Resolve each role from the "Where things go" table in the project's `.bc-agent/AGENTS.md`. Why: each project has one table, so a project that keeps something elsewhere changes one place and every skill follows. When the project has no such table, use the earlier defaults: glossary `glossary.md` (or `.bc-agent/project/overview.md` in a `bc-init-agent` vault), decisions `docs/adr/` (or `.bc-agent/decisions/` in a vault), and the observation inbox and disposition ledger described under [Projects without the table](#projects-without-the-table). Those projects have no ideas, work-planned or work-dropped role, so step 4 does not apply to them.
+This skill names roles — glossary, decisions, research, ideas, work-planned, work-dropped — not paths. Resolve each role from the "Where things go" table in the project's `.bc-agent/AGENTS.md`. Why: each project has one table, so a project that keeps something elsewhere changes one place and every skill follows. When the project has no such table, use the earlier defaults: glossary `glossary.md` (or `.bc-agent/project/overview.md` in a `bc-setup-project` vault), decisions `docs/adr/` (or `.bc-agent/decisions/` in a vault), and the observation inbox and disposition ledger described under [Projects without the table](#projects-without-the-table). Those projects have no ideas, work-planned or work-dropped role, so step 4 does not apply to them.
 
 ## 1. Explore
 
@@ -77,7 +77,7 @@ These projects keep the older observation inbox and disposition ledger, written 
 
 At the beginning of Explore, locate the project's architecture-observation inbox and, when inline inbox edits are forbidden, its durable fallback disposition ledger:
 
-- For a project scaffolded by `bc-init-agent`, use `.bc-agent/research/architecture-observations.md` for the inbox and `.bc-agent/research/architecture-review-dispositions.md` for the ledger.
+- For a project scaffolded by `bc-setup-project`, use `.bc-agent/research/architecture-observations.md` for the inbox and `.bc-agent/research/architecture-review-dispositions.md` for the ledger.
 - Otherwise use equivalent paths only when project instructions explicitly declare each path. An inbox declaration does not implicitly declare a fallback ledger. If no inbox sink exists or is declared, preserve the existing flow; do not invent a docs tree or claim that observations will be persisted. If inline edits are forbidden and no ledger sink exists or is declared, report the disposition as **not persisted** after grilling; if a later run encounters that known disposition, state the non-persistence instead of silently re-presenting it as a candidate.
 
 Before organic exploration or presenting inbox candidates, read the bounded fallback disposition-ledger entries first when a ledger sink exists or is declared. Match a ledger row only when both the exact observation identity and exact canonical `source` value match, and only `accepted`, `rejected`, or `deferred` are terminal dispositions. Suppress that exact terminal match before inbox candidate presentation and before current-tree verification or report disposition-ledger processing. A suppressed terminal match intentionally receives no current-run verification, candidate card, or report disposition-ledger row; it is already resolved by the matching ledger entry. Read the ledger metadata needed to filter the bounded inbox set without disclosing unread IDs or bodies. Do not suppress an observation merely because it was read; an open entry with no matching terminal ledger row remains eligible on a later run.
@@ -96,6 +96,6 @@ When the owner picks a candidate seeded by an inbox observation, leave that obse
 - After `bc-diagnosing-bugs`: use this when a bug fix reveals no correct regression-test seam.
 - A chosen finding becomes a planned work item that `/bc-plan-to-pipeline` then plans (or, without the table, a plan/decision record/issue set via `/bc-plan-to-pipeline`); this skill itself does not create GitHub issues or edit production code.
 
-Inline how-it-works visuals outside this report → `bc-show-me`; this report keeps its own format.
+Inline how-it-works visuals outside this report → `bc-explain-visually`; this report keeps its own format.
 
 For glossary discovery in legacy projects, follow `bc-domain-modeling`’s legacy glossary rule.

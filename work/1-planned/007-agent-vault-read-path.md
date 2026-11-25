@@ -1,6 +1,6 @@
 # Agent vault read path: finish the live-vault rollout
 
-Why: the cheap read path across `bc-init-agent` and `bc-wiki-maintain` is built and its benchmark is settled, but two rollout steps still only exist in this repository and have not reached the live vaults.
+Why: the cheap read path across `bc-setup-project` and `bc-wiki-maintain` is built and its benchmark is settled, but two rollout steps still only exist in this repository and have not reached the live vaults.
 Done when: the batch promotion timer runs every listed vault in place of the per-vault promotion timers and unpromoted headings fall below 10; every live vault's `map.md` uses real Markdown links for in-vault targets.
 Stage: later
 Blocked by: nothing

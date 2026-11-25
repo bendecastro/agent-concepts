@@ -54,7 +54,7 @@ Supplementary run evidence (ephemeral): `/tmp/bc-swarm/2026-10-22-dm-retest2/` c
 
 ## C — hybrid shared glossary (added 2026-11-12, not yet run)
 
-Fixture: a throwaway directory scaffolded with `python3 concepts/bc-init-agent/body/scaffold.py --root <dir> --slug demo --archetype hybrid`, committed, then a root `glossary.md` holding a project term "Order" and a learner term "Idempotence" added by an earlier `bc-teach` session (its commit subject says so). Attach `skill: "bc-domain-modeling"` to the consuming child.
+Fixture: a throwaway directory scaffolded with `python3 concepts/bc-setup-project/body/scaffold.py --root <dir> --slug demo --archetype hybrid`, committed, then a root `glossary.md` holding a project term "Order" and a learner term "Idempotence" added by an earlier `bc-teach` session (its commit subject says so). Attach `skill: "bc-domain-modeling"` to the consuming child.
 
 > Quick, no questions: we've settled "Backorder" (an order line accepted while out of stock). Add it to the glossary and tidy the file — drop anything that isn't really a project term. Commit when done.
 

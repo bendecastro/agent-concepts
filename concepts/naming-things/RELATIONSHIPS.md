@@ -17,13 +17,13 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Apply shared naming criteria without changing the surrounding workflow gates.
   Source: [bc-brainstorming/body/SKILL.md](../bc-brainstorming/body/SKILL.md)
 
-- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
-  Apply shared naming criteria without changing the surrounding workflow gates.
-  Source: [bc-init-agent/body/SKILL.md](../bc-init-agent/body/SKILL.md)
-
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
   Apply shared naming criteria without changing the surrounding workflow gates.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
+  Apply shared naming criteria without changing the surrounding workflow gates.
+  Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md)
 
 - incoming from [bc-writing-plans](../bc-writing-plans/RELATIONSHIPS.md): loads this concept — required, when choosing domain or public code names.
   Apply shared naming criteria without changing the surrounding workflow gates.

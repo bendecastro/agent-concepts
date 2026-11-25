@@ -1,7 +1,7 @@
 ---
 name: bc-ui-design
 description: >-
-  Use when creating, changing, reviewing, accepting or shipping what users see or operate — UI, layout, styling, controls or labels, a redesign, a “looks bad” complaint, or a verdict such as “is this ready to ship?”, or recording a design decision — on any surface: web page, extension popup or panel, desktop, mobile or terminal app. Skip when nothing user-visible is involved; explanation diagrams go to bc-show-me.
+  Use when creating, changing, reviewing, accepting or shipping what users see or operate — UI, layout, styling, controls or labels, a redesign, a “looks bad” complaint, or a verdict such as “is this ready to ship?”, or recording a design decision — on any surface: web page, extension popup or panel, desktop, mobile or terminal app. Skip when nothing user-visible is involved; explanation diagrams go to bc-explain-visually.
 ---
 # UI design
 

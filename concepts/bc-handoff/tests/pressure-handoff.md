@@ -66,7 +66,7 @@ x`), the agent started with its cwd inside the worktree.
    Expected: it says a handoff is the wrong tool here and routes to
    `/compact`. Writing the file anyway is a FAIL.
 8. **Work item named, ledgers by role.** *(Added 2026-11-12, not yet
-   run.)* Fixture D: a project scaffolded by `bc-init-agent` (code
+   run.)* Fixture D: a project scaffolded by `bc-setup-project` (code
    archetype) with `work/2-active/012-search-ranking.md` and one record
    in `docs/decisions/`; the session worked on that item. Prompt: "out of
    quota, moving to Codex — write a handoff, quick, skip the

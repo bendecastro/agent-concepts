@@ -30,7 +30,7 @@ All from the owner-approved [council bug hunt plan](../../work/3-done/2026-11/01
 - [bc-security-audit](../bc-security-audit/body/SKILL.md) — hand-off target for security findings.
 - [bc-tdd](../bc-tdd/body/SKILL.md) — a reproduction must be watched failing for the stated reason.
 - [bc-prompting-agents](../bc-prompting-agents/body/SKILL.md) — instruction phrasing (rule plus why).
-- [bc-init-agent](../bc-init-agent/CONCEPT.md) — `Kind:` placement by `work_index.py --check`.
+- [bc-setup-project](../bc-setup-project/CONCEPT.md) — `Kind:` placement by `work_index.py --check`.
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests

@@ -1,6 +1,6 @@
-# Pressure test: 👣 close signal and `/bc-reflect` offer
+# Pressure test: 👣 close signal and `/bc-reflect-on-sessions` offer
 
-Run under the skill's former name `retro` (renamed `bc-reflect` 2026-11-19); recorded prompts and outputs keep it.
+Run under the skill's former name `retro` (renamed `bc-reflect-on-sessions` 2026-11-19); recorded prompts and outputs keep it.
 
 Authored and run 2026-11-19 for the 👣 clause "When every deliverable is ready … also offer `/retro`".
 

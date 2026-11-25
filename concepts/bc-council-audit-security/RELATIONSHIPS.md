@@ -15,12 +15,12 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Briefing, launch, relay, resume and the pass cap have one home in bc-council-mode.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `bc-init-agent`'s contract — required, when filing into a work pipeline.
-  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
-  Source: [body/SKILL.md](body/SKILL.md)
-
 - loads `bc-security-audit` — required, when every council security audit.
   Recon, Output gate, execution boundary, fresh verification, JSON records, validator and report have one home in bc-security-audit.
+  Source: [body/SKILL.md](body/SKILL.md)
+
+- depends on `bc-setup-project`'s contract — required, when filing into a work pipeline.
+  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming

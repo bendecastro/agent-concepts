@@ -29,48 +29,48 @@
       "reason": "The gate fails a handoff whose tdd Test levels block is missing or has an empty L1, L2 or L3 line; the lines' truth is left to Spec review."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-pipeline-to-done",
       "relation": "depends_on_contract",
       "required": true,
       "when": "generated execution guidance for vault archetypes",
-      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "source": "concepts/bc-setup-project/body/scaffold.py",
       "reason": "Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-tdd",
       "relation": "depends_on_contract",
       "required": true,
       "when": "generated visible-layout validation page",
-      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "source": "concepts/bc-setup-project/body/scaffold.py",
       "reason": "The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-wiki-maintain",
       "relation": "depends_on_contract",
       "required": true,
       "when": "generated map links",
-      "source": "concepts/bc-init-agent/CONCEPT.md#design-decisions",
+      "source": "concepts/bc-setup-project/CONCEPT.md#design-decisions",
       "reason": "Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-wiki-maintain",
       "relation": "depends_on_contract",
       "required": true,
       "when": "registering a visible-layout project for search",
-      "source": "concepts/bc-init-agent/body/SKILL.md",
+      "source": "concepts/bc-setup-project/body/SKILL.md",
       "reason": "Step 9 appends the collections that wiki_lint.py --qmd-entry prints from the project's table; the lint's qmd registration check expects exactly that shape, and a test pins the skill's sample to the printed output."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-teach",
       "relation": "adapts",
       "required": true,
       "when": "learning or hybrid scaffold",
-      "source": "concepts/bc-init-agent/body/SKILL.md#learning-archetype-adapter",
+      "source": "concepts/bc-setup-project/body/SKILL.md#learning-archetype-adapter",
       "reason": "The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state."
     },
     {
@@ -84,7 +84,7 @@
     },
     {
       "from": "bc-teach",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "valid teach-host-adapter marker",
@@ -204,21 +204,21 @@
       "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-domain-modeling",
       "relation": "depends_on_contract",
       "required": true,
       "when": "glossary discovery in legacy projects",
-      "source": "concepts/bc-init-agent/body/SKILL.md",
+      "source": "concepts/bc-setup-project/body/SKILL.md",
       "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "bc-swarm",
+      "from": "bc-delegate-investigation",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-swarm/body/SKILL.md",
+      "source": "concepts/bc-delegate-investigation/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
@@ -276,12 +276,12 @@
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
-      "from": "bc-autoresearch-loop",
+      "from": "bc-optimize-code",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-autoresearch-loop/body/SKILL.md",
+      "source": "concepts/bc-optimize-code/body/SKILL.md",
       "reason": "The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
     },
     {
@@ -348,12 +348,12 @@
       "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "naming-things",
       "relation": "loads",
       "required": true,
       "when": "choosing domain or public code names",
-      "source": "concepts/bc-init-agent/body/SKILL.md",
+      "source": "concepts/bc-setup-project/body/SKILL.md",
       "reason": "Apply shared naming criteria without changing the surrounding workflow gates."
     },
     {
@@ -400,80 +400,80 @@
       "reason": "Points to the guidance-default and explicit-audit mode gate as an in-workspace example."
     },
     {
-      "from": "bc-show-me",
+      "from": "bc-explain-visually",
       "to": "bc-prompting-agents",
       "relation": "adapts",
       "required": true,
       "when": "authoring the skill",
-      "source": "concepts/bc-show-me/CONCEPT.md#design-decisions",
+      "source": "concepts/bc-explain-visually/CONCEPT.md#design-decisions",
       "reason": "Adapts loading-is-not-authorization, scope discipline and examples-over-rules."
     },
     {
-      "from": "bc-show-me",
+      "from": "bc-explain-visually",
       "to": "agent-kernel",
       "relation": "depends_on_contract",
       "required": true,
       "when": "any invocation",
-      "source": "concepts/bc-show-me/body/SKILL.md",
+      "source": "concepts/bc-explain-visually/body/SKILL.md",
       "reason": "Informational questions do not authorize edits; final-response rules remain kernel-owned."
     },
     {
-      "from": "bc-show-me",
+      "from": "bc-explain-visually",
       "to": "bc-plain-language",
       "relation": "depends_on_contract",
       "required": true,
       "when": "words around visuals",
-      "source": "concepts/bc-show-me/body/SKILL.md",
+      "source": "concepts/bc-explain-visually/body/SKILL.md",
       "reason": "Reader-outcome prose stays with bc-plain-language, not visual-form selection."
     },
     {
-      "from": "bc-show-me",
+      "from": "bc-explain-visually",
       "to": "bc-codebase-docs",
       "relation": "depends_on_contract",
       "required": true,
       "when": "durable source-tree docs",
-      "source": "concepts/bc-show-me/body/SKILL.md",
+      "source": "concepts/bc-explain-visually/body/SKILL.md",
       "reason": "Placement, current-state maintenance and one home per fact remain doc contracts."
     },
     {
-      "from": "bc-show-me",
+      "from": "bc-explain-visually",
       "to": "bc-unslop",
       "relation": "depends_on_contract",
       "required": true,
       "when": "shipped wrapping prose",
-      "source": "concepts/bc-show-me/body/SKILL.md",
+      "source": "concepts/bc-explain-visually/body/SKILL.md",
       "reason": "Shipped prose is unslopped without rewriting code-shaped visuals."
     },
     {
-      "from": "bc-show-me",
+      "from": "bc-explain-visually",
       "to": "bc-improve-codebase-architecture",
       "relation": "depends_on_contract",
       "required": true,
       "when": "architecture-review reports",
-      "source": "concepts/bc-show-me/body/SKILL.md",
+      "source": "concepts/bc-explain-visually/body/SKILL.md",
       "reason": "Architecture-review report artifacts retain their own contract."
     },
     {
-      "from": "bc-show-me",
+      "from": "bc-explain-visually",
       "to": "bc-teach",
       "relation": "depends_on_contract",
       "required": true,
       "when": "teaching sessions",
-      "source": "concepts/bc-show-me/body/SKILL.md",
+      "source": "concepts/bc-explain-visually/body/SKILL.md",
       "reason": "Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts."
     },
     {
-      "from": "bc-show-me",
+      "from": "bc-explain-visually",
       "to": "bc-ui-design",
       "relation": "depends_on_contract",
       "required": true,
       "when": "UI redesign",
-      "source": "concepts/bc-show-me/body/SKILL.md",
+      "source": "concepts/bc-explain-visually/body/SKILL.md",
       "reason": "Product UI design is not an explanation sketch."
     },
     {
       "from": "bc-codebase-docs",
-      "to": "bc-show-me",
+      "to": "bc-explain-visually",
       "relation": "loads",
       "required": false,
       "when": "how-it-works pages",
@@ -509,16 +509,16 @@
     },
     {
       "from": "bc-ui-design",
-      "to": "bc-show-me",
+      "to": "bc-explain-visually",
       "relation": "hands_off",
       "required": true,
       "when": "explanation diagrams",
       "source": "concepts/bc-ui-design/body/SKILL.md",
-      "reason": "Explanation diagrams belong to bc-show-me, not product UI design."
+      "reason": "Explanation diagrams belong to bc-explain-visually, not product UI design."
     },
     {
       "from": "bc-wiki-maintain",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -527,7 +527,7 @@
     },
     {
       "from": "bc-triage",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -536,7 +536,7 @@
     },
     {
       "from": "bc-pipeline-to-done",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -545,7 +545,7 @@
     },
     {
       "from": "bc-plan-to-pipeline",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -554,7 +554,7 @@
     },
     {
       "from": "bc-improve-codebase-architecture",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -563,7 +563,7 @@
     },
     {
       "from": "bc-diagnosing-bugs",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -572,7 +572,7 @@
     },
     {
       "from": "bc-prototype",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -581,7 +581,7 @@
     },
     {
       "from": "bc-handoff",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -590,7 +590,7 @@
     },
     {
       "from": "bc-domain-modeling",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -671,7 +671,7 @@
     },
     {
       "from": "bc-work-sync",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
@@ -679,41 +679,41 @@
       "reason": "Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line and Blocked by lines, and runs the scaffolded .bc-agent/scripts/work_index.py."
     },
     {
-      "from": "bc-swarm",
+      "from": "bc-delegate-investigation",
       "to": "bc-tdd",
       "relation": "depends_on_contract",
       "required": true,
       "when": "worker and review packets for code changes, and parent commits",
-      "source": "concepts/bc-swarm/body/SKILL.md#what-every-child-packet-adds",
+      "source": "concepts/bc-delegate-investigation/body/SKILL.md#what-every-child-packet-adds",
       "reason": "Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit."
     },
     {
       "from": "agent-kernel",
-      "to": "bc-reflect",
+      "to": "bc-reflect-on-sessions",
       "relation": "hands_off",
       "required": false,
       "source": "concepts/agent-kernel/body/AGENT-KERNEL.md",
-      "reason": "The recap's 👣 line offers /bc-reflect when a substantial session's deliverables are all ready; the owner decides."
+      "reason": "The recap's 👣 line offers /bc-reflect-on-sessions when a substantial session's deliverables are all ready; the owner decides."
     },
     {
-      "from": "bc-reflect",
+      "from": "bc-reflect-on-sessions",
       "to": "bc-prompting-agents",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-reflect/body/SKILL.md#every-proposal-names-its-home",
+      "source": "concepts/bc-reflect-on-sessions/body/SKILL.md#every-proposal-names-its-home",
       "reason": "A proposal homed in a concept or kernel clause is worded per bc-prompting-agents and pressure-tested before deploy."
     },
     {
-      "from": "bc-reflect",
+      "from": "bc-reflect-on-sessions",
       "to": "bc-code-review",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-reflect/body/SKILL.md#every-proposal-names-its-home",
+      "source": "concepts/bc-reflect-on-sessions/body/SKILL.md#every-proposal-names-its-home",
       "reason": "Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks."
     },
     {
       "from": "bc-ui-design",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has no docs/design/README.md",
@@ -721,39 +721,39 @@
       "reason": "A missing design README is created from the template the scaffold writes; the companion does not keep its own copy."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-ui-design",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout scaffold writes docs/design/README.md",
-      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "source": "concepts/bc-setup-project/body/scaffold.py",
       "reason": "The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary."
     },
     {
-      "from": "bc-council-improve-codebase",
+      "from": "bc-council-improve-architecture",
       "to": "bc-improve-codebase-architecture",
       "relation": "loads",
       "required": true,
       "when": "every council architecture review",
-      "source": "concepts/bc-council-improve-codebase/body/SKILL.md",
+      "source": "concepts/bc-council-improve-architecture/body/SKILL.md",
       "reason": "Inputs, card fields, report, grilling and filing have one home in bc-improve-codebase-architecture; this skill adds only the map contents, card format and agreement rule."
     },
     {
-      "from": "bc-council-improve-codebase",
+      "from": "bc-council-improve-architecture",
       "to": "bc-council-mode",
       "relation": "loads",
       "required": true,
       "when": "every council architecture review",
-      "source": "concepts/bc-council-improve-codebase/body/SKILL.md",
+      "source": "concepts/bc-council-improve-architecture/body/SKILL.md",
       "reason": "Briefing, launch, relay, resume and the pass and roster caps have one home in bc-council-mode."
     },
     {
-      "from": "bc-council-improve-codebase",
+      "from": "bc-council-improve-architecture",
       "to": "bc-council-chain",
       "relation": "loads",
       "required": true,
       "when": "every council architecture review",
-      "source": "concepts/bc-council-improve-codebase/body/SKILL.md",
+      "source": "concepts/bc-council-improve-architecture/body/SKILL.md",
       "reason": "Roster, shared map, pass 1, merge, pass 2, fallbacks and sandbox cleanup have one home in bc-council-chain; this skill defines only the chain parts."
     },
     {
@@ -794,7 +794,7 @@
     },
     {
       "from": "bc-find-bugs",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "filing into a work pipeline",
@@ -857,7 +857,7 @@
     },
     {
       "from": "bc-council-audit-security",
-      "to": "bc-init-agent",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "filing into a work pipeline",
@@ -907,7 +907,7 @@
       "required": true,
       "when": "after filing chosen findings in a project with a Where things go table",
       "source": "concepts/bc-improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table",
-      "reason": "Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-codebase inherits this through its filing step."
+      "reason": "Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-architecture inherits this through its filing step."
     },
     {
       "from": "bc-find-bugs",
@@ -937,64 +937,64 @@
       "reason": "Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-plan-to-pipeline",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has a Where things go table",
-      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "source": "concepts/bc-setup-project/body/scaffold.py",
       "reason": "The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode."
     },
     {
-      "from": "bc-guardrails",
+      "from": "bc-performance-guardrails",
       "to": "bc-ui-design",
       "relation": "adapts",
       "required": true,
-      "source": "concepts/bc-guardrails/CONCEPT.md#design-decisions-2026-11-25",
+      "source": "concepts/bc-performance-guardrails/CONCEPT.md#design-decisions-2026-11-25",
       "reason": "Copies design-framework.md's page model (read the project page first, copy the scaffold text when missing, agent's choice the owner may change, page line in the same commit) for limits and checks; design-consistency checks stay on the design page."
     },
     {
-      "from": "bc-guardrails",
-      "to": "bc-init-agent",
+      "from": "bc-performance-guardrails",
+      "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has no docs/guardrails/README.md",
-      "source": "concepts/bc-guardrails/body/SKILL.md#start-from-the-projects-guardrails-page",
+      "source": "concepts/bc-performance-guardrails/body/SKILL.md#start-from-the-projects-guardrails-page",
       "reason": "A missing guardrails page is copied from the GUARDRAILS_README text the scaffold writes; the skill does not keep its own copy."
     },
     {
-      "from": "bc-init-agent",
-      "to": "bc-guardrails",
+      "from": "bc-setup-project",
+      "to": "bc-performance-guardrails",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout scaffold writes docs/guardrails/README.md",
-      "source": "concepts/bc-init-agent/body/scaffold.py",
-      "reason": "The generated guardrails README names the bc-guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet)."
+      "source": "concepts/bc-setup-project/body/scaffold.py",
+      "reason": "The generated guardrails README names the bc-performance-guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet)."
     },
     {
-      "from": "bc-autoresearch-loop",
-      "to": "bc-guardrails",
+      "from": "bc-optimize-code",
+      "to": "bc-performance-guardrails",
       "relation": "depends_on_contract",
       "required": false,
       "when": "baselining a metric; keeping a change in a project with docs/guardrails/README.md",
-      "source": "concepts/bc-autoresearch-loop/body/SKILL.md#before-you-touch-code",
+      "source": "concepts/bc-optimize-code/body/SKILL.md#before-you-touch-code",
       "reason": "Measures and judges noise per guardrails' measuring.md, and a kept change tightens the matching agent-chosen limit on the guardrails page."
     },
     {
-      "from": "bc-guardrails",
-      "to": "bc-autoresearch-loop",
+      "from": "bc-performance-guardrails",
+      "to": "bc-optimize-code",
       "relation": "hands_off",
       "required": false,
-      "source": "concepts/bc-guardrails/body/measuring.md",
-      "reason": "measuring.md names bc-autoresearch-loop as the improvement loop that uses the same method; a verified improvement tightens the limit."
+      "source": "concepts/bc-performance-guardrails/body/measuring.md",
+      "reason": "measuring.md names bc-optimize-code as the improvement loop that uses the same method; a verified improvement tightens the limit."
     },
     {
-      "from": "bc-init-agent",
+      "from": "bc-setup-project",
       "to": "bc-teach",
       "relation": "loads",
       "required": false,
       "when": "learning workspace and the owner wants tutoring records",
-      "source": "concepts/bc-init-agent/body/SKILL.md",
+      "source": "concepts/bc-setup-project/body/SKILL.md",
       "reason": "Multi-session tutoring records come from the bc-teach skill."
     },
     {
@@ -1016,12 +1016,12 @@
       "reason": "The standards reviewer flags stale or change-narrating docs."
     },
     {
-      "from": "bc-swarm",
+      "from": "bc-delegate-investigation",
       "to": "bc-tdd",
       "relation": "loads",
       "required": true,
       "when": "worker and review packets for code changes",
-      "source": "concepts/bc-swarm/body/SKILL.md#what-every-child-packet-adds",
+      "source": "concepts/bc-delegate-investigation/body/SKILL.md#what-every-child-packet-adds",
       "reason": "Packets carry tdd's Test levels rules; the body names the skill instead of linking into its folder."
     },
     {

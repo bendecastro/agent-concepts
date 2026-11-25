@@ -15,7 +15,7 @@ nothing, so the fixture only needs recon-able boundaries.
 ## Setup (per run)
 
 1. `scratch=$(mktemp -d)`; copy the fixture to `$scratch/<run>`, `git init -b main`, scaffold a
-   work pipeline with `python3 concepts/bc-init-agent/body/scaffold.py --root . --slug docapi
+   work pipeline with `python3 concepts/bc-setup-project/body/scaffold.py --root . --slug docapi
    --archetype code`, add a `work/order.md` holding only a heading, add `.security-audit/` to
    `.git/info/exclude`, commit.
 2. Copy the bodies of `bc-council-audit-security`, `bc-council-chain`, `bc-security-audit` and

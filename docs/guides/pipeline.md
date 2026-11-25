@@ -43,9 +43,9 @@ bc-plan-to-pipeline → bc-pipeline-to-done → optional observation inbox
 
 After a landed issue, `bc-pipeline-to-done` may prepend at most one bounded structural observation to the project's declared context inbox. New entries are written in the consumer's current newest-first order, so bounded reads cannot hide new observations below older history. This is a separate context-only, non-authoritative update. `bc-improve-codebase-architecture` verifies the open evidence before exploration and keeps its existing human candidate-selection and grilling gates. This is feedback, not another autonomous drain phase or a direct issue-creation path: only the human-gated route back through `bc-plan-to-pipeline` can turn a verified runway candidate into planned issues.
 
-## Setup (once per repo) — `/bc-init-agent`
+## Setup (once per repo) — `/bc-setup-project`
 
-Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from project B) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-pipeline` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-pipeline-to-done` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. It also offers to install a per-vault `bc-wiki-maintain` systemd user timer so log promotion can run overnight; install happens only after confirm. Run once; then the two halves below.
+Before the loop runs in a fresh project, `/bc-setup-project` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from project B) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-pipeline` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-pipeline-to-done` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. It also offers to install a per-vault `bc-wiki-maintain` systemd user timer so log promotion can run overnight; install happens only after confirm. Run once; then the two halves below.
 
 ## The two halves
 
@@ -69,11 +69,11 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 
 | Layer | Skills |
 |---|---|
-| User-invoked setup | `bc-init-agent` (scaffolds the per-repo workspace) |
+| User-invoked setup | `bc-setup-project` (scaffolds the per-repo workspace) |
 | User-invoked orchestrators (loop) | `bc-plan-to-pipeline`, `bc-pipeline-to-done` |
 | User-invoked intake / exploration | `bc-triage`, `bc-prototype`, `bc-improve-codebase-architecture` |
 | User-invoked single-step (standalone) | `bc-to-spec`, `bc-to-tickets` |
-| Model-invoked disciplines | `bc-grilling`, `bc-domain-modeling`, `bc-prd-drafting`, `bc-plan-slicing`, `bc-research`, `bc-tdd`, `bc-diagnosing-bugs`, `bc-codebase-design`, `bc-autoresearch-loop`, `bc-code-review` |
+| Model-invoked disciplines | `bc-grilling`, `bc-domain-modeling`, `bc-prd-drafting`, `bc-plan-slicing`, `bc-research`, `bc-tdd`, `bc-diagnosing-bugs`, `bc-codebase-design`, `bc-optimize-code`, `bc-code-review` |
 
 `bc-to-spec` and `bc-to-tickets` remain for one-phase-at-a-time publication. For a standalone interview and domain capture, use `bc-grilling` + `bc-domain-modeling` directly. The loop orchestrators inline the *disciplines* beneath them so nothing is duplicated and no orchestrator calls another orchestrator.
 
@@ -84,6 +84,6 @@ Before the loop runs in a fresh project, `/bc-init-agent` scaffolds a repo-root 
 - **Bounded outcome handling** — fixable material findings use same-worktree rework/re-review for up to three cycles and then `REWORK_DEFERRED`; `HUMAN_BLOCKED` and `SYSTEMIC_FAILURE` remain distinct classifications.
 - **Completion gate reads the project's own validation conventions**, not a hardcoded test command.
 - **Tiered review gates landings** — the deterministic gate runs first; tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec + Standards), with one-way escalation on gate rejection or a Critical finding.
-- **Optional bounded improvement** — after a slice is GREEN, the per-issue agent runs `bc-autoresearch-loop` *only when* the issue targets a measurable metric; a change is kept only if correctness still holds and the metric provably improves, else reverted. No metric ⇒ skipped (never optimize blind).
+- **Optional bounded improvement** — after a slice is GREEN, the per-issue agent runs `bc-optimize-code` *only when* the issue targets a measurable metric; a change is kept only if correctness still holds and the metric provably improves, else reverted. No metric ⇒ skipped (never optimize blind).
 
 See [`work/3-done/2026-08/011-bc-grill-to-ship-loop.md`](../../work/3-done/2026-08/011-bc-grill-to-ship-loop.md) for the design rationale and `concepts/<name>/CONCEPT.md` for each skill's decisions.

@@ -4,7 +4,7 @@ Run 2026-11-16 (results in `../CONCEPT.md` § Tests). Run each scenario with a c
 
 ## Fixture
 
-A repository scaffolded with `bc-init-agent --archetype code`, committed on `main`, then:
+A repository scaffolded with `bc-setup-project --archetype code`, committed on `main`, then:
 
 - `.bc-agent/AGENTS.md` with `Stages: now, next, later, unscheduled` in its Work items section.
 - `docs/PRD.md` with a "Scope" section listing three features: search, export, sharing. Section "Sharing" says sharing ships `next`.

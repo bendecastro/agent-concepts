@@ -11,7 +11,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+- depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves work-active, decisions, research, glossary, ideas and work-dropped in the scaffolded table, with its earlier paths as fallback.
   Source: [CONCEPT.md](CONCEPT.md)
 

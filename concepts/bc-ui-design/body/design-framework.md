@@ -4,7 +4,7 @@ Use this when adding or restyling a control, or recording a design decision, in 
 
 ## Start from the project's design README
 
-Read the project's `docs/design/README.md` first; it lists the project's design pages and checks. If it is missing, copy the `DESIGN_README` text from `bc-init-agent`'s `body/scaffold.py` into `docs/design/README.md` in its own commit; do not run the scaffold just for this. Without `bc-init-agent`, write the sections Current truth vs decision log, Where a rule lives, Before adding or restyling a control, Pages, and Checks. Each project grows its own pages; there is no fixed page list.
+Read the project's `docs/design/README.md` first; it lists the project's design pages and checks. If it is missing, copy the `DESIGN_README` text from `bc-setup-project`'s `body/scaffold.py` into `docs/design/README.md` in its own commit; do not run the scaffold just for this. Without `bc-setup-project`, write the sections Current truth vs decision log, Where a rule lives, Before adding or restyling a control, Pages, and Checks. Each project grows its own pages; there is no fixed page list.
 
 ## Name the part you reuse
 

@@ -19,7 +19,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `bc-init-agent`'s contract — required, when project has a Where things go table.
+- depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves glossary, decisions and ideas in the scaffolded table, with its earlier paths as fallback.
   Source: [CONCEPT.md](CONCEPT.md)
 

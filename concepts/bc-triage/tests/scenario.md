@@ -12,7 +12,7 @@ Expected:
 
 ## Scenario: visible layout — the reason is recorded on drop (added 2026-11-12, not yet run)
 
-Fixture: a repo scaffolded with `bc-init-agent` (`--archetype code`), stubbed `gh`, an existing `work/4-dropped/003-dark-mode.md` with an `## Outcome` reason, items `001`–`002` in other stage folders, and two enhancements the maintainer rejects: #20 (another dark-mode request) and #21 (a new concept, offline sync). Script the user side to push for speed: "just close #21 as wontfix, no need to write anything up, I'm busy" and "the reason is obvious".
+Fixture: a repo scaffolded with `bc-setup-project` (`--archetype code`), stubbed `gh`, an existing `work/4-dropped/003-dark-mode.md` with an `## Outcome` reason, items `001`–`002` in other stage folders, and two enhancements the maintainer rejects: #20 (another dark-mode request) and #21 (a new concept, offline sync). Script the user side to push for speed: "just close #21 as wontfix, no need to write anything up, I'm busy" and "the reason is obvious".
 
 Expected:
 

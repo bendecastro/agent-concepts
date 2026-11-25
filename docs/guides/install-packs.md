@@ -12,7 +12,7 @@ Each command names its skills, so concepts not published as skills are never ins
 ## All public skills
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-autoresearch-loop bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs bc-council-audit-security bc-council-chain bc-council-challenge-plan bc-council-find-bugs bc-council-improve-codebase bc-council-mode bc-diagnosing-bugs bc-dispatching-parallel-agents bc-domain-modeling bc-executing-plans bc-find-bugs bc-finishing-development-branch bc-grilling bc-guardrails bc-handoff bc-improve-codebase-architecture bc-init-agent bc-json-canvas bc-minimal-solution-ladder bc-obsidian-bases bc-obsidian-markdown bc-pipeline-to-done bc-plain-language bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents bc-prototype bc-qmd bc-reflect bc-research bc-security-audit bc-seo bc-show-me bc-subagent-driven-development bc-swarm bc-tdd bc-teach bc-to-spec bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees bc-wiki-maintain bc-work-sync bc-writing-plans
+npx skills add <source> -g -a <agent> -y --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs bc-council-audit-security bc-council-chain bc-council-challenge-plan bc-council-find-bugs bc-council-improve-architecture bc-council-mode bc-delegate-investigation bc-diagnosing-bugs bc-dispatching-parallel-agents bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs bc-finishing-development-branch bc-grilling bc-handoff bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder bc-obsidian-bases bc-obsidian-markdown bc-optimize-code bc-performance-guardrails bc-pipeline-to-done bc-plain-language bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents bc-prototype bc-qmd bc-reflect-on-sessions bc-research bc-security-audit bc-seo bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
 ## Packs
@@ -22,13 +22,13 @@ Each pack is one skill plus every skill it needs, directly or through another ne
 ### bc-code-review
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-code-review bc-codebase-docs bc-show-me bc-tdd
+npx skills add <source> -g -a <agent> -y --skill bc-code-review bc-codebase-docs bc-explain-visually bc-tdd
 ```
 
 ### bc-codebase-docs
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-codebase-docs bc-show-me
+npx skills add <source> -g -a <agent> -y --skill bc-codebase-docs bc-explain-visually
 ```
 
 ### bc-council-audit-security
@@ -55,22 +55,22 @@ npx skills add <source> -g -a <agent> -y --skill bc-council-challenge-plan bc-co
 npx skills add <source> -g -a <agent> -y --skill bc-council-find-bugs bc-council-chain bc-council-mode bc-find-bugs
 ```
 
-### bc-council-improve-codebase
+### bc-council-improve-architecture
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-improve-codebase bc-council-chain bc-council-mode bc-improve-codebase-architecture
+npx skills add <source> -g -a <agent> -y --skill bc-council-improve-architecture bc-council-chain bc-council-mode bc-improve-codebase-architecture
 ```
 
-### bc-init-agent
+### bc-delegate-investigation
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-init-agent bc-teach
+npx skills add <source> -g -a <agent> -y --skill bc-delegate-investigation bc-tdd
 ```
 
 ### bc-pipeline-to-done
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-codebase-docs bc-show-me bc-tdd
+npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-codebase-docs bc-explain-visually bc-tdd
 ```
 
 ### bc-plan-to-pipeline
@@ -79,8 +79,8 @@ npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-codebase
 npx skills add <source> -g -a <agent> -y --skill bc-plan-to-pipeline bc-domain-modeling bc-grilling bc-plan-slicing bc-prd-drafting
 ```
 
-### bc-swarm
+### bc-setup-project
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-swarm bc-tdd
+npx skills add <source> -g -a <agent> -y --skill bc-setup-project bc-teach
 ```

@@ -20,7 +20,7 @@ This skill owns **placement** and **truthful maintainer writing**. It does
 not own reader-outcome prose (`bc-plain-language`), agent-instruction authoring
 (`bc-prompting-agents`), or whether a decision earns an ADR (`bc-domain-modeling`).
 
-For how-it-works pages, load `bc-show-me` for the smallest current-state visual on
+For how-it-works pages, load `bc-explain-visually` for the smallest current-state visual on
 the owning page; placement and one-home rules here still win.
 
 ## When this applies
@@ -40,7 +40,7 @@ applies if the file is source-tree docs; wording for human readers is
 
 On a mixed change, apply this skill only to the source-tree doc surface.
 `bc-code-review` loads this skill when a Standards pass sees source-tree docs
-in the diff. `bc-init-agent` points new code wikis at it and keeps it off
+in the diff. `bc-setup-project` points new code wikis at it and keeps it off
 the vault.
 
 ## One home per fact
