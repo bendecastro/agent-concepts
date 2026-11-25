@@ -22,10 +22,9 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [024-skill-delivery](2-active/024-skill-delivery/plan.md) | active, ready for agent | — | 025-dashboard-data | people outside this repository cannot install its skills reliably. | 13/13 |
-| 2 | [025-dashboard-data](1-planned/025-dashboard-data/plan.md) | planned, ready for agent | [024-skill-delivery](2-active/024-skill-delivery/plan.md) | — | people want a dashboard of their projects' work, but who holds an item, its history, review and gate results, and its time and cost are free text, only in git,… | 0/6 |
+| 1 | [025-dashboard-data](1-planned/025-dashboard-data/plan.md) | planned, ready for agent | — | — | people want a dashboard of their projects' work, but who holds an item, its history, review and gate results, and its time and cost are free text, only in git,… | 0/6 |
 
 - [Ideas](0-ideas.md): 2
-- [Done](3-done/): 22
+- [Done](3-done/): 23
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->

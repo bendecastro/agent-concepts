@@ -116,14 +116,15 @@ a smaller command for each pack (one skill plus the skills it needs). In those c
 [the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md)
 (for example `pi`).
 
-For example, this installs one skill, `bc-self-improve`, for Pi:
+For example, this installs one skill, `bc-self-improve`, for Cursor (an agent we have not tested; only `-a pi` has been):
 
 ```bash
-npx skills add bendecastro/agent-concepts@v0.2.0 -g -a pi -y --skill bc-self-improve
+npx skills add bendecastro/agent-concepts@v0.2.0 -g -a cursor -y --skill bc-self-improve
 ```
 
 - `bendecastro/agent-concepts@v0.2.0` is where the skills come from, at release `v0.2.0`.
-- `-a pi` is the agent to install for; use your agent's id instead.
+- `-a cursor` is the agent to install for; use your agent's id from the list instead, for
+  example `gemini-cli` or `github-copilot`.
 - `--skill` lists the skills to install, by name. The commands on the packs page list
   every skill a pack needs, so copy them rather than typing names yourself.
 - `-g` installs for you in every project, not just the current one; `-y` skips the tool's

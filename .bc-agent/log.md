@@ -2117,3 +2117,6 @@ README `## Install` reworked from the install-section review: Update renamed Ref
 
 ## [2026-11-25] implement | npx install example in README
 Owner could not follow the npx instructions; added a worked one-skill example (bc-self-improve for Pi) with each part of the command explained.
+
+## [2026-11-25] implement | 024-skill-delivery closed
+npx example switched to Cursor (`-a cursor`, untested, flagged) at the owner's request; item moved to work/3-done/2026-11 with its Outcome.

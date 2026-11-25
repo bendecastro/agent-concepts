@@ -2,7 +2,7 @@
 
 Why: people outside this repository cannot install its skills reliably. Skills link into each other's folders, name the owner's private tools, clash with common names, and the only installer assumes a clone and overwrites existing skills.
 Done when: a tagged release installs on Linux and macOS through the Claude Code plugin, the Codex plugin, the Pi package and `npx skills`, proven by the fresh-install test in CI; every public skill has a `bc-` name, refers to other skills by name and works without the owner's tools; the README documents each method; requirements in [requirements.md](requirements.md).
-Stage: next
+Stage: done
 Blocked by: nothing
 Kind: feature
 Source: bc-plan-to-pipeline
@@ -40,4 +40,4 @@ Ready for agent: yes
 
 ## Outcome
 
-<Filled when the item is finished or dropped.>
+Done 2026-11-25. Outside users can install the public skills from a tagged release through a Claude Code plugin, a Codex plugin, a Pi package or `npx skills`; the README `## Install` section gives install, refresh and uninstall commands for each, with a worked `npx skills` example. Releases `v0.1.0` and `v0.2.0` are published, each gated by `release.yml` (release check plus a fresh install of every method on Linux and macOS). Before `v0.2.0`, seven skills were renamed so their names say what they do (decision record 0004); old names stay as local deploy aliases only. `scripts/release_check.py` now also fails when the README names a different tag. Not covered: Windows, `npx skills` for agents other than Pi, and moving an install from one tag to a newer one.
