@@ -18,12 +18,14 @@ Four concepts chain into a cycle. Each hands the next a durable artifact on disk
 tracker, so no stage depends on a session staying alive.
 
 **`/bc-init-agent` — give the repo a memory.** Reads the repo, asks only what it cannot infer, then
-scaffolds `.bc-agent/`: `log.md`, `decisions/`, `references/`, `conventions/`, `tasks/active.md`.
-Additive: it never overwrites or deletes without an explicit flag.
+scaffolds the project layout: work items in `work/`, decisions and research in `docs/`, a root
+`glossary.md`, a `scripts/gate` check command with a CI workflow, and agent mechanics (journal,
+conventions, templates) in `.bc-agent/`. Additive: it never overwrites or deletes without an
+explicit flag.
 
 **`/bc-plan-to-pipeline` — turn an idea into a queue.** Grills one question at a time until every
-branch is resolved, writes a PRD under `docs/changes/<slug>/`, merges requirements into
-`docs/specs/`, then files the slices as a work item, as GitHub issues in dependency order, or both. From an
+branch is resolved, writes the requirements into a work item, then files the slices as that item's
+steps, as GitHub issues in dependency order, or both. From an
 already-settled design it asks only the open questions. The slicing quiz is the last human
 gate; the skill refuses to skip it.
 
@@ -64,7 +66,7 @@ git clone https://github.com/bendecastro/agent-concepts.git
 cd agent-concepts
 
 # Some skill bodies run scripts from the checkout, so the shell needs its location.
-echo 'export AGENT_CONCEPTS="$PWD"' >> ~/.profile   # adjust for your shell
+echo "export AGENT_CONCEPTS=\"$PWD\"" >> ~/.profile   # saves this checkout's path; adjust for your shell
 export AGENT_CONCEPTS="$PWD"
 
 python3 scripts/deploy-local-skills.py --dry-run

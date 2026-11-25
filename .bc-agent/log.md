@@ -1987,3 +1987,6 @@ Scaffolded with `bc-init-agent`: root `AGENTS.md`, `glossary.md`, `work/`, `docs
 
 ## [2026-11-25] implement | journal moved to .bc-agent/log.md (item 003)
 Moved the root journal here with `git mv` so history follows, merged the scaffold intro on top, and repointed references to this workspace's journal (AGENTS.md, lint required-files, portability exemption, unslop and bc-reflect concepts). Other `log.md` meanings (scaffolded projects, vaults, teach hosts) unchanged.
+
+## [2026-11-25] implement | README quick fixes
+Install line now saves the checkout's real path (it saved the literal `$PWD`); `/bc-init-agent` and `/bc-plan-to-pipeline` descriptions match the current layout. Full rewrite filed as 022-readme-rewrite, after the glossary.
