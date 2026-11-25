@@ -1996,3 +1996,6 @@ Discipline gates are now hard rules (canon, provenance, test, immutability; ui-d
 
 ## [2026-11-25] implement | glossary (item 005)
 Wrote root `glossary.md`: 51 terms in five groups using the settled meanings (gate = automated command only, hard rule, ticket/work item/issue/slice, subagent/worker, run folder). Dropped budget chain and regression allowance (unused in the repo); linked from AGENTS.md.
+
+## [2026-11-25] implement | glossary design terms; README plan for consistency
+Glossary gains a Design consistency group (design framework, design token, design page, capture rule). 022-readme-rewrite gains a "Keeping projects consistent" part; 006 extends its guardrails line when the method page lands.

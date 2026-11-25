@@ -10,6 +10,7 @@ Source: bc-init-agent
 ## Steps
 
 - [ ] Plan with `bc-plan-to-pipeline` (research: `docs/research/2026-11-25-performance-guardrails/`).
+- [ ] Extend the README's "Keeping projects consistent" guardrails line (written by 022-readme-rewrite) and link the method page, in the same change that adds the page.
 
 ## Outcome
 

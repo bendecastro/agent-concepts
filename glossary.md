@@ -60,6 +60,13 @@ same meaning.
 - **council** — a group of read-only advisors whose findings the parent weighs.
 - **worktree** — a separate checkout of the repository where a worker makes changes without touching the main one.
 
+## Design consistency
+
+- **design framework** — the method that lets short-lived agents build a project's interface consistently without the owner re-deciding the same things: tokens, design pages, checks and screenshot review.
+- **design token** — a named value (a colour, size or spacing) defined once and used everywhere by name, never typed in as a literal.
+- **design page** — a page in the project's `docs/design/` stating the current design choice on one topic, and whether the owner or an agent made it.
+- **capture rule** — the hard rule that a visible change is not done until screenshots of every surface it reaches are taken and critiqued against the screenshot checklist.
+
 ## Performance guardrails
 
 - **guardrail** — an automated check that stops a quality, such as speed, from getting worse.
