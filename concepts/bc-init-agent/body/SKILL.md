@@ -36,7 +36,7 @@ Modes:
 - **Migration assist**: for old/messy projects, propose how existing docs/files could seed the roles in the "Where things go" table (learning/knowledge: `.bc-agent/`); move/copy files only after explicit approval.
 
 Archetypes:
-- **code** — default project execution workspace: work items (a plan or feature is one item), decision records, research including architecture reviews, validation, commands, architecture-runway nudge tracking, `/bc-plan-to-pipeline` → `/bc-drain-issues`.
+- **code** — default project execution workspace: work items (a plan or feature is one item), decision records, research including architecture reviews, validation, commands, architecture-runway nudge tracking, `/bc-plan-to-pipeline` → `/bc-pipeline-to-done`.
 - **ops** — operational/system workspace: the code layout plus `docs/components/` (verified state of real systems); findings go to `docs/research/`, plans are work items, and open questions are work-item steps, planned items or ideas lines (the rule is in the generated `.bc-agent/AGENTS.md`); evidence before plan.
 
 ### Learning archetype adapter
@@ -99,7 +99,7 @@ Archetypes:
 
 7. **Seed obvious project facts conservatively and apply upgrade notes.** After scaffolding, you may fill TODO stubs only with facts verified during recon (for example validation commands from README/package scripts, existing deploy notes, or authoritative docs). Mark uncertain items as TODO. On an existing project, fill `./scripts/gate` with the verified commands its CI already runs before the scaffold commit; keep `gate.yml`, since a scaffold re-run recreates it. On a new project the stub stays red until the first test or build command lands; filling `./scripts/gate` is that green-making change. Why: the stub gate fails by design, and red trunk CI blocks landing except for the change that makes it green. Do not invent architecture or move old files during init unless the approved plan explicitly includes it. For existing projects, read any scaffold upgrade notes and merge small instruction pointers into preserved files when needed (for example linking `architecture-runway.md` from existing `AGENTS.md`, `.bc-agent/AGENTS.md`, or `references/agent-skills.md`). When the notes report earlier-layout paths under `.bc-agent/` (only possible with `--allow-earlier-layout`), leave them in place and say so in the close-out: moving them to the visible layout is a separate migration the user approves.
 
-8. **Wire publish authorization (offer).** `/bc-drain-issues` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, record a line in `work/0-ideas.md` for the visible layout, or `tasks/parking-lot.md` for legacy learning/knowledge vaults.
+8. **Wire publish authorization (offer).** `/bc-pipeline-to-done` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, record a line in `work/0-ideas.md` for the visible layout, or `tasks/parking-lot.md` for legacy learning/knowledge vaults.
 
 Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip both for code, ops and hybrid. Why: qmd registration and `bc-wiki-maintain` expect a vault with an index, which visible-layout projects no longer have; a later work package of the visible-layout plan revisits them.
 
@@ -203,7 +203,7 @@ Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip bot
     do not install `bc-wiki-lint.timer`.
 
 11. **Close out.** Point at the created files, the wiki-maintain timer offer
-    outcome, and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-drain-issues` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
+    outcome, and any migration plan. Next steps for the user: fill or verify `conventions/validation.md` + `file-layout.md`; run `/triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/prototype` or `/improve-codebase-architecture` when planning needs evidence/runway; then `/bc-pipeline-to-done` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
 
 ## Migrate an existing project
 

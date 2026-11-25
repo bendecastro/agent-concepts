@@ -700,3 +700,31 @@ def test_check_warns_about_planned_items_without_planned_line_but_still_passes(t
     assert "Planned:" in result.stderr
     assert "005-planned" not in result.stderr
     assert "006-active" not in result.stderr
+
+
+def header(text, line):
+    return text.replace("Done when:", f"{line}\nDone when:")
+
+
+def test_ready_and_waiting_items_are_marked_in_the_folder_column(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/004-ready.md": header(item("v1", "R."), "Ready for agent: yes"),
+        "work/1-planned/005-waiting.md": header(item("v1", "W."), "Waiting on owner: which API?"),
+        "work/1-planned/006-plain.md": item("v1", "P."),
+    })
+    assert run(tmp_path).returncode == 0
+    folders = dict(zip(names(tmp_path), (row.split(" | ")[2] for row in rows(tmp_path))))
+    assert folders == {"004-ready": "planned, ready for agent", "005-waiting": "planned, waiting on owner",
+                       "006-plain": "planned"}
+    result = run(tmp_path, "--check")
+    assert result.returncode == 0, result.stderr
+
+
+def test_waiting_item_that_is_also_ready_is_an_error(tmp_path):
+    fixture(tmp_path, {
+        "work/1-planned/004-both.md": header(item("v1", "B."), "Ready for agent: yes\nWaiting on owner: which API?"),
+    })
+    result = run(tmp_path)
+    assert result.returncode == 1
+    assert "1-planned/004-both.md" in result.stderr
+    assert "Waiting on owner" in result.stderr and "Ready for agent" in result.stderr

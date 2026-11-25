@@ -780,3 +780,19 @@ def test_root_agents_blocks_landing_on_red_trunk_ci(tmp_path):
     text = (_scaffold(tmp_path, 'code') / 'AGENTS.md').read_text()
     assert 'latest trunk CI run' in text
     assert 'red blocks landing anything except the change that makes it green' in text
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_scaffold_documents_ready_and_waiting_lines(tmp_path, archetype):
+    root = _scaffold(tmp_path, archetype)
+    agents = (root / '.bc-agent/AGENTS.md').read_text()
+    work = ' '.join(agents.split('## Work items')[1].split('\n## ')[0].split())
+    template = (root / '.bc-agent/templates/work-item.md').read_text()
+    readme = ' '.join((root / 'work/README.md').read_text().split())
+    for text in (work, readme):
+        assert 'Ready for agent: yes' in text
+    for text in (work, template, readme):
+        assert 'Ready for agent:' in text
+        assert 'Waiting on owner:' in text
+    assert 'bc-pipeline-to-done' in work
+    assert 'bc-pipeline-to-done' in readme

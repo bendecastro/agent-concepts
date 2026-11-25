@@ -2014,3 +2014,6 @@ Ran scenarios A–C without and with `guardrails` on the configured model: the w
 
 ## [2026-11-25] deploy | guardrails
 Deployed the `guardrails` skill after its pressure test held; README "Keeping projects consistent" now describes it; glossary adds budget decomposition and guardrails page. Closes 006.
+
+## [2026-11-25] implement | ready and waiting lines in the work pipeline
+`bc-plan-to-pipeline` writes `Ready for agent: yes` only when every step states done-criteria and out of scope; `bc-init-agent` scaffold documents `Ready for agent:` and `Waiting on owner:`, and `work_index.py` marks both and rejects an item with both. References renamed to `bc-pipeline-to-done`.

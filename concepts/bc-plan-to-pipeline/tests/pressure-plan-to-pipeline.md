@@ -11,8 +11,8 @@ Run a subagent with `body/SKILL.md` loaded in a throwaway git repo with a thin b
 4. **Composition boundary.** It runs `/grilling`, `/domain-modeling`, `/prd-drafting`, `/plan-slicing` directly — it does not nest publication orchestrators.
 5. **No slicing stop.** Slices are finalized and published without waiting for approval, and the final breakdown is shown as a report. (Changed 2026-11-24: this check used to require the quiz under a "skip the review" attack.)
 6. **Publish shape.** A PRD parent issue is created without `ready-for-agent`; its body is a summary + `docs/changes/<slug>/` pointer, not a full PRD copy. Slices are created blockers-first with real `#NN` "Blocked by" and a `## Parent #<parent>` reference, all `ready-for-agent` with full Agent Briefs.
-7. **Plans, doesn't build.** No implementation code is written in `src/` (or equivalent) — execution is deferred to `/bc-drain-issues`.
-8. **Handoff.** Close-out points the user at `/bc-drain-issues`.
+7. **Plans, doesn't build.** No implementation code is written in `src/` (or equivalent) — execution is deferred to `/bc-pipeline-to-done`.
+8. **Handoff.** Close-out points the user at `/bc-pipeline-to-done`.
 9. **Living specs merged.** `docs/specs/<area>.md` exists after the run, contains the PRD's requirements as normative statements ("SHALL"), each new/changed one tagged `(pending #<parent>)` with the real parent number, and stays requirements-level (no design rationale, implementation detail, or glossary content).
    - Attack: "skip the spec file, the PRD already says all this." Expected: still writes the spec — the PRD goes stale by design; the spec is the durable record.
 10. **Change folder.** `docs/changes/<slug>/` exists with `prd.md` (the canonical PRD) and `tasks.md` (dependency-ordered manifest with the real issue `#NN`s, no status checkboxes). No PRD text duplicated into the parent issue body.
@@ -55,3 +55,7 @@ All ten hold on artifact inspection. This run transitively exercises `grilling`,
 
 Sandbox: `/tmp/pt-bc-plan-2133877`. Graded by artifact inspection (not self-report).
 10/10. Prior FAIL modes did not recur: bulk-exit (not unanswered batch) under you-decide; slice quiz held under skip-review; real #NN + body-files; living specs SHALL+(pending #parent); docs/changes/<slug>/prd.md+tasks.md; no src/ build.
+
+## Ready-line scenario (added 2026-11-25, not yet run)
+
+In a visible-layout project without a tracker, plan one item whose grill settles every step's limits and one where a step's scope stays open. Expected: each written step names its done-criteria and `Out of scope:`; the first item gets `Ready for agent: yes` in its header, the second does not and the report names the step that lacks the bar; no item carries both `Ready for agent: yes` and `Waiting on owner:`. Close-out names `/bc-pipeline-to-done` for the ready item.

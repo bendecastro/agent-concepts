@@ -6,7 +6,9 @@ Usage: python3 .bc-agent/scripts/work_index.py [--check] [work-dir]
 Every item in 1-planned/ and 2-active/ needs a `Blocked by:` line naming full
 item names (`012-search-ranking`, comma-separated) or `nothing`. A `Stage:` line
 is optional; an unknown stage is an error. A `Kind:` line (security, bug, feature, ...)
-is optional and free text. Unknown names, dropped blockers, self-blocks and cycles among open
+is optional and free text. An optional `Ready for agent: yes` line (bc-pipeline-to-done
+may build the item unattended) or `Waiting on owner: <question>` line (parked) is shown
+in the Folder column; an item with both is an error. Unknown names, dropped blockers, self-blocks and cycles among open
 items are errors. A blocker in 3-done/ is satisfied; an item is ready when all
 its blockers are done.
 
@@ -144,11 +146,17 @@ def read_item(work: Path, folder: str, name: str, stages: tuple[str, ...]) -> di
     if not blocked_match or not blocked_match.group(1).strip():
         raise StageError(f"{rel}: missing Blocked by line (item names such as 012-search-ranking, or nothing)")
     blocked = blocked_match.group(1).strip()
+    ready = re.search(r"^Ready for agent:[ \t]*yes[ \t]*$", text, re.M | re.I) is not None
+    waiting = re.search(r"^Waiting on owner:[ \t]*\S", text, re.M) is not None
+    if ready and waiting:
+        raise StageError(f"{rel}: has both Waiting on owner and Ready for agent: yes; "
+                         "remove the ready line until the owner's answer is recorded")
+    marker = ", waiting on owner" if waiting else ", ready for agent" if ready else ""
     blockers = [] if blocked == "nothing" else [b.strip() for b in blocked.split(",") if b.strip()]
     return {
         "blockers": blockers,
         "stage": stage, "kind": kind, "name": name.removesuffix(".md"), "path": rel, "folder": folder[2:],
-        "why": why, "steps": f"{done}/{total}" if total else "—",
+        "status": folder[2:] + marker, "why": why, "steps": f"{done}/{total}" if total else "—",
     }
 
 
@@ -305,7 +313,7 @@ def build_block(work: Path, stages: tuple[str, ...]) -> str:
         "",
         "| # | Item | Folder | Waits on | Unblocks | Why | Steps |",
         "| --- | --- | --- | --- | --- | --- | --- |",
-        *(f"| {n} | [{i['name']}]({i['path']}) | {i['folder']} | {i['waits']} | {i['unblocks']} | {i['why']} | {i['steps']} |"
+        *(f"| {n} | [{i['name']}]({i['path']}) | {i['status']} | {i['waits']} | {i['unblocks']} | {i['why']} | {i['steps']} |"
           for n, i in enumerate(items, 1)),
         "",
         f"- [Ideas](0-ideas.md): {ideas}",

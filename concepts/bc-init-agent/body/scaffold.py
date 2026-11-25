@@ -268,7 +268,7 @@ This project is wired for the grill→issues→drain loop. See
 `.bc-agent/conventions/planning-workflow.md`:
 
 - `/bc-plan-to-pipeline` — interactive planning (grill → domain capture → PRD → ready-for-agent issues).
-- `/bc-drain-issues` — autonomous (AFK) execution of the ready-for-agent queue.
+- `/bc-pipeline-to-done` — autonomous (AFK) execution of the ready-for-agent queue.
 
 ## Publishing
 
@@ -395,7 +395,7 @@ Update the wiki *in the same turn* as the work — not "later," not only when as
 ## Plans & the live layer
 
 - A multi-step effort gets a **plan page** under `project/` from `templates/plan.md`.
-- For `grilling` + `domain-modeling` or `bc-plan-to-pipeline` → `bc-drain-issues` work, apply
+- For `grilling` + `domain-modeling` or `bc-plan-to-pipeline` → `bc-pipeline-to-done` work, apply
   `conventions/planning-workflow.md`: it maps generic `glossary.md`/`docs/adr/` persistence
   into this vault's pages.
 - Use `references/agent-skills.md` as the local map of required loop skills and where their
@@ -636,9 +636,9 @@ persist to generic `glossary.md` / `docs/adr/`, persist here instead:
 The one-question-at-a-time grilling rule and the slicing quiz (the last human gate before
 AFK) still apply. Don't write implementation code while major branches remain open.
 
-## Execution — `/bc-drain-issues`
+## Execution — `/bc-pipeline-to-done`
 
-Once planning leaves a `ready-for-agent` queue, `/bc-drain-issues` executes it autonomously
+Once planning leaves a `ready-for-agent` queue, `/bc-pipeline-to-done` executes it autonomously
 (AFK): per unblocked issue it dispatches a fresh subagent that builds the slice test-first and
 lands it **trunk-based**, then moves on.
 
@@ -649,7 +649,7 @@ lands it **trunk-based**, then moves on.
 - **Validation gate.** The per-issue agent reads THIS repo's `conventions/validation.md` +
   `references/commands.md` for what "validated" means — not a generic test command. Criteria
   met **and** that validation clean = eligible to land.
-- **Claim before work.** Follow `/bc-drain-issues`' authorized claim protocol: no-force create-if-absent or lease-guarded reuse of a Released Claim Marker; skip a lost race before dispatch.
+- **Claim before work.** Follow `/bc-pipeline-to-done`' authorized claim protocol: no-force create-if-absent or lease-guarded reuse of a Released Claim Marker; skip a lost race before dispatch.
 - **Trunk-based, not PRs.** Each slice commits → pushes `master` → closes its issue with a
   sha + validation comment. Dependent slices then see prior work immediately.
 - **Parking.** A slice that can't complete cleanly is parked: comment on the issue, swap
@@ -742,7 +742,7 @@ counts more history and may nudge again.
 VALIDATION = """# Validation
 
 > **TODO:** canonical validation commands are not established yet. Fill these in as you learn
-> the project; `bc-drain-issues` reads this page to know what "validated" means.
+> the project; `bc-pipeline-to-done` reads this page to know what "validated" means.
 
 ## Build / test validation
 
@@ -771,7 +771,7 @@ git status --short
 # Visible-layout projects carry code; vault archetypes keep the base VALIDATION byte-identical.
 VISIBLE_VALIDATION = """# Validation
 
-Run from the repository root. `bc-drain-issues` reads this page to know what "validated" means.
+Run from the repository root. `bc-pipeline-to-done` reads this page to know what "validated" means.
 Each stage has one owner. **TODO:** replace each placeholder with the real command when the
 first test or build step lands.
 
@@ -1063,7 +1063,7 @@ map so agents know what to invoke.
 ## Planning/execution loop
 
 - `/bc-plan-to-pipeline` — interactive planning front: grill → domain capture → PRD → issue slices.
-- `/bc-drain-issues` — AFK executor for `ready-for-agent` issue queues.
+- `/bc-pipeline-to-done` — AFK executor for `ready-for-agent` issue queues.
 - `/improve-codebase-architecture` — optional architecture runway before planning/slicing.
 
 ## Supporting skills used by the loop
@@ -1461,6 +1461,14 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   without the line.
   Why: an item filed without planning starts with unstated requirements and no slices, and the
   work drifts from what the owner decided.
+- **`Ready for agent: yes` lets an agent build an item unattended.** `bc-plan-to-pipeline`
+  writes the line in the item header only when every step states its done-criteria and what is
+  out of scope; `bc-pipeline-to-done` builds only items that carry it. Why: being planned is not
+  consent to build without the owner; the line is.
+- **`Waiting on owner: <question>` parks an item.** It replaces the ready line: a parked item is
+  not ready until the owner's answer is recorded in the item, the waiting line is removed and the
+  ready line restored. `work_index.py` marks both lines in the table and rejects an item with both.
+  Why: a question the owner has not answered must stop unattended work on it, visibly.
 - **Several items may be active at once.**
 - **GitHub issues are optional.** When one exists, record its number on the item's `Issue:`
   line. Why: the folders are the source of truth; an issue is a pointer to them.
@@ -1576,6 +1584,8 @@ Issue: <optional issue number; delete the line when there is none>
 Kind: <optional: security, bug, build, architecture, performance, tests, feature, docs, ...; delete the line when unclear>
 Source: <optional: the skill or review that produced this item, e.g. bc-plan-to-pipeline; delete the line when unknown>
 Planned: <written by bc-plan-to-pipeline once it has planned this item, e.g. bc-plan-to-pipeline 2026-11-24; delete the line until then>
+Ready for agent: <optional: yes when every step states its done-criteria and out of scope, so bc-pipeline-to-done may build it unattended; delete the line otherwise>
+Waiting on owner: <optional: the question that parks this item; delete the line when there is none, and never keep it with Ready for agent>
 
 ## Steps
 
@@ -1609,6 +1619,9 @@ ranking in `order.md`, when present, orders each tier, before the `Stages:` line
 number (see [.bc-agent/AGENTS.md](../.bc-agent/AGENTS.md#work-items)).
 It is generated: run `python3 .bc-agent/scripts/work_index.py` after changing an item or
 `order.md`; `--check` fails while it is out of date.
+An item with a `Ready for agent: yes` line may be built unattended by `bc-pipeline-to-done`;
+one with a `Waiting on owner: <question>` line is parked until the owner answers. The Folder
+column marks both.
 Write project-specific notes outside the markers; the script keeps them.
 
 <!-- work-index:start -->
@@ -2668,7 +2681,7 @@ def main() -> int:
 
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
           "read .bc-agent/references/agent-skills.md for the loop skill map; "
-          "authorize this repo in policies/publish.yaml if you'll run /bc-drain-issues AFK; "
+          "authorize this repo in policies/publish.yaml if you'll run /bc-pipeline-to-done AFK; "
           "then /triage existing issues or /bc-plan-to-pipeline to plan the first feature.")
     return 0
 
