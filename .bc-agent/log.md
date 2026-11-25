@@ -2096,3 +2096,6 @@ Planned the dashboard data item from the owner's choices (Held by line, history 
 
 ## [2026-11-25] implement | 024 release preparation
 CHANGELOG.md (0.1.0), docs/guides/releasing.md, one version home in package.json with a lint check and scripts/release_check.py, fresh_install_test.py --ref and a tag-triggered release workflow. All four install methods verified installing a pushed ref from GitHub; no tag created.
+
+## [2026-11-25] deploy | v0.1.0 released
+Tagged v0.1.0 on the commit whose gate and fresh-install CI passed; GitHub release from the CHANGELOG entry; the tag workflow installed it from GitHub with every method on Linux and macOS.
