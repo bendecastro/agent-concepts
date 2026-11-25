@@ -5,7 +5,7 @@ Concrete syntax for the `subagent` tool from the `pi-subagents` extension. The c
 ## Run directory
 
 ```
-${XDG_STATE_HOME:-$HOME/.local/state}/bc-delegate-investigation/<YYYY-MM-DD>-<slug>/
+${XDG_STATE_HOME:-$HOME/.local/state}/bc-swarm/<YYYY-MM-DD>-<slug>/
 ```
 
 `mkdir -p` it **before** dispatch. A child cannot write to a directory that does not exist, and it discovers this at the end of its run, which is the worst possible moment. The manifest goes at `manifest.md` in that root. Why not `/tmp`: a reboot clears it mid-run, taking the manifest, logs and worktree with it; the state directory survives reboots and stays on this machine. Old run folders are removed automatically after 7 days (where the machine runs a cleanup job; check its agent instructions), so do not clean them by hand, and promote anything needed longer out of the run folder.
