@@ -19,3 +19,5 @@ Planned: owner chose a plain-reference rewrite after the glossary, 2026-11-25
 
 ## Outcome
 
+Done. `README.md` is a plain reference: harnesses (with Muse), install, a map of the repository, the loop, keeping projects consistent, hard rules, publishing, private concepts, credits. Pitch phrasing, the stale slicing-quiz claim and the wiki benchmark were removed; the lint claim now says it reads recorded status. Gate green locally (468 passed, tree 8ff7b79b) and in GitHub CI.
+
