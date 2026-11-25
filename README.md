@@ -110,8 +110,14 @@ A rule that text search can find becomes a check in the project's test runner. T
 says a visible change is not done until the report lists screenshots and a written critique of
 each one.
 
-Guardrails are automated checks that stop speed, size or structure from getting worse. Today this
-repository's guardrail is `scripts/gate`, run in CI.
+Guardrails are automated checks that stop speed, size or structure from getting worse: performance
+budgets (limits on time, size or memory) and fitness functions (checks for a structural rule).
+The [`guardrails`](concepts/guardrails/body/SKILL.md) skill is the method. Each project lists its
+limits and checks on `docs/guardrails/README.md`, and the checks run inside the project's gate.
+Agents set limits themselves, from today's measurement or a published guideline, and mark each
+one as their choice so you can change it; a limit you set is never loosened without asking.
+After fixing a slowdown, an agent adds a check so it cannot come back. This repository's own
+guardrail is `scripts/gate`, run in CI.
 
 ## Hard rules
 

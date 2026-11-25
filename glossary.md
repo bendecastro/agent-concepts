@@ -75,5 +75,7 @@ same meaning.
 - **hot path** — the code that runs so often (for example every frame) that small costs there add up.
 - **baseline** — the measured value that later measurements are compared against.
 - **ratchet** — a check that accepts existing shortfalls but rejects anything worse, and tightens its baseline after a real improvement.
+- **budget decomposition** — splitting a user-facing target, such as time per frame, into smaller allowances for each step that shares it.
+- **guardrails page** — a project's `docs/guardrails/README.md`: its targets, limits and checks, each marked as the owner's or an agent's choice.
 - **noise** — the natural variation between repeated measurements of the same thing.
 - **measurement harness** — the repeatable setup that runs a measurement the same way each time; not the same thing as an agent's harness.

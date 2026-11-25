@@ -2,7 +2,7 @@
 
 # Status
 
-55 concepts. 0 need testing, 2 not deployed, 33 deployed with a known gap.
+55 concepts. 0 need testing, 1 not deployed, 33 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -11,11 +11,10 @@ Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page wi
 
 Nothing. Every deployed concept has a recorded run.
 
-## Not deployed (2)
+## Not deployed (1)
 
 | concept | kind | test status | tested |
 |---|---|---|---|
-| [guardrails](../concepts/guardrails/CONCEPT.md) | pressure | pass | 2026-11-25 |
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | not-run | never |
 
 ## Deployed with a known gap (33)
@@ -59,6 +58,6 @@ tested. See the concept's `## Tests` section for what is missing.
 | [using-git-worktrees](../concepts/using-git-worktrees/CONCEPT.md) | pressure | 2026-09-22 | yes |
 | [writing-plans](../concepts/writing-plans/CONCEPT.md) | pressure | 2026-07-16 | yes |
 
-## Passing and deployed (20)
+## Passing and deployed (21)
 
-[bc-council-audit-security](../concepts/bc-council-audit-security/CONCEPT.md), [bc-council-challenge-plan](../concepts/bc-council-challenge-plan/CONCEPT.md), [bc-council-find-bugs](../concepts/bc-council-find-bugs/CONCEPT.md), [brainstorming](../concepts/brainstorming/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [find-bugs](../concepts/find-bugs/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [security-audit](../concepts/security-audit/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md)
+[bc-council-audit-security](../concepts/bc-council-audit-security/CONCEPT.md), [bc-council-challenge-plan](../concepts/bc-council-challenge-plan/CONCEPT.md), [bc-council-find-bugs](../concepts/bc-council-find-bugs/CONCEPT.md), [brainstorming](../concepts/brainstorming/CONCEPT.md), [codebase-design](../concepts/codebase-design/CONCEPT.md), [codebase-docs](../concepts/codebase-docs/CONCEPT.md), [find-bugs](../concepts/find-bugs/CONCEPT.md), [grilling](../concepts/grilling/CONCEPT.md), [guardrails](../concepts/guardrails/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md), [json-canvas](../concepts/json-canvas/CONCEPT.md), [minimal-solution-ladder](../concepts/minimal-solution-ladder/CONCEPT.md), [obsidian-bases](../concepts/obsidian-bases/CONCEPT.md), [obsidian-markdown](../concepts/obsidian-markdown/CONCEPT.md), [plain-language](../concepts/plain-language/CONCEPT.md), [prd-drafting](../concepts/prd-drafting/CONCEPT.md), [qmd](../concepts/qmd/CONCEPT.md), [security-audit](../concepts/security-audit/CONCEPT.md), [seo](../concepts/seo/CONCEPT.md), [to-spec](../concepts/to-spec/CONCEPT.md), [unslop](../concepts/unslop/CONCEPT.md)

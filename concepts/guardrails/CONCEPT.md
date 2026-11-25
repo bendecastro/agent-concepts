@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass
 tested: 2026-11-25
-deployed: no
+deployed: yes
 ---
 # Concept: guardrails
 
@@ -38,4 +38,4 @@ One method for every guardrail in a project: performance budgets (limits on time
 
 ## Deploy targets
 
-Not deployed. Planned: `scripts/deploy-local-skills.py` relative symlinks for `~/.agents/skills/guardrails`, `~/.pi/agent/skills/guardrails` and `~/.claude/skills/guardrails`, after the pressure test holds.
+Deployed 2026-11-25 by `scripts/deploy-local-skills.py`: relative symlinks `~/.agents/skills/guardrails`, `~/.pi/agent/skills/guardrails` and `~/.claude/skills/guardrails`, after the pressure test held.

@@ -16,9 +16,11 @@ Planned: bc-plan-to-pipeline 2026-11-25
   Notes: page sections are Who chooses a limit, Where a rule lives, How to measure, Targets, Budgets, Checks (the required five plus who chooses); `MIGRATIONS.md` gained a Guardrails README section for the upgrade note to point at; `test_visible_layout.py`'s exact file list updated.
 - [x] Link the improvement loop: `bc-autoresearch-loop` points to the guardrails skill for measuring, and a kept improvement tightens the matching limit; update both concepts' relationships. Blocked by: Write the `guardrails` concept. Story 8.
   Notes: new loop step 7 tightens only agent-chosen limits; an owner-chosen one is reported instead. Edges: bc-autoresearch-loop depends on guardrails (optional), guardrails hands off to it.
-- [ ] Pressure-test and deploy: run the scenarios without and with the concept on the configured pressure-test model, tune until it holds, set `deployed: yes`, deploy, regenerate `docs/status.md`. Blocked by: Scaffold the page; Link the improvement loop. Stories 2–6.
-  Notes: pressure test passed 2026-11-25 with no tuning ([results](../../../concepts/guardrails/tests/pressure-results-2026-11-25.md)). Without the skill, scenario A failed (fix with no check); with it, every scenario held. B and C held in both runs. Deploy remains.
-- [ ] Extend the README's "Keeping projects consistent" guardrails line (written by 022-readme-rewrite) and link the method, and add any new glossary terms. Blocked by: Pressure-test and deploy.
+- [x] Pressure-test and deploy: run the scenarios without and with the concept on the configured pressure-test model, tune until it holds, set `deployed: yes`, deploy, regenerate `docs/status.md`. Blocked by: Scaffold the page; Link the improvement loop. Stories 2–6.
+  Notes: pressure test passed 2026-11-25 with no tuning ([results](../../../../concepts/guardrails/tests/pressure-results-2026-11-25.md)). Without the skill, scenario A failed (fix with no check); with it, every scenario held. B and C held in both runs. Deploy remains.
+- [x] Extend the README's "Keeping projects consistent" guardrails line (written by 022-readme-rewrite) and link the method, and add any new glossary terms. Blocked by: Pressure-test and deploy.
 
 ## Outcome
+
+Done. The `guardrails` skill is deployed after its pressure test held on the configured model (the run without the skill added no check under "no time for a check"; with it, all three scenarios held, no tuning needed). `bc-init-agent` creates `docs/guardrails/README.md`, `bc-autoresearch-loop` points to the skill, and the README and glossary describe it. Results: `concepts/guardrails/tests/pressure-results-2026-11-25.md`.
 

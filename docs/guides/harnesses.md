@@ -71,3 +71,4 @@ Copied kernel-delta drift (including Muse) is WARN-only in lint when pairs are c
 Project skill-copy drift is also WARN-only when repositories are configured in private `~/.config/agent-concepts/skill-copies.json`; see [example](../examples/skill-copies.example.json) for plain paths and per-repo `intentional` skill-name allowlists. Comparisons prefer private overrides over public canon and ignore OS/Syncthing debris.
 
 UI design deploy targets and current status: [ui-design](../../concepts/ui-design/CONCEPT.md).
+Guardrails deploy targets and current status: [guardrails](../../concepts/guardrails/CONCEPT.md).

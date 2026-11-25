@@ -2011,3 +2011,6 @@ New `guardrails` concept (method, measuring and targets pages, three pressure sc
 
 ## [2026-11-25] test | guardrails pressure test (item 006)
 Ran scenarios A–C without and with `guardrails` on the configured model: the without-run fixed the slowdown with no check (A fails), the with-runs held all three, and B and C held in both runs; no tuning. Results in `concepts/guardrails/tests/pressure-results-2026-11-25.md`; status pass, still not deployed.
+
+## [2026-11-25] deploy | guardrails
+Deployed the `guardrails` skill after its pressure test held; README "Keeping projects consistent" now describes it; glossary adds budget decomposition and guardrails page. Closes 006.
