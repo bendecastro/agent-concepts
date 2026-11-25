@@ -28,13 +28,13 @@ Use these detailed contracts when entering their phases:
 
 ## Jobs
 
-The workflow is harness-agnostic. It launches three jobs, each a fresh subagent with these limits:
+The workflow is harness-agnostic. It launches three jobs, each a fresh subagent that does not inherit the broad skill catalog and gets only the skills this contract passes:
 
-- **auditor** — read-only, fresh context, no extra skills; audits a high-risk unit's contract before code.
+- **auditor** — read-only, fresh context; audits a high-risk unit's contract before code.
 - **builder** — writes only in its own worktree and never commits; builds and reworks.
 - **reviewer** — read-only, fresh context; one review axis or the combined review.
 
-If `~/.config/agent-concepts/overlays/bc-pipeline-to-done.md` exists, read it for which roles and models do each job. Without it, use fresh subagents that meet those limits; example Pi profiles are in [examples/agents/](examples/agents/README.md). Set model effort explicitly per this contract. Because the jobs do not inherit the broad skill catalog, pass the worker disciplines explicitly (`minimal-solution-ladder` on every implementation packet, plus `tdd`, `diagnosing-bugs`, and/or `bc-autoresearch-loop` where applicable); auditor/reviewer jobs need none. Bound each read-only auditor/reviewer to four assistant turns and 12 tool calls; mutation-capable workers receive narrow packets and are never arbitrarily interrupted mid-write. Use the configured compact tool descriptions, set top-level `artifacts:false` or an external artifact/session root (including resumed runs), and keep outputs outside unit worktrees. These are economy controls, not permission to weaken correctness gates.
+If `~/.config/agent-concepts/overlays/bc-pipeline-to-done.md` exists, read it for which roles and models do each job. Without it, use fresh subagents that meet those limits; example Pi profiles are in [examples/agents/](examples/agents/README.md). Set model effort explicitly per this contract. Because the jobs do not inherit the broad skill catalog, pass the worker disciplines explicitly (`minimal-solution-ladder` on every implementation packet, plus `tdd`, `diagnosing-bugs`, and/or `bc-autoresearch-loop` where applicable); auditor and reviewer jobs get none up front: [review-contract.md](review-contract.md) gives the reviewer the `codebase-design` vocabulary and says when to load `codebase-docs`. Bound each read-only auditor/reviewer to four assistant turns and 12 tool calls; mutation-capable workers receive narrow packets and are never arbitrarily interrupted mid-write. Use the configured compact tool descriptions, set top-level `artifacts:false` or an external artifact/session root (including resumed runs), and keep outputs outside unit worktrees. These are economy controls, not permission to weaken correctness gates.
 
 Apply [kernel Storage safety](../../agent-kernel/body/AGENT-KERNEL.md#storage-safety) before full baseline/landing suites, worktree creation and multi-worker launch; include guarded pytest in packets and record landing proof in the run manifest before releasing integrated worktrees/branches. Why: unattended loops multiply storage leaks.
 

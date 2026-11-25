@@ -2020,3 +2020,6 @@ Deployed the `guardrails` skill after its pressure test held; README "Keeping pr
 
 ## [2026-11-25] implement | bc-pipeline-to-done: rename, source split, work-item source
 Renamed `bc-drain-issues` to `bc-pipeline-to-done` (old name a deploy alias); split the body into a shared core plus `source-issues.md` (issue text moved verbatim) and added `source-work-items.md` (ready line, item claim with and without a remote, steps in order, park, resume, finish). Jobs with limits and a private overlay replace fixed Pi role names. Gate A reads core plus issue page and gains check 32; lint exempts inline paths in finished and dropped work items.
+
+## [2026-11-25] implement | bc-pipeline-to-done job skills wording
+The three jobs are described as not inheriting the broad skill catalog and getting only the skills the contract passes, replacing "no extra skills", which read as "no skills". Owner kept the hand-picked skills after reviewing them against the local roles.
