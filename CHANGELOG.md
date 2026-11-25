@@ -6,6 +6,31 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-25
+
+Projects set up with `bc-setup-project` can feed a dashboard of their work.
+
+### Added
+
+- `work_index.py --json` prints every work item as data a dashboard can read: its header lines,
+  steps, outcome, and history from git (when it was created, moved between planned, active and
+  done, and when each step was ticked). [work-data.md](concepts/bc-setup-project/body/work-data.md)
+  lists every field.
+- Work items carry four new lines, written by the agents: `Held by:` (who is working on an
+  active item), `Review:` and `Gate:` under a step (its review and full-test results) and
+  `Spent:` in a finished item's outcome.
+- `work_spent.py` estimates an item's time, tokens and cost from Pi, Claude Code and Codex
+  session files, for the `Spent:` line. It is an estimate: parallel sessions add up, and only
+  Pi records cost.
+- The workflow guide has a section on building your own dashboard.
+
+### Changed
+
+- `bc-pipeline-to-done` and the project rules from `bc-setup-project` now write these lines,
+  and `bc-work-sync` reports `Held by:` lines that look stale. Projects set up earlier can pick
+  this up with the steps in `concepts/bc-setup-project/MIGRATIONS.md`; existing items need no
+  rewrite.
+
 ## [0.2.0] - 2026-11-25
 
 Seven skills have new names that say what they do
@@ -59,5 +84,7 @@ The first release you can install without cloning this repository.
 - Agents other than Pi, Claude Code and Codex. `npx skills` supports many more, but this
   release was checked only through its Pi target.
 
-[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/bendecastro/agent-concepts/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/bendecastro/agent-concepts/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/bendecastro/agent-concepts/releases/tag/v0.1.0

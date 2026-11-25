@@ -2,7 +2,7 @@
 
 Why: people want a dashboard of their projects' work, but who holds an item, its history, review and gate results, and its time and cost are free text, only in git, or not recorded, and everything else needs Markdown parsing.
 Done when: `work_index.py --json` prints every work-data field documented on the reference page; the skills that start, review, gate and close work write the `Held by:`, `Review:`, `Gate:` and `Spent:` lines; the workflow guide points people at the JSON; requirements in [requirements.md](requirements.md).
-Stage: now
+Stage: done
 Blocked by: 024-skill-delivery
 Kind: feature
 Source: bc-plan-to-pipeline
@@ -26,4 +26,6 @@ Ready for agent: yes
 
 ## Outcome
 
-<Filled when the item is finished or dropped: what happened, or why it was dropped.>
+Done 2026-11-25. `work_index.py --json` prints every work item as versioned JSON: header lines, steps with Notes, Outcome, and history from git (creation, folder moves and step ticks, following renames). Four new lines are parsed and checked: `Held by:` (who is working on an active item, written on start and removed on stop), `Review:` and `Gate:` per step, and `Spent:` in the Outcome, pasted from the new `work_spent.py`, which estimates time, tokens and cost from Pi, Claude Code and Codex session files, counting Pi subagent sessions under a counted parent. The scaffolded work-item rules, `bc-pipeline-to-done`'s work-item source and `bc-work-sync` write or report the lines; each new rule held 3/3 on the pressure-test model against a baseline of 0. `concepts/bc-setup-project/body/work-data.md` documents every field, `MIGRATIONS.md` covers older projects, and the workflow guide explains building your own dashboard. Not run as consuming-model scenarios: finishing an item with a Held by line, the drain's own wording for the new lines, and `bc-work-sync`'s stale report. The Spent estimate sums parallel sessions and counts subagents of a counted parent even when they worked on another item.
+
+Spent: 1h 27m active, 16.4M tokens, $10.48 (estimated; pi 8 sessions, claude-code 0 sessions, codex 0 sessions; other tools not counted)

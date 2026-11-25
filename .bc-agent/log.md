@@ -2141,3 +2141,6 @@ npx example switched to Cursor (`-a cursor`, untested, flagged) at the owner's r
 
 ## [2026-11-25] implement | 025 docs and migration step
 Migration note, dashboard section in the workflow guide, work-data page without planned fields and with Spent limits, Review and Gate lines in the glossary; every documented field checked against real --json output.
+
+## [2026-11-25] implement | 025-dashboard-data closed; v0.3.0 prepared
+Item moved to work/3-done/2026-11 with its Outcome and Spent line. Version 0.3.0 set, plugin manifests regenerated, CHANGELOG 0.3.0 entry (with missing 0.2.0 comparison link), README install tag moved to v0.3.0.

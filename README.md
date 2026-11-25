@@ -27,10 +27,10 @@ Prompts for harnesses without skill loading: [docs/guides/bootstrap.md](docs/gui
 ## Install
 
 Install a release, not the newest code: the newest code changes many times a day and can hold
-unfinished work. A release is a fixed, named version of the skills; its name (such as `v0.2.0`)
-is called a tag. The newest release is `v0.2.0`; check the
+unfinished work. A release is a fixed, named version of the skills; its name (such as `v0.3.0`)
+is called a tag. The newest release is `v0.3.0`; check the
 [releases page](https://github.com/bendecastro/agent-concepts/releases) and use the newest tag
-listed there in place of `v0.2.0` in the commands below.
+listed there in place of `v0.3.0` in the commands below.
 
 Before you start:
 
@@ -62,7 +62,7 @@ same words.
 
 ```bash
 # Install
-claude plugin marketplace add bendecastro/agent-concepts#v0.2.0
+claude plugin marketplace add bendecastro/agent-concepts#v0.3.0
 claude plugin install agent-concepts@agent-concepts
 
 # Refresh (stays on the release you installed)
@@ -78,7 +78,7 @@ claude plugin marketplace remove agent-concepts
 
 ```bash
 # Install
-codex plugin marketplace add bendecastro/agent-concepts --ref v0.2.0
+codex plugin marketplace add bendecastro/agent-concepts --ref v0.3.0
 codex plugin add agent-concepts@agent-concepts
 
 # Refresh (stays on the release you installed)
@@ -94,13 +94,13 @@ codex plugin marketplace remove agent-concepts
 
 ```bash
 # Install
-pi install git:github.com/bendecastro/agent-concepts@v0.2.0
+pi install git:github.com/bendecastro/agent-concepts@v0.3.0
 
 # Refresh (stays on the release you installed)
 pi update --extensions
 
 # Uninstall (use the same tag you installed)
-pi remove git:github.com/bendecastro/agent-concepts@v0.2.0
+pi remove git:github.com/bendecastro/agent-concepts@v0.3.0
 ```
 
 ### Other agents (`npx skills`)
@@ -112,17 +112,17 @@ the tested 1.9.0.
 
 [docs/guides/install-packs.md](docs/guides/install-packs.md) has the command for all skills and
 a smaller command for each pack (one skill plus the skills it needs). In those commands, replace
-`<source>` with `bendecastro/agent-concepts@v0.2.0` and `<agent>` with your agent's id from
+`<source>` with `bendecastro/agent-concepts@v0.3.0` and `<agent>` with your agent's id from
 [the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md)
 (for example `pi`).
 
 For example, this installs one skill, `bc-self-improve`, for Cursor (an agent we have not tested; only `-a pi` has been):
 
 ```bash
-npx skills add bendecastro/agent-concepts@v0.2.0 -g -a cursor -y --skill bc-self-improve
+npx skills add bendecastro/agent-concepts@v0.3.0 -g -a cursor -y --skill bc-self-improve
 ```
 
-- `bendecastro/agent-concepts@v0.2.0` is where the skills come from, at release `v0.2.0`.
+- `bendecastro/agent-concepts@v0.3.0` is where the skills come from, at release `v0.3.0`.
 - `-a cursor` is the agent to install for; use your agent's id from the list instead, for
   example `gemini-cli` or `github-copilot`.
 - `--skill` lists the skills to install, by name. The commands on the packs page list

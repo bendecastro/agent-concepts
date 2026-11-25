@@ -22,9 +22,8 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [025-dashboard-data](2-active/025-dashboard-data/plan.md) | active, ready for agent | — | — | people want a dashboard of their projects' work, but who holds an item, its history, review and gate results, and its time and cost are free text, only in git,… | 6/6 |
 
 - [Ideas](0-ideas.md): 2
-- [Done](3-done/): 23
+- [Done](3-done/): 24
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->
