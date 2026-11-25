@@ -2002,3 +2002,6 @@ Glossary gains a Design consistency group (design framework, design token, desig
 
 ## [2026-11-25] implement | README rewrite (item 022)
 Rewrote `README.md` as a plain reference: harness table (with Muse), install, repository map, the three-skill loop checked against each body, "Keeping projects consistent", hard rules as `AGENTS.md` states them. Dropped the uncaveated wiki-search benchmark and the stale slicing-quiz gate claim; lint now described as checking recorded status.
+
+## [2026-11-25] implement | plan 006 guardrails method
+Grilled with the owner and filed 006 as a large item (plan.md + requirements.md): a general `guardrails` concept, an empty `docs/guardrails/README.md` from `bc-init-agent`, agents set limits themselves (measured ratchet, targets from published guidelines), checks added at setup and after each fixed regression.
