@@ -2188,3 +2188,6 @@ Centred header with badges and quick links, emoji principle headings with Skills
 
 ## [2026-11-25] implement | README without emoji
 Removed every emoji from headings, stage summaries and the diagram at the owner's request.
+
+## [2026-11-25] implement | README session example
+Replaced the dark-mode walk-through with a discount-code example that shows test first, rule-based tests and a set-aside question; includes the owner's manual README edits.
