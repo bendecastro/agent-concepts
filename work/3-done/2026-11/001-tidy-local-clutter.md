@@ -21,9 +21,11 @@ Planned: grilled with the owner 2026-11-25 (decisions in the bc-init-agent grill
   Note: the check was wrong. It searched the whole planned line, including the link path under the scratch HOME, and the scratch folder sits inside the author's home when TMPDIR does. The alias was only first alphabetically; every line matched. It now checks only the link target.
 - [x] Fix portability-check failure "lint reports no errors on a fresh checkout" (`bc-autoresearch-loop: deployed:2026-06-21 but no deploy symlink exists`).
   Note: the lint check was wrong, not the data. Every deployed concept fails in a fresh HOME (only the first was shown), because `deployed:` records the owner's deployment. Lint now compares it with symlinks only when the home has deployed at least one concept.
-- [ ] `scripts/gate` green locally; CI run green after push.
-  Note: green locally in the worker's worktree; CI is left to the parent.
+- [x] `scripts/gate` green locally; CI run green after push.
+  Note: CI first failed on three PromotionAll tests (a test stub's indented shebang ran under dash) and on uutils `timeout`; fixed, and the workflow now clones full history so no test skips.
 
 ## Outcome
+
+Done. Gate green locally (468 passed, tree 73371676) and in GitHub CI (468 passed, 0 skipped). `run-promotion-all.sh` now requires GNU `timeout`; a portable process-group kill is an idea in `work/0-ideas.md`.
 
 
