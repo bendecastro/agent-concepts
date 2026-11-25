@@ -18,6 +18,11 @@ same meaning.
 - **harness** — the program that runs an agent and decides which tools and files it can see (for example Pi, Claude Code, OpenCode). _Avoid_: agent, for the program.
 - **private concept** — a concept kept outside this repository because it cannot be published; it overrides a public concept of the same name.
 - **overlay** — an optional private file that adds the owner's own tool names to a public skill; it adds no rules.
+- **public skill** — a skill people outside this repository can install: any concept not marked `deployed: no`, except kernels; its name starts with `bc-`.
+- **needed skills** — the other skills a skill refers to by name and that every install method installs with it.
+- **install method** — one way to install the public skills into an agent: a Claude Code plugin, a Codex plugin, the Pi package, `npx skills`, or the contributors' clone-and-link script. Use one per agent.
+- **release** — a tagged version of the public skills (`vMAJOR.MINOR.PATCH`) that install methods point at; never `master`.
+- **fresh-install test** — the CI check that installs with each install method into an empty home folder and checks what a stranger would find.
 
 ## Gates, checks and rules
 

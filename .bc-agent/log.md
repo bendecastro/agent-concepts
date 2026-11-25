@@ -2035,3 +2035,6 @@ README loop now presents attended "continue the work" as the standard and `/bc-p
 
 ## [2026-11-25] implement | close 023-pipeline-to-done
 All five steps landed; Outcome filled and the item moved to done.
+
+## [2026-11-25] implement | plan 024-skill-delivery
+Planned how people outside the repository install the skills (grill with the owner): Claude Code and Codex plugins, Pi package and `npx skills`, from tagged releases; `bc-` names; name references instead of path links; a fresh-install test on Linux and macOS. Decision records 0001 and 0002, five glossary terms, twelve steps.
