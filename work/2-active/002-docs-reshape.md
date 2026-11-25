@@ -16,7 +16,7 @@ Planned: grilled with the owner 2026-11-25 (decisions in the bc-init-agent grill
 - [x] Move `bootstrap.md`, `harnesses.md`, `pipeline.md`, `pressure-test-harness.md` to `docs/guides/`; rewrite every link (about 38 files). `scripts/lint.py` no longer checks plan lifecycle folders and now checks inline `docs/guides/` and `docs/examples/` paths. `log.md` and captured evidence keep their historical paths.
 - [x] Move the four `*.example.*` templates to `docs/examples/` (`policies/publish.example.yaml` stays); update lint and scripts that name them.
 - [x] Write `docs/README.md` naming what each page and folder is for.
-- [x] Lint and gate green. Lint 0 ERROR / 196 WARN before and after (identical list).
+- [x] Lint and gate green. Lint 0 ERROR / 196 WARN before and after (identical list). Gate passed on tree dd51b28bc833594b3de51ff6336512a0b1b39618 (468 tests, portability PASS).
 
 ## Outcome
 
