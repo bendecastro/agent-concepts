@@ -1548,6 +1548,8 @@ Work items are in `work/` (ideas in `work/0-ideas.md`), decision records in
 The "Where things go" table in `AGENTS.md` is the full list.
 
 Design, UI or CLI wording work (a control, a screen, a message, a design decision) starts at `docs/design/README.md`.
+
+Work on a speed, size, memory or structure limit, or a check that protects one, starts at `docs/guardrails/README.md`.
 """
 
 VISIBLE_FILE_LAYOUT = """# File Layout
@@ -1711,6 +1713,64 @@ or any case listed under **Stricter ask-cases**; never for taste calls.
 (none yet)
 """
 
+# The project's guardrails page: its limits and checks, current values only.
+# Its generic method lives in the guardrails skill; no measuring script is scaffolded.
+GUARDRAILS_README = """# Guardrails
+
+This page lists the limits this project must stay within: how fast, how small,
+how lean and how well-structured it is. Every limit has a check in
+`scripts/gate` that fails when a change breaks it. Agents read this page before
+changing anything that could make the project slower, bigger or more tangled.
+The generic method behind it is the `guardrails` skill.
+
+Design-consistency checks live on the design page, `docs/design/README.md`,
+not here.
+
+## Who chooses a limit
+
+- Agents set limits themselves and mark each one as the agent's choice; the
+  owner may change any of them.
+- A limit marked as the owner's choice is never loosened to make a check pass.
+  Fix the change instead, or ask the owner.
+- A page line lands in the same commit as the check that enforces it.
+
+## Where a rule lives
+
+| Kind of check | What it does | Use it when |
+|---|---|---|
+| static | reads the source or settings without running anything | the problem shows in the code (a banned call, a forbidden import) |
+| artifact | measures a built output without running the program | the problem is size (download size, number of dependencies) |
+| dynamic | runs the program and measures | only running shows it (startup time, time per frame, memory) |
+
+Use the cheapest kind that reliably catches the problem.
+
+## How to measure
+
+- With no limit yet, measure today's value with repeated runs, and set the
+  limit at today's value plus an allowance for run-to-run noise. Anything worse
+  fails; this is a ratchet.
+- After a verified improvement, tighten the limit in the same commit.
+- Write down the command and input used, so the next measurement matches.
+
+## Targets
+
+<!-- One line per user-facing target: measure, limit, published source, who chose it. -->
+
+(none yet)
+
+## Budgets
+
+<!-- One line per measured limit: measure, limit, source (date, runs, median, allowance), who chose it. -->
+
+(none yet)
+
+## Checks
+
+<!-- One line per check: file, what it rejects or measures, the target or budget it enforces. -->
+
+(none yet)
+"""
+
 VISIBLE_OPS_MAP = """
 ## Operations
 
@@ -1801,6 +1861,7 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
         "docs/decisions/.gitkeep": "",
         "docs/research/.gitkeep": "",
         "docs/design/README.md": DESIGN_README,
+        "docs/guardrails/README.md": GUARDRAILS_README,
         "scripts/gate": GATE_SCRIPT,
         ".github/workflows/gate.yml": CI_WORKFLOW,
     }
@@ -1927,6 +1988,9 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
         if map_path.exists() and "`docs/design/README.md`" not in map_path.read_text(errors="ignore"):
             notes.append("`.bc-agent/map.md` has no line routing design, UI or CLI wording work to "
                          "`docs/design/README.md` (see MIGRATIONS.md#design-readme)")
+        if map_path.exists() and "`docs/guardrails/README.md`" not in map_path.read_text(errors="ignore"):
+            notes.append("`.bc-agent/map.md` has no line routing speed, size, memory or structure limit "
+                         "work to `docs/guardrails/README.md` (see MIGRATIONS.md#guardrails-readme)")
         legacy = earlier_layout_paths(root, archetype)
         if legacy:
             notes.append(

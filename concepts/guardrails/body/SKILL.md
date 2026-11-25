@@ -9,7 +9,7 @@ A guardrail is a limit on how fast, small, lean or well-structured a project mus
 
 ## Start from the project's guardrails page
 
-Read the project's `docs/guardrails/README.md` first; it lists the project's targets, budgets and checks. If it is missing, copy the `GUARDRAILS_README` text from `bc-init-agent`'s `body/scaffold.py` into `docs/guardrails/README.md` in its own commit; do not run the scaffold just for this. Without `bc-init-agent`, write the sections Targets, Budgets, Checks, Where a rule lives, and How to measure. Then add the setup checks in [Setup checks](#setup-checks).
+Read the project's `docs/guardrails/README.md` first; it lists the project's targets, budgets and checks. If it is missing, copy the `GUARDRAILS_README` text from `bc-init-agent`'s `body/scaffold.py` into `docs/guardrails/README.md` in its own commit; do not run the scaffold just for this. Without `bc-init-agent`, write the sections Who chooses a limit, Where a rule lives, How to measure, Targets, Budgets and Checks. Then add the setup checks in [Setup checks](#setup-checks).
 
 Every check runs inside the project's existing full gate (`scripts/gate` or its equivalent); add no separate runner. Design-consistency checks stay on the project's design page (`docs/design/README.md`); the guardrails page links to it rather than copying them.
 

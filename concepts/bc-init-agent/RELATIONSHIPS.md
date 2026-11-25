@@ -27,6 +27,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `guardrails`'s contract — required, when visible-layout scaffold writes docs/guardrails/README.md.
+  The generated guardrails README names the guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet).
+  Source: [body/scaffold.py](body/scaffold.py)
+
 - loads `naming-things` — required, when choosing domain or public code names.
   Apply shared naming criteria without changing the surrounding workflow gates.
   Source: [body/SKILL.md](body/SKILL.md)

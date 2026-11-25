@@ -352,6 +352,16 @@ project, one project at a time on its next scaffold run:
 3. If the project already keeps design pages elsewhere, list them under Pages in the README rather
    than moving them, unless the owner asks for the move.
 
+## Guardrails README
+
+Since 2026-11-25 the code, ops and hybrid scaffold also writes `docs/guardrails/README.md`, the
+page listing the project's speed, size, memory and structure limits and their checks (its method is
+the `guardrails` skill), and a line in `.bc-agent/map.md` routing guardrail work to it. Learning and
+knowledge vaults do not get it, and no measuring script is scaffolded. Existing projects are not
+swept: the `guardrails` skill copies the page text the first time guardrail work comes up. A
+scaffold re-run also creates it when missing (never overwriting one) and prints an upgrade note
+while the map lacks the line; copy the line from a fresh scaffold's map into "Outside this folder".
+
 ## Source line
 
 Since 2026-11-22 the work-item template has an optional `Source:` line under `Issue:`, naming the

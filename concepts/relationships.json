@@ -952,6 +952,15 @@
       "when": "project has no docs/guardrails/README.md",
       "source": "concepts/guardrails/body/SKILL.md#start-from-the-projects-guardrails-page",
       "reason": "A missing guardrails page is copied from the GUARDRAILS_README text the scaffold writes; the skill does not keep its own copy."
+    },
+    {
+      "from": "bc-init-agent",
+      "to": "guardrails",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "visible-layout scaffold writes docs/guardrails/README.md",
+      "source": "concepts/bc-init-agent/body/scaffold.py",
+      "reason": "The generated guardrails README names the guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet)."
     }
   ]
 }

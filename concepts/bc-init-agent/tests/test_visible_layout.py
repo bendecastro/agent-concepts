@@ -136,6 +136,7 @@ CODE_FILES = {
     'docs/decisions/.gitkeep',
     'docs/research/.gitkeep',
     'docs/design/README.md',
+    'docs/guardrails/README.md',
     'scripts/gate',
     '.github/workflows/gate.yml',
 }

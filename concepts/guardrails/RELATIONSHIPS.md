@@ -17,4 +17,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-None.
+- incoming from [bc-init-agent](../bc-init-agent/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout scaffold writes docs/guardrails/README.md.
+  The generated guardrails README names the guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet).
+  Source: [bc-init-agent/body/scaffold.py](../bc-init-agent/body/scaffold.py)
