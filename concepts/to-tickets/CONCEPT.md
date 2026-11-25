@@ -6,7 +6,7 @@ deployed: yes
 ---
 # Concept: to-tickets
 
-User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbable **GitHub tickets** (GitHub issues) using tracer-bullet vertical slices, publishing the agent-finalized slices with the `ready-for-agent` label.
+User-invoked orchestrator that breaks a plan/spec/PRD into independently-grabbable **GitHub issues** using tracer-bullet vertical slices, publishing the agent-finalized slices with the `ready-for-agent` label.
 
 ## Design decisions
 

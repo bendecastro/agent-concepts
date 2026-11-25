@@ -66,7 +66,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
   - Status: implemented 2026-06-20; accuracy-checked 2026-08-21 **PASS** (including 2026-08-18 ADR alternatives/supersede clauses); 2026-10-22 glossary filename accuracy checked, legacy migration pressure **PASS 2/2** with skill loading verified; historical grilling behavior pressure-tested transitively through the wrapper removed 2026-09-27. Claude Code symlink.
 - [to-spec](concepts/to-spec/CONCEPT.md) — user-invoked: run `prd-drafting` then publish the PRD-format spec as an unlabeled **GitHub** parent issue; `ready-for-agent` is reserved for implementation slices.
   - Status: renamed 2026-07-11; pressure-tested 2026-07-16 **PASS** (Grok unlabeled parent retest).
-- [to-tickets](concepts/to-tickets/CONCEPT.md) — user-invoked: run `plan-slicing` then publish dependency-ordered GitHub tickets (issues).
+- [to-tickets](concepts/to-tickets/CONCEPT.md) — user-invoked: run `plan-slicing` then publish dependency-ordered GitHub issues.
   - Status: renamed 2026-07-11; pressure-tested 2026-07-16 **PASS** (Grok; quiz under attack + real #NN).
 - [prd-drafting](concepts/prd-drafting/CONCEPT.md) — model-invoked: draft a PRD from the conversation + codebase (synthesize-not-interview, seam-first, standard template), no publishing. Extracted from `to-spec` so the loop orchestrator can inline it.
   - Status: implemented 2026-06-20; accuracy-checked 2026-08-21 **PASS** 5/5; deployed yes (frontmatter).
