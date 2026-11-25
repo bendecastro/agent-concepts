@@ -18,4 +18,6 @@ Planned: grilled with the owner 2026-11-25 (decisions in the bc-init-agent grill
 
 ## Outcome
 
+Done. Root `glossary.md` holds 52 terms in five groups, linked from `AGENTS.md`. Parent follow-up: slice made tracker-neutral; fitness function kept as its own term (a guardrail for a design property). Places still using old words ("run directory", "gate" for a rule) are listed in the run notes for a later sweep. Gate green locally (468 passed, tree 42c3bbc3) and in GitHub CI.
+
 
