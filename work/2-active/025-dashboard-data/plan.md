@@ -2,7 +2,7 @@
 
 Why: people want a dashboard of their projects' work, but who holds an item, its history, review and gate results, and its time and cost are free text, only in git, or not recorded, and everything else needs Markdown parsing.
 Done when: `work_index.py --json` prints every work-data field documented on the reference page; the skills that start, review, gate and close work write the `Held by:`, `Review:`, `Gate:` and `Spent:` lines; the workflow guide points people at the JSON; requirements in [requirements.md](requirements.md).
-Stage: next
+Stage: now
 Blocked by: 024-skill-delivery
 Kind: feature
 Source: bc-plan-to-pipeline
