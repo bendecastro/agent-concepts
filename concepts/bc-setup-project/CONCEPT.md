@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL); Kind/top placement clause PASS 4/4 on Terra low 2026-11-24 after a run-check-first fix (1/2 before); plan-every-item pickup rule 2026-11-24 partial on Terra low: held (no unplanned start; baseline started it) but carry-on runs stop text-only before planning, 0/3 in round 3 (bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md)
-tested: 2026-11-24
+test_status: partial # Held by line 2026-11-25 PASS 3/3 write+remove on Terra low (baseline 0); visible layout (W1) changed 2026-11-12; 2026-11-19 staged validation + red-trunk rule PASS on Terra low via generated files (without/old FAIL); Kind/top placement clause PASS 4/4 on Terra low 2026-11-24 after a run-check-first fix (1/2 before); plan-every-item pickup rule 2026-11-24 partial on Terra low: held (no unplanned start; baseline started it) but carry-on runs stop text-only before planning, 0/3 in round 3 (bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md)
+tested: 2026-11-25
 deployed: 2026-06-21
 ---
 # Concept: bc-setup-project
@@ -108,6 +108,8 @@ Later work packages and other skills read project paths through this contract, n
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
+
+2026-11-25 (Held by line, 025): `tests/test_work_index_held_by.py` (JSON `held_by` with tool, session, since, committed date and age from `git log -S`; null without a line; `--check` warns on a malformed line and on one in a done or dropped item, exit unchanged), 3 failed before the parser; `test_visible_layout.py` gains the scaffolded rule and Begin / Resume / Stop / Finish rows (3 failed first). Pressure: [scenario](tests/pressure-held-by.md), [results](tests/pressure-held-by-results-2026-11-25.md), Terra low: baseline never wrote the line; with the rule 3/3 wrote and removed it at stop, 2/3 in the move commit itself. Finishing an item not run.
 
 2026-11-23 (order check): three `tests/test_work_index.py` cases (unlisted item with and without a listed dependant, item listed above its blocker, complete order passes); the two failing cases seen failing first (`--check` exited 0). Targeted file: 53 passed.
 

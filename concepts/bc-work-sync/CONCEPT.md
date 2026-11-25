@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # passed 2026-11-16; 2026-11-25 generic publish step PASS after one wording fix (baseline never ran the check); Kind line rides on the bc-setup-project placement rule (tested 2026-11-24); this skill's Kind line not run
+test_status: partial # 2026-11-25 stale Held by report not run; passed 2026-11-16; 2026-11-25 generic publish step PASS after one wording fix (baseline never ran the check); Kind line rides on the bc-setup-project placement rule (tested 2026-11-24); this skill's Kind line not run
 tested: 2026-11-25
 deployed: 2026-11-16
 ---
@@ -29,6 +29,8 @@ All agreed with the owner on 2026-11-16.
 - Work-item rules (status folders, numbering in the main checkout, ideas file) from the scaffold in [bc-setup-project](../bc-setup-project/CONCEPT.md).
 
 ## Tests
+
+2026-11-25 (Held by line, 025): "What the plan covers" item 3 also reports stale `Held by:` lines (no commit on the item for a day, an ended session, malformed, or left in a closed item) with a PLAN.md section; it proposes removal and never removes a possibly live session's line. Stale follows decision 0003: the JSON gives the age, the reader judges; this skill's default is a day. Not pressure-tested.
 
 2026-11-25: [tests/pressure-publish-step-2026-11-25.md](tests/pressure-publish-step-2026-11-25.md) reran scenario 4 with a remote and an allowing policy against the generic publish step (024-skill-delivery). With the skill, before the fix: no check found, asked; after the step 5 wording fix: overlay read, check run, `when:` applied. Without: never ran the check.
 

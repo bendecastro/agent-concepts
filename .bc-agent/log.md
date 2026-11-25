@@ -2126,3 +2126,6 @@ npx example switched to Cursor (`-a cursor`, untested, flagged) at the owner's r
 
 ## [2026-11-25] implement | 025 item history step
 `work_index.py --json` gains per-item `history` (created, moved, ticked events with commit date and SHA) from `git log --follow`; work-data.md marks it best-effort; scratch-git-repo tests.
+
+## [2026-11-25] implement | 025 Held by line step
+`work_index.py` parses `Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>` (JSON adds its age; `--check` warns on malformed or closed-item lines); the scaffolded work-item rules and the drain's work-item source write and remove it, bc-work-sync reports stale ones. Pressure test on Terra low: baseline never wrote it, with the rule 3/3 wrote and removed it.

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B dropped 2026-11-25 (v3 saving never measured); the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
+test_status: partial # 2026-11-25 Held by line wording not run (scaffolded rule held); 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B dropped 2026-11-25 (v3 saving never measured); the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
 tested: 2026-11-25
 deployed: 2026-11-25
 ---
@@ -91,6 +91,8 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
+
+2026-11-25 (Held by line, 025): `source-work-items.md` gains a "Held by line" section: the driver writes the line in the claim move (or its first commit on a resumed item) and removes it when it parks, defers or finishes the item or ends a run leaving it active; the builder never writes it. Not run as a consuming-model scenario; the same rule in the scaffolded work-item rules held on Terra low (bc-setup-project's `tests/pressure-held-by-results-2026-11-25.md`).
 
 2026-11-25 (024 rewording, dry run): [results](tests/pressure-publish-storage-2026-11-25.md). Scenario C variant with an overlay naming stub publish check, guarded runner and storage check. Check denies: the skill ran the overlay's check and stopped before claims (3/3). Check allows: check run, storage check run and repeated before worktrees/launches, guarded runner without `--basetemp`, `mktemp -d` outside `/tmp`, L1/L2/L3 gate, landing proof before release (6/6, `mktemp` stated for the artifact root only). Without the skill: no check (once read `publish.yaml` itself), none of the storage or gate rules. No wording change.
 
