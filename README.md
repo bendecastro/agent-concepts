@@ -77,7 +77,8 @@ unclear. This is the standard way.
 
 When you want to be away, `/bc-pipeline-to-done` builds the same work without you. It takes
 only the items marked `Ready for agent: yes`, which `/bc-plan-to-pipeline` marks for you, or
-GitHub issues labelled `ready-for-agent` — because the questions were already settled. It
+GitHub issues labelled `ready-for-agent`. Since nobody is there to answer, it takes on only
+the work those marks cover, because you already settled its questions, and then diligently
 verifies the work before merging. It claims each item so two drivers cannot build the same
 thing. Each builder works in its own worktree, and independent reviewers check every step
 before it lands. When it needs a decision, it parks the item with your question and moves
@@ -143,8 +144,8 @@ not done until the report lists screenshots with a written critique of each one.
 **Guardrails and fitness functions.** Each project lists its limits and checks in
 `docs/guardrails/README.md`, and the checks run inside the project's gate. Agents set limits
 from today's measurement or a published guideline and mark each one as their choice so you
-can change it. A limit you set is never loosened without asking. After fixing a slowdown, the
-agent adds a check so the problem cannot come back.
+can change it. A limit you set is never loosened without asking. After fixing something that got
+slower, bigger or more tangled, the agent adds a check so it cannot come back.
 
 </details>
 
@@ -365,7 +366,8 @@ supports them, but they have not been verified.
 [docs/guides/install-packs.md](docs/guides/install-packs.md) has a smaller command for each
 pack (one skill plus the skills it needs).
 
-**Cursor**
+<details>
+<summary><b>Cursor</b></summary>
 
 Install all public skills:
 
@@ -407,7 +409,10 @@ npx -y skills remove -g -a cursor -y \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
-**Gemini CLI**
+</details>
+
+<details>
+<summary><b>Gemini CLI</b></summary>
 
 Install all public skills:
 
@@ -449,7 +454,10 @@ npx -y skills remove -g -a gemini-cli -y \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
-**GitHub Copilot**
+</details>
+
+<details>
+<summary><b>GitHub Copilot</b></summary>
 
 Install all public skills:
 
@@ -491,7 +499,10 @@ npx -y skills remove -g -a github-copilot -y \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
-**OpenCode**
+</details>
+
+<details>
+<summary><b>OpenCode</b></summary>
 
 Install all public skills:
 
@@ -533,7 +544,10 @@ npx -y skills remove -g -a opencode -y \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
-**Any other agent**
+</details>
+
+<details>
+<summary><b>Any other agent</b></summary>
 
 Change `<agent>` to your agent's id from
 [the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md).
@@ -558,12 +572,6 @@ npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a <agent> -y \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
-**Refresh** (stays on the release you installed):
-
-```bash
-npx -y skills update -g -y
-```
-
 Uninstall (use the same `-a <agent>` you installed for):
 
 ```bash
@@ -582,6 +590,14 @@ npx -y skills remove -g -a <agent> -y \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
   bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
+```
+
+</details>
+
+**Refresh, for every agent** (stays on the release you installed):
+
+```bash
+npx -y skills update -g -y
 ```
 
 </details>

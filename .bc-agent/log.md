@@ -2167,3 +2167,6 @@ pipeline-to-done attended/unattended workflow, setup safety, planning safety, in
 (council dep, upgrade untested, npx version drift). Install boxes are now one-paste per method;
 npx section has per-agent boxes for Cursor, Gemini CLI, GitHub Copilot, OpenCode plus a generic
 fallback. Checkout uses a one-paste box with shell detection.
+
+## [2026-11-25] implement | README review fixes after restore
+Owner pipeline wording restored (nobody there to answer; diligently verifies), npx agents folded one per section with a shared refresh, guardrail regression wording matched to the skill.
