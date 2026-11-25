@@ -22,10 +22,10 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [003-journal-to-bc-agent](1-planned/003-journal-to-bc-agent.md) | planned | — | 004-vocabulary-renames | the bc-agent layout keeps the project journal at `.bc-agent/log.md`; two journals would split history. | 0/3 |
+| 1 | [003-journal-to-bc-agent](2-active/003-journal-to-bc-agent.md) | active | — | 004-vocabulary-renames | the bc-agent layout keeps the project journal at `.bc-agent/log.md`; two journals would split history. | 0/3 |
 | 2 | [007-agent-vault-read-path](1-planned/007-agent-vault-read-path.md) | planned | — | — | the cheap read path across `bc-init-agent` and `bc-wiki-maintain` is built and its benchmark is settled, but two rollout steps still only exist in this reposit… | 0/4 |
 | 3 | [008-bc-drain-issues-v3-review-economy](1-planned/008-bc-drain-issues-v3-review-economy.md) | planned | — | — | v3's review-economy rules are live in the drain skill, but their token win is unmeasured; the deterministic Gate B harness exists and the real same-model/mediu… | 0/3 |
-| 4 | [004-vocabulary-renames](1-planned/004-vocabulary-renames.md) | planned | [003-journal-to-bc-agent](1-planned/003-journal-to-bc-agent.md) | 005-glossary | "gate" names both a discipline and the check command, and some swarm jargon does not say what it does. | 0/5 |
+| 4 | [004-vocabulary-renames](1-planned/004-vocabulary-renames.md) | planned | [003-journal-to-bc-agent](2-active/003-journal-to-bc-agent.md) | 005-glossary | "gate" names both a discipline and the check command, and some swarm jargon does not say what it does. | 0/5 |
 | 5 | [005-glossary](1-planned/005-glossary.md) | planned | [004-vocabulary-renames](1-planned/004-vocabulary-renames.md) | 006-performance-guardrails-method | the bc-agent infrastructure has no shared vocabulary page, and several words clashed. | 0/5 |
 | 6 | [006-performance-guardrails-method](1-planned/006-performance-guardrails-method.md) | planned | [005-glossary](1-planned/005-glossary.md) | — | projects need a repeatable way to set performance budgets and guard them with static, artifact and dynamic checks, sharing a measurement harness with autoresea… | 0/1 |
 
