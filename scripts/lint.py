@@ -137,8 +137,24 @@ def lint_root(issues: list[Issue]) -> None:
         issues.append(Issue("WARN", "build/ exists; AGENTS.md says not to create it until derived outputs are needed"))
 
 
+def workspace_markdown() -> list[Path]:
+    """Markdown files under ROOT, minus anything git ignores (local clutter such as handoff notes).
+    Outside a git checkout every file is scanned."""
+    files = sorted(ROOT.rglob("*.md"))
+    try:
+        ignored = subprocess.run(["git", "-C", str(ROOT), "check-ignore", "--stdin", "-z"],
+                                 input="\0".join(str(f.relative_to(ROOT)) for f in files).encode(),
+                                 capture_output=True)
+    except FileNotFoundError:
+        return files
+    if ignored.returncode not in (0, 1):  # 128: not a git checkout
+        return files
+    skip = {ROOT / name for name in ignored.stdout.decode().split("\0") if name}
+    return [f for f in files if f not in skip]
+
+
 def lint_links(issues: list[Issue]) -> None:
-    for md in ROOT.rglob("*.md"):
+    for md in workspace_markdown():
         # Raw sources and the append-only journal are not workspace-owned docs
         # whose links can be rewritten during a structural migration.
         if "raw" in md.relative_to(ROOT).parts or md.name == "log.md":
@@ -163,7 +179,7 @@ INLINE_CODE = re.compile(r"`([^`\n]+)`")
 
 
 def lint_inline_paths(issues: list[Issue]) -> None:
-    for md in ROOT.rglob("*.md"):
+    for md in workspace_markdown():
         parts = md.relative_to(ROOT).parts
         if "raw" in parts:
             continue
@@ -216,6 +232,11 @@ def lint_status(issues: list[Issue]) -> None:
     concepts_dir = ROOT / "concepts"
     if not concepts_dir.exists():
         return
+    # `deployed:` records the owner's deployment. A home with no concept deployed at all (a
+    # stranger's fresh checkout, a CI runner) has nothing to compare it with, so the symlink check
+    # applies only once this home has deployed at least one concept.
+    concept_names = [p.name for p in concepts_dir.iterdir() if p.is_dir()]
+    home_has_deploys = any((d / name).exists() for d in KNOWN_DEPLOY_DIRS for name in concept_names)
     for cdir in sorted(p for p in concepts_dir.iterdir() if p.is_dir()):
         concept = cdir / "CONCEPT.md"
         if not concept.is_file():
@@ -255,7 +276,7 @@ def lint_status(issues: list[Issue]) -> None:
         # which is how 19 CONCEPT.md files came to claim "not deployed yet" while
         # live. Concepts without a body/SKILL.md (agent-kernel) deploy as harness
         # deltas instead and are not symlink-checkable.
-        if (cdir / "body" / "SKILL.md").is_file():
+        if home_has_deploys and (cdir / "body" / "SKILL.md").is_file():
             live = any((d / cdir.name).exists() for d in KNOWN_DEPLOY_DIRS)
             if live and deployed == "no":
                 issues.append(Issue("ERROR", f"{cdir.name}: deployed:no but a deploy symlink is live"))

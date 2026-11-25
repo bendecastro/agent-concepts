@@ -4,6 +4,11 @@
 # Agent session scratch and machine-local state
 .pi/
 .pi-subagents/
+.handoffs/
+.gemini/
+
+# Hypothesis test database (property-test cache)
+.hypothesis/
 
 # Python
 __pycache__/

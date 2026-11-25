@@ -87,9 +87,10 @@ def _base_scaffold(tmp_path):
     if shown.returncode != 0:
         pytest.skip(f'base commit {BASE_COMMIT} is not available (shallow clone or export)')
     base = tmp_path / 'base_scaffold.py'
-    # The planning skill was renamed after the base commit (2026-11-22); the rename is the only
-    # intended change to learning and knowledge output.
-    base.write_bytes(shown.stdout.replace(b'bc-plan-to-' + b'issues', b'bc-plan-to-pipeline'))
+    # Skills renamed after the base commit are the only intended changes to learning and knowledge
+    # output: the planning skill (2026-11-22) and issue-slicing to plan-slicing (2026-11-24).
+    renamed = shown.stdout.replace(b'bc-plan-to-' + b'issues', b'bc-plan-to-pipeline')
+    base.write_bytes(renamed.replace(b'issue-' + b'slicing', b'plan-slicing'))
     return base
 
 

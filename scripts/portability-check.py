@@ -90,7 +90,9 @@ def main() -> int:
         deployed = [l for l in r.stdout.splitlines() if "->" in l]
         check("deploy plans at least one skill link", bool(deployed),
               f"{len(deployed)} link(s)")
-        strays = [l for l in deployed if PERSONAL.search(l)]
+        # Only the link target can point into the author's tree; the link path itself lives under
+        # the scratch HOME, which is inside the author's home whenever their TMPDIR is.
+        strays = [l for l in deployed if PERSONAL.search(l.split(" -> ", 1)[1])]
         check("no planned symlink points into the author's tree", not strays,
               strays[0] if strays else "")
         absolute = [l for l in deployed if "-> /" in l]

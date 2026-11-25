@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [001-tidy-local-clutter](2-active/001-tidy-local-clutter.md) | active | — | 002-docs-reshape | untracked local folders leak into lint, a duplicate deploy script lingers, and four existing check failures keep the new gate red. | 0/7 |
+| 1 | [001-tidy-local-clutter](2-active/001-tidy-local-clutter.md) | active | — | 002-docs-reshape | untracked local folders leak into lint, a duplicate deploy script lingers, and four existing check failures keep the new gate red. | 6/7 |
 | 2 | [002-docs-reshape](1-planned/002-docs-reshape.md) | planned | [001-tidy-local-clutter](2-active/001-tidy-local-clutter.md) | 003-journal-to-bc-agent | `docs/` mixes guides, a generated page, config templates, plans and undated research at one level. | 0/7 |
 | 3 | [003-journal-to-bc-agent](1-planned/003-journal-to-bc-agent.md) | planned | [002-docs-reshape](1-planned/002-docs-reshape.md) | 004-vocabulary-renames | the bc-agent layout keeps the project journal at `.bc-agent/log.md`; two journals would split history. | 0/3 |
 | 4 | [004-vocabulary-renames](1-planned/004-vocabulary-renames.md) | planned | [003-journal-to-bc-agent](1-planned/003-journal-to-bc-agent.md) | 005-glossary | "gate" names both a discipline and the check command, and some swarm jargon does not say what it does. | 0/5 |

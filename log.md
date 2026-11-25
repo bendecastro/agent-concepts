@@ -1962,3 +1962,6 @@ Three Terra-low pressure rounds, two wording fixes between them. No new-rule run
 
 ## [2026-11-25] implement | bc-agent scaffold for this workspace
 Ran `bc-init-agent` (code archetype): `.bc-agent/`, `work/` with items 001–006 from the owner's grill (tidy, docs reshape, journal move, vocabulary renames, glossary, performance guardrails method), `scripts/gate` (lint, portability check, real Python tests) and its CI workflow. Gate starts red on four pre-existing failures that item 001 fixes.
+
+## [2026-11-25] implement | tidy local clutter (item 001)
+Ignored `.handoffs/`, `.hypothesis/` and `.gemini/`; lint skips git-ignored Markdown; removed the duplicate deploy-pi-skills script. Fixed a stale rename in the bc-init-agent base-output test, a portability check that matched the scratch HOME path, and a lint deploy check that failed on every fresh home.
