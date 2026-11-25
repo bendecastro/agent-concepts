@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Write the pipeline table in work/README.md from the open work items.
 
-Usage: python3 .bc-agent/scripts/work_index.py [--check] [work-dir]
+Usage: python3 .bc-agent/scripts/work_index.py [--check | --json] [work-dir]
+
+--json prints the work data of every item (all four folders) as one JSON object
+and writes nothing; the bc-setup-project skill's work-data.md lists its fields.
 
 Every item in 1-planned/ and 2-active/ needs a `Blocked by:` line naming full
 item names (`012-search-ranking`, comma-separated) or `nothing`. A `Stage:` line
@@ -53,6 +56,7 @@ Python 3.9 or later, standard library only.
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -68,6 +72,11 @@ MONTH = re.compile(r"^\d{4}-\d{2}$")
 LINK = re.compile(r"!?\[([^\]]+)\]\((?:[^()]|\([^()]*\))*\)")
 ABBREVIATION = re.compile(r"\b(?:e\.g|i\.e|vs|etc|Mr|Mrs|Ms|Dr)\.$", re.I)
 WHY_LIMIT = 160
+JSON_FORMAT_VERSION = 1
+HEADER_LINES = {"why": "Why", "done_when": "Done when", "stage": "Stage", "blocked_by": "Blocked by",
+                "kind": "Kind", "source": "Source", "planned": "Planned", "ready_for_agent": "Ready for agent",
+                "waiting_on_owner": "Waiting on owner"}
+STEP = re.compile(r"^- \[([ xX])\] ?(.*)$")
 
 
 class WorkIndexError(Exception):
@@ -364,6 +373,59 @@ def owner_order_errors(work: Path, stages: tuple[str, ...], top_kinds: tuple[str
     return errors
 
 
+def section(text: str, heading: str) -> str | None:
+    parts = re.split(rf"^## {heading}[ \t]*$", text, maxsplit=1, flags=re.M)
+    return re.split(r"^## ", parts[1], maxsplit=1, flags=re.M)[0] if len(parts) > 1 else None
+
+
+def parse_steps(text: str) -> list[dict]:
+    """Each `- [ ]` line under `## Steps` with its indented continuation lines; `Notes:` (inline or on its own line) split off."""
+    bodies: list[tuple[bool, list[str]]] = []
+    current: list[str] | None = None
+    for line in (section(text, "Steps") or "").split("\n"):
+        match = STEP.match(line)
+        if match:
+            current = [match.group(2).strip()]
+            bodies.append((match.group(1) != " ", current))
+        elif current is not None and line[:1] in (" ", "\t") and line.strip():
+            current.append(line.strip())
+        else:
+            current = None
+    steps = []
+    for checked, lines in bodies:
+        body, notes = "\n".join(lines), None
+        found = re.search(r"(?:^|\s)Notes:[ \t]*", body)
+        if found:
+            body, notes = body[:found.start()].rstrip(), body[found.end():].strip() or None
+        steps.append({"text": body, "checked": checked, "notes": notes})
+    return steps
+
+
+def item_data(work: Path, folder: str, name: str) -> dict:
+    rel = f"{folder}/{name}/plan.md" if (work / folder / name).is_dir() else f"{folder}/{name}"
+    if not (work / rel).is_file():
+        raise WorkIndexError(f"{rel}: missing")
+    text = read_text(work / rel)
+    title = re.search(r"^# (.+)$", text, re.M)
+    header = {}
+    for key, label in HEADER_LINES.items():
+        match = re.search(rf"^{label}:[ \t]*(.*)$", text, re.M)
+        header[key] = match.group(1).strip() if match and match.group(1).strip() else None
+    outcome = section(text, "Outcome")
+    item = name.removesuffix(".md")
+    return {
+        "number": item[:3], "slug": item[4:], "name": item, "folder": folder.split("/")[0][2:], "path": rel,
+        "title": title.group(1).strip() if title else None, "header": header, "steps": parse_steps(text),
+        "outcome": outcome.strip() or None if outcome is not None else None,
+    }
+
+
+def work_data(work: Path, stages: tuple[str, ...]) -> dict:
+    folders = ["1-planned", "2-active"] + archive_folders(work, "3-done") + archive_folders(work, "4-dropped")
+    items = [item_data(work, f, n) for f in sorted(folders, key=lambda f: (f.split("/")[0], f)) for n in entries(work, f)]
+    return {"format_version": JSON_FORMAT_VERSION, "stages": list(stages), "items": items}
+
+
 def unplanned_items(work: Path) -> list[str]:
     """Items in 1-planned/ without a `Planned:` line (bc-plan-to-pipeline writes it)."""
     missing = []
@@ -376,9 +438,12 @@ def unplanned_items(work: Path) -> list[str]:
 
 def main(argv: list[str]) -> int:
     check = "--check" in argv
-    paths = [arg for arg in argv if arg != "--check"]
+    paths = [arg for arg in argv if arg not in ("--check", "--json")]
     work = Path(paths[0]) if paths else Path(__file__).resolve().parents[2] / "work"
     try:
+        if "--json" in argv:
+            print(json.dumps(work_data(work, read_stages(work.resolve().parent)), ensure_ascii=False, indent=2))
+            return 0
         block = build_block(work, read_stages(work.resolve().parent))
         readme_path = work / "README.md"
         readme = read_text(readme_path)

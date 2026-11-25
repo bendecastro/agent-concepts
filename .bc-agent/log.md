@@ -2120,3 +2120,6 @@ Owner could not follow the npx instructions; added a worked one-skill example (b
 
 ## [2026-11-25] implement | 024-skill-delivery closed
 npx example switched to Cursor (`-a cursor`, untested, flagged) at the owner's request; item moved to work/3-done/2026-11 with its Outcome.
+
+## [2026-11-25] implement | 025 JSON output step
+`work_index.py --json` prints every work item's header lines, steps with Notes and Outcome under a format version; reference page `concepts/bc-setup-project/body/work-data.md` lists each field (later records marked planned); repo copy refreshed.
