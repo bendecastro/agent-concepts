@@ -37,7 +37,7 @@ PERSONAL = re.compile(re.escape(str(Path.home())) + r"(?![\w.-])|Sync/CONFIG")
 # were accurate on the machine and date they describe, and rewriting them would
 # falsify the record.
 EXEMPT = {
-    "log.md",
+    ".bc-agent/log.md",
     "work/3-done/2026-08/012-portability.md",  # quotes the problem it exists to solve
     "work/3-done/2026-08/014-bc-wiki-maintain.md",  # quotes a wrong path it records fixing
     "concepts/agent-kernel/CONCEPT.md",  # dated per-harness deploy records

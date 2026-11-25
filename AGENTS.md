@@ -6,10 +6,10 @@ This directory is the canonical, agent-agnostic home for the skills/concepts tha
 
 Project mechanics (work items, decisions, validation, the Where things go table) live in [.bc-agent/AGENTS.md](.bc-agent/AGENTS.md); read it before non-trivial work. This file stays the operating manual for concepts.
 
-1. Read this file, then `index.md`, then the last few `log.md` entries.
+1. Read this file, then `index.md`, then the last few `.bc-agent/log.md` entries.
 2. Identify the requested operation: ingest, implement/update, tune, test, deploy, or lint.
 3. Open only the concept/source files the index points you to; don't dump the whole workspace.
-4. Make the smallest canonical change in `concepts/` (never `docs/research/raw/` or derived deploys), update `index.md`/`log.md` plus `docs/guides/harnesses.md` for deploy/portability changes, run `python3 scripts/lint.py`, then commit.
+4. Make the smallest canonical change in `concepts/` (never `docs/research/raw/` or derived deploys), update `index.md`/`.bc-agent/log.md` plus `docs/guides/harnesses.md` for deploy/portability changes, run `python3 scripts/lint.py`, then commit.
 
 ## Spirit
 
@@ -32,7 +32,7 @@ This workspace exists to **liberate and improve agents, not to constrain them**.
 - `scripts/` — deterministic helpers shared across the workspace.
 - **Private concepts** live outside this repository at `~/.config/agent-concepts/concepts/<name>/body/SKILL.md`, in the same shape as `concepts/` here, and `scripts/deploy-local-skills.py` deploys them alongside the public ones. Use this for anything that must not be published to be useful: infrastructure topology, employer-specific process, or an upstream body whose licence does not permit redistribution. A private concept of the same name overrides the public one, and the override is reported. Never move something private *into* this repository to make tooling simpler — the whole point of the seam is that publishing and using are separate decisions.
 - `policies/` — **documentation for user-owned authorization only.** The real policy lives outside this repository at `~/.config/agent-concepts/publish.yaml`; what is tracked here is `publish.example.yaml`, a template. Agents follow the user's policy and may propose changes, but a policy change is never publishable under the policy itself — pushing one requires current explicit user instruction (self-amendment immunity). Never add a real (non-example) publish policy to this repository: a private authorization file in a public checkout is one `git add -f` from being published, and would be inherited by everyone who clones.
-- `AGENTS.md` (this file), `index.md`, `log.md`, `docs/guides/bootstrap.md`, `docs/guides/harnesses.md` — the schema, catalog, history, bootstrap prompts, and harness compatibility matrix.
+- `AGENTS.md` (this file), `index.md`, `.bc-agent/log.md`, `docs/guides/bootstrap.md`, `docs/guides/harnesses.md` — the schema, catalog, history, bootstrap prompts, and harness compatibility matrix.
 
 ## Operations
 
@@ -67,14 +67,14 @@ Gates are the rules that have earned a higher bar for revision, because their fa
 
 ## Bookkeeping
 
-Every operation that changes files appends a `log.md` entry:
+Every operation that changes files appends a `.bc-agent/log.md` entry:
 
 ```md
 ## [YYYY-MM-DD] <ingest|implement|test|deploy|lint> | <subject>
 1-3 lines: what changed and why.
 ```
 
-The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activity. `index.md` lists every concept (one line: link, one-line summary, deploy status) and every raw source file (filed/ingested). Update both in the same pass as the change.
+The prefix is consistent so `grep "^## \[" .bc-agent/log.md | tail -5` shows recent activity. `index.md` lists every concept (one line: link, one-line summary, deploy status) and every raw source file (filed/ingested). Update both in the same pass as the change.
 
 ## Conventions
 
@@ -97,7 +97,7 @@ The prefix is consistent so `grep "^## \[" log.md | tail -5` shows recent activi
   as an ERROR (concept bodies and mixed pressure-test results warn instead); without the file the check is skipped. Captured evidence under `docs/research/raw/**`, `docs/research/*/evidence/**`, and `concepts/agent-kernel/tests/pressure-concurrent-sessions/**` is skipped because it is immutable. Pushed history is left alone; current
   files get fixed.
 - **Private skill overlays.** A public skill that needs the owner's specifics describes each step generically and adds one line: if `~/.config/agent-concepts/overlays/<skill-name>.md` exists, read it. An overlay supplies only the tool names and invocation forms that the machine's always-loaded agent instructions do not already name; it states no rules, and the project's own instructions take precedence over it. The overlay is private and machine-local (never committed here; no template needed — it is plain prose), and every tool must work when it is absent: deploy symlinks only `body/`, and the skill's generic wording is the stranger's complete instruction. Why: one home per skill for the specifics keeps the public body copyable while the owner's agents, reading the same live symlink, still get their tool names.
-- `log.md` is a historical journal: its stale paths are exempt because they were accurate when
+- `.bc-agent/log.md` is a historical journal: its stale paths are exempt because they were accurate when
   written, but personal terms are not — scrub them like any other file.
 - No hardcoded home paths anywhere — `~` or `$HOME` only; symlinks relative.
 - **Externally owned authority has one home.** An instruction file names where an authoritative rule lives and how to query it; it never states what the rule decides. Why: a restatement is a second copy that drifts silently, and drift is discovered only when it blocks correct action — as happened here, costing 128 unpushed commits. For publishing, the canonical policy is `~/.config/agent-concepts/publish.yaml`; get the objective path/remote/branch answer from `python3 scripts/publish-check.py --repo "$PWD" --remote "$(git remote get-url origin)" --branch "$(git branch --show-current)"`, then verify the matched rule's `when:` conditions yourself before pushing. Do not restate the policy's rules here.

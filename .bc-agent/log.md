@@ -1,3 +1,13 @@
+# Agent Log
+
+Append-only journal of this workspace: operations that changed files, durable discoveries, and
+session outcomes. Newest at the bottom (a few early entries predate that rule and stay where they
+were written). One to three lines each; no transcripts or long command output.
+
+Every entry starts `## [YYYY-MM-DD] <ingest|implement|test|deploy|lint> | <subject>`, so
+`grep "^## \[" .bc-agent/log.md | tail -5` shows recent activity. A durable fact with no better
+home uses the same heading with the operation it came from.
+
 ## [2026-06-25] ingest | obra-superpowers skills
 Created local concepts for uncovered obra-superpowers workflows (brainstorming, planning/execution, subagent orchestration, parallel dispatch, code review, worktrees, branch finishing), mapped overlapping skills into existing TDD/debugging/kernel/prompting concepts, and updated the index.
 
@@ -1971,3 +1981,9 @@ CI (ubuntu-26.04) failed three bc-wiki-maintain batch-runner tests: the test stu
 
 ## [2026-11-25] implement | docs reshape (item 002)
 `docs/` now holds a README, `guides/` (bootstrap, harnesses, pipeline, pressure-test harness), `examples/` (private-config templates), `status.md`, and dated `research/<date>-<topic>/` folders. `docs/plans/` is gone: open plans became work items `007-agent-vault-read-path` and `008-bc-drain-issues-v3-review-economy`, finished ones moved to `work/3-done/` as 009–021, and the read-path plan record became research. Lint no longer checks plan lifecycle folders.
+
+## [2026-11-25] implement | scaffolded the project agent workspace
+Scaffolded with `bc-init-agent`: root `AGENTS.md`, `glossary.md`, `work/`, `docs/` and the `.bc-agent/` mechanics. Ready for the grill → issues → drain workflow.
+
+## [2026-11-25] implement | journal moved to .bc-agent/log.md (item 003)
+Moved the root journal here with `git mv` so history follows, merged the scaffold intro on top, and repointed references to this workspace's journal (AGENTS.md, lint required-files, portability exemption, unslop and bc-reflect concepts). Other `log.md` meanings (scaffolded projects, vaults, teach hosts) unchanged.

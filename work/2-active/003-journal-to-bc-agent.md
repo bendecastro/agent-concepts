@@ -10,9 +10,9 @@ Planned: grilled with the owner 2026-11-25 (decisions in the bc-init-agent grill
 
 ## Steps
 
-- [ ] `git mv log.md .bc-agent/log.md`, keeping the scaffold's durable-facts intro.
-- [ ] Rewrite every reference to root `log.md` (AGENTS.md, lint, skills that say append to `log.md`).
-- [ ] Lint and gate green.
+- [x] `git mv log.md .bc-agent/log.md`, keeping the scaffold's durable-facts intro. Intro rewritten to cover both journal entries and durable facts; the scaffold's one entry re-headed in the `## [date] op | subject` form at the bottom.
+- [x] Rewrite every reference to root `log.md` (AGENTS.md, lint, skills that say append to `log.md`). Skill bodies that say `log.md` mean a scaffolded project's, vault's or teach host's log and stay unchanged; lint/portability exemptions keyed on the name or new path.
+- [x] Lint and gate green.
 
 ## Outcome
 

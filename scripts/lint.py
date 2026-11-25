@@ -21,7 +21,7 @@ import relationships
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", "log.md", "README.md", "docs/guides/bootstrap.md", "docs/guides/harnesses.md"]
+REQUIRED_ROOT_FILES = ["AGENTS.md", "index.md", ".bc-agent/log.md", "README.md", "docs/guides/bootstrap.md", "docs/guides/harnesses.md"]
 
 # CONCEPT.md frontmatter. The test gate used to be honor-system prose spread
 # across 43 files in ~10 phrasings, so "what is untested" could not be answered

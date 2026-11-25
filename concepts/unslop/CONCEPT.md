@@ -26,7 +26,7 @@ contradicts it.
   single compressed line because they double as AI vocabulary.
 - **Model-invoked, not always-on.** Cursor's version declares "Must
   always apply." That would fight this workspace's own house style
-  (`index.md`, `log.md`, and every skill body use em dashes, bold
+  (`index.md`, `.bc-agent/log.md`, and every skill body use em dashes, bold
   lead-ins and deliberate triads) and would spend always-on budget on a
   minority of turns. The always-on slot here is `agent-kernel`, which is
   deliberately tiny.
