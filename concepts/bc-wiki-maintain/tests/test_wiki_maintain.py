@@ -813,14 +813,14 @@ class PromotionAllRunnerTests(unittest.TestCase):
                 #!/usr/bin/env bash
                 set -eu
                 if [[ "$#" -ne 0 ]]; then
-                  printf 'unexpected arguments: %s\n' "$*" >&2
+                  printf 'unexpected arguments: %s\\n' "$*" >&2
                   exit 64
                 fi
                 : "${VAULT_ROOT:?VAULT_ROOT is missing}"
                 : "${AGENT_CONCEPTS:?AGENT_CONCEPTS is missing}"
                 : "${PI_BIN:?PI_BIN is missing}"
                 : "${VISITS:?VISITS is missing}"
-                printf '%s\t%s\t%s\n' "$VAULT_ROOT" "$AGENT_CONCEPTS" "$PI_BIN" >> "$VISITS"
+                printf '%s\\t%s\\t%s\\n' "$VAULT_ROOT" "$AGENT_CONCEPTS" "$PI_BIN" >> "$VISITS"
                 if [[ "${HANG_VAULT:-}" == "$VAULT_ROOT" ]]; then
                   sleep 30
                 fi
@@ -829,7 +829,7 @@ class PromotionAllRunnerTests(unittest.TestCase):
                   sleep 30
                 fi
                 if [[ "${FAIL_VAULT:-}" == "$VAULT_ROOT" ]]; then
-                  printf 'stub failure for %s\n' "$VAULT_ROOT" >&2
+                  printf 'stub failure for %s\\n' "$VAULT_ROOT" >&2
                   exit 23
                 fi
                 """
@@ -982,6 +982,31 @@ class PromotionAllRunnerTests(unittest.TestCase):
 
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("AGENT_CONCEPTS is not set", result.stderr)
+            self.assertFalse(visits.exists())
+
+    def test_non_gnu_timeout_fails_closed_before_any_vault_runs(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            list_file = root / "vaults.txt"
+            list_file.write_text(str(root) + "\n", encoding="utf-8")
+            visits = root / "visits"
+            runner = self.write_promotion_runner(root, visits)
+            fake_bin = root / "bin"
+            fake_bin.mkdir()
+            for name in ("timeout", "gnutimeout"):
+                fake = fake_bin / name
+                fake.write_text(
+                    "#!/usr/bin/env bash\necho 'timeout (uutils coreutils) 0.10.0'\n",
+                    encoding="utf-8",
+                )
+                fake.chmod(0o755)
+            env = self.runner_environment(list_file, runner, visits)
+            env["PATH"] = f"{fake_bin}{os.pathsep}{env['PATH']}"
+
+            result = run("/usr/bin/bash", str(PROMOTION_ALL), cwd=ROOT, env=env, check=False)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("GNU timeout is required", result.stderr)
             self.assertFalse(visits.exists())
 
     def test_unset_vault_list_fails_closed(self) -> None:

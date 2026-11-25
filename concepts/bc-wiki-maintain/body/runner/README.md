@@ -121,7 +121,10 @@ period, overridable with `PROMOTION_TIMEOUT` and `PROMOTION_KILL_AFTER`. One uni
 vault, so an agent that hangs would otherwise consume the whole `TimeoutStartSec` budget and the
 vaults after it would never run — an exposure the one-vault units never had. `--kill-after` is
 load-bearing rather than defensive: plain `timeout` sends SIGTERM and then waits indefinitely, so
-a child that traps or ignores it is not bounded at all.
+a child that traps or ignores it is not bounded at all. The runner requires GNU `timeout`
+(preferring `gnutimeout`, Ubuntu's name for it) and fails before any vault otherwise: uutils
+`timeout`, the default on Ubuntu 26.04, signals only the direct child, so a timed-out agent's
+descendants would keep running.
 
 A timed-out vault is reported as a failure and the batch continues, but **it is not self-healing**.
 The timeout can land mid-write, and `run-promotion.sh` refuses to start on a dirty tree, so that

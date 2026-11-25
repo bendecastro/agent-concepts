@@ -31,7 +31,19 @@ PROMOTION_RUNNER="${PROMOTION_RUNNER:-$AGENT_CONCEPTS/concepts/bc-wiki-maintain/
 # against a SIGTERM-ignoring child, `timeout 1s` ran the full 60s.
 PROMOTION_TIMEOUT="${PROMOTION_TIMEOUT:-30m}"
 PROMOTION_KILL_AFTER="${PROMOTION_KILL_AFTER:-30s}"
-command -v timeout >/dev/null 2>&1 || fail 'timeout is not installed or not on PATH'
+# GNU timeout signals the child's whole process group; uutils timeout (Ubuntu 26.04's default
+# `timeout`) signals only the direct child, so a timed-out agent's descendants keep running.
+# Ubuntu ships GNU's as `gnutimeout`, so prefer that name when present.
+timeout_bin=''
+for candidate in gnutimeout timeout; do
+  if command -v "$candidate" >/dev/null 2>&1; then
+    timeout_bin="$candidate"
+    break
+  fi
+done
+[[ -n "$timeout_bin" ]] || fail 'timeout is not installed or not on PATH'
+[[ "$("$timeout_bin" --version 2>/dev/null || true)" == *'GNU coreutils'* ]] \
+  || fail "GNU timeout is required: $timeout_bin is not GNU coreutils, and a non-GNU timeout leaves descendants of a timed-out vault running; install GNU coreutils (on Ubuntu: the gnu-coreutils package, which provides gnutimeout)"
 
 declare -a vaults=()
 while IFS= read -r line || [[ -n "$line" ]]; do
@@ -64,7 +76,7 @@ for vault in "${vaults[@]}"; do
   fi
 
   # The assignment is exported only to this child; AGENT_CONCEPTS and PI_BIN are inherited.
-  if VAULT_ROOT="$vault" timeout --kill-after="$PROMOTION_KILL_AFTER" "$PROMOTION_TIMEOUT" "$PROMOTION_RUNNER"; then
+  if VAULT_ROOT="$vault" "$timeout_bin" --kill-after="$PROMOTION_KILL_AFTER" "$PROMOTION_TIMEOUT" "$PROMOTION_RUNNER"; then
     printf 'bc-wiki-maintain-all: PASS: promotion completed for %s\n' "$vault"
   else
     status=$?

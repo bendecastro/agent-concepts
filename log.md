@@ -1965,3 +1965,6 @@ Ran `bc-init-agent` (code archetype): `.bc-agent/`, `work/` with items 001–006
 
 ## [2026-11-25] implement | tidy local clutter (item 001)
 Ignored `.handoffs/`, `.hypothesis/` and `.gemini/`; lint skips git-ignored Markdown; removed the duplicate deploy-pi-skills script. Fixed a stale rename in the bc-init-agent base-output test, a portability check that matched the scratch HOME path, and a lint deploy check that failed on every fresh home.
+
+## [2026-11-25] implement | fix CI-only gate failures
+CI (ubuntu-26.04) failed three bc-wiki-maintain batch-runner tests: the test stub's `\n` broke `dedent`, so its shebang was indented and it ran under `/bin/sh` (dash there, bash locally). Fixed the stub; `run-promotion-all.sh` now requires GNU `timeout` (prefers `gnutimeout`) because uutils `timeout` leaves a timed-out child's descendants running; CI installs `gnu-coreutils` and fetches full history so the base-commit layout tests stop skipping.
