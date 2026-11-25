@@ -1,8 +1,7 @@
 # Agent concepts
 
 Skills and rules for coding agents — a way of working where questions get settled before code
-is written, every test is proved able to fail before it is trusted, and work lives in files so
-it survives a closed terminal. The skills are kept once here and linked into whichever agent
+is written, every test is proved able to fail before it is trusted, and work lives in files so your project builds intrinsic long-term memory. The skills are kept once here and linked into whichever agent
 you use.
 
 ## How these skills work
