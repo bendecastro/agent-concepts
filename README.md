@@ -96,32 +96,6 @@ Set up a project with `/bc-setup-project`, plan its work with `/bc-plan-to-pipel
 > [!TIP]
 > **Working while you are away.** `/bc-pipeline-to-done` builds the same work without you. It takes only the items marked `Ready for agent: yes`, which `/bc-plan-to-pipeline` marks for you, or GitHub issues labelled `ready-for-agent`. Since nobody is there to answer, it takes on only the work those marks cover, because you already settled its questions, and then diligently verifies the work before merging. It claims each item so two agents never build the same thing. Each builder works in its own separate copy of the project, and other agents review every step before it is merged. When it needs a decision, it sets the item aside with your question and moves on.
 
-<details>
-<summary><b>What a session looks like</b> — one idea, from first question to merged code</summary>
-
-Say you want customers to be able to enter a discount code at checkout.
-
-1. You type `/bc-plan-to-pipeline add discount codes`. The agent asks you questions one at a
-   time: can a customer use two codes at once? Do codes expire? Is it a percentage, a fixed
-   amount, or both? You answer each with a word or two.
-2. It writes down what you decided as requirements, then cuts the work into small pieces that
-   each work on their own: "check that a code is valid", "take the discount off the total",
-   "show the code at checkout". These land as planned work items in the project's `work/`
-   folder.
-3. You tell the agent to carry on, or type `/bc-pipeline-to-done` and walk away. For each
-   piece it writes a test first, such as "a 10% code on a £20.00 order makes the total
-   £18.00", watches it fail, then writes the code that makes it pass. Because totals follow
-   a clear rule, it also tries hundreds of random orders to check that a total never goes
-   below zero and never gains a stray penny from rounding.
-4. Before a piece is merged, it is checked: the tests pass, a separate review looks at it
-   with fresh eyes, and, because customers see the checkout page, the agent takes
-   screenshots and critiques them.
-5. Anything it could not decide waits for you with a question attached, for example "should
-   a code also work on items already on sale?" Everything else is done, and the work items
-   show what happened.
-
-</details>
-
 ### Running it as a software factory
 
 A factory is more than its machines. Nothing enters the line until its questions are settled, every piece is checked at every step, and each defect that gets out leads to a change in the line itself, so that kind of defect cannot get out again. These skills give you each part.
@@ -168,7 +142,7 @@ flowchart TD
     improve -- "#nbsp;better skills and checks#nbsp;" --> build
 ```
 
-When a bug gets out, fix it, then ask what would have caught it: a test, a guardrail or a change to a skill. Add that too. That is how the line gets better, not just the product.
+When a bug gets out, fix it, then ask what would have caught it: a test, a guardrail or a change to a skill? Add that too. That is how both the line and the product get better.
 
 ### The skills, stage by stage
 

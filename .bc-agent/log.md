@@ -2203,3 +2203,6 @@ Removed the guardrails line; the factory list now holds only commands you run. G
 
 ## [2026-11-25] implement | README factory diagram
 Added a mermaid diagram of the factory loop after the As needed table: commands in bold blue, Your idea enlarged, Merged and inputs rounded.
+
+## [2026-11-25] implement | README: drop session example
+Removed the folded "What a session looks like" example at the owner's request to keep the README short; kept the owner's edit to the factory closing line.
