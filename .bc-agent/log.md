@@ -2200,3 +2200,6 @@ Typing /bc-security-audit is now an explicit full-audit request; rule moved firs
 
 ## [2026-11-25] implement | README factory list: commands only
 Removed the guardrails line; the factory list now holds only commands you run. Guardrails stay described under How these skills work.
+
+## [2026-11-25] implement | README factory diagram
+Added a mermaid diagram of the factory loop after the As needed table: commands in bold blue, Your idea enlarged, Merged and inputs rounded.

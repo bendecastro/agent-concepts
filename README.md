@@ -152,6 +152,22 @@ Agents add code quickly, and with it tangles and bugs nobody has reported yet. E
 | The list of planned work no longer matches what is actually happening | `/bc-work-sync` |
 | The project's agent notes contradict each other or have gone stale | `/bc-wiki-maintain` |
 
+```mermaid
+flowchart TD
+    setup["Once<br/><code style='color:dodgerblue;font-weight:bold'>/bc-setup-project</code>"] --> plan
+    idea(["<span style='font-size:22px;font-weight:bold;padding:6px 14px;display:inline-block'>Your idea</span>"]) --> plan
+    issue(["GitHub issue"]) --- triage["<code style='color:dodgerblue;font-weight:bold'>/bc-triage</code>"] --> plan
+    plan["Plan<br/><code style='color:dodgerblue;font-weight:bold'>/bc-plan-to-pipeline</code>"] --> queue[("Planned work")]
+    plan -. "#nbsp;large or risky#nbsp;" .-> challenge["<code style='color:dodgerblue;font-weight:bold'>/bc-council-challenge-plan</code>"]
+    challenge -.-> queue
+    queue --> build["Build and review<br/><code style='color:dodgerblue;font-weight:bold'>/bc-pipeline-to-done</code><br/>when you are away"]
+    build --> merged(["Merged"])
+    merged -- "#nbsp;as the code grows#nbsp;" --> sweep["<code style='color:dodgerblue;font-weight:bold'>/bc-improve-codebase-architecture</code><br/><code style='color:dodgerblue;font-weight:bold'>/bc-find-bugs</code>"]
+    sweep -- "#nbsp;findings#nbsp;" --> queue
+    build -- "#nbsp;end of session#nbsp;" --> improve["<code style='color:dodgerblue;font-weight:bold'>/bc-self-improve</code>"]
+    improve -- "#nbsp;better skills and checks#nbsp;" --> build
+```
+
 When a bug gets out, fix it, then ask what would have caught it: a test, a guardrail or a change to a skill. Add that too. That is how the line gets better, not just the product.
 
 ### The skills, stage by stage
