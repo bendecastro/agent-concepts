@@ -11,7 +11,7 @@ Go wide. While this skill is active, delegating is the default and **keeping** w
 
 It composes `bc-dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
 
-Before fan-out or worktree creation, run the machine's storage health check if one exists, and stop and report on critical or unknown health. After integrating a worker, prove its commits are in `HEAD` (its tip is an ancestor, or every commit is patch-equivalent), record that proof, and only then remove its worktree and branch. Copy into worker packets: run pytest through the guarded test runner the project's or machine's instructions name, never with a custom `--basetemp`; make scratch folders with `mktemp -d`, never under `/tmp`; run targeted tests only, never the full suite or gate. The `agent-kernel` concept's Storage safety (temp files, scratch folders) and Verification sections hold their rules, when loaded. Why: children do not inherit the kernel and retained worktrees consume storage.
+Before fan-out or worktree creation, run the machine's storage health check if one exists, and stop and report on critical or unknown health or if the configured check cannot run. If no storage health check is configured, skip it and note that in one line in the report. After integrating a worker, prove its commits are in `HEAD` (its tip is an ancestor, or every commit is patch-equivalent), record that proof, and only then remove its worktree and branch. Copy into worker packets: run pytest through the guarded test runner the project's or machine's instructions name (otherwise plain `pytest`, with `tmp_path` for test fixtures and cleanup even on failure; never custom `--basetemp`); make scratch folders with `mktemp -d`, never under `/tmp`; run targeted tests only, never the full suite or gate. The `agent-kernel` concept's Storage safety (temp files, scratch folders) and Verification sections hold their rules, when loaded. Why: children do not inherit the kernel and retained worktrees consume storage.
 
 ## Recovery rule — before routing
 
@@ -68,7 +68,7 @@ After applying a valid patch, verify the resulting diff/tree before any commit o
 
 **Parent integration on receipt.** On the first turn a completed worktree result is in front of the parent — a completion wake, status poll, or user report — apply its validated handoff patch or integrate its validated full commit range before any other dispatch. This is completion-wake behavior, never a reason to block or wait on the launch turn; rule 2 remains intact.
 
-**Full gate on the integrated tree.** After integrating, start the project's full gate (through the project's or machine's offload/heavy-run wrapper if its agent instructions name one) in the background with a completion wake, and dispatch the independent reviewer on the same tree in parallel; record the tree SHA (`git rev-parse HEAD^{tree}`) and the gate result. The reviewer reports the gate as pending; the parent combines the gate result with the review verdict before landing. Never wait with sleep or poll loops. Why: the gate and the review are independent, so running them in sequence doubles the wait.
+**Full gate on the integrated tree.** After integrating, start the project's full gate (through the project's or machine's offload/heavy-run wrapper if its instructions name one; otherwise run the gate directly) in the background with a completion wake, and dispatch the independent reviewer on the same tree in parallel; record the tree SHA (`git rev-parse HEAD^{tree}`) and the gate result. The reviewer reports the gate as pending; the parent combines the gate result with the review verdict before landing. Never wait with sleep or poll loops. Why: the gate and the review are independent, so running them in sequence doubles the wait.
 
 Artifacts are scratch, not knowledge. Anything worth keeping gets explicitly promoted into the repo, a concept, or a note; the run directory is disposable by design. For worktree workers, the Git commit and harness patch are the durable handoff records used before that promotion.
 
@@ -96,13 +96,13 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
   start-of-line records. If you made no commit, write `Commit: none` and `Branch: none`.
   The returned summary is not the only copy of those records.
 - For implementation/testing: follow kernel Storage safety; run pytest through
-  <the project's or machine's guarded pytest runner, if one exists>, never custom
-  `--basetemp`. Run only these targeted checks: <test files or IDs, typecheck, lint>.
+  the configured guarded runner or, if absent, plain `pytest` with `tmp_path`
+  for test fixtures and cleanup even on failure. Never use custom `--basetemp`. Run only these targeted checks: <test files or IDs, typecheck, lint>.
   No browser/e2e tests and no full gate; the parent runs it on the integrated tree.
   Why: fresh workers must not multiply full suites or unmanaged test roots.
 ```
 
-Fill the runner slot from the project's and machine's agent instructions and docs (drop it to plain pytest only when none exists). Fill the targeted checks with named test files or IDs; never paste the project's full gate into a packet, even when its validation page lists the gate. Why: a pasted gate is a full run per worker. The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
+Name the guarded runner from the project's or machine's instructions and docs, if configured. Fill the targeted checks with named test files or IDs; never paste the project's full gate into a packet, even when its validation page lists the gate. Why: a pasted gate is a full run per worker. The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
 
 **Test levels travel with the code** (load the `bc-tdd` skill, section Test levels):
 

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # architecture chain unchanged after extraction, 4/4 dry runs (2026-11-24, Terra low); no live council run through the recipe; second chain not yet built
+test_status: partial # 2026-11-26 missing-subagent stop accuracy-checked (no new model run); architecture chain unchanged after extraction, 4/4 dry runs (2026-11-24, Terra low); no live council run through the recipe; second chain not yet built
 tested: 2026-11-24
 deployed: yes
 ---

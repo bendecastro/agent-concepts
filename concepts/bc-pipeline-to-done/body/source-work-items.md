@@ -57,7 +57,7 @@ When the item needs an owner decision (`HUMAN_BLOCKED`), park it in one commit. 
 - remove its `Held by:` line;
 - run the work index script.
 
-File the question where the owner sees questions: the project's or the machine's instructions name the place, and the private overlay names the tool. Then release the claim and its worktree as the core says for a blocked unit without useful local work, or keep a recovery bundle when the step has useful work. Why: the dashboard reads the work folders and these lines, so a parked item shows as waiting on the owner instead of as running.
+File the question where the owner sees questions: the project's or machine's instructions name the place, and the private overlay may name the tool. If no destination or filing tool is configured, include the exact question and item in the run report. Then release the claim and its worktree as the core says for a blocked unit without useful local work, or keep a recovery bundle when the step has useful work. Why: the dashboard reads the work folders and these lines, so a parked item shows as waiting on the owner instead of as running.
 
 ## Resume
 

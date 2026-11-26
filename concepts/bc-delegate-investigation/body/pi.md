@@ -1,6 +1,6 @@
 # Pi mechanics for bc-delegate-investigation
 
-Concrete syntax for the `subagent` tool from the `pi-subagents` extension. The contract in `SKILL.md` is harness-neutral; this file is not. In a harness without these primitives, keep the four rules and use whatever the harness offers for durable output and retained runs.
+Concrete syntax for the `subagent` tool from the `pi-subagents` extension. The contract in `SKILL.md` is harness-neutral; this file is not. In Pi, if `subagent` is missing, stop Pi dispatch and tell the user to install `pi-subagents` and restart Pi. In other harnesses, keep the four rules and use their equivalent primitives for durable output and retained runs.
 
 ## Run directory
 
@@ -12,7 +12,7 @@ ${XDG_STATE_HOME:-$HOME/.local/state}/bc-swarm/<YYYY-MM-DD>-<slug>/
 
 ## Fan-out
 
-Run the project's or machine's storage health check, if one exists (check the project's and machine's agent instructions and docs), before multi-worker launch or managed worktree creation; stop/report on critical or unknown health, or if an existing check cannot run. Why: harness-managed isolation still allocates storage.
+Run the project's or machine's storage health check, if one exists (check the project's and machine's agent instructions and docs), before multi-worker launch or managed worktree creation; stop/report on critical or unknown health, or if an existing check cannot run. If no storage health check is configured, skip it and note that in one line in the report. Why: harness-managed isolation still allocates storage.
 
 ```js
 subagent({

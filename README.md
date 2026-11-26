@@ -314,7 +314,6 @@ Details and known problems for each agent live in [harnesses.md](docs/guides/har
 > - **Pick one method per agent.** Two methods install each skill twice. Several agents also read `~/.agents/skills/`; the contributor install and `npx skills -a pi` both write there.
 > - **After installing, start a new agent session.** Open sessions do not see new skills.
 > - **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. Installing this repository does not install `pi-subagents`. To install it: `pi install npm:pi-subagents`. The other methods install the council skills too, but they will not run there.
-> - **GitHub issues.** `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` need the GitHub CLI (`gh`) for issue flows.
 > - **To move to a newer release**, uninstall first, then install with the new tag.
 
 <a name="claude-code"></a>
@@ -681,6 +680,23 @@ A symlink pointing to a skill this checkout does not own is reported and left al
 </details>
 
 <br>
+
+### Install prerequisites for the pipeline
+
+`/bc-pipeline-to-done` needs separate agents to build and review changes. In Pi:
+
+1. Run `pi install npm:pi-subagents` and restart Pi to enable the `subagent` tool.
+2. Set up the auditor, builder and reviewer roles. Start with the [example Pi profiles](concepts/bc-pipeline-to-done/body/examples/agents/README.md), which show where the files go and how to assign each role. The pipeline stops before claiming work if it cannot launch the required roles. Other harnesses need equivalent roles and isolation.
+3. If you use GitHub issues, install and sign in to the [GitHub CLI](https://cli.github.com/) (`gh`). Both `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` use it for issues; local work items do not need it.
+
+These machine tools are optional:
+
+| Tool | If you have not configured one |
+|---|---|
+| Guarded pytest runner | Run plain `pytest` in the project environment. Use `tmp_path` for test fixtures, clean up temporary files even on failure and do not set a custom `--basetemp`. |
+| Storage health check | Skip the check and say so in one line of the run report. If a configured check fails to run or reports critical or unknown health, stop and report it. |
+| Wrapper for heavy checks | Run the project's full validation command directly. The session combining the changes runs it, not each worker. |
+| Publish-policy checker | The pipeline uses its bundled checker. With no policy file, it asks once before pushing if you can answer; otherwise it commits locally and pushes nothing. |
 
 ## Working on this repository
 

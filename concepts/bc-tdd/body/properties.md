@@ -20,7 +20,7 @@ If you skip a property on rule-bearing logic, name the rule you could not state.
 
 | Language | Library | Run by |
 |---|---|---|
-| Python | Hypothesis | the project's pytest command (through the guarded runner, if the project or machine names one) |
+| Python | Hypothesis | the project's pytest command through its guarded runner when configured; otherwise plain `pytest` with `tmp_path` for fixtures, cleanup even on failure, and no custom `--basetemp` |
 | JS/TS | fast-check | the project's test command (for example `pnpm test`) |
 | Rust | proptest | `cargo test` |
 

@@ -13,7 +13,7 @@ Before launch, read [references/pass-contracts.md](references/pass-contracts.md)
 
 ## Roster
 
-Run `subagent({ action: "list" })`, then choose 2-3 executable advisor names that start with `council-`. The prefix is convention only. Never use more than four advisors. If the user has no `council-*` profiles, point them to [examples/agents/](examples/agents/README.md): ready profiles with distinct stances and a placeholder model.
+If the `subagent` tool is missing, stop and tell the user to install `pi-subagents` and restart Pi. Otherwise run `subagent({ action: "list" })`, then choose 2-3 executable advisor names that start with `council-`. The prefix is convention only. Never use more than four advisors. If the user has no `council-*` profiles, point them to [examples/agents/](examples/agents/README.md): ready profiles with distinct stances and a placeholder model.
 
 If fewer than two council profiles are available, fill with `oracle`, then `reviewer`. Launch fallback `oracle` with `context: "fork"`; let fallback `reviewer` use its normal profile context. Note fallbacks and known context modes in the memo. If fewer than two advisors remain, use the normal one-oracle consultation loop and label it degraded mode.
 

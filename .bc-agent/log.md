@@ -2265,3 +2265,6 @@ First-time setup for existing codebases now proposes applicable starters and fil
 
 ## [2026-11-26] test | Pipeline preflight without a publish policy
 Round 1, one Terra low dry run per arm: treatment ran the bundled checker and planned a local commit with no pushes when away; comparison stopped. The owner-present case had single-run mode preselected. Round 2, one treatment dry run (owner present only, no mode preselected): planned one scoped yes, single-driver mode and a target push with no claim-ref or issue writes. No live launch or landing ran. Generated scaffold guidance points to that preflight.
+
+## [2026-11-26] implement | Fallbacks for missing machine tools
+Standalone skills now say what to do without optional helpers; the pipeline stops before claims without fresh roles. README lists prerequisites and fallbacks. Missing-tools dry run: Terra low, one completed run per arm, comparison 2/5 and revised 5/5; no live execution.

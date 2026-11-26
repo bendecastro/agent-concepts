@@ -47,6 +47,8 @@ After a landed issue, `bc-pipeline-to-done` may prepend at most one bounded stru
 
 Before the loop runs in a fresh project, `/bc-setup-project` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from project B) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-pipeline` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-pipeline-to-done` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. It also offers to install a per-vault `bc-wiki-maintain` systemd user timer so log promotion can run overnight; install happens only after confirm. Run once; then the two halves below.
 
+Before running the executor, follow the [pipeline install prerequisites](../../README.md#install-prerequisites-for-the-pipeline). If the harness cannot launch the required jobs, the pipeline stops before claiming work.
+
 ## The two halves
 
 **Intake — `/bc-triage`** (interactive, as needed). Turns existing issues/PRs into the bc state machine: verify, grill if needed, write an Agent Brief, mark `ready-for-agent`, route broad work into `/bc-plan-to-pipeline`, or record durable `.bc-agent/out-of-scope/` rejections.

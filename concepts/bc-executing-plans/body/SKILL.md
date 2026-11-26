@@ -7,7 +7,7 @@ description: Use when the user provides or selects a written implementation plan
 
 Execute written plans deliberately: review the plan, verify preconditions, complete each task, and stop instead of guessing when the plan is wrong.
 
-In preflight and verification: run pytest through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`); make scratch folders with `mktemp -d`, never under `/tmp`; before a full suite, worktree isolation or fan-out, run the machine's storage health check if one exists and stop on critical or unknown health. Run targeted checks per task and one shared landing run of the full suite. The `agent-kernel` concept's Storage safety (temp files, scratch folders) and Verification sections hold their rules, when loaded. Why: task-by-task execution must not duplicate full suites.
+In preflight and verification: run pytest through the guarded test runner the project's or machine's instructions name (otherwise plain `pytest`, with `tmp_path` for test fixtures and cleanup even on failure; never custom `--basetemp`); make scratch folders with `mktemp -d`, never under `/tmp`; before a full suite, worktree isolation or fan-out, run the machine's storage health check if one exists and stop on critical or unknown health or if the configured check cannot run. If no storage health check is configured, skip it and note that in one line in the report. Run targeted checks per task and one shared landing run of the full suite. The `agent-kernel` concept's Storage safety (temp files, scratch folders) and Verification sections hold their rules, when loaded. Why: task-by-task execution must not duplicate full suites.
 
 ## Preflight
 

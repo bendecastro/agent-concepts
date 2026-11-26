@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # passed 3/3 after two skill fixes (2026-11-24, Terra/Luna low); pass contracts' outputSchema never used; no-profile fallback untested
+test_status: partial # 2026-11-26 missing-subagent stop accuracy-checked (no new model run); passed 3/3 after two skill fixes (2026-11-24, Terra/Luna low); pass contracts' outputSchema never used; no-profile fallback untested
 tested: 2026-11-24
 deployed: yes
 ---

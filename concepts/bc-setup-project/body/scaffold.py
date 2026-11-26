@@ -792,7 +792,8 @@ the integrated tree.
 Owner: the session that integrates changes. `scripts/gate` holds every step (install,
 typecheck, lint, all tests including every browser/e2e test, build) and runs them directly,
 so CI runs the same file on a clean checkout. Start it in the background with a wake, through
-the machine's offload wrapper if its agent instructions name one. Budget 300 s, measured, not enforced:
+the machine's offload wrapper if its agent instructions name one; otherwise run the script directly.
+Budget 300 s, measured, not enforced:
 pass it to the wrapper's budget option if available; otherwise time the run. Never wrap the gate in `timeout`:
 an over-budget run must finish and count toward the two-in-a-row rule.
 
@@ -851,7 +852,7 @@ The `bc-tdd` skill defines these levels.
 GATE_SCRIPT = """#!/usr/bin/env bash
 # Full gate: every check the integrated tree must pass, run directly (no offload wrapper here) so
 # CI runs this file unchanged. Agents run it through the machine's offload wrapper if its agent
-# instructions name one.
+# instructions name one; otherwise run the script directly.
 # Stages and owners: .bc-agent/conventions/validation.md
 set -euo pipefail
 
@@ -1462,8 +1463,9 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   `2-active/`, by hand, on "carry on" or by a drain, run `bc-plan-to-pipeline` on it from a
   settled source, in the same reply: it fills the item in place and asks only what is still open.
   When the owner said they are away (or the run is a drain) and a question stays open, file it
-  where the owner sees questions (this project's or this machine's instructions name the place),
-  never in chat, leave the item in `1-planned/`, then move the next planned item to `2-active/`
+  where the owner sees questions (check the project's or machine's instructions), never in chat.
+  If no destination or filing tool is configured, record the question in the item's plan and name
+  the item in the run report. Leave it in `1-planned/`, then move the next planned item to `2-active/`
   and start it in the same run. Planning an item is part of carrying on, not a reason to stop:
   never end a reply that only says an item needs planning, a question needs filing or an item
   needs starting; do that work first. `work_index.py --check` warns about each planned item

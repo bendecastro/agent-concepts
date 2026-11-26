@@ -7,7 +7,7 @@ description: "Shared recipe loaded by bc-council-* chain skills (for example bc-
 
 A `bc-council-<job>` skill runs a parent skill through the advisor council. This file holds the council steps every chain shares. Load `bc-council-mode` with it: that skill says how to brief, launch, relay to and resume advisors, and sets the pass and roster caps. Where this file and the chain are silent, `bc-council-mode` and the chain's parent skill decide.
 
-If `~/.config/agent-concepts/overlays/bc-council-chain.md` exists, read it: it names this machine's roster, map-scout model and which advisors are sandboxed.
+If the `subagent` tool is missing, stop and tell the user to install `pi-subagents` and restart Pi. If `~/.config/agent-concepts/overlays/bc-council-chain.md` exists, read it: it names this machine's roster, map-scout model and which advisors are sandboxed. Without the overlay, use the roster and routing rules below.
 
 ## What a chain must define
 
