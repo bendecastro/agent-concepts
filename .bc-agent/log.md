@@ -2215,3 +2215,6 @@ Folded "Evidence before claims" into the TDD idea as proof shown with "done"; re
 
 ## [2026-11-25] implement | README: files idea names setup and wiki skills
 Added bc-setup-project and bc-wiki-maintain to the Skills line of "Work lives in files, not chat".
+
+## [2026-11-25] implement | owner-notes link
+Linked owner-notes/ to the owner notes folder and ignored it, as other projects do.
