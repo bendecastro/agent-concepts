@@ -4,6 +4,8 @@ To install the skills as an outside user, follow the [Install section of the REA
 
 The canonical copy of each concept (the one that is edited) is `concepts/<name>/body/`. Harness-specific deployment should expose that body through a relative symlink (a shortcut written as a path relative to itself) rather than a copy. When a harness cannot consume an Agent Skills directory directly, point the session at the body file with a [bootstrap prompt](bootstrap.md) (a message you paste to tell the agent which instructions to read).
 
+The `bc-pipeline-to-done` body includes the [publish checker](../../policies/README.md#checking-a-rule) in symlink deployments, Pi packages, and Claude Code and Codex plugins.
+
 For always-on base instructions, use `concepts/agent-kernel/body/AGENT-KERNEL.md`; it is deliberately a small Markdown include, not an on-demand skill.
 
 ## Compatibility matrix

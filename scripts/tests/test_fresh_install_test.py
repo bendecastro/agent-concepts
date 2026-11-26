@@ -7,6 +7,8 @@ import sys
 import unittest
 from pathlib import Path
 
+import pytest
+
 SCRIPTS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SCRIPTS))
 
@@ -59,6 +61,43 @@ class FreshInstallCheckTest(unittest.TestCase):
 
     def test_helper_exists_in_the_source(self):
         self.assertTrue((fit.ROOT / "concepts" / fit.HELPER_SKILL / "body" / fit.HELPER_RELPATH).is_file())
+
+
+@pytest.mark.parametrize("has_checker", [False, True], ids=["missing", "present"])
+def test_claude_install_checks_for_bundled_publish_checker(tmp_path, monkeypatch, has_checker):
+    skill = "bc-pipeline-to-done"
+    listing = {skill: [], fit.HELPER_SKILL: []}
+    checker = Path("scripts/publish-check.py")
+
+    def install(plugin):
+        cache = plugin.box.home / ".claude" / "plugins" / "cache" / "concepts"
+        for name, relpath in [(fit.HELPER_SKILL, fit.HELPER_RELPATH), (skill, checker)]:
+            body = cache / name / "body"
+            body.mkdir(parents=True)
+            (body / "SKILL.md").touch()
+            if name != skill or has_checker:
+                (body / relpath).parent.mkdir(parents=True, exist_ok=True)
+                (body / relpath).touch()
+
+    def run(box, *args, **kwargs):
+        if args[:3] == ("claude", "plugin", "list"):
+            return '[{"id":"agent-concepts"}]' if not removed else "[]"
+        if args[:3] == ("claude", "plugin", "details"):
+            return f"Skills (2) {skill}, {fit.HELPER_SKILL}"
+        if args[0] == sys.executable and args[-1] == "--help":
+            return "usage"
+        pytest.fail(f"unexpected sandbox command: {args}")
+
+    removed = []
+    monkeypatch.setattr(fit.Sandbox, "run", run)
+    monkeypatch.setattr(fit.ClaudePlugin, "install", install)
+    monkeypatch.setattr(fit.ClaudePlugin, "update", lambda plugin: None)
+    monkeypatch.setattr(fit.ClaudePlugin, "uninstall", lambda plugin: removed.append(True))
+    if has_checker:
+        fit.run_method("claude", tmp_path, listing, fit.DEFAULT_PACK, None)
+    else:
+        with pytest.raises(fit.CheckFailed, match=r"bc-pipeline-to-done/scripts/publish-check\.py"):
+            fit.run_method("claude", tmp_path, listing, fit.DEFAULT_PACK, None)
 
 
 if __name__ == "__main__":

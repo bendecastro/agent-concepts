@@ -54,11 +54,13 @@ later. Pushing a policy change always requires current explicit user instruction
 > A policy that can publish its own amendments is default-allow in disguise — one self-edit away
 > from authorizing anything.
 
-This is enforced by [`scripts/publish-check.py`](../scripts/publish-check.py), which resolves the
+The [publish checker bundled with `bc-pipeline-to-done`](../concepts/bc-pipeline-to-done/body/scripts/publish-check.py) resolves the
 policy's real path and excludes it whenever it falls inside the repository being pushed — so the
 protection holds even when the config directory is synced through a git repo by symlink.
 
 ## Checking a rule
+
+Run `scripts/publish-check.py` from the installed skill directory, or use the same path from the repository root as shown here. Both entry points use the same checker. The checker needs Python 3, Git and PyYAML.
 
 ```bash
 python3 scripts/publish-check.py \

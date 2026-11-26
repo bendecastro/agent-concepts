@@ -16,7 +16,7 @@ jobs:
           python-version: "3.13"
       # run-promotion-all.sh needs GNU timeout; Ubuntu 26.04 defaults to uutils and ships GNU's as gnutimeout.
       - run: sudo apt-get install -y gnu-coreutils
-      - run: pip install pytest hypothesis
+      - run: pip install pytest hypothesis pyyaml
       - run: scripts/gate
   # Installs this checkout through each install method in a fresh HOME (scripts/fresh_install_test.py).
   # macOS runs only this job: the gate needs Bash 4 (mapfile) and GNU tools.

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-26 target-branch dry run held (old body blocked preflight on a `main` repo, new body planned its landing push to `main`; n=1 per arm; tests/pressure-default-branch-results-2026-11-26.md); 2026-11-25 Spent line wording not run (scaffolded rule held 3/3); 2026-11-25 Review and Gate lines wording not run (scaffolded rule held 3/3); 2026-11-25 Held by line wording not run (scaffolded rule held); 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B dropped 2026-11-25 (v3 saving never measured); the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
+test_status: partial # 2026-11-26 bundled checker dry run held (n=1 per arm; base install lacked the checker, bundled install ran it and denied without policy; no live pipeline run); 2026-11-26 target-branch dry run held (old body blocked preflight on a `main` repo, new body planned its landing push to `main`; n=1 per arm; tests/pressure-default-branch-results-2026-11-26.md); 2026-11-25 Spent line wording not run (scaffolded rule held 3/3); 2026-11-25 Review and Gate lines wording not run (scaffolded rule held 3/3); 2026-11-25 Held by line wording not run (scaffolded rule held); 2026-11-25 generic publish preflight and inline storage/Test-levels rules (024) held in a dry run, D 3/3 and A 6/6 vs baseline 0; 2026-11-25 work-item source and issue-source regression held in consuming-model dry runs after three wording fixes; first real work-item drain is the live test; Gate B dropped 2026-11-25 (v3 saving never measured); the 2026-11-12 role lookup / 2026-11-24 skip-unplanned rule not run as consuming-model scenarios
 tested: 2026-11-26
 deployed: 2026-11-25
 ---
@@ -80,7 +80,7 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - `work/3-done/2026-08/010-bc-drain-issues-v2-token-efficiency.md` — approved bounded-rework design and #29 evidence (2026-07-25).
 - `work/3-done/2026-08/011-bc-grill-to-ship-loop.md` — original build plan (2026-06-20).
 - Matt Pocock `triage`, `AGENT-BRIEF`, `implement`, and `code-review` skills — label/brief workflow and independent review intent; no atomic claim mechanism, hence claim branches.
-- `~/.config/agent-concepts/publish.yaml` and `scripts/publish-check.py` — objective push/close authorization.
+- `~/.config/agent-concepts/publish.yaml` and [the bundled publish checker](body/scripts/publish-check.py) — objective push/close authorization. The repository’s `scripts/publish-check.py` remains a compatibility entry point.
 - `concepts/bc-tdd/`, `concepts/bc-diagnosing-bugs/`, and `concepts/bc-optimize-code/` — worker feedback disciplines.
 - `concepts/bc-prompting-agents/body/SKILL.md` — progressive disclosure, right-altitude instructions, context economy, and evidence gates.
 - `concepts/bc-plain-language/body/SKILL.md` — reader-outcome source for the 2026-08-18 `HUMAN_BLOCKED` comment clause; the skill itself is not loaded.
@@ -91,6 +91,8 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - Owner decision 2026-11-24: every item in work-planned gets the `bc-plan-to-pipeline` treatment before it starts (filing-time handoff, pickup rule, `Planned:` marker).
 
 ## Tests
+
+2026-11-26 (bundled checker): [standalone-install dry run](tests/pressure-bundled-publish-checker-results-2026-11-26.md), one executed per arm; the base install had no checker, the bundled install ran it and got exit 2 without a policy. No live pipeline or installer CLI run.
 
 2026-11-25 (Spent line, 025): `source-work-items.md`'s finish ends the Outcome with the `Spent:` line `work_spent.py <item-name>` prints, pasted unchanged; a project without the script gets none. Gate A passes. Not run as a consuming-model scenario; the same rule in the scaffolded work-item rules held on Terra low (bc-setup-project's `tests/pressure-spent-results-2026-11-25.md`).
 

@@ -5,7 +5,8 @@ For each install method (Pi package, Claude Code plugin, Codex plugin, `npx skil
 command, one `npx skills` pack) the test runs in a new empty HOME with a scrubbed environment:
 install, check the installed skill list equals the expected list (`concepts/public-skills.json`,
 or for a pack the pack's skill plus every skill it needs), run one bundled helper from the
-installed copy, update, check again, uninstall and check nothing is left listed.
+installed copy, check that any installed pipeline skill includes its publish checker, update,
+check the skill list again, uninstall and check nothing is left listed.
 
 No logins, API keys or model calls. The agent CLIs come from PATH (CI installs pinned versions
 from npm). `--drop-needed SKILL` installs the pack without one of its needed skills, to show the
@@ -42,6 +43,8 @@ DEFAULT_PACK = "bc-code-review"
 # install the test makes (all skills, and the default pack needs it).
 HELPER_SKILL = "bc-tdd"
 HELPER_RELPATH = "scripts/confirm-red.py"
+PUBLISH_SKILL = "bc-pipeline-to-done"
+PUBLISH_RELPATH = "scripts/publish-check.py"
 METHODS = ("pi", "claude", "codex", "npx-all", "npx-pack")
 
 # Lists every skill Pi itself would load, the way a Pi session does (no model call).
@@ -150,12 +153,12 @@ class Sandbox:
         return proc.stdout
 
 
-def find_helper(base: Path) -> Path:
-    hits = sorted(base.glob(f"**/{HELPER_SKILL}/**/{HELPER_RELPATH}"))
-    hits = [h for h in hits if ROOT not in h.parents]
-    if not hits:
-        raise CheckFailed(f"no installed copy of {HELPER_SKILL}/{HELPER_RELPATH} under {base}")
-    return hits[0]
+def find_helper(base: Path, skill: str, relpath: str) -> Path:
+    for skill_md in sorted(base.glob(f"**/{skill}/**/SKILL.md")):
+        helper = skill_md.parent / relpath
+        if skill_md.is_file() and helper.is_file() and ROOT not in helper.parents:
+            return helper
+    raise CheckFailed(f"no installed copy of {skill}/{relpath} under {base}")
 
 
 class PiPackage:
@@ -172,10 +175,10 @@ class PiPackage:
         out = self.box.run("node", str(self.lister), shutil.which("pi") or "pi")
         return {name: Path(base) for name, base in (line.split("\t") for line in out.splitlines())}
 
-    def helper(self, listed: dict[str, Path]) -> Path:
+    def helper(self, listed: dict[str, Path], skill: str, relpath: str) -> Path:
         # A local-path Pi package is used in place, not copied: the helper runs from that path.
         # A git package is cloned under ~/.pi/agent/git and runs from there.
-        return listed[HELPER_SKILL] / HELPER_RELPATH
+        return listed[skill] / relpath
 
     def update(self):
         self.box.run("pi", "update", "--extensions")
@@ -202,8 +205,8 @@ class ClaudePlugin:
         names = [n.strip() for n in match.group(1).split(",")] if match else []
         return {name: self.box.home / ".claude" for name in names}
 
-    def helper(self, listed: dict[str, Path]) -> Path:
-        return find_helper(self.box.home / ".claude" / "plugins")
+    def helper(self, listed: dict[str, Path], skill: str, relpath: str) -> Path:
+        return find_helper(self.box.home / ".claude" / "plugins", skill, relpath)
 
     def update(self):
         self.box.run("claude", "plugin", "marketplace", "update", MARKETPLACE)
@@ -229,8 +232,8 @@ class CodexPlugin:
         names = set(re.findall(r"\bagent-concepts:([a-z0-9-]+)", out))
         return {name: self.box.home / ".codex" for name in names}
 
-    def helper(self, listed: dict[str, Path]) -> Path:
-        return find_helper(self.box.home / ".codex" / "plugins")
+    def helper(self, listed: dict[str, Path], skill: str, relpath: str) -> Path:
+        return find_helper(self.box.home / ".codex" / "plugins", skill, relpath)
 
     def update(self):
         # Codex has no plugin update command; installing again is the update. A Git
@@ -261,8 +264,8 @@ class NpxSkills:
             return {}
         return {p.name: p for p in self.skills_dir.iterdir() if (p / "SKILL.md").is_file()}
 
-    def helper(self, listed: dict[str, Path]) -> Path:
-        return listed[HELPER_SKILL] / HELPER_RELPATH
+    def helper(self, listed: dict[str, Path], skill: str, relpath: str) -> Path:
+        return listed[skill] / relpath
 
     def update(self):
         self.box.run("skills", "update", "-g", "-y")
@@ -297,7 +300,12 @@ def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: 
     agent.install()
     listed = agent.listed()
     check_listed("after install", expected, listed)
-    helper = agent.helper(listed)
+    if PUBLISH_SKILL in listed:
+        checker = agent.helper(listed, PUBLISH_SKILL, PUBLISH_RELPATH)
+        if not checker.is_file():
+            raise CheckFailed(f"no installed copy of {PUBLISH_SKILL}/{PUBLISH_RELPATH} at {checker}")
+        print(f"  ok: publish checker present in the installed skill: {checker}", flush=True)
+    helper = agent.helper(listed, HELPER_SKILL, HELPER_RELPATH)
     out = box.run(sys.executable, str(helper), "--help")
     if "usage" not in out.lower():
         raise CheckFailed(f"helper {helper} --help printed no usage")

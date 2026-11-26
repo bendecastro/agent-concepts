@@ -2250,3 +2250,6 @@ Removed personal rows 9, 13, 18, 21, 31 and the tool-thresholds line from the pu
 Resolve and record the landing branch in preflight, then use it for policy checks, claim checkout, fetch and landing. Standalone execution/finishing and generated scaffold guidance no longer assume a named trunk. Scaffold output regression reproduced on learning and knowledge and passes after the change; the `main` fixture consumer scenario is documented separately.
 ## [2026-11-26] test | Setup verifies the local gate without existing CI
 Existing setup now fills checks and layout from recon and names unresolved owner actions. One Terra low run per arm: the revised body ran its portable gate locally; the old body wrote the same gate but did not run it; targeted conventions partial in both. CI toolchain and scaffold output unchanged.
+
+## [2026-11-26] implement | Bundle the pipeline publish checker
+Moved the checker into the skill body, retained the checkout entry point, and added an installed-file check. One dry run per arm verified the old install lacked the checker and the bundled install ran it without a policy; preflight wording is unchanged.
