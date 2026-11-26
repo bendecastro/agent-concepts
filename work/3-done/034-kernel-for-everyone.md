@@ -7,7 +7,6 @@ Blocked by: nothing
 Kind: docs
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
-Needs owner: approve the keep/move list for each kernel rule before anything moves
 
 ## Requirements
 
@@ -18,8 +17,8 @@ Needs owner: approve the keep/move list for each kernel rule before anything mov
 
 ## Steps
 
-- [ ] Audit list: one line per kernel rule with class and reason, written into this item's Steps Notes and shown to the owner. Blocked by: nothing. Done when the owner has approved or changed each line. Out of scope: moving anything.
-- [ ] Apply the approved moves: edit `concepts/agent-kernel/body/AGENT-KERNEL.md`, carry personal rules into the owner's private preferences, update the kernel copies and CONCEPT provenance. Blocked by: Audit list. Done when no approved-personal rule remains in the kernel, the owner's own instructions still contain each moved rule, kernel-copy lint warnings are resolved, and the pressure-tested kernel rules are unchanged in wording. Out of scope: re-running kernel pressure tests for unchanged rules.
+- [x] Audit list: one line per kernel rule with class and reason, written into this item's Steps Notes and shown to the owner. Blocked by: nothing. Done when the owner has approved or changed each line. Out of scope: moving anything.
+- [x] Apply the approved moves: edit `concepts/agent-kernel/body/AGENT-KERNEL.md`, carry personal rules into the owner's private preferences, update the kernel copies and CONCEPT provenance. Blocked by: Audit list. Done when no approved-personal rule remains in the kernel, the owner's own instructions still contain each moved rule, kernel-copy lint warnings are resolved, and the pressure-tested kernel rules are unchanged in wording. Out of scope: re-running kernel pressure tests for unchanged rules.
 
 ### Audit list (proposed 2026-11-26, awaiting owner approval)
 
@@ -62,4 +61,6 @@ Classes: **keep** (sensible for anyone), **personal** (moves to the owner's priv
 Public kernel edits applied 2026-11-26 (rows 7, 9, 12, 13, 18, 21, 22, 23, 31).
 
 ## Outcome
+
+Owner approved the audit as written (rows 1, 24, 30 kept) on 2026-11-26. Public kernel edits landed in commit 3895d3d. Personal rules moved to the owner's private preferences (recap in the preferences file; tool and synced-folder rules in a machine-safety topic file) and removed from every harness copy; the worktree cleanup rule stays in the owner's harness copies on purpose. How strangers get the kernel is planned in 030-ship-machine-only-rules.
 
