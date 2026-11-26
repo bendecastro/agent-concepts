@@ -2,12 +2,13 @@
 
 Why: on an existing codebase `bc-setup-project` creates `docs/design/README.md` and `docs/guardrails/README.md` with empty lists and only names follow-up skills in its close-out, so nothing records the app's existing design, nothing adds the stack checks that `bc-performance-guardrails` § Setup checks says belong "at project setup", and `work/` starts empty on the owner's dashboard.
 Done when: setting up an existing codebase proposes, in the init plan, only the starter items its survey shows apply; the accepted ones land in `work/1-planned/` and `work/order.md`; the change has held under a pressure test; requirements in [requirements.md](requirements.md).
-Stage: next
+Stage: now
 Blocked by: nothing
 Kind: feature
 Source: owner conversation about post-setup onboarding, 2026-11-26
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
+Held by: pi 01a218e4 since 2026-11-26 21:25 +00:00
 
 ## Steps
 
