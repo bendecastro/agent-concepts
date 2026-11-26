@@ -2233,3 +2233,6 @@ GitHub image proxy times out (504) on the shields.io release badge; badgen.net l
 
 ## [2026-11-26] test | Gemini 4 Neon README prose pass
 Delegate on antigravity-acp/gemini-4-neon:high produced a prose rewrite (owner-notes only, sandbox blocked writes so parent extracted it); structure checks pass; filed adopt question.
+
+## [2026-11-26] implement | README prose from Gemini 4 Neon
+Adopted the Gemini 4 Neon prose rewrite (structure unchanged), with the owner's own edit to the Simple on purpose ending.

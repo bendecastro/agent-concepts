@@ -14,10 +14,9 @@
 
 ---
 
-Skills and rules for coding agents — a way of working where questions get settled before code is written, every test is proved able to fail before it is trusted, and work lives in
-files so your project builds intrinsic long-term memory.
+Most coding agents rush into code, guess what you meant, and forget everything once the chat closes. Here, questions get settled first, every test proves it can fail before anyone trusts it, and work lives in files so your project builds intrinsic long-term memory.
 
-Install them once and they work in the coding agent you already use: **Claude Code**, **Codex**, **Pi**, Cursor, or any other harness. All skills are prefixed with `bc-` so they don't conflict with the ones you already have, and uninstalling them is straightforward.
+Install them once and use them in **Claude Code**, **Codex**, **Pi**, Cursor, or almost any other coding tool. Every skill starts with `bc-` so nothing clashes with what you already have, and uninstalling is clean.
 
 <br>
 
@@ -27,8 +26,7 @@ Seven ideas run through the whole set.
 
 ### Settle questions before building
 
-An agent that guesses what you wanted builds the wrong thing quickly. So the agent asks you questions one at a time until every decision in a plan is made, explores ideas with you
-before they become plans, and brings real choices to you instead of deciding and then building something you didn't want.
+An agent that guesses what you wanted only builds the wrong thing faster. These skills slow it down first: exploring rough ideas with you, asking questions one at a time until every decision is settled, and bringing real choices to you instead of quietly picking a side.
 
 **Skills:** [bc-grilling](concepts/bc-grilling/body/SKILL.md) · [bc-brainstorming](concepts/bc-brainstorming/body/SKILL.md) · [bc-plan-to-pipeline](concepts/bc-plan-to-pipeline/body/SKILL.md) · the [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md), a short set of rules the agent reads in every session
 
@@ -36,12 +34,11 @@ before they become plans, and brings real choices to you instead of deciding and
 
 ### Test first, and prove the test can fail
 
-The agent writes a test first and watches it fail, then writes the code that makes it pass. A test that has never failed proves nothing, so when the code already works, the agent breaks it on purpose, checks that the test notices, and undoes the break.
+Once a plan is settled, the agent writes a test and watches it fail before writing the code that makes it pass. A test that never failed proves nothing (it might approve anything), so on existing code the agent breaks things on purpose, checks the test catches it, and undoes the break.
 
-Every change gets ordinary example tests. Logic that follows a clear rule (calculations, parsers, sorting) also gets tests that try hundreds of inputs automatically. Mathematical
-proof is off unless you turn it on, and the agent suggests it where a mistake would be costly.
+Every change gets ordinary example tests. Rule-based logic (calculations, sorting, or reading structured text) also gets automated tests that try hundreds of inputs at once. Mathematical proof stays off unless you turn it on, suggested only where mistakes are costly.
 
-Agents often say a task is done when it isn't, so here "done" comes with proof: the agent runs the tests, reads the result and shows you. A bug is first made to happen on demand, so the fix can be shown to stop it.
+Agents often call a job done too early, so "done" comes with proof: the agent runs the tests, reads the output, and shows you. Bugs follow the same rule — first made to happen on demand, so the fix can be shown to stop them.
 
 **Skills:** [bc-tdd](concepts/bc-tdd/body/SKILL.md) · [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md)
 
@@ -49,7 +46,7 @@ Agents often say a task is done when it isn't, so here "done" comes with proof: 
 
 ### Simple on purpose
 
-Simple code is easier to trust, test and change, and it takes effort to get there. Before building anything, the agent looks for the simplest way to get the result: something the project already has, a feature the language already offers, or a single line. It writes new code only when those fall short. What it does build, it shapes into parts that are simple to use from outside, with the hard work kept inside, so the next person or agent can use a part without understanding all of it.
+Simple code is easier to trust, test and change, yet it rarely happens by accident. Before writing anything new, the agent looks for the smallest move that works: something the project already has, a feature built into the language, or a single line. New code comes only when those fall short. What it does build gets shaped into tidy parts that are easy to use from outside, with the hard work tucked inside, so the next person or agent can use a part without understanding all of it.
 
 **Skills:** [bc-minimal-solution-ladder](concepts/bc-minimal-solution-ladder/body/SKILL.md) · [bc-codebase-design](concepts/bc-codebase-design/body/SKILL.md)
 
@@ -57,7 +54,7 @@ Simple code is easier to trust, test and change, and it takes effort to get ther
 
 ### Independent checking
 
-The agent that wrote something is the worst one to judge it. A separate agent reviews every change with fresh eyes: does it do what was asked, and is it well made? For big questions, several AI models answer and challenge each other's answers.
+The agent that wrote the code is the worst judge of it, just as writers struggle to proofread their own drafts. A separate agent reviews every change with fresh eyes, checking whether it does what was asked and is well made. On big questions, several AI models challenge each other's answers.
 
 **Skills:** [bc-code-review](concepts/bc-code-review/body/SKILL.md) · [bc-pipeline-to-done](concepts/bc-pipeline-to-done/body/SKILL.md) · the [council skills](#running-several-agents)
 
@@ -65,8 +62,7 @@ The agent that wrote something is the worst one to judge it. A separate agent re
 
 ### Work lives in files, not chat
 
-A chat disappears when the session ends... files stay. Plans, work items and handoff notes are saved in the project, so they survive a crash and another agent, or a dashboard, can read
-them. Over time this becomes the project's long-term memory: facts that an agent can look up when it needs them.
+A chat vanishes when a session ends, while files stay put. Plans, work items and handoff notes live inside the project, surviving crashes so the next agent or a dashboard can read them. Over time they become the project's long-term memory: past facts any session can look up.
 
 **Skills:** [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) · [bc-handoff](concepts/bc-handoff/body/SKILL.md) · [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) · [bc-wiki-maintain](concepts/bc-wiki-maintain/body/SKILL.md) · the [work-data format](concepts/bc-setup-project/body/work-data.md) a dashboard reads
 
@@ -74,8 +70,7 @@ them. Over time this becomes the project's long-term memory: facts that an agent
 
 ### Keep the project consistent, and stop it getting worse
 
-Many short-lived agents working on one project will slowly pull it in different directions unless something holds it together. Every colour, size and wording pattern is defined once and
-reused. Automatic checks fail when a change makes the project slower, bigger or more tangled: performance budgets limit time, size or memory, and fitness functions check established rules about how code should be put together, such as "the screen code never talks to the database directly".
+Many short-lived agents on one project will slowly pull it apart unless something holds it together. Every colour, size and wording pattern is defined once and reused. Automatic checks guard the rest, failing whenever a change makes things slower, bigger or more tangled: performance budgets cap time, size or memory, and structural checks (fitness functions) enforce ground rules such as "the screen code never talks to the database directly".
 
 **Skills:** [bc-ui-design](concepts/bc-ui-design/body/SKILL.md) · [bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md)
 
@@ -83,9 +78,9 @@ reused. Automatic checks fail when a change makes the project slower, bigger or 
 
 ### The instructions are sourced, tested and improved from use
 
-Every skill records where its ideas came from ([hard rules](AGENTS.md)). A skill that makes the agent follow a discipline is published only after it holds up in a pressure test: an agent is tempted with scripted excuses ("I'm short on time", "just trust me"), to see if it skips the rules, and the skill wording is changed until the skill works as intended.
+The same care goes into the skills themselves. Every skill records where its ideas came from ([hard rules](AGENTS.md)), and no discipline skill ships until it passes a pressure test: a test agent faces scripted excuses ("I'm short on time", "just trust me"), and wording gets tightened until it holds the line.
 
-After a session, the agent can suggest better instructions for itself and ways to improve the structure you built for it to operate in (recursive self-improvement 😉).
+When a session ends, the agent can also look back and suggest sharper instructions for itself, plus improvements to the setup you built for it to work in (recursive self-improvement 😉).
 
 **Skills:** [bc-self-improve](concepts/bc-self-improve/body/SKILL.md) · [bc-prompting-agents](concepts/bc-prompting-agents/body/SKILL.md)
 
@@ -102,34 +97,34 @@ flowchart LR
     D -- "changes needed" --> C
 ```
 
-Set up a project with `/bc-setup-project`, plan its work with `/bc-plan-to-pipeline`, then build it with your agent. The agent finishes the work already started, then takes the next planned item and ticks off each step as it is done. It asks you when something is unclear.
+Prepare your project with `/bc-setup-project`, talk through the plan with `/bc-plan-to-pipeline`, and let your agent build. It finishes work already under way before taking the next planned item, ticks off each step as it lands, and asks whenever something is unclear.
 
 > [!TIP]
-> **Working while you are away.** `/bc-pipeline-to-done` builds the same work without you. It takes only the items marked `Ready for agent: yes`, which `/bc-plan-to-pipeline` marks for you, or GitHub issues labelled `ready-for-agent`. Since nobody is there to answer, it takes on only the work those marks cover, because you already settled its questions, and then diligently verifies the work before merging. It claims each item so two agents never build the same thing. Each builder works in its own separate copy of the project, and other agents review every step before it is merged. When it needs a decision, it sets the item aside with your question and moves on.
+> **Working while you are away.** `/bc-pipeline-to-done` keeps the same work moving when you step away. It takes only items marked `Ready for agent: yes` (set by `/bc-plan-to-pipeline`) or GitHub issues labelled `ready-for-agent`. Since nobody is there to answer, it takes on only the work those marks cover, because you already settled its questions, and then diligently verifies the work before merging. It claims each item so two agents never collide, builds in a separate copy of the project, and has other agents review every step before merging. When a genuine decision comes up, it sets the item aside with your question and moves on.
 
 <br>
 
 ### Running it as a software factory
 
-A factory is more than its machines. Nothing enters the line until its questions are settled, every piece is checked at every step, and each defect that gets out leads to a change in the line itself, so that kind of defect cannot get out again. These skills give you each part.
+A factory is more than its machines. Nothing enters the line until its questions are settled, every piece is checked along the way, and each defect that slips out changes the line itself so it cannot escape twice. These skills cover each step.
 
 **Once, when you start a project**
-- `/bc-setup-project` makes the project ready for agents.
+- `/bc-setup-project` gets the project ready for agents.
 
 **For each idea**
 - `/bc-triage` first, if the idea arrives as a GitHub issue.
-- `/bc-plan-to-pipeline` settles the questions and turns the idea into planned work.
-- `/bc-council-challenge-plan` for a large or risky plan, so several AI models look for wrong assumptions before anything is built (Pi only).
+- `/bc-plan-to-pipeline` settles open questions and turns the idea into planned work.
+- `/bc-council-challenge-plan` for a large or risky plan, bringing in several AI models to spot shaky assumptions before anything is built (Pi only).
 - `/bc-pipeline-to-done` to build while you are away.
 
 **At the end of each session**
-- `/bc-self-improve` suggests changes to the skills, checks or tools so the next session goes better.
+- `/bc-self-improve` suggests tweaks to skills, checks or tools so the next session goes better.
 
 **Regularly, as the code grows**
 
-Agents add code quickly, and with it tangles and bugs nobody has reported yet. Every few finished pieces of work, or whenever a part of the code has grown a lot:
+Agents write code quickly, and speed quietly builds up tangles and unreported bugs. Every few finished pieces of work, or whenever one area has grown rapidly:
 - `/bc-improve-codebase-architecture` finds parts that would be simpler if reshaped.
-- `/bc-find-bugs` looks for bugs in the newest or busiest code and proves each with a failing test.
+- `/bc-find-bugs` hunts for bugs in the newest or busiest code and proves each with a failing test.
 
 **As needed**
 
@@ -161,17 +156,17 @@ When a bug gets out, fix it, then ask what would have caught it: a test, a guard
 
 ### The skills, stage by stage
 
-Each skill writes its result to files or GitHub issues, so the next step does not need the same session. See how the planning skills fit together: [pipeline.md](docs/guides/pipeline.md).
+Each skill writes its output to files or GitHub issues, so the next step never needs the same session. See how the planning skills connect in [pipeline.md](docs/guides/pipeline.md).
 
-Skills marked `/name` are ones you type, the rest load on their own when they fit. Skills with a link to [workflows.md](docs/guides/workflows.md) have a longer description there (when to run, what it asks, what you get back).
+Skills marked `/name` are ones you type yourself; the rest load automatically when they fit. Skills linked to [workflows.md](docs/guides/workflows.md) have a fuller guide there (when to run, what it asks, what you get back).
 
 <details>
 <summary><b>Set up</b> — get a project ready for agents</summary>
 
 | Skill | What it does | How it starts |
 |---|---|---|
-| [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) | Gets a project ready for agents to work in: a folder for planned work, a place for its docs, and an automatic check that runs on every change. It only adds files that are missing and never overwrites yours unless you ask (`--force`, `--force-root`). Learning projects get a notes vault instead. | [`/bc-setup-project`](docs/guides/workflows.md#bc-setup-project) |
-| [bc-using-git-worktrees](concepts/bc-using-git-worktrees/body/SKILL.md) | Gives a piece of work its own separate copy of the project, so unfinished changes never get mixed into what you are working on, and tidies the copy away afterwards. | automatically |
+| [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) | Prepares a project for agents: a folder for planned work, a place for its docs, and an automatic check on every change. It only adds missing files and never overwrites yours unless you ask (`--force`, `--force-root`). Learning projects get a notes vault instead. | [`/bc-setup-project`](docs/guides/workflows.md#bc-setup-project) |
+| [bc-using-git-worktrees](concepts/bc-using-git-worktrees/body/SKILL.md) | Gives a piece of work its own separate copy of the project so unfinished changes never collide with what you are working on, then tidies the copy away afterwards. | automatically |
 
 </details>
 
@@ -185,8 +180,8 @@ Skills marked `/name` are ones you type, the rest load on their own when they fi
 | [bc-domain-modeling](concepts/bc-domain-modeling/body/SKILL.md) | Pins down the words your project uses so everyone, agents included, means the same thing by them. Keeps a glossary and a record of hard decisions. | automatically |
 | [bc-prd-drafting](concepts/bc-prd-drafting/body/SKILL.md) | Writes up what was already decided in the conversation as a requirements document, without asking you again. | automatically |
 | [bc-writing-plans](concepts/bc-writing-plans/body/SKILL.md) | Turns agreed requirements into a step-by-step build plan before any code is touched. | automatically |
-| [bc-plan-slicing](concepts/bc-plan-slicing/body/SKILL.md) | Cuts a plan into small pieces that each work end to end on their own, in the order they depend on each other, so an agent can pick one up and finish it. | automatically |
-| [bc-plan-to-pipeline](concepts/bc-plan-to-pipeline/body/SKILL.md) | Runs the whole planning sequence in one go: questions, requirements, then slicing into work items. For a design you already settled it asks only what is still open. It opens GitHub issues only if the project already uses them or you ask. | `/bc-plan-to-pipeline` |
+| [bc-plan-slicing](concepts/bc-plan-slicing/body/SKILL.md) | Cuts a plan into small pieces that each work end to end on their own, ordered by what depends on what, so an agent can pick one up and finish it. | automatically |
+| [bc-plan-to-pipeline](concepts/bc-plan-to-pipeline/body/SKILL.md) | Runs the whole planning sequence in one go: questions, requirements, then slicing into work items. For a settled design, it asks only what is still open; it opens GitHub issues only if the project already uses them or you ask. | `/bc-plan-to-pipeline` |
 | [bc-to-spec](concepts/bc-to-spec/body/SKILL.md) | Turns what you have discussed into a written spec on GitHub. | [`/bc-to-spec`](docs/guides/workflows.md#bc-to-spec-and-bc-to-tickets) |
 | [bc-to-tickets](concepts/bc-to-tickets/body/SKILL.md) | Breaks a plan into GitHub issues that agents can each pick up on their own. | [`/bc-to-tickets`](docs/guides/workflows.md#bc-to-spec-and-bc-to-tickets) |
 | [bc-triage](concepts/bc-triage/body/SKILL.md) | Sorts incoming GitHub issues: checks each one, asks you what is unclear, and marks it ready for an agent or rejected with a reason. | [`/bc-triage`](docs/guides/workflows.md#bc-triage) |
@@ -208,11 +203,9 @@ Skills marked `/name` are ones you type, the rest load on their own when they fi
 | [bc-minimal-solution-ladder](concepts/bc-minimal-solution-ladder/body/SKILL.md) | Stops the agent from building more than needed. Before writing code it asks: does this need to exist? Does the project already have it? Would one line do? It stops at the first yes. | automatically |
 | [bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md) | Sets limits on speed, size and structure, plus automatic checks that fail when a change breaks them, so the project cannot quietly get slower or messier. | automatically |
 
-**Design consistency.** Each project writes down its design choices in `docs/design/`. A colour, size or wording pattern is defined once, as a named value or a shared building block, and every screen uses that instead of typing the value in again. Where a rule can be checked by searching the code, it becomes an automatic check. A visual change is not done until the agent has taken screenshots and written a critique of each one.
+**Design consistency.** Each project records its design choices in `docs/design/`. A colour, size or wording pattern is defined once, as a named value or shared building block, and every screen reuses it instead of typing the value again. Rules that can be checked by scanning the code become automatic checks, and a visual change is not done until the agent has taken screenshots and critiqued each one.
 
-**Guardrails and fitness functions.** Each project lists its limits and checks in `docs/guardrails/README.md`, and the checks run with the project's other tests on every change.
-An agent can set a limit itself, from a measurement or a published guideline, and marks it as its own choice so you can change it. A limit you set is never loosened without asking you.
-After fixing something that got slower, bigger or more tangled, the agent adds a check so it cannot come back.
+**Guardrails and fitness functions.** Each project lists its limits and checks in `docs/guardrails/README.md`, and they run alongside the project's other tests on every change. An agent can set a limit from a measurement or published guideline, marking it as its own choice so you can adjust it; a limit you set is never loosened without asking. After fixing something that got slower, bigger or more tangled, the agent adds a check so it cannot return.
 
 </details>
 
@@ -246,13 +239,10 @@ After fixing something that got slower, bigger or more tangled, the agent adds a
 
 | Skill | What it does | How it starts |
 |---|---|---|
-| [bc-handoff](concepts/bc-handoff/body/SKILL.md) | Writes down where a session got to, so another session, agent or day can pick up exactly where it left off. | automatically |
+| [bc-handoff](concepts/bc-handoff/body/SKILL.md) | Writes down where a session got to, so another session, agent or day can pick up right where it left off. | automatically |
 | [bc-work-sync](concepts/bc-work-sync/body/SKILL.md) | Checks that the project's list of planned work matches its docs: finds missing, finished or stale items and proposes fixes before changing anything. | [`/bc-work-sync`](docs/guides/workflows.md#bc-work-sync) |
 
-**Dashboard.** Each project's work items are machine-readable.
-`python3 .bc-agent/scripts/work_index.py --json` prints every item as JSON — stage, steps, blockers, which agent holds it, review and gate results, time and cost.
-`python3 .bc-agent/scripts/work_spent.py <item>` estimates one item's time and cost from session files. Field definitions:
-[work-data reference](concepts/bc-setup-project/body/work-data.md). How to build a dashboard on these: [workflows.md § Building your own dashboard](docs/guides/workflows.md#building-your-own-dashboard).
+**Dashboard.** Each project's work items are machine-readable. `python3 .bc-agent/scripts/work_index.py --json` prints every item as JSON (stage, steps, blockers, holding agent, review and gate results, time and cost), and `python3 .bc-agent/scripts/work_spent.py <item>` estimates one item's time and cost from session files. See the [work-data reference](concepts/bc-setup-project/body/work-data.md) for fields and [workflows.md § Building your own dashboard](docs/guides/workflows.md#building-your-own-dashboard) to build a dashboard on them.
 
 </details>
 
@@ -286,8 +276,7 @@ After fixing something that got slower, bigger or more tangled, the agent adds a
 | [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) | Splits a big investigation across multiple helper agents working in parallel, and saves each result to a file so nothing is lost if a session dies. | [`/bc-delegate-investigation`](docs/guides/workflows.md#bc-delegate-investigation) |
 | [bc-dispatching-parallel-agents](concepts/bc-dispatching-parallel-agents/body/SKILL.md) | How to hand separate tasks to several agents at once: what each one needs to know and how to put their results together. | automatically |
 
-**Council skills** (Pi only; need [`pi-subagents`](https://www.npmjs.com/package/pi-subagents)):
-run several models against the same question, then cross-examine each other's answers. Each council skill wraps a parent skill through the advisor council.
+**Council skills** (Pi only; need [`pi-subagents`](https://www.npmjs.com/package/pi-subagents)): put the same question to several models and have them cross-examine each other's answers. Each council skill wraps a parent skill through the advisor council.
 
 | Skill | What it does | How it starts |
 |---|---|---|
@@ -300,18 +289,15 @@ run several models against the same question, then cross-examine each other's an
 
 </details>
 
-The always-on [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md) loads in every session
-and holds the basic rules: how the agent behaves, how it checks its work, and how it keeps its working memory focused. The install methods below do not add it: copy it into your agent's always-on instructions file (`AGENTS.md`, `CLAUDE.md` or similar); [harnesses.md](docs/guides/harnesses.md) says where each agent reads that file.
+The always-on [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md) loads in every session and holds the basic rules: how the agent behaves, checks its work, and keeps its working memory focused. The install methods below do not add it, so copy it into your agent's always-on instructions file (`AGENTS.md`, `CLAUDE.md` or similar); [harnesses.md](docs/guides/harnesses.md) says where each agent reads that file.
 
-Every concept is listed in [index.md](index.md). How agents test the code they change:
-[workflows.md § How the skills test code](docs/guides/workflows.md#how-the-skills-test-code).
+Every concept is listed in [index.md](index.md). To see how agents test the code they change, read [workflows.md § How the skills test code](docs/guides/workflows.md#how-the-skills-test-code).
 
 <br>
 
 ## Install
 
-Pick your agent, open its box, and paste the command. Each installs a **release**: a fixed, named version (its name, such as `v0.3.0`, is called a tag), not the newest code, which can hold
-unfinished work. The newest release is `v0.3.0`; if the [releases page](https://github.com/bendecastro/agent-concepts/releases) lists a newer tag, use it in place of `v0.3.0`.
+Pick your agent, open its box, and paste the command. Each installs a **release** — a fixed, named version (its name, such as `v0.3.0`, is called a tag) — not the newest code, which can hold unfinished work. The newest release is `v0.3.0`; if the [releases page](https://github.com/bendecastro/agent-concepts/releases) lists a newer tag, use it in place of `v0.3.0`.
 
 | Agent | Method |
 |---|---|
@@ -322,8 +308,7 @@ unfinished work. The newest release is `v0.3.0`; if the [releases page](https://
 | An agent that cannot load skills | [bootstrap prompt](docs/guides/bootstrap.md) |
 | Contributors | [install from a checkout](#install-from-a-checkout-contributors) |
 
-Details and known problems for each agent: [harnesses.md](docs/guides/harnesses.md).
-Prompts for agents without skill loading: [bootstrap.md](docs/guides/bootstrap.md).
+Details and known problems for each agent live in [harnesses.md](docs/guides/harnesses.md); prompts for agents without skill loading live in [bootstrap.md](docs/guides/bootstrap.md).
 
 > [!IMPORTANT]
 > - **Pick one method per agent.** Two methods install each skill twice. Several agents also read `~/.agents/skills/`; the contributor install and `npx skills -a pi` both write there.
@@ -414,15 +399,9 @@ pi remove git:github.com/bendecastro/agent-concepts@v0.3.0
 <details>
 <summary><b>Other agents (<code>npx skills</code>)</b></summary>
 
-Use the [`skills` command-line tool](https://github.com/vercel-labs/skills) through `npx`.
-`npx` comes with [Node.js](https://nodejs.org); it downloads and runs a command-line tool in
-one step. `-g` installs for you in every project; `-y` skips the tool's questions.
-The skills go into `~/.agents/skills/`, which Codex and Pi also read. If either of those is
-installed, the skills show up there too, and removing them for one agent leaves them in place
-for the others.
+Use the [`skills` command-line tool](https://github.com/vercel-labs/skills) through `npx`, which comes with [Node.js](https://nodejs.org) and downloads and runs a tool in one step. `-g` installs for you in every project; `-y` skips the prompts. Skills land in `~/.agents/skills/`, which Codex and Pi also read, so they show up there too, and removing them for one agent leaves them in place for the others.
 
-[docs/guides/install-packs.md](docs/guides/install-packs.md) has a smaller command for each
-pack (one skill plus the skills it needs).
+For a smaller install (one skill plus the skills it needs), see [docs/guides/install-packs.md](docs/guides/install-packs.md).
 
 <details>
 <summary><b>Cursor</b></summary>
@@ -607,8 +586,7 @@ npx -y skills remove -g -a opencode -y \
 <details>
 <summary><b>Any other agent</b></summary>
 
-Change `<agent>` to your agent's id from
-[the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md).
+Change `<agent>` to your agent's id from [the `skills` agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md).
 
 Install all public skills:
 
@@ -663,8 +641,7 @@ npx -y skills update -g -y
 <a name="install-from-a-checkout-contributors"></a>
 <details>
 <summary><b>Install from a checkout (contributors)</b></summary>
-This links the skills to a local copy of this repository, so your edits take effect at once.
-This installs the newest code, not a release, so expect unfinished work. Do not combine it with a method above for the same agent.
+This links the skills to a local copy of this repository so your edits take effect at once. It tracks the newest code instead of a release, so expect unfinished work, and do not combine it with a method above for the same agent.
 
 You need Git and Python 3. To run the repository's checks (`scripts/gate`), also install `pytest` and `hypothesis`, for example with `pip install pytest hypothesis`.
 
@@ -691,19 +668,15 @@ cd "$AGENT_CONCEPTS" && git pull --ff-only && python3 scripts/deploy-local-skill
 cd "$AGENT_CONCEPTS" && python3 scripts/deploy-local-skills.py --uninstall
 ```
 
-The script makes symlinks (shortcuts to a folder). Its options:
+The script makes symlinks (shortcuts pointing to a folder). Its options:
 
-- **`--uninstall`** removes only the links this script created; other skills are left alone.
-  Add `--dry-run` to preview it.
+- **`--uninstall`** removes only the links this script created and leaves other skills alone. Add `--dry-run` to preview it.
 - `--dry-run` shows what would change without changing anything.
 - `--force` replaces existing files that are not symlinks; it does not replace folders.
-- `--harness {all,pi,claude}` picks which of the Pi and Claude Code folders are written. The
-  shared `~/.agents/skills/` folder is always written.
+- `--harness {all,pi,claude}` picks which of the Pi and Claude Code folders are written. The shared `~/.agents/skills/` folder is always written.
 - `--skip NAME` leaves one skill out; repeat it for more.
 
-A symlink to a skill this checkout does not own is reported and left alone. The links are
-relative, so the checkout can live anywhere. Concepts whose `CONCEPT.md` says `deployed: no`
-are not linked.
+A symlink pointing to a skill this checkout does not own is reported and left alone. The links are relative so the checkout can live anywhere, and concepts whose `CONCEPT.md` says `deployed: no` are skipped.
 
 </details>
 
@@ -711,7 +684,7 @@ are not linked.
 
 ## Working on this repository
 
-How this repository is organised and the rules for changing it. You need this only if you want to change the skills themselves.
+How this repository is organised and the rules for changing it. You only need this section if you want to edit the skills themselves.
 
 ### Where things are
 
@@ -730,58 +703,35 @@ How this repository is organised and the rules for changing it. You need this on
 | [`policies/`](policies/README.md) | documentation and a template for the publish policy, which lives outside the repository |
 | [`AGENTS.md`](AGENTS.md) | operating manual for agents working on this repository |
 
-`python3 scripts/lint.py` checks for mechanical drift: broken links, missing sources, stale index
-entries and status pages. For each deployed concept it also checks the recorded test status in
-`CONCEPT.md`. It reads that record; it does not rerun the pressure tests.
+`python3 scripts/lint.py` checks for mechanical drift: broken links, missing sources, stale index entries and status pages. For each deployed concept it also checks the recorded test status in `CONCEPT.md`, reading that record without rerunning the pressure tests.
 
 <br>
 
 ### Hard rules
 
-[`AGENTS.md`](AGENTS.md) names four hard rules. They are harder to change than other rules
-because breaking them is most tempting when they get in the way. Each can be changed
-deliberately, with the change logged, but not skipped quietly.
+[`AGENTS.md`](AGENTS.md) sets four hard rules. They are harder to change than other rules because breaking them is most tempting when they get in the way; each can be changed deliberately with the change logged, never skipped quietly.
 
-- **Canon rule** — don't hand-edit derived outputs, or anything outside this repository that a
-  harness's symlink points into. The next rebuild reverts it.
+- **Canon rule** — don't hand-edit derived outputs, or anything outside this repository that a harness's symlink points into; the next rebuild reverts it.
 - **Provenance rule** — every concept names its sources in `CONCEPT.md`.
-- **Test rule** — a concept that enforces discipline is not deployed until it has held under a
-  pressure test.
+- **Test rule** — a concept that enforces discipline is not deployed until it has held under a pressure test.
 - **Immutability rule** — files in `docs/research/raw/` are never edited.
 
 <br>
 
 ### Publishing and authorisation
 
-Agents publish (push, open pull requests, release) only on your explicit instruction or a
-matching rule in `~/.config/agent-concepts/publish.yaml`. That file is yours, lives outside the
-repository, and denies by default; with no file, agents ask. A repository's own instruction
-files can restrict publishing but cannot grant it. A change to the policy file is never
-publishable under the policy itself. `scripts/publish-check.py` checks whether a rule matches.
-See [policies/README.md](policies/README.md).
+Agents publish (push, open pull requests, release) only on your explicit instruction or a matching rule in `~/.config/agent-concepts/publish.yaml`. That file belongs to you, lives outside the repository, and denies by default; when it is missing, agents ask first. A repository's own instructions can restrict publishing, never grant it, and a change to the policy file is never publishable under the policy itself. `scripts/publish-check.py` checks whether a rule matches; see [policies/README.md](policies/README.md).
 
 <br>
 
 ### Private concepts
 
-For guidance that cannot be published (infrastructure details, employer process, or an upstream
-text whose licence forbids redistribution), put a concept in
-`~/.config/agent-concepts/concepts/<name>/body/SKILL.md`, in the same shape as `concepts/`. The
-deploy script links it alongside the public ones. A private concept overrides a public one of the
-same name, and the script reports the override.
+For guidance that cannot be published (infrastructure details, employer process, or an upstream text whose licence forbids redistribution), put a concept in `~/.config/agent-concepts/concepts/<name>/body/SKILL.md`, in the same shape as `concepts/`. The deploy script links it alongside the public ones; a private concept overrides a public one of the same name, and the script reports the override.
 
 <br>
 
 ### Provenance and licensing
 
-This repository is released under the [MIT licence](LICENSE): you may use, copy and change it
-freely, as long as you keep the copyright notice. It was built by reading other people's work
-and adapting it: Jesse Vincent's
-[superpowers](https://github.com/obra/superpowers) (MIT), [Matt Pocock's
-skills](https://github.com/mattpocock/skills), and published guidance from Anthropic, OpenAI and
-Google. `docs/research/raw/ingested/CITATIONS.md` indexes the sources.
+This repository is released under the [MIT licence](LICENSE), so you may use, copy and change it freely as long as you keep the copyright notice. It grew out of reading and adapting other people's work: Jesse Vincent's [superpowers](https://github.com/obra/superpowers) (MIT), [Matt Pocock's skills](https://github.com/mattpocock/skills), and published guidance from Anthropic, OpenAI and Google. `docs/research/raw/ingested/CITATIONS.md` indexes the sources.
 
-Concept bodies are rewritten and specialised, not copies of upstream. Where a body could not be
-written independently, the concept points upstream instead of copying it; the public `herdr`
-concept works this way because upstream states no licence. Some licensed upstream snapshots remain
-under `docs/research/raw/ingested/` as immutable evidence, under their own terms.
+Concept bodies are rewritten and specialised, not copies of upstream. Where a body could not be written independently, the concept points upstream instead; the public `herdr` concept works this way because upstream states no licence. Some licensed upstream snapshots stay under `docs/research/raw/ingested/` as immutable evidence, under their own terms.
