@@ -9,7 +9,7 @@ and writes nothing; the bc-setup-project skill's work-data.md lists its fields.
 Every item in 1-planned/ and 2-active/ needs a `Blocked by:` line naming full
 item names (`012-search-ranking`, comma-separated) or `nothing`. A `Stage:` line
 is optional; an unknown stage is an error. A `Kind:` line (security, bug, feature, ...)
-is optional and free text, as is a `Needs owner:` line. An optional `Ready for agent: yes` line (bc-pipeline-to-done
+is optional and free text, as are `Needs owner:` and `Changes UI:` lines. An optional `Ready for agent: yes` line (bc-pipeline-to-done
 may build the item unattended) or `Waiting on owner: <question>` line (parked) is shown
 in the Folder column; an item with both is an error. Unknown names, dropped blockers, self-blocks and cycles among open
 items are errors. A blocker in 3-done/ is satisfied; an item is ready when all
@@ -78,7 +78,8 @@ ABBREVIATION = re.compile(r"\b(?:e\.g|i\.e|vs|etc|Mr|Mrs|Ms|Dr)\.$", re.I)
 WHY_LIMIT = 160
 JSON_FORMAT_VERSION = 1
 HEADER_LINES = {"why": "Why", "done_when": "Done when", "stage": "Stage", "blocked_by": "Blocked by",
-                "kind": "Kind", "needs_owner": "Needs owner", "source": "Source", "planned": "Planned", "ready_for_agent": "Ready for agent",
+                "kind": "Kind", "needs_owner": "Needs owner", "changes_ui": "Changes UI",
+                "source": "Source", "planned": "Planned", "ready_for_agent": "Ready for agent",
                 "waiting_on_owner": "Waiting on owner", "held_by": "Held by"}
 HELD_BY = re.compile(r"^(\S+) (\S+) since (\d{4}-\d{2}-\d{2} \d{2}:\d{2} (?:UTC|[+-]\d{2}:\d{2}))$")
 STEP = re.compile(r"^- \[([ xX])\] ?(.*)$")

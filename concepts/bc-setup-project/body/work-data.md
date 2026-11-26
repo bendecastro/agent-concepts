@@ -44,6 +44,7 @@ Each value is the text after the label on its line, trimmed, or `null` when the 
 | `blocked_by` | `Blocked by:` (comma-separated item names or `nothing`) | stable for open items; best-effort otherwise |
 | `kind` | `Kind:` | best-effort |
 | `needs_owner` | `Needs owner:` (what the owner must decide or do, and when) | best-effort |
+| `changes_ui` | `Changes UI:` (what the user will see change) | best-effort |
 | `source` | `Source:` | best-effort |
 | `planned` | `Planned:` | best-effort |
 | `ready_for_agent` | `Ready for agent:` (`yes` when set) | best-effort |

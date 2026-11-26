@@ -2239,3 +2239,6 @@ Adopted the Gemini 4 Neon prose rewrite (structure unchanged), with the owner's 
 
 ## [2026-11-26] implement | Needs owner: work-item line
 Added an optional `Needs owner:` header line (what the owner must decide or do, and when; removed once settled) to bc-setup-project's work-item rules, template and `--json` output, and to bc-plan-to-pipeline's header-line step, with a migration entry; the owner's dashboard shows it for planning time away.
+
+## [2026-11-26] implement | Changes UI: work-item line
+Added an optional `Changes UI:` header line (what the user will see change; kept current with the plan) to bc-setup-project's work-item rules, template and `--json` output, and to bc-plan-to-pipeline's header-line step, with a migration entry; the owner's dashboard shows it for planning UI review.

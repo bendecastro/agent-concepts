@@ -407,3 +407,20 @@ need an owner decision or action before or during its build; it is removed once 
 4. Add the line to any open item that already needs an owner decision or action.
 
 Without step 3 the line is still written and read from the item file; only the JSON lacks it.
+
+## Changes UI line
+
+Since 2026-11-26 the Work items rules in `.bc-agent/AGENTS.md` and the work-item template have an
+optional `Changes UI: <what the user will see change>` line, for an item whose build changes what
+users see or operate (screens, controls, labels, keys, layout, styling); it is kept current when
+the plan changes. `work_index.py --json` reports it as `header.changes_ui`. To adopt it in an
+existing project:
+
+1. In `.bc-agent/AGENTS.md`, copy the `Changes UI:` rule from the Work items section of a fresh
+   scaffold, below the `Needs owner:` rule.
+2. Copy the `Changes UI:` line from a fresh scaffold's `.bc-agent/templates/work-item.md` into the
+   project's template, below `Needs owner:`.
+3. Copy the script: `cp "$AGENT_CONCEPTS"/concepts/bc-setup-project/body/work_index.py .bc-agent/scripts/`.
+4. Add the line to any open item whose build changes what users see.
+
+Without step 3 the line is still written and read from the item file; only the JSON lacks it.

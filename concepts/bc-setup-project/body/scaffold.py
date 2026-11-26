@@ -1433,6 +1433,10 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   only the owner can make, an approval, an account or store action, a hands-on check. Remove it
   when that is settled, and record the decision as usual. Why: the owner's dashboard shows it, so
   the owner can plan time away.
+- **`Changes UI: <what the user will see change>` flags UI work.** Write it on any item whose build
+  changes what users see or operate: screens, controls, labels, keys, layout, styling. Leave it off
+  otherwise, and keep it current when the plan changes. Why: the owner's dashboard shows it, so the
+  owner can plan when to review UI work.
 - **Never reorder `work/order.md`; place what you add.** When it exists, a new item whose kind is
   on the `Top kinds:` line below goes directly below the run of top-kind items at the top of the
   list (at the top when there is none; several new ones oldest first); any other new item goes
@@ -1622,6 +1626,7 @@ Blocked by: <full names of the items this waits for, such as 012-search-ranking,
 Issue: <optional issue number; delete the line when there is none>
 Kind: <optional: security, bug, build, architecture, performance, tests, feature, docs, ...; delete the line when unclear>
 Needs owner: <optional: what the owner must decide or do, and when; delete the line when nothing, or once it is settled>
+Changes UI: <optional: what the user will see change, e.g. new launcher box in the side panel; delete the line when the build changes nothing users see or operate>
 Source: <optional: the skill or review that produced this item, e.g. bc-plan-to-pipeline; delete the line when unknown>
 Planned: <written by bc-plan-to-pipeline once it has planned this item, e.g. bc-plan-to-pipeline 2026-11-24; delete the line until then>
 Ready for agent: <optional: yes when every step states its done-criteria and out of scope, so bc-pipeline-to-done may build it unattended; delete the line otherwise>
