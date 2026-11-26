@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [028-missing-private-tool-fallbacks](2-active/028-missing-private-tool-fallbacks/plan.md) | active, ready for agent | — | 033-stranger-end-to-end-test | Deployed skills name tools only the owner's machine has (the publish check found through a private overlay, a guarded pytest runner, a storage health check, Pi… | 0/3 |
+| 1 | [028-missing-private-tool-fallbacks](2-active/028-missing-private-tool-fallbacks/plan.md) | active, ready for agent | — | 033-stranger-end-to-end-test | Deployed skills name tools only the owner's machine has (the publish check found through a private overlay, a guarded pytest runner, a storage health check, Pi… | 1/3 |
 | 2 | [029-setup-green-gate-and-ci](2-active/029-setup-green-gate-and-ci/plan.md) | active, ready for agent | — | 033-stranger-end-to-end-test | On an existing repository without CI, setup has no rule for filling `./scripts/gate`, so it stays red and blocks landing; the generated CI job leaves its toolc… | 1/2 |
 | 3 | [026-setup-starter-items](1-planned/026-setup-starter-items/plan.md) | planned, ready for agent | — | — | on an existing codebase `bc-setup-project` creates `docs/design/README.md` and `docs/guardrails/README.md` with empty lists and only names follow-up skills in… | 0/2 |
 | 4 | [030-ship-machine-only-rules](1-planned/030-ship-machine-only-rules/plan.md) | planned, ready for agent | — | — | Behaviours strangers need live only in the owner's own instructions: carry-on puts unfinished active work first only in the owner's file, away-mode questions p… | 0/2 |

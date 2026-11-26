@@ -18,6 +18,7 @@ Held by: pi 01a218e4 since 2026-11-26 18:23 +00:00
   - Gate: pass ./scripts/gate at ac96cac 2026-11-26
   - Landed in `ac96cac`. The second review's one finding (a stale log line) was fixed with the reviewer's exact wording and not re-reviewed. Pressure: one run per arm; revised body ran its portable gate, old body wrote the same gate but did not run it.
 - [ ] CI toolchain from existing CI or markers: reword the CI part of setup and the scaffold TODO comment; pressure scenario on the Node fixture. Blocked by: Gate without CI and filled conventions. Stories 2, 4. Done when the with-change run's workflow installs Node and dependencies before `scripts/gate` while the baseline does not; CONCEPT status, `index.md`, `.bc-agent/log.md` updated; lint has 0 ERROR and the gate passes. Out of scope: running CI remotely.
+  - Owner 2026-11-26: the Node fixture with existing CI showed no defect (old and new text both set up Node and the gate runs `npm ci`). Run one more pair on a fixture with no CI that uses uv or Rust; land the wording only if the old text fails there.
 
 ## Outcome
 
