@@ -2209,3 +2209,6 @@ Removed the folded "What a session looks like" example at the owner's request to
 
 ## [2026-11-25] implement | README factory diagram: span styling
 GitHub strips <code> inside mermaid labels; switched command styling to <span> (kept by GitHub) with no-wrap.
+
+## [2026-11-25] implement | README principles: seven ideas
+Folded "Evidence before claims" into the TDD idea as proof shown with "done"; renamed the simplicity idea "Simple on purpose" and framed it as a goal; fixed "writes". Owner keeps the wink emoji on purpose.

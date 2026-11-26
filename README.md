@@ -21,7 +21,7 @@ Install them once and they work in the coding agent you already use: **Claude Co
 
 ## How these skills work
 
-Eight ideas run through the whole set.
+Seven ideas run through the whole set.
 
 ### Settle questions before building
 
@@ -32,23 +32,18 @@ before they become plans, and brings real choices to you instead of deciding and
 
 ### Test first, and prove the test can fail
 
-The agent write a test first and watch it fail, then writes the code that makes it pass. A test that has never failed proves nothing, so when the code already works, the agent breaks it on purpose, checks that the test notices, and undoes the break.
+The agent writes a test first and watches it fail, then writes the code that makes it pass. A test that has never failed proves nothing, so when the code already works, the agent breaks it on purpose, checks that the test notices, and undoes the break.
 
 Every change gets ordinary example tests. Logic that follows a clear rule (calculations, parsers, sorting) also gets tests that try hundreds of inputs automatically. Mathematical
 proof is off unless you turn it on, and the agent suggests it where a mistake would be costly.
 
-**Skills:** [bc-tdd](concepts/bc-tdd/body/SKILL.md)
+Agents often say a task is done when it isn't, so here "done" comes with proof: the agent runs the tests, reads the result and shows you. A bug is first made to happen on demand, so the fix can be shown to stop it.
 
-### Evidence before claims
+**Skills:** [bc-tdd](concepts/bc-tdd/body/SKILL.md) · [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md)
 
-"It works" means nothing until it has been checked. The agent checks its own work, and other agents' reports, against the code itself before saying it is done. A bug is first made to
-happen on demand, then its cause is looked for.
+### Simple on purpose
 
-**Skills:** [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md) · the agent kernel
-
-### Build the least that works, and keep it simple to use
-
-Before writing code the agent asks: does this need to exist? Does the project already have it? Would one line do? It stops at the first yes. What does get built is shaped into parts with a simple outside and the complexity hidden inside, so they are easy to use, test and change.
+Simple code is easier to trust, test and change, and it takes effort to get there. Before building anything, the agent looks for the simplest way to get the result: something the project already has, a feature the language already offers, or a single line. It writes new code only when those fall short. What it does build, it shapes into parts that are simple to use from outside, with the hard work kept inside, so the next person or agent can use a part without understanding all of it.
 
 **Skills:** [bc-minimal-solution-ladder](concepts/bc-minimal-solution-ladder/body/SKILL.md) · [bc-codebase-design](concepts/bc-codebase-design/body/SKILL.md)
 
