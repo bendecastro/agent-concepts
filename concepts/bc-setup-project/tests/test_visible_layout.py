@@ -82,6 +82,16 @@ def _run(root, archetype, *extra, script=SCAFFOLD):
         check=True, capture_output=True, text=True).stdout
 
 
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_generated_work_rules_resume_unfinished_active_items_first(tmp_path, archetype):
+    _run(tmp_path, archetype)
+    rules = ' '.join((tmp_path / '.bc-agent/AGENTS.md').read_text().split())
+    assert 'When told to carry on without a named item, read every item in `work/2-active/` first.' in rules
+    assert 'Unfinished active work comes before new items from `work/order.md`.' in rules
+    assert 'Before taking an active item, check its `Held by:` line and recent commits for a live holder.' in rules
+    assert 'If another agent is still working on it, ask that agent rather than take the item.' in rules
+
+
 @pytest.mark.parametrize('archetype', (*VISIBLE, 'learning', 'knowledge'))
 def test_generated_text_does_not_assume_master(tmp_path, archetype):
     _run(tmp_path, archetype)

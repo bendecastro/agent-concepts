@@ -2271,3 +2271,6 @@ Standalone skills now say what to do without optional helpers; the pipeline stop
 
 ## [2026-11-26] implement | Standalone kernel package and fallback installer
 Stage the canonical kernel as bundled Markdown and fail lint on copy drift. The opt-in installer manages a versioned block without changing surrounding bytes. Pytest examples and a round-trip property ran; no kernel wording changed and no consumer pressure or harness deployment ran.
+
+## [2026-11-26] implement | Carry-on order and away questions without a destination
+Visible scaffold rules prefer unfinished active work and check holders; planning and both drain sources use the waiting header as the fallback. Scaffold test RED/GREEN for code, ops and hybrid. Masked round 2, one real Terra low run per arm per fixture: both carry-on fixtures revised 3/3 vs base 1/3 on actions (literal active-first read order not observed); planning fallback 3/3 both arms (comparison NO_DEFECT). Round 1 carried owner rules and is excluded. No live drain ran.

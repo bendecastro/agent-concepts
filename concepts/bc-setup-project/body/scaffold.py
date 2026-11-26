@@ -1383,6 +1383,12 @@ __DEFAULT_PATH_RULE__
 
 ## Work items
 
+- **Carry on with active work first.** When told to carry on without a named item, read every item
+  in `work/2-active/` first. Unfinished active work comes before new items from `work/order.md`.
+  Before taking an active item, check its `Held by:` line and recent commits for a live holder.
+  If another agent is still working on it, ask that agent rather than take the item. Why: work
+  already in flight comes first, but taking it from a live holder duplicates the work.
+
 A work item is one feature or plan. Template: [templates/work-item.md](templates/work-item.md).
 
 - **The folder is the status.** Move an item between status folders with `git mv`, in the
@@ -1464,8 +1470,9 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   settled source, in the same reply: it fills the item in place and asks only what is still open.
   When the owner said they are away (or the run is a drain) and a question stays open, file it
   where the owner sees questions (check the project's or machine's instructions), never in chat.
-  If no destination or filing tool is configured, record the question in the item's plan and name
-  the item in the run report. Leave it in `1-planned/`, then move the next planned item to `2-active/`
+  If none is named, or the named place cannot be used, park the item: write
+  `Waiting on owner: <question>` in its header, replacing any `Ready for agent:` line, and name it
+  in the run report. Leave it in `1-planned/`, then move the next eligible planned item to `2-active/`
   and start it in the same run. Planning an item is part of carrying on, not a reason to stop:
   never end a reply that only says an item needs planning, a question needs filing or an item
   needs starting; do that work first. `work_index.py --check` warns about each planned item
