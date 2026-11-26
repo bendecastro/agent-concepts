@@ -8,7 +8,6 @@ Kind: bug
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
-Held by: pi 01a218e4 since 2026-11-26 18:23 +00:00
 
 ## Requirements
 
@@ -19,7 +18,13 @@ Held by: pi 01a218e4 since 2026-11-26 18:23 +00:00
 
 ## Steps
 
-- [ ] Replace the `master` assumptions with the detected target branch in all four bodies, add the scaffold assertion, run the `main` fixture pressure scenario and record results beside it in `concepts/bc-pipeline-to-done/tests/`; update CONCEPT status frontmatter, `index.md`, `.bc-agent/log.md`. Blocked by: nothing. Done when the scaffold test passed after failing first, the with-change runs name and push `main` while the baseline does not, and lint has 0 ERROR and the gate passes. Out of scope: branch renames; release branches.
+- [x] Replace the `master` assumptions with the detected target branch in all four bodies, add the scaffold assertion, run the `main` fixture pressure scenario and record results beside it in `concepts/bc-pipeline-to-done/tests/`; update CONCEPT status frontmatter, `index.md`, `.bc-agent/log.md`. Blocked by: nothing. Done when the scaffold test passed after failing first, the with-change runs name and push `main` while the baseline does not, and lint has 0 ERROR and the gate passes. Out of scope: branch renames; release branches.
+  - Review: changes requested by tier-1 2026-11-26
+  - Review: approved by tier-1 2026-11-26
+  - Gate: pass ./scripts/gate at ac96cac 2026-11-26
 
 ## Outcome
+
+Landed in `2204409` (027-pipeline-default-branch: pipeline skills use the target branch, not master). Preflight resolves the target branch (project instruction, then `origin/HEAD`, then the current branch) and uses it for the policy check, claims, fetch and landing; `bc-finishing-development-branch`, `bc-executing-plans` and the scaffold's generated rules follow. Scaffold test watched RED then GREEN. Pressure dry run, Terra low, n=1 per arm: the old body stopped preflight on a `main` repo, the revised body planned its push to `main`. Deviation from the test seam: the comparison arm loaded the old skill body, not no skill, because a run without the skill has no reason to assume `master`; the reviewer accepted this. Full gate: 573 passed, 4 skipped at `ac96cac`.
+Spent: 47m active, 13M tokens, $6.94 (estimated; pi 9 sessions, claude-code 0 sessions, codex 0 sessions; other tools not counted)
 

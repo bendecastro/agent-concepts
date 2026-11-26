@@ -12,7 +12,11 @@ Held by: pi 01a218e4 since 2026-11-26 18:23 +00:00
 
 ## Steps
 
-- [ ] Gate without CI and filled conventions: reword setup steps 2 and 7 for the no-CI path and the conventions; pressure scenario on the Python fixture. Blocked by: nothing. Stories 1, 3, 4. Done when the with-change run leaves a passing gate and filled conventions while the baseline does not, results recorded beside the scenario in `concepts/bc-setup-project/tests/`. Out of scope: CI toolchain.
+- [x] Gate without CI and filled conventions: reword setup steps 2 and 7 for the no-CI path and the conventions; pressure scenario on the Python fixture. Blocked by: nothing. Stories 1, 3, 4. Done when the with-change run leaves a passing gate and filled conventions while the baseline does not, results recorded beside the scenario in `concepts/bc-setup-project/tests/`. Out of scope: CI toolchain.
+  - Review: changes requested by tier-1 2026-11-26
+  - Review: changes requested by tier-1 2026-11-26
+  - Gate: pass ./scripts/gate at ac96cac 2026-11-26
+  - Landed in `ac96cac`. The second review's one finding (a stale log line) was fixed with the reviewer's exact wording and not re-reviewed. Pressure: one run per arm; revised body ran its portable gate, old body wrote the same gate but did not run it.
 - [ ] CI toolchain from existing CI or markers: reword the CI part of setup and the scaffold TODO comment; pressure scenario on the Node fixture. Blocked by: Gate without CI and filled conventions. Stories 2, 4. Done when the with-change run's workflow installs Node and dependencies before `scripts/gate` while the baseline does not; CONCEPT status, `index.md`, `.bc-agent/log.md` updated; lint has 0 ERROR and the gate passes. Out of scope: running CI remotely.
 
 ## Outcome
