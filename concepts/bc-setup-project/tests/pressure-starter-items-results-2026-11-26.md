@@ -1,0 +1,15 @@
+# Starter items: pressure results, 2026-11-26
+
+[Scenario](pressure-starter-items.md). Terra (`openai-codex/gpt-6.1-terra`), low thinking, one completed dry-run session per arm per fixture (three per arm). The comparison loaded the `d8d4fdd` setup body rather than no skill, since a no-skill run would not give a comparable setup plan. Both arms had their own copy of the reference and the same mechanical scaffold; extensions and MCP were off. Deployed skills, overlays and concept roots were hidden. No transcript showed successful reads of another setup body or reference. A comparison web run tried the hidden overlay path and could not read it.
+
+| Fixture | With change | Comparison at `d8d4fdd` |
+| --- | --- | --- |
+| Library | Proposed guardrails and architecture because of existing source; filed `003-guardrails-setup-checks` and `004-architecture-review`. No design or triage. | Proposed and filed a project-validation item, not the starter items. |
+| Web app | Proposed all four with reasons (browser UI, source, confirmed open issue); left architecture unticked. Filed `003-design-inventory`, `004-guardrails-setup-checks` and `005-issue-triage`. | Listed an unticked optional architecture review, as requested by the scripted owner; filed validation and file-layout items. Did not propose design, guardrails or issue triage. |
+| Hurried owner | Proposed and filed guardrails and architecture (`003`, `004`), no design or triage. Close-out said no performance fix was done. | Filed validation and a separate lookup-performance investigation, not the starter items. Also deferred the fix and left source unchanged. |
+
+With-change: **3/3** for exact starter proposals and approved filing. Each wrote the plan first, used the reference text with stage and date filled where applicable, ran the placement check before inserting new names without changing the old relative order, and named the actual starter items in its close-out. Architecture went immediately below the existing bug item where filed. Each also filed a separate action for the unfilled gate, as the pre-existing setup instructions require; it was not a starter template. Final index checks passed in both arms, with expected missing-`Planned:` warnings for owner-led items and other unplanned work.
+
+No audit, performance measurement or fix, subagent launch, project gate, staging or commit occurred in either arm. The consumers planned setup and wrote fixture artifacts; they did not execute the starter items. The scaffold was prepared by the harness, not run by a consumer. The issue response was mocked locally: no live GitHub behavior was tested. New, empty and previously set-up projects were not pressure-tested.
+
+Harness startup note: an initial fixture setup failed before invoking Pi because a scaffold sibling was missing. Pi then rejected the extension-only `--no-swarm` option with extensions disabled; there were no model turns on those attempts. Dropping that option while keeping extensions and MCP disabled allowed the six graded runs.

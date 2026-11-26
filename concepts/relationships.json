@@ -722,6 +722,42 @@
       "reason": "The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary."
     },
     {
+      "from": "bc-setup-project",
+      "to": "bc-ui-design",
+      "relation": "hands_off",
+      "required": false,
+      "when": "existing codebase with a UI or CLI and accepted design inventory",
+      "source": "concepts/bc-setup-project/body/starter-items.md#design-inventory",
+      "reason": "The design inventory files the existing-surface documentation and reuse checks for later execution."
+    },
+    {
+      "from": "bc-setup-project",
+      "to": "bc-performance-guardrails",
+      "relation": "hands_off",
+      "required": false,
+      "when": "existing codebase and accepted guardrails setup checks",
+      "source": "concepts/bc-setup-project/body/starter-items.md#guardrails-setup-checks",
+      "reason": "The guardrails item defers sourced stack checks and baseline measurement until the item is executed."
+    },
+    {
+      "from": "bc-setup-project",
+      "to": "bc-improve-codebase-architecture",
+      "relation": "hands_off",
+      "required": false,
+      "when": "existing codebase and accepted architecture review",
+      "source": "concepts/bc-setup-project/body/starter-items.md#architecture-review",
+      "reason": "The architecture review item leaves the interactive review to the owner."
+    },
+    {
+      "from": "bc-setup-project",
+      "to": "bc-triage",
+      "relation": "hands_off",
+      "required": false,
+      "when": "existing codebase with confirmed open GitHub issues and accepted issue triage",
+      "source": "concepts/bc-setup-project/body/starter-items.md#issue-triage",
+      "reason": "The issue triage item leaves the interactive disposition of open issues to the owner."
+    },
+    {
       "from": "bc-council-improve-architecture",
       "to": "bc-improve-codebase-architecture",
       "relation": "loads",

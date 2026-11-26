@@ -44,3 +44,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture observation after landing.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
   Source: [bc-pipeline-to-done/CONCEPT.md](../bc-pipeline-to-done/CONCEPT.md)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): hands off to this concept — optional, when existing codebase and accepted architecture review.
+  The architecture review item leaves the interactive review to the owner.
+  Source: [bc-setup-project/body/starter-items.md](../bc-setup-project/body/starter-items.md#architecture-review)

@@ -11,9 +11,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- hands off to `bc-improve-codebase-architecture` — optional, when existing codebase and accepted architecture review.
+  The architecture review item leaves the interactive review to the owner.
+  Source: [body/starter-items.md](body/starter-items.md#architecture-review)
+
 - depends on `bc-performance-guardrails`'s contract — required, when visible-layout scaffold writes docs/guardrails/README.md.
   The generated guardrails README names the bc-performance-guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet).
   Source: [body/scaffold.py](body/scaffold.py)
+
+- hands off to `bc-performance-guardrails` — optional, when existing codebase and accepted guardrails setup checks.
+  The guardrails item defers sourced stack checks and baseline measurement until the item is executed.
+  Source: [body/starter-items.md](body/starter-items.md#guardrails-setup-checks)
 
 - depends on `bc-pipeline-to-done`'s contract — required, when generated execution guidance for vault archetypes.
   Generated claim-before-work guidance delegates absent-ref creation and released-marker reuse to the drain's authorized claim protocol.
@@ -35,9 +43,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Multi-session tutoring records come from the bc-teach skill.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- hands off to `bc-triage` — optional, when existing codebase with confirmed open GitHub issues and accepted issue triage.
+  The issue triage item leaves the interactive disposition of open issues to the owner.
+  Source: [body/starter-items.md](body/starter-items.md#issue-triage)
+
 - depends on `bc-ui-design`'s contract — required, when visible-layout scaffold writes docs/design/README.md.
   The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary.
   Source: [body/scaffold.py](body/scaffold.py)
+
+- hands off to `bc-ui-design` — optional, when existing codebase with a UI or CLI and accepted design inventory.
+  The design inventory files the existing-surface documentation and reuse checks for later execution.
+  Source: [body/starter-items.md](body/starter-items.md#design-inventory)
 
 - depends on `bc-wiki-maintain`'s contract — required, when generated map links.
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.

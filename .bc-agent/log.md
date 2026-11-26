@@ -2259,3 +2259,6 @@ The old setup body provisioned CI on an existing-CI Node fixture (setup-node in 
 
 ## [2026-11-26] implement | Setup starter-item reference
 Defined applicability and work-item text for design inventory, guardrails setup checks, architecture review and issue triage. A scaffold fixture verifies all four with `work_index.py --check`; setup workflow wiring is unchanged.
+
+## [2026-11-26] test | Setup files approved starter items
+First-time setup for existing codebases now proposes applicable starters and files the owner's picks without running the work. Terra low dry runs (one per arm per fixture) gave exact proposals and approved filing in 3/3 revised runs versus 0/3 on the base body; neither arm ran an audit.

@@ -28,3 +28,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout scaffold writes docs/design/README.md.
   The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary.
   Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): hands off to this concept — optional, when existing codebase with a UI or CLI and accepted design inventory.
+  The design inventory files the existing-surface documentation and reuse checks for later execution.
+  Source: [bc-setup-project/body/starter-items.md](../bc-setup-project/body/starter-items.md#design-inventory)

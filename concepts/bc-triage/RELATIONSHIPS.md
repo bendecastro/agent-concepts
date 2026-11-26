@@ -25,4 +25,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-None.
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): hands off to this concept — optional, when existing codebase with confirmed open GitHub issues and accepted issue triage.
+  The issue triage item leaves the interactive disposition of open issues to the owner.
+  Source: [bc-setup-project/body/starter-items.md](../bc-setup-project/body/starter-items.md#issue-triage)
