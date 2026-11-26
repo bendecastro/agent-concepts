@@ -2,12 +2,13 @@
 
 Why: `concepts/bc-pipeline-to-done/body/SKILL.md` requires the target repo to be "on `master`" and "pushes `HEAD:master`", so a repository on `main` cannot pass preflight.
 Done when: `bc-pipeline-to-done` and the skills that name `master` (`bc-finishing-development-branch`, `bc-executing-plans`, the generated rules in `bc-setup-project`'s `scaffold.py`) use the repository's target branch, detected once in preflight, for the policy check, claims, fetch and landing.
-Stage: next
+Stage: now
 Blocked by: nothing
 Kind: bug
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
+Held by: pi 01a218e4 since 2026-11-26 18:23 +00:00
 
 ## Requirements
 

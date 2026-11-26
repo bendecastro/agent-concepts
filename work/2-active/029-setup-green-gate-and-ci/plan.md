@@ -2,12 +2,13 @@
 
 Why: On an existing repository without CI, setup has no rule for filling `./scripts/gate`, so it stays red and blocks landing; the generated CI job leaves its toolchain as a TODO, so a locally green gate fails in CI; `conventions/validation.md` and `file-layout.md` stay stubs.
 Done when: Setting up an existing repository ends with a gate that passes locally, a CI job that installs the project's toolchain, and filled validation and file-layout conventions, or names each gap as an owner action in the close-out; requirements in [requirements.md](requirements.md).
-Stage: next
+Stage: now
 Blocked by: nothing
 Kind: build
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
+Held by: pi 01a218e4 since 2026-11-26 18:23 +00:00
 
 ## Steps
 
