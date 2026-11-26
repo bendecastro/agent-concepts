@@ -2227,3 +2227,6 @@ Extra space above The workflow, Install and Working on this repository; none abo
 
 ## [2026-11-25] implement | README spacing and Release badge
 Space above How these skills work; ?sort=semver on the Release badge so GitHub image proxy refetches it (it returned 404).
+
+## [2026-11-25] implement | Release badge via badgen
+GitHub image proxy times out (504) on the shields.io release badge; badgen.net loads through it.
