@@ -128,7 +128,6 @@ A factory is more than its machines. Nothing enters the line until its questions
 
 **Once, when you start a project**
 - `/bc-setup-project` makes the project ready for agents.
-- Ask the agent to set performance guardrails (automatic checks that fail when a change makes the project slower, bigger or more tangled).
 
 **For each idea**
 - `/bc-triage` first, if the idea arrives as a GitHub issue.
