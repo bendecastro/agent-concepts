@@ -42,7 +42,7 @@ def fixture(root):
         "work/0-ideas.md": "# Ideas\n",
         ".bc-agent/AGENTS.md": AGENTS,
         "work/2-active/025-dashboard-data/plan.md": ACTIVE,
-        "work/1-planned/030-waiting.md": "# Waiting\n\nWhy: w.\nBlocked by: nothing\nWaiting on owner: which colour?\n",
+        "work/1-planned/030-waiting.md": "# Waiting\n\nWhy: w.\nBlocked by: nothing\nWaiting on owner: which colour?\nNeeds owner: approve the colours once drafted.\n",
         "work/3-done/2026-11/001-base/plan.md": DONE,
         "work/4-dropped/002-gone.md": "# Gone\n\nWhy: g.\n\n## Outcome\n\nNot needed.\n",
     }
@@ -75,7 +75,7 @@ def test_json_prints_every_item_with_header_steps_and_outcome(tmp_path):
         "path": "2-active/025-dashboard-data/plan.md", "title": "Dashboard data",
         "header": {
             "why": "people want a dashboard. Second sentence.", "done_when": "it prints JSON.", "stage": "now",
-            "blocked_by": "001-base", "kind": "feature", "source": "bc-plan-to-pipeline",
+            "blocked_by": "001-base", "kind": "feature", "needs_owner": None, "source": "bc-plan-to-pipeline",
             "planned": "bc-plan-to-pipeline 2026-11-25", "ready_for_agent": "yes", "waiting_on_owner": None,
             "held_by": None,
         },
@@ -92,6 +92,7 @@ def test_json_prints_every_item_with_header_steps_and_outcome(tmp_path):
     assert done["outcome"] == "Shipped it.\nTwo lines."
     assert dropped["header"]["blocked_by"] is None and dropped["steps"] == []
     assert data["items"][0]["header"]["waiting_on_owner"] == "which colour?"
+    assert data["items"][0]["header"]["needs_owner"] == "approve the colours once drafted."
 
 
 def test_json_writes_no_files(tmp_path):

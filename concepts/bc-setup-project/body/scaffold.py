@@ -1428,6 +1428,11 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
 - **An item may name its kind on a `Kind:` line** (security, bug, build, architecture,
   performance, tests, feature, docs, ...): what the item is, while `Source:` says who filed it.
   The owner's dashboard shows it. Why: placement in `work/order.md` follows the kind.
+- **`Needs owner: <what the owner must decide or do, and when>` flags owner work ahead.** Write
+  it on any item that will need an owner decision or action before or during its build: a choice
+  only the owner can make, an approval, an account or store action, a hands-on check. Remove it
+  when that is settled, and record the decision as usual. Why: the owner's dashboard shows it, so
+  the owner can plan time away.
 - **Never reorder `work/order.md`; place what you add.** When it exists, a new item whose kind is
   on the `Top kinds:` line below goes directly below the run of top-kind items at the top of the
   list (at the top when there is none; several new ones oldest first); any other new item goes
@@ -1616,6 +1621,7 @@ Stage: <one of the stages on the `Stages:` line in .bc-agent/AGENTS.md>
 Blocked by: <full names of the items this waits for, such as 012-search-ranking, or "nothing">
 Issue: <optional issue number; delete the line when there is none>
 Kind: <optional: security, bug, build, architecture, performance, tests, feature, docs, ...; delete the line when unclear>
+Needs owner: <optional: what the owner must decide or do, and when; delete the line when nothing, or once it is settled>
 Source: <optional: the skill or review that produced this item, e.g. bc-plan-to-pipeline; delete the line when unknown>
 Planned: <written by bc-plan-to-pipeline once it has planned this item, e.g. bc-plan-to-pipeline 2026-11-24; delete the line until then>
 Ready for agent: <optional: yes when every step states its done-criteria and out of scope, so bc-pipeline-to-done may build it unattended; delete the line otherwise>

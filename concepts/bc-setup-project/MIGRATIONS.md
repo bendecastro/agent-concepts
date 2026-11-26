@@ -391,3 +391,19 @@ Existing items need no change. All four lines are optional: an item without them
 `held_by` and `spent` and empty `review` and `gate` lists in the JSON, and `--check` does not
 warn. Items get a `history` from git with no change at all. Only a malformed line, or a `Held by:`
 line left in a done item, gives a `--check` warning.
+
+## Needs owner line
+
+Since 2026-11-26 the Work items rules in `.bc-agent/AGENTS.md` and the work-item template have an
+optional `Needs owner: <what the owner must decide or do, and when>` line, for an item that will
+need an owner decision or action before or during its build; it is removed once settled.
+`work_index.py --json` reports it as `header.needs_owner`. To adopt it in an existing project:
+
+1. In `.bc-agent/AGENTS.md`, copy the `Needs owner:` rule from the Work items section of a fresh
+   scaffold, below the `Kind:` rule.
+2. Copy the `Needs owner:` line from a fresh scaffold's `.bc-agent/templates/work-item.md` into the
+   project's template, below `Kind:`.
+3. Copy the script: `cp "$AGENT_CONCEPTS"/concepts/bc-setup-project/body/work_index.py .bc-agent/scripts/`.
+4. Add the line to any open item that already needs an owner decision or action.
+
+Without step 3 the line is still written and read from the item file; only the JSON lacks it.
