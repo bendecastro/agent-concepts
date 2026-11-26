@@ -2,12 +2,13 @@
 
 Why: The README tells strangers to copy the kernel by hand into an always-on instructions file. A copy goes stale, each harness keeps that file in a different place, and setup runs per project while the kernel is per machine. Installing the skills must not silently add always-on rules, so the kernel ships as its own package.
 Done when: Pi, Claude Code, Codex and OpenCode each have a separate kernel package built from the one canonical `AGENT-KERNEL.md`; a marker-block install script covers any other harness; setup reports a missing kernel with the install command and writes nothing; README and `docs/guides/harnesses.md` describe it; requirements in [requirements.md](requirements.md).
-Stage: next
+Stage: now
 Blocked by: nothing
 Kind: feature
 Source: owner decision 2026-11-26 (kernel delivery, option 1); research in the owner's local swarm state (kernel-delivery)
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
+Held by: pi 01a218e4 since 2026-11-26 22:54 +00:00
 
 ## Steps
 

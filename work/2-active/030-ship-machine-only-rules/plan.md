@@ -2,12 +2,13 @@
 
 Why: Behaviours strangers need live only in the owner's own instructions: carry-on puts unfinished active work first only in the owner's file, away-mode questions point at the owner's dashboard, and drain fixes for performance regressions do not load `bc-performance-guardrails`.
 Done when: The generated work rules carry the active-first carry-on order and fall back to `Waiting on owner:` lines for questions; the drain loads `bc-performance-guardrails` for regression fixes; requirements in [requirements.md](requirements.md).
-Stage: next
+Stage: now
 Blocked by: nothing
 Kind: feature
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
+Held by: pi 01a218e4 since 2026-11-26 22:54 +00:00
 
 ## Steps
 
