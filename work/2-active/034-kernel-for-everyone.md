@@ -59,5 +59,7 @@ Classes: **keep** (sensible for anyone), **personal** (moves to the owner's priv
 | 30 | Final response: question format (`1a 2b`) | owner's call, recommend keep | owner's request, but it helps anyone and no public skill depends on it |
 | 31 | Final response: `📦`/`👣`/`🏁` recap and `/bc-self-improve` offer | personal | owner's memory aid and chosen emoji; a third of the kernel; no public skill depends on it |
 
+Public kernel edits applied 2026-11-26 (rows 7, 9, 12, 13, 18, 21, 22, 23, 31).
+
 ## Outcome
 

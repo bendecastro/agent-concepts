@@ -12,7 +12,7 @@ ${XDG_STATE_HOME:-$HOME/.local/state}/bc-swarm/<YYYY-MM-DD>-<slug>/
 
 ## Fan-out
 
-Run the project's or machine's storage health check, if one exists (check the project's and machine's agent instructions and docs), before multi-worker launch or managed worktree creation; stop/report on critical or unknown health, or if an existing check cannot run (the `agent-kernel` concept's Storage safety section states the same rule, when it is loaded). Why: harness-managed isolation still allocates storage.
+Run the project's or machine's storage health check, if one exists (check the project's and machine's agent instructions and docs), before multi-worker launch or managed worktree creation; stop/report on critical or unknown health, or if an existing check cannot run. Why: harness-managed isolation still allocates storage.
 
 ```js
 subagent({
@@ -66,7 +66,7 @@ refused because the child was dirty/divergent, capture was missing, or a retaine
 child still needs its managed CWD. Do not infer retention from a successful
 handoff, and do not treat a cleaned worktree as resumable.
 
-After parent integration, record kernel ancestry/patch-equivalence proof in the manifest. If the harness already removed the worktree, record that there is nothing to remove; otherwise apply kernel safe cleanup only to clean inactive owned state. Why: patch capture is not integration proof, and preserved exceptions may hold useful work.
+After parent integration, record the ancestry/patch-equivalence proof in the manifest. If the harness already removed the worktree, record that there is nothing to remove; otherwise apply safe cleanup (`bc-using-git-worktrees`) only to clean inactive owned state. Why: patch capture is not integration proof, and preserved exceptions may hold useful work.
 
 ## Recovery, in order
 

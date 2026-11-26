@@ -8,7 +8,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Outgoing
 
 - depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-domain-modeling`'s contract — required, when glossary discovery in legacy projects.

@@ -7,7 +7,7 @@ description: Use when starting feature work that needs isolation, before executi
 
 Work in an isolated workspace when it reduces risk. Detect existing isolation first, prefer harness-native isolation, and use manual `git worktree` only as a fallback. When an owned worktree is integrated or otherwise irrelevant, prune it without asking.
 
-Before either creation path, run the machine's storage health check if one exists, and stop and report on critical or unknown health. Reuse the once-per-base baseline. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof; remove with `git worktree remove`, never `--force`. The `agent-kernel` concept's Storage safety section holds the full rule, when loaded. Why: native isolation still consumes disk.
+Before either creation path, run the machine's storage health check if one exists, and stop and report on critical or unknown health. Reuse the once-per-base baseline. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof; remove with `git worktree remove`, never `--force`. The `agent-kernel` concept's Storage safety section holds the temp-file and scratch-folder rules, when loaded. Why: native isolation still consumes disk.
 
 ## Step 0: detect current state
 
@@ -58,12 +58,14 @@ Run the project’s bounded setup and baseline check before making changes; reus
 
 Prune owned worktrees when they are done. Do not ask. Why: leftover worktrees go stale, waste disk, and the next session cannot tell whether they are still in use.
 
-Done means integration passes the kernel ancestry/patch-equivalence proof recorded in the manifest, or discard was explicitly confirmed. Superseded or squash-merged without that proof is unclear: keep it.
+Done means integration passes the ancestry/patch-equivalence proof recorded in the manifest (below), or discard was explicitly confirmed. Superseded or squash-merged without that proof is unclear: keep it.
+
+Before removing, prove the integration. After integrating a worker result, prove its tip is an ancestor of `HEAD` (`git merge-base --is-ancestor <tip> HEAD`), or prove every worker commit is patch-equivalent in `HEAD` (`git cherry HEAD <tip>` succeeds and prints only `-` lines, no `+`; empty output alone is not proof without ancestry). A resolved-pick proof matches each commit `git cherry` marks `+` to one named commit in `HEAD` carrying the same change, differing only where a conflict was resolved; record both SHAs. Record the tip, landed HEAD and proof in the run manifest before cleanup. If your subagent tool already removed the worktree after capturing its patch, there is nothing to remove. Why: integration without recorded cleanup leaks worktrees; deletion without proof loses work.
 
 How:
 
 - `git worktree remove <path>` — not `git worktree prune`, which only drops stale registrations.
-- Then `git branch -d <branch>`; `-D` requires the kernel patch-equivalence or resolved-pick proof, not a squash/rebase label; with a proof, delete without asking. Explicit discard is a separate destructive workflow; do not force deletion here.
+- Then `git branch -d <branch>`; `-D` requires the patch-equivalence or resolved-pick proof, not a squash/rebase label; with a proof, delete without asking. Explicit discard is a separate destructive workflow; do not force deletion here.
 - Report the path and branch removed.
 
 Owned means this agent created the worktree, or it lives under a known project-local directory (`.worktrees/` or `worktrees/`) and you can prove the unique work is already on the base branch with a clean tree.

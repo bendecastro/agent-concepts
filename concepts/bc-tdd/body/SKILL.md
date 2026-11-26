@@ -5,7 +5,7 @@ description: Use when writing new tests or behaviour-changing assertions, includ
 
 # Test-Driven Development
 
-Use targeted RED/GREEN checks, running pytest through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`). Tests you write delete every temporary file and folder they create, even on failure; make scratch folders with `mktemp -d`, never under `/tmp`. Before a full suite, not each cycle, run the machine's storage health check if one exists and stop on critical or unknown health. The `agent-kernel` concept's Storage safety section holds the full rule, when loaded. Why: fast feedback does not require repeated full suites.
+Use targeted RED/GREEN checks, running pytest through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`). Tests you write delete every temporary file and folder they create, even on failure; make scratch folders with `mktemp -d`, never under `/tmp`. Before a full suite, not each cycle, run the machine's storage health check if one exists and stop on critical or unknown health. The `agent-kernel` concept's Storage safety section holds the temp-file and scratch-folder rules, when loaded. Why: fast feedback does not require repeated full suites.
 
 If `~/.config/agent-concepts/overlays/bc-tdd.md` exists, read it for this machine's tool names.
 

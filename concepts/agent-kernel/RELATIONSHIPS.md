@@ -7,10 +7,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- hands off to `bc-self-improve` — optional.
-  The recap's 👣 line offers /bc-self-improve when a substantial session's deliverables are all ready; the owner decides.
-  Source: [body/AGENT-KERNEL.md](body/AGENT-KERNEL.md)
-
 - loads `bc-tdd` — required, when new tests or behaviour-changing assertions.
   Test evidence requires a watched behavioural fail; mechanical test edits are excluded.
   Source: [body/AGENT-KERNEL.md](body/AGENT-KERNEL.md#verification)
@@ -18,23 +14,23 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Incoming
 
 - incoming from [bc-code-review](../bc-code-review/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-code-review/body/SKILL.md](../bc-code-review/body/SKILL.md)
 
 - incoming from [bc-delegate-investigation](../bc-delegate-investigation/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-delegate-investigation/body/SKILL.md](../bc-delegate-investigation/body/SKILL.md)
 
 - incoming from [bc-diagnosing-bugs](../bc-diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-diagnosing-bugs/body/SKILL.md](../bc-diagnosing-bugs/body/SKILL.md)
 
 - incoming from [bc-dispatching-parallel-agents](../bc-dispatching-parallel-agents/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-dispatching-parallel-agents/body/SKILL.md](../bc-dispatching-parallel-agents/body/SKILL.md)
 
 - incoming from [bc-executing-plans](../bc-executing-plans/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-executing-plans/body/SKILL.md](../bc-executing-plans/body/SKILL.md)
 
 - incoming from [bc-explain-visually](../bc-explain-visually/RELATIONSHIPS.md): depends on this concept's contract — required, when any invocation.
@@ -42,29 +38,29 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-explain-visually/body/SKILL.md](../bc-explain-visually/body/SKILL.md)
 
 - incoming from [bc-finishing-development-branch](../bc-finishing-development-branch/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-finishing-development-branch/body/SKILL.md](../bc-finishing-development-branch/body/SKILL.md)
 
 - incoming from [bc-optimize-code](../bc-optimize-code/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-optimize-code/body/SKILL.md](../bc-optimize-code/body/SKILL.md)
 
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-pipeline-to-done/body/SKILL.md](../bc-pipeline-to-done/body/SKILL.md)
 
 - incoming from [bc-subagent-driven-development](../bc-subagent-driven-development/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-subagent-driven-development/body/SKILL.md](../bc-subagent-driven-development/body/SKILL.md)
 
 - incoming from [bc-tdd](../bc-tdd/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-tdd/body/SKILL.md](../bc-tdd/body/SKILL.md)
 
 - incoming from [bc-using-git-worktrees](../bc-using-git-worktrees/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-using-git-worktrees/body/SKILL.md](../bc-using-git-worktrees/body/SKILL.md)
 
 - incoming from [bc-writing-plans](../bc-writing-plans/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (guarded pytest, scratch folders, health preflight, proven integration cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
+  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-writing-plans/body/SKILL.md](../bc-writing-plans/body/SKILL.md)

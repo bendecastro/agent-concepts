@@ -17,6 +17,4 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-- incoming from [agent-kernel](../agent-kernel/RELATIONSHIPS.md): hands off to this concept — optional.
-  The recap's 👣 line offers /bc-self-improve when a substantial session's deliverables are all ready; the owner decides.
-  Source: [agent-kernel/body/AGENT-KERNEL.md](../agent-kernel/body/AGENT-KERNEL.md)
+None.

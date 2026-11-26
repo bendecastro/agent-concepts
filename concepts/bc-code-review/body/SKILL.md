@@ -7,7 +7,7 @@ description: Review a diff or completed change for independent Spec fidelity and
 
 Code review is technical evaluation, not emotional performance. Verify feedback against the codebase; request reviews with enough context for an independent reviewer to judge the diff.
 
-Before a parallel review, run the machine's storage health check if one exists, and stop and report on critical or unknown health. Reuse recorded checks for the exact tree; repro findings only with targeted tests, run through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`), with scratch folders from `mktemp -d`, never under `/tmp`. The `agent-kernel` concept's Storage safety section holds the full rule, when loaded. Why: reviewers should assess evidence, not duplicate full suites.
+Before a parallel review, run the machine's storage health check if one exists, and stop and report on critical or unknown health. Reuse recorded checks for the exact tree; repro findings only with targeted tests, run through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`), with scratch folders from `mktemp -d`, never under `/tmp`. The `agent-kernel` concept's Storage safety section holds the temp-file and scratch-folder rules, when loaded. Why: reviewers should assess evidence, not duplicate full suites.
 
 ## Two-axis diff review
 

@@ -7,7 +7,7 @@ description: Use when an approved spec or resolved requirements need to become a
 
 Write plans for a capable engineer or fresh agent with little project context. The plan must be concrete enough to execute task-by-task without guessing.
 
-Plans must be storage-safe: pytest through the guarded test runner the project's or machine's instructions name, without a custom `--basetemp`; scratch folders from `mktemp -d`, never under `/tmp`; the machine's storage health check (if one exists) before full suites, worktrees and multi-worker launches; and worktree cleanup only after proving the work's commits are in `HEAD`. Plan targeted task checks plus one shared baseline and one landing run of the full suite. The `agent-kernel` concept's Storage safety and Verification sections hold the full rules, when loaded. Why: unsafe commands in plans become unsafe execution.
+Plans must be storage-safe: pytest through the guarded test runner the project's or machine's instructions name, without a custom `--basetemp`; scratch folders from `mktemp -d`, never under `/tmp`; the machine's storage health check (if one exists) before full suites, worktrees and multi-worker launches; and worktree cleanup only after proving the work's commits are in `HEAD`. Plan targeted task checks plus one shared baseline and one landing run of the full suite. The `agent-kernel` concept's Storage safety (temp files, scratch folders) and Verification sections hold their rules, when loaded. Why: unsafe commands in plans become unsafe execution.
 
 ## Scope gate
 

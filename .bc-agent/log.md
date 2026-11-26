@@ -2242,3 +2242,6 @@ Added an optional `Needs owner:` header line (what the owner must decide or do, 
 
 ## [2026-11-26] implement | Changes UI: work-item line
 Added an optional `Changes UI:` header line (what the user will see change; kept current with the plan) to bc-setup-project's work-item rules, template and `--json` output, and to bc-plan-to-pipeline's header-line step, with a migration entry; the owner's dashboard shows it for planning UI review.
+
+## [2026-11-26] implement | agent-kernel holds rules for everyone
+Removed personal rows 9, 13, 18, 21, 31 and the tool-thresholds line from the public kernel; moved worktree cleanup proof (row 22) to bc-using-git-worktrees; reworded rows 7, 12, 23 (accuracy-checked only). Repaired stale kernel references in skill bodies, index.md, CONCEPT.md and relationships.json (dropped the kernel→bc-self-improve hands_off edge). Decision 0005; work item 034.

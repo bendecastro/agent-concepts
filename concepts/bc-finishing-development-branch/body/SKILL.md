@@ -7,7 +7,7 @@ description: Use when implementation is complete and the user needs options for 
 
 Finish work by verifying first, then presenting clear options. Do not publish, merge, or discard by implication.
 
-Run pytest through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`). Before deleting a branch or worktree, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof; keep anything dirty, unmerged or unclear. Reuse recorded full-suite evidence for the same tree instead of running the suite again. The `agent-kernel` concept's Storage safety and Verification sections hold the full rules, when loaded. Why: completion is not a reason to duplicate suites or delete unproven work.
+Run pytest through the guarded test runner the project's or machine's instructions name (never with a custom `--basetemp`). Before deleting a branch or worktree, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof; keep anything dirty, unmerged or unclear. Reuse recorded full-suite evidence for the same tree instead of running the suite again. The `agent-kernel` concept's Storage safety (temp files, scratch folders) and Verification sections hold their rules, when loaded. Why: completion is not a reason to duplicate suites or delete unproven work.
 
 ## 1. Verify before offering completion
 
@@ -70,4 +70,4 @@ Only remove a worktree if all are true:
 
 Never force-push. Never delete unmerged work without explicit confirmation. Integrated owned worktrees do not need a second confirmation.
 
-For integrated work, record the kernel ancestry/patch-equivalence proof in the manifest, remove the clean inactive owned worktree with `git worktree remove` (no `--force`), then use `git branch -d`. Use `-D` only after the kernel patch-equivalence or resolved-pick proof, and then without asking; squash/rebase alone is not proof. Keep dirty, active, unmerged or unclear work. Explicit discard remains a separately confirmed destructive action, not integration proof.
+For integrated work, record the ancestry/patch-equivalence proof in the manifest, remove the clean inactive owned worktree with `git worktree remove` (no `--force`), then use `git branch -d`. Use `-D` only after the patch-equivalence or resolved-pick proof, and then without asking; squash/rebase alone is not proof. Keep dirty, active, unmerged or unclear work. Explicit discard remains a separately confirmed destructive action, not integration proof.
