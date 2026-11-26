@@ -2221,3 +2221,6 @@ Linked owner-notes/ to the owner notes folder and ignored it, as other projects 
 
 ## [2026-11-25] implement | README heading spacing
 Added a <br> before every ### heading so the gap above a heading is larger than below; GitHub CSS gives them equal gaps.
+
+## [2026-11-25] implement | README heading spacing, adjusted
+Extra space above The workflow, Install and Working on this repository; none above the first heading after a section intro.

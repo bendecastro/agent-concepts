@@ -23,8 +23,6 @@ Install them once and they work in the coding agent you already use: **Claude Co
 
 Seven ideas run through the whole set.
 
-<br>
-
 ### Settle questions before building
 
 An agent that guesses what you wanted builds the wrong thing quickly. So the agent asks you questions one at a time until every decision in a plan is made, explores ideas with you
@@ -88,6 +86,8 @@ Every skill records where its ideas came from ([hard rules](AGENTS.md)). A skill
 After a session, the agent can suggest better instructions for itself and ways to improve the structure you built for it to operate in (recursive self-improvement 😉).
 
 **Skills:** [bc-self-improve](concepts/bc-self-improve/body/SKILL.md) · [bc-prompting-agents](concepts/bc-prompting-agents/body/SKILL.md)
+
+<br>
 
 ## The workflow
 
@@ -303,6 +303,8 @@ and holds the basic rules: how the agent behaves, how it checks its work, and ho
 
 Every concept is listed in [index.md](index.md). How agents test the code they change:
 [workflows.md § How the skills test code](docs/guides/workflows.md#how-the-skills-test-code).
+
+<br>
 
 ## Install
 
@@ -703,11 +705,11 @@ are not linked.
 
 </details>
 
+<br>
+
 ## Working on this repository
 
 How this repository is organised and the rules for changing it. You need this only if you want to change the skills themselves.
-
-<br>
 
 ### Where things are
 
