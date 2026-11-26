@@ -8,7 +8,6 @@ Kind: bug
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
-Held by: pi 01a218e4 since 2026-11-26 18:50 +00:00
 
 ## Steps
 
@@ -20,7 +19,13 @@ Held by: pi 01a218e4 since 2026-11-26 18:50 +00:00
   - Review: approved by tier-1 2026-11-26 (round 2)
   - Gate: pass ./scripts/gate at bc525c0 2026-11-26
   - Landed in `bc525c0`.
-- [ ] Fallback for every machine-tool reference and README prerequisites: inventory, classify and reword each hit in deployed bodies; README lists pipeline prerequisites and optional tools. Blocked by: nothing. Stories 3, 4. Done when every inventoried hit states a fallback or stop (inventory recorded in this item's folder), lint has 0 ERROR and the gate passes. Out of scope: shipping the tools themselves.
+- [x] Fallback for every machine-tool reference and README prerequisites: inventory, classify and reword each hit in deployed bodies; README lists pipeline prerequisites and optional tools. Blocked by: nothing. Stories 3, 4. Done when every inventoried hit states a fallback or stop (inventory recorded in this item's folder), lint has 0 ERROR and the gate passes. Out of scope: shipping the tools themselves.
+  - Review: approved by tier-1 2026-11-26 (round 2)
+  - Gate: pass ./scripts/gate at 502ed1a 2026-11-26
+  - Landed in `502ed1a`.
 
 ## Outcome
 
+Strangers no longer hit tools that exist only on the owner's machine. The publish checker ships inside `bc-pipeline-to-done`; with no publish policy, preflight asks once per run whether it may push to the target branch (a yes also sets single-driver mode: one item at a time, no remote claim refs), and an owner-away run commits locally only. Every deployed-body reference to a machine-only tool (inventory: `inventory.md`, 43 rows) now states a fallback or a stop: plain pytest with `tmp_path` and the temp-file rules, a skipped-and-reported absent storage check, a stop before claims when Pi subagents or the pipeline roles are missing. README lists the pipeline's install prerequisites and the optional tools. Pressure tests were dry runs on Terra low, one run per arm: missing-policy treatment asked once and planned only the target push; missing-tools treatment 5/5 against 2/5 for the old body. No live pipeline run has exercised the no-policy path yet.
+
+Spent: 2h 37m active, 33.9M tokens, $17.32 (estimated; pi 19 sessions, claude-code 0 sessions, codex 0 sessions; other tools not counted)

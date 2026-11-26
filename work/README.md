@@ -22,14 +22,13 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [028-missing-private-tool-fallbacks](2-active/028-missing-private-tool-fallbacks/plan.md) | active, ready for agent | — | 033-stranger-end-to-end-test | Deployed skills name tools only the owner's machine has (the publish check found through a private overlay, a guarded pytest runner, a storage health check, Pi… | 2/3 |
-| 2 | [030-ship-machine-only-rules](1-planned/030-ship-machine-only-rules/plan.md) | planned, ready for agent | — | — | Behaviours strangers need live only in the owner's own instructions: carry-on puts unfinished active work first only in the owner's file, away-mode questions p… | 0/2 |
-| 3 | [031-trigger-lint](1-planned/031-trigger-lint.md) | planned, ready for agent | — | — | Skills say they run "at project setup", "on first need" or "periodically" while no skill that owns that moment hands off to them; the setup-starter-items gap w… | 0/1 |
-| 4 | [032-stranger-docs-cleanup](1-planned/032-stranger-docs-cleanup.md) | planned, ready for agent | — | — | `docs/guides/pipeline.md` still describes the old `.bc-agent/` vault layout; five skills say to use `naming-things`, which was never tested or deployed; wiki s… | 0/3 |
-| 5 | [033-stranger-end-to-end-test](1-planned/033-stranger-end-to-end-test.md) | planned, ready for agent | [028-missing-private-tool-fallbacks](2-active/028-missing-private-tool-fallbacks/plan.md) | — | Every gap found on 2026-11-26 came from skills only ever run on the owner's machine; the fresh-install test checks installation but nothing checks using the lo… | 0/1 |
-| 6 | [035-kernel-package](1-planned/035-kernel-package/plan.md) | planned, ready for agent | — | — | The README tells strangers to copy the kernel by hand into an always-on instructions file. | 0/5 |
+| 1 | [030-ship-machine-only-rules](1-planned/030-ship-machine-only-rules/plan.md) | planned, ready for agent | — | — | Behaviours strangers need live only in the owner's own instructions: carry-on puts unfinished active work first only in the owner's file, away-mode questions p… | 0/2 |
+| 2 | [031-trigger-lint](1-planned/031-trigger-lint.md) | planned, ready for agent | — | — | Skills say they run "at project setup", "on first need" or "periodically" while no skill that owns that moment hands off to them; the setup-starter-items gap w… | 0/1 |
+| 3 | [032-stranger-docs-cleanup](1-planned/032-stranger-docs-cleanup.md) | planned, ready for agent | — | — | `docs/guides/pipeline.md` still describes the old `.bc-agent/` vault layout; five skills say to use `naming-things`, which was never tested or deployed; wiki s… | 0/3 |
+| 4 | [033-stranger-end-to-end-test](1-planned/033-stranger-end-to-end-test.md) | planned, ready for agent | — | — | Every gap found on 2026-11-26 came from skills only ever run on the owner's machine; the fresh-install test checks installation but nothing checks using the lo… | 0/1 |
+| 5 | [035-kernel-package](1-planned/035-kernel-package/plan.md) | planned, ready for agent | — | — | The README tells strangers to copy the kernel by hand into an always-on instructions file. | 0/5 |
 
 - [Ideas](0-ideas.md): 2
-- [Done](3-done/): 28
+- [Done](3-done/): 29
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->
