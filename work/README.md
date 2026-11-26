@@ -30,7 +30,7 @@ Write project-specific notes outside the markers; the script keeps them.
 | 6 | [031-trigger-lint](1-planned/031-trigger-lint.md) | planned, ready for agent | — | — | Skills say they run "at project setup", "on first need" or "periodically" while no skill that owns that moment hands off to them; the setup-starter-items gap w… | 0/1 |
 | 7 | [032-stranger-docs-cleanup](1-planned/032-stranger-docs-cleanup.md) | planned, ready for agent | — | — | `docs/guides/pipeline.md` still describes the old `.bc-agent/` vault layout; five skills say to use `naming-things`, which was never tested or deployed; wiki s… | 0/3 |
 | 8 | [033-stranger-end-to-end-test](1-planned/033-stranger-end-to-end-test.md) | planned, ready for agent | [027-pipeline-default-branch](2-active/027-pipeline-default-branch.md), [028-missing-private-tool-fallbacks](1-planned/028-missing-private-tool-fallbacks/plan.md), [029-setup-green-gate-and-ci](2-active/029-setup-green-gate-and-ci/plan.md) | — | Every gap found on 2026-11-26 came from skills only ever run on the owner's machine; the fresh-install test checks installation but nothing checks using the lo… | 0/1 |
-| 9 | [035-kernel-package](1-planned/035-kernel-package/plan.md) | planned, waiting on owner | — | — | The README tells strangers to copy the kernel by hand into an always-on instructions file. | 0/5 |
+| 9 | [035-kernel-package](1-planned/035-kernel-package/plan.md) | planned, ready for agent | — | — | The README tells strangers to copy the kernel by hand into an always-on instructions file. | 0/5 |
 
 - [Ideas](0-ideas.md): 2
 - [Done](3-done/): 25
