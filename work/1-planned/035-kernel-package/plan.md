@@ -1,0 +1,21 @@
+# Ship the kernel as an opt-in package
+
+Why: The README tells strangers to copy the kernel by hand into an always-on instructions file. A copy goes stale, each harness keeps that file in a different place, and setup runs per project while the kernel is per machine. Installing the skills must not silently add always-on rules, so the kernel ships as its own package.
+Done when: Pi, Claude Code, Codex and OpenCode each have a separate kernel package built from the one canonical `AGENT-KERNEL.md`; a marker-block install script covers any other harness; setup reports a missing kernel with the install command and writes nothing; README and `docs/guides/harnesses.md` describe it; requirements in [requirements.md](requirements.md).
+Stage: next
+Blocked by: nothing
+Kind: feature
+Source: owner decision 2026-11-26 (kernel delivery, option 1); research in the owner's local swarm state (kernel-delivery)
+Planned: bc-plan-to-pipeline 2026-11-26
+Waiting on owner: Claude Code route. The kernel is 14,435 characters and a Claude Code SessionStart hook caps each payload at 10,000. (a) Recommended: split the kernel at section boundaries into two hook payloads; it stays context, leaves the user's output style alone, and repeats after resume and compaction. (b) Forced plugin output style: sent with every request as system instructions, no hook cap known, but it overrides the user's own output style and does not reach subagents. Reply `a` or `b`.
+
+## Steps
+
+- [ ] Staged package root and fallback script: a build script stages a self-contained package folder (a new `packages/agent-kernel/`) with real Markdown bytes from the canonical kernel; lint or the gate fails when the staged copy drifts; a marker-block install script writes the kernel between versioned begin/end markers into a named instructions file, replaces the block on upgrade, removes it on `--remove`, and leaves every other line untouched. Tests watched failing first. Blocked by: nothing. Stories 1, 5. Done when the drift check fails on an edited copy and the script's install, upgrade, remove and no-op runs pass. Out of scope: harness packages.
+- [ ] Pi package: a separate package (distinct npm name) whose extension adds the kernel as one fixed structured prompt section, read once per extension instance, same bytes and position for the whole session; the root skills package stays unchanged. Blocked by: step 1. Story 2. Done when a local install loads the kernel in a fresh session, removing it unloads it, and the owner's prompt-cache check passes. Out of scope: npm publishing.
+- [ ] Claude Code plugin: a second marketplace entry `agent-kernel` with a SessionStart hook per the owner's answer above, reading the bundled Markdown through the plugin root; payload measured against the cap in a test. Blocked by: step 1. Story 2. Done when a user-scope install shows the full kernel at start and after compaction and uninstall removes it. Out of scope: the existing skills plugin.
+- [ ] Codex and OpenCode packages: Codex plugin with a trusted SessionStart hook (own hooks file, separate from Claude's) and a local marketplace entry; OpenCode V2 plugin adding the kernel through its context hook. Blocked by: step 1. Story 2. Done when each loads the kernel in a fresh session on the local client, or the step records which client version could not be tested as a human-only verification. Out of scope: OpenCode V1.
+- [ ] Setup checks for the kernel, and docs: `bc-setup-project`'s survey checks whether the kernel is loaded (package installed, marker block or `# Agent Kernel` heading in the always-on file); when missing it names the install command for the harness and writes nothing; one ideas-file line if the user declines. README Install gains an optional kernel section (install, disable, remove, pins); `docs/guides/harnesses.md` separates package delivery from manual deltas; CONCEPT deploy targets, `index.md`, `.bc-agent/log.md`. Pressure scenario. Blocked by: steps 2 to 4. Stories 3, 4. Done when the with-change run reports the missing kernel and writes nothing while the baseline does not report it; lint has 0 ERROR and the gate passes. Out of scope: kernel content.
+
+## Outcome
+

@@ -7,3 +7,4 @@
 7. 031-trigger-lint
 8. 032-stranger-docs-cleanup
 9. 033-stranger-end-to-end-test
+10. 035-kernel-package
