@@ -18,6 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import install_packs
+import kernel_package
 import pi_package
 import plugin_manifests
 import release_check
@@ -457,6 +458,11 @@ def lint_relationships(issues: list[Issue]) -> None:
         issues.append(Issue("ERROR", f"relationship graph: {error}"))
 
 
+def lint_kernel_package(issues: list[Issue]) -> None:
+    for error in kernel_package.check_staged_kernel(ROOT):
+        issues.append(Issue("ERROR", f"agent kernel package: {error}"))
+
+
 def lint_pi_package(issues: list[Issue]) -> None:
     for error in pi_package.check_manifest(ROOT):
         issues.append(Issue("ERROR", f"pi package: {error}"))
@@ -856,6 +862,7 @@ def main() -> int:
     lint_status_doc(issues)
     lint_relationships(issues)
     lint_public_skills(issues)
+    lint_kernel_package(issues)
     lint_pi_package(issues)
     lint_plugin_manifests(issues)
     lint_release_versions(issues)

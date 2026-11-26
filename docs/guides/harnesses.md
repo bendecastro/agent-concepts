@@ -6,7 +6,11 @@ The canonical copy of each concept (the one that is edited) is `concepts/<name>/
 
 The `bc-pipeline-to-done` body includes the [publish checker](../../policies/README.md#checking-a-rule) in symlink deployments, Pi packages, and Claude Code and Codex plugins.
 
-For always-on base instructions, use `concepts/agent-kernel/body/AGENT-KERNEL.md`; it is deliberately a small Markdown include, not an on-demand skill.
+## Standalone kernel
+
+The kernel is a small Markdown include for always-on instructions, not an on-demand skill. Edit `concepts/agent-kernel/body/AGENT-KERNEL.md` and run `python3 scripts/kernel_package.py` to refresh the bundled bytes. Lint rejects drift in that copy.
+
+Keep `install.py` and `AGENT-KERNEL.md` together from `packages/agent-kernel/`. Run `python3 /path/to/package/install.py /path/to/instructions.md` to install or upgrade one versioned block in the instructions file your harness reads. Pass `--remove` to remove the block. The installer appends the block, or prepends it if there is no final newline, so it does not need to change the file's other bytes. Leave marker lines to the installer: malformed or duplicate markers cause it to refuse the edit.
 
 ## Compatibility matrix
 

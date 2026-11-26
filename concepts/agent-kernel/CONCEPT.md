@@ -12,6 +12,8 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 ## Design decisions
 
+- **Opt-in package root (2026-11-26)** — keep one edited kernel body per [decision 0005](../../docs/decisions/0005-kernel-holds-rules-for-everyone.md). Stage real bytes so installers that copy only their package directory do not depend on a checkout or a symlink target. The fallback manages one versioned block in a user-named file; it is not part of skill installation.
+
 - **Storage tools are optional; temp-file rules are not (2026-11-26).** Without a guarded runner, use plain pytest and `tmp_path` under the same cleanup rules. Consumers keep that fallback inline so a standalone install can use it. A missing optional storage health check is reported and skipped; a configured check that cannot run or reports critical or unknown health still blocks the action.
 
 - **Coordinate with concurrent sessions before any repository write (2026-11-19).** Owner decision, from a reflection (then `retro`) of 10 sampled project A sessions: in 2 of them the owner had to ask parallel parent sessions in one repository to coordinate — session 2026-11-18T04-30-21 (lines 90–104) and 2026-11-18T05-57-04 (lines 154–176), the second after a worker was already dispatched into an overlapping registry. First shipped as a bc-delegate-investigation section covering only dispatch (commit fe826ff); moved here because the same collision happens when a parent edits, commits or merges itself, in any harness. Home is Git discipline, ahead of its "you changed files" bullets, because the trigger is the moment before any repo write, and Git discipline already owns how this session's writes meet the repository. Until 2026-11-26 the kernel's Pi example used `intercom` `list` and matched cwds against the repo root, subdirectories and `git worktree list`, because pi-intercom's `list-cwd` compares one realpath-normalized directory exactly (`cwd.ts` `sameCwd`) and misses sessions in a subdirectory or another worktree. Stale or silent sessions never block; the owner is asked only when an unknown overlap could break a shared checkout, build or integration. Tests: [tests/pressure-concurrent-sessions.md](tests/pressure-concurrent-sessions.md) (kernel wording) and [tests/pressure-concurrent-sessions-dispatch.md](tests/pressure-concurrent-sessions-dispatch.md) (earlier dispatch-only evidence against the bc-delegate-investigation body).
@@ -64,6 +66,8 @@ The deliverable is `body/AGENT-KERNEL.md`, intended to be pasted, included, or r
 
 ## Tests
 
+The staged copy and fallback installer are covered by pytest examples and an install/remove byte-preservation property. The kernel body is unchanged by this delivery path; no consuming-agent pressure runs or harness installs were executed for it.
+
 `tests/pressure-scenarios.md` — compact checks for the kernel's main failure modes: over-planning, scope creep, context dumping, unverified completion, dirty-worktree damage, unsafe publishing, off-vault stalls, missing concept loads, and informational questions triggering edits. Scenario 9's answer-first boundary passed a full two-turn Pi pressure run on 2026-08-12 after two failed phrasings were strengthened.
 
 Scenario 15 (test evidence, 2026-11-05) in `tests/pressure-scenarios.md`: kernel-only, tdd hidden by `bwrap`; with the kernel the consumer watched RED before fixing 2/2 vs 0/2 without.
@@ -78,7 +82,7 @@ Scenario 15 (test evidence, 2026-11-05) in `tests/pressure-scenarios.md`: kernel
 
 ## Deploy policy
 
-The kernel is deployed only as harness-specific deltas so far. Two rules govern any further deploy:
+The recorded live deployments below are harness-specific deltas. The [standalone installer](../../docs/guides/harnesses.md#standalone-kernel) is an opt-in fallback for an instructions file the user names. Two rules govern further harness-specific deploys:
 
 1. **Inject only the delta.** Before deploying to a harness, diff the kernel against what that harness's built-in system prompt already covers, and inject only what's missing. Rich harnesses (Claude Code in particular) already cover most of this kernel natively — deploying the full kernel there duplicates instructions at permanent token cost and risks phrasing conflicts. **Anti-recommended for Claude Code.** The kernel earns its keep in thin harnesses: bare API loops, grok-cli-style agents, minimal CLI wrappers.
 2. **Reference, don't paste.** Prefer include/reference mechanisms so the harness reads the canonical body. Where a harness only supports pasted text, the pasted copy must open with a marker line — `<!-- DERIVED from <agent-concepts>/concepts/agent-kernel/body/AGENT-KERNEL.md @ YYYY-MM-DD — do not edit here -->` — and lint/deploy passes refresh stale copies from canon. Private derived copies may intentionally keep owner-specific tool names when refreshing from the public kernel. Why: an unmarked pasted copy is exactly the hand-edited derived output the canon rule exists to prevent.

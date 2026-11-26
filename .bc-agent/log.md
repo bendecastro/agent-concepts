@@ -2268,3 +2268,6 @@ Round 1, one Terra low dry run per arm: treatment ran the bundled checker and pl
 
 ## [2026-11-26] implement | Fallbacks for missing machine tools
 Standalone skills now say what to do without optional helpers; the pipeline stops before claims without fresh roles. README lists prerequisites and fallbacks. Missing-tools dry run: Terra low, one completed run per arm, comparison 2/5 and revised 5/5; no live execution.
+
+## [2026-11-26] implement | Standalone kernel package and fallback installer
+Stage the canonical kernel as bundled Markdown and fail lint on copy drift. The opt-in installer manages a versioned block without changing surrounding bytes. Pytest examples and a round-trip property ran; no kernel wording changed and no consumer pressure or harness deployment ran.
