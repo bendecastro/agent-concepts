@@ -22,7 +22,14 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [026-setup-starter-items](1-planned/026-setup-starter-items/plan.md) | planned, ready for agent | — | — | on an existing codebase `bc-setup-project` creates `docs/design/README.md` and `docs/guardrails/README.md` with empty lists and only names follow-up skills in… | 0/2 |
+| 1 | [027-pipeline-default-branch](1-planned/027-pipeline-default-branch.md) | planned | — | 033-stranger-end-to-end-test | `concepts/bc-pipeline-to-done/body/SKILL.md` requires the target repo to be "on `master`" and "pushes `HEAD:master`", so a repository on `main` cannot pass pre… | 0/3 |
+| 2 | [028-missing-private-tool-fallbacks](1-planned/028-missing-private-tool-fallbacks.md) | planned | — | 033-stranger-end-to-end-test | Deployed skills name tools only the owner's machine has (publish check via the private overlay, guarded pytest runner, storage health check, Pi worker roles);… | 0/4 |
+| 3 | [029-setup-green-gate-and-ci](1-planned/029-setup-green-gate-and-ci.md) | planned | — | 033-stranger-end-to-end-test | On an existing repository without CI, setup has no rule for filling `./scripts/gate`, so it stays red and blocks landing; the generated `.github/workflows/gate… | 0/4 |
+| 4 | [026-setup-starter-items](1-planned/026-setup-starter-items/plan.md) | planned, ready for agent | — | — | on an existing codebase `bc-setup-project` creates `docs/design/README.md` and `docs/guardrails/README.md` with empty lists and only names follow-up skills in… | 0/2 |
+| 5 | [030-ship-machine-only-rules](1-planned/030-ship-machine-only-rules.md) | planned | — | — | Several behaviours strangers need live only in the owner's own instructions: the agent kernel is a manual copy step (so "workers never run the full suite" is e… | 0/5 |
+| 6 | [031-trigger-lint](1-planned/031-trigger-lint.md) | planned | — | — | Skills say they run "at project setup", "on first need" or "periodically" while no skill that owns that moment hands off to them; the setup-starter-items gap w… | 0/3 |
+| 7 | [032-stranger-docs-cleanup](1-planned/032-stranger-docs-cleanup.md) | planned | — | — | `docs/guides/pipeline.md` still describes the old `.bc-agent/` vault layout; setup names `naming-things`, which is not deployed; wiki search needs `$AGENT_CONC… | 0/4 |
+| 8 | [033-stranger-end-to-end-test](1-planned/033-stranger-end-to-end-test.md) | planned | [027-pipeline-default-branch](1-planned/027-pipeline-default-branch.md), [028-missing-private-tool-fallbacks](1-planned/028-missing-private-tool-fallbacks.md), [029-setup-green-gate-and-ci](1-planned/029-setup-green-gate-and-ci.md) | — | Every gap found on 2026-11-26 came from skills only ever run on the owner's machine; nothing checks the loop as a stranger meets it. | 0/4 |
 
 - [Ideas](0-ideas.md): 2
 - [Done](3-done/): 24
