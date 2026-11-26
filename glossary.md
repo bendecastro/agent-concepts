@@ -52,6 +52,7 @@ same meaning.
 - **Ready for agent** — the line `Ready for agent: yes` in a work item: the owner's consent that an unattended drain may build it; written only when every step states its done-criteria and what is out of scope.
 - **Waiting on owner** — the line `Waiting on owner: <question>` in a parked work item: the decision a drain needs before it can continue; the item loses its ready line until the owner answers.
 - **starter item** — a work item `bc-setup-project` proposes when setting up an existing codebase (design inventory, guardrails setup checks, architecture review, issue triage), filed only when the survey shows it applies and the owner accepts it.
+- **stranger test** — a sandboxed run of the whole loop (install, setup, plan, build) with none of the owner's private configuration or tools, to find what only works on the owner's machine.
 - **rework** — fixing the defects a gate or review sent back.
 - **landing** — the final merge, push and close of reviewed work, done by the run's driver.
 - **PRD** — a product requirements document: what to build and why, written before the work is split into slices (bc-prd-drafting).
