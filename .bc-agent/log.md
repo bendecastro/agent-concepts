@@ -2218,3 +2218,6 @@ Added bc-setup-project and bc-wiki-maintain to the Skills line of "Work lives in
 
 ## [2026-11-25] implement | owner-notes link
 Linked owner-notes/ to the owner notes folder and ignored it, as other projects do.
+
+## [2026-11-25] implement | README heading spacing
+Added a <br> before every ### heading so the gap above a heading is larger than below; GitHub CSS gives them equal gaps.

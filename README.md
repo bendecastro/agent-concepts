@@ -23,12 +23,16 @@ Install them once and they work in the coding agent you already use: **Claude Co
 
 Seven ideas run through the whole set.
 
+<br>
+
 ### Settle questions before building
 
 An agent that guesses what you wanted builds the wrong thing quickly. So the agent asks you questions one at a time until every decision in a plan is made, explores ideas with you
 before they become plans, and brings real choices to you instead of deciding and then building something you didn't want.
 
 **Skills:** [bc-grilling](concepts/bc-grilling/body/SKILL.md) · [bc-brainstorming](concepts/bc-brainstorming/body/SKILL.md) · [bc-plan-to-pipeline](concepts/bc-plan-to-pipeline/body/SKILL.md) · the [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md), a short set of rules the agent reads in every session
+
+<br>
 
 ### Test first, and prove the test can fail
 
@@ -41,17 +45,23 @@ Agents often say a task is done when it isn't, so here "done" comes with proof: 
 
 **Skills:** [bc-tdd](concepts/bc-tdd/body/SKILL.md) · [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md)
 
+<br>
+
 ### Simple on purpose
 
 Simple code is easier to trust, test and change, and it takes effort to get there. Before building anything, the agent looks for the simplest way to get the result: something the project already has, a feature the language already offers, or a single line. It writes new code only when those fall short. What it does build, it shapes into parts that are simple to use from outside, with the hard work kept inside, so the next person or agent can use a part without understanding all of it.
 
 **Skills:** [bc-minimal-solution-ladder](concepts/bc-minimal-solution-ladder/body/SKILL.md) · [bc-codebase-design](concepts/bc-codebase-design/body/SKILL.md)
 
+<br>
+
 ### Independent checking
 
 The agent that wrote something is the worst one to judge it. A separate agent reviews every change with fresh eyes: does it do what was asked, and is it well made? For big questions, several AI models answer and challenge each other's answers.
 
 **Skills:** [bc-code-review](concepts/bc-code-review/body/SKILL.md) · [bc-pipeline-to-done](concepts/bc-pipeline-to-done/body/SKILL.md) · the [council skills](#running-several-agents)
+
+<br>
 
 ### Work lives in files, not chat
 
@@ -60,12 +70,16 @@ them. Over time this becomes the project's long-term memory: facts that an agent
 
 **Skills:** [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) · [bc-handoff](concepts/bc-handoff/body/SKILL.md) · [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) · [bc-wiki-maintain](concepts/bc-wiki-maintain/body/SKILL.md) · the [work-data format](concepts/bc-setup-project/body/work-data.md) a dashboard reads
 
+<br>
+
 ### Keep the project consistent, and stop it getting worse
 
 Many short-lived agents working on one project will slowly pull it in different directions unless something holds it together. Every colour, size and wording pattern is defined once and
 reused. Automatic checks fail when a change makes the project slower, bigger or more tangled: performance budgets limit time, size or memory, and fitness functions check established rules about how code should be put together, such as "the screen code never talks to the database directly".
 
 **Skills:** [bc-ui-design](concepts/bc-ui-design/body/SKILL.md) · [bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md)
+
+<br>
 
 ### The instructions are sourced, tested and improved from use
 
@@ -90,6 +104,8 @@ Set up a project with `/bc-setup-project`, plan its work with `/bc-plan-to-pipel
 
 > [!TIP]
 > **Working while you are away.** `/bc-pipeline-to-done` builds the same work without you. It takes only the items marked `Ready for agent: yes`, which `/bc-plan-to-pipeline` marks for you, or GitHub issues labelled `ready-for-agent`. Since nobody is there to answer, it takes on only the work those marks cover, because you already settled its questions, and then diligently verifies the work before merging. It claims each item so two agents never build the same thing. Each builder works in its own separate copy of the project, and other agents review every step before it is merged. When it needs a decision, it sets the item aside with your question and moves on.
+
+<br>
 
 ### Running it as a software factory
 
@@ -138,6 +154,8 @@ flowchart TD
 ```
 
 When a bug gets out, fix it, then ask what would have caught it: a test, a guardrail or a change to a skill? Add that too. That is how both the line and the product get better.
+
+<br>
 
 ### The skills, stage by stage
 
@@ -689,6 +707,8 @@ are not linked.
 
 How this repository is organised and the rules for changing it. You need this only if you want to change the skills themselves.
 
+<br>
+
 ### Where things are
 
 | Path | What it holds |
@@ -710,6 +730,8 @@ How this repository is organised and the rules for changing it. You need this on
 entries and status pages. For each deployed concept it also checks the recorded test status in
 `CONCEPT.md`. It reads that record; it does not rerun the pressure tests.
 
+<br>
+
 ### Hard rules
 
 [`AGENTS.md`](AGENTS.md) names four hard rules. They are harder to change than other rules
@@ -723,6 +745,8 @@ deliberately, with the change logged, but not skipped quietly.
   pressure test.
 - **Immutability rule** — files in `docs/research/raw/` are never edited.
 
+<br>
+
 ### Publishing and authorisation
 
 Agents publish (push, open pull requests, release) only on your explicit instruction or a
@@ -732,6 +756,8 @@ files can restrict publishing but cannot grant it. A change to the policy file i
 publishable under the policy itself. `scripts/publish-check.py` checks whether a rule matches.
 See [policies/README.md](policies/README.md).
 
+<br>
+
 ### Private concepts
 
 For guidance that cannot be published (infrastructure details, employer process, or an upstream
@@ -739,6 +765,8 @@ text whose licence forbids redistribution), put a concept in
 `~/.config/agent-concepts/concepts/<name>/body/SKILL.md`, in the same shape as `concepts/`. The
 deploy script links it alongside the public ones. A private concept overrides a public one of the
 same name, and the script reports the override.
+
+<br>
 
 ### Provenance and licensing
 
