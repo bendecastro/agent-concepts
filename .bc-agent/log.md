@@ -2256,3 +2256,6 @@ Moved the checker into the skill body, retained the checkout entry point, and ad
 
 ## [2026-11-26] test | Setup CI toolchain: no defect
 The old setup body provisioned CI on an existing-CI Node fixture (setup-node in the workflow, `npm ci` as the gate's first step) and a no-CI uv fixture (setup-uv and Python before the gate) (one Terra low run each). Owner chose to land wording only on a failure, so only the generated workflow's TODO comment changed.
+
+## [2026-11-26] implement | Setup starter-item reference
+Defined applicability and work-item text for design inventory, guardrails setup checks, architecture review and issue triage. A scaffold fixture verifies all four with `work_index.py --check`; setup workflow wiring is unchanged.
