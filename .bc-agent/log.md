@@ -2230,3 +2230,6 @@ Space above How these skills work; ?sort=semver on the Release badge so GitHub i
 
 ## [2026-11-25] implement | Release badge via badgen
 GitHub image proxy times out (504) on the shields.io release badge; badgen.net loads through it.
+
+## [2026-11-26] test | Gemini 4 Neon README prose pass
+Delegate on antigravity-acp/gemini-4-neon:high produced a prose rewrite (owner-notes only, sandbox blocked writes so parent extracted it); structure checks pass; filed adopt question.
