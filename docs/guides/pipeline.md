@@ -28,7 +28,7 @@ How the workshop-pipeline skills compose into one end-to-end loop: from a raw id
    │            └► deterministic gate ─► tiered review                │
    │                 (tier 1: combined; tier 2: Spec + Standards axes)
    │                 └► same-worktree rework/re-review (up to 3 cycles)
-   │                      └► driver-owned commit ─► push master ─► close
+   │                      └► driver-owned commit ─► push to target branch ─► close
    │       └► terminal outcomes: HUMAN_BLOCKED / REWORK_DEFERRED / SYSTEMIC_FAILURE
    ▼                                                                       │
   shipped (trunk) ◄────────────────────────────────────────────────────────┘
@@ -61,7 +61,7 @@ Before the loop runs in a fresh project, `/bc-setup-project` scaffolds a repo-ro
 
 - **Claim.** The driver claims each unit before any work starts so two drivers cannot build the same thing: a no-force `bc-drain-claims/issue-<n>` or `bc-drain-claims/item-<slug>` branch on the remote. A work item is claimed whole; one builder works through its steps in order and ticks each as it lands. With no Git remote, only one driver may run, the committed move of the item to `work/2-active/` is the claim, and the run commits locally without pushing.
 - **Audit and build.** High-risk units get a read-only audit first. A **fresh builder** then builds the unit test-first (or runs `bc-diagnosing-bugs` for bugs) in its own worktree; it cannot commit, push, or change the issue or work item.
-- **Review and land.** A deterministic pre-review gate (an automated check with fixed rules, not an agent's judgment) runs, then tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards). The driver lands (commit, push `master`, close the issue with a validation comment, or tick the step) only when every review approves the exact final diff. Material findings receive bounded same-worktree rework/re-review for up to three cycles. A finished work item gets its Outcome filled and moves to `work/3-done/`.
+- **Review and land.** A deterministic pre-review gate (an automated check with fixed rules, not an agent's judgment) runs, then tiered review: tier 1 uses one combined reviewer, while tier 2 uses two independent axes (Spec and Standards). The driver lands (commit, push to the preflight-recorded target branch, close the issue with a validation comment, or tick the step) only when every review approves the exact final diff. Material findings receive bounded same-worktree rework/re-review for up to three cycles. A finished work item gets its Outcome filled and moves to `work/3-done/`.
 - **Outcomes.** `HUMAN_BLOCKED` for a human decision, unavailable access, contract clarification, or irreparable environment repair; `REWORK_DEFERRED` when fixable findings outlast the round or token bound; `SYSTEMIC_FAILURE` for repeated tooling, base, or environment failure. A work item that needs a decision is parked: the driver adds `Waiting on owner: <question>`, removes its `Ready for agent:` line, releases the claim and moves on; when you answer, write the answer into the item, delete the waiting line and restore `Ready for agent: yes`. Preflight (the checks and decisions made before a run starts) is the only planned human decision point.
 
 

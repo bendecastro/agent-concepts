@@ -82,6 +82,14 @@ def _run(root, archetype, *extra, script=SCAFFOLD):
         check=True, capture_output=True, text=True).stdout
 
 
+@pytest.mark.parametrize('archetype', (*VISIBLE, 'learning', 'knowledge'))
+def test_generated_text_does_not_assume_master(tmp_path, archetype):
+    _run(tmp_path, archetype)
+    for path in tmp_path.rglob('*'):
+        if path.is_file():
+            assert not re.search(r'\bmaster\b', path.read_text()), str(path.relative_to(tmp_path))
+
+
 def _base_scaffold(tmp_path):
     shown = subprocess.run(
         ['git', 'show', f'{BASE_COMMIT}:concepts/bc-setup-project/body/scaffold.py'],

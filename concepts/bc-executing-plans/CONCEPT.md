@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-25 inline storage/verification rules PASS on Terra low (without FAIL); rest of the shared storage matrix unrun
+test_status: partial # target-branch preflight not pressure-tested; 2026-11-25 inline storage/verification rules PASS on Terra low (without FAIL); rest of the shared storage matrix unrun
 tested: 2026-11-25
 deployed: yes
 ---

@@ -13,7 +13,7 @@ In preflight and verification: run pytest through the guarded test runner the pr
 
 1. Read the plan fully.
 2. Inspect current git branch/status.
-3. If on `main`/`master` and the work is more than a trivial edit, ask before implementing in place or use an approved isolated workspace.
+3. Use the target branch already recorded for this run, if any. Otherwise resolve it once from an explicit project instruction, then `git symbolic-ref refs/remotes/origin/HEAD` (strip `refs/remotes/origin/`), then the current named branch only if no Git remote is configured. For more than a trivial edit, ask before implementing in place if on the target or the target is unresolved, or use an approved isolated workspace.
 4. Review the plan critically. Raise blockers, contradictions, missing files, or unsafe steps before coding.
 5. Create a task list from the plan’s tasks.
 

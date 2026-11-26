@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-25 inline guarded runner + cleanup-proof rule reworded in 024 held on Terra low (without FAIL, with PASS, n=1; tests/pressure-024-rewording-2026-11-25.md); older scenario.md cases not re-run
+test_status: partial # target-branch merge base not pressure-tested; 2026-11-25 inline guarded runner + cleanup-proof rule reworded in 024 held on Terra low (without FAIL, with PASS, n=1; tests/pressure-024-rewording-2026-11-25.md); older scenario.md cases not re-run
 tested: 2026-11-25
 deployed: yes
 ---

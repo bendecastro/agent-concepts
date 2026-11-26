@@ -50,8 +50,8 @@ This skill names project files by role: the **work-planned**, **work-active** an
 
 Stop and report if a required check fails; AFK work must not invent mid-run decisions.
 
-1. Confirm the target repo is clean, on `master`, and capture its remote and base SHA.
-2. Run the machine's publish policy check for this repo, remote and `master`, if the machine has one (the overlay names it). A pass authorizes the configured operations. A denial, or no check, aborts unless the user pre-agreed to commit-only-local mode. Never edit the policy to authorize this run.
+1. Resolve the **target branch** (where work lands) once. An explicit target in the project's instructions wins. Otherwise read `git symbolic-ref refs/remotes/origin/HEAD` and strip `refs/remotes/origin/`. Only when there is no Git remote, use the current named branch (`git symbolic-ref --short HEAD`). If the target cannot be determined, stop and report; do not guess. Confirm the target repo is clean and checked out on that branch. Capture the remote and base SHA and record them with `target_branch` in the run manifest. Use the recorded branch throughout the run, including recovery; if resuming, verify the checkout against the manifest rather than resolving the branch again.
+2. Run the machine's publish policy check for this repo, remote and the recorded target branch, if the machine has one (the overlay names it). A pass authorizes the configured operations. A denial, or no check, aborts unless the user pre-agreed to commit-only-local mode. Never edit the policy to authorize this run.
 3. Confirm no-force creation/deletion of `bc-drain-claims/issue-<n>` is authorized. For marker reuse, also confirm authorization for lease-guarded fast-forward acquisition from a valid marker; optional marker cleanup requires lease-guarded deletion authorization. Both leases must name the exact inspected marker SHA. This never authorizes force-updating a non-marker tip. Without no-force creation/deletion authorization, stop unless the user explicitly selected single-run mode. Without marker authorization, continue, but report each valid-marker issue and skip it for the run. Why: the marker paths update an existing ref, which a no-force-only policy does not cover, and an unauthorized marker should cost one issue, not the run. Labels/comments are advisory, not locks.
 4. Run the chosen source's preflight checks.
 5. Record the launch caps: `max-iters` (default 20) and `max-parallel` (default 3), plus the review bound of an initial review and at most three rework/re-review cycles.
@@ -87,12 +87,12 @@ Classify risk cheaply in the driver before claim: **high-risk** means compatibil
 
 Record a **review tier** with its classification reason at the same time. High-risk slices are tier 2 (two independent axes). Ordinary slices start at tier 1 (one combined reviewer) and escalate permanently on a pre-review gate rejection or any Critical finding; see [review-contract.md](review-contract.md). Tier is recorded before dispatch and reported per issue so the cheap path stays auditable; it never lowers mid-issue.
 
-Atomically claim from the main checkout's tree with `git commit-tree`:
+Atomically claim from the main checkout's tree on the recorded target branch with `git commit-tree` (the coordination ref is still separate):
 
 - **Absent ref** — create a parentless claim commit and push it without force to `refs/heads/bc-drain-claims/issue-<n>` (unchanged create-if-absent path).
 - **Valid marker tip** — create the claim commit with parent = marker, then push with `--force-with-lease=refs/heads/bc-drain-claims/issue-<n>:<marker sha>`. Keep it fast-forward; never use plain force or replace a held/malformed tip. Why: the exact lease makes marker reuse a compare-and-swap, so a concurrent claimant cannot be overwritten.
 
-Only a push reporting an update of this exact ref to the new claim SHA **and** `git ls-remote` equality with that SHA proves ownership; a successful but up-to-date push is not ownership proof. A lease rejection is a lost race: skip without spending child tokens, as on a failed no-force creation. Without both proofs, do not dispatch. Then apply the source's claim marks, fetch `origin/master`, and create `bc-drain-work/issue-<n>` in the external worktree root.
+Only a push reporting an update of this exact ref to the new claim SHA **and** `git ls-remote` equality with that SHA proves ownership; a successful but up-to-date push is not ownership proof. A lease rejection is a lost race: skip without spending child tokens, as on a failed no-force creation. Without both proofs, do not dispatch. Then apply the source's claim marks, fetch the recorded target branch from the recorded remote when present and create `bc-drain-work/issue-<n>` in the external worktree root from the fetched tip (or the local target tip for a no-remote run).
 
 For recovered work, follow [recovery-bundle.md](recovery-bundle.md) only after the claim succeeds. A matching base may restore directly; a changed base requires full diff inspection, validation, and full fresh review.
 
@@ -148,8 +148,8 @@ Only after verifying that **every axis holds a standing approval whose `diff_sha
 1. inspects status and the exact reviewed diff;
 2. runs final relevant/full project validation once (the only full run after the cached baseline);
 3. commits only unit-authored changes using project conventions, plus the source's progress update (for a work item, its ticked step; for an issue, the work-item update in [source-issues.md](source-issues.md#landing));
-4. runs publish authorization again as required;
-5. pushes `HEAD:master`;
+4. runs publish authorization again as required for the recorded remote and target branch;
+5. pushes with `git push "$remote" "HEAD:refs/heads/$target_branch"` using the manifest values; skips the push in local-only mode;
 6. finishes the unit as the source page says (closes the issue, or ticks the step and finishes the item);
 7. releases worktree, local branch, and claim.
 

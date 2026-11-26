@@ -643,14 +643,14 @@ Once planning leaves a `ready-for-agent` queue, `/bc-pipeline-to-done` executes 
 lands it **trunk-based**, then moves on.
 
 - **Authorization.** The executor's preflight runs the machine's publish policy check. This repo must have an
-  allow rule in `policies/publish.yaml` (push + issue-close on `master`) and authorization for
+  allow rule in `policies/publish.yaml` (push to the recorded target branch + issue-close) and authorization for
   `bc-drain-claims/issue-<n>` coordination branches, or AFK/parallel push is blocked.
   **TODO:** confirm this repo is authorized before the first AFK run.
 - **Validation gate.** The per-issue agent reads THIS repo's `conventions/validation.md` +
   `references/commands.md` for what "validated" means — not a generic test command. Criteria
   met **and** that validation clean = eligible to land.
 - **Claim before work.** Follow `/bc-pipeline-to-done`' authorized claim protocol: no-force create-if-absent or lease-guarded reuse of a Released Claim Marker; skip a lost race before dispatch.
-- **Trunk-based, not PRs.** Each slice commits → pushes `master` → closes its issue with a
+- **Trunk-based, not PRs.** Each slice commits → pushes to the target branch recorded by preflight → closes its issue with a
   sha + validation comment. Dependent slices then see prior work immediately.
 - **Parking.** A slice that can't complete cleanly is parked: comment on the issue, swap
   `ready-for-agent` → `needs-human`, push nothing partial/RED. A run of consecutive parks

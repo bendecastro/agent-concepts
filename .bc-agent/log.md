@@ -2245,3 +2245,6 @@ Added an optional `Changes UI:` header line (what the user will see change; kept
 
 ## [2026-11-26] implement | agent-kernel holds rules for everyone
 Removed personal rows 9, 13, 18, 21, 31 and the tool-thresholds line from the public kernel; moved worktree cleanup proof (row 22) to bc-using-git-worktrees; reworded rows 7, 12, 23 (accuracy-checked only). Repaired stale kernel references in skill bodies, index.md, CONCEPT.md and relationships.json (dropped the kernel→bc-self-improve hands_off edge). Decision 0005; work item 034.
+
+## [2026-11-26] implement | Pipeline target branch
+Resolve and record the landing branch in preflight, then use it for policy checks, claim checkout, fetch and landing. Standalone execution/finishing and generated scaffold guidance no longer assume a named trunk. Scaffold output regression reproduced on learning and knowledge and passes after the change; the `main` fixture consumer scenario is documented separately.
