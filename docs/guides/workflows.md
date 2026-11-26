@@ -152,7 +152,7 @@ Every field, where it comes from and how far you can rely on it are listed in th
 - **When:** the skill sets no schedule. Suggested: before a first public release, and after changes to login, permissions or input handling.
 - **Start:** `/bc-council-audit-security` (slash command only), optionally with a scope and `--max-verify N`. Needs the council setup above.
 - **What it asks:** which findings to file, after the report. Confirmed findings are pre-selected.
-- **What you get:** a run folder `.security-audit/run-N/` with an architecture note listing the places where input from a less-trusted user or system enters the code (trust boundaries), a coverage record, a findings file whose format is checked by a script, and `REPORT.md`. Advisors hunt the boundaries dealt to them; every candidate is then checked by a fresh reviewer, because advisors agreeing is not proof. For a single-model audit, ask for a full audit with the `bc-security-audit` skill.
+- **What you get:** a run folder `.security-audit/run-N/` with an architecture note listing the places where input from a less-trusted user or system enters the code (trust boundaries), a coverage record, a findings file whose format is checked by a script, and `REPORT.md`. Advisors hunt the boundaries dealt to them; every candidate is then checked by a fresh reviewer, because advisors agreeing is not proof. For a single-model audit, type `/bc-security-audit`, optionally with a scope; asking for a full audit in words works too.
 - **Example:** the audit confirms that a file-upload route lets a signed-in user overwrite another user's file, with the code path from request to file write.
 
 ## Every few weeks

@@ -7,22 +7,30 @@ description: Use for security questions, source security review, or an explicitl
 
 ## Choose the mode before acting
 
-Loading this skill is **guidance**, not authorization to audit. Answer the security
-question or review the code in front of you; write no files. A vague “check security?”
-stays in guidance: ask one focused question about the intended scope before creating
-anything. Do not interpret interest in security as permission for an audit.
-Guidance describes observations as suspected/likely and unverified, plus what a
-full audit would check; never use `confirmed`, `rejected` as a verdict, or severity
-labels, which exist only after independent verification.
+First check how this skill reached you. If the owner typed its command
+(`/bc-security-audit`, `/skill:bc-security-audit` in Pi), the skill's text arrives as
+the owner's own message, wrapped in a skill or command block, with nothing before
+it. That is an explicit request for a **full audit**: text after the command names
+the scope, and with no text the scope is the whole repository. Do not ask what to
+review; start the audit.
 
-Enter **full audit** only for an explicit request such as “audit this repo”,
-“pen-test”, “full security review”, or requested audit report artifacts. This
-source-focused workflow does not authorize live penetration testing. State the
-scope and source revision. Audit findings describe fixes; do not change target code.
-On a full-audit trigger, the workflow below (recon note and ledger, fresh reviewer
-per candidate, records under `.security-audit/run-N/`, validator) is the
-deliverable; a chat-only answer is incomplete, not a faster audit. If the Output
-gate blocks artifacts, say so and pause.
+Loading this skill on your own, because security came up, is **guidance**, not
+authorization to audit. Answer the security question or review the code in front of
+you; write no files. A vague “check security?” stays in guidance: ask one focused
+question about the intended scope before creating anything. Do not interpret
+interest in security as permission for an audit. Guidance describes observations as
+suspected/likely and unverified, plus what a full audit would check; never use
+`confirmed`, `rejected` as a verdict, or severity labels, which exist only after
+independent verification.
+
+Besides the typed command, enter **full audit** only for an explicit request such as
+“audit this repo”, “pen-test”, “full security review”, or requested audit report
+artifacts. This source-focused workflow does not authorize live penetration
+testing. State the scope and source revision. Audit findings describe fixes; do not
+change target code. On a full-audit trigger, the workflow below (recon note and
+ledger, fresh reviewer per candidate, records under `.security-audit/run-N/`,
+validator) is the deliverable; a chat-only answer is incomplete, not a faster audit.
+If the Output gate blocks artifacts, say so and pause.
 
 ## Evidence before labels
 

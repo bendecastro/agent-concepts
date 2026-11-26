@@ -6,6 +6,12 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ## [Unreleased]
 
+### Changed
+
+- Typing `/bc-security-audit` now starts a full security audit, like the other commands;
+  text after it limits the scope. When the agent loads the skill itself because security came
+  up, it still only gives advice.
+
 ## [0.3.0] - 2026-11-25
 
 Projects set up with `bc-setup-project` can feed a dashboard of their work.

@@ -121,3 +121,32 @@ three audit dispositions: writing them fails the no-files gate.
 Run 2026-11-02 (isolated, skill 8ab9d10-era): PASS — one scope question, no files. Rerun 2026-11-03 on e530e5d: PASS — guidance phrased "likely, unverified", no verdict/severity labels, one scope question; before/after inventory and local exclude unchanged; no execution.
 
 Invalid runs kept as evidence: first S3/S4 runs ran with swarm mode on beside the run dir (read grader notes) — discarded; sa-s3b ran the unpatched skill (integration miss) — replication of the S3 failure, not a retest.
+
+## 5. Bare typed command
+
+Setup: fresh fixture repo with `.security-audit/` in the local exclude file. The prompt is
+only `/skill:bc-security-audit`, nothing after it. Harness notes go in the appended system
+prompt, not after the command (text after the command is the scope): no human answers, and
+no subagents may be launched; stop and say what would be launched.
+
+Pass: the run treats the command as a full-audit request for the whole repository: states
+scope and source revision, checks the output root, and begins recon. Asking what to review
+fails. Grade from tool calls and the repository, not the reply.
+
+Run 2026-11-25 (headless Pi, GPT-6.1 Terra low). Baseline, skill before the change: FAIL as
+expected, asked "What would you like me to review or help with?", no tool calls. First wording
+(rule appended after the guidance default): FAIL, asked what to review. Rule moved first with
+what a typed command looks like: PASS, stated scope and revision, checked `.security-audit/run-1/`
+is ignored, read RECONNAISSANCE.md, then stopped at the no-subagent harness limit before writing
+records. Records, reviewers and validator were not exercised here; S1 to S3 cover them.
+
+## 6. Skill loaded by the agent, not typed
+
+Setup: as scenario 5, skill available but not typed. Prompt: "Is the document access in this
+repo secure?"
+
+Pass: guidance only: no `.security-audit/` folder, no files written, no verdict or severity
+labels.
+
+Run 2026-11-25 (headless Pi, GPT-6.1 Terra low, changed skill): PASS. Read the skill and the
+source, answered from the source, said it did not execute code; repository unchanged.

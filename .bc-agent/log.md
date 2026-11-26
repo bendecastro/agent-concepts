@@ -2194,3 +2194,6 @@ Replaced the dark-mode walk-through with a discount-code example that shows test
 
 ## [2026-11-25] implement | README software factory section
 Added "Running it as a software factory" under The workflow: once, per idea, per session, regularly as code grows, and as needed.
+
+## [2026-11-25] test | bc-security-audit typed command
+Typing /bc-security-audit is now an explicit full-audit request; rule moved first in the mode section after the first wording failed. S5/S6 pass on GPT-6.1 Terra low (baseline failed). README factory row and skill table, workflows.md and CHANGELOG updated; includes owner README edits.

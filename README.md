@@ -128,13 +128,13 @@ A factory is more than its machines. Nothing enters the line until its questions
 
 **Once, when you start a project**
 - `/bc-setup-project` makes the project ready for agents.
-- Ask the agent to set performance guardrails: automatic checks that fail when a change makes the project slower, bigger or more tangled.
+- Ask the agent to set performance guardrails (automatic checks that fail when a change makes the project slower, bigger or more tangled).
 
 **For each idea**
 - `/bc-triage` first, if the idea arrives as a GitHub issue.
 - `/bc-plan-to-pipeline` settles the questions and turns the idea into planned work.
 - `/bc-council-challenge-plan` for a large or risky plan, so several AI models look for wrong assumptions before anything is built (Pi only).
-- Build it with your agent, or with `/bc-pipeline-to-done` while you are away.
+- `/bc-pipeline-to-done` to build while you are away.
 
 **At the end of each session**
 - `/bc-self-improve` suggests changes to the skills, checks or tools so the next session goes better.
@@ -149,7 +149,7 @@ Agents add code quickly, and with it tangles and bugs nobody has reported yet. E
 
 | Situation | Run |
 |---|---|
-| A release is coming, or the code handles logins, payments or personal data | ask the agent for a security audit |
+| A release is coming, or the code handles logins, payments or personal data | `/bc-security-audit` |
 | The list of planned work no longer matches what is actually happening | `/bc-work-sync` |
 | The project's agent notes contradict each other or have gone stale | `/bc-wiki-maintain` |
 
@@ -220,7 +220,7 @@ After fixing something that got slower, bigger or more tangled, the agent adds a
 | [bc-code-review](concepts/bc-code-review/body/SKILL.md) | Reviews a change with fresh eyes: does it do what was asked, and is it well made? Also helps decide which review comments to act on. | automatically |
 | [bc-diagnosing-bugs](concepts/bc-diagnosing-bugs/body/SKILL.md) | Finds the real cause of a bug by first making it happen on demand, then fixes it with a test that keeps it from coming back. | [`/bc-diagnosing-bugs`](docs/guides/workflows.md#bc-diagnosing-bugs) |
 | [bc-find-bugs](concepts/bc-find-bugs/body/SKILL.md) | Goes looking for bugs nobody has reported yet in a part of the code, and proves each one with a failing test. | [`/bc-find-bugs`](docs/guides/workflows.md#bc-find-bugs-and-bc-council-find-bugs) |
-| [bc-security-audit](concepts/bc-security-audit/body/SKILL.md) | Looks for security holes, answers security questions, and in a full audit proves each finding before reporting it. Council version: [`/bc-council-audit-security`](docs/guides/workflows.md#bc-council-audit-security). | automatically |
+| [bc-security-audit](concepts/bc-security-audit/body/SKILL.md) | Looks for security holes, answers security questions, and in a full audit proves each finding before reporting it. Council version: [`/bc-council-audit-security`](docs/guides/workflows.md#bc-council-audit-security). | automatically for security questions; [`/bc-security-audit`](docs/guides/workflows.md#bc-council-audit-security) for a full audit |
 | [bc-optimize-code](concepts/bc-optimize-code/body/SKILL.md) | Makes code faster or smaller in measured steps, keeping a change only when the measurement shows a real gain and nothing broke. | [`/bc-optimize-code`](docs/guides/workflows.md#bc-optimize-code) |
 
 </details>

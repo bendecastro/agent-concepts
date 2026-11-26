@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: pass
-tested: 2026-11-03
+tested: 2026-11-25
 deployed: yes
 ---
 # Concept: bc-security-audit
@@ -20,6 +20,13 @@ silently authorize files, execution or a full audit.
   writes. Explicit audit/pen-test/full-review/report requests enable the audit flow;
   ambiguous intent gets one focused question before files. This preserves owner
   control and adapts bc-prompting-agents' ambiguity, scope and untrusted-input blocks.
+- **The typed command is an audit request (2026-11-25).** The owner wanted
+  `/bc-security-audit` to work like the other commands. Typing the skill's own command
+  is a deliberate act, so it counts as the explicit request; loading the skill on the
+  agent's own initiative stays guidance. The rule comes first in the mode section and
+  says what a typed command looks like (the skill text arriving as the owner's
+  message), because a first wording placed after the guidance default was loaded and
+  ignored: the agent asked what to review.
 - **One bounded pass.** Recon and threat model establish assets, principals and
   trust boundaries in a short architecture note, then one coverage-led,
   invariant-first hunt, one fresh verifier per candidate, and reporting. This keeps
@@ -86,6 +93,11 @@ high, isolated scratch repos, graded from artifacts). [Scenarios](tests/scenario
 cover severity pressure, skipping independent verification, unsandboxed execution and
 ambiguous guidance with no files. Two failures were tuned first: owner approval treated
 as a sandbox waiver (S3), and an explicit audit answered in chat with verdict labels (S1).
+
+Typed-command scenarios S5 and S6 **pass** (2026-11-25; headless Pi, GPT-6.1 Terra low, the
+model in the private pressure-test config). Without the change, a bare `/skill:bc-security-audit`
+asked what to review; with it, the run started a full audit. An ordinary security question with
+the skill available still got guidance and no files.
 
 Validator command: `<pytest-wrapper> -q concepts/bc-security-audit/tests` (fallback: `python3 -m pytest -q concepts/bc-security-audit/tests`).
 Result: **11 passed, 36 subtests passed in 0.02s**. Unit success does not change the
