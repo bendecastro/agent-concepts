@@ -8,7 +8,7 @@ Kind: bug
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
-Held by: pi 01a218e4 since 2026-11-26 19:40 +00:00
+Held by: pi 01a218e4 since 2026-11-26 18:50 +00:00
 
 ## Steps
 
