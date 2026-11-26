@@ -2262,3 +2262,6 @@ Defined applicability and work-item text for design inventory, guardrails setup 
 
 ## [2026-11-26] test | Setup files approved starter items
 First-time setup for existing codebases now proposes applicable starters and files the owner's picks without running the work. Terra low dry runs (one per arm per fixture) gave exact proposals and approved filing in 3/3 revised runs versus 0/3 on the base body; neither arm ran an audit.
+
+## [2026-11-26] test | Pipeline preflight without a publish policy
+Round 1, one Terra low dry run per arm: treatment ran the bundled checker and planned a local commit with no pushes when away; comparison stopped. The owner-present case had single-run mode preselected. Round 2, one treatment dry run (owner present only, no mode preselected): planned one scoped yes, single-driver mode and a target push with no claim-ref or issue writes. No live launch or landing ran. Generated scaffold guidance points to that preflight.

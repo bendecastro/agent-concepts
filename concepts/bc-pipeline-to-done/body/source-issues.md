@@ -29,8 +29,8 @@ A review rejection is not by itself a human blocker. Preserve useful fixable wor
 
 Add these to the core preflight:
 
-- Ensure `ready-for-agent`, `rework-for-agent`, `needs-human`, and `in-progress-agent` exist.
-- Confirm issue/comment/close access and the ability to inspect PRD parent/children. A blocked, claimed, deferred, or open child keeps its parent open.
+- Check for `ready-for-agent`, `rework-for-agent`, `needs-human`, and `in-progress-agent`; create missing labels only with separate issue-mutation authorization and never in local-only mode.
+- Confirm the ability to read issues, comments and PRD parent/children. In local-only mode, or when issue mutations are not separately authorized (including a no-policy yes in single-driver mode), use GitHub read-only: skip mutation-access checks and record claim, blocker and deferral notes locally. Otherwise confirm issue/comment/close access. A blocked, claimed, deferred, or open child keeps its parent open.
 
 ## Resuming an interrupted run
 
@@ -68,7 +68,7 @@ Keep `ready-for-agent`, add `rework-for-agent`, remove `in-progress-agent`, mark
 
 ## Landing
 
-After the core landing steps commit and push, the driver:
+Only after the core landing steps commit and push, and only with separate authorization for issue mutations, the driver:
 
 6. closes the issue with commit and validation evidence;
 7. releases worktree, local branch, and claim, and removes both `in-progress-agent` and `ready-for-agent` from the closed issue (closing does not clear labels); then evaluates PRD closeout.

@@ -642,10 +642,8 @@ Once planning leaves a `ready-for-agent` queue, `/bc-pipeline-to-done` executes 
 (AFK): per unblocked issue it dispatches a fresh subagent that builds the slice test-first and
 lands it **trunk-based**, then moves on.
 
-- **Authorization.** The executor's preflight runs the machine's publish policy check. This repo must have an
-  allow rule in `policies/publish.yaml` (push to the recorded target branch + issue-close) and authorization for
-  `bc-drain-claims/issue-<n>` coordination branches, or AFK/parallel push is blocked.
-  **TODO:** confirm this repo is authorized before the first AFK run.
+- **Authorization.** Follow `/bc-pipeline-to-done` preflight for the target-branch push, including its
+  local-only fallback. Claim refs and issue mutations need separate authorization.
 - **Validation gate.** The per-issue agent reads THIS repo's `conventions/validation.md` +
   `references/commands.md` for what "validated" means — not a generic test command. Criteria
   met **and** that validation clean = eligible to land.
@@ -979,7 +977,7 @@ Deferred / future ideas and wiki improvements.
 
 - Fill `conventions/validation.md` with canonical commands once discovered.
 - Fill `conventions/file-layout.md` once the source/build layout is known.
-- Confirm this repo is authorized in `policies/publish.yaml` before the first AFK drain.
+- Follow `/bc-pipeline-to-done` preflight before the first AFK drain.
 """
 
 
@@ -2728,7 +2726,7 @@ def main() -> int:
 
     print("\nNext: fill conventions/validation.md + file-layout.md as you learn the project; "
           "read .bc-agent/references/agent-skills.md for the loop skill map; "
-          "authorize this repo in policies/publish.yaml if you'll run /bc-pipeline-to-done AFK; "
+          "follow /bc-pipeline-to-done preflight before an AFK drain; "
           "then /triage existing issues or /bc-plan-to-pipeline to plan the first feature.")
     return 0
 

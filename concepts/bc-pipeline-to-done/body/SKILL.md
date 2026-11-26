@@ -40,7 +40,7 @@ Before full baseline/landing suites, worktree creation and multi-worker launch, 
 
 ## Claim before work
 
-No auditor, worker, or worktree starts on a unit until the driver has claimed it through the authorized claim protocol in [Select, classify, and claim](#select-classify-and-claim): no-force create-if-absent, or lease-guarded reuse of a Released Claim Marker, with a lost race skipped before dispatch. The work-item source without a Git remote uses its single-driver claim instead. Why: labels, comments and folder moves are advisory across drivers, so the claim ref is the only thing that stops two drivers or machines building the same unit. This rule lives here, in the skill itself, because projects with the visible layout no longer generate `.bc-agent/conventions/planning-workflow.md`, which used to carry the pointer.
+No auditor, worker, or worktree starts on a unit until the driver has claimed it through the authorized claim protocol in [Select, classify, and claim](#select-classify-and-claim): no-force create-if-absent, or lease-guarded reuse of a Released Claim Marker, with a lost race skipped before dispatch. Local-only and single-driver modes record a local claim instead and never write claim refs. Why: labels, comments and folder moves are advisory across drivers, so the claim ref is the only thing that stops two drivers or machines building the same unit. This rule lives here, in the skill itself, because projects with the visible layout no longer generate `.bc-agent/conventions/planning-workflow.md`, which used to carry the pointer.
 
 ## Where project files go
 
@@ -51,10 +51,14 @@ This skill names project files by role: the **work-planned**, **work-active** an
 Stop and report if a required check fails; AFK work must not invent mid-run decisions.
 
 1. Resolve the **target branch** (where work lands) once. An explicit target in the project's instructions wins. Otherwise read `git symbolic-ref refs/remotes/origin/HEAD` and strip `refs/remotes/origin/`. Only when there is no Git remote, use the current named branch (`git symbolic-ref --short HEAD`). If the target cannot be determined, stop and report; do not guess. Confirm the target repo is clean and checked out on that branch. Capture the remote and base SHA and record them with `target_branch` in the run manifest. Use the recorded branch throughout the run, including recovery; if resuming, verify the checkout against the manifest rather than resolving the branch again.
-2. Run the machine's publish policy check for this repo, remote and the recorded target branch, if the machine has one (the overlay names it). A pass authorizes the configured operations. A denial, or no check, aborts unless the user pre-agreed to commit-only-local mode. Never edit the policy to authorize this run.
-3. Confirm no-force creation/deletion of `bc-drain-claims/issue-<n>` is authorized. For marker reuse, also confirm authorization for lease-guarded fast-forward acquisition from a valid marker; optional marker cleanup requires lease-guarded deletion authorization. Both leases must name the exact inspected marker SHA. This never authorizes force-updating a non-marker tip. Without no-force creation/deletion authorization, stop unless the user explicitly selected single-run mode. Without marker authorization, continue, but report each valid-marker issue and skip it for the run. Why: the marker paths update an existing ref, which a no-force-only policy does not cover, and an unauthorized marker should cost one issue, not the run. Labels/comments are advisory, not locks.
+2. For this repo, remote and recorded target branch, run the checker named by the private overlay, or, if none is named, run `python3 <skill-dir>/scripts/publish-check.py --repo <repo> --remote <remote-url> --branch <target-branch>` from the installed skill's copy. A pass authorizes only the configured operations and conditions. Only when the checker explicitly reports that the policy file does not exist:
+   - If the owner can answer, ask once per run: “May this run push to <remote> <target branch>?” Record the answer and exact destination in the run manifest. An explicit yes authorizes only this run’s target-branch push and sets single-driver mode in the manifest (`max-parallel=1`, no remote claim-ref writes). If more parallelism was requested, build one unit at a time and say why in the report. The yes does not authorize issue mutations. A no stops the run unless local-only was agreed. On resume, use the recorded decision for the same run and destination; do not ask again.
+   - If the owner is away or cannot be asked, record local-only mode, commit locally, push nothing, and report that outcome.
+
+   Otherwise, a denial or missing/unusable check aborts unless the user pre-agreed to commit-only-local mode. Never write or edit the policy to authorize a run. A push that includes a policy change still requires separate, explicit current user instruction covering that change.
+3. Skip claim-ref authorization in preflight’s single-driver or local-only mode. Otherwise, confirm no-force creation/deletion of `bc-drain-claims/issue-<n>` is authorized. For marker reuse, also confirm authorization for lease-guarded fast-forward acquisition from a valid marker; optional marker cleanup requires lease-guarded deletion authorization. Both leases must name the exact inspected marker SHA. This never authorizes force-updating a non-marker tip. Without that authorization, stop unless the user explicitly selected single-run mode; in that case record single-driver mode in the manifest and use its limits. Without marker authorization, continue, but report each valid-marker issue and skip it for the run. Why: the marker paths update an existing ref, which a no-force-only policy does not cover, and an unauthorized marker should cost one issue, not the run. Labels/comments are advisory, not locks.
 4. Run the chosen source's preflight checks.
-5. Record the launch caps: `max-iters` (default 20) and `max-parallel` (default 3), plus the review bound of an initial review and at most three rework/re-review cycles.
+5. Record the launch caps: `max-iters` (default 20) and `max-parallel` (default 3; 1 in single-driver or local-only mode), plus the review bound of an initial review and at most three rework/re-review cycles.
 6. Choose a run artifact root outside every worktree for review packets, `review-packet/issue-<n>/round-<r>/`, and verify it is writable.
 7. Set worker effort explicitly: low for ordinary slices, medium for high-risk slices. Rework rounds after review run at low even for high-risk slices, never at the role cap: the slice is already built and reviewed, and the rework packet names the findings to fix. Never silently inherit a higher AFK parent effort.
 8. Verify worktree support and a root outside the checkout, default `${BC_DRAIN_WT_ROOT:-${TMPDIR:-/tmp}/bc-drain-worktrees/$(basename "$PWD")}`. Never build in the main checkout. Fixed-port tooling may require `max-parallel=1`.
@@ -71,7 +75,7 @@ After preflight and before the loop, list `refs/heads/bc-drain-claims/*` on the 
 - **Valid marker tip** — treat the ref as free; acquire through the marker path below before adopting/restoring any surviving local work.
 - **Marker-looking but malformed, or unreadable tip** — held/unaccounted: leave it, report it, and skip. Never infer release from the subject alone or guess through missing/mismatched fields or parents.
 
-For remaining held claims:
+For remaining held claims, apply these dispositions only with the required claim authorization; otherwise leave them untouched, report and skip:
 
 - **Worktree present with an uncommitted diff** — adopt it. Re-derive the packet, re-run the deterministic pre-review gate, and take full fresh review on every axis. No standing approval survives a run whose reviewer records are gone; an approval is a record, and an unreadable record is not one.
 - **Valid recovery bundle** — restore through [recovery-bundle.md](recovery-bundle.md) exactly as for a `rework-for-agent` candidate.
@@ -87,12 +91,16 @@ Classify risk cheaply in the driver before claim: **high-risk** means compatibil
 
 Record a **review tier** with its classification reason at the same time. High-risk slices are tier 2 (two independent axes). Ordinary slices start at tier 1 (one combined reviewer) and escalate permanently on a pre-review gate rejection or any Critical finding; see [review-contract.md](review-contract.md). Tier is recorded before dispatch and reported per issue so the cheap path stays auditable; it never lowers mid-issue.
 
-Atomically claim from the main checkout's tree on the recorded target branch with `git commit-tree` (the coordination ref is still separate):
+In local-only or single-driver mode, use one driver and `max-parallel=1`. Check for other drivers and live claims read-only; stop if you cannot rule them out. Record the local claim before dispatch (for work items, follow the source's single-driver claim). Do not create, reuse, release or clean up remote claim refs in this mode. In local-only mode, make no other remote writes either.
+
+Otherwise, atomically claim from the main checkout's tree on the recorded target branch with `git commit-tree` (the coordination ref is still separate):
 
 - **Absent ref** — create a parentless claim commit and push it without force to `refs/heads/bc-drain-claims/issue-<n>` (unchanged create-if-absent path).
 - **Valid marker tip** — create the claim commit with parent = marker, then push with `--force-with-lease=refs/heads/bc-drain-claims/issue-<n>:<marker sha>`. Keep it fast-forward; never use plain force or replace a held/malformed tip. Why: the exact lease makes marker reuse a compare-and-swap, so a concurrent claimant cannot be overwritten.
 
-Only a push reporting an update of this exact ref to the new claim SHA **and** `git ls-remote` equality with that SHA proves ownership; a successful but up-to-date push is not ownership proof. A lease rejection is a lost race: skip without spending child tokens, as on a failed no-force creation. Without both proofs, do not dispatch. Then apply the source's claim marks, fetch the recorded target branch from the recorded remote when present and create `bc-drain-work/issue-<n>` in the external worktree root from the fetched tip (or the local target tip for a no-remote run).
+Only a push reporting an update of this exact ref to the new claim SHA **and** `git ls-remote` equality with that SHA proves ownership; a successful but up-to-date push is not ownership proof. A lease rejection is a lost race: skip without spending child tokens, as on a failed no-force creation. Without both proofs, do not dispatch. Then apply the source's authorized claim marks.
+
+Once claimed, fetch the recorded target branch from the recorded remote when present and create `bc-drain-work/issue-<n>` in the external worktree root from the fetched tip (or the local target tip for a no-remote run).
 
 For recovered work, follow [recovery-bundle.md](recovery-bundle.md) only after the claim succeeds. A matching base may restore directly; a changed base requires full diff inspection, validation, and full fresh review.
 
@@ -148,10 +156,10 @@ Only after verifying that **every axis holds a standing approval whose `diff_sha
 1. inspects status and the exact reviewed diff;
 2. runs final relevant/full project validation once (the only full run after the cached baseline);
 3. commits only unit-authored changes using project conventions, plus the source's progress update (for a work item, its ticked step; for an issue, the work-item update in [source-issues.md](source-issues.md#landing));
-4. runs publish authorization again as required for the recorded remote and target branch;
+4. verifies authorization for the exact recorded destination; for a no-policy yes, use the current run's manifest without re-asking or extending its scope. A changed destination is not authorized. In local-only mode, skip the publish check and all remote writes;
 5. pushes with `git push "$remote" "HEAD:refs/heads/$target_branch"` using the manifest values; skips the push in local-only mode;
 6. finishes the unit as the source page says (closes the issue, or ticks the step and finishes the item);
-7. releases worktree, local branch, and claim.
+7. releases worktree, local branch, and claim only where authorized; preserve any local-only commit on a named branch and report it.
 
 A rebase that changes the reviewed diff changes its hash, so no standing approval covers it: update the base, validate, and obtain fresh focused approval on both axes before push. The driver owns commit/push/close so implementation and rework workers cannot bypass the independent gate.
 

@@ -97,15 +97,22 @@ def _base_scaffold(tmp_path):
     if shown.returncode != 0:
         pytest.skip(f'base commit {BASE_COMMIT} is not available (shallow clone or export)')
     base = tmp_path / 'base_scaffold.py'
-    # Skills renamed after the base commit are the only intended changes to learning and knowledge
-    # output: the planning skill (2026-11-22) and issue-slicing to bc-plan-slicing (2026-11-24); the
-    # workspace's pipeline guide moved to docs/guides/ (2026-11-25); bc-drain-issues became
-    # bc-pipeline-to-done (2026-11-25); the owner's publish-check tool became a generic description
-    # (2026-11-25).
+    # Normalize the intentional skill renames, guide move and executor preflight guidance
+    # changes before comparing the otherwise unchanged vault output.
     renamed = shown.stdout.replace(b'bc-plan-to-' + b'issues', b'bc-plan-to-pipeline')
     renamed = renamed.replace(b'bc-drain-' + b'issues', b'bc-pipeline-to-done')
     renamed = renamed.replace(b'$AGENT_CONCEPTS/docs/' + b'pipeline.md', b'$AGENT_CONCEPTS/docs/guides/pipeline.md')
-    renamed = renamed.replace(b"runs `publish-" + b"check.py`.", b"runs the machine's publish policy check.")
+    renamed = re.sub(
+        rb'- \*\*Authorization\.\*\* The executor\'s preflight[^\n]*\n(?:  [^\n]*\n)+',
+        b'- **Authorization.** Follow `/bc-pipeline-to-done` preflight for the target-branch push, including its\n'
+        b'  local-only fallback. Claim refs and issue mutations need separate authorization.\n',
+        renamed, count=1)
+    renamed = renamed.replace(
+        b'Confirm this repo is authorized in `policies/publish.yaml` before the first AFK drain.',
+        b'Follow `/bc-pipeline-to-done` preflight before the first AFK drain.')
+    renamed = renamed.replace(
+        b"authorize this repo in policies/publish.yaml if you'll run /bc-pipeline-to-done AFK; ",
+        b'follow /bc-pipeline-to-done preflight before an AFK drain; ')
     renamed = renamed.replace(b'issue-' + b'slicing', b'bc-plan-slicing')
     # Every public skill gained the bc- prefix (2026-11-25, decision 0001).
     public = json.loads((SCAFFOLD.parents[3] / 'concepts/public-skills.json').read_text())['skills']
@@ -131,6 +138,20 @@ def _files(root):
 def _snapshot(root):
     return {rel: (hashlib.sha256((root / rel).read_bytes()).hexdigest(), (root / rel).stat().st_mtime_ns)
             for rel in _files(root)}
+
+
+@pytest.mark.parametrize('archetype', ['learning', 'knowledge'])
+def test_vault_executor_defers_publish_authority_to_pipeline_preflight(tmp_path, archetype):
+    output = _run(tmp_path, archetype)
+    workflow = (tmp_path / '.bc-agent/conventions/planning-workflow.md').read_text()
+    authorization = workflow.split('- **Authorization.** ', 1)[1].split('- **Validation gate.**', 1)[0]
+    assert 'Follow `/bc-pipeline-to-done` preflight' in authorization
+    assert 'local-only fallback' in authorization
+    assert 'Claim refs and issue mutations need separate authorization.' in authorization
+    assert 'publish.yaml' not in authorization
+    for rel in sorted(_files(tmp_path)):
+        assert 'policies/publish.yaml' not in (tmp_path / rel).read_text(), rel
+    assert 'policies/publish.yaml' not in output
 
 
 CODE_FILES = {
