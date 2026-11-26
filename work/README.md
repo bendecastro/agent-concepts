@@ -22,6 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
+| 1 | [026-setup-starter-items](1-planned/026-setup-starter-items.md) | planned | — | — | on an existing codebase `bc-setup-project` creates `docs/design/README.md` and `docs/guardrails/README.md` with empty lists and only names follow-up skills in… | 1/7 |
 
 - [Ideas](0-ideas.md): 2
 - [Done](3-done/): 24
