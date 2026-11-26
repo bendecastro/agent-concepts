@@ -2191,3 +2191,6 @@ Removed every emoji from headings, stage summaries and the diagram at the owner'
 
 ## [2026-11-25] implement | README session example
 Replaced the dark-mode walk-through with a discount-code example that shows test first, rule-based tests and a set-aside question; includes the owner's manual README edits.
+
+## [2026-11-25] implement | README software factory section
+Added "Running it as a software factory" under The workflow: once, per idea, per session, regularly as code grows, and as needed.

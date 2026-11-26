@@ -122,6 +122,39 @@ Say you want customers to be able to enter a discount code at checkout.
 
 </details>
 
+### Running it as a software factory
+
+A factory is more than its machines. Nothing enters the line until its questions are settled, every piece is checked at every step, and each defect that gets out leads to a change in the line itself, so that kind of defect cannot get out again. These skills give you each part.
+
+**Once, when you start a project**
+- `/bc-setup-project` makes the project ready for agents.
+- Ask the agent to set performance guardrails: automatic checks that fail when a change makes the project slower, bigger or more tangled.
+
+**For each idea**
+- `/bc-triage` first, if the idea arrives as a GitHub issue.
+- `/bc-plan-to-pipeline` settles the questions and turns the idea into planned work.
+- `/bc-council-challenge-plan` for a large or risky plan, so several AI models look for wrong assumptions before anything is built (Pi only).
+- Build it with your agent, or with `/bc-pipeline-to-done` while you are away.
+
+**At the end of each session**
+- `/bc-self-improve` suggests changes to the skills, checks or tools so the next session goes better.
+
+**Regularly, as the code grows**
+
+Agents add code quickly, and with it tangles and bugs nobody has reported yet. Every few finished pieces of work, or whenever a part of the code has grown a lot:
+- `/bc-improve-codebase-architecture` finds parts that would be simpler if reshaped.
+- `/bc-find-bugs` looks for bugs in the newest or busiest code and proves each with a failing test.
+
+**As needed**
+
+| Situation | Run |
+|---|---|
+| A release is coming, or the code handles logins, payments or personal data | ask the agent for a security audit |
+| The list of planned work no longer matches what is actually happening | `/bc-work-sync` |
+| The project's agent notes contradict each other or have gone stale | `/bc-wiki-maintain` |
+
+When a bug gets out, fix it, then ask what would have caught it: a test, a guardrail or a change to a skill. Add that too. That is how the line gets better, not just the product.
+
 ### The skills, stage by stage
 
 Each skill writes its result to files or GitHub issues, so the next step does not need the same session. See how the planning skills fit together: [pipeline.md](docs/guides/pipeline.md).
