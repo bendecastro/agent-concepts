@@ -2253,3 +2253,6 @@ Existing setup now fills checks and layout from recon and names unresolved owner
 
 ## [2026-11-26] implement | Bundle the pipeline publish checker
 Moved the checker into the skill body, retained the checkout entry point, and added an installed-file check. One dry run per arm verified the old install lacked the checker and the bundled install ran it without a policy; preflight wording is unchanged.
+
+## [2026-11-26] test | Setup CI toolchain: no defect
+The old setup body provisioned CI on an existing-CI Node fixture (setup-node in the workflow, `npm ci` as the gate's first step) and a no-CI uv fixture (setup-uv and Python before the gate) (one Terra low run each). Owner chose to land wording only on a failure, so only the generated workflow's TODO comment changed.

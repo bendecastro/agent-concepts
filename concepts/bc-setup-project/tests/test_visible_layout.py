@@ -796,6 +796,10 @@ def test_ci_workflow_runs_gate_on_clean_checkout(tmp_path):
     assert 'push' in text and 'pull_request' in text
     assert 'actions/checkout' in text
     assert 'run: scripts/gate' in text
+    assert (
+        '# TODO: add language setup and dependency installation before scripts/gate.\n'
+        '      # Reuse existing CI; if none, use project lockfiles and language markers.'
+    ) in text
 
 
 def test_root_agents_blocks_landing_on_red_trunk_ci(tmp_path):

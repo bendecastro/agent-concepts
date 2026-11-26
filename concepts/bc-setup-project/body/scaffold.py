@@ -877,7 +877,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # TODO: set up the toolchain scripts/gate needs (for example actions/setup-node).
+      # TODO: add language setup and dependency installation before scripts/gate.
+      # Reuse existing CI; if none, use project lockfiles and language markers.
       - run: scripts/gate
 """
 
