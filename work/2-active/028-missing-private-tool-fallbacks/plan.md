@@ -2,12 +2,13 @@
 
 Why: Deployed skills name tools only the owner's machine has (the publish check found through a private overlay, a guarded pytest runner, a storage health check, Pi worker roles), so on a stranger's machine the pipeline aborts at preflight or the instruction has no defined action.
 Done when: Every deployed reference to a machine-provided tool states what to do when it is absent; the pipeline ships its own publish checker and asks once per run when no policy exists; the README lists what the pipeline needs; requirements in [requirements.md](requirements.md).
-Stage: next
+Stage: now
 Blocked by: nothing
 Kind: bug
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
+Held by: pi 01a218e4 since 2026-11-26 19:40 +00:00
 
 ## Steps
 
