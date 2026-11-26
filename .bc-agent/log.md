@@ -2212,3 +2212,6 @@ GitHub strips <code> inside mermaid labels; switched command styling to <span> (
 
 ## [2026-11-25] implement | README principles: seven ideas
 Folded "Evidence before claims" into the TDD idea as proof shown with "done"; renamed the simplicity idea "Simple on purpose" and framed it as a goal; fixed "writes". Owner keeps the wink emoji on purpose.
+
+## [2026-11-25] implement | README: files idea names setup and wiki skills
+Added bc-setup-project and bc-wiki-maintain to the Skills line of "Work lives in files, not chat".

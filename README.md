@@ -58,7 +58,7 @@ The agent that wrote something is the worst one to judge it. A separate agent re
 A chat disappears when the session ends... files stay. Plans, work items and handoff notes are saved in the project, so they survive a crash and another agent, or a dashboard, can read
 them. Over time this becomes the project's long-term memory: facts that an agent can look up when it needs them.
 
-**Skills:** [bc-handoff](concepts/bc-handoff/body/SKILL.md) · [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) · the [work-data format](concepts/bc-setup-project/body/work-data.md) a dashboard reads
+**Skills:** [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) · [bc-handoff](concepts/bc-handoff/body/SKILL.md) · [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) · [bc-wiki-maintain](concepts/bc-wiki-maintain/body/SKILL.md) · the [work-data format](concepts/bc-setup-project/body/work-data.md) a dashboard reads
 
 ### Keep the project consistent, and stop it getting worse
 
