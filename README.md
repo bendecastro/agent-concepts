@@ -128,17 +128,17 @@ Agents add code quickly, and with it tangles and bugs nobody has reported yet. E
 
 ```mermaid
 flowchart TD
-    setup["Once<br/><code style='color:dodgerblue;font-weight:bold'>/bc-setup-project</code>"] --> plan
-    idea(["<span style='font-size:22px;font-weight:bold;padding:6px 14px;display:inline-block'>Your idea</span>"]) --> plan
-    issue(["GitHub issue"]) --- triage["<code style='color:dodgerblue;font-weight:bold'>/bc-triage</code>"] --> plan
-    plan["Plan<br/><code style='color:dodgerblue;font-weight:bold'>/bc-plan-to-pipeline</code>"] --> queue[("Planned work")]
-    plan -. "#nbsp;large or risky#nbsp;" .-> challenge["<code style='color:dodgerblue;font-weight:bold'>/bc-council-challenge-plan</code>"]
+    setup["Once<br/><span style='color:dodgerblue;font-weight:bold;font-family:monospace;white-space:nowrap'>/bc-setup-project</span>"] --> plan
+    idea(["<span style='font-size:22px;font-weight:bold;padding:6px 14px;display:inline-block;white-space:nowrap'>Your idea</span>"]) --> plan
+    issue(["GitHub issue"]) --- triage["<span style='color:dodgerblue;font-weight:bold;font-family:monospace;white-space:nowrap'>/bc-triage</span>"] --> plan
+    plan["Plan<br/><span style='color:dodgerblue;font-weight:bold;font-family:monospace;white-space:nowrap'>/bc-plan-to-pipeline</span>"] --> queue[("Planned work")]
+    plan -. "#nbsp;large or risky#nbsp;" .-> challenge["<span style='color:dodgerblue;font-weight:bold;font-family:monospace;white-space:nowrap'>/bc-council-challenge-plan</span>"]
     challenge -.-> queue
-    queue --> build["Build and review<br/><code style='color:dodgerblue;font-weight:bold'>/bc-pipeline-to-done</code><br/>when you are away"]
+    queue --> build["Build and review<br/><span style='color:dodgerblue;font-weight:bold;font-family:monospace;white-space:nowrap'>/bc-pipeline-to-done</span><br/>when you are away"]
     build --> merged(["Merged"])
-    merged -- "#nbsp;as the code grows#nbsp;" --> sweep["<code style='color:dodgerblue;font-weight:bold'>/bc-improve-codebase-architecture</code><br/><code style='color:dodgerblue;font-weight:bold'>/bc-find-bugs</code>"]
+    merged -- "#nbsp;as the code grows#nbsp;" --> sweep["<span style='color:dodgerblue;font-weight:bold;font-family:monospace;white-space:nowrap'>/bc-improve-codebase-architecture</span><br/><span style='color:dodgerblue;font-weight:bold;font-family:monospace;white-space:nowrap'>/bc-find-bugs</span>"]
     sweep -- "#nbsp;findings#nbsp;" --> queue
-    build -- "#nbsp;end of session#nbsp;" --> improve["<code style='color:dodgerblue;font-weight:bold'>/bc-self-improve</code>"]
+    build -- "#nbsp;end of session#nbsp;" --> improve["<span style='color:dodgerblue;font-weight:bold;font-family:monospace;white-space:nowrap'>/bc-self-improve</span>"]
     improve -- "#nbsp;better skills and checks#nbsp;" --> build
 ```
 
