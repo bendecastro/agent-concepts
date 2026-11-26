@@ -1,0 +1,11 @@
+# No-CI gate: pressure results, 2026-11-26
+
+[Scenario](pressure-no-ci-gate.md). The portable fixture was run once per arm on `openai-codex/gpt-6.1-terra`, low, with the same scaffold from base `2a1d2a4`. The first old-body run lost its artifacts to scratch cleanup, so the driver reran the old-body arm once on a freshly built fixture with the same harness, hidden roots and prompt.
+
+| Observable | Revised body (one run) | Old body (one run) |
+| --- | --- | --- |
+| Portable gate, verified locally | PASS: the only check inside `scripts/gate` was `python3 -m pytest -q`. The transcript shows the gate itself ran with the machine's guarded invocation outside the file and reported one passing test. | FAIL: the gate held only `python3 -m pytest -q`, but the run tested the suite separately and its close-out says "the gate itself was not run". |
+| Validation and layout conventions | PARTIAL: full gate and real source, test and config paths recorded. The While working example named a machine-local runner instead of the documented portable targeted command. | PARTIAL: same pattern; While working named the machine-local runner. |
+| Release TODO and actionable close-out | PASS: the release TODO stayed explicit; the close-out names the release and CI provisioning gaps and reports only a local gate pass. The workflow was unchanged. | PARTIAL: workflow unchanged and CI readiness reported unverified, but release is only mentioned as not established, not named as an owner action. |
+
+The earlier blind run on the nonportable fixture did write a portable gate but ran its test suite separately, not `scripts/gate`. It explicitly attributed that choice to the owner's machine instructions requiring a guarded runner; this was not a demonstrated gate failure or an effect isolated to the missing skill. Its revised counterpart put a machine-local runner inside the gate. In the portable comparison the discriminating step is running the gate itself: the revised body did, the old body did not. Both arms saw the owner's machine instructions (guarded runner, offload wrapper), so a stranger's baseline might run its gate unprompted; the result shows the new wording makes that step explicit, not that the old wording always skips it. CI provisioning and CI execution were not tested.
