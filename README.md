@@ -5,7 +5,7 @@
 **Skills that make coding agents plan first, test first, and remember.**
 
 [![Gate](https://github.com/bendecastro/agent-concepts/actions/workflows/gate.yml/badge.svg)](https://github.com/bendecastro/agent-concepts/actions/workflows/gate.yml)
-[![Release](https://img.shields.io/github/v/release/bendecastro/agent-concepts)](https://github.com/bendecastro/agent-concepts/releases)
+[![Release](https://img.shields.io/github/v/release/bendecastro/agent-concepts?sort=semver)](https://github.com/bendecastro/agent-concepts/releases)
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
 
 [How it works](#how-these-skills-work) · [The workflow](#the-workflow) · [Install](#install) · [Contributing](#working-on-this-repository)
@@ -18,6 +18,8 @@ Skills and rules for coding agents — a way of working where questions get sett
 files so your project builds intrinsic long-term memory.
 
 Install them once and they work in the coding agent you already use: **Claude Code**, **Codex**, **Pi**, Cursor, or any other harness. All skills are prefixed with `bc-` so they don't conflict with the ones you already have, and uninstalling them is straightforward.
+
+<br>
 
 ## How these skills work
 

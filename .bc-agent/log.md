@@ -2224,3 +2224,6 @@ Added a <br> before every ### heading so the gap above a heading is larger than 
 
 ## [2026-11-25] implement | README heading spacing, adjusted
 Extra space above The workflow, Install and Working on this repository; none above the first heading after a section intro.
+
+## [2026-11-25] implement | README spacing and Release badge
+Space above How these skills work; ?sort=semver on the Release badge so GitHub image proxy refetches it (it returned 404).
