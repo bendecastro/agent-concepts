@@ -2,12 +2,13 @@
 
 Why: Every gap found on 2026-11-26 came from skills only ever run on the owner's machine; the fresh-install test checks installation but nothing checks using the loop as a stranger meets it.
 Done when: A repeatable Pi run in a sandbox with no `~/.config/agent-concepts/` and no owner tools installs from the README, sets up a sample repository on `main` without CI, plans and builds one item, and its results are filed with each stall turned into an item or fixed.
-Stage: later
+Stage: now
 Blocked by: 027-pipeline-default-branch, 028-missing-private-tool-fallbacks, 029-setup-green-gate-and-ci
 Kind: tests
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
+Held by: pi 01a218e4 since 2026-11-27 03:26 +00:00
 
 ## Requirements
 
