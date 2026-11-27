@@ -16,4 +16,6 @@ Ready for agent: yes
 
 ## Outcome
 
-Draft: Reproduced with project instructions loaded: the old wording called `gh` in every run and stopped at the source question in 3 of 4 Terra low dry runs. "Choose the source" now says the issue source exists only with a GitHub remote. With the new wording, 2 of 2 runs chose the work items without calling `gh` ([results](../../concepts/bc-pipeline-to-done/tests/pressure-no-github-source-results-2026-11-27.md)). Dry runs only; the live check is 039-stranger-rerun.
+Reproduced with project instructions loaded: the old wording called `gh` in every run and stopped at the source question in 3 of 4 Terra low dry runs. "Choose the source" now says the issue source exists only with a GitHub remote. With the new wording, 2 of 2 runs chose the work items without calling `gh` ([results](../../../concepts/bc-pipeline-to-done/tests/pressure-no-github-source-results-2026-11-27.md)). Dry runs only; the live check is 039-stranger-rerun.
+
+Landed on master; full gate `scripts/gate` passed on tree d9c32474 (639 passed, 4 skipped).

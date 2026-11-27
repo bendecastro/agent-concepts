@@ -22,14 +22,11 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [036-pipeline-no-github-source](2-active/036-pipeline-no-github-source.md) | active, ready for agent | — | — | In the stranger test the pipeline stopped before building because it could not check GitHub issues in a project whose only remote is a local path, even though… | 2/2 |
-| 2 | [037-setup-find-installed-wiki-skill](2-active/037-setup-find-installed-wiki-skill.md) | active, ready for agent | — | — | In the stranger test setup skipped the wiki check because it looked only in `$HOME/.agents/skills/bc-wiki-maintain`, the directory `bc-setup-project` calls nor… | 1/1 |
-| 3 | [038-starter-items-pass-index-check](2-active/038-starter-items-pass-index-check.md) | active | — | 039-stranger-rerun | Right after setup in the stranger test, `work_index.py` warned that the seeded `002-architecture-review` item "has no Planned: line", and the next session repo… | 1/1 |
-| 4 | [039-stranger-rerun](1-planned/039-stranger-rerun.md) | planned | [038-starter-items-pass-index-check](2-active/038-starter-items-pass-index-check.md) | — | The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/README.md`) stopped before the pipeline launched any child, and its planning and build se… | 0/1 |
-| 5 | [040-pressure-sandbox-instructions](1-planned/040-pressure-sandbox-instructions.md) | planned | — | — | In the 2026-11-26 drain, 3 of 10 items needed a review round because a test session read the wrong instruction files: the owner's private instructions decided… | 0/2 |
-| 6 | [041-results-claims-match-tables](1-planned/041-results-claims-match-tables.md) | planned | — | — | In the 2026-11-26 drain, 4 of 10 items had a summary that claimed more than its results table showed: 027 called a comparison run blind, 029 step 1 counted thr… | 0/1 |
+| 1 | [039-stranger-rerun](1-planned/039-stranger-rerun.md) | planned | — | — | The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/README.md`) stopped before the pipeline launched any child, and its planning and build se… | 0/1 |
+| 2 | [040-pressure-sandbox-instructions](1-planned/040-pressure-sandbox-instructions.md) | planned | — | — | In the 2026-11-26 drain, 3 of 10 items needed a review round because a test session read the wrong instruction files: the owner's private instructions decided… | 0/2 |
+| 3 | [041-results-claims-match-tables](1-planned/041-results-claims-match-tables.md) | planned | — | — | In the 2026-11-26 drain, 4 of 10 items had a summary that claimed more than its results table showed: 027 called a comparison run blind, 029 step 1 counted thr… | 0/1 |
 
-- [Ideas](0-ideas.md): 3
-- [Done](3-done/): 34
+- [Ideas](0-ideas.md): 4
+- [Done](3-done/): 37
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->

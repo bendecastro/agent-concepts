@@ -2319,3 +2319,6 @@ Reproduced stall 1 with project instructions loaded (old wording called `gh` in 
 
 ## [2026-11-27] implement | 037 setup finds installed bc-wiki-maintain
 `bc-setup-project` now finds `bc-wiki-maintain` beside its own skill folder with ordered `test -f` checks, covering the script install and `pi install` (stall 2 of the stranger test). Pressure runs on Terra low: final wording passed both install methods; old body failed both; a "harness lists it" wording failed because the skill is unlisted.
+
+## [2026-11-27] implement | 036, 037, 038 done
+Integrated and gated (tree d9c32474, 639 passed). Filed an idea for the scaffold's vault read block, which still hardcodes the `~/.agents/skills` wiki path.
