@@ -57,6 +57,8 @@ Children do not inherit the swarm kernel, so the swarm-mode parent must copy the
 
 **Worktree isolation refuses a dirty checkout, including someone else's dirt.** `worktree: true` fails before any child runs with `worktree isolation requires a clean git working tree` when the child's `cwd` has any uncommitted or untracked file — also one left by another live session in the same repository. Do not commit, stash or delete that session's files to make the launch pass. Instead create a base worktree for the track (`git worktree add -b <int-branch> <run-dir>/wt-<key> <base>`) and give it as the child's `cwd`; the managed worktree is then cut from that clean checkout, and the parent integrates the child's commits into the integration branch, then onto the main branch. Remove the base worktree and branch after integration proof. Seen twice in one session (2026-11-21, 2026-11-22).
 
+**A long command inside a worktree worker dies with the worker.** 2026-11-27: two `worker` children each ran a stranger end-to-end script of about 30 minutes in their managed worktrees and hit the child timeout (`Subagent timed out after 1800000ms`). A timed-out worker's worktree is removed, which pulls the directory out from under a script still running there; the parent had to resume one child and grade the other run itself. Run any command expected to take more than about 20 minutes from the parent's own checkout, detached, with a completion wake (see Waiting), and give a worker only the bounded part: preparing the change before, or grading the evidence and fixing after.
+
 ## Worktree lifecycle (pi-subagents 0.56.0)
 
 A successful managed-worktree handoff captures the child diff as a patch and records

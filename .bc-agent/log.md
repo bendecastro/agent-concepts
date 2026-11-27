@@ -2369,3 +2369,6 @@ agent-concepts@0.4.0 on npm (owner-run first publish from the tag); release work
 
 ## [2026-11-27] implement | blind-spot council work items
 Council (fable + Opus fallback) found release-reach, reporting, CI, migrations, rename and release-hygiene gaps; owner chose 1a 2a 3a 4a minus F. Planned 047-052; outside-PR rules went to ideas; kernel stays on by default.
+
+## [2026-11-27] implement | long scripts out of worktree workers; isolated Pi home
+bc-delegate-investigation pi.md failure mode: commands over ~20 min run from the parent detached (two worker timeouts this session); stranger_end_to_end.sh header says the same; releasing.md: a throwaway Pi home sets HOME and PI_CODING_AGENT_DIR. From bc-self-improve, owner picks 1 2. pi.md entry is an observed-failure reference note, accuracy-checked against the session log.

@@ -4,6 +4,8 @@
 # Usage: EVIDENCE=/abs/new/dir MODEL=provider/id THINKING=low scripts/stranger_end_to_end.sh
 # Optional: STRANGER_AUTH (Pi auth.json to copy the MODEL provider's credential from);
 # STRANGER_SOURCE=pack installs what `npm pack` of the committed HEAD would publish (the README's npm:agent-concepts).
+# Runs about 30 minutes: start it detached from the main checkout with a completion wake, not inside a
+# subagent worktree, whose timeout removes the directory mid-run.
 set -euo pipefail
 : "${EVIDENCE:?Set an absolute evidence path}" "${MODEL:?Set provider/model}" "${THINKING:?Set effort}"
 [[ "$EVIDENCE" = /* ]]; mkdir -m 700 "$EVIDENCE"

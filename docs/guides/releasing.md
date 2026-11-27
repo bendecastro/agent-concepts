@@ -93,4 +93,4 @@ The README commands must be kept matching by hand; the test will not catch a dri
 The test runs the update commands against the same tag. Moving an install from one tag to a
 newer one has not been tested yet; until it is, the safe way is to uninstall and install again
 with the new tag. For the unpinned npm Pi install, check by hand after a release that
-`pi update` on an install of the previous version moves it to the new one.
+`pi update` on an install of the previous version moves it to the new one. Do that in a throwaway Pi home: set both `HOME` and `PI_CODING_AGENT_DIR` to a `mktemp -d` folder (for example `D=$(mktemp -d); HOME=$D PI_CODING_AGENT_DIR=$D/.pi/agent pi install npm:agent-concepts@<previous>`), because `PI_CODING_AGENT_DIR`, when set, wins over `HOME` and the install would land in your real Pi config.
