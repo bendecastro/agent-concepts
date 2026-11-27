@@ -52,3 +52,7 @@ Findings (no stall):
 Child session prompts were captured with the sessions (kept private).
 
 The full session logs and system prompts stay private, outside the repository.
+
+## npm package rerun (044), 2026-11-27
+
+[npm-pack-rerun.md](npm-pack-rerun.md): installing the `npm pack` of the checkout plus `npm:pi-subagents` worked with no copied roles, but every session was refused with HTTP 429 (rate limit), so setup, plan and build were not graded. Rerun needed.
