@@ -6,10 +6,12 @@ Stage: next
 Blocked by: nothing
 Kind: bug
 Source: 033-stranger-end-to-end-test
+Planned: bc-plan-to-pipeline 2026-11-27
+Ready for agent: yes
 
 ## Steps
 
-- [ ] Locate the skill: `concepts/bc-setup-project/body/SKILL.md` (the `wiki_skill_dir` paragraph) tells the agent to use the directory its harness lists for `bc-wiki-maintain`, naming the `pi install` location next to `~/.agents/skills`. Done when a Pi run after `pi install <checkout>` runs the wiki check instead of reporting it unavailable.
+- [ ] Locate the skill: `concepts/bc-setup-project/body/SKILL.md` (the `wiki_skill_dir` paragraph) tells the agent to use the directory its harness lists for `bc-wiki-maintain`, naming the `pi install` location next to `~/.agents/skills`. Done when a Pi run after `pi install <checkout>` runs the wiki check instead of reporting it unavailable, and a run after the script install still does; both results filed in `concepts/bc-setup-project/tests/`. Out of scope: changing where either install method puts skills; other harnesses' install paths beyond naming them if already documented.
 
 ## Outcome
 
