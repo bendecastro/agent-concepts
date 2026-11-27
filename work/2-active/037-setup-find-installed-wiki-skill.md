@@ -15,3 +15,5 @@ Ready for agent: yes
 
 ## Outcome
 
+Draft: setup now finds `bc-wiki-maintain` from its own skill folder with ordered `test -f` checks (`../bc-wiki-maintain`, then `../../bc-wiki-maintain/body`). Terra low runs: new body ran the installed `wiki_lint.py` after both the script install and `pi install <checkout>`; the old body failed both (under `pi install` exactly as in stall 2). The approved "directory your harness lists" wording failed after the script install because `bc-wiki-maintain` is not listed (`disable-model-invocation: true`). [Results](../../concepts/bc-setup-project/tests/pressure-installed-wiki-location-results-2026-11-27.md).
+
