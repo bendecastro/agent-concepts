@@ -2348,3 +2348,6 @@ releasing.md step 2: retest only changes that add or change a stop, requirement 
 
 ## [2026-11-27] implement | Pi package publishable to npm (046-install-from-npm)
 package.json gains a generated `files` list and drops `private`; release.yml publishes tags through npm trusted publishing; fresh_install_test.py `pi-npm` packs and installs the tarball; README Pi install is the unpinned `npm:agent-concepts`. The first publish stays manual.
+
+## [2026-11-27] implement | bc-ui-design description covers everything a user sees or operates
+Description and opening line now name wording, commands and flags, keyboard, states, accessibility, motion, missing tokens and design decisions, not only layout/styling (owner decision); trigger check in the concept's tests.

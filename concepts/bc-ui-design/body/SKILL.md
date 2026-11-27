@@ -1,11 +1,11 @@
 ---
 name: bc-ui-design
 description: >-
-  Use when creating, changing, reviewing, accepting or shipping what users see or operate — UI, layout, styling, controls or labels, a redesign, a “looks bad” complaint, or a verdict such as “is this ready to ship?”, or recording a design decision — on any surface: web page, extension popup or panel, desktop, mobile or terminal app. Skip when nothing user-visible is involved; explanation diagrams go to bc-explain-visually.
+  Use when creating, changing or reviewing anything a user sees or operates, on any surface (web page, extension, desktop, mobile, terminal UI or CLI). That includes layout and styling, but also wording (labels, help text, error and status messages), commands and flags, keyboard and focus, interaction states, accessibility and motion. Use it when a change needs a colour, size, control or message pattern the project lacks; when recording or checking a design decision so the project stays consistent; and when judging whether such a change is ready to ship. Skip when nothing user-facing changes; explanation diagrams go to bc-explain-visually.
 ---
 # UI design
 
-Make the interface understandable and operable before polishing it. Scale the work to the change: one control in an established application needs the existing system and a capture, not a new art direction.
+Design is everything a user sees or operates: look, wording, commands, keyboard, states, accessibility and motion, kept consistent across the project. Make it understandable and operable before polishing it. Scale the work to the change: one control in an established application needs the existing system and a capture, not a new art direction.
 
 ## Frame and design
 
