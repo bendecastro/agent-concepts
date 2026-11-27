@@ -29,7 +29,8 @@ TAG_PATTERN = re.compile(r"v(\d+\.\d+\.\d+)")
 ANY_TAG = re.compile(r"\bv\d+\.\d+\.\d+\b")
 NPM_PACKAGE = "agent-concepts"
 NPM_UNPINNED = re.compile(rf"pi install npm:{NPM_PACKAGE}(?![@\w-])")
-NPM_PIN = re.compile(rf"npm:{NPM_PACKAGE}@(\S+?)(?=[`\s]|$)", re.MULTILINE)
+# A version pin starts with a digit; `@next` names a dist-tag, not a version.
+NPM_PIN = re.compile(rf"npm:{NPM_PACKAGE}@(\d\S*?)(?=[`\s]|$)", re.MULTILINE)
 
 
 def readme_install_problems(root: Path, tag: str) -> list[str]:

@@ -54,7 +54,10 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
    packs the tagged checkout with `npm pack`, checks the tarball and installs it in Pi. Then
    its `publish-npm` job publishes that version to npm on the `next` dist-tag (see
    [Publishing to npm](#publishing-to-npm)). `latest`, which `pi install npm:agent-concepts`
-   and `npm install agent-concepts` follow, stays on the previous release.
+   and `npm install agent-concepts` follow, stays on the previous release. Last, its
+   `github-release` job creates the tag's GitHub release with its `CHANGELOG.md` entry as the
+   notes; GitHub's Releases page then labels it "Latest". If the job fails, create it by hand
+   with `gh release create vMAJOR.MINOR.PATCH --verify-tag --notes-file <the entry>`.
 10. If it fails, do not move the tag. Fix the problem on `master` and release the next patch
     version; someone may already have installed the broken tag. A version on npm cannot be
     replaced either.

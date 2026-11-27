@@ -1,6 +1,6 @@
 {
   "name": "agent-concepts",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Every public agent-concepts skill: planning, TDD, code review, debugging, subagent workflows and upkeep, with bc- names.",
   "author": {
     "name": "agent-concepts contributors"

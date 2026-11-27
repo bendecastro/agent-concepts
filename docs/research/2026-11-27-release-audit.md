@@ -50,3 +50,9 @@ agent-kernel, bc-brainstorming, bc-code-review (its rule change of 2026-11-27 wa
 - bc-wiki-maintain | NEUTRAL | 3d2c53d (same commit that set tested: 2026-11-27, CONCEPT.md tested line added there; wiki pressure/Installed-search test ran with it) | skill-relative path change: "wiki_skill_dir=\"$HOME/.agents/skills/bc-wiki-maintain\"" replaces $AGENT_CONCEPTS; runner units no longer need AGENT_CONCEPTS edit; no gate changed
 - bc-work-sync | BEHAVIOUR | 502ed1a | "a line naming a session the session tool shows as ended (if none is available, report session status as unverified)" — small changed fallback decision; borderline-minor
 - bc-writing-plans | BEHAVIOUR | 502ed1a, 3895d3d, 4b05ddf | storage-safe plan rule: "(otherwise plain `pytest`, with `tmp_path` ...)" and storage check "stop on critical or unk..." wording; 4b05ddf only adds an HTML trigger-allow comment (neutral)
+
+# Release audit since v0.4.0 (for v0.4.1, 2026-11-27)
+
+`git diff v0.4.0..HEAD -- concepts/*/body` touches one file: `concepts/bc-delegate-investigation/body/pi.md` (c613156), two added lines in "Failure modes observed on this machine" saying commands over about 20 minutes run from the parent, detached, not inside a worktree worker. It is an observed-failure reference note, accuracy-checked against the session log when written (`.bc-agent/log.md`, 2026-11-27 "long scripts out of worktree workers"): no new stop, requirement or prohibition on the skill's contract. Wording change; no retest. No concept is under "Needs testing".
+
+The rest of this release is release tooling and docs (npm `next` soak, `set-latest` and `github-release` jobs, SECURITY.md, issue form, README fixes), checked by the gate and the release workflow, not by pressure tests.

@@ -84,6 +84,29 @@ jobs:
           else
             npm publish --tag next --provenance --access public
           fi
+  github-release:
+    if: github.event_name == 'push'
+    needs: publish-npm
+    runs-on: ubuntu-latest
+    # The GitHub release page, with the tag's CHANGELOG.md entry as its notes. A tag alone shows
+    # no release, and GitHub's Releases page labels the newest release "Latest".
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create the release unless it exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::notice::release $TAG already exists"; exit 0
+          fi
+          awk -v v="${TAG#v}" '$0 ~ "^## \\[" v "\\]" {f=1; next} /^## \[/ {f=0} f' CHANGELOG.md \
+            | sed '/^\[.*\]: http/d' > notes.md
+          test -s notes.md
+          gh release create "$TAG" --verify-tag --title "$TAG" --notes-file notes.md
   set-latest:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest

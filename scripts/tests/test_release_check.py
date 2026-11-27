@@ -86,6 +86,13 @@ class ReleaseCheckTests(unittest.TestCase):
         problems = release_check.version_problems(self.root, "v1.2.3")
         self.assertEqual(problems, ["README.md section `## Install` pins npm:agent-concepts@1.2.2, not 1.2.3"])
 
+    def test_readme_npm_dist_tag_is_not_a_version_pin(self):
+        (self.root / "README.md").write_text(
+            "# Readme\n\n## Install\n\npi install npm:agent-concepts\n"
+            "pi install npm:agent-concepts@next\npi install npm:agent-concepts@1.2.3\nclaude o/r#v1.2.3\n",
+            encoding="utf-8")
+        self.assertEqual(release_check.version_problems(self.root, "v1.2.3"), [])
+
     def test_main_exits_nonzero_on_mismatch(self):
         self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)
         self.assertEqual(release_check.main(["v9.9.9"], self.root), 1)

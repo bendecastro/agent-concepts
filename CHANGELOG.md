@@ -6,11 +6,21 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-11-27
+
+New releases soak on npm before they reach you, and there is a way to report problems.
+
 ### Changed
 
 - New releases go to npm's `next` tag first and move to `latest`, which
   `pi install npm:agent-concepts` follows, only after an end-to-end test passes on the
   published version. Try a release early with `pi install npm:agent-concepts@next`.
+- Each release has a GitHub release page with its changelog entry.
+
+### Added
+
+- Report a problem through a [new issue](https://github.com/bendecastro/agent-concepts/issues/new/choose),
+  and a security problem privately through [SECURITY.md](SECURITY.md).
 
 ### Fixed
 
@@ -135,7 +145,8 @@ The first release you can install without cloning this repository.
 - Agents other than Pi, Claude Code and Codex. `npx skills` supports many more, but this
   release was checked only through its Pi target.
 
-[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/bendecastro/agent-concepts/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/bendecastro/agent-concepts/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bendecastro/agent-concepts/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/bendecastro/agent-concepts/compare/v0.1.0...v0.2.0

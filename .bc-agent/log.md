@@ -2381,3 +2381,6 @@ SECURITY.md, issue form and security contact link, README "Report a problem" lin
 
 ## [2026-11-27] implement | modularity work items 054-060
 Scout scan of all skill bodies for multi-job skills; owner picked safe-runs module (before 053), project-file rules in the bc-agent scaffold, file-findings module, teach-hosting home, kernel rule for runs nobody can answer, qmd query contradiction fix, wiki timer install move.
+
+## [2026-11-27] deploy | v0.4.1 prep; GitHub release pages
+Owner chose 1a 2a: created the missing v0.4.0 GitHub release (Releases page still said v0.3.0 was Latest); release.yml gains a `github-release` job from the CHANGELOG entry. release_check.py no longer reads `npm:agent-concepts@next` as a version pin (test first). Version 0.4.1, CHANGELOG, README tags, audit row.
