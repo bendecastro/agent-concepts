@@ -25,6 +25,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Measures and judges noise per guardrails' measuring.md, and a kept change tightens the matching agent-chosen limit on the guardrails page.
   Source: [bc-optimize-code/body/SKILL.md](../bc-optimize-code/body/SKILL.md#before-you-touch-code)
 
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): loads this concept — required, when fixing a performance, size, memory, or structure regression.
+  Workers add the check that would have caught the regression or explain why no check can; Spec review verifies the evidence.
+  Source: [bc-pipeline-to-done/body/execute-issue.md](../bc-pipeline-to-done/body/execute-issue.md#build-loop)
+
 - incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when visible-layout scaffold writes docs/guardrails/README.md.
   The generated guardrails README names the bc-performance-guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet).
   Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)

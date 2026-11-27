@@ -19,6 +19,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
   Source: [CONCEPT.md](CONCEPT.md)
 
+- loads `bc-performance-guardrails` — required, when fixing a performance, size, memory, or structure regression.
+  Workers add the check that would have caught the regression or explain why no check can; Spec review verifies the evidence.
+  Source: [body/execute-issue.md](body/execute-issue.md#build-loop)
+
 - depends on `bc-plan-to-pipeline`'s contract — required, when project has a Where things go table.
   Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner.
   Source: [body/source-issues.md](body/source-issues.md#select)

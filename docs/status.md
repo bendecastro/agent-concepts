@@ -39,7 +39,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-handoff](../concepts/bc-handoff/CONCEPT.md) | pressure | 2026-08-21 | 2026-08-21 |
 | [bc-improve-codebase-architecture](../concepts/bc-improve-codebase-architecture/CONCEPT.md) | pressure | 2026-08-20 | 2026-06-21 |
 | [bc-optimize-code](../concepts/bc-optimize-code/CONCEPT.md) | pressure | 2026-11-25 | 2026-06-21 |
-| [bc-pipeline-to-done](../concepts/bc-pipeline-to-done/CONCEPT.md) | pressure | 2026-11-26 | 2026-11-25 |
+| [bc-pipeline-to-done](../concepts/bc-pipeline-to-done/CONCEPT.md) | pressure | 2026-11-27 | 2026-11-25 |
 | [bc-plan-slicing](../concepts/bc-plan-slicing/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-plan-to-pipeline](../concepts/bc-plan-to-pipeline/CONCEPT.md) | pressure | 2026-11-26 | 2026-06-21 |
 | [bc-prompting-agents](../concepts/bc-prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |

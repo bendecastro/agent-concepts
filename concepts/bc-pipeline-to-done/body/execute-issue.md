@@ -20,6 +20,8 @@ On every implementation packet, load and follow the repo-available `bc-minimal-s
 
 For bug/performance-regression issues, load and follow the repo-available `bc-diagnosing-bugs` discipline: establish a red-capable reproduction, minimise it, rank and test hypotheses, instrument where useful, fix the cause, and add a regression test. Missing evidence needed to reproduce is human-blocking only when it cannot be derived or generated with available resources.
 
+When fixing a performance, size, memory, or structure regression, load `bc-performance-guardrails`. Add the check that would have caught it and report the command and result, or state why no check can catch it.
+
 For feature/enhancement work, load and follow the repo-available `bc-tdd` discipline in thin observable increments: one public behavior per test, RED, minimal GREEN, then refactor only while GREEN. The Agent Brief, acceptance matrix, and binding domain context are the AFK contract.
 
 For metric-bearing work only, load and follow `bc-optimize-code` after GREEN: establish a correctness-bearing baseline, make one bounded refinement, and keep it only when correctness holds and the named metric improves. Do not optimize without an objective metric. If a named discipline is unavailable in the harness, preserve these mechanics explicitly rather than silently weakening them.

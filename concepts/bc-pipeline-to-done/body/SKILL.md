@@ -123,7 +123,7 @@ For replacement work, inventory the complete old public interface from source, t
 
 ## Build and deterministic pre-review gate
 
-Dispatch a fresh builder with [execute-issue.md](execute-issue.md), the unit's contract (issue/Agent Brief, or work item and step), acceptance matrix, worktree, remote identity, base SHA, and baseline summary. Keep validation artifacts outside the project worktree.
+Dispatch a fresh builder with [execute-issue.md](execute-issue.md), the unit's contract (issue/Agent Brief, or work item and step), acceptance matrix, worktree, remote identity, base SHA, and baseline summary. For a performance, size, memory, or structure regression, include `bc-performance-guardrails` and require the check or explanation from the builder contract. Keep validation artifacts outside the project worktree.
 
 When it returns `READY_FOR_REVIEW`, the driver—not a model reviewer—must deterministically verify:
 
@@ -144,7 +144,7 @@ Follow [review-contract.md](review-contract.md). Dispatch fresh read-only review
 
 Record each approval as a standing record bound to the packet's `diff_sha256`. After a rework round, re-dispatch the axis that raised the findings, plus any axis whose deterministic invalidation trigger fired on the rework delta; an axis holding a standing approval over untouched scope is not asked the same question twice. An unmappable delta invalidates both axes—ambiguity costs a review, never an assumption.
 
-For Critical/Important findings, retain the claim and same worktree. Launch a **fresh compact rework worker** with only the current worktree/base, the round's packet paths, unresolved findings, prior dispositions, validation evidence, and the driver-computed implicated row set (the acceptance-matrix rows those findings touch). It fixes and runs targeted validation, then the deterministic gate, packet refresh, and selective focused re-review repeat. Do not replay an accumulating transcript.
+For Critical/Important findings, retain the claim and same worktree. Launch a **fresh compact rework worker** with only the current worktree/base, the round's packet paths, unresolved findings, prior dispositions, validation evidence, and the driver-computed implicated row set (the acceptance-matrix rows those findings touch). If rework touches a regression fix covered by the guardrails rule above, include the same skill and check requirement. It fixes and runs targeted validation, then the deterministic gate, packet refresh, and selective focused re-review repeat. Do not replay an accumulating transcript.
 
 Allow the initial review plus at most three rework/re-review cycles. Continue only if material findings are resolved or the failure class materially changes. The same unresolved material finding after two attempted fixes defers immediately. This progress rule prevents superficially different patches from consuming an unbounded loop while preserving useful implementation state. A review-ready result still passes the deterministic gate and receives independent review regardless of child-token volume; token counts alone neither defer an issue nor stop launches. Continue selecting eligible issues within `max-iters` and `max-parallel`.
 

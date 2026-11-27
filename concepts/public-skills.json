@@ -55,6 +55,7 @@
     "bc-performance-guardrails": [],
     "bc-pipeline-to-done": [
       "bc-codebase-docs",
+      "bc-performance-guardrails",
       "bc-tdd"
     ],
     "bc-plain-language": [],

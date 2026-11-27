@@ -21,6 +21,15 @@
     },
     {
       "from": "bc-pipeline-to-done",
+      "to": "bc-performance-guardrails",
+      "relation": "loads",
+      "required": true,
+      "when": "fixing a performance, size, memory, or structure regression",
+      "source": "concepts/bc-pipeline-to-done/body/execute-issue.md#build-loop",
+      "reason": "Workers add the check that would have caught the regression or explain why no check can; Spec review verifies the evidence."
+    },
+    {
+      "from": "bc-pipeline-to-done",
       "to": "bc-tdd",
       "relation": "depends_on_contract",
       "required": true,

@@ -70,7 +70,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-delegate-investigation bc-td
 ### bc-pipeline-to-done
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-codebase-docs bc-explain-visually bc-tdd
+npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-codebase-docs bc-explain-visually bc-performance-guardrails bc-tdd
 ```
 
 ### bc-plan-to-pipeline

@@ -2277,3 +2277,6 @@ Visible scaffold rules prefer unfinished active work and check holders; planning
 
 ## [2026-11-27] implement | Opt-in Pi kernel package
 Pi loads a fixed staged kernel section from the separate local package; install and removal verified without changing the owner's Pi configuration. One real Terra low run per arm confirmed delivery and unchanged settings; neither asked for approval. The isolated Opus cache check hit 12/12 follow-up requests, including across resume; no kernel wording changed.
+
+## [2026-11-27] implement | Pipeline regression guardrails
+Build packets load performance guardrails for performance, size, memory and structure regressions; Spec checks the new protection or the reason none can catch it. One masked Terra low dry run per arm: both added a check (NO_DEFECT); treatment loaded the skill and documented the cap. No live drain ran.
