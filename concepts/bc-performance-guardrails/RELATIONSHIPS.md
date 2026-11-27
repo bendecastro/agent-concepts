@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- adapts `bc-design` — required.
+  Copies design-framework.md's page model (read the project page first, copy the scaffold text when missing, agent's choice the owner may change, page line in the same commit) for limits and checks; design-consistency checks stay on the design page.
+  Source: [CONCEPT.md](CONCEPT.md#design-decisions-2026-11-25)
+
 - hands off to `bc-optimize-code` — optional.
   measuring.md names bc-optimize-code as the improvement loop that uses the same method; a verified improvement tightens the limit.
   Source: [body/measuring.md](body/measuring.md)
@@ -14,10 +18,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - depends on `bc-setup-project`'s contract — required, when project has no docs/guardrails/README.md.
   A missing guardrails page is copied from the GUARDRAILS_README text the scaffold writes; the skill does not keep its own copy.
   Source: [body/SKILL.md](body/SKILL.md#start-from-the-projects-guardrails-page)
-
-- adapts `bc-ui-design` — required.
-  Copies design-framework.md's page model (read the project page first, copy the scaffold text when missing, agent's choice the owner may change, page line in the same commit) for limits and checks; design-consistency checks stay on the design page.
-  Source: [CONCEPT.md](CONCEPT.md#design-decisions-2026-11-25)
 
 ## Incoming
 

@@ -1733,12 +1733,12 @@ VISIBLE_OPS_KEEP_CURRENT = """| Check the state of a real system | Update its pa
 """
 
 # The project's design framework entry page: current truth only, no fixed page list.
-# Its generic method lives in the bc-ui-design skill's design-framework.md.
+# Its generic method lives in the bc-design skill's design-framework.md.
 DESIGN_README = """# Design
 
 This folder says how this product looks and behaves **now**. Agents and people
 read it before adding or changing anything a user sees or operates. The
-generic method behind it is `design-framework.md` in the `bc-ui-design` skill.
+generic method behind it is `design-framework.md` in the `bc-design` skill.
 
 <!-- Optional: if the project has a page for its screenshot and review conventions, link it here. -->
 

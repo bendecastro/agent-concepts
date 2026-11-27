@@ -32,7 +32,7 @@ Pages state current behaviour only: one fact per line, no history. Link decision
 
 When a page first names a control kind and its forbidden alternatives, add a text-search check in the project's own test runner; no shared checker tool. Each rule's failure message names the part to use and the design-page line. An exception is a `design-allow <rule>: <reason>` comment on the line. Existing violations go in a per-file baseline that may only fall, so adding the check early costs nothing. List the check under Checks in the README.
 
-If `~/.config/agent-concepts/overlays/bc-ui-design.md` exists, read it: it may name a worked example of a project check. It never changes behaviour, and the project's own instructions take precedence.
+If `~/.config/agent-concepts/overlays/bc-design.md` exists, read it: it may name a worked example of a project check. It never changes behaviour, and the project's own instructions take precedence.
 
 ## Capture scope
 

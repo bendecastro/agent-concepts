@@ -14,6 +14,9 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ### Changed
 
+- Renamed the `bc-ui-design` skill to `bc-design`, and widened its description to wording, CLI
+  commands and flags, keyboard, states, accessibility, motion and design decisions. Reinstall, or
+  use `/skill:bc-design`; local deploys keep `bc-ui-design` as an alias.
 - Typing `/bc-security-audit` now starts a full security audit, like the other commands;
   text after it limits the scope. When the agent loads the skill itself because security came
   up, it still only gives advice.

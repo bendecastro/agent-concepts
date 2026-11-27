@@ -126,7 +126,7 @@ they matter.
 - Visual form of how-it-works explanations → `bc-explain-visually`; this skill owns the
   words around the visual.
 - Agent-instruction authoring → `bc-prompting-agents`.
-- Visual UI beyond the words → `bc-ui-design`.
+- Visual UI beyond the words → `bc-design`.
 - Evidence and citations → `bc-research`. This skill can make a human-facing
   note scannable; it does not change what counts as a source.
 - Live grill questions, the architecture-review HTML report, and a drain

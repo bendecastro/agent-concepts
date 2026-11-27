@@ -37,6 +37,7 @@
     "bc-delegate-investigation": [
       "bc-tdd"
     ],
+    "bc-design": [],
     "bc-diagnosing-bugs": [],
     "bc-dispatching-parallel-agents": [],
     "bc-domain-modeling": [],
@@ -83,7 +84,6 @@
     "bc-to-spec": [],
     "bc-to-tickets": [],
     "bc-triage": [],
-    "bc-ui-design": [],
     "bc-unslop": [],
     "bc-using-git-worktrees": [],
     "bc-wiki-maintain": [],

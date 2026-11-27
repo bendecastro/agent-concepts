@@ -491,7 +491,7 @@
     },
     {
       "from": "bc-explain-visually",
-      "to": "bc-ui-design",
+      "to": "bc-design",
       "relation": "depends_on_contract",
       "required": true,
       "when": "UI redesign",
@@ -535,12 +535,12 @@
       "reason": "Mutation evidence goes in the drain’s existing validation.json, not a new evidence file."
     },
     {
-      "from": "bc-ui-design",
+      "from": "bc-design",
       "to": "bc-explain-visually",
       "relation": "hands_off",
       "required": true,
       "when": "explanation diagrams",
-      "source": "concepts/bc-ui-design/body/SKILL.md",
+      "source": "concepts/bc-design/body/SKILL.md",
       "reason": "Explanation diagrams belong to bc-explain-visually, not product UI design."
     },
     {
@@ -731,26 +731,26 @@
       "reason": "Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks."
     },
     {
-      "from": "bc-ui-design",
+      "from": "bc-design",
       "to": "bc-setup-project",
       "relation": "depends_on_contract",
       "required": true,
       "when": "project has no docs/design/README.md",
-      "source": "concepts/bc-ui-design/body/design-framework.md#start-from-the-projects-design-readme",
+      "source": "concepts/bc-design/body/design-framework.md#start-from-the-projects-design-readme",
       "reason": "A missing design README is created from the template the scaffold writes; the companion does not keep its own copy."
     },
     {
       "from": "bc-setup-project",
-      "to": "bc-ui-design",
+      "to": "bc-design",
       "relation": "depends_on_contract",
       "required": true,
       "when": "visible-layout scaffold writes docs/design/README.md",
       "source": "concepts/bc-setup-project/body/scaffold.py",
-      "reason": "The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary."
+      "reason": "The generated design README names bc-design's design-framework.md as its method and restates only the project-facing summary."
     },
     {
       "from": "bc-setup-project",
-      "to": "bc-ui-design",
+      "to": "bc-design",
       "relation": "hands_off",
       "required": false,
       "when": "existing codebase with a UI or CLI, or new project with a planned UI or CLI, and accepted design starter item",
@@ -1011,7 +1011,7 @@
     },
     {
       "from": "bc-performance-guardrails",
-      "to": "bc-ui-design",
+      "to": "bc-design",
       "relation": "adapts",
       "required": true,
       "source": "concepts/bc-performance-guardrails/CONCEPT.md#design-decisions-2026-11-25",

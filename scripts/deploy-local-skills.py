@@ -73,6 +73,7 @@ DEPLOY_ALIASES: dict[str, str] = {
     "bc-show-me": "bc-explain-visually",
     "bc-init-agent": "bc-setup-project",
     "bc-council-improve-codebase": "bc-council-improve-architecture",
+    "bc-ui-design": "bc-design",
     "bc-guardrails": "bc-performance-guardrails",
     # Names before the bc- prefix (docs/decisions/0001-bc-prefix-for-public-skill-names.md).
     "brainstorming": "bc-brainstorming",
@@ -111,7 +112,7 @@ DEPLOY_ALIASES: dict[str, str] = {
     "to-spec": "bc-to-spec",
     "to-tickets": "bc-to-tickets",
     "triage": "bc-triage",
-    "ui-design": "bc-ui-design",
+    "ui-design": "bc-design",
     "unslop": "bc-unslop",
     "using-git-worktrees": "bc-using-git-worktrees",
     "writing-plans": "bc-writing-plans",

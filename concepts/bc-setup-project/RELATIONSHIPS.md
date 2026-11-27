@@ -11,6 +11,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The read-only survey uses the kernel's opt-in install contract and marked-block signature; setup does not load the kernel.
   Source: [body/SKILL.md](body/SKILL.md#process)
 
+- depends on `bc-design`'s contract — required, when visible-layout scaffold writes docs/design/README.md.
+  The generated design README names bc-design's design-framework.md as its method and restates only the project-facing summary.
+  Source: [body/scaffold.py](body/scaffold.py)
+
+- hands off to `bc-design` — optional, when existing codebase with a UI or CLI, or new project with a planned UI or CLI, and accepted design starter item.
+  The design items file the existing-surface inventory, or for a new project the intended design, plus reuse checks for later execution.
+  Source: [body/starter-items.md](body/starter-items.md#design-inventory)
+
 - depends on `bc-domain-modeling`'s contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
@@ -51,14 +59,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The issue triage item leaves the interactive disposition of open issues to the owner.
   Source: [body/starter-items.md](body/starter-items.md#issue-triage)
 
-- depends on `bc-ui-design`'s contract — required, when visible-layout scaffold writes docs/design/README.md.
-  The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary.
-  Source: [body/scaffold.py](body/scaffold.py)
-
-- hands off to `bc-ui-design` — optional, when existing codebase with a UI or CLI, or new project with a planned UI or CLI, and accepted design starter item.
-  The design items file the existing-surface inventory, or for a new project the intended design, plus reuse checks for later execution.
-  Source: [body/starter-items.md](body/starter-items.md#design-inventory)
-
 - depends on `bc-wiki-maintain`'s contract — required, when generated map links.
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.
   Source: [CONCEPT.md](CONCEPT.md#design-decisions)
@@ -80,6 +80,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-council-audit-security](../bc-council-audit-security/RELATIONSHIPS.md): depends on this concept's contract — required, when filing into a work pipeline.
   Relies on the work-item template, Kind placement in order.md and work_index.py --check.
   Source: [bc-council-audit-security/body/SKILL.md](../bc-council-audit-security/body/SKILL.md)
+
+- incoming from [bc-design](../bc-design/RELATIONSHIPS.md): depends on this concept's contract — required, when project has no docs/design/README.md.
+  A missing design README is created from the template the scaffold writes; the companion does not keep its own copy.
+  Source: [bc-design/body/design-framework.md](../bc-design/body/design-framework.md#start-from-the-projects-design-readme)
 
 - incoming from [bc-diagnosing-bugs](../bc-diagnosing-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves glossary, decisions and ideas in the scaffolded table, with its earlier paths as fallback.
@@ -124,10 +128,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-triage](../bc-triage/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules.
   Source: [bc-triage/CONCEPT.md](../bc-triage/CONCEPT.md)
-
-- incoming from [bc-ui-design](../bc-ui-design/RELATIONSHIPS.md): depends on this concept's contract — required, when project has no docs/design/README.md.
-  A missing design README is created from the template the scaffold writes; the companion does not keep its own copy.
-  Source: [bc-ui-design/body/design-framework.md](../bc-ui-design/body/design-framework.md#start-from-the-projects-design-readme)
 
 - incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   The detector carries a verbatim copy of the Where things go table parser and checks work folders through the table's paths; a drift test fails when the copies differ. Its agent-mechanics check allows the .bc-agent/ entries the hybrid scaffold writes and the optional agent-extras role; a test compares the hybrid list with the scaffold's output.

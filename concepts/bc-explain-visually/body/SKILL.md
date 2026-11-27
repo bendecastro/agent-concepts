@@ -161,7 +161,7 @@ needs to understand the mechanism and its limits.
 - Architecture-review reports → `bc-improve-codebase-architecture`, not this skill.
 - Lessons and their after-lesson HTML → `bc-teach`; inline visuals are fine, but
   do not write or open HTML mid-lesson.
-- Product UI or visual redesign → `bc-ui-design`.
+- Product UI or visual redesign → `bc-design`.
 
 Adapted from HumanLayer / Dex Horthy's MIT `bc-explain-visually` skill.
 Copyright (c) 2026 HumanLayer; [MIT notice](../../../docs/research/raw/humanlayer-show-me/LICENSE).

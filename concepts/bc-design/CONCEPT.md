@@ -4,7 +4,7 @@ test_status: partial
 tested: 2026-11-21
 deployed: yes
 ---
-# Concept: bc-ui-design
+# Concept: bc-design
 
 ## What it is
 
@@ -34,6 +34,7 @@ A cross-surface UI design skill for any visible change, from a single control to
 
 - 2026-11-21: Added the `design-framework.md` companion so short-lived agents build consistently across a project: read the project's `docs/design/README.md` (template from `bc-setup-project`), name the reused part before adding or restyling a control, place each rule as prose, shared code/token, lexical check or screenshot review ("could two people disagree?"), ask the owner with numbered pictures in `owner-notes/<item>/`, land the page line with the code, add a project-owned falling-baseline check when a control kind is first named, and capture every surface a changed part reaches. No fixed page list and no shared checker tool (owner decisions). The trigger widens to recording a design decision; the inventory step sits in the companion the skill links, because the drift it fixes happened while adding a control, not while recording a decision. bc-explain-visually's incoming handoff is unaffected: routing of product UI work is unchanged.
 - 2026-11-27: Description and opening line widened to name everything a user sees or operates: wording (labels, help text, error and status messages), commands and flags, keyboard and focus, states, accessibility and motion, plus a needed colour/size/control/message pattern the project lacks and recording or checking a design decision. Why: the old description led with UI, layout and styling, so agents could skip the skill for CLI wording, flags, new tokens or design decisions (owner decision 2026-11-27). Relationship edges unaffected: bc-explain-visually's handoff and bc-setup-project's UI-or-CLI handoff keep the same routing; the trigger check is in `tests/trigger-description-results-2026-11-27.md`.
+- 2026-11-27: Renamed `bc-ui-design` to `bc-design` (owner decision), so the name matches the widened scope: design is not only UI. The old name stays a deploy alias, like earlier renames, so existing project design pages and muscle memory keep working.
 - 2026-11-21: Agents decide taste calls instead of asking: pick the closest fit, define it once as a token or shared part, record it on a design page as the agent's choice, and list it as an FYI. Ask the owner only to contradict a recorded decision or remove something users rely on. Why: the owner's goal is consistency, not sign-off (one place to change beats a thousand); pressure evidence showed a weak model hard-coding hex colours in a component without asking or recording a reusable value.
 
 ## Provenance
@@ -57,4 +58,4 @@ A cross-surface UI design skill for any visible change, from a single control to
 
 ## Deploy targets
 
-Deployed 2026-11-11 by `scripts/deploy-local-skills.py`: relative symlinks for the shared bus `~/.agents/skills/bc-ui-design`, Pi `~/.pi/agent/skills/bc-ui-design`, and Claude Code `~/.claude/skills/bc-ui-design`.
+Deployed 2026-11-11 by `scripts/deploy-local-skills.py`: relative symlinks for the shared bus `~/.agents/skills/bc-design`, Pi `~/.pi/agent/skills/bc-design`, and Claude Code `~/.claude/skills/bc-design` (deployed as `bc-ui-design` until the 2026-11-27 rename; `scripts/deploy-local-skills.py` keeps `bc-ui-design` as an alias).

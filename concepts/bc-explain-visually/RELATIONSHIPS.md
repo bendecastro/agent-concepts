@@ -15,6 +15,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Placement, current-state maintenance and one home per fact remain doc contracts.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- depends on `bc-design`'s contract — required, when UI redesign.
+  Product UI design is not an explanation sketch.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - depends on `bc-improve-codebase-architecture`'s contract — required, when architecture-review reports.
   Architecture-review report artifacts retain their own contract.
   Source: [body/SKILL.md](body/SKILL.md)
@@ -31,10 +35,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Inline visuals do not authorize mid-lesson HTML or replace after-lesson artifacts.
   Source: [body/SKILL.md](body/SKILL.md)
 
-- depends on `bc-ui-design`'s contract — required, when UI redesign.
-  Product UI design is not an explanation sketch.
-  Source: [body/SKILL.md](body/SKILL.md)
-
 - depends on `bc-unslop`'s contract — required, when shipped wrapping prose.
   Shipped prose is unslopped without rewriting code-shaped visuals.
   Source: [body/SKILL.md](body/SKILL.md)
@@ -45,6 +45,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Use a smallest current-state visual on the owning page; placement rules still win.
   Source: [bc-codebase-docs/body/SKILL.md](../bc-codebase-docs/body/SKILL.md)
 
-- incoming from [bc-ui-design](../bc-ui-design/RELATIONSHIPS.md): hands off to this concept — required, when explanation diagrams.
+- incoming from [bc-design](../bc-design/RELATIONSHIPS.md): hands off to this concept — required, when explanation diagrams.
   Explanation diagrams belong to bc-explain-visually, not product UI design.
-  Source: [bc-ui-design/body/SKILL.md](../bc-ui-design/body/SKILL.md)
+  Source: [bc-design/body/SKILL.md](../bc-design/body/SKILL.md)

@@ -341,7 +341,7 @@ a project without one is unaffected.
 
 Since 2026-11-21 the code, ops and hybrid scaffold also writes `docs/design/README.md`, the entry
 page of the project's design framework (how the product looks and behaves now; its method is the
-`bc-ui-design` skill's `design-framework.md`), and a line in `.bc-agent/map.md` routing design, UI and
+`bc-design` skill's `design-framework.md`), and a line in `.bc-agent/map.md` routing design, UI and
 CLI wording work to it. Learning and knowledge vaults do not get it. To adopt it in an existing
 project, one project at a time on its next scaffold run:
 

@@ -12,7 +12,7 @@ One method for every guardrail in a project: performance budgets (limits on time
 
 ## Design decisions (2026-11-25)
 
-- General method rather than performance only, as its own concept; the project page comes from `bc-setup-project`, mirroring the design framework (`bc-ui-design`'s `design-framework.md` and `docs/design/README.md`): read the page first, copy the scaffold text when it is missing, record a limit as the agent's choice the owner may change, land the page line in the same commit as the check (owner decisions, grill 2026-11-25).
+- General method rather than performance only, as its own concept; the project page comes from `bc-setup-project`, mirroring the design framework (`bc-design`'s `design-framework.md` and `docs/design/README.md`): read the page first, copy the scaffold text when it is missing, record a limit as the agent's choice the owner may change, land the page line in the same commit as the check (owner decisions, grill 2026-11-25).
 - Agents set every limit themselves: a measured ratchet when none exists, published guidelines for user-facing targets. Asking the owner for a number was rejected because guardrails would then not appear without the owner's effort. Owner-chosen limits are never loosened to make a check pass.
 - Three check kinds (static, artifact, dynamic), cheapest reliable kind first; the kinds and their split follow the research synthesis, and the glossary already defines them.
 - A fixed regression gets its check in the same change even under time pressure; at setup, checks only for stack problems with a named source or past bug, each ratcheted so existing shortfalls do not fail the gate. Why: poteto's practice of turning each found issue into a lint rule, bounded so unsourced checks are not added.
@@ -29,7 +29,7 @@ One method for every guardrail in a project: performance budgets (limits on time
 - [Building Evolutionary Architectures précis](https://evolutionaryarchitecture.com/precis.html) — fitness functions.
 - [CodSpeed thresholds](https://codspeed.io/changelog/2025-10-31-per-benchmark-regression-thresholds), [Spotless ratchet](https://github.com/diffplug/spotless/blob/main/plugin-gradle/README.md#ratchet), [Size Limit](https://github.com/ai/size-limit), [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#assert) — regression thresholds, ratchet and size budgets.
 - [Electron performance](https://www.electronjs.org/docs/latest/tutorial/performance) — blocking I/O in the main process as a sourced setup check.
-- [ui-design design framework](../bc-ui-design/body/design-framework.md) — page, write path and agent's-choice model copied here.
+- [ui-design design framework](../bc-design/body/design-framework.md) — page, write path and agent's-choice model copied here.
 - [bc-prompting-agents](../bc-prompting-agents/body/SKILL.md) — rule-plus-why phrasing.
 
 ## Tests

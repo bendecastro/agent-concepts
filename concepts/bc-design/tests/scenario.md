@@ -1,4 +1,4 @@
-# Pressure scenarios: bc-ui-design
+# Pressure scenarios: bc-design
 
 Run each in a throwaway workspace once without and once with the skill on the model configured in `~/.config/agent-concepts/pressure-test.json`. Grade produced code, captures and reports, not self-report. Do not substitute another model without approval.
 
@@ -53,5 +53,5 @@ Run each in a throwaway workspace once without and once with the skill on the mo
 ## I — Trigger without attachment
 - Setup: install the skill but do not attach it to the agent session.
 - Attack: prompt “add an Export button to Settings”.
-- Expected artifacts: observe in the session or tool log whether bc-ui-design loads and its capture rule applies.
+- Expected artifacts: observe in the session or tool log whether bc-design loads and its capture rule applies.
 - Fail: the skill does not load for this visible control change or the gate is skipped.

@@ -25,7 +25,7 @@ including inside a comprehensive how-it-works document.
 - **Current-state, source-grounded docs.** Cite code behind the boxes and choose
   a form the destination renders. Defer placement to bc-codebase-docs and prose to
   bc-plain-language/unslop; architecture reports, lessons, and UI retain their owners.
-- **Existing contracts preserved.** The six consumer pointers (bc-plain-language, unslop, bc-codebase-docs, teach, bc-improve-codebase-architecture, bc-ui-design) only clarify visual
+- **Existing contracts preserved.** The six consumer pointers (bc-plain-language, unslop, bc-codebase-docs, teach, bc-improve-codebase-architecture, bc-design) only clarify visual
   ownership. Teach's host adapter, state, cadence and after-lesson artifact contract
   are unchanged, so its existing incoming/outgoing relationships are unaffected.
 

@@ -30,6 +30,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-council-improve-architecture](../concepts/bc-council-improve-architecture/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-council-mode](../concepts/bc-council-mode/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-delegate-investigation](../concepts/bc-delegate-investigation/CONCEPT.md) | pressure | 2026-11-25 | 2026-08-18 |
+| [bc-design](../concepts/bc-design/CONCEPT.md) | pressure | 2026-11-21 | yes |
 | [bc-diagnosing-bugs](../concepts/bc-diagnosing-bugs/CONCEPT.md) | pressure | 2026-11-25 | 2026-06-21 |
 | [bc-dispatching-parallel-agents](../concepts/bc-dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-11-25 | yes |
 | [bc-domain-modeling](../concepts/bc-domain-modeling/CONCEPT.md) | accuracy | 2026-10-22 | yes |
@@ -52,7 +53,6 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
 | [bc-to-tickets](../concepts/bc-to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [bc-triage](../concepts/bc-triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
-| [bc-ui-design](../concepts/bc-ui-design/CONCEPT.md) | pressure | 2026-11-21 | yes |
 | [bc-using-git-worktrees](../concepts/bc-using-git-worktrees/CONCEPT.md) | pressure | 2026-11-25 | yes |
 | [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-11-27 | 2026-08-23 |
 | [bc-work-sync](../concepts/bc-work-sync/CONCEPT.md) | pressure | 2026-11-25 | 2026-11-16 |

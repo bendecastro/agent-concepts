@@ -20,7 +20,7 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Inventory the current surfaces following `bc-ui-design`'s `existing-app.md` and `design-framework.md`. Record the existing themes, tokens by role, control kinds and where to reuse them on design pages linked under Pages in `docs/design/README.md`. Done when the pages point to the current implementations and distinguish shared controls from one-offs. Out of scope: redesigning surfaces, adding tokens or replacing existing controls.
+- [ ] Inventory the current surfaces following `bc-design`'s `existing-app.md` and `design-framework.md`. Record the existing themes, tokens by role, control kinds and where to reuse them on design pages linked under Pages in `docs/design/README.md`. Done when the pages point to the current implementations and distinguish shared controls from one-offs. Out of scope: redesigning surfaces, adding tokens or replacing existing controls.
 - [ ] For control rules that can be checked by text search, add checks to the project's own test runner and list them under Checks in `docs/design/README.md`. Name the part to reuse and the design-page rule in each diagnostic; record current hits in a per-file baseline that may only fall. Done when the checks pass at the recorded baseline and catch a new violation. Out of scope: fixing baseline hits or encoding visual-only judgments as text rules.
 
 ## Outcome
@@ -148,7 +148,7 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Follow `bc-ui-design`'s `new-work.md` and `design-framework.md` to record the intended themes, tokens by role and the kinds of control the project will use, on design pages linked under Pages in `docs/design/README.md`. Done when the pages name each theme, token role and control kind, marked as the agent's choice the owner may change. Out of scope: building screens or controls.
+- [ ] Follow `bc-design`'s `new-work.md` and `design-framework.md` to record the intended themes, tokens by role and the kinds of control the project will use, on design pages linked under Pages in `docs/design/README.md`. Done when the pages name each theme, token role and control kind, marked as the agent's choice the owner may change. Out of scope: building screens or controls.
 - [ ] Once the project has UI or CLI code, add text-search checks for the recorded control rules to the project's own test runner and list them under Checks in `docs/design/README.md`; name the part to reuse and the design-page rule in each failure message. If there is no code yet, leave this step open; it does not block any other item. Done when the checks pass and catch a new violation. Out of scope: visual-only judgments as text rules.
 
 ## Outcome

@@ -1,7 +1,7 @@
 ---
 name: bc-performance-guardrails
 description: >-
-  Use when setting or changing a speed, size, memory or structure limit (a performance budget, a bundle-size cap, a frame or load-time target, a dependency or layering rule); adding or changing a check that protects such a property; fixing a regression in one (something got slower, bigger, hungrier or more tangled); or setting up a project's guardrails. Skip design-consistency checks: those live on the project's design page (bc-ui-design).
+  Use when setting or changing a speed, size, memory or structure limit (a performance budget, a bundle-size cap, a frame or load-time target, a dependency or layering rule); adding or changing a check that protects such a property; fixing a regression in one (something got slower, bigger, hungrier or more tangled); or setting up a project's guardrails. Skip design-consistency checks: those live on the project's design page (bc-design).
 ---
 # Guardrails
 

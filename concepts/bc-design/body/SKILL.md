@@ -1,5 +1,5 @@
 ---
-name: bc-ui-design
+name: bc-design
 description: >-
   Use when creating, changing or reviewing anything a user sees or operates, on any surface (web page, extension, desktop, mobile, terminal UI or CLI). That includes layout and styling, but also wording (labels, help text, error and status messages), commands and flags, keyboard and focus, interaction states, accessibility and motion. Use it when a change needs a colour, size, control or message pattern the project lacks; when recording or checking a design decision so the project stays consistent; and when judging whether such a change is ready to ship. Skip when nothing user-facing changes; explanation diagrams go to bc-explain-visually.
 ---

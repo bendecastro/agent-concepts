@@ -212,7 +212,7 @@ Skills worth attaching to one role:
 | Skill | Role | What it adds |
 |---|---|---|
 | `bc-research` | researcher | Every claim traced to a primary source (official docs, specifications, source code), with facts, recommendations and open questions kept apart. |
-| `bc-ui-design` | anyone changing screens | The project's design rules, and screenshots with a written critique before a visible change counts as done. |
+| `bc-design` | anyone changing screens | The project's design rules, and screenshots with a written critique before a visible change counts as done. |
 | `bc-plain-language` | anyone writing for people | Documents written so the intended readers can find what they need, understand it and act on it. |
 
 ### Pi (pi-subagents)

@@ -72,7 +72,7 @@ A chat vanishes when a session ends, while files stay put. Plans, work items and
 
 Many short-lived agents on one project will slowly pull it apart unless something holds it together. Every colour, size and wording pattern is defined once and reused. Automatic checks guard the rest, failing whenever a change makes things slower, bigger or more tangled: performance budgets cap time, size or memory, and structural checks (fitness functions) enforce ground rules such as "the screen code never talks to the database directly".
 
-**Skills:** [bc-ui-design](concepts/bc-ui-design/body/SKILL.md) · [bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md)
+**Skills:** [bc-design](concepts/bc-design/body/SKILL.md) · [bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md)
 
 <br>
 
@@ -199,7 +199,7 @@ Skills marked `/name` are ones you type yourself; the rest load automatically wh
 | [bc-subagent-driven-development](concepts/bc-subagent-driven-development/body/SKILL.md) | Works through a written plan by giving each step to a fresh helper agent, with a review after each one. | automatically |
 | [bc-pipeline-to-done](concepts/bc-pipeline-to-done/body/SKILL.md) | Builds the work you already planned and settled while you are away, with every step reviewed by a separate agent before it is merged. | `/bc-pipeline-to-done` |
 | [bc-finishing-development-branch](concepts/bc-finishing-development-branch/body/SKILL.md) | When a piece of work is done, helps you decide whether to merge it, open a pull request, keep it for later or throw it away. | automatically |
-| [bc-ui-design](concepts/bc-ui-design/body/SKILL.md) | Keeps what users see consistent: colours, sizes and wording are defined once and reused. A visual change counts as done only with screenshots and a written critique of each. | automatically |
+| [bc-design](concepts/bc-design/body/SKILL.md) | Keeps what users see consistent: colours, sizes and wording are defined once and reused. A visual change counts as done only with screenshots and a written critique of each. | automatically |
 | [bc-minimal-solution-ladder](concepts/bc-minimal-solution-ladder/body/SKILL.md) | Stops the agent from building more than needed. Before writing code it asks: does this need to exist? Does the project already have it? Would one line do? It stops at the first yes. | automatically |
 | [bc-performance-guardrails](concepts/bc-performance-guardrails/body/SKILL.md) | Sets limits on speed, size and structure, plus automatic checks that fail when a change breaks them, so the project cannot quietly get slower or messier. | automatically |
 
@@ -426,7 +426,7 @@ npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a cursor -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -446,7 +446,7 @@ npx -y skills remove -g -a cursor -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -471,7 +471,7 @@ npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a gemini-cli -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -491,7 +491,7 @@ npx -y skills remove -g -a gemini-cli -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -516,7 +516,7 @@ npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a github-copilot -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -536,7 +536,7 @@ npx -y skills remove -g -a github-copilot -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -561,7 +561,7 @@ npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a opencode -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -581,7 +581,7 @@ npx -y skills remove -g -a opencode -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -608,7 +608,7 @@ npx -y skills add bendecastro/agent-concepts@v0.3.0 -g -a <agent> -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
@@ -628,7 +628,7 @@ npx -y skills remove -g -a <agent> -y \
   bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents \
   bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo \
   bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec \
-  bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees \
+  bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 

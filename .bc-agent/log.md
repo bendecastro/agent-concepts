@@ -2351,3 +2351,6 @@ package.json gains a generated `files` list and drops `private`; release.yml pub
 
 ## [2026-11-27] implement | bc-ui-design description covers everything a user sees or operates
 Description and opening line now name wording, commands and flags, keyboard, states, accessibility, motion, missing tokens and design decisions, not only layout/styling (owner decision); trigger check in the concept's tests.
+
+## [2026-11-27] implement | rename bc-ui-design to bc-design
+Owner decision: the name matches the widened scope. References, relationships, packages and generated pages updated; old name kept as a deploy alias. Trigger check of old vs new description: 4/4 reads each arm on Terra low (no difference shown).
