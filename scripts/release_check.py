@@ -7,7 +7,7 @@ Codex plugin manifests and the Claude Code marketplace copy it when regenerated
 `python3 scripts/release_check.py vMAJOR.MINOR.PATCH`, which also requires the tag to name the
 same version, CHANGELOG.md to have an entry for it, and the README's Install section to name
 that tag and no other, to show the unpinned Pi install from npm (`pi install npm:agent-concepts`,
-which `pi update` moves to each new release) and to pin npm only to this version. Exit 1 on any
+which `pi update --extensions` moves to each release promoted to `latest`) and to pin npm only to this version. Exit 1 on any
 problem.
 """
 

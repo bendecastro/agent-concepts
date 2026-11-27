@@ -1,13 +1,28 @@
 # Checks a pushed release tag: versions match the tag, and every install method installs the
 # tag from GitHub (scripts/fresh_install_test.py --ref; its pi-npm method installs the tarball
-# `npm pack` makes from this checkout). Then publishes that version to npm as agent-concepts.
-# Steps: docs/guides/releasing.md.
+# `npm pack` makes from this checkout). Then publishes that version to npm as agent-concepts on
+# the `next` dist-tag; `latest`, which unpinned installs follow, does not move.
+# Run by hand (workflow_dispatch), the set-latest job points `latest` at a version: `promote`
+# after the stranger end-to-end test passed on the version on `next`, `rollback` to move it back
+# to an earlier good version. Steps: docs/guides/releasing.md.
 name: release
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "promote: the version on next becomes latest; rollback: an earlier version becomes latest"
+        type: choice
+        options: [promote, rollback]
+        required: true
+      version:
+        description: "Version to point latest at, without v (for example 0.4.1)"
+        type: string
+        required: true
 jobs:
   release-check:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,6 +31,7 @@ jobs:
           python-version: "3.13"
       - run: python3 scripts/release_check.py "${{ github.ref_name }}"
   install-tag:
+    if: github.event_name == 'push'
     needs: release-check
     strategy:
       fail-fast: false
@@ -40,6 +56,7 @@ jobs:
           skills@1.9.0
       - run: python3 scripts/fresh_install_test.py --ref "${{ github.ref_name }}"
   publish-npm:
+    if: github.event_name == 'push'
     needs: install-tag
     runs-on: ubuntu-latest
     # npm trusted publishing (OIDC, no stored token). npm's requirements, from
@@ -65,5 +82,39 @@ jobs:
           if npm view "agent-concepts@${version}" version >/dev/null 2>&1; then
             echo "::notice::agent-concepts@${version} is already on npm; skipping publish"
           else
-            npm publish --provenance --access public
+            npm publish --tag next --provenance --access public
           fi
+  set-latest:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    # Same trusted publisher as publish-npm, with "Allow npm dist-tag" turned on. OIDC dist-tag
+    # needs npm CLI 11.21.0 or later (docs.npmjs.com/trusted-publishers, read 2026-11-27).
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g "npm@>=11.21.0"
+      - name: Point latest at the version
+        env:
+          ACTION: ${{ inputs.action }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          npm -v
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::version must be MAJOR.MINOR.PATCH"; exit 1; }
+          npm dist-tag ls agent-concepts
+          latest="$(npm view agent-concepts@latest version)"
+          next="$(npm view agent-concepts@next version 2>/dev/null || true)"
+          npm view "agent-concepts@${VERSION}" version >/dev/null
+          if [[ "$ACTION" == promote && "$VERSION" != "$next" ]]; then
+            echo "::error::promote takes the version on next (${next:-none}), not ${VERSION}"; exit 1
+          fi
+          if [[ "$VERSION" == "$latest" ]]; then
+            echo "::notice::latest is already ${VERSION}"; exit 0
+          fi
+          npm dist-tag add "agent-concepts@${VERSION}" latest
+          npm dist-tag ls agent-concepts

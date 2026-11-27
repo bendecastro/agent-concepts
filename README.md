@@ -314,7 +314,7 @@ Details and known problems for each agent live in [harnesses.md](docs/guides/har
 > - **Pick one method per agent.** Two methods install each skill twice. Several agents also read `~/.agents/skills/`; the contributor install and `npx skills -a pi` both write there.
 > - **After installing, start a new agent session.** Open sessions do not see new skills.
 > - **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. The [Pi install](#pi) installs it; other installs of this repository do not. To install it: `pi install npm:pi-subagents`. The other methods install the council skills too, but they will not run there.
-> - **To move to a newer release**, uninstall first, then install with the new tag. The [Pi package](#pi) from npm is the exception: `pi update` moves it.
+> - **To move to a newer release**, uninstall first, then install with the new tag. The [Pi package](#pi) from npm is the exception: `pi update --extensions` moves it.
 
 <a name="claude-code"></a>
 <details>
@@ -381,7 +381,7 @@ pi install npm:agent-concepts
 pi install npm:pi-subagents
 ```
 
-This installs the newest release, and `pi update` moves you to each new one. To stay on one release instead, name its version (`pi update` then skips it): `pi install npm:agent-concepts@0.4.0`, or from GitHub by tag, `pi install git:github.com/bendecastro/agent-concepts@v0.4.0`.
+This installs the release on npm's `latest` tag, and `pi update --extensions` moves you to each new one. A new release goes first to the `next` tag and moves to `latest` after it passes an end-to-end test; to try it before then, install `pi install npm:agent-concepts@next`, which `pi update --extensions` keeps on `next`. To stay on one release instead, name its version (updates then skip it): `pi install npm:agent-concepts@0.4.0`, or from GitHub by tag, `pi install git:github.com/bendecastro/agent-concepts@v0.4.0`.
 
 The package includes the [agent kernel](#optional-agent-kernel) as a Pi extension; to turn it off, disable that extension in `pi config`.
 

@@ -3,7 +3,8 @@
 # then set up, plan and build a generated fixture repository. See stranger-end-to-end.md.
 # Usage: EVIDENCE=/abs/new/dir MODEL=provider/id THINKING=low scripts/stranger_end_to_end.sh
 # Optional: STRANGER_AUTH (Pi auth.json to copy the MODEL provider's credential from);
-# STRANGER_SOURCE=pack installs what `npm pack` of the committed HEAD would publish (the README's npm:agent-concepts).
+# STRANGER_SOURCE=pack installs what `npm pack` of the committed HEAD would publish (the README's npm:agent-concepts);
+# STRANGER_SOURCE=npm STRANGER_VERSION=X.Y.Z installs that published version from npm (the release soak, releasing.md).
 # Runs about 30 minutes: start it detached from the main checkout with a completion wake, not inside a
 # subagent worktree, whose timeout removes the directory mid-run.
 set -euo pipefail
@@ -22,6 +23,8 @@ PKG=/box/src/agent-concepts
 if [[ "${STRANGER_SOURCE:-checkout}" == pack ]]; then
   (cd "$scratch/src/agent-concepts" && npm pack --silent --pack-destination "$scratch/src") > "$EVIDENCE/npm-pack.txt"
   tar -xzf "$scratch"/src/agent-concepts-*.tgz -C "$scratch/src"; PKG=/box/src/package
+elif [[ "${STRANGER_SOURCE:-checkout}" == npm ]]; then
+  PKG="npm:agent-concepts@${STRANGER_VERSION:?Set STRANGER_VERSION to the published version}"; echo "$PKG" > "$EVIDENCE/installed-npm-version.txt"
 fi
 # Copy only the selected provider's credential; no other auth, settings or config.
 python3 - "$AUTH" "$scratch/home/.pi/agent/auth.json" "${MODEL%%/*}" <<'PY'

@@ -2372,3 +2372,6 @@ Council (fable + Opus fallback) found release-reach, reporting, CI, migrations, 
 
 ## [2026-11-27] implement | long scripts out of worktree workers; isolated Pi home
 bc-delegate-investigation pi.md failure mode: commands over ~20 min run from the parent detached (two worker timeouts this session); stranger_end_to_end.sh header says the same; releasing.md: a throwaway Pi home sets HOME and PI_CODING_AGENT_DIR. From bc-self-improve, owner picks 1 2. pi.md entry is an observed-failure reference note, accuracy-checked against the session log.
+
+## [2026-11-27] implement | release soak on npm next; bad-release procedure (047)
+Tags publish to npm `next`; a dispatch-only `set-latest` job in release.yml promotes (version on next) or rolls back `latest` over OIDC (npm >= 11.21.0). Stranger test can install a published version (`STRANGER_SOURCE=npm`). releasing.md gains the soak and "Withdraw a bad release"; README now says `pi update --extensions` (plain `pi update` is Pi-only in 1.6.1).

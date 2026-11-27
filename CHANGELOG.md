@@ -6,6 +6,17 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ## [Unreleased]
 
+### Changed
+
+- New releases go to npm's `next` tag first and move to `latest`, which
+  `pi install npm:agent-concepts` follows, only after an end-to-end test passes on the
+  published version. Try a release early with `pi install npm:agent-concepts@next`.
+
+### Fixed
+
+- The README's Pi update command: `pi update --extensions` updates the package; plain
+  `pi update` updates only Pi.
+
 ## [0.4.0] - 2026-11-27
 
 Pi users install from npm, and a stranger's first project goes from setup to a built, reviewed
