@@ -93,11 +93,17 @@ same questions phrased as keywords (CI `[0.11, 0.47]`); see
 [`tests/retrieval-results-round2.md`](../tests/retrieval-results-round2.md). Query shape is the
 safe conclusion; the small sample does **not** prove one retriever is more accurate.
 
-Run this from the directory containing the vault's `AGENTS.md`:
+Run this from the directory containing the vault's `AGENTS.md`. The script is next to this
+`SKILL.md`; use that directory if it differs from the default install below.
+`AGENT_CONCEPTS` is an optional checkout override:
 
 ```bash
 VAULT_ROOT="$PWD"
-python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py" \
+wiki_skill_dir="$HOME/.agents/skills/bc-wiki-maintain"
+if [ -n "${AGENT_CONCEPTS:-}" ]; then
+  wiki_skill_dir="$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body"
+fi
+python3 "$wiki_skill_dir/wiki_search.py" \
   --limit 15 "$VAULT_ROOT" "term one" "term two"
 ```
 
@@ -135,11 +141,17 @@ one.
 ## First move: search the vault, do not read the index
 
 For any task that needs a fact from this vault, run from the directory containing this
-`AGENTS.md`:
+`AGENTS.md`. Find `wiki_search.py` next to the installed `bc-wiki-maintain` skill's
+`SKILL.md`. Use that directory if your install differs from the default below;
+`AGENT_CONCEPTS`, when set, overrides it with a contributor checkout.
 
 ```bash
 VAULT_ROOT="$PWD"
-python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py" \
+wiki_skill_dir="$HOME/.agents/skills/bc-wiki-maintain"
+if [ -n "${AGENT_CONCEPTS:-}" ]; then
+  wiki_skill_dir="$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body"
+fi
+python3 "$wiki_skill_dir/wiki_search.py" \
   --limit 15 "$VAULT_ROOT" "term one" "term two"
 ```
 

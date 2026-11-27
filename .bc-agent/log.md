@@ -2289,3 +2289,9 @@ A deployed body naming a covered moment must be the moment owner, have a handoff
 
 ## [2026-11-27] implement | Opt-in Codex and OpenCode V2 kernel packages
 Isolated loopback requests contained the exact Markdown at startup and resume and omitted it after removal on Codex 0.153.1 and OpenCode V2 2.4.2; OpenCode 1.18.3 used native instructions instead. Codex interactive trust and compaction were not run. One real Terra low Pi proxy run per arm verified delivery; neither asked for approval. No kernel wording or owner configuration changed.
+
+## [2026-11-27] implement | Visible pipeline layout and installed wiki tools
+The pipeline guide now describes the code scaffold; setup distinguishes all-archetype indexing and lint from classic-vault promotion. Vault search defaults to the installed skill, and runner scripts resolve their bundled files locally.
+
+## [2026-11-27] test | Installed wiki tools close-out
+One real Terra low run per arm: revised 4/4 vs base 3/4 on archetype scope and installed CLI calls. Both ran registration-entry generation, lint and search (no registry edit or timer install); the unset-variable search invocation also failed then passed in the deterministic regression.

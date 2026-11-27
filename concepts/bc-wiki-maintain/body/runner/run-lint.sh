@@ -10,16 +10,15 @@ fail() {
   exit 1
 }
 
-AGENT_CONCEPTS="${AGENT_CONCEPTS:-}"
 VAULT_LIST="${VAULT_LIST:-}"
 
-[[ -n "$AGENT_CONCEPTS" ]] || fail 'AGENT_CONCEPTS is not set'
 [[ -n "$VAULT_LIST" ]] || fail 'VAULT_LIST is not set'
 [[ -f "$VAULT_LIST" ]] || fail "vault list does not exist: $VAULT_LIST"
 [[ -r "$VAULT_LIST" ]] || fail "vault list is not readable: $VAULT_LIST"
 command -v python3 >/dev/null 2>&1 || fail 'python3 is not installed or not on PATH'
 
-DETECTION_SCRIPT="$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_lint.py"
+skill_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+DETECTION_SCRIPT="$skill_dir/wiki_lint.py"
 [[ -f "$DETECTION_SCRIPT" ]] || fail "detection script does not exist: $DETECTION_SCRIPT"
 [[ -r "$DETECTION_SCRIPT" ]] || fail "detection script is not readable: $DETECTION_SCRIPT"
 

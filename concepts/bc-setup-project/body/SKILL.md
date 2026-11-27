@@ -113,11 +113,13 @@ Archetypes:
 
 8. **Wire publish authorization (offer).** `/bc-pipeline-to-done` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, record a line in `work/0-ideas.md` for the visible layout, or `tasks/parking-lot.md` for legacy learning/knowledge vaults.
 
-Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip both for code, ops and hybrid. Why: qmd registration and `bc-wiki-maintain` expect a vault with an index, which visible-layout projects no longer have; a later work package of the visible-layout plan revisits them.
+For steps 9 and 10, find `wiki_lint.py` and `runner/` next to the installed `bc-wiki-maintain`
+`SKILL.md`. Set `wiki_skill_dir` to that directory (normally `$HOME/.agents/skills/bc-wiki-maintain`).
+Use `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body` only as an explicit checkout override.
 
-9. **Register the project for global search (default yes, opt-out).** New projects are searchable by default; append to the qmd collections file and apply it with the setup command — see the `bc-qmd` concept. Ask only if the user wants this project **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos — and then record a line containing "excluded from the global qmd index" and the reason in `.bc-agent/AGENTS.md` (learning/knowledge: `project/overview.md`), which `bc-wiki-maintain`'s lint reads. Skip the setup command if qmd is not installed, but append to the synced YAML anyway so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `bc-qmd` skill).
+9. **Register the project for global search (all archetypes; default yes, opt-out).** New projects are searchable by default; append to the qmd collections file and apply it with the setup command — see the `bc-qmd` concept. Ask only if the user wants this project **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos — and then record a line containing "excluded from the global qmd index" and the reason in `.bc-agent/AGENTS.md` (learning/knowledge: `project/overview.md`), which `bc-wiki-maintain`'s lint reads. Skip the setup command if qmd is not installed, but append to the synced YAML anyway so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `bc-qmd` skill).
    - **Code, ops and hybrid:** two collections, printed from the project's own table by
-     `python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_lint.py" "<repo-root>/.bc-agent" --qmd-entry <slug>`.
+     `python3 "$wiki_skill_dir/wiki_lint.py" "<repo-root>/.bc-agent" --qmd-entry <slug>`.
      Append its output under `collections:` unchanged. `<slug>` is rooted at `.bc-agent/` (agent
      mechanics); `<slug>-project` is rooted at the repository with a pattern listing only the
      table's glossary, decisions, research, requirements, architecture, components, ideas and
@@ -155,19 +157,20 @@ Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip bot
      `--qmd-entry` output.
    - **Learning and knowledge:** one collection for `.bc-agent/` (collection name = the slug; copy an existing entry's shape, contexts stating each directory's *authority level*).
 
-10. **Offer rolling wiki maintenance (offer-then-confirm; learning and knowledge only).** Skip
-    this step for code, ops and hybrid. Why: promotion existed to move log entries into vault
-    pages; in the visible layout agents write decisions and research straight to the table's role
-    folders and `log.md` is a plain journal, so there is nothing to promote (the runner exits 0
-    with "not applicable" there). The lint still applies: run `/bc-wiki-maintain` interactively, and
-    offer the lint-list entry in the last paragraph of this step.
+10. **Run wiki lint (all archetypes); offer rolling promotion (learning and knowledge only).**
+    Run `python3 "$wiki_skill_dir/wiki_lint.py" "<repo-root>/.bc-agent"` for code, ops, hybrid,
+    learning and knowledge. If `$HOME/.config/agent-concepts/wiki-lint-vaults.txt` already exists,
+    say it is detection-only and offer to append this vault path; do not install `bc-wiki-lint.timer`.
 
-    Capture into
+    For code, ops and hybrid, skip the promotion offer and go to step 11: decisions and
+    research go directly to the table's role folders and `log.md` is a plain journal.
+
+    For learning and knowledge, capture into
     `.bc-agent/log.md` is cheap; promotion is not. Without a per-vault user
     timer, the new wiki will not promote overnight. This is not qmd:
     `bc-qmd-refresh.timer` only refreshes search indexes. `/bc-wiki-maintain`
     is the maintenance skill; its systemd templates
-    (`$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/`) do not install,
+    (`$wiki_skill_dir/runner/`) do not install,
     enable, or start themselves.
 
     Show the user the exact slug-suffixed unit names and env, then **offer to
@@ -177,12 +180,11 @@ Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip bot
     vault. Never vendor runner scripts into the project.
 
     If `systemctl --user` is unavailable, skip install and append a
-    TODO in `work/0-ideas.md` (or the legacy vault parking lot for learning/knowledge) pointing at
-    `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/README.md`.
+    TODO in the vault parking lot pointing at `$wiki_skill_dir/runner/README.md`.
 
     On confirm, copy — do not symlink — the templates to slug-suffixed
     names, edit the placeholders from the runner README (WorkingDirectory,
-    VAULT_ROOT, AGENT_CONCEPTS, PI_BIN, SyslogIdentifier, the timer's
+    VAULT_ROOT, PI_BIN, SyslogIdentifier, ExecStart for a non-default skill directory, the timer's
     `Unit=`), stagger `OnCalendar` at least 15 minutes away from any
     existing `bc-wiki-maintain*.timer`, then reload and enable:
 
@@ -190,9 +192,9 @@ Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip bot
     unit_dir="$HOME/.config/systemd/user"
     slug="<slug>"
     vault="<repo-root>/.bc-agent"
-    install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.service" \
+    install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.service" \
       "$unit_dir/bc-wiki-maintain-${slug}.service"
-    install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.timer" \
+    install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.timer" \
       "$unit_dir/bc-wiki-maintain-${slug}.timer"
     # edit placeholders, then:
     systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-${slug}.service"
@@ -202,17 +204,9 @@ Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip bot
     systemctl --user status "bc-wiki-maintain-${slug}.timer"
     ```
 
-    Resolve `AGENT_CONCEPTS` from the environment, else from the skill
-    directory (the `bc-setup-project` body lives at
-    `$AGENT_CONCEPTS/concepts/bc-setup-project/body`). Resolve `PI_BIN` with
-    `command -v pi` falling back to `$HOME/.local/bin/pi`. If a matching
-    slug-suffixed unit already exists for this `VAULT_ROOT`, report it and
-    skip.
-
+    Resolve `PI_BIN` with `command -v pi` falling back to `$HOME/.local/bin/pi`.
+    If a matching slug-suffixed unit already exists for this `VAULT_ROOT`, report it and skip.
     On decline, append the same TODO as the no-systemd case.
-    If `$HOME/.config/agent-concepts/wiki-lint-vaults.txt` already exists,
-    mention that it is detection-only and offer to append this vault path;
-    do not install `bc-wiki-lint.timer`.
 
 11. **Close out.** Point at the created files, name each starter item filed, and note the wiki-maintain timer offer outcome and any migration plan. For existing code, ops and hybrid projects, record the actual local gate result and name each unresolved gate, validation (including Release) or file-layout gap as a concrete owner action. Next steps for the user: run `/bc-triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/bc-prototype` or `/bc-improve-codebase-architecture` when planning needs evidence/runway; then `/bc-pipeline-to-done` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift). <!-- trigger-allow: setup recommends evidence tools for future planning; the planning pipeline does not trigger setup -->
 

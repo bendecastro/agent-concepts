@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run the additive wiki promotion pass for one configured vault.
 #
-# The systemd unit supplies VAULT_ROOT, AGENT_CONCEPTS, and PI_BIN. Keeping these
+# The systemd unit supplies VAULT_ROOT and PI_BIN. Keeping these
 # as environment inputs makes the wrapper usable for a later pilot without baking
 # a home directory into the executable.
 set -Eeuo pipefail
@@ -15,18 +15,17 @@ fail() {
   exit 1
 }
 
-AGENT_CONCEPTS="${AGENT_CONCEPTS:-}"
 VAULT_ROOT="${VAULT_ROOT:-}"
 PI_BIN="${PI_BIN:-pi}"
 
-[[ -n "$AGENT_CONCEPTS" ]] || fail 'AGENT_CONCEPTS is not set'
 [[ -n "$VAULT_ROOT" ]] || fail 'VAULT_ROOT is not set'
 [[ -d "$VAULT_ROOT" ]] || fail "vault does not exist: $VAULT_ROOT"
 command -v git >/dev/null 2>&1 || fail 'git is not installed or not on PATH'
 command -v python3 >/dev/null 2>&1 || fail 'python3 is not installed or not on PATH'
 
-DETECTION_SCRIPT="${DETECTION_SCRIPT:-$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_lint.py}"
-PROMOTION_SKILL="${PROMOTION_SKILL:-$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/SKILL.md}"
+skill_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+DETECTION_SCRIPT="${DETECTION_SCRIPT:-$skill_dir/wiki_lint.py}"
+PROMOTION_SKILL="${PROMOTION_SKILL:-$skill_dir/SKILL.md}"
 [[ -f "$DETECTION_SCRIPT" ]] || fail "detection script does not exist: $DETECTION_SCRIPT"
 
 REPO_ROOT="$(git -C "$VAULT_ROOT" rev-parse --show-toplevel 2>/dev/null)" \

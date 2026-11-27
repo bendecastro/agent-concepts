@@ -46,7 +46,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-prototype](../concepts/bc-prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-research](../concepts/bc-research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [bc-self-improve](../concepts/bc-self-improve/CONCEPT.md) | pressure | 2026-11-19 | yes |
-| [bc-setup-project](../concepts/bc-setup-project/CONCEPT.md) | pressure | 2026-11-26 | 2026-06-21 |
+| [bc-setup-project](../concepts/bc-setup-project/CONCEPT.md) | pressure | 2026-11-27 | 2026-06-21 |
 | [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-11-25 | yes |
 | [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-25 | yes |
 | [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
@@ -54,7 +54,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-triage](../concepts/bc-triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-ui-design](../concepts/bc-ui-design/CONCEPT.md) | pressure | 2026-11-21 | yes |
 | [bc-using-git-worktrees](../concepts/bc-using-git-worktrees/CONCEPT.md) | pressure | 2026-11-25 | yes |
-| [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-09-05 | 2026-08-23 |
+| [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-11-27 | 2026-08-23 |
 | [bc-work-sync](../concepts/bc-work-sync/CONCEPT.md) | pressure | 2026-11-25 | 2026-11-16 |
 | [bc-writing-plans](../concepts/bc-writing-plans/CONCEPT.md) | pressure | 2026-11-25 | yes |
 

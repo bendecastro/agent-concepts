@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # visible-layout lint (agent-mechanics, qmd collections) and retired visible promotion changed 2026-11-12: deterministic tests only, not yet pressure-tested
-tested: 2026-09-05
+test_status: partial # Installed search and lint ran in one real Terra low close-out per arm, both worked; the literal unset-variable search command failed then passed deterministically. Broader visible-layout lint and promotion gates were not pressure-tested by this fixture.
+tested: 2026-11-27
 deployed: 2026-08-23
 ---
 # Concept: bc-wiki-maintain
@@ -101,13 +101,12 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   3/20 misses versus qmd at 500 tokens and 4/20 misses under the same 15-row cap. The accuracy
   difference is inside noise at n=20; the order is inverted for the operational properties: no
   install, registration, or stale index, compact path-only output, and coverage of orphan pages.
-  The shell-ranked emergency pipeline remains available when the concept checkout itself is not
-  available.
-- **The read path assumes a discoverable concept checkout.** Vault instructions invoke the
-  canonical reader through `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py` rather
-  than a machine-specific home path. `$AGENT_CONCEPTS` is an environment assumption, not a
-  guarantee: if it is unset or invalid, repair or resolve the canonical checkout through the
-  harness instead of inventing a hardcoded path or reading the whole vault.
+  If the bundled reader cannot run, use a bounded lexical candidate search.
+- **The read path works from an installed skill.** `wiki_search.py` lives beside the installed
+  `SKILL.md`; `$AGENT_CONCEPTS` is only a checkout override. The generated vault read block mirrors
+  the pasteable block. The runners locate the detector and the promotion body beside their own
+  `runner/` directory, independent of the caller's working directory. See the
+  [installed-tools pressure results](../bc-setup-project/tests/pressure-installed-wiki-tools-results.md).
 - **Curated index, not generated index.** `index.md` carries editorial groupings and annotations.
   The pass reports missing entries and appends a link for a newly created page. It also appends
   links for existing `findings/` and `decisions/` pages the detector lists as missing, except

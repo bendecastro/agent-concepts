@@ -69,9 +69,18 @@
       "to": "bc-wiki-maintain",
       "relation": "depends_on_contract",
       "required": true,
-      "when": "registering a visible-layout project for search",
+      "when": "registering for search and linting a scaffolded project",
       "source": "concepts/bc-setup-project/body/SKILL.md",
-      "reason": "Step 9 appends the collections that wiki_lint.py --qmd-entry prints from the project's table; the lint's qmd registration check expects exactly that shape, and a test pins the skill's sample to the printed output."
+      "reason": "Setup runs the installed wiki_lint.py for all archetypes. For visible layouts, step 9 appends its --qmd-entry output; the registration check expects exactly that shape and a test pins the setup sample to it. Only classic vaults get the promotion timer offer."
+    },
+    {
+      "from": "bc-setup-project",
+      "to": "bc-wiki-maintain",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "generating the canonical vault read block for learning, knowledge and hybrid",
+      "source": "concepts/bc-setup-project/body/scaffold.py",
+      "reason": "The generated read block mirrors the maintenance skill's installed wiki_search.py invocation and tracked-only read rules; a drift test compares the blocks byte for byte."
     },
     {
       "from": "bc-setup-project",

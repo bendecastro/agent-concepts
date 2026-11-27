@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -20,6 +22,31 @@ SPEC.loader.exec_module(WIKI_SEARCH)
 
 def run(*args: str, cwd: Path, check: bool = True) -> subprocess.CompletedProcess[str]:
     return subprocess.run(args, cwd=cwd, text=True, capture_output=True, check=check)
+
+
+def test_documented_search_runs_from_an_installed_skill(tmp_path, monkeypatch):
+    home = tmp_path / "new home"
+    installed = home / ".agents/skills/bc-wiki-maintain"
+    shutil.copytree(SCRIPT.parent, installed)
+    monkeypatch.setenv("HOME", str(home))
+    monkeypatch.delenv("AGENT_CONCEPTS", raising=False)
+
+    vault = tmp_path / "vault with spaces"
+    vault.mkdir()
+    (vault / "AGENTS.md").write_text("# Vault\n")
+    (vault / "answer.md").write_text("# Answer\n\nObsidian quartz is the answer.\n")
+    run("git", "init", "-q", cwd=vault)
+    run("git", "add", "AGENTS.md", "answer.md", cwd=vault)
+
+    skill = (installed / "SKILL.md").read_text(encoding="utf-8")
+    commands = [block for block in re.findall(r"```bash\n(.*?)```", skill, re.S)
+                if "wiki_search.py" in block]
+    assert len(commands) == 2  # live instructions and pasteable vault block
+    for command in commands:
+        result = run("bash", "-eu", "-c", command.replace('"term one" "term two"', '"obsidian" "quartz"'),
+                     cwd=vault, check=False)
+        assert result.returncode == 0, result.stderr
+        assert result.stdout.splitlines() == ["answer.md"]
 
 
 class WikiSearchTests(unittest.TestCase):

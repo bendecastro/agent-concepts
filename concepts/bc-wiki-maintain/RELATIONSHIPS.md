@@ -25,6 +25,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Generated map links rely on bc-wiki-maintain's existing links parser and resolver to participate in the vault graph.
   Source: [bc-setup-project/CONCEPT.md](../bc-setup-project/CONCEPT.md#design-decisions)
 
-- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when registering a visible-layout project for search.
-  Step 9 appends the collections that wiki_lint.py --qmd-entry prints from the project's table; the lint's qmd registration check expects exactly that shape, and a test pins the skill's sample to the printed output.
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when generating the canonical vault read block for learning, knowledge and hybrid.
+  The generated read block mirrors the maintenance skill's installed wiki_search.py invocation and tracked-only read rules; a drift test compares the blocks byte for byte.
+  Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when registering for search and linting a scaffolded project.
+  Setup runs the installed wiki_lint.py for all archetypes. For visible layouts, step 9 appends its --qmd-entry output; the registration check expects exactly that shape and a test pins the setup sample to it. Only classic vaults get the promotion timer offer.
   Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md)

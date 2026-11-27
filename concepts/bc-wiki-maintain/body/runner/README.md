@@ -24,21 +24,21 @@ A healthy no-op does not fire the notifier: the promotion runner exits 0 for
 The notifier is only a failure path; it does not replace the journal or `systemctl --user`
 status checks.
 
-Install the notifier template alongside whichever runner service(s) you use, after editing its
-`AGENT_CONCEPTS` placeholder:
+Install the notifier template alongside whichever runner service(s) you use. It runs
+`notify-failure.sh` from the installed skill (`~/.agents/skills/bc-wiki-maintain/runner/`), so it
+needs no checkout of this repository; edit its `ExecStart=` only if the skill lives elsewhere:
 
 ```bash
-export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"
+wiki_skill_dir="$HOME/.agents/skills/bc-wiki-maintain"
 unit_dir="$HOME/.config/systemd/user"
-install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-notify@.service" \
+install -Dm644 "$wiki_skill_dir/runner/bc-wiki-notify@.service" \
   "$unit_dir/bc-wiki-notify@.service"
-$EDITOR "$unit_dir/bc-wiki-notify@.service"  # set AGENT_CONCEPTS
 systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"
 ```
 
 Copy the notifier template, the matching runner service, and its timer before running
-`systemctl --user daemon-reload`. Do not symlink the templates: the copied unit's
-`AGENT_CONCEPTS` value must point at the checkout containing this runner.
+`systemctl --user daemon-reload`. Do not symlink the templates, so local edits survive updates.
+Every runner service names it in `OnFailure=`; without it a failed run notifies nobody.
 
 ## Lint all configured vaults (detection only)
 
@@ -162,7 +162,6 @@ install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-ma
 install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-notify@.service" \
   "$unit_dir/bc-wiki-notify@.service"
 $EDITOR "$unit_dir/bc-wiki-maintain-all.service"  # set AGENT_CONCEPTS, VAULT_LIST, and PI_BIN
-$EDITOR "$unit_dir/bc-wiki-notify@.service"       # set AGENT_CONCEPTS
 systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-all.service"
 systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-all.timer"
 systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"
@@ -275,7 +274,7 @@ list_file="$HOME/.config/agent-concepts/wiki-promotion-vaults.txt"
 
 4. **Install and verify the batch units.** Copy the batch service, timer, and the notifier it
    references. Do not symlink the templates. Edit the copied service's `AGENT_CONCEPTS`,
-   `VAULT_LIST`, and `PI_BIN` values, and edit the notifier's `AGENT_CONCEPTS` value.
+   `VAULT_LIST`, and `PI_BIN` values. The notifier needs no edit.
 
    ```bash
    install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain-all.service" \
@@ -285,7 +284,6 @@ list_file="$HOME/.config/agent-concepts/wiki-promotion-vaults.txt"
    install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-notify@.service" \
      "$unit_dir/bc-wiki-notify@.service"
    $EDITOR "$unit_dir/bc-wiki-maintain-all.service"
-   $EDITOR "$unit_dir/bc-wiki-notify@.service"
    systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-all.service"
    systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-all.timer"
    systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"
@@ -409,21 +407,20 @@ refuse the vault until the complete worktree is clean.
 
 ## Install after review
 
-Set `AGENT_CONCEPTS` to the checkout that contains this concept, then copy the units
-and wrapper to the user systemd directory. Do not copy the wrapper alone: the service
-uses the canonical concept path and the detection/skill files beside it.
+Copy the unit templates from the installed skill's `runner/` directory. Leave the
+wrapper with the skill: it finds the detector and `SKILL.md` beside `runner/`.
 
 ```bash
-export AGENT_CONCEPTS="$HOME/path/to/agent-concepts"  # your checkout of this workspace
+wiki_skill_dir="$HOME/.agents/skills/bc-wiki-maintain"
 unit_dir="$HOME/.config/systemd/user"
-install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.service" \
+install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.service" \
   "$unit_dir/bc-wiki-maintain.service"
-install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-maintain.timer" \
+install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.timer" \
   "$unit_dir/bc-wiki-maintain.timer"
 # Required: the service's OnFailure= points here. Without it a failed run notifies nobody.
-install -Dm644 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/bc-wiki-notify@.service" \
+install -Dm644 "$wiki_skill_dir/runner/bc-wiki-notify@.service" \
   "$unit_dir/bc-wiki-notify@.service"
-$EDITOR "$unit_dir/bc-wiki-notify@.service"  # set AGENT_CONCEPTS
+$EDITOR "$unit_dir/bc-wiki-maintain.service"  # set the paths below
 systemctl --user daemon-reload
 systemctl --user enable --now bc-wiki-maintain.timer
 ```
@@ -437,11 +434,12 @@ vault: a dirty tree in one project must not skip the others. The wrapper already
 
 The supplied unit uses `%h` (the systemd user home specifier) and placeholder paths:
 
-- `AGENT_CONCEPTS=%h/path/to/agent-concepts`
+- `WorkingDirectory=%h/path/to/your/project`
 - `VAULT_ROOT=%h/path/to/your/project/.bc-agent`
 - `PI_BIN=%h/.local/bin/pi`
+- `ExecStart=%h/.agents/skills/bc-wiki-maintain/runner/run-promotion.sh`
 
-If the checkout or Pi binary is elsewhere, edit the copied service before
+If the skill or Pi binary is elsewhere, edit the copied service before
 `daemon-reload` (or use a user drop-in). Keep `VAULT_ROOT` pointed at one vault;
 the wrapper requires it as an explicit environment value and never guesses another
 vault.
@@ -452,8 +450,6 @@ vault.
 
 - `VAULT_ROOT` — the project-local vault to inspect. The pilot service sets this to
   `%h/path/to/your/project/.bc-agent`.
-- `AGENT_CONCEPTS` — canonical concepts checkout; used to locate `wiki_lint.py` and
-  `SKILL.md`.
 - `PI_BIN` — optional Pi executable/path; defaults to `pi` when run manually.
 - `DETECTION_SCRIPT` — optional override for the detection script.
 - `PROMOTION_SKILL` — optional override for the loaded skill file.

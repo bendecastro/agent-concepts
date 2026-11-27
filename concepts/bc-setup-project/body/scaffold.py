@@ -325,11 +325,17 @@ CANONICAL_VAULT_READ_PATH = """<!-- BEGIN canonical vault read path -->
 ## First move: search the vault, do not read the index
 
 For any task that needs a fact from this vault, run from the directory containing this
-`AGENTS.md`:
+`AGENTS.md`. Find `wiki_search.py` next to the installed `bc-wiki-maintain` skill's
+`SKILL.md`. Use that directory if your install differs from the default below;
+`AGENT_CONCEPTS`, when set, overrides it with a contributor checkout.
 
 ```bash
 VAULT_ROOT="$PWD"
-python3 "$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/wiki_search.py" \\
+wiki_skill_dir="$HOME/.agents/skills/bc-wiki-maintain"
+if [ -n "${AGENT_CONCEPTS:-}" ]; then
+  wiki_skill_dir="$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body"
+fi
+python3 "$wiki_skill_dir/wiki_search.py" \\
   --limit 15 "$VAULT_ROOT" "term one" "term two"
 ```
 

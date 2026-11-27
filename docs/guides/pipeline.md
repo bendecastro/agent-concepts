@@ -45,13 +45,19 @@ After a landed issue, `bc-pipeline-to-done` may prepend at most one bounded stru
 
 ## Setup (once per repo) — `/bc-setup-project`
 
-Before the loop runs in a fresh project, `/bc-setup-project` scaffolds a repo-root `AGENTS.md` + a `.bc-agent/` Obsidian-vault wiki (generalized from project B) via a deterministic `scaffold.py`. The vault's `conventions/planning-workflow.md` is the adapter that redirects `bc-plan-to-pipeline` persistence into the vault (glossary → `project/overview.md`, ADRs → `decisions/`, plans → `project/`) and documents the `bc-pipeline-to-done` execution phase. It also offers to add the repo's `publish.yaml` push-authorization rule. It also offers to install a per-vault `bc-wiki-maintain` systemd user timer so log promotion can run overnight; install happens only after confirm. Run once; then the two halves below.
+Run `/bc-setup-project` once. For a fresh code project it creates a root `AGENTS.md` and keeps project knowledge in ordinary folders:
+
+- `work/0-ideas.md` holds undecided ideas. Work items move from `work/1-planned/` to `work/2-active/` to `work/3-done/` (filed by month); `work/4-dropped/` holds dropped work. `work/README.md` shows the work index. The owner can add `work/order.md` to rank open items; setup does not create that file.
+- Decisions and research go in `docs/decisions/` and `docs/research/`; the domain glossary is `glossary.md` at the root.
+- `.bc-agent/` holds agent mechanics: `AGENTS.md` (including the **Where things go** table), `map.md`, `log.md`, `conventions/`, `references/`, `templates/`, and `scripts/`. The planning and execution skills use the table to find project paths.
+
+Setup can also offer a `publish.yaml` push-authorization rule if the project will use unattended pushes.
 
 Before running the executor, follow the [pipeline install prerequisites](../../README.md#install-prerequisites-for-the-pipeline). If the harness cannot launch the required jobs, the pipeline stops before claiming work.
 
 ## The two halves
 
-**Intake — `/bc-triage`** (interactive, as needed). Turns existing issues/PRs into the bc state machine: verify, grill if needed, write an Agent Brief, mark `ready-for-agent`, route broad work into `/bc-plan-to-pipeline`, or record durable `.bc-agent/out-of-scope/` rejections.
+**Intake — `/bc-triage`** (interactive, as needed). Turns existing issues/PRs into the bc state machine: verify, grill if needed, write an Agent Brief, mark `ready-for-agent`, route broad work into `/bc-plan-to-pipeline`, or record rejections as dropped work items in `work/4-dropped/`.
 
 **Evidence / runway — `/bc-prototype` and `/bc-improve-codebase-architecture`** (interactive, optional). Use prototypes when a state/UI decision needs a throwaway artifact before the PRD. Use architecture review when a feature or bug exposes poor seams and needs a deep-module plan before slicing.
 

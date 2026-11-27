@@ -8,7 +8,9 @@ import io
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
+import sys
 import tempfile
 import textwrap
 import time
@@ -62,6 +64,32 @@ def runner_env(repo: Path, vault: Path, pi: Path, **extra: str) -> dict[str, str
     })
     env.update(extra)
     return env
+
+
+def test_installed_runners_use_bundled_files_without_a_checkout(tmp_path, monkeypatch):
+    installed = tmp_path / ".agents/skills/bc-wiki-maintain"
+    shutil.copytree(RUNNER_DIR.parent, installed)
+    monkeypatch.delenv("AGENT_CONCEPTS", raising=False)
+    for override in ("DETECTION_SCRIPT", "PROMOTION_SKILL", "PROMOTION_RUNNER"):
+        monkeypatch.delenv(override, raising=False)
+
+    repo = tmp_path / "project"
+    repo.mkdir()
+    scaffold = ROOT / "concepts/bc-setup-project/body/scaffold.py"
+    run(sys.executable, str(scaffold), "--root", str(repo), "--slug", "demo", cwd=tmp_path)
+    run("git", "init", "-q", cwd=repo)
+    vault = repo / ".bc-agent"
+    vault_list = tmp_path / "vaults.txt"
+    vault_list.write_text(f"{vault}\n", encoding="utf-8")
+    monkeypatch.setenv("VAULT_ROOT", str(vault))
+    monkeypatch.setenv("VAULT_LIST", str(vault_list))
+
+    lint = run("bash", str(installed / "runner/run-lint.sh"), cwd=tmp_path)
+    assert "Layout: visible" in lint.stdout
+    assert "failures=0" in lint.stdout
+    # The batch runner resolves its bundled per-vault runner, which resolves the detector.
+    promotion = run("bash", str(installed / "runner/run-promotion-all.sh"), cwd=tmp_path)
+    assert "promotion is not applicable to visible-layout projects" in promotion.stdout
 
 
 class WikiLintCliTests(unittest.TestCase):
@@ -968,22 +996,6 @@ class PromotionAllRunnerTests(unittest.TestCase):
                 [str(tilde_vault), str(home), str(absolute_vault)],
             )
 
-    def test_unset_agent_concepts_fails_closed(self) -> None:
-        with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
-            list_file = root / "vaults.txt"
-            list_file.write_text(str(root) + "\n", encoding="utf-8")
-            visits = root / "visits"
-            runner = self.write_promotion_runner(root, visits)
-            env = self.runner_environment(list_file, runner, visits)
-            env.pop("AGENT_CONCEPTS")
-
-            result = run("/usr/bin/bash", str(PROMOTION_ALL), cwd=ROOT, env=env, check=False)
-
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("AGENT_CONCEPTS is not set", result.stderr)
-            self.assertFalse(visits.exists())
-
     def test_non_gnu_timeout_fails_closed_before_any_vault_runs(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -1170,6 +1182,12 @@ class PromotionAllRunnerTests(unittest.TestCase):
                 [row[0] for row in self.visited_rows(visits)],
                 [str(vault) for vault in vaults],
             )
+
+    def test_notifier_template_runs_from_installed_skill_without_checkout(self) -> None:
+        # A stranger who installed only the skill has no agent-concepts checkout.
+        unit = (RUNNER_DIR / "bc-wiki-notify@.service").read_text(encoding="utf-8")
+        self.assertNotIn("AGENT_CONCEPTS", unit)
+        self.assertIn("%h/.agents/skills/bc-wiki-maintain/runner/notify-failure.sh", unit)
 
     def test_all_vault_service_has_distinct_failure_identity_and_write_list(self) -> None:
         service = (RUNNER_DIR / "bc-wiki-maintain-all.service").read_text(encoding="utf-8")

@@ -10,15 +10,14 @@ fail() {
   exit 1
 }
 
-AGENT_CONCEPTS="${AGENT_CONCEPTS:-}"
 VAULT_LIST="${VAULT_LIST:-}"
 
-[[ -n "$AGENT_CONCEPTS" ]] || fail 'AGENT_CONCEPTS is not set'
 [[ -n "$VAULT_LIST" ]] || fail 'VAULT_LIST is not set'
 [[ -f "$VAULT_LIST" ]] || fail "vault list does not exist: $VAULT_LIST"
 [[ -r "$VAULT_LIST" ]] || fail "vault list is not readable: $VAULT_LIST"
 
-PROMOTION_RUNNER="${PROMOTION_RUNNER:-$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body/runner/run-promotion.sh}"
+runner_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROMOTION_RUNNER="${PROMOTION_RUNNER:-$runner_dir/run-promotion.sh}"
 [[ -f "$PROMOTION_RUNNER" ]] || fail "promotion runner does not exist: $PROMOTION_RUNNER"
 [[ -r "$PROMOTION_RUNNER" ]] || fail "promotion runner is not readable: $PROMOTION_RUNNER"
 
@@ -75,7 +74,7 @@ for vault in "${vaults[@]}"; do
     continue
   fi
 
-  # The assignment is exported only to this child; AGENT_CONCEPTS and PI_BIN are inherited.
+  # The assignment is exported only to this child; PI_BIN is inherited.
   if VAULT_ROOT="$vault" "$timeout_bin" --kill-after="$PROMOTION_KILL_AFTER" "$PROMOTION_TIMEOUT" "$PROMOTION_RUNNER"; then
     printf 'bc-wiki-maintain-all: PASS: promotion completed for %s\n' "$vault"
   else
