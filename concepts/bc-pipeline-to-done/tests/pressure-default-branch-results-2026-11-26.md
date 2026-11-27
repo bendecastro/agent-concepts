@@ -13,3 +13,5 @@ The comparison arm loaded the skill body at the commit before this change (it re
 Both runs left only `plan.md` untracked; no pushes, commits or launches. The old arm's plan blocks the run, which is the reported bug: a repository on `main` cannot pass preflight. Held: the new body passes all three, the old body fails criterion 1.
 
 Note: both arms saw the owner's machine-wide instructions (the new plan mentions the owner's offload wrapper); this does not touch the graded criteria.
+
+Re-check 2026-11-27 (040-pressure-sandbox-instructions, from the kept session logs and launch commands): **stands.** The owner's preferences were in both system prompts and both sessions read a preference topic file, but neither names a default or target branch; the old arm failed on its own body's literal `master` requirement, which no leaked text could cause or cure.

@@ -12,3 +12,5 @@
 Deviation: the seed was not committed before setup (the close-out reports every file untracked); grading did not depend on history.
 
 Outcome: no defect found in the old wording, on this fixture or on the [existing-CI Node fixture](pressure-existing-ci-toolchain-results-2026-11-26.md). Per the owner's decision (2026-11-26), the proposed setup wording change was dropped; only the clearer TODO comment in the generated workflow was kept, covered by the scaffold regression test.
+
+Re-check 2026-11-27 (040-pressure-sandbox-instructions, from the kept session logs and launch commands): **stands.** The old arm had the owner's preferences in its system prompt and read the owner's machine-safety rules (it ran the gate through the offload wrapper), but those rules push toward a machine-local command, not toward the portable gate and CI toolchain steps that were graded, so they could not have produced the passes. One arm only; the revised arm never ran.

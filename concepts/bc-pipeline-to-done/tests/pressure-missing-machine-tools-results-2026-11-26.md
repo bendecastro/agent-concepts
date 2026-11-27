@@ -11,3 +11,5 @@
 | Only the plan was written | Pass. | Pass. |
 
 Graded from the plans and session traces: 2/5 comparison, 5/5 treatment. The comparison read only its own copied contract files; the treatment made no read calls. Both wrote only `plan.md`. Claims, checks, launches, reviews and landing were planned, not executed. No live pipeline run or configured guarded-runner execution was tested.
+
+Re-check 2026-11-27 (040-pressure-sandbox-instructions, from the kept session logs and launch commands): **stands.** Both arms ran with `-nc -ne` and the owner's `APPEND_SYSTEM.md` replaced by a one-line neutral note; no private instruction text was in either system prompt and neither session read a private file.

@@ -9,3 +9,5 @@
 | Local gate, separate from workflow grade | PASS: one test. No GitHub Actions run. | PASS: one test. No GitHub Actions run. |
 
 The tested wording did not distinguish the arms. The original criterion demanded `npm ci` in the workflow; installing dependencies as the gate's first step also provisions CI on a clean runner, so the scenario now accepts either. A follow-up on a no-CI uv fixture also found no defect in the old wording ([results](pressure-no-ci-uv-toolchain-results-2026-11-26.md)), so the wording change was dropped and only the scaffold TODO comment was kept, covered by the generated-workflow regression assertion.
+
+Re-check 2026-11-27 (040-pressure-sandbox-instructions, from the kept session logs and launch commands): **stands.** Both arms ran with `-nc` and the owner's `APPEND_SYSTEM.md` replaced by a one-line neutral note, and neither session read a private file (the base arm tried the hidden overlay path); the arms also did not differ.
