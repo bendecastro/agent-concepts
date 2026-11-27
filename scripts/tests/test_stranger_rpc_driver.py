@@ -76,3 +76,11 @@ def test_plan_phase_does_not_answer_a_stop_that_is_not_a_question(tmp_path):
 def test_answers_stop_after_three(tmp_path):
     assert run_driver(tmp_path, BUILD_PI, "plan", None) == [
         "Start", "Scripted answer.", "Yes, that's fine. Go ahead.", "Yes, that's fine. Go ahead."]
+
+
+def test_plan_phase_answers_a_numbered_choice_without_a_question_mark(tmp_path):
+    # Attempt 3 of the 2026-11-27 rerun: the planner's dependency question ended
+    # "Reply `1` or `2`." with no "?", and the driver ended the phase unanswered.
+    script = FAKE_PI.replace('replies = ["Which layout?", "Is that test seam okay?", "Done."]',
+                             'replies = ["1. **Recommended:** add it.\\n2. Do not.\\n\\nReply `1` or `2`.", "Done.", "Done."]')
+    assert run_driver(tmp_path, script, "plan", None) == ["Start", "Scripted answer."]

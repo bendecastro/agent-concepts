@@ -4,7 +4,7 @@ Usage: stranger_rpc_driver.py PHASE PROMPT ANSWER QUIET_SECONDS LIMIT_SECONDS [P
 
 A long-lived RPC process is used instead of `pi -p` because the pipeline's background
 children wake the parent after its first reply; a print-mode process would already have
-exited. The first time the agent stops with a question (or, in the build phase, stops at
+exited. The first time the agent stops with a question (a `?`, or a "Reply `1`" choice; in the build phase, any stop at
 all) it receives ANSWER; up to two later questions receive FOLLOW_UP, a neutral go-ahead.
 Project AGENTS.md files load as they would for a stranger; the sandbox masks the global ones.
 STRANGER_PI (default `pi`) is split like a shell command, so it can name the pi_sandbox.py wrapper.
@@ -13,6 +13,7 @@ Writes rpc.jsonl, stderr.txt and final.txt under $STRANGER_LOG_DIR/PHASE (defaul
 import json
 import os
 import queue
+import re
 import shlex
 import subprocess
 import sys
@@ -70,7 +71,8 @@ def main(argv):
             event = events.get(timeout=min(5, quiet))
         except queue.Empty:
             if settled and time.monotonic() - last > quiet:
-                asked = "?" in final[-600:]
+                tail = final[-600:]
+                asked = "?" in tail or re.search(r"\b[Rr]eply\b[^\n]*`", tail) is not None
                 if answers < MAX_ANSWERS and (asked or (phase == "build" and answers == 0)):
                     reply = answer if answers == 0 and answer else FOLLOW_UP
                     answers += 1

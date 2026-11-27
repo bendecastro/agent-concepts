@@ -26,6 +26,10 @@ Build transcript, condensed ([excerpt](evidence/npm-pack-rerun-build-stall.md)):
 3. Driver: "**001-guardrails-setup-checks** is ahead of it in the pipeline. The drain's work-item rules say not to skip an eligible item. Which should run first? 1. Whitespace (recommended) … 2. Guardrails". 
 4. Neutral "Yes, that's fine. Go ahead." twice; the driver re-asks, then refuses to guess. Script answer budget (3) exhausted.
 
+## Attempt 3, 20:27–21:12: openai-codex/gpt-6.1-terra low, test-driver fault
+
+Installed revision `d308141` (after the named-item and bare-yes fixes). Setup passed. Planning asked three questions instead of two: the third was the new dependency question ("Reply `1` or `2`."), which has no question mark, so the scripted stranger took it as the end of the phase and never answered; no plan was written or pushed. The build then correctly reported that no whitespace item exists and asked for it. Not graded as a skill failure: the driver now also answers a "Reply `…`" choice (`scripts/stranger_rpc_driver.py`, with a test), and the rerun is attempt 4.
+
 ## Friction a stranger hits
 
 | # | Where | What happened | Status |
