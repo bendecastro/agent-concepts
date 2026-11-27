@@ -316,6 +316,8 @@ Details and known problems for each agent live in [harnesses.md](docs/guides/har
 > - **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. The [Pi install](#pi) installs it; other installs of this repository do not. To install it: `pi install npm:pi-subagents`. The other methods install the council skills too, but they will not run there.
 > - **To move to a newer release**, uninstall first, then install with the new tag. The [Pi package](#pi) from npm is the exception: `pi update --extensions` moves it.
 
+**Report a problem:** an install that fails or a skill that misfires goes in a [new issue](https://github.com/bendecastro/agent-concepts/issues/new/choose); a security problem goes privately through [SECURITY.md](SECURITY.md).
+
 <a name="claude-code"></a>
 <details>
 <summary><b>Claude Code</b></summary>

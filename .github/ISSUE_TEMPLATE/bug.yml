@@ -1,0 +1,38 @@
+name: Problem or misfiring skill
+description: An install failed, a skill did the wrong thing, or a skill did not load when it should have.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: For a security problem, do not use this form; see SECURITY.md.
+  - type: input
+    id: agent
+    attributes:
+      label: Agent and its version
+      description: For example Pi 1.6.1, Claude Code 2.1.329, Codex 0.153.1.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: agent-concepts version and install method
+      description: From `pi list` or the plugin's version, and how you installed it (npm, plugin, npx skills, checkout).
+    validations:
+      required: true
+  - type: input
+    id: skill
+    attributes:
+      label: Skill
+      description: The skill involved, for example bc-pipeline-to-done; or "install" for an install problem.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: transcript
+    attributes:
+      label: Transcript or log excerpt
+      description: The part of the session or install output that shows the problem. Remove secrets, tokens and private paths first.
+      render: text
