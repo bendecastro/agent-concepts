@@ -6,8 +6,22 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-27
+
+Pi users install from npm, and a stranger's first project goes from setup to a built, reviewed
+item without stalling.
+
 ### Added
 
+- Pi installs from npm: `pi install npm:agent-concepts`, and `pi update` moves to each new
+  release. The package carries the skills, the pipeline's agent roles and the agent kernel.
+- The agent kernel ships as a Pi package, a Claude Code plugin, a Codex plugin and an OpenCode
+  plugin; `bc-setup-project` reports when it is missing.
+- `bc-setup-project` offers new projects starter work items for guardrail checks and a design
+  page, and sets up a gate even when the project has no CI.
+- Skills that use the owner's machine-only tools fall back to plain ones when those are absent
+  (for example plain `pytest` with `tmp_path`), and the pipeline asks once about publishing when
+  there is no publish policy.
 - Lint warns when a deployed concept names a workflow moment without a matching handoff or
   load from its owner. The warning becomes an error in the version after the first tagged
   release carrying it.
@@ -28,6 +42,9 @@ release rather than `master`: `master` changes many times a day and can hold unf
   answered (`… (owner's answer, <date>)`), and a builder treats only a line so marked as the
   owner's permission to use example tests instead of property tests. Before, builders stopped on
   a `none new; use example-based tests` line the owner had already answered.
+- Planning asks about new dependencies, and the builder adds only the ones named.
+- Pipeline skills use the repository's target branch instead of assuming `main` or `master`,
+  and a repository with no GitHub remote has no issue source.
 
 ## [0.3.0] - 2026-11-25
 
@@ -107,7 +124,8 @@ The first release you can install without cloning this repository.
 - Agents other than Pi, Claude Code and Codex. `npx skills` supports many more, but this
   release was checked only through its Pi target.
 
-[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/bendecastro/agent-concepts/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bendecastro/agent-concepts/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/bendecastro/agent-concepts/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/bendecastro/agent-concepts/releases/tag/v0.1.0

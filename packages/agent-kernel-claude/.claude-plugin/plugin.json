@@ -1,6 +1,6 @@
 {
   "name": "agent-kernel",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Opt-in always-on instructions for coding agents.",
   "author": {
     "name": "agent-concepts contributors"

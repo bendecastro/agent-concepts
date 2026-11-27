@@ -9,9 +9,12 @@ Sorts each discipline concept's body changes since its `tested` date into rule c
 | Missing owner tools: skip an absent storage check with a note; plain `pytest` with `tmp_path` when no guarded runner | bc-delegate-investigation, bc-diagnosing-bugs, bc-dispatching-parallel-agents, bc-executing-plans, bc-finishing-development-branch, bc-optimize-code, bc-subagent-driven-development, bc-tdd, bc-using-git-worktrees, bc-writing-plans | [bc-pipeline-to-done missing-machine-tools results](../../concepts/bc-pipeline-to-done/tests/pressure-missing-machine-tools-results-2026-11-26.md) |
 | Resolve the target branch instead of guessing `main`/`master` | bc-executing-plans, bc-finishing-development-branch | [bc-pipeline-to-done default-branch results](../../concepts/bc-pipeline-to-done/tests/pressure-default-branch-results-2026-11-26.md) |
 | Stop when the `subagent` tool is missing | bc-council-chain, bc-council-mode | Read check: one-line stop, same wording as the pipeline preflight |
-| Planning asks about new dependencies; the builder adds only named ones | bc-plan-to-pipeline, bc-pipeline-to-done | Pending: `044-stranger-rerun-and-release` |
-| Starter items for new projects; guardrail checks added when that item runs | bc-setup-project, bc-performance-guardrails | Pending: `044-stranger-rerun-and-release` |
-| A typed security-audit command starts a full audit | bc-security-audit | Pending: `044-stranger-rerun-and-release` |
+| Planning asks about new dependencies; the builder adds only named ones | bc-plan-to-pipeline, bc-pipeline-to-done | [planned-dependencies results](../../concepts/bc-pipeline-to-done/tests/pressure-planned-dependencies-results-2026-11-27.md); stranger rerun attempt 4 |
+| Starter items for new projects; guardrail checks added when that item runs | bc-setup-project, bc-performance-guardrails | [starter-items new-project results](../../concepts/bc-setup-project/tests/pressure-starter-items-new-project-results-2026-11-27.md) |
+| A typed security-audit command starts a full audit | bc-security-audit | [typed-command results](../../concepts/bc-security-audit/tests/pressure-typed-command-results-2026-11-27.md) |
+| A `Dependencies:` line counts as a test waiver only when marked as the owner's answer | bc-plan-to-pipeline, bc-tdd, bc-pipeline-to-done | [planned-dependencies results](../../concepts/bc-pipeline-to-done/tests/pressure-planned-dependencies-results-2026-11-27.md) (marked-line arm) |
+| A user-named work item sets the order for its run | bc-pipeline-to-done | [named-item results](../../concepts/bc-pipeline-to-done/tests/pressure-named-item-results-2026-11-27.md) |
+| A bare yes or "rec" means the recommended option | agent-kernel | [bare-yes test](../../concepts/agent-kernel/tests/pressure-bare-yes.md) |
 | Setup checks `gh` only with a GitHub remote; sync-tool ignore only in a synced folder | bc-setup-project, bc-tdd | Exercised by the stranger rerun (no GitHub, no synced folder) |
 | A session the session tool shows as ended counts as finished (unverified when no tool) | bc-work-sync | Read check: fallback for a missing tool, no new stop |
 
