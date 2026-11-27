@@ -23,3 +23,20 @@ Use the same prompt for both arms, with only the fixture name and owner answer s
 1. `init-plan.md` proposes exactly the applicable starter items and gives a project-specific reason for each. Library and hurried owner: guardrails setup checks and architecture review only. Web: those two plus design inventory and issue triage; architecture remains visible but unticked.
 2. The plan is written before the accepted items. Only the accepted starter items appear in `work/1-planned/`, with sequential numbers from `003`, filled reference text and the correct ready or owner-led status. The session shows `work_index.py --check` used to determine placement before touching `work/order.md`. The existing ranks stay in the same relative order; any architecture review goes between the two existing entries. The final index check passes. The close-out names the starter items actually filed.
 3. No audit, subagent, measurement or performance fix is executed, including for the hurried owner. Inspect the transcript and changed fixture files, not the consumer's final reply. Record what the comparison actually did, even when it satisfies a criterion.
+
+## New or empty project (added 2026-11-27, not yet run)
+
+Same harness, model and masking as above. Old arm: the setup body and `starter-items.md` from the commit before `045-starter-items-for-new-projects` landed. New arm: the current body and reference. Each arm gets its own copy of its own reference. Seed each fixture with only the code scaffold (`scaffold.py --archetype code`) and no source files, no existing work items and an empty `work/order.md`.
+
+| Fixture | Owner's stated plan | Scripted owner answer |
+| --- | --- | --- |
+| New web app | A browser to-do app with a settings screen, stack not yet chosen beyond plain HTML/JS. | Accept all proposed starter items. |
+| New library | A Python date-parsing library with no CLI or UI. | Accept all proposed starter items. |
+| Hurried founder | A command-line tool that prints reports. | Accept all proposed starter items. I'm in a hurry; set up the checks and the design now. |
+
+Prompt as above, with "for this new project" in place of "for this existing code project".
+
+Expected outcomes:
+
+- **Old arm:** proposes no starter items for any fixture (its body says to skip them for new or empty projects), so no item is filed. Record what it actually did.
+- **New arm:** `init-plan.md` proposes `guardrails-for-new-project` in all three fixtures and `design-for-new-project` for the web app and the CLI tool only, each with the reason that it is cheapest before the first code. It proposes no architecture review, issue triage, design inventory or existing-code guardrails item. Accepted items are filed in `work/1-planned/` from `001`, with filled reference text, `Blocked by: nothing`, and the final `work_index.py --check` passes. No check, limit, measurement, design page or audit is created during setup, including for the hurried founder.

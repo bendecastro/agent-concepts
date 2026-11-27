@@ -46,7 +46,7 @@ When you fix something that got slower, bigger, hungrier or more tangled, and a 
 
 ## Setup checks
 
-For existing codebases, `bc-setup-project` files the accepted **Guardrails setup checks** starter item; add the checks when executing that item, not during scaffolding. When executing it or first adding the guardrails page, add checks for well-known problems of the project's stack: for example blocking file or network I/O in an Electron main process, or download size for a web app. Ratchet each one at today's value so existing shortfalls do not fail the gate. Add a check only when you can name a source (official guidance, a published guideline) or a past bug in this project for it; record that source on the page. Why: unsourced checks add noise and cost without catching anything real.
+`bc-setup-project` files an accepted guardrails starter item (for a new project, limits wait until the first code exists); add the checks when executing that item, not during scaffolding. When executing it or first adding the guardrails page, add checks for well-known problems of the project's stack: for example blocking file or network I/O in an Electron main process, or download size for a web app. Ratchet each one at today's value so existing shortfalls do not fail the gate. Add a check only when you can name a source (official guidance, a published guideline) or a past bug in this project for it; record that source on the page. Why: unsourced checks add noise and cost without catching anything real.
 
 ## Report
 

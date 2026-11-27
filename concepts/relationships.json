@@ -753,18 +753,18 @@
       "to": "bc-ui-design",
       "relation": "hands_off",
       "required": false,
-      "when": "existing codebase with a UI or CLI and accepted design inventory",
+      "when": "existing codebase with a UI or CLI, or new project with a planned UI or CLI, and accepted design starter item",
       "source": "concepts/bc-setup-project/body/starter-items.md#design-inventory",
-      "reason": "The design inventory files the existing-surface documentation and reuse checks for later execution."
+      "reason": "The design items file the existing-surface inventory, or for a new project the intended design, plus reuse checks for later execution."
     },
     {
       "from": "bc-setup-project",
       "to": "bc-performance-guardrails",
       "relation": "hands_off",
       "required": false,
-      "when": "existing codebase and accepted guardrails setup checks",
+      "when": "existing codebase or new project, and accepted guardrails starter item",
       "source": "concepts/bc-setup-project/body/starter-items.md#guardrails-setup-checks",
-      "reason": "The guardrails item defers sourced stack checks and baseline measurement until the item is executed."
+      "reason": "The guardrails items defer sourced stack checks and baseline measurement until the item is executed; for a new project, limits wait until the first code exists."
     },
     {
       "from": "bc-setup-project",

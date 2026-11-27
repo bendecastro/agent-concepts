@@ -2339,3 +2339,6 @@ AGENTS.md gains a Release operation: the integrating session releases without as
 
 ## [2026-11-27] implement | 042-one-command-pi-install
 Pi package now ships the three pipeline roles (`bc-pipeline-to-done/body/agents/`, via `pi-subagents.agents`) and the agent kernel extension; pipeline uses bundled roles by default and offers to install `pi-subagents`; README Pi install is one block; stranger script installs per README. Verified with a fresh-HOME Pi 1.6.1 install (roles discovered, kernel section in the system prompt).
+
+## [2026-11-27] implement | 045-starter-items-for-new-projects
+Setup now offers new or empty projects a guardrails starter item, plus a design item when a UI or CLI is planned; each does its planning step now and waits for code without blocking. Unit-tested; new-project pressure arm written, not run. Guardrails Setup checks pointer and the two hand-off edges updated.

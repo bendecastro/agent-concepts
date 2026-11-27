@@ -18,8 +18,8 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] New-project starter items for guardrails and design. Done when a targeted test files them for an empty-project survey and they pass the index check, and the existing-code tests still pass. Out of scope: changing what the existing-code items do.
+- [x] New-project starter items for guardrails and design. Done when a targeted test files them for an empty-project survey and they pass the index check, and the existing-code tests still pass. Out of scope: changing what the existing-code items do.
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Added `guardrails-for-new-project` and `design-for-new-project` to `concepts/bc-setup-project/body/starter-items.md`; setup's SKILL offers them for new or empty projects (design only with a planned UI or CLI) and asks about UI/CLI when no code exists. Each first step runs now; the second waits for code and blocks nothing. `tests/test_starter_items.py` files both in an empty scaffold and passes `work_index.py --check` (RED before, 4 passed after). Hand-off edges and the guardrails Setup checks pointer updated. New-project pressure arm written in `tests/pressure-starter-items.md`, not run.

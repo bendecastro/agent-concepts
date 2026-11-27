@@ -25,20 +25,17 @@ def project(tmp_path):
         shutil.rmtree(root)
 
 
-def test_starter_items_pass_work_index_check(project):
+def published_starters():
     reference = (BODY / "starter-items.md").read_text(encoding="utf-8")
-    starters = dict(re.findall(
+    return dict(re.findall(
         r"^## ([a-z-]+)\n\nApplies when: [^\n]+\n\n```markdown\n(.*?)^```$",
         reference, re.MULTILINE | re.DOTALL,
     ))
-    # Architecture is a top kind in the scaffold's ordering rules.
-    expected = {
-        "architecture-review": ("architecture", "/bc-improve-codebase-architecture"),
-        "design-inventory": ("design", None),
-        "guardrails-setup-checks": ("performance", None),
-        "issue-triage": ("none", "/bc-triage"),
-    }
-    assert starters.keys() == expected.keys()
+
+
+def file_starters(project, expected):
+    """File each expected starter item in order and run the project's index check."""
+    starters = published_starters()
     work = project / "work"
     items = []
     for number, (slug, (kind, owner_command)) in enumerate(expected.items(), 1):
@@ -71,3 +68,42 @@ def test_starter_items_pass_work_index_check(project):
         result = subprocess.run(index + args, capture_output=True, text=True)
         assert result.returncode == 0, result.stderr
         assert "warning" not in result.stderr, result.stderr
+
+
+def test_starter_items_pass_work_index_check(project):
+    # Architecture is a top kind in the scaffold's ordering rules.
+    expected = {
+        "architecture-review": ("architecture", "/bc-improve-codebase-architecture"),
+        "design-inventory": ("design", None),
+        "guardrails-setup-checks": ("performance", None),
+        "issue-triage": ("none", "/bc-triage"),
+    }
+    file_starters(project, expected)
+
+
+def test_new_project_starter_items_pass_work_index_check(project):
+    # The scaffold alone holds no source code: the new or empty project case.
+    expected = {
+        "guardrails-for-new-project": ("performance", None),
+        "design-for-new-project": ("design", None),
+    }
+    file_starters(project, expected)
+    for slug in expected:
+        item = published_starters()[slug]
+        # Each waits for code without blocking other work.
+        assert "no code yet" in item.split("\n## Steps\n")[1], slug
+        assert "Blocked by: nothing" in item.splitlines(), slug
+
+
+def test_published_starter_items_are_all_covered():
+    assert published_starters().keys() == {
+        "architecture-review", "design-inventory", "guardrails-setup-checks",
+        "issue-triage", "design-for-new-project", "guardrails-for-new-project",
+    }
+
+
+def test_setup_offers_new_project_starter_items():
+    skill = (BODY / "SKILL.md").read_text(encoding="utf-8")
+    assert "Skip starter items for new or empty projects" not in skill
+    assert "guardrails-for-new-project" in skill
+    assert "design-for-new-project" in skill

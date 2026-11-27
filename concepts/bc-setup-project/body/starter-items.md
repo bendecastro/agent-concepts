@@ -1,6 +1,6 @@
-# Starter items for an existing codebase
+# Starter items
 
-Use these only when the setup survey finds existing source code. Each section heading is the item's filename slug; copy only the fenced text into the work item. Replace `{{stage}}` with a stage from the project's `Stages:` line and `{{date}}` with the setup date (`YYYY-MM-DD`). Every item here is already planned by this reference, so `work_index.py --check` does not ask for `bc-plan-to-pipeline`; only the two ready items carry `Ready for agent: yes`, because the owner-led items wait on the owner's own command.
+Setup offers these follow-up items in its init plan. The first four are for a project that already has source code; the last two are for a new or empty project, where the checks and design notes are cheapest to set up before the first code lands. Each section heading is the item's filename slug; copy only the fenced text into the work item. Replace `{{stage}}` with a stage from the project's `Stages:` line and `{{date}}` with the setup date (`YYYY-MM-DD`). Every item here is already planned by this reference, so `work_index.py --check` does not ask for `bc-plan-to-pipeline`; only the two ready items carry `Ready for agent: yes`, because the owner-led items wait on the owner's own command.
 
 ## design-inventory
 
@@ -98,6 +98,58 @@ Planned: bc-setup-project {{date}}
 ## Steps
 
 - [ ] Owner starts interactive triage and decides what to do with the open issues.
+
+## Outcome
+
+_To be filled when finished or dropped._
+```
+
+## guardrails-for-new-project
+
+Applies when: the survey finds no project source code yet (a new or empty project).
+
+```markdown
+# Plan guardrails checks for the first code
+
+Why: Known problems for the planned stack are cheapest to catch from the first commit, before any shortfall builds up.
+Done when: Each chosen stack risk has a sourced check in the project gate, with a limit measured on the project's first code.
+Stage: {{stage}}
+Blocked by: nothing
+Kind: performance
+Source: bc-setup-project
+Planned: bc-setup-project {{date}}
+Ready for agent: yes
+
+## Steps
+
+- [ ] Follow `bc-performance-guardrails`' Setup checks for the planned stack: choose checks for its known problems that have an official source or published guideline, and list each with its source and the command that will measure it in `docs/guardrails/README.md`, marked as having no limit yet. Done when every chosen check has a source and a measuring command. Out of scope: limits, since there is no code yet to measure, and unsourced checks.
+- [ ] Once the project has its first working code, add the checks to `./scripts/gate`, measure today's value and set each limit there. If there is no code yet, leave this step open; it does not block any other item. Done when the checks pass at the measured limit and fail on a controlled regression. Out of scope: optimizing code or raising a limit to hide a regression.
+
+## Outcome
+
+_To be filled when finished or dropped._
+```
+
+## design-for-new-project
+
+Applies when: the survey finds no project source code yet and the owner plans a user-facing UI or CLI.
+
+```markdown
+# Record the intended design before the first UI
+
+Why: Writing down the intended look and controls before the first screen keeps later work from inventing a second theme or a duplicate control.
+Done when: The intended design is recorded on design pages and text-search checks catch departures from it once there is UI code.
+Stage: {{stage}}
+Blocked by: nothing
+Kind: design
+Source: bc-setup-project
+Planned: bc-setup-project {{date}}
+Ready for agent: yes
+
+## Steps
+
+- [ ] Follow `bc-ui-design`'s `new-work.md` and `design-framework.md` to record the intended themes, tokens by role and the kinds of control the project will use, on design pages linked under Pages in `docs/design/README.md`. Done when the pages name each theme, token role and control kind, marked as the agent's choice the owner may change. Out of scope: building screens or controls.
+- [ ] Once the project has UI or CLI code, add text-search checks for the recorded control rules to the project's own test runner and list them under Checks in `docs/design/README.md`; name the part to reuse and the design-page rule in each failure message. If there is no code yet, leave this step open; it does not block any other item. Done when the checks pass and catch a new violation. Out of scope: visual-only judgments as text rules.
 
 ## Outcome
 

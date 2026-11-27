@@ -23,8 +23,8 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The generated guardrails README names the bc-performance-guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet).
   Source: [body/scaffold.py](body/scaffold.py)
 
-- hands off to `bc-performance-guardrails` — optional, when existing codebase and accepted guardrails setup checks.
-  The guardrails item defers sourced stack checks and baseline measurement until the item is executed.
+- hands off to `bc-performance-guardrails` — optional, when existing codebase or new project, and accepted guardrails starter item.
+  The guardrails items defer sourced stack checks and baseline measurement until the item is executed; for a new project, limits wait until the first code exists.
   Source: [body/starter-items.md](body/starter-items.md#guardrails-setup-checks)
 
 - depends on `bc-pipeline-to-done`'s contract — required, when generated execution guidance for vault archetypes.
@@ -55,8 +55,8 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The generated design README names bc-ui-design's design-framework.md as its method and restates only the project-facing summary.
   Source: [body/scaffold.py](body/scaffold.py)
 
-- hands off to `bc-ui-design` — optional, when existing codebase with a UI or CLI and accepted design inventory.
-  The design inventory files the existing-surface documentation and reuse checks for later execution.
+- hands off to `bc-ui-design` — optional, when existing codebase with a UI or CLI, or new project with a planned UI or CLI, and accepted design starter item.
+  The design items file the existing-surface inventory, or for a new project the intended design, plus reuse checks for later execution.
   Source: [body/starter-items.md](body/starter-items.md#design-inventory)
 
 - depends on `bc-wiki-maintain`'s contract — required, when generated map links.

@@ -33,6 +33,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The generated guardrails README names the bc-performance-guardrails skill as its method and restates only the project-facing summary (who chooses, check kinds, ratchet).
   Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)
 
-- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): hands off to this concept — optional, when existing codebase and accepted guardrails setup checks.
-  The guardrails item defers sourced stack checks and baseline measurement until the item is executed.
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): hands off to this concept — optional, when existing codebase or new project, and accepted guardrails starter item.
+  The guardrails items defer sourced stack checks and baseline measurement until the item is executed; for a new project, limits wait until the first code exists.
   Source: [bc-setup-project/body/starter-items.md](../bc-setup-project/body/starter-items.md#guardrails-setup-checks)
