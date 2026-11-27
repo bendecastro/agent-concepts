@@ -26,3 +26,5 @@ Ready for agent: yes
 ## Outcome
 
 Implemented in `bc-pipeline-to-done` (plain push question; full report in the run log `report.md`, short chat report leading with what landed, checks and reviews, cost table only when a cost is known; builder adds only dependencies the item names, else `BLOCKED_NEEDS_HUMAN`), `bc-plan-to-pipeline` (asks once about a library the project lacks and records a `Dependencies:` line) and `bc-setup-project` (`Spent: not measured` when nothing was counted, accepted by `work_index.py --check`; `gh` checked and mentioned only with a GitHub remote). Tests: `tests/test_work_spent.py` and new `tests/test_survey_github.py` pass. New contract edge builder → planner in `relationships.json`. The dependency rule's pressure scenario is `concepts/bc-pipeline-to-done/tests/scenario-planned-dependencies.md`, not yet run; `test_status` records it as untested. The report and push-question wording are untested by a pressure run.
+
+Integrated 2026-11-27; full gate passed on tree 5a2d15f (646 passed, 4 skipped).

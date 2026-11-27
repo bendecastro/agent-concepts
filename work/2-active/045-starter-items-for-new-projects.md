@@ -3,7 +3,7 @@
 Why: Setup offers the guardrails item (the project's fitness functions) and the design-inventory item (design consistency) only when it finds existing source code, so a new or empty project never gets either, and it is cheapest to set both up before the first code lands.
 Done when: Setting up a new or empty project offers both items (design only when the planned project has a user-facing UI or CLI), worded for a project with no code yet: each waits until there is code to measure or inventory, and neither blocks the first feature.
 Stage: now
-Blocked by: 042-one-command-pi-install, 043-plain-pipeline-messages
+Blocked by: nothing
 Kind: feature
 Source: owner choice on the 039 stranger walkthrough, 2026-11-27
 Planned: bc-plan-to-pipeline 2026-11-27
