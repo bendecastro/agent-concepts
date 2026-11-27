@@ -2274,3 +2274,6 @@ Stage the canonical kernel as bundled Markdown and fail lint on copy drift. The 
 
 ## [2026-11-26] implement | Carry-on order and away questions without a destination
 Visible scaffold rules prefer unfinished active work and check holders; planning and both drain sources use the waiting header as the fallback. Scaffold test RED/GREEN for code, ops and hybrid. Masked round 2, one real Terra low run per arm per fixture: both carry-on fixtures revised 3/3 vs base 1/3 on actions (literal active-first read order not observed); planning fallback 3/3 both arms (comparison NO_DEFECT). Round 1 carried owner rules and is excluded. No live drain ran.
+
+## [2026-11-27] implement | Opt-in Pi kernel package
+Pi loads a fixed staged kernel section from the separate local package; install and removal verified without changing the owner's Pi configuration. One real Terra low run per arm confirmed delivery and unchanged settings; neither asked for approval. The isolated Opus cache check hit 12/12 follow-up requests, including across resume; no kernel wording changed.

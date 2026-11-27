@@ -8,7 +8,9 @@ The `bc-pipeline-to-done` body includes the [publish checker](../../policies/REA
 
 ## Standalone kernel
 
-The kernel is a small Markdown include for always-on instructions, not an on-demand skill. Edit `concepts/agent-kernel/body/AGENT-KERNEL.md` and run `python3 scripts/kernel_package.py` to refresh the bundled bytes. Lint rejects drift in that copy.
+The kernel is a small Markdown include for always-on instructions, not an on-demand skill. Edit `concepts/agent-kernel/body/AGENT-KERNEL.md` and run `python3 scripts/kernel_package.py` to refresh the bundled bytes for each package. Lint rejects drift in either copy.
+
+On Pi 1.6.1, run `pi install ./packages/agent-kernel-pi` from the checkout root and start a fresh Pi session. The package supplies one fixed `<agent-kernel>` system-prompt section; the separate skills package does not load it. Disable its extension in `pi config`, or run `pi remove ./packages/agent-kernel-pi` from the checkout root, then start a fresh session. Use this in place of a manual kernel copy, not alongside one.
 
 Keep `install.py` and `AGENT-KERNEL.md` together from `packages/agent-kernel/`. Run `python3 /path/to/package/install.py /path/to/instructions.md` to install or upgrade one versioned block in the instructions file your harness reads. Pass `--remove` to remove the block. The installer appends the block, or prepends it if there is no final newline, so it does not need to change the file's other bytes. Leave marker lines to the installer: malformed or duplicate markers cause it to refuse the edit.
 

@@ -1,0 +1,12 @@
+{
+  "name": "agent-kernel-pi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Opt-in Agent Kernel instructions for Pi.",
+  "license": "MIT",
+  "keywords": ["pi-package"],
+  "pi": {
+    "extensions": ["./index.js"]
+  }
+}
