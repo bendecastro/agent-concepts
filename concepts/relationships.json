@@ -998,7 +998,16 @@
       "required": false,
       "when": "the unit needs a dependency the project lacks",
       "source": "concepts/bc-pipeline-to-done/body/execute-issue.md#build-loop",
-      "reason": "The builder adds only dependencies the item names, which bc-plan-to-pipeline records in a `Dependencies:` line after asking the owner; without the line the builder stops the unit with a question."
+      "reason": "The builder adds only dependencies the item names, which bc-plan-to-pipeline records in a `Dependencies:` line after asking the owner; without the line the builder stops the unit with a question. Only a line marked as the owner's answer lets it manage without a test level's library."
+    },
+    {
+      "from": "bc-tdd",
+      "to": "bc-plan-to-pipeline",
+      "relation": "depends_on_contract",
+      "required": false,
+      "when": "a work item's Dependencies line says to manage without the property library",
+      "source": "concepts/bc-tdd/body/SKILL.md#test-levels",
+      "reason": "A `Dependencies:` line marked as the owner's answer, the form bc-plan-to-pipeline writes when the owner answered, counts as quoting the owner for skipping the property library; an unmarked line does not."
     },
     {
       "from": "bc-setup-project",

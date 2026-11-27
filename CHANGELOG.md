@@ -20,6 +20,10 @@ release rather than `master`: `master` changes many times a day and can hold unf
 - Typing `/bc-security-audit` now starts a full security audit, like the other commands;
   text after it limits the scope. When the agent loads the skill itself because security came
   up, it still only gives advice.
+- Planning now marks a work item's `Dependencies:` line as the owner's answer when the owner
+  answered (`… (owner's answer, <date>)`), and a builder treats only a line so marked as the
+  owner's permission to use example tests instead of property tests. Before, builders stopped on
+  a `none new; use example-based tests` line the owner had already answered.
 
 ## [0.3.0] - 2026-11-25
 

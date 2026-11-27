@@ -62,7 +62,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-pipeline-to-done/body/source-issues.md](../bc-pipeline-to-done/body/source-issues.md#select)
 
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — optional, when the unit needs a dependency the project lacks.
-  The builder adds only dependencies the item names, which bc-plan-to-pipeline records in a `Dependencies:` line after asking the owner; without the line the builder stops the unit with a question.
+  The builder adds only dependencies the item names, which bc-plan-to-pipeline records in a `Dependencies:` line after asking the owner; without the line the builder stops the unit with a question. Only a line marked as the owner's answer lets it manage without a test level's library.
   Source: [bc-pipeline-to-done/body/execute-issue.md](../bc-pipeline-to-done/body/execute-issue.md#build-loop)
 
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when work-item source.
@@ -72,3 +72,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
   The generated pickup rule, work-item template and work_index.py --check warning rely on the Planned: line bc-plan-to-pipeline writes once an item is planned, and on its existing-work-item settled-source mode.
   Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)
+
+- incoming from [bc-tdd](../bc-tdd/RELATIONSHIPS.md): depends on this concept's contract — optional, when a work item's Dependencies line says to manage without the property library.
+  A `Dependencies:` line marked as the owner's answer, the form bc-plan-to-pipeline writes when the owner answered, counts as quoting the owner for skipping the property library; an unmarked line does not.
+  Source: [bc-tdd/body/SKILL.md](../bc-tdd/body/SKILL.md#test-levels)

@@ -42,14 +42,14 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-optimize-code](../concepts/bc-optimize-code/CONCEPT.md) | pressure | 2026-11-25 | 2026-06-21 |
 | [bc-pipeline-to-done](../concepts/bc-pipeline-to-done/CONCEPT.md) | pressure | 2026-11-27 | 2026-11-25 |
 | [bc-plan-slicing](../concepts/bc-plan-slicing/CONCEPT.md) | pressure | 2026-11-24 | yes |
-| [bc-plan-to-pipeline](../concepts/bc-plan-to-pipeline/CONCEPT.md) | pressure | 2026-11-26 | 2026-06-21 |
+| [bc-plan-to-pipeline](../concepts/bc-plan-to-pipeline/CONCEPT.md) | pressure | 2026-11-27 | 2026-06-21 |
 | [bc-prompting-agents](../concepts/bc-prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
 | [bc-prototype](../concepts/bc-prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-research](../concepts/bc-research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [bc-self-improve](../concepts/bc-self-improve/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-setup-project](../concepts/bc-setup-project/CONCEPT.md) | pressure | 2026-11-27 | 2026-06-21 |
 | [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-11-25 | yes |
-| [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-25 | yes |
+| [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-27 | yes |
 | [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
 | [bc-to-tickets](../concepts/bc-to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [bc-triage](../concepts/bc-triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |

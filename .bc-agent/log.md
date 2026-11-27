@@ -2354,3 +2354,6 @@ Description and opening line now name wording, commands and flags, keyboard, sta
 
 ## [2026-11-27] implement | rename bc-ui-design to bc-design
 Owner decision: the name matches the widened scope. References, relationships, packages and generated pages updated; old name kept as a deploy alias. Trigger check of old vs new description: 4/4 reads each arm on Terra low (no difference shown).
+
+## [2026-11-27] test | planned-dependencies owner's-answer mark
+`bc-plan-to-pipeline` marks the `Dependencies:` line as the owner's answer; `bc-tdd` and `execute-issue.md` accept only a marked line as the property-library waiver. Terra low: new arm 3 of 3 runs wrote example tests with no dependency (old arm also 3 of 3, so the mark is the fix); no-line regression 1 of 1 blocked.

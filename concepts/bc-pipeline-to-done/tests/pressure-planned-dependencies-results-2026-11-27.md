@@ -36,3 +36,15 @@ Not run. `bc-plan-to-pipeline`'s planning question is a one-line ask, covered by
 ## Limits
 
 - n=3 per arm per case; Part 2 only; driver and reviewers not exercised.
+
+## Rerun after the owner's-answer fix (2026-11-27, later)
+
+Fix: `bc-plan-to-pipeline` writes the `Dependencies:` line marked as the owner's answer when the owner answered (`… (owner's answer, <date>)`); `bc-tdd` counts a line so marked as quoting the owner, and an unmarked line or an orchestrator's words not; `execute-issue.md` says the same. Consumer `openai-codex/gpt-6.1-terra`, thinking low. Same fixture and prompt as above, except the item's line now reads `Dependencies: none new; use example-based tests instead of property tests (owner's answer, 2026-11-27)` (case **attr**). Old arm: `execute-issue.md`, `bc-tdd` and `bc-minimal-solution-ladder` at the commit before this fix (the bodies of the first run's new arm); new arm: the revised bodies. `scripts/pi_sandbox.py` with `-ne`, no extensions needed; the run was also wrapped in `bwrap --tmpfs` over the main checkout, the worktree root and the private concept root, so no concept folder was readable (session logs mention `concepts/bc-tdd` only inside the loaded skill text's `$AGENT_CONCEPTS/…/confirm-red.py` line).
+
+| Run | Body | Case | Diff | Handoff |
+| --- | --- | --- | --- | --- |
+| new attr 1–3 | new | marked line | `labels/__init__.py`, `tests/test_normalize.py` only; `pyproject.toml` unchanged; `python3 -m unittest` OK | `READY_FOR_REVIEW`, L2 names the item's Dependencies line (owner's answer) as the waiver (3/3) |
+| old attr 1–3 | old | marked line | same shape: code and example tests only, no dependency | `READY_FOR_REVIEW`, L2 "waived by owner … per item Dependencies" (3/3) |
+| new noline 1 | new | no line | none | `BLOCKED_NEEDS_HUMAN #003 May I add \`hypothesis\` as a test dependency? …; without it I would use example-based tests only…` (regression check held, 1/1) |
+
+**Verdict: the case now holds — new arm 3 of 3 runs wrote example-based tests without a dependency and without blocking; no-line regression 1 of 1 held.** The old arm also passed 3 of 3 with the marked line, so the mark that `bc-plan-to-pipeline` now writes is what fixed the failure; the `bc-tdd` and `execute-issue.md` sentences did not change the outcome on this model and are kept as the stated contract for the mark (non-discriminating here). The unmarked line still blocks by design (first run above). Part 1 (planning asks and writes the mark) is not run.

@@ -23,6 +23,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Mutation evidence goes in the drain’s existing validation.json, not a new evidence file.
   Source: [body/properties.md](body/properties.md#fail-first-for-properties)
 
+- depends on `bc-plan-to-pipeline`'s contract — optional, when a work item's Dependencies line says to manage without the property library.
+  A `Dependencies:` line marked as the owner's answer, the form bc-plan-to-pipeline writes when the owner answered, counts as quoting the owner for skipping the property library; an unmarked line does not.
+  Source: [body/SKILL.md](body/SKILL.md#test-levels)
+
 ## Incoming
 
 - incoming from [agent-kernel](../agent-kernel/RELATIONSHIPS.md): loads this concept — required, when new tests or behaviour-changing assertions.

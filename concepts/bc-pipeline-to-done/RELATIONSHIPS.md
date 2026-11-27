@@ -28,7 +28,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/source-issues.md](body/source-issues.md#select)
 
 - depends on `bc-plan-to-pipeline`'s contract — optional, when the unit needs a dependency the project lacks.
-  The builder adds only dependencies the item names, which bc-plan-to-pipeline records in a `Dependencies:` line after asking the owner; without the line the builder stops the unit with a question.
+  The builder adds only dependencies the item names, which bc-plan-to-pipeline records in a `Dependencies:` line after asking the owner; without the line the builder stops the unit with a question. Only a line marked as the owner's answer lets it manage without a test level's library.
   Source: [body/execute-issue.md](body/execute-issue.md#build-loop)
 
 - depends on `bc-plan-to-pipeline`'s contract — required, when work-item source.
