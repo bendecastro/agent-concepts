@@ -2366,3 +2366,6 @@ Version 0.4.0 across package.json and plugin manifests; CHANGELOG entry; README 
 
 ## [2026-11-27] deploy | npm first publish; close 044 and 046
 agent-concepts@0.4.0 on npm (owner-run first publish from the tag); release workflow green; both items moved to done.
+
+## [2026-11-27] implement | blind-spot council work items
+Council (fable + Opus fallback) found release-reach, reporting, CI, migrations, rename and release-hygiene gaps; owner chose 1a 2a 3a 4a minus F. Planned 047-052; outside-PR rules went to ideas; kernel stays on by default.

@@ -19,3 +19,9 @@
 19. 044-stranger-rerun-and-release
 20. 045-starter-items-for-new-projects
 21. 046-install-from-npm
+22. 047-release-soak-and-withdraw
+23. 048-stranger-report-channel
+24. 049-ci-latest-agents-and-kernel-load
+25. 050-ship-setup-migrations
+26. 051-renamed-skill-aliases
+27. 052-release-hygiene-pins
