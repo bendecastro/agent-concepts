@@ -8,7 +8,6 @@ Kind: feature
 Source: owner decision 2026-11-26 (kernel delivery, option 1); research in the owner's local swarm state (kernel-delivery)
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
-Held by: pi 01a218e4 since 2026-11-26 22:54 +00:00
 
 ## Steps
 
@@ -30,7 +29,22 @@ Held by: pi 01a218e4 since 2026-11-26 22:54 +00:00
   - Gate: pass ./scripts/gate at 4afb40c 2026-11-27
   - Landed in `4afb40c`.
   - Human-only verification: in a logged-in Codex 0.153.1, trust the hook in `/hooks` and confirm a fresh session gets the kernel without the smoke-only bypass; compaction not exercised. Known: a resumed Codex session carries the kernel twice (history plus the new hook output).
-- [ ] Setup checks for the kernel, and docs: `bc-setup-project`'s survey checks whether the kernel is loaded (package installed, marker block or `# Agent Kernel` heading in the always-on file); when missing it names the install command for the harness and writes nothing; one ideas-file line if the user declines. README Install gains an optional kernel section (install, disable, remove, pins); `docs/guides/harnesses.md` separates package delivery from manual deltas; CONCEPT deploy targets, `index.md`, `.bc-agent/log.md`. Pressure scenario. Blocked by: steps 2 to 4. Stories 3, 4. Done when the with-change run reports the missing kernel and writes nothing while the baseline does not report it; lint has 0 ERROR and the gate passes. Out of scope: kernel content.
+- [x] Setup checks for the kernel, and docs: `bc-setup-project`'s survey checks whether the kernel is loaded (package installed, marker block or `# Agent Kernel` heading in the always-on file); when missing it names the install command for the harness and writes nothing; one ideas-file line if the user declines. README Install gains an optional kernel section (install, disable, remove, pins); `docs/guides/harnesses.md` separates package delivery from manual deltas; CONCEPT deploy targets, `index.md`, `.bc-agent/log.md`. Pressure scenario. Blocked by: steps 2 to 4. Stories 3, 4. Done when the with-change run reports the missing kernel and writes nothing while the baseline does not report it; lint has 0 ERROR and the gate passes. Out of scope: kernel content.
+  - Review: approved by tier-1 2026-11-27
+  - Gate: pass ./scripts/gate at a01bcd6 2026-11-27
+  - Landed in `a01bcd6`.
+  - Pressure: one run per arm; with the change setup reported the missing kernel and the Pi install command (hedging about runtime presence) and wrote nothing; the old body never mentioned the kernel.
 
 ## Outcome
+
+The kernel now ships as an opt-in package per harness, all copies staged from one canon and drift-checked by lint:
+- Staged package root and a marker-block fallback script for harnesses without a package (`299f4d7`).
+- Pi package (`eb8dbd0`): kernel in 4/4 requests with it, 0/3 after removal, cache hits 12/12.
+- Claude Code plugin (`bccfbde`): SessionStart hooks in two labelled parts under the 10,000-character cap. Claude Code merges them in completion order, so the parts say they may arrive in any order (a recorded deviation).
+- Codex plugin and OpenCode V2 plugin (`4afb40c`); OpenCode 1.18.3 uses the `instructions` array. A resumed Codex session carries the kernel twice.
+- Setup reports a missing kernel with the install command and writes nothing; README kernel section (`a01bcd6`).
+
+Human-only checks left for the owner (need logged-in clients): Claude Code shows both parts at start and after `/compact`; Codex 0.153.1 hook trusted in `/hooks` delivers the kernel to a fresh session. Compaction was not exercised for Pi or Codex. Full gate 634 passed, 4 skipped.
+
+Spent: 3h 51m active, 50.5M tokens, $23.12 (estimated; pi 26 sessions, claude-code 0 sessions, codex 0 sessions; other tools not counted)
 
