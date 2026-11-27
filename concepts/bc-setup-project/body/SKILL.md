@@ -214,7 +214,7 @@ Steps 9 and 10 apply to **learning and knowledge** vaults only for now; skip bot
     mention that it is detection-only and offer to append this vault path;
     do not install `bc-wiki-lint.timer`.
 
-11. **Close out.** Point at the created files, name each starter item filed, and note the wiki-maintain timer offer outcome and any migration plan. For existing code, ops and hybrid projects, record the actual local gate result and name each unresolved gate, validation (including Release) or file-layout gap as a concrete owner action. Next steps for the user: run `/bc-triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/bc-prototype` or `/bc-improve-codebase-architecture` when planning needs evidence/runway; then `/bc-pipeline-to-done` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift).
+11. **Close out.** Point at the created files, name each starter item filed, and note the wiki-maintain timer offer outcome and any migration plan. For existing code, ops and hybrid projects, record the actual local gate result and name each unresolved gate, validation (including Release) or file-layout gap as a concrete owner action. Next steps for the user: run `/bc-triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/bc-prototype` or `/bc-improve-codebase-architecture` when planning needs evidence/runway; then `/bc-pipeline-to-done` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift). <!-- trigger-allow: setup recommends evidence tools for future planning; the planning pipeline does not trigger setup -->
 
 ## Migrate an existing project
 

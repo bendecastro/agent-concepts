@@ -11,7 +11,7 @@ Plans must be storage-safe: pytest through the guarded test runner the project's
 
 ## Scope gate
 
-Before planning, check whether the spec contains multiple independent subsystems. If so, split into separate plans or ask the user which subsystem to plan first. One plan should produce one working, testable slice.
+Before planning, check whether the spec contains multiple independent subsystems. If so, split into separate plans or ask the user which subsystem to plan first. One plan should produce one working, testable slice. <!-- trigger-allow: internal scope gate for standalone plan writing, not a handoff from the planning pipeline -->
 
 ## Plan location
 

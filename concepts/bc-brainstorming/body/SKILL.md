@@ -32,7 +32,7 @@ Do not use to block clearly specified small edits, bug fixes with a tight repro,
 - The design follows existing project patterns unless deliberately changing them.
 - Refactoring is targeted to the current goal, not drive-by cleanup.
 - YAGNI: remove speculative features and “professional” extras not needed for success.
-- Tests/verification are considered before planning implementation.
+- Tests/verification are considered before planning implementation. <!-- trigger-allow: design self-check before any planning handoff, not a task triggered by the planning pipeline -->
 
 ## Red flags
 

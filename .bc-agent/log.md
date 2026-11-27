@@ -2283,3 +2283,6 @@ Build packets load performance guardrails for performance, size, memory and stru
 
 ## [2026-11-27] implement | Opt-in Claude Code kernel plugin
 Separate marketplace plugin; Claude Code 2.1.329 sent both labeled section slices at startup and resume against a loopback stub and neither after uninstall or with skills alone. No authenticated Claude request or compaction ran. One real Terra low Pi proxy run per arm confirmed byte delivery in treatment only; neither asked for approval. No kernel wording or owner configuration changed.
+
+## [2026-11-27] lint | Require handoffs for named workflow moments
+A deployed body naming a covered moment must be the moment owner, have a handoff or load from the owner, or carry a reason on that line. Severity is WARN in the first tagged `CHANGELOG.md` version that includes the check and becomes ERROR in the following tagged version.

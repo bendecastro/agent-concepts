@@ -6,6 +6,12 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ## [Unreleased]
 
+### Added
+
+- Lint warns when a deployed concept names a workflow moment without a matching handoff or
+  load from its owner. The warning becomes an error in the version after the first tagged
+  release carrying it.
+
 ### Changed
 
 - Typing `/bc-security-audit` now starts a full security audit, like the other commands;

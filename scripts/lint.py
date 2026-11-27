@@ -441,6 +441,41 @@ def lint_status_doc(issues: list[Issue]) -> None:
         issues.append(Issue("ERROR", "docs/status.md is stale; run scripts/lint.py --write-status"))
 
 
+MOMENT_OWNERS = {
+    "at project setup": "bc-setup-project",
+    "during setup": "bc-setup-project",
+    "before planning": "bc-plan-to-pipeline",
+    "when planning": "bc-plan-to-pipeline",
+    "during a drain": "bc-pipeline-to-done",
+    "while draining": "bc-pipeline-to-done",
+}
+# ceiling: literal, single-line phrases only; add recurring variants as the corpus evolves.
+MOMENT_PHRASE = re.compile(r"\b(?ai:" + "|".join(map(re.escape, MOMENT_OWNERS)) + r")\b")
+TRIGGER_ALLOW = re.compile(r"<!--\s*trigger-allow:\s*(.*?)-->")
+
+
+def lint_moment_triggers(issues: list[Issue], edges: list[relationships.Edge]) -> None:
+    triggers = {(edge.owner, edge.target) for edge in edges if edge.relation in {"hands_off", "loads"}}
+    for concept, fields in all_status():
+        if fields.get("deployed", "no") == "no":
+            continue
+        for md in sorted((ROOT / "concepts" / concept / "body").rglob("*.md")):
+            if not md.is_file():
+                continue
+            for number, line in enumerate(read(md).splitlines(), 1):
+                if any(reason.strip() for reason in TRIGGER_ALLOW.findall(line)):
+                    continue
+                for match in MOMENT_PHRASE.finditer(line):
+                    phrase = match.group()
+                    owner = MOMENT_OWNERS[phrase.lower()]
+                    if owner == concept or (owner, concept) in triggers:
+                        continue
+                    issues.append(Issue(
+                        "WARN", f"{rel(md)}:{number}: moment trigger {phrase!r} needs a hands_off or loads edge "
+                        f"from {owner} to {concept} in concepts/relationships.json",
+                    ))
+
+
 def lint_relationships(issues: list[Issue]) -> None:
     edges, load_errors = relationships.load_graph(ROOT)
     for error in load_errors:
@@ -456,6 +491,7 @@ def lint_relationships(issues: list[Issue]) -> None:
 
     for error in relationships.check_views(ROOT, edges):
         issues.append(Issue("ERROR", f"relationship graph: {error}"))
+    lint_moment_triggers(issues, edges)
 
 
 def lint_kernel_package(issues: list[Issue]) -> None:

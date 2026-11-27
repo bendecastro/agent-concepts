@@ -719,7 +719,7 @@ How this repository is organised and the rules for changing it. You only need th
 | [`policies/`](policies/README.md) | documentation and a template for the publish policy, which lives outside the repository |
 | [`AGENTS.md`](AGENTS.md) | operating manual for agents working on this repository |
 
-`python3 scripts/lint.py` checks for mechanical drift: broken links, missing sources, stale index entries and status pages. For each deployed concept it also checks the recorded test status in `CONCEPT.md`, reading that record without rerunning the pressure tests.
+`python3 scripts/lint.py` checks for mechanical drift: broken links, missing sources, stale index entries and status pages. For each deployed concept it also checks the recorded test status in `CONCEPT.md`, reading that record without rerunning the pressure tests. It also warns if a deployed body names a workflow moment without a handoff or load from the skill that owns that moment.
 
 <br>
 
