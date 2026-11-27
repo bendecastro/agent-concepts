@@ -22,10 +22,9 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [032-stranger-docs-cleanup](2-active/032-stranger-docs-cleanup.md) | active, ready for agent | — | — | `docs/guides/pipeline.md` still describes the old `.bc-agent/` vault layout; five skills say to use `naming-things`, which was never tested or deployed; wiki s… | 2/3 |
-| 2 | [033-stranger-end-to-end-test](2-active/033-stranger-end-to-end-test.md) | active, ready for agent | — | — | Every gap found on 2026-11-26 came from skills only ever run on the owner's machine; the fresh-install test checks installation but nothing checks using the lo… | 0/1 |
+| 1 | [033-stranger-end-to-end-test](2-active/033-stranger-end-to-end-test.md) | active, ready for agent | — | — | Every gap found on 2026-11-26 came from skills only ever run on the owner's machine; the fresh-install test checks installation but nothing checks using the lo… | 0/1 |
 
-- [Ideas](0-ideas.md): 3
-- [Done](3-done/): 32
+- [Ideas](0-ideas.md): 4
+- [Done](3-done/): 33
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->

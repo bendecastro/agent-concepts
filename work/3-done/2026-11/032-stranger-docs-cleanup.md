@@ -8,7 +8,6 @@ Kind: docs
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
-Held by: pi 01a218e4 since 2026-11-27 02:50 +00:00
 
 ## Requirements
 
@@ -26,7 +25,18 @@ Held by: pi 01a218e4 since 2026-11-27 02:50 +00:00
   - Review: approved by tier-1 2026-11-27 (round 2)
   - Gate: pass ./scripts/gate at 3d2c53d 2026-11-27
   - Landed in `3d2c53d`.
-- [ ] Test and deploy `naming-things`: scenarios in `concepts/naming-things/tests/`, runs on the pressure-test model, status frontmatter, deploy, `index.md`, `docs/status.md`, `.bc-agent/log.md`. Blocked by: nothing. Done when the with-skill runs hold where the baseline fails and the skill is deployed, or the failure is recorded and deployment left off. Out of scope: rewriting the five referencing skills.
+- [x] Test and deploy `naming-things`: scenarios in `concepts/naming-things/tests/`, runs on the pressure-test model, status frontmatter, deploy, `index.md`, `docs/status.md`, `.bc-agent/log.md`. Blocked by: nothing. Done when the with-skill runs hold where the baseline fails and the skill is deployed, or the failure is recorded and deployment left off. Out of scope: rewriting the five referencing skills.
+  - Review: approved by tier-1 2026-11-27 (round 2)
+  - Gate: pass ./scripts/gate at c685022 2026-11-27
+  - Landed in `c685022`. Result: FAIL recorded, deployment left off.
 
 ## Outcome
+
+- Pipeline guide names only the visible layout setup creates; setup states which archetypes its indexing, wiki-lint and promotion steps apply to (`3d2c53d`).
+- Wiki search, the runner scripts and the failure notifier work from the installed skill with `AGENT_CONCEPTS` unset; regression tests run the documented commands from a copied installed layout (`3d2c53d`).
+- `naming-things` pressure case G (`c685022`): with the skill the agent flagged the misleading name 3/3 (blind 0/3) but still used it and persisted it into IDs and hashes, so the skill stays undeployed. The result file names the body gap: no rule for a user-dictated name that breaks the checklist. Follow-up filed in `work/0-ideas.md`.
+
+Full gate 634 passed, 4 skipped.
+
+Spent: 1h 22m active, 21.4M tokens, $9.07 (estimated; pi 11 sessions, claude-code 0 sessions, codex 0 sessions; other tools not counted)
 
