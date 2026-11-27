@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from shutil import rmtree
 
 
 SCRIPTS = Path(__file__).resolve().parents[1]
@@ -44,27 +45,13 @@ class PluginManifestsTests(unittest.TestCase):
             self.assertEqual(manifest["version"], "1.2.3", path)
             self.assertEqual(manifest["name"], plugin_manifests.PLUGIN_NAME, path)
 
-    def test_marketplaces_point_at_the_separate_plugins(self):
-        plugin_manifests.write_manifests(self.root)
-        claude = self.read(plugin_manifests.CLAUDE_MARKETPLACE)
-        self.assertEqual([(p["name"], p["source"]) for p in claude["plugins"]],
-                         [(plugin_manifests.PLUGIN_NAME, "./"),
-                          ("agent-kernel", "./packages/agent-kernel-claude")])
-        kernel = self.read("packages/agent-kernel-claude/.claude-plugin/plugin.json")
-        self.assertEqual(kernel["name"], "agent-kernel")
-        self.assertEqual(kernel["version"], "1.2.3")
-        self.assertNotIn("skills", kernel)
-        codex = self.read(plugin_manifests.CODEX_MARKETPLACE)
-        self.assertEqual([(p["name"], p["source"]) for p in codex["plugins"]],
-                         [(plugin_manifests.PLUGIN_NAME, {"source": "local", "path": "./"})])
-
     def test_check_is_clean_after_write(self):
         plugin_manifests.write_manifests(self.root)
         self.assertEqual(plugin_manifests.check_manifests(self.root), [])
 
     def test_check_reports_missing_manifests(self):
         errors = plugin_manifests.check_manifests(self.root)
-        self.assertEqual(len(errors), 5)
+        self.assertEqual(len(errors), 6)
         self.assertTrue(all("--write-plugin-manifests" in error for error in errors))
 
     def test_check_reports_a_manifest_stale_after_the_public_list_changes(self):
@@ -73,6 +60,38 @@ class PluginManifestsTests(unittest.TestCase):
         errors = plugin_manifests.check_manifests(self.root)
         self.assertEqual(len(errors), 2)
         self.assertTrue(all("stale" in error for error in errors))
+
+
+def test_marketplaces_point_at_separate_kernel_plugins(tmp_path):
+    root = tmp_path / "checkout"
+    try:
+        (root / "concepts").mkdir(parents=True)
+        (root / "concepts/public-skills.json").write_text('{"skills": {"bc-a": []}}', encoding="utf-8")
+        (root / "package.json").write_text('{"version": "1.2.3"}', encoding="utf-8")
+        plugin_manifests.write_manifests(root)
+
+        for marketplace, expected in (
+            (plugin_manifests.CLAUDE_MARKETPLACE, ["./", "./packages/agent-kernel-claude"]),
+            (plugin_manifests.CODEX_MARKETPLACE, [
+                {"source": "local", "path": "./"},
+                {"source": "local", "path": "./packages/agent-kernel-codex"},
+            ]),
+        ):
+            entries = json.loads((root / marketplace).read_bytes())["plugins"]
+            assert [(entry["name"], entry["source"]) for entry in entries] == list(zip(
+                [plugin_manifests.PLUGIN_NAME, "agent-kernel"], expected, strict=True,
+            ))
+        for manifest in (
+            "packages/agent-kernel-claude/.claude-plugin/plugin.json",
+            "packages/agent-kernel-codex/.codex-plugin/plugin.json",
+        ):
+            kernel = json.loads((root / manifest).read_bytes())
+            assert kernel["name"] == "agent-kernel"
+            assert kernel["version"] == "1.2.3"
+            assert "skills" not in kernel
+    finally:
+        if root.exists():
+            rmtree(root)
 
 
 if __name__ == "__main__":

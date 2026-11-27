@@ -9,6 +9,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+PACKAGES = (
+    "agent-kernel", "agent-kernel-pi", "agent-kernel-claude",
+    "agent-kernel-codex", "agent-kernel-opencode",
+)
+
 
 @pytest.fixture
 def checkout(tmp_path):
@@ -17,16 +22,16 @@ def checkout(tmp_path):
     canonical.parent.mkdir(parents=True)
     canonical.write_bytes(b"# Agent Kernel\r\n\nKeep exact bytes.\n")
     try:
-        yield root, canonical, root / "packages/agent-kernel/AGENT-KERNEL.md"
+        yield root, canonical
     finally:
         rmtree(root)
 
 
-@pytest.mark.parametrize("package", ["agent-kernel", "agent-kernel-pi", "agent-kernel-claude"])
+@pytest.mark.parametrize("package", PACKAGES)
 def test_build_stages_canonical_bytes_without_rewriting_an_identical_copy(checkout, package):
     from kernel_package import stage_kernel
 
-    root, canonical, _ = checkout
+    root, canonical = checkout
     staged = root / "packages" / package / "AGENT-KERNEL.md"
     stage_kernel(root)
     assert staged.is_file() and not staged.is_symlink()
@@ -37,46 +42,33 @@ def test_build_stages_canonical_bytes_without_rewriting_an_identical_copy(checko
     assert (after.st_ino, after.st_mtime_ns) == (before.st_ino, before.st_mtime_ns)
 
 
-def test_lint_rejects_edited_staged_bytes(checkout, monkeypatch):
+@pytest.mark.parametrize("package", PACKAGES)
+def test_lint_rejects_edited_staged_bytes(checkout, monkeypatch, package):
     import lint
     from kernel_package import stage_kernel
 
-    root, _, staged = checkout
+    root, _ = checkout
+    path = Path("packages") / package / "AGENT-KERNEL.md"
     monkeypatch.setattr(lint, "ROOT", root)
     stage_kernel(root)
     issues = []
     lint.lint_kernel_package(issues)
     assert issues == []
+    staged = root / path
+    staged.parent.mkdir(parents=True, exist_ok=True)
     staged.write_bytes(b"# Edited copy\n")
     lint.lint_kernel_package(issues)
     assert len(issues) == 1
     assert issues[0].severity == "ERROR"
+    assert str(path) in issues[0].message
     assert "python3 scripts/kernel_package.py" in issues[0].message
-
-
-def test_lint_rejects_edited_pi_copy(checkout, monkeypatch):
-    import lint
-    from kernel_package import stage_kernel
-
-    root, _, _ = checkout
-    pi_copy = root / "packages/agent-kernel-pi/AGENT-KERNEL.md"
-    stage_kernel(root)
-    monkeypatch.setattr(lint, "ROOT", root)
-    issues = []
-    lint.lint_kernel_package(issues)
-    assert issues == []
-
-    pi_copy.write_bytes(b"# Edited Pi copy\n")
-    lint.lint_kernel_package(issues)
-    assert [(issue.severity, "packages/agent-kernel-pi/AGENT-KERNEL.md" in issue.message)
-            for issue in issues] == [("ERROR", True)]
 
 
 @pytest.mark.skipif(which("node") is None, reason="Node.js is needed to run the Pi extension")
 def test_pi_extension_reads_once_and_keeps_the_same_section(checkout):
     from kernel_package import stage_kernel
 
-    root, _, _ = checkout
+    root, _ = checkout
     stage_kernel(root)
     package = root / "packages/agent-kernel-pi"
     source = Path(__file__).resolve().parents[2] / "packages/agent-kernel-pi"
@@ -116,22 +108,3 @@ def test_pi_extension_reads_once_and_keeps_the_same_section(checkout):
         }
         assert.equal(reads, 1);
     """], cwd=package, check=True)
-
-
-def test_lint_rejects_edited_claude_copy(checkout, monkeypatch):
-    import lint
-    from kernel_package import stage_kernel
-
-    root, _, _ = checkout
-    path = Path("packages/agent-kernel-claude/AGENT-KERNEL.md")
-    stage_kernel(root)
-    copy = root / path
-    monkeypatch.setattr(lint, "ROOT", root)
-    issues = []
-    lint.lint_kernel_package(issues)
-    assert issues == []
-    copy.write_bytes(b"# Edited Claude copy\n")
-    lint.lint_kernel_package(issues)
-    assert len(issues) == 1
-    assert issues[0].severity == "ERROR"
-    assert str(path) in issues[0].message

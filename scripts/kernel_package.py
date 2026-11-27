@@ -9,6 +9,8 @@ STAGED_COPIES = (
     Path("packages/agent-kernel/AGENT-KERNEL.md"),
     Path("packages/agent-kernel-pi/AGENT-KERNEL.md"),
     Path("packages/agent-kernel-claude/AGENT-KERNEL.md"),
+    Path("packages/agent-kernel-codex/AGENT-KERNEL.md"),
+    Path("packages/agent-kernel-opencode/AGENT-KERNEL.md"),
 )
 BUILD_COMMAND = "python3 scripts/kernel_package.py"
 

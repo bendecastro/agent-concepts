@@ -30,6 +30,8 @@ CLAUDE_KERNEL_ROOT = "packages/agent-kernel-claude"
 CLAUDE_KERNEL_PLUGIN = f"{CLAUDE_KERNEL_ROOT}/.claude-plugin/plugin.json"
 CODEX_PLUGIN = ".codex-plugin/plugin.json"
 CODEX_MARKETPLACE = ".agents/plugins/marketplace.json"
+CODEX_KERNEL_ROOT = "packages/agent-kernel-codex"
+CODEX_KERNEL_PLUGIN = f"{CODEX_KERNEL_ROOT}/{CODEX_PLUGIN}"
 
 
 def _skill_paths(root: Path) -> list[str]:
@@ -81,15 +83,19 @@ def render_manifests(root: Path) -> dict[str, dict]:
                 "category": "Coding",
             },
         },
+        CODEX_KERNEL_PLUGIN: kernel,
         CODEX_MARKETPLACE: {
             "name": PLUGIN_NAME,
             "interface": {"displayName": "Agent Concepts"},
-            "plugins": [{
-                "name": PLUGIN_NAME,
-                "source": {"source": "local", "path": "./"},
-                "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
-                "category": "Coding",
-            }],
+            "plugins": [
+                {
+                    "name": name,
+                    "source": {"source": "local", "path": path},
+                    "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+                    "category": "Coding",
+                }
+                for name, path in ((PLUGIN_NAME, "./"), (kernel["name"], f"./{CODEX_KERNEL_ROOT}"))
+            ],
         },
     }
 

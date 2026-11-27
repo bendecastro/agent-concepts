@@ -1,0 +1,9 @@
+{
+  "name": "agent-kernel",
+  "version": "0.3.0",
+  "description": "Opt-in always-on instructions for coding agents.",
+  "author": {
+    "name": "agent-concepts contributors"
+  },
+  "license": "MIT"
+}

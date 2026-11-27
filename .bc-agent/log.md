@@ -2286,3 +2286,6 @@ Separate marketplace plugin; Claude Code 2.1.329 sent both labeled section slice
 
 ## [2026-11-27] lint | Require handoffs for named workflow moments
 A deployed body naming a covered moment must be the moment owner, have a handoff or load from the owner, or carry a reason on that line. Severity is WARN in the first tagged `CHANGELOG.md` version that includes the check and becomes ERROR in the following tagged version.
+
+## [2026-11-27] implement | Opt-in Codex and OpenCode V2 kernel packages
+Isolated loopback requests contained the exact Markdown at startup and resume and omitted it after removal on Codex 0.153.1 and OpenCode V2 2.4.2; OpenCode 1.18.3 used native instructions instead. Codex interactive trust and compaction were not run. One real Terra low Pi proxy run per arm verified delivery; neither asked for approval. No kernel wording or owner configuration changed.
