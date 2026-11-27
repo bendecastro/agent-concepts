@@ -7,7 +7,7 @@ Blocked by: 042-one-command-pi-install, 043-plain-pipeline-messages, 045-starter
 Kind: release
 Source: owner decision 6a (release without asking again), 2026-11-27
 Planned: bc-plan-to-pipeline 2026-11-27
-Ready for agent: no
+Ready for agent: yes
 
 ## Steps
 
