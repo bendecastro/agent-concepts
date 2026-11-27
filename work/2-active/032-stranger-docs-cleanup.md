@@ -18,8 +18,14 @@ Held by: pi 01a218e4 since 2026-11-27 02:50 +00:00
 
 ## Steps
 
-- [ ] Pipeline guide and setup archetype scope: rewrite the layout parts of `docs/guides/pipeline.md` and state archetypes for setup's indexing and wiki-lint steps. Blocked by: nothing. Done when the guide names only visible-layout paths for code projects and lint has 0 ERROR. Out of scope: other guides.
-- [ ] Wiki search path: resolve the script relative to the installed skill; test with `$AGENT_CONCEPTS` unset. Blocked by: nothing. Done when the test passes with the variable unset, after failing first. Out of scope: search behaviour.
+- [x] Pipeline guide and setup archetype scope: rewrite the layout parts of `docs/guides/pipeline.md` and state archetypes for setup's indexing and wiki-lint steps. Blocked by: nothing. Done when the guide names only visible-layout paths for code projects and lint has 0 ERROR. Out of scope: other guides.
+  - Review: approved by tier-1 2026-11-27 (round 2)
+  - Gate: pass ./scripts/gate at 3d2c53d 2026-11-27
+  - Landed in `3d2c53d`.
+- [x] Wiki search path: resolve the script relative to the installed skill; test with `$AGENT_CONCEPTS` unset. Blocked by: nothing. Done when the test passes with the variable unset, after failing first. Out of scope: search behaviour.
+  - Review: approved by tier-1 2026-11-27 (round 2)
+  - Gate: pass ./scripts/gate at 3d2c53d 2026-11-27
+  - Landed in `3d2c53d`.
 - [ ] Test and deploy `naming-things`: scenarios in `concepts/naming-things/tests/`, runs on the pressure-test model, status frontmatter, deploy, `index.md`, `docs/status.md`, `.bc-agent/log.md`. Blocked by: nothing. Done when the with-skill runs hold where the baseline fails and the skill is deployed, or the failure is recorded and deployment left off. Out of scope: rewriting the five referencing skills.
 
 ## Outcome
