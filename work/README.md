@@ -22,11 +22,10 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [045-starter-items-for-new-projects](2-active/045-starter-items-for-new-projects.md) | active, ready for agent | — | — | Setup offers the guardrails item (the project's fitness functions) and the design-inventory item (design consistency) only when it finds existing source code,… | 1/1 |
-| 2 | [044-stranger-rerun-and-release](1-planned/044-stranger-rerun-and-release.md) | planned | — | — | Strangers install tagged releases, and `v0.3.0` predates every fix from the 2026-11-26/27 stranger tests. | 0/3 |
-| 3 | [046-install-from-npm](1-planned/046-install-from-npm.md) | planned | — | — | The README's `pi install git:…@v0.3.0` pins the package, and Pi skips pinned packages on `pi update`, so everyone stays on the version they first installed eve… | 0/1 |
+| 1 | [044-stranger-rerun-and-release](1-planned/044-stranger-rerun-and-release.md) | planned | — | — | Strangers install tagged releases, and `v0.3.0` predates every fix from the 2026-11-26/27 stranger tests. | 0/4 |
+| 2 | [046-install-from-npm](1-planned/046-install-from-npm.md) | planned | — | — | The README's `pi install git:…@v0.3.0` pins the package, and Pi skips pinned packages on `pi update`, so everyone stays on the version they first installed eve… | 0/1 |
 
 - [Ideas](0-ideas.md): 8
-- [Done](3-done/): 42
+- [Done](3-done/): 43
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->
