@@ -2,7 +2,8 @@
 # Pi stranger end-to-end test: install this checkout into a sandbox with no private config,
 # then set up, plan and build a generated fixture repository. See stranger-end-to-end.md.
 # Usage: EVIDENCE=/abs/new/dir MODEL=provider/id THINKING=low scripts/stranger_end_to_end.sh
-# Optional: STRANGER_AUTH (Pi auth.json to copy the MODEL provider's credential from).
+# Optional: STRANGER_AUTH (Pi auth.json to copy the MODEL provider's credential from);
+# STRANGER_SOURCE=pack installs what `npm pack` of the committed HEAD would publish (the README's npm:agent-concepts).
 set -euo pipefail
 : "${EVIDENCE:?Set an absolute evidence path}" "${MODEL:?Set provider/model}" "${THINKING:?Set effort}"
 [[ "$EVIDENCE" = /* ]]; mkdir -m 700 "$EVIDENCE"
@@ -15,6 +16,11 @@ mkdir -p "$scratch"/{home/.pi/agent,logs/{setup,plan,build},src}
 cp "$REPO/scripts/stranger_fixture.py" "$scratch/fixture.py"; cp "$REPO/scripts/stranger_rpc_driver.py" "$scratch/rpc_driver.py"; cp "$REPO/scripts/pi_sandbox.py" "$scratch/pi_sandbox.py"
 # Committed HEAD only: uncommitted edits are not installed.
 git clone -q --no-hardlinks "$REPO" "$scratch/src/agent-concepts"; git -C "$scratch/src/agent-concepts" rev-parse HEAD > "$EVIDENCE/installed-revision.txt"
+PKG=/box/src/agent-concepts
+if [[ "${STRANGER_SOURCE:-checkout}" == pack ]]; then
+  (cd "$scratch/src/agent-concepts" && npm pack --silent --pack-destination "$scratch/src") > "$EVIDENCE/npm-pack.txt"
+  tar -xzf "$scratch"/src/agent-concepts-*.tgz -C "$scratch/src"; PKG=/box/src/package
+fi
 # Copy only the selected provider's credential; no other auth, settings or config.
 python3 - "$AUTH" "$scratch/home/.pi/agent/auth.json" "${MODEL%%/*}" <<'PY'
 import json,sys,os; a=json.load(open(sys.argv[1])); json.dump({sys.argv[3]:a[sys.argv[3]]},open(sys.argv[2],"w")); os.chmod(sys.argv[2],0o600)
@@ -42,8 +48,8 @@ box /box bash -ec 'for f in "$HOME/.config/agent-concepts" /home /root; do test 
   echo isolation ok' | tee "$EVIDENCE/isolation.txt"
 box /box python3 /box/fixture.py /box > "$EVIDENCE/fixture.log" 2>&1
 box /box npm install --prefix /box/cli --no-audit --no-fund @earendil-works/pi-coding-agent@1.6.1 > "$EVIDENCE/npm.log" 2>&1
-# The README's Pi install block, with this checkout in place of the release source.
-box /box pi install /box/src/agent-concepts > "$EVIDENCE/install.log" 2>&1
+# The README's Pi install block, with this checkout (or its npm pack) in place of the release source.
+box /box pi install "$PKG" > "$EVIDENCE/install.log" 2>&1
 box /box pi install npm:pi-subagents >> "$EVIDENCE/install.log" 2>&1
 box /box bash -c 'pi --version; pi list; cat /box/home/.pi/agent/npm/node_modules/pi-subagents/package.json 2>/dev/null | grep "\"version\"" ' > "$EVIDENCE/versions.txt" 2>&1 || true
 box /box pi auth check --model "$MODEL" --no-refresh | tee "$EVIDENCE/auth-check.txt"

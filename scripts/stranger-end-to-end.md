@@ -8,7 +8,7 @@ Needs: x86-64 Linux with a merged `/usr`, `bwrap`, Git, Python 3, Node and npm i
 EVIDENCE=/absolute/new/dir MODEL=provider/model-id THINKING=low scripts/stranger_end_to_end.sh
 ```
 
-Choose `MODEL` and `THINKING` on your side (for example from your pressure-test configuration); the sandbox never sees that file. `STRANGER_AUTH` names the Pi `auth.json` to copy the provider's credential from (default `~/.pi/agent/auth.json`); only that one provider entry is copied into the sandbox, and it is deleted with it. The script installs the **committed** `HEAD` of this checkout through `pi install <path>`; to test a release instead, change that line to the README's `pi install git:…@<tag>` command and record why.
+Choose `MODEL` and `THINKING` on your side (for example from your pressure-test configuration); the sandbox never sees that file. `STRANGER_AUTH` names the Pi `auth.json` to copy the provider's credential from (default `~/.pi/agent/auth.json`); only that one provider entry is copied into the sandbox, and it is deleted with it. The script installs the **committed** `HEAD` of this checkout through `pi install <path>`; with `STRANGER_SOURCE=pack` it installs the unpacked `npm pack` of that `HEAD` instead, which is what `pi install npm:agent-concepts` delivers; to test a release instead, change that line to the README's `pi install git:…@<tag>` command and record why.
 
 ## What the script does
 
