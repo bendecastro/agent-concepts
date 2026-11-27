@@ -22,10 +22,11 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [042-one-command-pi-install](2-active/042-one-command-pi-install.md) | active, ready for agent | — | 044-stranger-rerun-and-release, 045-starter-items-for-new-projects | In the 039 stranger rerun the test copied the pipeline's three role files into Pi for the stranger; a real stranger must copy them by hand, edit an overlay, in… | 0/1 |
+| 1 | [042-one-command-pi-install](2-active/042-one-command-pi-install.md) | active, ready for agent | — | 044-stranger-rerun-and-release, 045-starter-items-for-new-projects, 046-install-from-npm | In the 039 stranger rerun the test copied the pipeline's three role files into Pi for the stranger; a real stranger must copy them by hand, edit an overlay, in… | 0/1 |
 | 2 | [043-plain-pipeline-messages](2-active/043-plain-pipeline-messages.md) | active, ready for agent | — | 044-stranger-rerun-and-release, 045-starter-items-for-new-projects | In the 039 stranger rerun a newcomer met jargon ("publish policy", "claim commit", "review tier", `$unavailable` cost rows), noise (an unauthenticated-`gh` not… | 2/2 |
 | 3 | [044-stranger-rerun-and-release](1-planned/044-stranger-rerun-and-release.md) | planned | [042-one-command-pi-install](2-active/042-one-command-pi-install.md), [043-plain-pipeline-messages](2-active/043-plain-pipeline-messages.md) | — | Strangers install tagged releases, and `v0.3.0` predates every fix from the 2026-11-26/27 stranger tests. | 0/3 |
 | 4 | [045-starter-items-for-new-projects](1-planned/045-starter-items-for-new-projects.md) | planned, ready for agent | [042-one-command-pi-install](2-active/042-one-command-pi-install.md), [043-plain-pipeline-messages](2-active/043-plain-pipeline-messages.md) | — | Setup offers the guardrails item (the project's fitness functions) and the design-inventory item (design consistency) only when it finds existing source code,… | 0/1 |
+| 5 | [046-install-from-npm](1-planned/046-install-from-npm.md) | planned | [042-one-command-pi-install](2-active/042-one-command-pi-install.md) | — | The README's `pi install git:…@v0.3.0` pins the package, and Pi skips pinned packages on `pi update`, so everyone stays on the version they first installed eve… | 0/1 |
 
 - [Ideas](0-ideas.md): 8
 - [Done](3-done/): 40

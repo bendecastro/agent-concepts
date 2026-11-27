@@ -18,3 +18,4 @@
 18. 043-plain-pipeline-messages
 19. 044-stranger-rerun-and-release
 20. 045-starter-items-for-new-projects
+21. 046-install-from-npm
