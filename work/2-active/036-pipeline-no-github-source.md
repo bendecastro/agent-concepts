@@ -11,8 +11,9 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Reproduce: the first run started the build without project instructions (`-nc`), and `.bc-agent/AGENTS.md` says issues are optional. Run the build phase on a work-items-only fixture with project instructions loaded. Done when the stall reproduces (continue) or does not (drop this item with the evidence). Out of scope: editing the skill before the stall reproduces.
-- [ ] Source choice: `concepts/bc-pipeline-to-done/body/SKILL.md` "Choose the source" says the issue source exists only when the project has a GitHub remote; pressure-test old vs new wording on a work-items-only repository with a local remote. Done when the new wording proceeds without `gh` and the old one stops, with results filed in `concepts/bc-pipeline-to-done/tests/`. Blocked by: Reproduce. Out of scope: changing how projects with a GitHub remote choose a source; the full stranger rerun (039-stranger-rerun).
+- [x] Reproduce: the first run started the build without project instructions (`-nc`), and `.bc-agent/AGENTS.md` says issues are optional. Run the build phase on a work-items-only fixture with project instructions loaded. Done when the stall reproduces (continue) or does not (drop this item with the evidence). Out of scope: editing the skill before the stall reproduces.
+- [x] Source choice: `concepts/bc-pipeline-to-done/body/SKILL.md` "Choose the source" says the issue source exists only when the project has a GitHub remote; pressure-test old vs new wording on a work-items-only repository with a local remote. Done when the new wording proceeds without `gh` and the old one stops, with results filed in `concepts/bc-pipeline-to-done/tests/`. Blocked by: Reproduce. Out of scope: changing how projects with a GitHub remote choose a source; the full stranger rerun (039-stranger-rerun).
 
 ## Outcome
 
+Draft: Reproduced with project instructions loaded: the old wording called `gh` in every run and stopped at the source question in 3 of 4 Terra low dry runs. "Choose the source" now says the issue source exists only with a GitHub remote. With the new wording, 2 of 2 runs chose the work items without calling `gh` ([results](../../concepts/bc-pipeline-to-done/tests/pressure-no-github-source-results-2026-11-27.md)). Dry runs only; the live check is 039-stranger-rerun.

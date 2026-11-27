@@ -14,7 +14,7 @@ Drain eligible units of work through isolated build, independent Spec and Standa
 A unit of work comes from one of two sources, and each source page owns choosing, claim key, contract, parking and finishing for its units:
 
 - **Work items** — [source-work-items.md](source-work-items.md): the project keeps a `work/` pipeline (a "Where things go" table in `.bc-agent/AGENTS.md`) and at least one item carries the line `Ready for agent: yes`.
-- **Issues** — [source-issues.md](source-issues.md): the project's GitHub issues carry `ready-for-agent` or `rework-for-agent`.
+- **Issues** — [source-issues.md](source-issues.md): the project has a GitHub remote and its GitHub issues carry `ready-for-agent` or `rework-for-agent`. Without a GitHub remote there is no issue source: do not query it or ask about it.
 
 If only one source has ready units, use it. If both do, ask the owner which to drain before preflight; if neither does, report an empty queue and stop. Read only the chosen source page.
 

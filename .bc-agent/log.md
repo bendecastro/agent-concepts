@@ -2313,3 +2313,6 @@ The reflection on the 2026-11-26 drain found test sessions reading the wrong ins
 
 ## [2026-11-27] implement | Starter items carry a Planned: line
 The owner-led architecture-review and issue-triage starter items now carry `Planned: bc-setup-project`, so `work_index.py --check` is quiet right after setup (owner choice over exempting them in the check). `test_starter_items.py` now fails on any index warning; it failed on both items before the change.
+
+## [2026-11-27] test | 036 pipeline: no GitHub remote, no issue source
+Reproduced stall 1 with project instructions loaded (old wording called `gh` in 4/4 runs and stopped at the source question in 3/4). "Choose the source" now requires a GitHub remote for the issue source; the new wording chose the work items with no `gh` call in 2/2 runs.
