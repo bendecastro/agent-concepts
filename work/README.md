@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [039-stranger-rerun](1-planned/039-stranger-rerun.md) | planned | — | — | The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/README.md`) stopped before the pipeline launched any child, and its planning and build se… | 0/1 |
+| 1 | [039-stranger-rerun](2-active/039-stranger-rerun.md) | active, ready for agent | — | — | The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/README.md`) stopped before the pipeline launched any child, and its planning and build se… | 0/1 |
 
 - [Ideas](0-ideas.md): 6
 - [Done](3-done/): 39

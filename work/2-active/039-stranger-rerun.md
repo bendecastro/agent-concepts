@@ -4,6 +4,8 @@ Why: The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/READM
 Done when: One run of `scripts/stranger_end_to_end.sh` reaches the build phase's landing step or records the new stall; results are filed next to the first run with each stall fixed or turned into an item.
 Stage: later
 Blocked by: 038-starter-items-pass-index-check
+Planned: bc-plan-to-pipeline 2026-11-27
+Ready for agent: yes
 Kind: tests
 Source: 033-stranger-end-to-end-test
 
