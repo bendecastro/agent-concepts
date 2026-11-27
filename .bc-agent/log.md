@@ -2378,3 +2378,6 @@ Tags publish to npm `next`; a dispatch-only `set-latest` job in release.yml prom
 
 ## [2026-11-27] implement | stranger report channel (048)
 SECURITY.md, issue form and security contact link, README "Report a problem" line, session-start issue check in .bc-agent/AGENTS.md. Dry run with a fake gh filed one issue as an idea line. Private vulnerability reporting still needs enabling on GitHub (owner).
+
+## [2026-11-27] implement | modularity work items 054-060
+Scout scan of all skill bodies for multi-job skills; owner picked safe-runs module (before 053), project-file rules in the bc-agent scaffold, file-findings module, teach-hosting home, kernel rule for runs nobody can answer, qmd query contradiction fix, wiki timer install move.

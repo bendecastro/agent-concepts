@@ -3,7 +3,7 @@
 Why: `bc-delegate-investigation` does two jobs under a name that fits neither the way the owner calls it ("swarm", "go wide") nor how swarm mode uses it. Its durability rules (run folder, manifest, artifacts, Commit/Branch records, recovery before relaunch) have three drifting copies: the skill, the Pi swarm-mode prompt, and `bc-pipeline-to-done`. Other skills that launch children have none, so the 2026-11-27 council ran with no run folder until the parent made one by hand.
 Done when: `bc-durable-subagents` holds the durability contract and today's `pi.md`; `bc-swarm` holds the delegate-by-default posture and loads it; every skill that launches children loads `bc-durable-subagents` instead of restating it; the Pi swarm-mode prompt points to it instead of carrying a copy; the old name still resolves through the rename policy; and the affected pressure scenarios pass on the new skills.
 Stage: later
-Blocked by: 051-renamed-skill-aliases
+Blocked by: 051-renamed-skill-aliases, 054-safe-runs-module
 Kind: architecture
 Source: bc-self-improve 2026-11-27, owner picked split + rename and "add job B to the other skills that could use it"
 Planned: bc-plan-to-pipeline 2026-11-27

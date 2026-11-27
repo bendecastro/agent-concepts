@@ -25,4 +25,11 @@
 25. 050-ship-setup-migrations
 26. 051-renamed-skill-aliases
 27. 052-release-hygiene-pins
-28. 053-split-swarm-and-durable-subagents
+28. 054-safe-runs-module
+29. 053-split-swarm-and-durable-subagents
+30. 055-project-files-in-scaffold
+31. 056-file-findings-module
+32. 057-teach-hosting-module
+33. 058-kernel-unattended-default
+34. 059-qmd-query-contradiction
+35. 060-wiki-timer-install-to-wiki-maintain
