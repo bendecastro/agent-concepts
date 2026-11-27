@@ -22,9 +22,12 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [033-stranger-end-to-end-test](2-active/033-stranger-end-to-end-test.md) | active, ready for agent | — | — | Every gap found on 2026-11-26 came from skills only ever run on the owner's machine; the fresh-install test checks installation but nothing checks using the lo… | 0/1 |
+| 1 | [036-pipeline-no-github-source](1-planned/036-pipeline-no-github-source.md) | planned | — | — | In the stranger test the pipeline stopped before building because it could not check GitHub issues in a project whose only remote is a local path, even though… | 0/2 |
+| 2 | [037-setup-find-installed-wiki-skill](1-planned/037-setup-find-installed-wiki-skill.md) | planned | — | — | In the stranger test setup skipped the wiki check because it looked only in `$HOME/.agents/skills/bc-wiki-maintain`, the directory `bc-setup-project` calls nor… | 0/1 |
+| 3 | [038-starter-items-pass-index-check](1-planned/038-starter-items-pass-index-check.md) | planned | — | 039-stranger-rerun | Right after setup in the stranger test, `work_index.py` warned that the seeded `002-architecture-review` item "has no Planned: line", and the next session repo… | 0/1 |
+| 4 | [039-stranger-rerun](1-planned/039-stranger-rerun.md) | planned | [038-starter-items-pass-index-check](1-planned/038-starter-items-pass-index-check.md) | — | The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/README.md`) stopped before the pipeline launched any child, and its planning and build se… | 0/1 |
 
 - [Ideas](0-ideas.md): 4
-- [Done](3-done/): 33
+- [Done](3-done/): 34
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->

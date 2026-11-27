@@ -2304,3 +2304,6 @@ Three real Terra low runs per arm; neither arm held (0/3 each). Treatment record
 
 ## [2026-11-27] test | Pi stranger end-to-end run
 Added `scripts/stranger_end_to_end.sh`, its RPC driver and fixture: a sandbox with no private config installs this checkout and drives setup, planning and `bc-pipeline-to-done` on a generated repository with a local bare remote. First live run (Terra low, two attempts): setup and planning pass; the build stopped asking whether GitHub issues were also ready in a project with no GitHub remote, so building and landing were not reached. Planning and the build ran with `-nc`, so they never loaded the project instructions setup wrote; the GitHub stall is unconfirmed. Skill stalls became work items; the driver stalls, including `-nc`, were fixed.
+
+## [2026-11-27] test | 033 stranger test done
+Filed the first stranger run's stalls as 036-pipeline-no-github-source, 037-setup-find-installed-wiki-skill, 038-starter-items-pass-index-check and 039-stranger-rerun (building and landing still untested for a stranger).
