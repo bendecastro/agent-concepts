@@ -1,5 +1,7 @@
 # Checks a pushed release tag: versions match the tag, and every install method installs the
-# tag from GitHub (scripts/fresh_install_test.py --ref). Steps: docs/guides/releasing.md.
+# tag from GitHub (scripts/fresh_install_test.py --ref; its pi-npm method installs the tarball
+# `npm pack` makes from this checkout). Then publishes that version to npm as agent-concepts.
+# Steps: docs/guides/releasing.md.
 name: release
 on:
   push:
@@ -37,3 +39,31 @@ jobs:
           @openai/codex@0.153.1
           skills@1.9.0
       - run: python3 scripts/fresh_install_test.py --ref "${{ github.ref_name }}"
+  publish-npm:
+    needs: install-tag
+    runs-on: ubuntu-latest
+    # npm trusted publishing (OIDC, no stored token). npm's requirements, from
+    # docs.npmjs.com/trusted-publishers (read 2026-11-27): `id-token: write`, npm CLI 11.5.1 or
+    # later, Node 22.14.0 or later, a GitHub-hosted runner, and a trusted publisher on
+    # npmjs.com naming this repository and release.yml. Provenance needs a public repository
+    # and package.json `repository` matching it.
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g "npm@>=11.5.1"
+      # The first release is published by hand before the trusted publisher exists, so a
+      # version already on npm is skipped with a notice rather than failing the tag's run.
+      - name: Publish unless this version is on npm
+        run: |
+          version="$(node -p 'require("./package.json").version')"
+          if npm view "agent-concepts@${version}" version >/dev/null 2>&1; then
+            echo "::notice::agent-concepts@${version} is already on npm; skipping publish"
+          else
+            npm publish --provenance --access public
+          fi

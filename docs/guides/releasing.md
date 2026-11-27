@@ -28,10 +28,13 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
    `## [MAJOR.MINOR.PATCH] - YYYY-MM-DD` heading, written for people who install the skills,
    and update the comparison links at the bottom.
    Then replace the old tag with the new one everywhere in the
-   [Install section of the README](../../README.md#install), including "The newest release is".
+   [Install section of the README](../../README.md#install), including "The newest release is",
+   and the old version in the Pi pin example (`npm:agent-concepts@MAJOR.MINOR.PATCH`). The Pi
+   install itself names no version.
 5. Run `python3 scripts/release_check.py vMAJOR.MINOR.PATCH`. It exits nonzero when any
    description's version differs from the tag, `CHANGELOG.md` has no entry for it, or the
-   README's Install section does not name the tag or still names another one. Run
+   README's Install section does not name the tag or still names another one, does not show
+   the unpinned `pi install npm:agent-concepts`, or pins npm to another version. Run
    `python3 scripts/lint.py` too (0 ERROR).
 6. Commit and push these changes, and wait for the `gate` run on that commit to be green.
 
@@ -47,9 +50,38 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
 
 9. Watch the `release` workflow for the tag. It runs `release_check.py` for the tag, then
    installs the tag from GitHub with every method on Ubuntu and macOS
-   (`python3 scripts/fresh_install_test.py --ref vMAJOR.MINOR.PATCH`).
+   (`python3 scripts/fresh_install_test.py --ref vMAJOR.MINOR.PATCH`), whose `pi-npm` method
+   packs the tagged checkout with `npm pack`, checks the tarball and installs it in Pi. Then
+   its `publish-npm` job publishes that version to npm (see [Publishing to npm](#publishing-to-npm)).
 10. If it fails, do not move the tag. Fix the problem on `master` and release the next patch
-    version; someone may already have installed the broken tag.
+    version; someone may already have installed the broken tag. A version on npm cannot be
+    replaced either.
+
+## Publishing to npm
+
+The release workflow publishes `package.json`'s version as `agent-concepts` through npm
+trusted publishing: GitHub Actions proves the workflow's identity over OIDC, so no npm token is
+stored anywhere. npm requires (per docs.npmjs.com/trusted-publishers) the `id-token: write`
+permission, npm CLI 11.5.1 or later, Node 22.14.0 or later and a GitHub-hosted runner; the
+workflow sets these. Provenance is attached with `--provenance` and needs the public repository
+named in `package.json` `repository`. If this version is already on npm, the job prints a
+notice and skips publishing instead of failing.
+
+A trusted publisher can only be connected to a package that exists, so the first release is
+published by hand:
+
+1. On the maintainer's machine, from a clean checkout of the tag: `npm login`, then
+   `npm pack --dry-run` to review the file list (skill bodies, `packages/agent-kernel-pi/`,
+   README, LICENSE, package.json, nothing else), then `npm publish --access public`.
+2. On npmjs.com, open the package's Settings → Trusted publishing, choose GitHub Actions and
+   enter this repository and the workflow file `release.yml`. npm expires a new trusted
+   publisher that has not published within 2 days, so connect it shortly before the next
+   release, or delete and recreate it if it expired.
+3. Optional, recommended by npm: in the same settings, require two-factor authentication and
+   disallow tokens, so only the workflow can publish.
+
+The tag's `release` run for that first version finds it on npm and skips publishing; every
+later tag publishes from the workflow.
 
 ## What the fresh-install test runs for a tag
 
@@ -60,4 +92,5 @@ The README commands must be kept matching by hand; the test will not catch a dri
 
 The test runs the update commands against the same tag. Moving an install from one tag to a
 newer one has not been tested yet; until it is, the safe way is to uninstall and install again
-with the new tag.
+with the new tag. For the unpinned npm Pi install, check by hand after a release that
+`pi update` on an install of the previous version moves it to the new one.

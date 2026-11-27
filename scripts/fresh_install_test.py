@@ -8,6 +8,12 @@ or for a pack the pack's skill plus every skill it needs), run one bundled helpe
 installed copy, check that any installed pipeline skill includes its publish checker, update,
 check the skill list again, uninstall and check nothing is left listed.
 
+`pi-npm` installs what `npm publish` would ship: it runs `npm pack` on this checkout, checks the
+tarball holds the kernel extension, the pipeline roles and the licence and nothing outside
+package.json `files`, unpacks it and installs the unpacked folder (Pi 1.6 records a local
+`.tgz` path but loads no skills from it). It packs the checkout even with `--ref`; the release
+workflow's checkout is the tag, so that is the tarball the release publishes.
+
 No logins, API keys or model calls. The agent CLIs come from PATH (CI installs pinned versions
 from npm). `--drop-needed SKILL` installs the pack without one of its needed skills, to show the
 check fails when a needed skill is missing. `--ref REF` installs from the GitHub repository at
@@ -33,6 +39,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from install_packs import DOC_PATH, load_listing, packs  # noqa: E402
+from pi_package import shipped_files  # noqa: E402
 
 GITHUB_REPO = "bendecastro/agent-concepts"
 PLUGIN_ID = "agent-concepts@agent-concepts"
@@ -45,7 +52,12 @@ HELPER_SKILL = "bc-tdd"
 HELPER_RELPATH = "scripts/confirm-red.py"
 PUBLISH_SKILL = "bc-pipeline-to-done"
 PUBLISH_RELPATH = "scripts/publish-check.py"
-METHODS = ("pi", "claude", "codex", "npx-all", "npx-pack")
+METHODS = ("pi", "pi-npm", "claude", "codex", "npx-all", "npx-pack")
+# Files the npm package must carry besides the skill bodies; npm adds README and LICENSE itself.
+PACKED_ALWAYS = ("package.json", "README.md", "LICENSE")
+PACKED_REQUIRED = ("LICENSE", "packages/agent-kernel-pi/index.js", "packages/agent-kernel-pi/AGENT-KERNEL.md",
+                   *sorted(p.relative_to(ROOT).as_posix()
+                           for p in (ROOT / "concepts/bc-pipeline-to-done/body/agents").glob("*.md")))
 
 # Lists every skill Pi itself would load, the way a Pi session does (no model call).
 PI_LISTER = r"""
@@ -78,9 +90,10 @@ def install_sources(ref: str | None) -> dict[str, list[str]]:
     """
     if ref is None:
         local = str(ROOT)
-        return {"pi": [local], "claude": [local], "codex": [local], "npx": [local]}
+        return {"pi": [local], "pi-npm": [local], "claude": [local], "codex": [local], "npx": [local]}
     return {
         "pi": [f"git:github.com/{GITHUB_REPO}@{ref}"],
+        "pi-npm": [str(ROOT)],
         "claude": [f"{GITHUB_REPO}#{ref}"],
         "codex": [GITHUB_REPO, "--ref", ref],
         "npx": [f"{GITHUB_REPO}@{ref}"],
@@ -187,6 +200,32 @@ class PiPackage:
         self.box.run("pi", "remove", *self.source)
 
 
+def packed_problems(paths: list[str]) -> list[str]:
+    """What is wrong with a packed npm package, given its file paths relative to the package."""
+    shipped = tuple(shipped_files(ROOT))
+    problems = [f"missing from the packed package: {p}" for p in PACKED_REQUIRED if p not in paths]
+    problems += [f"outside the shipped files: {p}" for p in sorted(paths)
+                 if p not in PACKED_ALWAYS and not p.startswith(shipped)]
+    return problems
+
+
+class PiNpmPackage(PiPackage):
+    """The tarball `npm publish` would upload, unpacked and installed as a local Pi package."""
+
+    def install(self):
+        tarball = self.box.run("npm", "pack", "--silent", "--pack-destination", str(self.box.root),
+                               *self.source).strip().splitlines()[-1]
+        self.box.run("tar", "xzf", str(self.box.root / tarball), "-C", str(self.box.root))
+        package = self.box.root / "package"
+        paths = [p.relative_to(package).as_posix() for p in package.rglob("*") if p.is_file()]
+        problems = packed_problems(paths)
+        if problems:
+            raise CheckFailed("npm pack: " + "; ".join(problems))
+        print(f"  ok: packed package holds {len(paths)} files, kernel, roles and licence", flush=True)
+        self.source = [str(package)]
+        super().install()
+
+
 class ClaudePlugin:
     def __init__(self, box: Sandbox, source: list[str]):
         self.box = box
@@ -288,6 +327,8 @@ def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: 
     sources = install_sources(ref)
     if method == "pi":
         agent, expected = PiPackage(box, sources["pi"]), expected_skills(listing)
+    elif method == "pi-npm":
+        agent, expected = PiNpmPackage(box, sources["pi-npm"]), expected_skills(listing)
     elif method == "claude":
         agent, expected = ClaudePlugin(box, sources["claude"]), expected_skills(listing)
     elif method == "codex":

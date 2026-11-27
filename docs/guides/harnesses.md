@@ -6,6 +6,8 @@ The canonical copy of each concept (the one that is edited) is `concepts/<name>/
 
 The `bc-pipeline-to-done` body includes the [publish checker](../../policies/README.md#checking-a-rule) in symlink deployments, Pi packages, and Claude Code and Codex plugins. The Pi package also ships the pipeline's three `pi-subagents` roles from `concepts/bc-pipeline-to-done/body/agents/` through the manifest's `pi-subagents.agents` key; `pi-subagents` loads package roles above its builtins and below user and project roles, so a stranger installs the package and `pi-subagents` and copies nothing.
 
+Strangers install the Pi package from npm as `npm:agent-concepts`, unpinned, so `pi update` moves them to each release; Pi skips pinned specs (`npm:agent-concepts@<version>` or `git:…@<tag>`) on update, so pinning stays an option. The tarball ships only package.json `files` (the public skill bodies with the pipeline roles inside, and `packages/agent-kernel-pi/`), plus README and LICENSE. Pi 1.6 accepts a local `.tgz` path in `pi install` but loads no skills from it, so the fresh-install test's `pi-npm` method installs the unpacked tarball folder instead.
+
 ## Standalone kernel
 
 The kernel is a small Markdown include for always-on instructions, not an on-demand skill. Edit `concepts/agent-kernel/body/AGENT-KERNEL.md` and run `python3 scripts/kernel_package.py` to refresh the bundled bytes for each package. Lint rejects drift in any bundled copy.

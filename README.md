@@ -314,7 +314,7 @@ Details and known problems for each agent live in [harnesses.md](docs/guides/har
 > - **Pick one method per agent.** Two methods install each skill twice. Several agents also read `~/.agents/skills/`; the contributor install and `npx skills -a pi` both write there.
 > - **After installing, start a new agent session.** Open sessions do not see new skills.
 > - **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. The [Pi install](#pi) installs it; other installs of this repository do not. To install it: `pi install npm:pi-subagents`. The other methods install the council skills too, but they will not run there.
-> - **To move to a newer release**, uninstall first, then install with the new tag.
+> - **To move to a newer release**, uninstall first, then install with the new tag. The [Pi package](#pi) from npm is the exception: `pi update` moves it.
 
 <a name="claude-code"></a>
 <details>
@@ -374,25 +374,27 @@ codex plugin remove agent-concepts@agent-concepts && \
 <details>
 <summary><b>Pi</b></summary>
 
-**Install** — the skills, the agent kernel, and the pipeline's roles, plus [`pi-subagents`](https://www.npmjs.com/package/pi-subagents), which runs the council and pipeline skills:
+**Install** — the skills, the agent kernel, and the pipeline's roles from npm, plus [`pi-subagents`](https://www.npmjs.com/package/pi-subagents), which runs the council and pipeline skills:
 
 ```bash
-pi install git:github.com/bendecastro/agent-concepts@v0.3.0
+pi install npm:agent-concepts
 pi install npm:pi-subagents
 ```
 
+This installs the newest release, and `pi update` moves you to each new one. To stay on one release instead, name its version (`pi update` then skips it): `pi install npm:agent-concepts@0.3.0`, or from GitHub by tag, `pi install git:github.com/bendecastro/agent-concepts@v0.3.0`.
+
 The package includes the [agent kernel](#optional-agent-kernel) as a Pi extension; to turn it off, disable that extension in `pi config`.
 
-**Refresh** (stays on the release you installed):
+**Update** to the newest release (a pinned install stays where it is):
 
 ```bash
 pi update --extensions
 ```
 
-**Uninstall** (use the same tag you installed; also run `pi remove npm:pi-subagents` if nothing else uses it):
+**Uninstall** (use the same source you installed; also run `pi remove npm:pi-subagents` if nothing else uses it):
 
 ```bash
-pi remove git:github.com/bendecastro/agent-concepts@v0.3.0
+pi remove npm:agent-concepts
 ```
 
 </details>

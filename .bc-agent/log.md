@@ -2345,3 +2345,6 @@ Setup now offers new or empty projects a guardrails starter item, plus a design 
 
 ## [2026-11-27] implement | Release retests only rule changes
 releasing.md step 2: retest only changes that add or change a stop, requirement or prohibition; a shared rule is tested once; wording changes need no retest; record the sort in a release audit (owner choice). First audit: docs/research/2026-11-27-release-audit.md; 044 adds the security-audit test.
+
+## [2026-11-27] implement | Pi package publishable to npm (046-install-from-npm)
+package.json gains a generated `files` list and drops `private`; release.yml publishes tags through npm trusted publishing; fresh_install_test.py `pi-npm` packs and installs the tarball; README Pi install is the unpinned `npm:agent-concepts`. The first publish stays manual.

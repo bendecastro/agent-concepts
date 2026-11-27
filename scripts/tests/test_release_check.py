@@ -28,7 +28,8 @@ class ReleaseCheckTests(unittest.TestCase):
         plugin_manifests.write_manifests(self.root)
         (self.root / "CHANGELOG.md").write_text("# Changelog\n\n## [1.2.3] - 2026-11-25\n", encoding="utf-8")
         (self.root / "README.md").write_text(
-            "# Readme\n\n## Install\n\npi install git:github.com/o/r@v1.2.3\n\n## Next\n\nv0.0.1\n",
+            "# Readme\n\n## Install\n\npi install npm:agent-concepts\n"
+            "pi install npm:agent-concepts@1.2.3\nclaude o/r#v1.2.3\n\n## Next\n\nv0.0.1\n",
             encoding="utf-8")
 
     def write_json(self, relative: str, document: dict) -> None:
@@ -65,12 +66,25 @@ class ReleaseCheckTests(unittest.TestCase):
 
     def test_readme_install_must_name_the_tag(self):
         (self.root / "README.md").write_text(
-            "# Readme\n\n## Install\n\npi install git:github.com/o/r@v1.2.2\n", encoding="utf-8")
+            "# Readme\n\n## Install\n\npi install npm:agent-concepts\nclaude o/r#v1.2.2\n", encoding="utf-8")
         self.assertEqual(release_check.version_problems(self.root), [])
         problems = release_check.version_problems(self.root, "v1.2.3")
         self.assertEqual(len(problems), 2)
         self.assertIn("README.md", problems[0])
         self.assertIn("v1.2.2", problems[1])
+
+    def test_readme_pi_install_must_be_the_unpinned_npm_package(self):
+        (self.root / "README.md").write_text(
+            "# Readme\n\n## Install\n\npi install git:github.com/o/r@v1.2.3\n", encoding="utf-8")
+        problems = release_check.version_problems(self.root, "v1.2.3")
+        self.assertEqual(problems, ["README.md section `## Install` does not show `pi install npm:agent-concepts`"])
+
+    def test_readme_npm_pin_example_must_name_the_version(self):
+        (self.root / "README.md").write_text(
+            "# Readme\n\n## Install\n\npi install npm:agent-concepts\n"
+            "pi install npm:agent-concepts@1.2.2\nclaude o/r#v1.2.3\n", encoding="utf-8")
+        problems = release_check.version_problems(self.root, "v1.2.3")
+        self.assertEqual(problems, ["README.md section `## Install` pins npm:agent-concepts@1.2.2, not 1.2.3"])
 
     def test_main_exits_nonzero_on_mismatch(self):
         self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)

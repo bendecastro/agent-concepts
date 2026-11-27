@@ -6,7 +6,9 @@ Codex plugin manifests and the Claude Code marketplace copy it when regenerated
 (`scripts/lint.py --write-plugin-manifests`). Lint runs the no-tag check; a release runs
 `python3 scripts/release_check.py vMAJOR.MINOR.PATCH`, which also requires the tag to name the
 same version, CHANGELOG.md to have an entry for it, and the README's Install section to name
-that tag and no other. Exit 1 on any problem.
+that tag and no other, to show the unpinned Pi install from npm (`pi install npm:agent-concepts`,
+which `pi update` moves to each new release) and to pin npm only to this version. Exit 1 on any
+problem.
 """
 
 from __future__ import annotations
@@ -25,6 +27,9 @@ CHANGELOG = "CHANGELOG.md"
 README = "README.md"
 TAG_PATTERN = re.compile(r"v(\d+\.\d+\.\d+)")
 ANY_TAG = re.compile(r"\bv\d+\.\d+\.\d+\b")
+NPM_PACKAGE = "agent-concepts"
+NPM_UNPINNED = re.compile(rf"pi install npm:{NPM_PACKAGE}(?![@\w-])")
+NPM_PIN = re.compile(rf"npm:{NPM_PACKAGE}@(\S+?)(?=[`\s]|$)", re.MULTILINE)
 
 
 def readme_install_problems(root: Path, tag: str) -> list[str]:
@@ -39,6 +44,11 @@ def readme_install_problems(root: Path, tag: str) -> list[str]:
     others = sorted(set(ANY_TAG.findall(body)) - {tag})
     if others:
         problems.append(f"{README} section `## Install` names other tags: {', '.join(others)}")
+    if not NPM_UNPINNED.search(body):
+        problems.append(f"{README} section `## Install` does not show `pi install npm:{NPM_PACKAGE}`")
+    version = tag[1:]
+    for pinned in sorted(set(NPM_PIN.findall(body)) - {version}):
+        problems.append(f"{README} section `## Install` pins npm:{NPM_PACKAGE}@{pinned}, not {version}")
     return problems
 
 

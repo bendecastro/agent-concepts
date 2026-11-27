@@ -40,6 +40,20 @@ class PiPackageTests(unittest.TestCase):
         self.assertIn("pi-package", self.manifest()["keywords"])
         self.assertEqual(pi_package.check_manifest(self.root), [])
 
+    def test_write_ships_only_the_skill_bodies_and_kernel_extension(self):
+        pi_package.write_manifest(self.root)
+        manifest = self.manifest()
+        self.assertEqual(manifest["files"], ["concepts/bc-a/body/", "concepts/bc-b/body/",
+                                             "packages/agent-kernel-pi/"])
+        self.assertNotIn("private", manifest)
+
+    def test_check_fails_when_files_drift_from_the_skill_list(self):
+        pi_package.write_manifest(self.root)
+        manifest = self.manifest()
+        manifest["files"] = ["concepts/"]
+        (self.root / "package.json").write_text(json.dumps(manifest), encoding="utf-8")
+        self.assertEqual(len(pi_package.check_manifest(self.root)), 1)
+
     def test_write_keeps_other_fields(self):
         (self.root / "package.json").write_text(json.dumps({"name": "x", "version": "1.2.3"}), encoding="utf-8")
         pi_package.write_manifest(self.root)

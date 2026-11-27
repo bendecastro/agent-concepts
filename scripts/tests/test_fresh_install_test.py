@@ -59,6 +59,22 @@ class FreshInstallCheckTest(unittest.TestCase):
         command = fit.pack_command(fit.DEFAULT_PACK, source=sources["npx"][0])
         self.assertEqual(command[:3], ["skills", "add", "bendecastro/agent-concepts@v0.1.0"])
 
+    def test_packed_package_must_hold_kernel_roles_and_licence(self):
+        complete = ["package.json", "README.md", "LICENSE", *fit.PACKED_REQUIRED]
+        self.assertEqual(fit.packed_problems(complete), [])
+        problems = fit.packed_problems([p for p in complete if p != "packages/agent-kernel-pi/AGENT-KERNEL.md"])
+        self.assertEqual(problems, ["missing from the packed package: packages/agent-kernel-pi/AGENT-KERNEL.md"])
+
+    def test_packed_package_must_not_hold_work_items_or_research(self):
+        complete = ["package.json", "README.md", "LICENSE", *fit.PACKED_REQUIRED]
+        problems = fit.packed_problems([*complete, "work/README.md", "concepts/bc-tdd/tests/x.md"])
+        self.assertEqual(problems, ["outside the shipped files: concepts/bc-tdd/tests/x.md",
+                                    "outside the shipped files: work/README.md"])
+
+    def test_pi_npm_installs_the_packed_checkout_even_with_a_ref(self):
+        self.assertIn("pi-npm", fit.METHODS)
+        self.assertEqual(fit.install_sources("v0.1.0")["pi-npm"], [str(fit.ROOT)])
+
     def test_helper_exists_in_the_source(self):
         self.assertTrue((fit.ROOT / "concepts" / fit.HELPER_SKILL / "body" / fit.HELPER_RELPATH).is_file())
 
