@@ -18,8 +18,12 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Add the report channels and the session-start issue check. Done when the files exist, lint passes, and a session-start dry run on a fake `gh` output files one issue. Out of scope: other repositories.
+- [x] Add the report channels and the session-start issue check. Done when the files exist, lint passes, and a session-start dry run on a fake `gh` output files one issue. Out of scope: other repositories.
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Done 2026-11-27. Added `SECURITY.md` (GitHub private vulnerability reporting), `.github/ISSUE_TEMPLATE/bug.yml` (agent, version and install method, skill, what happened, transcript with secrets removed) and `config.yml` (security link to the private advisory form), a README "Report a problem" line under Install, and a "Start a session" row in `.bc-agent/AGENTS.md` that lists open issues and files untracked ones as idea lines or planned items. Lint 0 errors.
+
+Dry run: a Sonnet 5.5 low agent started a session in a throwaway clone with a fake `gh` returning issue #7; the clone's `git diff` showed exactly one new `work/0-ideas.md` line `- bc-tdd skill not loaded in Codex 0.153 (issue #7, <url>)`, and nothing else changed. Clone deleted.
+
+Left for the owner: private vulnerability reporting was off on GitHub (`{"enabled":false}` on 2026-11-27); SECURITY.md's form works once it is enabled in Settings → Code security.

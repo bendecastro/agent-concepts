@@ -2375,3 +2375,6 @@ bc-delegate-investigation pi.md failure mode: commands over ~20 min run from the
 
 ## [2026-11-27] implement | release soak on npm next; bad-release procedure (047)
 Tags publish to npm `next`; a dispatch-only `set-latest` job in release.yml promotes (version on next) or rolls back `latest` over OIDC (npm >= 11.21.0). Stranger test can install a published version (`STRANGER_SOURCE=npm`). releasing.md gains the soak and "Withdraw a bad release"; README now says `pi update --extensions` (plain `pi update` is Pi-only in 1.6.1).
+
+## [2026-11-27] implement | stranger report channel (048)
+SECURITY.md, issue form and security contact link, README "Report a problem" line, session-start issue check in .bc-agent/AGENTS.md. Dry run with a fake gh filed one issue as an idea line. Private vulnerability reporting still needs enabling on GitHub (owner).
