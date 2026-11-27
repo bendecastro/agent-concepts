@@ -25,3 +25,4 @@
 25. 050-ship-setup-migrations
 26. 051-renamed-skill-aliases
 27. 052-release-hygiene-pins
+28. 053-split-swarm-and-durable-subagents
