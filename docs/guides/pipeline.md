@@ -55,6 +55,19 @@ Setup can also offer a `publish.yaml` push-authorization rule if the project wil
 
 Before running the executor, follow the [pipeline install prerequisites](../../README.md#install-prerequisites-for-the-pipeline). If the harness cannot launch the required jobs, the pipeline stops before claiming work.
 
+In Pi, the [Pi install](../../README.md#pi) brings `pi-subagents` and the pipeline's auditor, builder and reviewer [roles](../../concepts/bc-pipeline-to-done/body/roles.md), with nothing to copy. If `pi-subagents` is missing, the pipeline offers to install it, then asks you to restart Pi.
+
+### Optional machine tools
+
+The skills name a few machine tools a project may have configured. None is required; without one, the agent does this:
+
+| Tool | If you have not configured one |
+|---|---|
+| Guarded pytest runner | Run plain `pytest` in the project environment. Use `tmp_path` for test fixtures, clean up temporary files even on failure and do not set a custom `--basetemp`. |
+| Storage health check | Skip the check and say so in one line of the run report. If a configured check fails to run or reports critical or unknown health, stop and report it. |
+| Wrapper for heavy checks | Run the project's full validation command directly. The session combining the changes runs it, not each worker. |
+| Publish-policy checker | The pipeline uses its bundled checker. With no policy file, it asks once before pushing if you can answer; otherwise it commits locally and pushes nothing. |
+
 ## The two halves
 
 **Intake — `/bc-triage`** (interactive, as needed). Turns existing issues/PRs into the bc state machine: verify, grill if needed, write an Agent Brief, mark `ready-for-agent`, route broad work into `/bc-plan-to-pipeline`, or record rejections as dropped work items in `work/4-dropped/`.

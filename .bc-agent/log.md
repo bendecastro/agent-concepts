@@ -2387,3 +2387,6 @@ Owner chose 1a 2a: created the missing v0.4.0 GitHub release (Releases page stil
 
 ## [2026-11-27] implement | plan 061 drift prevention
 Lint check for repeated text across skill bodies, copy-of markers kept in sync, author guidance to search for an owner first; ordered before 054.
+
+## [2026-11-27] implement | README install section tidied
+Owner chose Pi first and open, plus 1a 2a 3a: Pi box opens by default with `next`/pin details folded; IMPORTANT trimmed to two bullets (council and update notes moved into the boxes); kernel section opens with what the kernel is and folds its per-agent table; pipeline prerequisites cut to one paragraph, optional machine-tools table moved to docs/guides/pipeline.md.

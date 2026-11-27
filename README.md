@@ -301,9 +301,9 @@ Pick your agent, open its box, and paste the command. Each installs a **release*
 
 | Agent | Method |
 |---|---|
+| Pi (recommended) | [Pi package](#pi) |
 | Claude Code | [Claude Code plugin](#claude-code) |
 | Codex | [Codex plugin](#codex) |
-| Pi | [Pi package](#pi) |
 | Any other agent (Cursor, Gemini CLI, GitHub Copilot, …) | [`npx skills`](#other-agents-npx-skills) |
 | An agent that cannot load skills | [bootstrap prompt](docs/guides/bootstrap.md) |
 | Contributors | [install from a checkout](#install-from-a-checkout-contributors) |
@@ -313,10 +313,44 @@ Details and known problems for each agent live in [harnesses.md](docs/guides/har
 > [!IMPORTANT]
 > - **Pick one method per agent.** Two methods install each skill twice. Several agents also read `~/.agents/skills/`; the contributor install and `npx skills -a pi` both write there.
 > - **After installing, start a new agent session.** Open sessions do not see new skills.
-> - **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. The [Pi install](#pi) installs it; other installs of this repository do not. To install it: `pi install npm:pi-subagents`. The other methods install the council skills too, but they will not run there.
-> - **To move to a newer release**, uninstall first, then install with the new tag. The [Pi package](#pi) from npm is the exception: `pi update --extensions` moves it.
 
 **Report a problem:** an install that fails or a skill that misfires goes in a [new issue](https://github.com/bendecastro/agent-concepts/issues/new/choose); a security problem goes privately through [SECURITY.md](SECURITY.md).
+
+<a name="pi"></a>
+<details open>
+<summary><b>Pi</b> — recommended: the only agent that runs every skill</summary>
+
+**Install** — the skills, the agent kernel, and the pipeline's roles from npm, plus [`pi-subagents`](https://www.npmjs.com/package/pi-subagents), which runs the council and pipeline skills:
+
+```bash
+pi install npm:agent-concepts
+pi install npm:pi-subagents
+```
+
+The council skills run only in Pi, through `pi-subagents`; other install methods include them, but they do not run there.
+
+<details>
+<summary>Try a release early, or stay on one release</summary>
+
+`pi install npm:agent-concepts` installs the release on npm's `latest` tag, and `pi update --extensions` moves you to each new one. A new release goes first to the `next` tag and moves to `latest` after it passes an end-to-end test; to try it before then, install `pi install npm:agent-concepts@next`, which `pi update --extensions` keeps on `next`. To stay on one release instead, name its version (updates then skip it): `pi install npm:agent-concepts@0.4.1`, or from GitHub by tag, `pi install git:github.com/bendecastro/agent-concepts@v0.4.1`.
+
+</details>
+
+The package includes the [agent kernel](#optional-agent-kernel) as a Pi extension; to turn it off, disable that extension in `pi config`.
+
+**Update** to the newest release (a pinned install stays where it is):
+
+```bash
+pi update --extensions
+```
+
+**Uninstall** (use the same source you installed; also run `pi remove npm:pi-subagents` if nothing else uses it):
+
+```bash
+pi remove npm:agent-concepts
+```
+
+</details>
 
 <a name="claude-code"></a>
 <details>
@@ -335,6 +369,8 @@ claude plugin marketplace add bendecastro/agent-concepts#v0.4.1 && \
 claude plugin marketplace update agent-concepts && \
   claude plugin update agent-concepts@agent-concepts
 ```
+
+**To move to a newer release**, uninstall, then install again with the new tag.
 
 **Uninstall:**
 
@@ -363,6 +399,8 @@ codex plugin marketplace upgrade agent-concepts && \
   codex plugin add agent-concepts@agent-concepts
 ```
 
+**To move to a newer release**, uninstall, then install again with the new tag.
+
 **Uninstall:**
 
 ```bash
@@ -372,34 +410,6 @@ codex plugin remove agent-concepts@agent-concepts && \
 
 </details>
 
-<a name="pi"></a>
-<details>
-<summary><b>Pi</b></summary>
-
-**Install** — the skills, the agent kernel, and the pipeline's roles from npm, plus [`pi-subagents`](https://www.npmjs.com/package/pi-subagents), which runs the council and pipeline skills:
-
-```bash
-pi install npm:agent-concepts
-pi install npm:pi-subagents
-```
-
-This installs the release on npm's `latest` tag, and `pi update --extensions` moves you to each new one. A new release goes first to the `next` tag and moves to `latest` after it passes an end-to-end test; to try it before then, install `pi install npm:agent-concepts@next`, which `pi update --extensions` keeps on `next`. To stay on one release instead, name its version (updates then skip it): `pi install npm:agent-concepts@0.4.1`, or from GitHub by tag, `pi install git:github.com/bendecastro/agent-concepts@v0.4.1`.
-
-The package includes the [agent kernel](#optional-agent-kernel) as a Pi extension; to turn it off, disable that extension in `pi config`.
-
-**Update** to the newest release (a pinned install stays where it is):
-
-```bash
-pi update --extensions
-```
-
-**Uninstall** (use the same source you installed; also run `pi remove npm:pi-subagents` if nothing else uses it):
-
-```bash
-pi remove npm:agent-concepts
-```
-
-</details>
 
 <a name="other-agents-npx-skills"></a>
 <details>
@@ -636,7 +646,7 @@ npx -y skills remove -g -a <agent> -y \
 
 </details>
 
-**Refresh, for every agent** (stays on the release you installed):
+**Refresh, for every agent** (stays on the release you installed; to move to a newer release, remove the skills and install again with the new tag):
 
 ```bash
 npx -y skills update -g -y
@@ -690,7 +700,12 @@ A symlink pointing to a skill this checkout does not own is reported and left al
 
 ### Optional agent kernel
 
-The kernel is separate from the skills, except in the [Pi package](#pi), which includes it. Use one kernel source per harness: a package, a manual include or a marked block, not several. The commands below use a local Agent Concepts checkout. To pin the kernel, check out a release tag **that contains the kernel package** or a full commit SHA in a dedicated checkout and use that path. These instructions do not assume the skills release named above includes the kernel. Keep the pinned checkout at that revision; to upgrade, select another revision and refresh or reinstall from it.
+The kernel is a short instruction file loaded into every session, whatever the task: answer questions before editing, check claims before reporting them, keep changes small, and ask before choices you might weigh differently. The [Pi package](#pi) already includes it; for other agents it is a separate, optional install.
+
+<details>
+<summary><b>Install, disable or remove the kernel</b> (Claude Code, Codex, OpenCode, other agents)</summary>
+
+The commands below use a local Agent Concepts checkout. Use one kernel source per agent: a package, a manual include or a marked block, not several. To pin the kernel, check out a release tag that contains the kernel package, or a full commit SHA, in a dedicated checkout and use that path; to upgrade, select another revision and refresh or reinstall from it.
 
 | Harness | Install | Disable | Remove |
 |---|---|---|---|
@@ -703,21 +718,12 @@ The kernel is separate from the skills, except in the [Pi package](#pi), which i
 
 Start a fresh session after install, disable or removal; an old session may still carry earlier instructions. For OpenCode, restart the server before starting the new session. The manual installer pins the **copied bytes**: to change versions, run the installer from the new pinned checkout against the same file. See [delivery behavior and manual deltas](docs/guides/harnesses.md#standalone-kernel) for details.
 
+</details>
+
+
 ### Install prerequisites for the pipeline
 
-`/bc-pipeline-to-done` needs separate agents to build and review changes. In Pi:
-
-1. Use the [Pi install](#pi): it installs `pi-subagents` and the pipeline's auditor, builder and reviewer [roles](concepts/bc-pipeline-to-done/body/roles.md), with nothing to copy. If `pi-subagents` is missing, the pipeline offers to install it, then asks you to restart Pi. Other harnesses need equivalent roles and isolation.
-2. If you use GitHub issues, install and sign in to the [GitHub CLI](https://cli.github.com/) (`gh`). Both `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` use it for issues; local work items do not need it.
-
-These machine tools are optional:
-
-| Tool | If you have not configured one |
-|---|---|
-| Guarded pytest runner | Run plain `pytest` in the project environment. Use `tmp_path` for test fixtures, clean up temporary files even on failure and do not set a custom `--basetemp`. |
-| Storage health check | Skip the check and say so in one line of the run report. If a configured check fails to run or reports critical or unknown health, stop and report it. |
-| Wrapper for heavy checks | Run the project's full validation command directly. The session combining the changes runs it, not each worker. |
-| Publish-policy checker | The pipeline uses its bundled checker. With no policy file, it asks once before pushing if you can answer; otherwise it commits locally and pushes nothing. |
+`/bc-pipeline-to-done` needs separate agents to build and review changes. The [Pi install](#pi) sets them up; other agents need equivalent roles and isolation. To work from GitHub issues, also install and sign in to the [GitHub CLI](https://cli.github.com/) (`gh`); local work items do not need it.
 
 ## Working on this repository
 
