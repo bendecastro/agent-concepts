@@ -61,6 +61,14 @@
       "./concepts/bc-wiki-maintain/body",
       "./concepts/bc-work-sync/body",
       "./concepts/bc-writing-plans/body"
+    ],
+    "extensions": [
+      "./packages/agent-kernel-pi/index.js"
+    ]
+  },
+  "pi-subagents": {
+    "agents": [
+      "./concepts/bc-pipeline-to-done/body/agents"
     ]
   }
 }

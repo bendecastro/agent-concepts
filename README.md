@@ -313,7 +313,7 @@ Details and known problems for each agent live in [harnesses.md](docs/guides/har
 > [!IMPORTANT]
 > - **Pick one method per agent.** Two methods install each skill twice. Several agents also read `~/.agents/skills/`; the contributor install and `npx skills -a pi` both write there.
 > - **After installing, start a new agent session.** Open sessions do not see new skills.
-> - **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. Installing this repository does not install `pi-subagents`. To install it: `pi install npm:pi-subagents`. The other methods install the council skills too, but they will not run there.
+> - **Council skills work only in Pi** with [`pi-subagents`](https://www.npmjs.com/package/pi-subagents) installed. The [Pi install](#pi) installs it; other installs of this repository do not. To install it: `pi install npm:pi-subagents`. The other methods install the council skills too, but they will not run there.
 > - **To move to a newer release**, uninstall first, then install with the new tag.
 
 <a name="claude-code"></a>
@@ -374,11 +374,14 @@ codex plugin remove agent-concepts@agent-concepts && \
 <details>
 <summary><b>Pi</b></summary>
 
-**Install:**
+**Install** — the skills, the agent kernel, and the pipeline's roles, plus [`pi-subagents`](https://www.npmjs.com/package/pi-subagents), which runs the council and pipeline skills:
 
 ```bash
 pi install git:github.com/bendecastro/agent-concepts@v0.3.0
+pi install npm:pi-subagents
 ```
+
+The package includes the [agent kernel](#optional-agent-kernel) as a Pi extension; to turn it off, disable that extension in `pi config`.
 
 **Refresh** (stays on the release you installed):
 
@@ -386,7 +389,7 @@ pi install git:github.com/bendecastro/agent-concepts@v0.3.0
 pi update --extensions
 ```
 
-**Uninstall** (use the same tag you installed):
+**Uninstall** (use the same tag you installed; also run `pi remove npm:pi-subagents` if nothing else uses it):
 
 ```bash
 pi remove git:github.com/bendecastro/agent-concepts@v0.3.0
@@ -683,11 +686,11 @@ A symlink pointing to a skill this checkout does not own is reported and left al
 
 ### Optional agent kernel
 
-The kernel is separate from the skills. Use one kernel source per harness: a package, a manual include or a marked block, not several. The commands below use a local Agent Concepts checkout. To pin the kernel, check out a release tag **that contains the kernel package** or a full commit SHA in a dedicated checkout and use that path. These instructions do not assume the skills release named above includes the kernel. Keep the pinned checkout at that revision; to upgrade, select another revision and refresh or reinstall from it.
+The kernel is separate from the skills, except in the [Pi package](#pi), which includes it. Use one kernel source per harness: a package, a manual include or a marked block, not several. The commands below use a local Agent Concepts checkout. To pin the kernel, check out a release tag **that contains the kernel package** or a full commit SHA in a dedicated checkout and use that path. These instructions do not assume the skills release named above includes the kernel. Keep the pinned checkout at that revision; to upgrade, select another revision and refresh or reinstall from it.
 
 | Harness | Install | Disable | Remove |
 |---|---|---|---|
-| Pi 1.6.1+ | From the checkout root, `pi install ./packages/agent-kernel-pi`. | Disable the kernel extension in `pi config`. | From the same checkout root, `pi remove ./packages/agent-kernel-pi`. |
+| Pi 1.6.1+ | Included in the [Pi package](#pi). Only with the contributor install (no package): from the checkout root, `pi install ./packages/agent-kernel-pi`. | Disable the kernel extension in `pi config`. | Package: remove the package. Standalone: from the same checkout root, `pi remove ./packages/agent-kernel-pi`. |
 | Claude Code (requires `python3`) | `claude plugin marketplace add /path/to/agent-concepts`, then `claude plugin install agent-kernel@agent-concepts --scope user`. If the marketplace is already registered, use its checkout if it contains the package. | `claude plugin disable agent-kernel@agent-concepts --scope user`. | `claude plugin uninstall agent-kernel@agent-concepts --scope user`. Keep the marketplace if you still use its skills. |
 | Codex (requires `python3`) | `codex plugin marketplace add /path/to/agent-concepts`, then `codex plugin add agent-kernel@agent-concepts`. If the marketplace is already registered, use its checkout if it contains the package. Review and trust the SessionStart hook with `/hooks`; it won't load until trusted. | Disable the kernel plugin in `/plugins`. | `codex plugin remove agent-kernel@agent-concepts`. Keep the marketplace if you still use its skills. |
 | OpenCode V2 | In global `opencode.json(c)`, add the absolute path to `packages/agent-kernel-opencode/` to `plugins`. | Delete that entry from `plugins`; leave the package files in place to re-enable later. | Delete the same entry; the checkout can stay. |
@@ -700,9 +703,8 @@ Start a fresh session after install, disable or removal; an old session may stil
 
 `/bc-pipeline-to-done` needs separate agents to build and review changes. In Pi:
 
-1. Run `pi install npm:pi-subagents` and restart Pi to enable the `subagent` tool.
-2. Set up the auditor, builder and reviewer roles. Start with the [example Pi profiles](concepts/bc-pipeline-to-done/body/examples/agents/README.md), which show where the files go and how to assign each role. The pipeline stops before claiming work if it cannot launch the required roles. Other harnesses need equivalent roles and isolation.
-3. If you use GitHub issues, install and sign in to the [GitHub CLI](https://cli.github.com/) (`gh`). Both `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` use it for issues; local work items do not need it.
+1. Use the [Pi install](#pi): it installs `pi-subagents` and the pipeline's auditor, builder and reviewer [roles](concepts/bc-pipeline-to-done/body/roles.md), with nothing to copy. If `pi-subagents` is missing, the pipeline offers to install it, then asks you to restart Pi. Other harnesses need equivalent roles and isolation.
+2. If you use GitHub issues, install and sign in to the [GitHub CLI](https://cli.github.com/) (`gh`). Both `/bc-plan-to-pipeline` and `/bc-pipeline-to-done` use it for issues; local work items do not need it.
 
 These machine tools are optional:
 

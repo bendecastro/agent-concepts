@@ -2336,3 +2336,6 @@ Pipeline push question in plain words; full report moves to the run log and the 
 
 ## [2026-11-27] implement | Release after each integrated batch
 AGENTS.md gains a Release operation: the integrating session releases without asking when gate, fresh-install and pressure tests allow, else records the blocker. Planned 046-install-from-npm (unpinned npm install so `pi update` reaches users).
+
+## [2026-11-27] implement | 042-one-command-pi-install
+Pi package now ships the three pipeline roles (`bc-pipeline-to-done/body/agents/`, via `pi-subagents.agents`) and the agent kernel extension; pipeline uses bundled roles by default and offers to install `pi-subagents`; README Pi install is one block; stranger script installs per README. Verified with a fresh-HOME Pi 1.6.1 install (roles discovered, kernel section in the system prompt).

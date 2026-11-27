@@ -305,13 +305,18 @@ assert_(not staged and complete['raw_log_outside_worktree'],'gate')
 
 # Fresh independent packets, installed minimal Pi roles, strict outputs, and top-level harness controls.
 minimal_keys=['worktree','base_sha','issue','acceptance_matrix','changed_files','diff_range','targeted_validation','baseline_delta','raw_logs']
-# The skill names jobs, not roles; the shipped example profiles must meet the job limits.
-role_dir=CONCEPT/'body/examples/agents'
+# The skill names jobs; the bundled role profiles must meet the job limits, pin no model,
+# and be the folder the package manifest hands to pi-subagents.
+role_dir=CONCEPT/'body/agents'
+manifest=json.loads((WORKSPACE/'package.json').read_text())
+assert_((WORKSPACE/(manifest.get('pi-subagents',{}).get('agents') or [''])[0]).resolve()==role_dir.resolve(),'package.json does not ship the drain roles to pi-subagents')
+assert_(sorted(p.name for p in role_dir.iterdir())==sorted(f'{n}.md' for n in ['bc-drain-auditor','bc-drain-worker','bc-drain-reviewer']),'role folder holds non-role files pi-subagents would parse')
 role_names=['bc-drain-auditor','bc-drain-worker','bc-drain-reviewer']
 role_audit={}
 for name in role_names:
- rp=role_dir/f'{name}.md'; assert_(rp.is_file(),f'missing example role {name}')
+ rp=role_dir/f'{name}.md'; assert_(rp.is_file(),f'missing bundled role {name}')
  rt=rp.read_text()
+ assert_('\nmodel:' not in rt.split('\n---',1)[0],f'{name} pins a model')
  for required in ('systemPromptMode: replace','inheritProjectContext: false','inheritSkills: false','defaultContext: fresh','defaultProgress: false'):
   assert_(required in rt,f'{name} missing {required}')
  assert_('glossary.md' not in rt and 'load all skills' not in rt.lower(),f'{name} inherits generic context')

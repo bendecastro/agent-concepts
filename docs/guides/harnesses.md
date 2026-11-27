@@ -4,15 +4,15 @@ To install the skills as an outside user, follow the [Install section of the REA
 
 The canonical copy of each concept (the one that is edited) is `concepts/<name>/body/`. Harness-specific deployment should expose that body through a relative symlink (a shortcut written as a path relative to itself) rather than a copy. When a harness cannot consume an Agent Skills directory directly, point the session at the body file with a [bootstrap prompt](bootstrap.md) (a message you paste to tell the agent which instructions to read).
 
-The `bc-pipeline-to-done` body includes the [publish checker](../../policies/README.md#checking-a-rule) in symlink deployments, Pi packages, and Claude Code and Codex plugins.
+The `bc-pipeline-to-done` body includes the [publish checker](../../policies/README.md#checking-a-rule) in symlink deployments, Pi packages, and Claude Code and Codex plugins. The Pi package also ships the pipeline's three `pi-subagents` roles from `concepts/bc-pipeline-to-done/body/agents/` through the manifest's `pi-subagents.agents` key; `pi-subagents` loads package roles above its builtins and below user and project roles, so a stranger installs the package and `pi-subagents` and copies nothing.
 
 ## Standalone kernel
 
 The kernel is a small Markdown include for always-on instructions, not an on-demand skill. Edit `concepts/agent-kernel/body/AGENT-KERNEL.md` and run `python3 scripts/kernel_package.py` to refresh the bundled bytes for each package. Lint rejects drift in any bundled copy.
 
-### Package delivery (opt-in)
+### Package delivery
 
-Use the [README commands to install, disable, remove or pin the kernel](../../README.md#optional-agent-kernel). `deploy-local-skills.py`, the skills package and the skills plugins do not install it.
+Use the [README commands to install, disable, remove or pin the kernel](../../README.md#optional-agent-kernel). The Pi skills package includes it: the root `package.json` lists `packages/agent-kernel-pi/index.js` under `pi.extensions`, so `pi install` of the package loads the kernel by default and `pi config` turns that extension off. Elsewhere it is opt-in: `deploy-local-skills.py` and the Claude Code and Codex skills plugins do not install it.
 
 | Harness | How the kernel reaches the model |
 |---|---|

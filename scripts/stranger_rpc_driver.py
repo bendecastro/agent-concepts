@@ -35,7 +35,7 @@ def main(argv):
     log_dir = os.path.join(os.environ.get("STRANGER_LOG_DIR", "/box/logs"), phase)
     os.makedirs(log_dir, exist_ok=True)
     log = open(os.path.join(log_dir, "rpc.jsonl"), "a", encoding="utf-8")
-    command = [*shlex.split(os.environ.get("STRANGER_PI", "pi")), "--mode", "rpc", "-ne", "--no-mcp",
+    command = [*shlex.split(os.environ.get("STRANGER_PI", "pi")), "--mode", "rpc", "--no-mcp",
                "--no-prompt-templates", "--model", os.environ["MODEL"], "--thinking", os.environ["THINKING"],
                "--session-dir", os.path.join(log_dir, "session"), *argv[5:]]
     stderr = open(os.path.join(log_dir, "stderr.txt"), "a", encoding="utf-8")

@@ -11,7 +11,7 @@ export MODEL THINKING
 scratch=$(mktemp -d)
 cleanup() { cp -r "$scratch/logs" "$EVIDENCE/" 2>/dev/null || true; mkdir -p "$EVIDENCE/fixture"; (cd "$scratch/tinylabels" 2>/dev/null && tar --exclude=.git --exclude=__pycache__ -cf - . | tar -xf - -C "$EVIDENCE/fixture") || true; git --git-dir="$scratch/origin.git" log --format='%H %s' main > "$EVIDENCE/origin-main.txt" 2>&1 || true; git --git-dir="$scratch/origin.git" show --stat main > "$EVIDENCE/origin-tip.txt" 2>&1 || true; git -C "$scratch/tinylabels" log --all --oneline > "$EVIDENCE/fixture-log.txt" 2>&1 || true; git -C "$scratch/tinylabels" status --short --branch > "$EVIDENCE/fixture-status.txt" 2>&1 || true; rm -rf -- "$scratch"; echo "cleaned $scratch"; }
 trap cleanup EXIT
-mkdir -p "$scratch"/{home/.pi/agent/agents,logs/{setup,plan,build},src}
+mkdir -p "$scratch"/{home/.pi/agent,logs/{setup,plan,build},src}
 cp "$REPO/scripts/stranger_fixture.py" "$scratch/fixture.py"; cp "$REPO/scripts/stranger_rpc_driver.py" "$scratch/rpc_driver.py"; cp "$REPO/scripts/pi_sandbox.py" "$scratch/pi_sandbox.py"
 # Committed HEAD only: uncommitted edits are not installed.
 git clone -q --no-hardlinks "$REPO" "$scratch/src/agent-concepts"; git -C "$scratch/src/agent-concepts" rev-parse HEAD > "$EVIDENCE/installed-revision.txt"
@@ -19,9 +19,6 @@ git clone -q --no-hardlinks "$REPO" "$scratch/src/agent-concepts"; git -C "$scra
 python3 - "$AUTH" "$scratch/home/.pi/agent/auth.json" "${MODEL%%/*}" <<'PY'
 import json,sys,os; a=json.load(open(sys.argv[1])); json.dump({sys.argv[3]:a[sys.argv[3]]},open(sys.argv[2],"w")); os.chmod(sys.argv[2],0o600)
 PY
-for f in "$REPO"/concepts/bc-pipeline-to-done/body/examples/agents/bc-drain-*.md; do
-  awk -v m="$MODEL" -v th="$THINKING" 'NR==1{print; print "model: " m; print "thinking: " th; next} {print}' "$f" > "$scratch/home/.pi/agent/agents/$(basename "$f")"
-done
 # Every Pi session runs through scripts/pi_sandbox.py (STRANGER_PI below): it masks any global
 # instruction file and fails the phase before it starts when the system prompt leaks a private
 # term or misses the project's AGENTS.md. The fresh home holds none, which the isolation step checks.
@@ -45,12 +42,11 @@ box /box bash -ec 'for f in "$HOME/.config/agent-concepts" /home /root; do test 
   echo isolation ok' | tee "$EVIDENCE/isolation.txt"
 box /box python3 /box/fixture.py /box > "$EVIDENCE/fixture.log" 2>&1
 box /box npm install --prefix /box/cli --no-audit --no-fund @earendil-works/pi-coding-agent@1.6.1 > "$EVIDENCE/npm.log" 2>&1
+# The README's Pi install block, with this checkout in place of the release source.
 box /box pi install /box/src/agent-concepts > "$EVIDENCE/install.log" 2>&1
 box /box pi install npm:pi-subagents >> "$EVIDENCE/install.log" 2>&1
 box /box bash -c 'pi --version; pi list; cat /box/home/.pi/agent/npm/node_modules/pi-subagents/package.json 2>/dev/null | grep "\"version\"" ' > "$EVIDENCE/versions.txt" 2>&1 || true
 box /box pi auth check --model "$MODEL" --no-refresh | tee "$EVIDENCE/auth-check.txt"
-SUB=$(box /box bash -c 'd=$(find /box/home/.pi/agent -path "*node_modules/pi-subagents/package.json" -print -quit); dirname "$d"')
-echo "pi-subagents at $SUB" | tee -a "$EVIDENCE/versions.txt"
 P1='/skill:bc-setup-project Set up this small Python library for working with these skills. Inspect it first and go ahead with the project setup. I want to keep using main and the local remote; I don'"'"'t want CI or a release process for this toy project.'
 A1='Yes, use the layout you proposed. This is a small code project. The test command is in the README. I'"'"'m the only contributor, I don'"'"'t use an issue tracker, and I don'"'"'t need a wiki or a timer.'
 P2='/skill:bc-plan-to-pipeline I'"'"'d like normalize to make labels with messy internal spacing consistent too, for example "  Next   Up  " should become "next up". Put the plan in this repo, not in an issue tracker.'
@@ -59,7 +55,7 @@ P3='/skill:bc-pipeline-to-done max-iters=1 max-parallel=1'
 A3='Use the work items in this repo; there is no GitHub here and I don'"'"'t use issues. Build the whitespace item I just planned. Yes, push to the local origin at /box/origin.git, main only. No other remotes are authorized.'
 echo "== setup $(date -u +%T)"; box /box/tinylabels python3 /box/rpc_driver.py setup "$P1" "$A1" 30 1800 || echo "setup driver exit $?"
 echo "== plan $(date -u +%T)"; box /box/tinylabels python3 /box/rpc_driver.py plan "$P2" "$A2" 30 1800 || echo "plan driver exit $?"
-echo "== build $(date -u +%T)"; box /box/tinylabels python3 /box/rpc_driver.py build "$P3" "$A3" 600 5400 -e "$SUB" || echo "build driver exit $?"
+echo "== build $(date -u +%T)"; box /box/tinylabels python3 /box/rpc_driver.py build "$P3" "$A3" 600 5400 || echo "build driver exit $?"
 echo "== done $(date -u +%T)"
 # Each session's system prompt arrives in the RPC stream; save one copy per distinct prompt for the audit.
 python3 - "$scratch/logs" "$EVIDENCE/system-prompts" <<'PY'

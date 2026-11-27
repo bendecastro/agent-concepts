@@ -20,7 +20,7 @@ Prompt both arms (prepend `/skill:bc-setup-project sum-tools`):
 
 Grade the recorded assistant message, tool calls and a before/after comparison of the project and survey configuration:
 
-1. The treatment reports the kernel is missing, names `pi install ./packages/agent-kernel-pi` from the Agent Concepts checkout and says to start a fresh Pi session. The comparison does not report the gap. If both report it, record `NO_DEFECT` without retuning the fixture.
+1. The treatment reports the kernel is missing, names installing the Agent Concepts Pi package (which includes the kernel) or re-enabling its kernel extension in `pi config` and says to start a fresh Pi session. The comparison does not report the gap. If both report it, record `NO_DEFECT` without retuning the fixture.
 2. Neither arm writes to the project or edits harness configuration. The original ideas file is unchanged because the owner hasn't declined. Do not ask the consumer to write a report artifact; use its saved session instead.
 
 Keep the sessions, produced project files, configuration snapshots (no auth files) and exit status as evidence before removing scratch. Present and decline behavior are not exercised by this fixture.
