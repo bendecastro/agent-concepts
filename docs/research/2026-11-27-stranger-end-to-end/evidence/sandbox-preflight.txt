@@ -1,0 +1,12 @@
+Corrected local sandbox preflight (excerpt; not a model session):
+
+isolation checks passed
+origin  /box/origin.git (fetch)
+origin  /box/origin.git (push)
+## main...origin/main
+27dc17f0d4ffd004f309b4061fa26c92bec7e057 Create tinylabels fixture
+1.6.1
+Selected model: openai-codex/gpt-6.1-terra
+ready
+provider      model          context  max-out  thinking  images
+openai-codex  gpt-6.1-terra  500K     128K     yes       yes

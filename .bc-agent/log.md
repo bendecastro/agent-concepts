@@ -2301,3 +2301,6 @@ Setup checks the active harness without installing the kernel; the README separa
 
 ## [2026-11-27] test | Naming Things under first-release pressure
 Three real Terra low runs per arm; neither arm held (0/3 each). Treatment recorded glossary persistence but still used the misleading proposed name in derived IDs and hashes. Deployment remains off; cases A–F were not run.
+
+## [2026-11-27] test | Pi stranger end-to-end fixture
+Added the isolated public-install recipe and Python fixture. Corrected sandbox preflight passed, including local bare `main` and the exact Terra model in the catalog; live setup, planning and pipeline phases were not run (zero model requests).
