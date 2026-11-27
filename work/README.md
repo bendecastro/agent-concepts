@@ -22,8 +22,11 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
+| 1 | [042-one-command-pi-install](2-active/042-one-command-pi-install.md) | active, ready for agent | — | 044-stranger-rerun-and-release | In the 039 stranger rerun the test copied the pipeline's three role files into Pi for the stranger; a real stranger must copy them by hand, edit an overlay, in… | 0/1 |
+| 2 | [043-plain-pipeline-messages](2-active/043-plain-pipeline-messages.md) | active, ready for agent | — | 044-stranger-rerun-and-release | In the 039 stranger rerun a newcomer met jargon ("publish policy", "claim commit", "review tier", `$unavailable` cost rows), noise (an unauthenticated-`gh` not… | 0/2 |
+| 3 | [044-stranger-rerun-and-release](1-planned/044-stranger-rerun-and-release.md) | planned | [042-one-command-pi-install](2-active/042-one-command-pi-install.md), [043-plain-pipeline-messages](2-active/043-plain-pipeline-messages.md) | — | Strangers install tagged releases, and `v0.3.0` predates every fix from the 2026-11-26/27 stranger tests. | 0/3 |
 
-- [Ideas](0-ideas.md): 7
+- [Ideas](0-ideas.md): 8
 - [Done](3-done/): 40
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->

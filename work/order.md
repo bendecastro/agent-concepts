@@ -14,3 +14,6 @@
 14. 039-stranger-rerun
 15. 040-pressure-sandbox-instructions
 16. 041-results-claims-match-tables
+17. 042-one-command-pi-install
+18. 043-plain-pipeline-messages
+19. 044-stranger-rerun-and-release
