@@ -2316,3 +2316,6 @@ The owner-led architecture-review and issue-triage starter items now carry `Plan
 
 ## [2026-11-27] test | 036 pipeline: no GitHub remote, no issue source
 Reproduced stall 1 with project instructions loaded (old wording called `gh` in 4/4 runs and stopped at the source question in 3/4). "Choose the source" now requires a GitHub remote for the issue source; the new wording chose the work items with no `gh` call in 2/2 runs.
+
+## [2026-11-27] implement | 037 setup finds installed bc-wiki-maintain
+`bc-setup-project` now finds `bc-wiki-maintain` beside its own skill folder with ordered `test -f` checks, covering the script install and `pi install` (stall 2 of the stranger test). Pressure runs on Terra low: final wording passed both install methods; old body failed both; a "harness lists it" wording failed because the skill is unlisted.

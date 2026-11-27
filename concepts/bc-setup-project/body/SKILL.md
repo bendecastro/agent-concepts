@@ -120,8 +120,17 @@ Archetypes:
 
 8. **Wire publish authorization (offer).** `/bc-pipeline-to-done` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, record a line in `work/0-ideas.md` for the visible layout, or `tasks/parking-lot.md` for legacy learning/knowledge vaults.
 
-For steps 9 and 10, find `wiki_lint.py` and `runner/` next to the installed `bc-wiki-maintain`
-`SKILL.md`. Set `wiki_skill_dir` to that directory (normally `$HOME/.agents/skills/bc-wiki-maintain`).
+For steps 9 and 10, `wiki_lint.py` and `runner/` sit next to the installed `bc-wiki-maintain`
+`SKILL.md`. It loads only by command, so it is not in your skills list; find it from `<dir>`, the
+directory this `bc-setup-project` `SKILL.md` was loaded from. Set `wiki_skill_dir` to the first
+candidate where `test -f <candidate>/wiki_lint.py` succeeds (`test -f` follows symlinks; do not
+use `find`):
+
+1. `<dir>/../bc-wiki-maintain` (the contributor script, `npx skills`: `~/.agents/skills/`)
+2. `<dir>/../../bc-wiki-maintain/body` (a `pi install` package: the checkout itself for a local
+   path, a folder under `~/.pi/agent/git/` for a git source)
+
+Report the wiki tools unavailable only when both fail.
 Use `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body` only as an explicit checkout override.
 
 9. **Register the project for global search (all archetypes; default yes, opt-out).** New projects are searchable by default; append to the qmd collections file and apply it with the setup command — see the `bc-qmd` concept. Ask only if the user wants this project **excluded** ("should this one stay unindexed?") — e.g. for throwaway or sensitive repos — and then record a line containing "excluded from the global qmd index" and the reason in `.bc-agent/AGENTS.md` (learning/knowledge: `project/overview.md`), which `bc-wiki-maintain`'s lint reads. Skip the setup command if qmd is not installed, but append to the synced YAML anyway so other machines converge. Never `qmd init` inside the repo — project-local indexes shadow the global collections (see the `bc-qmd` skill).
