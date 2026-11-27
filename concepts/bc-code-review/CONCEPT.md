@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-25 inline Storage safety + tdd name references PASS on Terra low (without 1/5, with 5/5; pressure-storage-inline.md); earlier data-size and test-layout checks PASS 2026-11-19
-tested: 2026-11-25
+test_status: partial # 2026-11-27 results-claims Standards sentence: Terra low NO_DEFECT, overclaim flagged in 3 of 3 comparison runs and 3 of 3 treatment runs (tests/pressure-results-claims.md); 2026-11-25 inline Storage safety + tdd name references PASS on Terra low (without 1/5, with 5/5; pressure-storage-inline.md); earlier data-size and test-layout checks PASS 2026-11-19
+tested: 2026-11-27
 deployed: yes
 ---
 # Concept: bc-code-review
@@ -35,6 +35,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Provenance
 
+- bc-self-improve reflection on the 2026-11-26 drain (owner archive, 2026-11-27): 4 of 10 items had a test summary that claimed more than its results table — source of the results-claims rule.
 - [Matt Pocock talk source](../../docs/research/raw/pocock-pr-bottleneck-talk/SOURCE.md) and [research notes](../../docs/research/raw/pocock-pr-bottleneck-talk/research-notes.md) — checks that lie (~5–7 min) and merge danger (~17–18 min), selectively adapted, not the reviewer-write model.
 - Owner-supplied agent-test audit (2026-11-04), three read-only sampled reports covering orchestration, products and harnesses — evidence for same-function oracles, source-text coverage claims, subsystem-erasing fixtures and private-helper patches; no suite execution or mutation validation. Generic examples only; audit repository and code are not reproduced.
 
@@ -52,6 +53,8 @@ Model-invoked review discipline for both sides of code review: independently ass
 - [michaelshimeles/skills `evidence-driven-testing`](https://github.com/michaelshimeles/skills) — `untested` as a first-class result so a check that could not run is recorded with a reason rather than omitted. Restated in this workspace's voice; the upstream repo has no root LICENSE and that skill carries no licence file. (2026-09-06)
 
 ## Tests
+
+2026-11-27: [`tests/pressure-results-claims.md`](tests/pressure-results-claims.md). Standards now checks every count and claim in a changed test-summary status or log line against the results file it cites. Terra low, both axes in one headless reviewer: the overclaim was flagged Important in 3 of 3 comparison runs and 3 of 3 treatment runs, so **NO_DEFECT**; the sentence is kept because it costs one sentence and makes the check a Standards duty rather than a by-product of the spec.
 
 2026-11-18: [`tests/pressure-missing-levels.md`](tests/pressure-missing-levels.md) (reviewers never saw or mentioned levels). Terra low, text-only: without FAIL, pre-change body FAIL (blocked the review instead of auditing), current body PASS (missing block/trailer and missing property both reported). **helped**. Design: a code-change packet with no block or `Test-levels:` trailer is itself a finding, and an L2 line saying `covered by examples` or deferring to owner/reviewer is a finding.
 

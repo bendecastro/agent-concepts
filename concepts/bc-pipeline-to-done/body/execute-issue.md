@@ -44,6 +44,7 @@ Before handoff:
 - ensure no file is staged and no unrelated artifact is present;
 - write requested validation evidence outside the project worktree.
 - fill in the Test levels block from the `bc-tdd` skill (section Test levels) (L1, L2, L3, one choice per line); the driver's gate rejects a handoff without it.
+- write any status line or log entry that summarizes test results (for example a concept's `test_status` or a `.bc-agent/log.md` line) last, copying each count from the results table and naming its unit ("2 of 3 runs", "5 of 5 checks in one run"), even when the packet supplies a draft. Why: summaries written ahead of their table claimed more than it showed in 4 of 10 items of one drain.
 
 Return:
 

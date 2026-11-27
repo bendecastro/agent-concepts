@@ -25,7 +25,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | concept | kind | tested | deployed |
 |---|---|---|---|
 | [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-27 | 2026-11-15 |
-| [bc-code-review](../concepts/bc-code-review/CONCEPT.md) | pressure | 2026-11-25 | yes |
+| [bc-code-review](../concepts/bc-code-review/CONCEPT.md) | pressure | 2026-11-27 | yes |
 | [bc-council-chain](../concepts/bc-council-chain/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-council-improve-architecture](../concepts/bc-council-improve-architecture/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-council-mode](../concepts/bc-council-mode/CONCEPT.md) | pressure | 2026-11-24 | yes |

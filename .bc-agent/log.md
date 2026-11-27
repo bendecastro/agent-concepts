@@ -2325,3 +2325,5 @@ Integrated and gated (tree d9c32474, 639 passed). Filed an idea for the scaffold
 
 ## [2026-11-27] implement | 040 pressure sandbox loads the right instruction files
 New `scripts/pi_sandbox.py` masks Pi 1.6.1's global instruction files (seven names in the agent folder, resolved through symlinks), deployed skill folders, overlays and ancestor `.agents/skills`, then checks the session's RPC system prompt for private terms and a missing project `AGENTS.md` before running. The pressure-test guide (now `-ne`, no `-nc`) and the stranger script use it; a real Pi start passed with `-ne` and failed with `-nc` and with the owner's extensions loaded. Re-check verdicts for the 2026-11-26 runs are in their results files.
+## [2026-11-27] test | 041 results claims match tables
+`bc-pipeline-to-done`'s worker review-ready gate now says to write test-summary status and log lines last, copying counts with their unit; `bc-code-review` Standards checks those counts against the cited results file. Terra low: NO_DEFECT on both sides (worker overclaim 0 of 5 comparison runs, 0 of 5 treatment runs; reviewer flagged it 3 of 3 runs in each arm).
