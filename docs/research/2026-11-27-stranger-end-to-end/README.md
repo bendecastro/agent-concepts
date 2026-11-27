@@ -28,4 +28,27 @@ The sandbox check passed in both attempts: no private configuration directory, n
 | 7 | Worker preflight | The first preflight's log (kept private; the committed [corrected preflight](evidence/sandbox-preflight.txt) is the passing rerun): Pi could not open a mask file created on a `nodev` bind (`EACCES`), and `--no-refresh` was rejected before the `check` subcommand. | Fixed earlier in this change: masks are bound from `/dev/null` data, and the options follow the subcommand. |
 | 8 | Coverage | Building and landing were never reached, and planning and the build ran without project instructions. | Fixed in the driver (no `-nc`). Work item: rerun the stranger test with the fixed driver; it also confirms or clears stall 1. |
 
+## Rerun after the fixes (039-stranger-rerun)
+
+**Result: a stranger got from an empty sample repository to a reviewed change on the remote's `main`, with no stall.** One run, no retry, installed commit `87782c9` (after 036 to 040 landed), same Pi, `pi-subagents` and model as above ([versions and Git state](evidence/rerun-git-state.txt)). Every session started through `scripts/pi_sandbox.py`, whose check passed: each session's system prompt held the project's `AGENTS.md`. The audit found no private term in the four saved system prompts.
+
+| What | Result | Evidence |
+| --- | --- | --- |
+| Setup writes project instructions, layout and a passing local check | Pass | [setup reply](evidence/rerun-setup-reply.md); setup commit on `main` |
+| Planning writes an item ready for an agent | Pass | [planning reply](evidence/rerun-plan-reply.md) |
+| A commit with the change lands on the bare remote's `main` | Pass | `074e264 Normalize internal label whitespace` and the item-close commit are on the remote's `main`; [build reply](evidence/rerun-build-reply.md), [landed item](evidence/rerun-landed-item.md) |
+| Workers ran only targeted tests | Pass | Both worker transcripts ran `python3 -m unittest discover -s tests -p 'test_labels.py'`; the full `scripts/gate` ran only in the driver (baseline and final gate) |
+| Review | Pass | Spec and Standards reviewers both approved after one rework round |
+| No GitHub source asked about (stall 1) | Pass | The build made no `gh` call and asked no source question |
+
+Findings (no stall):
+
+| # | Where | Evidence | Disposition |
+| --- | --- | --- | --- |
+| R1 | Build worker, property test | The worker wrote `.stignore` containing `.hypothesis/` into a project no sync tool watched. Source: `bc-tdd`'s `properties.md` said to list such caches "as Syncthing-ignored", and setup's generated `validation.md` repeated it. | Fixed here: both now say to add the cache to a sync tool's ignore list only when the project sits in a synced folder; `test_visible_layout.py` asserts the conditional wording. |
+| R2 | Build, pre-review gate | The first worker handoff gave no targeted-test command or raw log path, so the driver sent it back once; the second handoff passed. | Cost one rework round; the gate did its job. No change. |
+| R3 | Sandbox | A worker listed processes and saw the outer `bwrap` command line, which holds the host scratch path (under the owner's home). It is a path, not an instruction, and nothing acted on it. | Idea line in `work/0-ideas.md`: hide the outer command line (for example by starting the box from a scratch dir outside the home). |
+
+Child session prompts were captured with the sessions (kept private).
+
 The full session logs and system prompts stay private, outside the repository.

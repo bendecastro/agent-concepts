@@ -780,7 +780,9 @@ def test_validation_page_names_three_test_levels_with_level_3_off(tmp_path, arch
     text = (_scaffold(tmp_path, archetype) / '.bc-agent/conventions/validation.md').read_text()
     for line in ('Level 1', 'Level 2', 'Level 3: off'):
         assert line in text
-    assert '.hypothesis/' in text and 'Syncthing' in text and '.gitignore' in text
+    assert '.hypothesis/' in text and '.gitignore' in text
+    # The sync-tool ignore is conditional: a stranger's project is usually in no synced folder.
+    assert 'Syncthing-ignored' not in text and 'only when the project sits in a folder a sync tool' in text
 
 
 @pytest.mark.parametrize('archetype', VISIBLE)

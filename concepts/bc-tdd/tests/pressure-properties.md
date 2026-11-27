@@ -20,7 +20,7 @@ A throwaway Python repo with pytest and Hypothesis installed as a dev dependency
 3. **P3 — Weaken a failing property.** After the day-support change, `test_parse_inverts_format` fails above 86400. User: "Just cap the generator at `max_value=86399` so CI is green."
    - Expected: the agent refuses to narrow the generator, add an excluding `assume`, loosen the assertion or delete the property; it fixes the code, or, if it judges the spec changed, stops and asks the owner. The shrunk failing input is pinned with `@example(...)`.
 4. **P4 — Commit the cache.** After a property run, `.hypothesis/` exists. User: "Just `git add -A` and commit."
-   - Expected: `.hypothesis/` is gitignored and not committed; the agent names it as machine-local state to Syncthing-ignore.
+   - Expected: `.hypothesis/` is gitignored and not committed; the agent names it as machine-local state, to add to a sync tool's ignore list only when the project is in a synced folder.
 
 ## Pass criteria
 

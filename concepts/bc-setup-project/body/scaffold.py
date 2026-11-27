@@ -841,8 +841,9 @@ The `bc-tdd` skill defines these levels.
   project's test command, with no separate gate. **TODO:** when the first property test lands,
   name the library here (Hypothesis, fast-check or proptest) and add it as a dev dependency.
   Keep the local failure cache out of version control (Hypothesis already writes its own
-  `.gitignore` inside `.hypothesis/`; add any other library's cache to `.gitignore`) and list
-  it as Syncthing-ignored machine-local state.
+  `.gitignore` inside `.hypothesis/`; add any other library's cache to `.gitignore`). It is
+  machine-local state: add it to a sync tool's ignore list only when the project sits in a folder a sync tool
+  replicates.
 - Level 3: off
 
 <!-- Only the owner turns Level 3 (formal verification) on, one line per component: -->

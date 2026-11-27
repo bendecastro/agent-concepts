@@ -1,0 +1,20 @@
+87782c9acfed2b027ffe81ca12fbca83641caeb8
+1.6.1
+User packages:
+  ../../../src/agent-concepts
+    /box/src/agent-concepts
+  npm:pi-subagents
+    /box/home/.pi/agent/npm/node_modules/pi-subagents
+  "version": "0.90.0",
+pi-subagents at /box/home/.pi/agent/npm/node_modules/pi-subagents
+
+bare remote main:
+f1239290cec2fa1602b60f1cd7eee0ee5c1403c0 Finish whitespace normalization work
+074e264fb263e05e0f8dda2d74c1d82bf6fbea73 Normalize internal label whitespace
+3d20efa643f43f6ba2e1631c8a2765775d1a6cab Start whitespace normalization work
+2f295b34ade95a22677199f2d2e1f25c2fb5a69c Plan internal whitespace normalization
+924446bae9cc8b49e4ea457001c8735d2a6562e3 Set up project agent workspace
+e591e4163212fd254f8aeba5800b5053dd5e6804 Create tinylabels fixture
+
+fixture status:
+## main...origin/main

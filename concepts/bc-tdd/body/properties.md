@@ -52,7 +52,7 @@ When a property finds a real failure, pin its shrunk input as an explicit exampl
 - fast-check: the `examples` option of `fc.assert`;
 - proptest: commit the regression file it writes (`proptest-regressions/`).
 
-Local failure caches (`.hypothesis/` and similar) are machine-local state: never commit them, and list them as Syncthing-ignored. Hypothesis gitignores `.hypothesis/` itself; add other libraries' caches to `.gitignore`.
+Local failure caches (`.hypothesis/` and similar) are machine-local state: never commit them, and only when the project sits in a folder a sync tool replicates (Syncthing, Dropbox), add them to that tool's ignore list; otherwise create no sync-tool file. Why: a stranger's build worker wrote a `.stignore` into a project no sync tool watched (stranger rerun, 2026-11-27). Hypothesis gitignores `.hypothesis/` itself; add other libraries' caches to `.gitignore`.
 
 ## Changing an existing property
 

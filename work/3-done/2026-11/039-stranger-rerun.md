@@ -11,7 +11,8 @@ Source: 033-stranger-end-to-end-test
 
 ## Steps
 
-- [ ] Rerun: one run on the pressure-test model with at most one infrastructure retry; capture child prompts too. Done when the results folder exists and every stall has an item or a fix.
+- [x] Rerun: one run on the pressure-test model with at most one infrastructure retry; capture child prompts too. Done when the results folder exists and every stall has an item or a fix.
 
 ## Outcome
 
+Done 2026-11-27. One run, no retry, installed `87782c9`: setup, planning, build, two reviews and landing on the bare remote's `main` all passed with no stall; workers ran targeted tests only. Finding R1 (`bc-tdd` told every project to Syncthing-ignore its property-test cache) is fixed in the same change; R3 (host path visible in the sandbox's process list) is an idea line. Results: `docs/research/2026-11-27-stranger-end-to-end/README.md` § Rerun after the fixes.
