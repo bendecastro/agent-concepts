@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [044-stranger-rerun-and-release](2-active/044-stranger-rerun-and-release.md) | active, ready for agent | — | — | Strangers install tagged releases, and `v0.3.0` predates every fix from the 2026-11-26/27 stranger tests. | 4/6 |
+| 1 | [044-stranger-rerun-and-release](2-active/044-stranger-rerun-and-release.md) | active, ready for agent | — | — | Strangers install tagged releases, and `v0.3.0` predates every fix from the 2026-11-26/27 stranger tests. | 5/6 |
 | 2 | [046-install-from-npm](2-active/046-install-from-npm.md) | active, ready for agent | — | — | The README's `pi install git:…@v0.3.0` pins the package, and Pi skips pinned packages on `pi update`, so everyone stays on the version they first installed eve… | 0/1 |
 
 - [Ideas](0-ideas.md): 8
