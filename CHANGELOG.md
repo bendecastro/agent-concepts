@@ -17,6 +17,10 @@ release rather than `master`: `master` changes many times a day and can hold unf
 - Renamed the `bc-ui-design` skill to `bc-design`, and widened its description to wording, CLI
   commands and flags, keyboard, states, accessibility, motion and design decisions. Reinstall, or
   use `/skill:bc-design`; local deploys keep `bc-ui-design` as an alias.
+- `bc-pipeline-to-done` builds the work item you name, even when other ready items come first
+  in the order, and records the new order in its claim commit instead of asking.
+- The agent kernel reads a bare "yes" or "go ahead" to a question with a recommended option as
+  that option, instead of asking again.
 - Typing `/bc-security-audit` now starts a full security audit, like the other commands;
   text after it limits the scope. When the agent loads the skill itself because security came
   up, it still only gives advice.

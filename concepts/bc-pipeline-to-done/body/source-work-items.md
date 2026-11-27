@@ -8,7 +8,9 @@ An item is eligible when all three hold:
 
 - it carries the line `Ready for agent: yes` and no `Waiting on owner:` line;
 - every item named on its `Blocked by:` line is in work-done;
-- it is next in pipeline order: the generated table in `work/README.md` (run the project's work index script first so it is current), or the project's order rules when the project has no generated table. Take the first eligible item; never jump an item the order puts ahead of it.
+- it is next in pipeline order: the generated table in `work/README.md` (run the project's work index script first so it is current), or the project's order rules when the project has no generated table. Take the first eligible item; never jump an item the order puts ahead of it. Why: an unattended drain has no one to say which item matters more, so the owner's order is the only priority it has.
+
+When the user's request names an item ("build 003-whitespace", "build the item I just planned"), that naming is the order decision for this run: build that item without asking about the order, provided the other two conditions hold. Record the change the project's way in the claim commit — for example move the item to the top of `work/order.md` — and rerun the work index script. Why: the user has already chosen; asking again whether to skip the items ahead stalls a run the user started on purpose.
 
 Skip an item without the ready line, even when it looks fully planned. Why: `Planned:` proves the item was planned, not that the owner agreed to let it run unattended; the ready line is that consent, and `bc-plan-to-pipeline` writes it only when every step states what "done" means and what is out of scope. An eligible item whose steps still lack done-criteria or out-of-scope is parked (see [Park](#park)), not guessed.
 

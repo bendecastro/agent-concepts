@@ -101,3 +101,9 @@ the question with the exact reply format.
 
 Why: the user answers fastest when each answer is one short token that cannot
 be misread; an unnumbered list or a buried question costs a reread.
+
+A bare yes, ok, go ahead or "rec" in reply means the recommended option, for
+every question in the batch; proceed with it. Ask again only when the reply
+could mean something else, such as naming another option or adding a
+condition. Why: you marked the recommendation so that agreeing costs one word;
+asking again makes the user answer twice.

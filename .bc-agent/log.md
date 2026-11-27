@@ -2357,3 +2357,6 @@ Owner decision: the name matches the widened scope. References, relationships, p
 
 ## [2026-11-27] test | planned-dependencies owner's-answer mark
 `bc-plan-to-pipeline` marks the `Dependencies:` line as the owner's answer; `bc-tdd` and `execute-issue.md` accept only a marked line as the property-library waiver. Terra low: new arm 3 of 3 runs wrote example tests with no dependency (old arm also 3 of 3, so the mark is the fix); no-line regression 1 of 1 blocked.
+
+## [2026-11-27] implement | build stall: named item sets the order, bare yes means the recommendation
+Owner choices 1a 2a after the stranger rerun stalled: `bc-pipeline-to-done` builds a user-named item without an order question and records the order in the claim commit; the kernel reads a bare yes as the recommended option. Terra low: named item old 0/3 vs new 3/3; stall replay old kernel 3/5 vs new 5/5.
