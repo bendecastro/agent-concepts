@@ -26,8 +26,10 @@ Write project-specific notes outside the markers; the script keeps them.
 | 2 | [037-setup-find-installed-wiki-skill](1-planned/037-setup-find-installed-wiki-skill.md) | planned | — | — | In the stranger test setup skipped the wiki check because it looked only in `$HOME/.agents/skills/bc-wiki-maintain`, the directory `bc-setup-project` calls nor… | 0/1 |
 | 3 | [038-starter-items-pass-index-check](1-planned/038-starter-items-pass-index-check.md) | planned | — | 039-stranger-rerun | Right after setup in the stranger test, `work_index.py` warned that the seeded `002-architecture-review` item "has no Planned: line", and the next session repo… | 0/1 |
 | 4 | [039-stranger-rerun](1-planned/039-stranger-rerun.md) | planned | [038-starter-items-pass-index-check](1-planned/038-starter-items-pass-index-check.md) | — | The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/README.md`) stopped before the pipeline launched any child, and its planning and build se… | 0/1 |
+| 5 | [040-pressure-sandbox-instructions](1-planned/040-pressure-sandbox-instructions.md) | planned | — | — | In the 2026-11-26 drain, 3 of 10 items needed a review round because a test session read the wrong instruction files: the owner's private instructions decided… | 0/2 |
+| 6 | [041-results-claims-match-tables](1-planned/041-results-claims-match-tables.md) | planned | — | — | In the 2026-11-26 drain, 4 of 10 items had a summary that claimed more than its results table showed: 027 called a comparison run blind, 029 step 1 counted thr… | 0/1 |
 
-- [Ideas](0-ideas.md): 4
+- [Ideas](0-ideas.md): 3
 - [Done](3-done/): 34
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->

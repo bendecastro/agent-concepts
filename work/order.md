@@ -12,3 +12,5 @@
 12. 033-stranger-end-to-end-test
 13. 035-kernel-package
 14. 039-stranger-rerun
+15. 040-pressure-sandbox-instructions
+16. 041-results-claims-match-tables

@@ -2307,3 +2307,6 @@ Added `scripts/stranger_end_to_end.sh`, its RPC driver and fixture: a sandbox wi
 
 ## [2026-11-27] test | 033 stranger test done
 Filed the first stranger run's stalls as 036-pipeline-no-github-source, 037-setup-find-installed-wiki-skill, 038-starter-items-pass-index-check and 039-stranger-rerun (building and landing still untested for a stranger).
+
+## [2026-11-27] implement | file 040 and 041 from drain reflection
+The reflection on the 2026-11-26 drain found test sessions reading the wrong instruction files (3 of 10 items) and status lines claiming more than their results tables (4 of 10); filed as 040-pressure-sandbox-instructions (replaces the harness-masks idea) and 041-results-claims-match-tables.
