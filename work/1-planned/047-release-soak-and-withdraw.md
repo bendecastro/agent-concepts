@@ -12,7 +12,7 @@ Ready for agent: yes
 ## Requirements
 
 - `release.yml`'s `publish-npm` job publishes with `--tag next`; `latest` moves only by the promotion step.
-- Promotion runs after `STRANGER_SOURCE=pack scripts/stranger_end_to_end.sh` (or an npm-installed variant of it) passes for that version. Check first, from docs.npmjs.com, whether `npm dist-tag add` works under trusted publishing (OIDC) without a stored token. If it needs a token or the owner's two-factor approval, stop and ask the owner how promotion should be authorized before building it; do not add a token.
+- Promotion runs after `STRANGER_SOURCE=pack scripts/stranger_end_to_end.sh` (or an npm-installed variant of it) passes for that version. The npm trusted publisher allows both `npm publish` and `npm dist-tag` (owner choice 2026-11-27, staged publishing declined), so promotion runs from `release.yml` under OIDC with no stored token; if npm still refuses, stop and ask the owner; do not add a token.
 - "Bad release" section in `docs/guides/releasing.md`: `npm deprecate agent-concepts@X "<reason; use Y>"`, move `latest` back to the last good version, a GitHub release note, and a CHANGELOG "Withdrawn" line; decision 0002 and AGENTS.md's Release operation name the soak.
 - README: say that `pi install npm:agent-concepts` follows `latest`, and how to try `next`.
 
