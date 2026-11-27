@@ -16,8 +16,8 @@ Ready for agent: yes
 - [x] Pressure-test `bc-security-audit`'s typed-command full-audit rule on the pressure-test model (see `docs/research/2026-11-27-release-audit.md`). Done when results are recorded and `test_status` set.
 - [x] Fix the build stall the 2026-11-27 stranger rerun found (owner choices 1a 2a): a user who names an item sets the order for that run (`bc-pipeline-to-done`), and a bare yes to a question with a recommended option means that option (`agent-kernel`). Done when both rules hold in pressure tests on the pressure-test model (old/new arms). Out of scope: other pipeline rules.
 - [x] Rerun the stranger test with the README install and record results next to the 039 rerun. Done when setup, plan and build pass with no copied roles. Out of scope: other harnesses.
-- [ ] Release per `docs/guides/releasing.md`. Done when the tag's `release` workflow is green.
+- [x] Release per `docs/guides/releasing.md`. Done when the tag's `release` workflow is green.
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Released v0.4.0 on 2026-11-27. The four pressure tests held (planned dependencies with the owner's-answer mark, starter items for a new project, typed security-audit command, named item and bare yes); results are linked from `docs/research/2026-11-27-release-audit.md`. The stranger rerun passed every phase on attempt 4 installing the `npm pack` of the release tree (`docs/research/2026-11-27-stranger-end-to-end/npm-pack-rerun.md`); attempt 2's build stall led to the named-item and bare-yes fixes, attempt 3 to a test-driver fix. Full gate on the release commit `0431b57`: 657 passed, 4 skipped. Tag `v0.4.0` pushed; its `release` workflow is green (release-check, install-tag on Ubuntu and macOS, publish-npm skipped as already published).

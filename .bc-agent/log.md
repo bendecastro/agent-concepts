@@ -2363,3 +2363,6 @@ Owner choices 1a 2a after the stranger rerun stalled: `bc-pipeline-to-done` buil
 
 ## [2026-11-27] deploy | release v0.4.0
 Version 0.4.0 across package.json and plugin manifests; CHANGELOG entry; README tags; release audit rows filled from the 044 pressure tests and stranger attempt 4.
+
+## [2026-11-27] deploy | npm first publish; close 044 and 046
+agent-concepts@0.4.0 on npm (owner-run first publish from the tag); release workflow green; both items moved to done.
