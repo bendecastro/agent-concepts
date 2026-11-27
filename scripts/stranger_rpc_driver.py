@@ -7,11 +7,13 @@ children wake the parent after its first reply; a print-mode process would alrea
 exited. The first time the agent stops with a question (or, in the build phase, stops at
 all) it receives ANSWER; up to two later questions receive FOLLOW_UP, a neutral go-ahead.
 Project AGENTS.md files load as they would for a stranger; the sandbox masks the global ones.
+STRANGER_PI (default `pi`) is split like a shell command, so it can name the pi_sandbox.py wrapper.
 Writes rpc.jsonl, stderr.txt and final.txt under $STRANGER_LOG_DIR/PHASE (default /box/logs).
 """
 import json
 import os
 import queue
+import shlex
 import subprocess
 import sys
 import threading
@@ -33,7 +35,7 @@ def main(argv):
     log_dir = os.path.join(os.environ.get("STRANGER_LOG_DIR", "/box/logs"), phase)
     os.makedirs(log_dir, exist_ok=True)
     log = open(os.path.join(log_dir, "rpc.jsonl"), "a", encoding="utf-8")
-    command = [os.environ.get("STRANGER_PI", "pi"), "--mode", "rpc", "-ne", "--no-mcp",
+    command = [*shlex.split(os.environ.get("STRANGER_PI", "pi")), "--mode", "rpc", "-ne", "--no-mcp",
                "--no-prompt-templates", "--model", os.environ["MODEL"], "--thinking", os.environ["THINKING"],
                "--session-dir", os.path.join(log_dir, "session"), *argv[5:]]
     stderr = open(os.path.join(log_dir, "stderr.txt"), "a", encoding="utf-8")

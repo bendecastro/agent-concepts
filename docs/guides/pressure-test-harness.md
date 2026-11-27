@@ -16,20 +16,37 @@ concept's `tests/`. Worked examples: `concepts/bc-council-find-bugs/tests/scenar
 
 ## Command
 
+Run it from inside the practice project, so its own `AGENTS.md` loads:
+
 ```sh
-bwrap --dev-bind / / \
-  --tmpfs ~/.agents/skills --tmpfs ~/.pi/agent/skills --tmpfs ~/.claude/skills \
-  --tmpfs ~/.config/agent-concepts/overlays \
+python3 <agent-concepts>/scripts/pi_sandbox.py --prompt-out <scratch>/prompt-<run>.json -- \
   pi -p --model <pressure-test model> --thinking low \
-  --no-swarm -nc -ns --no-prompt-templates --no-skills \
+  -ne -ns --no-prompt-templates --no-skills \
   --skill <scratch>/<skill-a> --skill <scratch>/<skill-b> \
   --session-dir <scratch>/sess-<run> '/skill:<name> <arguments, then harness notes>'
 ```
 
-- The `--tmpfs` mounts (empty temporary folders laid over the real ones for this run only) hide every deployed skill and private overlay, so the run sees only the
-  bodies passed with `--skill`. The comparison run (without the concept) keeps the mounts and
-  omits that concept's `--skill`; search its transcript for reads of the concept path before
-  grading (see the Test operation).
+- `scripts/pi_sandbox.py` runs the command in `bwrap` with Pi's global instruction files
+  (`AGENTS.md`, `APPEND_SYSTEM.md`, `SYSTEM.md` and the other names Pi reads from its agent
+  folder) replaced by empty files, and with every deployed skill folder, the private overlays
+  and any `.agents/skills` above the working folder replaced by empty folders. The run then sees
+  only the bodies passed with `--skill`. The comparison run (without the concept) uses the same
+  helper and omits that concept's `--skill`; search its transcript for reads of the concept
+  path before grading (see the Test operation).
+- Before the run, the helper starts the same command once, takes the system prompt Pi records
+  before its first model reply, and stops with exit 3 when it holds a term from the private
+  denylist (`~/.config/agent-concepts/personal-terms.txt`) or misses the text of the project's
+  `AGENTS.md`. Keep the `--prompt-out` file with the grading evidence; it shows what both arms
+  were told. `--check-only` checks without running.
+- No `-nc`. Why: in the 2026-11-26 drain, and in the stranger test's driver, `-nc` was used to
+  keep out the global files and also hid the project's own `AGENTS.md`, so the run never saw
+  the project's rules. The helper masks
+  the global files instead, and its check fails a run with `-nc` in a project that has an
+  `AGENTS.md`.
+- `-ne` turns off extensions; name each one the run needs with `-e <path>` (for example
+  pi-subagents for a run that must see the `subagent` tool), and pass extension flags such as
+  `--no-swarm` only when that extension is loaded. Why: the owner's extensions add text to the
+  tools and rules sections of the prompt, and the check fails on it.
 - A skill with `disable-model-invocation: true` loads only through its slash command, so the
   prompt must start with `/skill:<name>`.
 - Headless `pi -p` ends the session at the first reply without a tool call. Say so in the
