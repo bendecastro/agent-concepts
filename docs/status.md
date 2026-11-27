@@ -15,7 +15,7 @@ Nothing. Every deployed concept has a recorded run.
 
 | concept | kind | test status | tested |
 |---|---|---|---|
-| [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | not-run | never |
+| [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | fail | 2026-11-27 |
 
 ## Deployed with a known gap (33)
 

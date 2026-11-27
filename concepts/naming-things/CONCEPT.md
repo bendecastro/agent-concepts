@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: not-run
-tested: never
+test_status: fail # case G, real Terra low sessions, 3 per arm; 0/3 held in either arm; cases A–F not run
+tested: 2026-11-27
 deployed: no
 ---
 # Concept: naming-things
@@ -24,8 +24,8 @@ Model-invoked advisory criteria for clear domain and public code names, applied 
 
 ## Tests
 
-[Pressure scenarios](tests/pressure-naming.md) cover new names, persistence pressure, state boundaries, negative invocation and audit/rename artifacts. Authored, not run; no consuming-agent pressure pass is claimed. Pointer consumers have not been re-pressure-tested with this addition.
+[Pressure scenarios](tests/pressure-naming.md) cover new names, persistence pressure, state boundaries, negative invocation and audit/rename artifacts. [Case G results](tests/pressure-naming-results-2026-11-27.md): three real Terra low sessions per arm; none held. Cases A–F and pointer consumers were not run.
 
 ## Deploy targets
 
-Not deployed. Intended for model invocation through native skill discovery; pressure validation and explicit deployment remain pending. No deployment tooling run.
+Not deployed. Intended for model invocation through native skill discovery once pressure validation holds. No deployment tooling run.

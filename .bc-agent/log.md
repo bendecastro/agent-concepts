@@ -2298,3 +2298,6 @@ One real Terra low run per arm: revised 4/4 vs base 3/4 on archetype scope and i
 
 ## [2026-11-27] implement | Read-only kernel survey and optional install guide
 Setup checks the active harness without installing the kernel; the README separates package lifecycle and pinning from manual deltas. One real masked Terra low run per arm: base omitted the kernel, revised supplied the Pi command but hedged on runtime activation, and neither changed project files or settings.
+
+## [2026-11-27] test | Naming Things under first-release pressure
+Three real Terra low runs per arm; neither arm held (0/3 each). Treatment recorded glossary persistence but still used the misleading proposed name in derived IDs and hashes. Deployment remains off; cases A–F were not run.

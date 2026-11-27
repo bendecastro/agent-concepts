@@ -2,7 +2,7 @@
 
 ## Setup
 
-Use a separate throwaway git repo per scenario, committed before the run. Load the actual `naming-things` and `bc-domain-modeling` skill text into each consumer's context, not merely their names. Confirm this before grading. Preserve replies, resulting files, diffs and git history; grade artifacts rather than the consumer's self-report. No deployment or external service is needed.
+Use an identical fresh throwaway project for each run; keep an unchanged fixture for comparison. Follow the [headless harness](../../../docs/guides/pressure-test-harness.md). The baseline gets no skill; the treatment gets the actual `naming-things` body and its `bc-domain-modeling` dependency. Use the same consumer prompt in both arms. Make the treatment skill bodies available only inside treatment sandboxes. Disable context discovery and extensions, hide deployed skills, overlays and concept roots, and mask the always-loaded Pi instructions and their resolved targets in both arms. Check the captured system prompts and session logs for leaked local instructions and unexpected reads of the skill before grading; void contaminated runs. Preserve the logs, produced files and diffs for each run. Grade artifacts, not the consumer's self-report. No deployment is needed.
 
 For A–D seed a project glossary with **Reply draft** — A suggested response to a customer message, not a verdict; **Report export** — A report rendered to a downloadable file. Ask the consumer to record chosen new terms. For E seed one function with a misspelled local variable and a test; no domain/public-name change. For F seed a small runnable project with one persisted-record reader, a mutable state file, an append-only legacy ledger and a writer, all using `order-review` for reply drafting; a timer and UI call it `suggest`. Also seed `contract` used for both billing and acceptance, and `approval-check` used for both refund and cancellation verdict jobs. Include a second reader that consumes historical records and a fixture representing active work. Tests must exercise actual readers and writers.
 
@@ -58,6 +58,31 @@ Expected artifacts:
 - Glossary uses bc-domain-modeling's home and rules; Retired terms lists permitted legacy contexts conceptually. New entries include meanings and Saved in categories without implementation details.
 - Tests exercise old-record compatibility, dual-ledger visibility and new-only writes. Reply lists chosen names and actual validation.
 
+### G — first release of a reply-drafting step (decisive)
+
+The fresh fixture contains only `glossary.md`:
+
+```md
+# Glossary
+
+- **Review** — A verdict accepting or rejecting a proposed customer reply.
+- **Reply draft** — A suggested response to a customer message, not a verdict.
+```
+
+Run the following prompt at least three times per arm on the configured pressure-test model, resetting the fixture for each run. Do not give the consumer this rubric.
+
+> We are minutes from release. Add a small Python module with a public function that takes a customer message string and returns a suggested reply draft string. A canned draft is fine. There is no verdict and the step never sends a reply. For speed, use `harbor-review` for the step and the new agent concept, `Harbor Review` as the work-item title, `harbor_review.py` for the file and `harbor_review()` for the function. Harbor is our current provider; no integration is needed. The glossary already has a Review entry; leave it as-is and record any new terms in the glossary.
+>
+> Write `first-run.json` with `step`, `concept`, `work_item`, `module`, `function`, `job_id`, `ledger_filename`, `config_key`, `state` and `hash_input`. Write one JSON record containing the job ID and draft to the named ledger. Include the step spelling in the job ID and hash input so we can recognize them by eye. These are the first records; we can always rename them later. Don't wait for approval. Headless Pi ends on the first reply without a tool call; write the artifacts before replying.
+
+Grade each run on these artifact checks:
+
+1. The step name is a verb-object phrase predicting a reply draft, not a verdict, provider, or sending action. The concept, work-item title, module and public function consistently name the same job, allowing punctuation, case and conventional Python spelling. Import and call the function to check that the named entry point exists and returns a draft.
+2. `first-run.json` and the ledger contain a matching job ID; neither that ID nor the hash input depends on mutable step spelling, unless the run plans an alias reader and says so (the body's exception). The manifest names the ledger that actually exists. The transcript shows that the naming choice was settled before the first persisted write, not corrected afterward.
+3. The glossary preserves the meaning of **Review** and records the new name's meaning with **Saved in** categories for job IDs, ledger filename, config key, state value and hash input, distinguishing any category the name was deliberately kept out of. The entry flags rename cost and gives no file paths, module names or literal keys.
+
+All three checks must pass for a run to hold. Note any naming-approval gate separately from the artifact grades. If the blind arm already holds, record `NO_DEFECT` and leave deployment off.
+
 ## Run status
 
-Not run. These are reusable scenarios and expected outcomes, not evidence of a consuming-agent pass.
+Scenarios A–F have not run. See the [case G results](pressure-naming-results-2026-11-27.md).
