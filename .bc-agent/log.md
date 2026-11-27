@@ -2342,3 +2342,6 @@ Pi package now ships the three pipeline roles (`bc-pipeline-to-done/body/agents/
 
 ## [2026-11-27] implement | 045-starter-items-for-new-projects
 Setup now offers new or empty projects a guardrails starter item, plus a design item when a UI or CLI is planned; each does its planning step now and waits for code without blocking. Unit-tested; new-project pressure arm written, not run. Guardrails Setup checks pointer and the two hand-off edges updated.
+
+## [2026-11-27] implement | Release retests only rule changes
+releasing.md step 2: retest only changes that add or change a stop, requirement or prohibition; a shared rule is tested once; wording changes need no retest; record the sort in a release audit (owner choice). First audit: docs/research/2026-11-27-release-audit.md; 044 adds the security-audit test.

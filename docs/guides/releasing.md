@@ -8,11 +8,19 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
 
 1. Pick the commit to release, normally the tip of `master`. Check that its `gate` workflow
    run is green, including both `fresh-install` jobs (Ubuntu and macOS).
-2. Check that the pressure tests of every discipline skill changed since the last release
-   held. Run `git diff --stat <last tag>..HEAD -- concepts/` to see what changed, then look
-   each changed concept up in [status.md](../status.md): its `tested` date must be after the
-   change, and it must not be under "Needs testing". Re-run any that are missing; see the Test
-   operation in `AGENTS.md`.
+2. Check that every changed rule held a pressure test. Run `git diff <last tag>..HEAD --
+   concepts/*/body` and sort each discipline concept's changes since its `tested` date
+   (see [status.md](../status.md)) into two kinds, recorded in a release audit under
+   `docs/research/<date>-release-audit.md`:
+   - **Rule changes** add or change a stop, a requirement or a prohibition. Each needs a held
+     pressure test after the change (see the Test operation in `AGENTS.md`). A rule repeated
+     across skills is tested once, in one of them; the audit names that test for the others.
+     A one-line stop with no judgment in it (for example "stop if the tool is missing") may be
+     checked by reading instead.
+   - **Wording changes** (renames, links, moved text, plainer wording with the same meaning)
+     need no retest.
+   No concept may be under "Needs testing". Why: retesting every edited skill made each
+   release wait on dozens of runs, so fixes stopped reaching users.
 3. Set the version. Its one home is `version` in `package.json`. Edit it, then run
    `python3 scripts/lint.py --write-plugin-manifests` so the Claude Code and Codex plugin
    manifests and the Claude Code marketplace carry the same version.

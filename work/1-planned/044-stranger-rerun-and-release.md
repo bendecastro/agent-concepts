@@ -13,6 +13,7 @@ Ready for agent: no
 
 - [ ] Pressure-test the planned-dependencies rule on the pressure-test model (old/new arms). Done when results are recorded and `test_status` set. Out of scope: other concepts.
 - [ ] Pressure-test `bc-setup-project`'s new-project starter-items arm (`concepts/bc-setup-project/tests/pressure-starter-items.md`) on the pressure-test model. Done when results are recorded and `test_status` set. Out of scope: other arms.
+- [ ] Pressure-test `bc-security-audit`'s typed-command full-audit rule on the pressure-test model (see `docs/research/2026-11-27-release-audit.md`). Done when results are recorded and `test_status` set.
 - [ ] Rerun the stranger test with the README install and record results next to the 039 rerun. Done when setup, plan and build pass with no copied roles. Out of scope: other harnesses.
 - [ ] Release per `docs/guides/releasing.md`. Done when the tag's `release` workflow is green.
 
