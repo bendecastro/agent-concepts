@@ -22,11 +22,9 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [040-pressure-sandbox-instructions](2-active/040-pressure-sandbox-instructions.md) | active, ready for agent | — | — | In the 2026-11-26 drain, 3 of 10 items needed a review round because a test session read the wrong instruction files: the owner's private instructions decided… | 2/2 |
-| 2 | [041-results-claims-match-tables](2-active/041-results-claims-match-tables.md) | active, ready for agent | — | — | In the 2026-11-26 drain, 4 of 10 items had a summary that claimed more than its results table showed: 027 called a comparison run blind, 029 step 1 counted thr… | 1/1 |
-| 3 | [039-stranger-rerun](1-planned/039-stranger-rerun.md) | planned | — | — | The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/README.md`) stopped before the pipeline launched any child, and its planning and build se… | 0/1 |
+| 1 | [039-stranger-rerun](1-planned/039-stranger-rerun.md) | planned | — | — | The first stranger run (`docs/research/2026-11-27-stranger-end-to-end/README.md`) stopped before the pipeline launched any child, and its planning and build se… | 0/1 |
 
 - [Ideas](0-ideas.md): 6
-- [Done](3-done/): 37
+- [Done](3-done/): 39
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->
