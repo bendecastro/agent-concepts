@@ -1,29 +1,37 @@
 # Stranger rerun with the npm package (044), 2026-11-27
 
-**Result: not graded. The install passed; setup, planning and the build never ran because every model call was refused with HTTP 429 (Anthropic account rate limit).** This is an infrastructure stop, not a skill result. The 044 step stays open.
+**Result: setup and planning pass; the build FAILED (it stalled on a question and never built). The 044 step stays open.**
 
-- Consumer: anthropic/claude-haiku-5-5 low (owner choice 2026-11-27 for this release). It was also the stranger's model.
-- Installed: commit `5137d11` packed with `npm pack` (`agent-concepts-0.3.0.tgz`), unpacked, and installed with `pi install <unpacked dir>`, which is what `pi install npm:agent-concepts` delivers. Then `pi install npm:pi-subagents` (0.90.0), as the README says. Pi 1.6.1. Run with `STRANGER_SOURCE=pack scripts/stranger_end_to_end.sh`.
-- No copied roles: nothing was copied into the sandbox's agent directory. The skills, kernel and roles came from the package only.
+Both attempts installed the committed HEAD with `STRANGER_SOURCE=pack scripts/stranger_end_to_end.sh`: `npm pack`, unpack, `pi install <unpacked dir>` (what `pi install npm:agent-concepts` delivers), then `pi install npm:pi-subagents` 0.90.0 on Pi 1.6.1. Nothing was copied into the sandbox's agent directory; skills, kernel and roles came from the package only.
 
-## What the files show
+## Attempt 1, 16:51–17:14: anthropic/claude-haiku-5-5 low, not graded
 
-| Phase | Evidence | Outcome |
+Consumer: anthropic/claude-haiku-5-5 low (owner choice 2026-11-27 for this release). Install `5137d11` passed, but every model call was refused with HTTP 429 `rate_limit_error` (16 errored turns in setup, 32 in the build), so no phase ran. The limit persisted afterwards, so the orchestrator switched the model.
+
+## Attempt 2, 19:06–19:52: openai-codex/gpt-6.1-terra low
+
+Model: openai-codex/gpt-6.1-terra low (orchestrator choice after Haiku stayed rate-limited). Installed revision `29ae424`.
+
+| Phase | Evidence (from files) | Grade |
 |---|---|---|
-| Isolation | `isolation.txt`: `isolation ok` | pass |
-| Install | `install.log`: `Installed /box/src/package`, `Installed npm:pi-subagents`; `pi list` shows both packages | pass |
-| Auth | `auth-check.txt`: `ready` | pass |
-| Setup (16:51–16:52) | 16 turns end with `stopReason: error`, 429 `rate_limit_error`; the fixture has no `AGENTS.md`; `fixture-log.txt` holds only the fixture commit | not run |
-| Plan (16:52–16:53) | same 429 errors; no work item | not run |
-| Build (16:53–17:14) | 32 turns end with 429 errors; the bare remote's `main` is still the fixture commit | not run |
+| Install | `Installed /box/src/package`, `Installed npm:pi-subagents`; no copied roles | pass |
+| Setup | `AGENTS.md`, `.bc-agent/`, `work/`, `scripts/gate` exist; `scripts/gate` exits 0 on the fixture copy; origin `main` has `Set up project agent workspace` | pass |
+| Plan | `work/1-planned/003-normalize-internal-whitespace.md`: `Ready for agent: yes`, requirements, one step; pushed as `Plan internal whitespace normalization` | pass |
+| Build | origin `main` tip is still the plan commit; no code or test change anywhere. Final reply: "I can't tell which item "yes" refers to. Reply **1** for whitespace or **2** for guardrails." | **FAIL** |
 
-A model check outside the sandbox after the run also returned the same 429, so the one allowed infrastructure retry was not used: it would hit the same limit.
+Build transcript, condensed ([excerpt](evidence/npm-pack-rerun-build-stall.md)):
 
-## Friction a stranger would hit
+1. Driver asks permission to push to `origin` `main` (fine).
+2. The stranger answers: "Build the whitespace item I just planned. Yes, push to the local origin … main only."
+3. Driver: "**001-guardrails-setup-checks** is ahead of it in the pipeline. The drain's work-item rules say not to skip an eligible item. Which should run first? 1. Whitespace (recommended) … 2. Guardrails". 
+4. Neutral "Yes, that's fine. Go ahead." twice; the driver re-asks, then refuses to guess. Script answer budget (3) exhausted.
+
+## Friction a stranger hits
 
 | # | Where | What happened | Status |
 |---|---|---|---|
-| N1 | Every phase | When the provider rate-limits, the session ends with an empty reply. `final.txt` is empty for all three phases; the 429 shows only in the RPC stream. A stranger sees nothing happen and no reason. | Pi behavior, not this repository's; recorded only. |
-| N2 | Install | The packed tarball is named `agent-concepts-0.3.0.tgz`: `package.json` still says 0.3.0 although it now holds changes made after v0.3.0. The release step must raise the version before publishing. | For the release step. |
-
-Rerun when the Anthropic limit has reset: `EVIDENCE=<new dir> MODEL=anthropic/claude-haiku-5-5 THINKING=low STRANGER_SOURCE=pack scripts/stranger_end_to_end.sh`.
+| N1 | Attempt 1, every phase | On a provider 429 every phase ends with an empty reply; the error is only in the RPC stream. | Pi behavior; recorded only. |
+| N2 | Install | The tarball is `agent-concepts-0.3.0.tgz`: `package.json` still says 0.3.0. | Release step must raise the version. |
+| N3 | Build (blocker) | Setup's new starter items (`001-guardrails-setup-checks`, `002-architecture-review`, both `Ready for agent: yes`) sit ahead of the user's freshly planned item, so the pipeline refuses to build the item the user named without a numbered reorder answer, even though the user already said which item to build. | Open: needs a fix in `bc-pipeline-to-done` (an explicit user naming of an item should count as the reorder decision) and/or in the starter items' readiness from 045. Needs a work item. |
+| N4 | Build | A "yes" to a numbered choice is rejected rather than taken as the recommended option; a stranger answering conversationally loops. | Same work item as N3. |
+| N5 | Build | The build session ran 40 minutes (21 subagent calls) before stalling. | Recorded. |

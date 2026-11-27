@@ -55,4 +55,4 @@ The full session logs and system prompts stay private, outside the repository.
 
 ## npm package rerun (044), 2026-11-27
 
-[npm-pack-rerun.md](npm-pack-rerun.md): installing the `npm pack` of the checkout plus `npm:pi-subagents` worked with no copied roles, but every session was refused with HTTP 429 (rate limit), so setup, plan and build were not graded. Rerun needed.
+[npm-pack-rerun.md](npm-pack-rerun.md): installing the `npm pack` of the checkout plus `npm:pi-subagents` worked with no copied roles. Haiku attempt: every session HTTP 429, not graded. Terra attempt: setup and planning pass; the build FAILED, stalling on a reorder question because setup's starter items sit ahead of the planned item.
