@@ -25,7 +25,11 @@ Held by: pi 01a218e4 since 2026-11-26 22:54 +00:00
   - Gate: pass ./scripts/gate at bccfbde 2026-11-27
   - Landed in `bccfbde`.
   - Human-only verification: an authenticated Claude Code session with the plugin shows both kernel parts at start and after `/compact` (the build's isolated client was not logged in).
-- [ ] Codex and OpenCode packages: Codex plugin with a trusted SessionStart hook (own hooks file, separate from Claude's) and a local marketplace entry; OpenCode V2 plugin adding the kernel through its context hook. Blocked by: step 1. Story 2. Done when each loads the kernel in a fresh session on the local client, or the step records which client version could not be tested as a human-only verification. Out of scope: OpenCode V1.
+- [x] Codex and OpenCode packages: Codex plugin with a trusted SessionStart hook (own hooks file, separate from Claude's) and a local marketplace entry; OpenCode V2 plugin adding the kernel through its context hook. Blocked by: step 1. Story 2. Done when each loads the kernel in a fresh session on the local client, or the step records which client version could not be tested as a human-only verification. Out of scope: OpenCode V1.
+  - Review: approved by tier-1 2026-11-27
+  - Gate: pass ./scripts/gate at 4afb40c 2026-11-27
+  - Landed in `4afb40c`.
+  - Human-only verification: in a logged-in Codex 0.153.1, trust the hook in `/hooks` and confirm a fresh session gets the kernel without the smoke-only bypass; compaction not exercised. Known: a resumed Codex session carries the kernel twice (history plus the new hook output).
 - [ ] Setup checks for the kernel, and docs: `bc-setup-project`'s survey checks whether the kernel is loaded (package installed, marker block or `# Agent Kernel` heading in the always-on file); when missing it names the install command for the harness and writes nothing; one ideas-file line if the user declines. README Install gains an optional kernel section (install, disable, remove, pins); `docs/guides/harnesses.md` separates package delivery from manual deltas; CONCEPT deploy targets, `index.md`, `.bc-agent/log.md`. Pressure scenario. Blocked by: steps 2 to 4. Stories 3, 4. Done when the with-change run reports the missing kernel and writes nothing while the baseline does not report it; lint has 0 ERROR and the gate passes. Out of scope: kernel content.
 
 ## Outcome
