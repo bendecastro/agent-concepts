@@ -2330,3 +2330,6 @@ New `scripts/pi_sandbox.py` masks Pi 1.6.1's global instruction files (seven nam
 
 ## [2026-11-27] test | stranger rerun (039) and conditional sync-tool ignore
 Stranger rerun on installed 87782c9 reached landing on the bare remote with no stall; results filed beside the first run. Its build worker wrote a `.stignore` because bc-tdd's properties.md and setup's generated validation.md said to Syncthing-ignore property-test caches; both now make it conditional on a synced folder.
+
+## [2026-11-27] implement | 043 plain pipeline messages and planned dependencies
+Pipeline push question in plain words; full report moves to the run log and the chat report leads with what landed, checks and reviews (cost table only when a cost is known); `work_spent.py` prints `Spent: not measured` instead of zeros; setup's survey checks `gh` only with a GitHub remote. Planning asks about libraries the project lacks and records `Dependencies:`; the builder adds only those (new contract edge; scenario written, not run).

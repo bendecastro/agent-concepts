@@ -20,9 +20,9 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Plain push question, plain report, plain Spent line, no `gh` noise. Done when targeted tests cover the Spent line and a setup survey without a GitHub remote, and lint passes. Out of scope: role and install wiring (042-one-command-pi-install).
-- [ ] Planned dependencies: planning asks, builder obeys. Done when the scenario file exists with old/new arms and expected outcomes. Out of scope: running the pressure test (the parent runs it on the pressure-test model).
+- [x] Plain push question, plain report, plain Spent line, no `gh` noise. Done when targeted tests cover the Spent line and a setup survey without a GitHub remote, and lint passes. Out of scope: role and install wiring (042-one-command-pi-install).
+- [x] Planned dependencies: planning asks, builder obeys. Done when the scenario file exists with old/new arms and expected outcomes. Out of scope: running the pressure test (the parent runs it on the pressure-test model).
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Implemented in `bc-pipeline-to-done` (plain push question; full report in the run log `report.md`, short chat report leading with what landed, checks and reviews, cost table only when a cost is known; builder adds only dependencies the item names, else `BLOCKED_NEEDS_HUMAN`), `bc-plan-to-pipeline` (asks once about a library the project lacks and records a `Dependencies:` line) and `bc-setup-project` (`Spent: not measured` when nothing was counted, accepted by `work_index.py --check`; `gh` checked and mentioned only with a GitHub remote). Tests: `tests/test_work_spent.py` and new `tests/test_survey_github.py` pass. New contract edge builder → planner in `relationships.json`. The dependency rule's pressure scenario is `concepts/bc-pipeline-to-done/tests/scenario-planned-dependencies.md`, not yet run; `test_status` records it as untested. The report and push-question wording are untested by a pressure run.

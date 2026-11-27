@@ -61,6 +61,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Skips an issue whose planned work item lacks the Planned: bc-plan-to-pipeline <date> line that bc-plan-to-pipeline writes, and reports it as needs planning instead of running the interactive planner.
   Source: [bc-pipeline-to-done/body/source-issues.md](../bc-pipeline-to-done/body/source-issues.md#select)
 
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — optional, when the unit needs a dependency the project lacks.
+  The builder adds only dependencies the item names, which bc-plan-to-pipeline records in a `Dependencies:` line after asking the owner; without the line the builder stops the unit with a question.
+  Source: [bc-pipeline-to-done/body/execute-issue.md](../bc-pipeline-to-done/body/execute-issue.md#build-loop)
+
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when work-item source.
   Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope.
   Source: [bc-pipeline-to-done/body/source-work-items.md](../bc-pipeline-to-done/body/source-work-items.md#eligibility)

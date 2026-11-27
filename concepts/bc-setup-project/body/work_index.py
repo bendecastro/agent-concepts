@@ -527,7 +527,7 @@ def spent_warnings(work: Path) -> list[str]:
             if not (work / rel).is_file():
                 continue
             data = spent_data(section(read_text(work / rel), "Outcome"))
-            if data and data["active"] is None:
+            if data and data["active"] is None and not data["text"].startswith("not measured"):
                 warnings.append(f"{rel} has a malformed Spent: line; write `{SPENT_FORM}` "
                                 f"(python3 .bc-agent/scripts/work_spent.py <item> prints it)")
     return warnings

@@ -96,15 +96,14 @@ def test_codex_sums_token_counts_and_has_no_cost(tmp_path):
                                      "claude-code no files, codex 1 session without cost; other tools not counted)")
 
 
-def test_no_matching_session_gives_a_zero_line(tmp_path):
+def test_no_matching_session_says_not_measured(tmp_path):
     proj = project(tmp_path)
     pi = tmp_path / "pi"
     pi_session(pi, "later", proj, ["2026-11-02T10:05:00Z", "2026-11-02T10:10:00Z"])
     (tmp_path / "claude").mkdir()
     result = run(proj, {"pi": pi, "claude": tmp_path / "claude", "codex": tmp_path / "none"})
     assert result.returncode == 0, result.stderr
-    assert result.stdout.strip() == ("Spent: 0m active, 0 tokens, cost unknown (estimated; pi 0 sessions, "
-                                     "claude-code 0 sessions, codex no files; other tools not counted)")
+    assert result.stdout.strip() == "Spent: not measured (no agent session for this item was found)"
 
 
 def test_json_lists_the_period_and_matched_sessions(tmp_path):
@@ -148,6 +147,8 @@ def test_work_index_json_parses_the_spent_line_and_check_warns_on_a_malformed_on
     (work / "3-done/2026-11/001-good.md").write_text(PLAN + f"Landed.\n\n{LINE}\n")
     (work / "3-done/2026-11/002-bad.md").write_text(PLAN + "Spent: about an hour\n")
     (work / "3-done/2026-11/003-none.md").write_text(PLAN + "Landed.\n")
+    (work / "3-done/2026-11/004-unmeasured.md").write_text(
+        PLAN + "Landed.\n\nSpent: not measured (no agent session for this item was found)\n")
     result = subprocess.run([sys.executable, str(INDEX), "--json", str(work)], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
     items = {i["name"]: i for i in json.loads(result.stdout)["items"]}
@@ -157,11 +158,14 @@ def test_work_index_json_parses_the_spent_line_and_check_warns_on_a_malformed_on
     assert items["002-bad"]["spent"] == {"active": None, "tokens": None, "cost": None, "sources": None,
                                          "text": "about an hour"}
     assert items["003-none"]["spent"] is None
+    assert items["004-unmeasured"]["spent"] == {"active": None, "tokens": None, "cost": None, "sources": None,
+                                                "text": "not measured (no agent session for this item was found)"}
     subprocess.run([sys.executable, str(INDEX), str(work)], check=True)
     check = subprocess.run([sys.executable, str(INDEX), "--check", str(work)], capture_output=True, text=True)
     assert check.returncode == 0, check.stderr
     assert "3-done/2026-11/002-bad.md has a malformed Spent: line" in check.stderr
     assert "001-good" not in check.stderr
+    assert "004-unmeasured" not in check.stderr
 
 
 def test_pi_child_sessions_of_a_matched_parent_count_in_any_folder_within_the_period(tmp_path):

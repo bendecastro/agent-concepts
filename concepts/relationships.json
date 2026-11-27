@@ -992,6 +992,15 @@
       "reason": "Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope."
     },
     {
+      "from": "bc-pipeline-to-done",
+      "to": "bc-plan-to-pipeline",
+      "relation": "depends_on_contract",
+      "required": false,
+      "when": "the unit needs a dependency the project lacks",
+      "source": "concepts/bc-pipeline-to-done/body/execute-issue.md#build-loop",
+      "reason": "The builder adds only dependencies the item names, which bc-plan-to-pipeline records in a `Dependencies:` line after asking the owner; without the line the builder stops the unit with a question."
+    },
+    {
       "from": "bc-setup-project",
       "to": "bc-plan-to-pipeline",
       "relation": "depends_on_contract",

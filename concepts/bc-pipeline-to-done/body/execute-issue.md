@@ -34,6 +34,8 @@ Preserve the driver's baseline cache. Run targeted tests/checks while editing an
 
 If you notice follow-up work or an observation outside this issue, list each one as a one-line follow-up in your handoff, and leave the work folders and the ideas file untouched. Why: you run in a git worktree, so you cannot see other worktrees' item numbers and would pick a taken one; the line is outside this issue's scope, so the scope gate and the reviewers would reject it; and parallel workers appending to one ideas file conflict at rebase. When the project has a "Where things go" table, the driver appends your follow-ups to its ideas file after landing.
 
+Add only the dependencies the issue or item names. A dependency is any library, tool or package the project does not already declare, including test-only ones such as a property-testing library; adding one means editing a dependency file (`pyproject.toml`, `requirements*.txt`, `package.json`, a lockfile and the like) or installing it into the project. When the work seems to need one the issue does not name, do not add it and do not work around the rule with a vendored copy: return `BLOCKED_NEEDS_HUMAN` with the question “May I add `<name>` as a (test) dependency? It is needed for <reason>; without it I would <alternative>.” If the issue already says how to manage without it (for example example-based tests instead of property tests), do that instead. Why: a dependency is the owner's decision with lasting cost, and planning (`bc-plan-to-pipeline`) asks it while the owner is present and records it as a `Dependencies:` line; in a stranger's test run a builder added Hypothesis to `pyproject.toml` unasked.
+
 ## Review-ready gate
 
 Before handoff:

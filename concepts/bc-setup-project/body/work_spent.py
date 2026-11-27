@@ -29,6 +29,7 @@ TOOLS = {  # tool: (label, env override, default root)
     "codex": ("codex", "WORK_SPENT_CODEX_SESSIONS", Path(os.environ.get("CODEX_HOME", HOME / ".codex")) / "sessions"),
 }
 COSTED = {"pi"}  # tools whose session files record cost
+NOT_MEASURED = "Spent: not measured (no agent session for this item was found)"
 
 
 def when(stamp) -> datetime | None:
@@ -182,6 +183,8 @@ def tokens_text(n: int) -> str:
 
 
 def spent_line(tools: dict, sessions: list[dict]) -> str:
+    if not sessions:
+        return NOT_MEASURED
     minutes = sum(s["active_seconds"] for s in sessions) // 60
     active = f"{minutes // 60}h {minutes % 60}m" if minutes >= 60 else f"{minutes}m"
     costs = [s["cost"] for s in sessions if s["cost"] is not None]

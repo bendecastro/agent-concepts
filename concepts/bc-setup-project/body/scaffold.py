@@ -1522,7 +1522,7 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
   the last line of `## Outcome`, for example `Spent: 2h 10m active, 3.4M tokens, $5.20 (estimated;
   pi 3 sessions, claude-code no files, codex 0 sessions; other tools not counted)`. The script
   estimates it from the agent tools' own session files for the item's active period; never write
-  or adjust the figures yourself, and paste a line that says `0m` or `cost unknown` as it is.
+  or adjust the figures yourself, and paste a line that says `cost unknown` or `not measured` as it is.
   `--json` lists the sessions it counted. `work_index.py --check` warns about a malformed line.
   Why: the owner's dashboard shows what each item cost; a guessed figure is worse than none.
 - **Several items may be active at once.**
