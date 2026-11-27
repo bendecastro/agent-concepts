@@ -2310,3 +2310,6 @@ Filed the first stranger run's stalls as 036-pipeline-no-github-source, 037-setu
 
 ## [2026-11-27] implement | file 040 and 041 from drain reflection
 The reflection on the 2026-11-26 drain found test sessions reading the wrong instruction files (3 of 10 items) and status lines claiming more than their results tables (4 of 10); filed as 040-pressure-sandbox-instructions (replaces the harness-masks idea) and 041-results-claims-match-tables.
+
+## [2026-11-27] implement | Starter items carry a Planned: line
+The owner-led architecture-review and issue-triage starter items now carry `Planned: bc-setup-project`, so `work_index.py --check` is quiet right after setup (owner choice over exempting them in the check). `test_starter_items.py` now fails on any index warning; it failed on both items before the change.

@@ -47,6 +47,7 @@ def test_starter_items_pass_work_index_check(project):
         steps, _ = steps_and_outcome.split("\n## Outcome\n")
         assert f"Kind: {kind}" in header.splitlines(), slug
         assert "Source: bc-setup-project" in header.splitlines(), slug
+        assert "Planned: bc-setup-project 2026-01-02" in header.splitlines(), slug
         if owner_command:
             assert any(line.startswith("Needs owner: ") and owner_command in line
                        for line in header.splitlines()), slug
@@ -69,3 +70,4 @@ def test_starter_items_pass_work_index_check(project):
     for args in ([], ["--check"]):
         result = subprocess.run(index + args, capture_output=True, text=True)
         assert result.returncode == 0, result.stderr
+        assert "warning" not in result.stderr, result.stderr

@@ -1,6 +1,6 @@
 # Starter items for an existing codebase
 
-Use these only when the setup survey finds existing source code. Each section heading is the item's filename slug; copy only the fenced text into the work item. Replace `{{stage}}` with a stage from the project's `Stages:` line and `{{date}}` with the setup date (`YYYY-MM-DD`). The two ready items are already planned by this reference; the owner-led items are not.
+Use these only when the setup survey finds existing source code. Each section heading is the item's filename slug; copy only the fenced text into the work item. Replace `{{stage}}` with a stage from the project's `Stages:` line and `{{date}}` with the setup date (`YYYY-MM-DD`). Every item here is already planned by this reference, so `work_index.py --check` does not ask for `bc-plan-to-pipeline`; only the two ready items carry `Ready for agent: yes`, because the owner-led items wait on the owner's own command.
 
 ## design-inventory
 
@@ -68,6 +68,7 @@ Blocked by: nothing
 Kind: architecture
 Needs owner: Run `/bc-improve-codebase-architecture` when ready to lead the review.
 Source: bc-setup-project
+Planned: bc-setup-project {{date}}
 
 ## Steps
 
@@ -92,6 +93,7 @@ Blocked by: nothing
 Kind: none
 Needs owner: Run `/bc-triage` when ready to decide which issues to take forward.
 Source: bc-setup-project
+Planned: bc-setup-project {{date}}
 
 ## Steps
 
