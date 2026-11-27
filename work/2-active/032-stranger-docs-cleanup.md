@@ -2,12 +2,13 @@
 
 Why: `docs/guides/pipeline.md` still describes the old `.bc-agent/` vault layout; five skills say to use `naming-things`, which was never tested or deployed; wiki search needs `$AGENT_CONCEPTS`, set only for a contributor checkout; setup's indexing and wiki-lint steps do not say which archetypes they apply to.
 Done when: The pipeline guide matches the visible layout; `naming-things` held its pressure test and is deployed; wiki search finds its script from the installed skill; setup's indexing and lint steps name their archetypes.
-Stage: later
+Stage: now
 Blocked by: nothing
 Kind: docs
 Source: stranger gap hunt (scouts), 2026-11-26; run notes in the owner's local swarm state
 Planned: bc-plan-to-pipeline 2026-11-26
 Ready for agent: yes
+Held by: pi 01a218e4 since 2026-11-27 02:50 +00:00
 
 ## Requirements
 
