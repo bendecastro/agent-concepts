@@ -44,10 +44,16 @@ class PluginManifestsTests(unittest.TestCase):
             self.assertEqual(manifest["version"], "1.2.3", path)
             self.assertEqual(manifest["name"], plugin_manifests.PLUGIN_NAME, path)
 
-    def test_marketplaces_point_at_the_repository_root_plugin(self):
+    def test_marketplaces_point_at_the_separate_plugins(self):
         plugin_manifests.write_manifests(self.root)
         claude = self.read(plugin_manifests.CLAUDE_MARKETPLACE)
-        self.assertEqual([(p["name"], p["source"]) for p in claude["plugins"]], [(plugin_manifests.PLUGIN_NAME, "./")])
+        self.assertEqual([(p["name"], p["source"]) for p in claude["plugins"]],
+                         [(plugin_manifests.PLUGIN_NAME, "./"),
+                          ("agent-kernel", "./packages/agent-kernel-claude")])
+        kernel = self.read("packages/agent-kernel-claude/.claude-plugin/plugin.json")
+        self.assertEqual(kernel["name"], "agent-kernel")
+        self.assertEqual(kernel["version"], "1.2.3")
+        self.assertNotIn("skills", kernel)
         codex = self.read(plugin_manifests.CODEX_MARKETPLACE)
         self.assertEqual([(p["name"], p["source"]) for p in codex["plugins"]],
                          [(plugin_manifests.PLUGIN_NAME, {"source": "local", "path": "./"})])
@@ -58,7 +64,7 @@ class PluginManifestsTests(unittest.TestCase):
 
     def test_check_reports_missing_manifests(self):
         errors = plugin_manifests.check_manifests(self.root)
-        self.assertEqual(len(errors), 4)
+        self.assertEqual(len(errors), 5)
         self.assertTrue(all("--write-plugin-manifests" in error for error in errors))
 
     def test_check_reports_a_manifest_stale_after_the_public_list_changes(self):

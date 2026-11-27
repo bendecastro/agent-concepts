@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage the canonical kernel bytes for the standalone package."""
+"""Stage the canonical kernel bytes for the standalone packages."""
 
 from pathlib import Path
 
@@ -8,6 +8,7 @@ CANONICAL = Path("concepts/agent-kernel/body/AGENT-KERNEL.md")
 STAGED_COPIES = (
     Path("packages/agent-kernel/AGENT-KERNEL.md"),
     Path("packages/agent-kernel-pi/AGENT-KERNEL.md"),
+    Path("packages/agent-kernel-claude/AGENT-KERNEL.md"),
 )
 BUILD_COMMAND = "python3 scripts/kernel_package.py"
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate and check the Claude Code and Codex plugin manifests and marketplaces.
 
-The repository root is one plugin for both agents. Each manifest lists every
+The repository root is the skills plugin for both agents. Each manifest lists every
 public skill's `concepts/<name>/body` folder by path, read from the committed
 public skill list, so no skill is copied or linked into a second tree. Why
 paths rather than a `skills/` folder of symlinks: Claude Code's installer
@@ -26,6 +26,8 @@ LICENSE = "MIT"
 LIST_PATH = "concepts/public-skills.json"
 CLAUDE_PLUGIN = ".claude-plugin/plugin.json"
 CLAUDE_MARKETPLACE = ".claude-plugin/marketplace.json"
+CLAUDE_KERNEL_ROOT = "packages/agent-kernel-claude"
+CLAUDE_KERNEL_PLUGIN = f"{CLAUDE_KERNEL_ROOT}/.claude-plugin/plugin.json"
 CODEX_PLUGIN = ".codex-plugin/plugin.json"
 CODEX_MARKETPLACE = ".agents/plugins/marketplace.json"
 
@@ -50,14 +52,25 @@ def render_manifests(root: Path) -> dict[str, dict]:
         "license": LICENSE,
         "skills": skills,
     }
+    kernel = {
+        "name": "agent-kernel",
+        "version": version,
+        "description": "Opt-in always-on instructions for coding agents.",
+        "author": AUTHOR,
+        "license": LICENSE,
+    }
     return {
+        CLAUDE_KERNEL_PLUGIN: kernel,
         CLAUDE_PLUGIN: plugin,
         CLAUDE_MARKETPLACE: {
             "name": PLUGIN_NAME,
             "owner": AUTHOR,
             "metadata": {"description": DESCRIPTION},
-            "plugins": [{"name": PLUGIN_NAME, "source": "./", "description": DESCRIPTION,
-                         "version": version}],
+            "plugins": [
+                {"name": PLUGIN_NAME, "source": "./", "description": DESCRIPTION, "version": version},
+                {"name": kernel["name"], "source": f"./{CLAUDE_KERNEL_ROOT}",
+                 "description": kernel["description"], "version": version},
+            ],
         },
         CODEX_PLUGIN: {
             **plugin,

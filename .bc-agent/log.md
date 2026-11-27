@@ -2280,3 +2280,6 @@ Pi loads a fixed staged kernel section from the separate local package; install 
 
 ## [2026-11-27] implement | Pipeline regression guardrails
 Build packets load performance guardrails for performance, size, memory and structure regressions; Spec checks the new protection or the reason none can catch it. One masked Terra low dry run per arm: both added a check (NO_DEFECT); treatment loaded the skill and documented the cap. No live drain ran.
+
+## [2026-11-27] implement | Opt-in Claude Code kernel plugin
+Separate marketplace plugin; Claude Code 2.1.329 sent both labeled section slices at startup and resume against a loopback stub and neither after uninstall or with skills alone. No authenticated Claude request or compaction ran. One real Terra low Pi proxy run per arm confirmed byte delivery in treatment only; neither asked for approval. No kernel wording or owner configuration changed.

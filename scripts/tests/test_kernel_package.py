@@ -22,7 +22,7 @@ def checkout(tmp_path):
         rmtree(root)
 
 
-@pytest.mark.parametrize("package", ["agent-kernel", "agent-kernel-pi"])
+@pytest.mark.parametrize("package", ["agent-kernel", "agent-kernel-pi", "agent-kernel-claude"])
 def test_build_stages_canonical_bytes_without_rewriting_an_identical_copy(checkout, package):
     from kernel_package import stage_kernel
 
@@ -56,12 +56,11 @@ def test_lint_rejects_edited_staged_bytes(checkout, monkeypatch):
 
 def test_lint_rejects_edited_pi_copy(checkout, monkeypatch):
     import lint
+    from kernel_package import stage_kernel
 
-    root, canonical, staged = checkout
+    root, _, _ = checkout
     pi_copy = root / "packages/agent-kernel-pi/AGENT-KERNEL.md"
-    for copy in (staged, pi_copy):
-        copy.parent.mkdir(parents=True)
-        copy.write_bytes(canonical.read_bytes())
+    stage_kernel(root)
     monkeypatch.setattr(lint, "ROOT", root)
     issues = []
     lint.lint_kernel_package(issues)
@@ -117,3 +116,22 @@ def test_pi_extension_reads_once_and_keeps_the_same_section(checkout):
         }
         assert.equal(reads, 1);
     """], cwd=package, check=True)
+
+
+def test_lint_rejects_edited_claude_copy(checkout, monkeypatch):
+    import lint
+    from kernel_package import stage_kernel
+
+    root, _, _ = checkout
+    path = Path("packages/agent-kernel-claude/AGENT-KERNEL.md")
+    stage_kernel(root)
+    copy = root / path
+    monkeypatch.setattr(lint, "ROOT", root)
+    issues = []
+    lint.lint_kernel_package(issues)
+    assert issues == []
+    copy.write_bytes(b"# Edited Claude copy\n")
+    lint.lint_kernel_package(issues)
+    assert len(issues) == 1
+    assert issues[0].severity == "ERROR"
+    assert str(path) in issues[0].message
