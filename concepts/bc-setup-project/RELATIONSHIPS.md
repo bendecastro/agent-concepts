@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- depends on `agent-kernel`'s contract — required, when surveying the current harness for the kernel.
+  The read-only survey uses the kernel's opt-in install contract and marked-block signature; setup does not load the kernel.
+  Source: [body/SKILL.md](body/SKILL.md#process)
+
 - depends on `bc-domain-modeling`'s contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)

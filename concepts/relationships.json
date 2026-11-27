@@ -39,6 +39,15 @@
     },
     {
       "from": "bc-setup-project",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "surveying the current harness for the kernel",
+      "source": "concepts/bc-setup-project/body/SKILL.md#process",
+      "reason": "The read-only survey uses the kernel's opt-in install contract and marked-block signature; setup does not load the kernel."
+    },
+    {
+      "from": "bc-setup-project",
       "to": "bc-pipeline-to-done",
       "relation": "depends_on_contract",
       "required": true,

@@ -49,6 +49,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-pipeline-to-done/body/SKILL.md](../bc-pipeline-to-done/body/SKILL.md)
 
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when surveying the current harness for the kernel.
+  The read-only survey uses the kernel's opt-in install contract and marked-block signature; setup does not load the kernel.
+  Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md#process)
+
 - incoming from [bc-subagent-driven-development](../bc-subagent-driven-development/RELATIONSHIPS.md): depends on this concept's contract — required, when test, fan-out or worktree lifecycle.
   The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
   Source: [bc-subagent-driven-development/body/SKILL.md](../bc-subagent-driven-development/body/SKILL.md)

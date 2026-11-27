@@ -289,7 +289,7 @@ Skills marked `/name` are ones you type yourself; the rest load automatically wh
 
 </details>
 
-The always-on [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md) loads in every session and holds the basic rules: how the agent behaves, checks its work, and keeps its working memory focused. The install methods below do not add it, so copy it into your agent's always-on instructions file (`AGENTS.md`, `CLAUDE.md` or similar); [harnesses.md](docs/guides/harnesses.md) says where each agent reads that file.
+The [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md) supplies always-on rules for how the agent behaves and checks its work. The skills do not load it. To use it, [install the optional kernel](#optional-agent-kernel) separately.
 
 Every concept is listed in [index.md](index.md). To see how agents test the code they change, read [workflows.md § How the skills test code](docs/guides/workflows.md#how-the-skills-test-code).
 
@@ -680,6 +680,21 @@ A symlink pointing to a skill this checkout does not own is reported and left al
 </details>
 
 <br>
+
+### Optional agent kernel
+
+The kernel is separate from the skills. Use one kernel source per harness: a package, a manual include or a marked block, not several. The commands below use a local Agent Concepts checkout. To pin the kernel, check out a release tag **that contains the kernel package** or a full commit SHA in a dedicated checkout and use that path. These instructions do not assume the skills release named above includes the kernel. Keep the pinned checkout at that revision; to upgrade, select another revision and refresh or reinstall from it.
+
+| Harness | Install | Disable | Remove |
+|---|---|---|---|
+| Pi 1.6.1+ | From the checkout root, `pi install ./packages/agent-kernel-pi`. | Disable the kernel extension in `pi config`. | From the same checkout root, `pi remove ./packages/agent-kernel-pi`. |
+| Claude Code (requires `python3`) | `claude plugin marketplace add /path/to/agent-concepts`, then `claude plugin install agent-kernel@agent-concepts --scope user`. If the marketplace is already registered, use its checkout if it contains the package. | `claude plugin disable agent-kernel@agent-concepts --scope user`. | `claude plugin uninstall agent-kernel@agent-concepts --scope user`. Keep the marketplace if you still use its skills. |
+| Codex (requires `python3`) | `codex plugin marketplace add /path/to/agent-concepts`, then `codex plugin add agent-kernel@agent-concepts`. If the marketplace is already registered, use its checkout if it contains the package. Review and trust the SessionStart hook with `/hooks`; it won't load until trusted. | Disable the kernel plugin in `/plugins`. | `codex plugin remove agent-kernel@agent-concepts`. Keep the marketplace if you still use its skills. |
+| OpenCode V2 | In global `opencode.json(c)`, add the absolute path to `packages/agent-kernel-opencode/` to `plugins`. | Delete that entry from `plugins`; leave the package files in place to re-enable later. | Delete the same entry; the checkout can stay. |
+| OpenCode V1 | In global `opencode.json(c)`, add the absolute path to the checkout's `packages/agent-kernel/AGENT-KERNEL.md` to `instructions`. There is no V1 kernel plugin. | Delete that entry from `instructions`; keep the file to re-enable later. | Delete the same entry; the checkout can stay. |
+| Other harnesses or manual file install | `python3 /path/to/agent-concepts/packages/agent-kernel/install.py /path/to/instructions.md`, naming the instructions file your harness loads. | There is no separate switch; remove the block and rerun install to re-enable it. | Run the same command with `--remove`; it removes only the marked block. |
+
+Start a fresh session after install, disable or removal; an old session may still carry earlier instructions. For OpenCode, restart the server before starting the new session. The manual installer pins the **copied bytes**: to change versions, run the installer from the new pinned checkout against the same file. See [delivery behavior and manual deltas](docs/guides/harnesses.md#standalone-kernel) for details.
 
 ### Install prerequisites for the pipeline
 

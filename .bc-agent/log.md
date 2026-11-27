@@ -2295,3 +2295,6 @@ The pipeline guide now describes the code scaffold; setup distinguishes all-arch
 
 ## [2026-11-27] test | Installed wiki tools close-out
 One real Terra low run per arm: revised 4/4 vs base 3/4 on archetype scope and installed CLI calls. Both ran registration-entry generation, lint and search (no registry edit or timer install); the unset-variable search invocation also failed then passed in the deterministic regression.
+
+## [2026-11-27] implement | Read-only kernel survey and optional install guide
+Setup checks the active harness without installing the kernel; the README separates package lifecycle and pinning from manual deltas. One real masked Terra low run per arm: base omitted the kernel, revised supplied the Pi command but hedged on runtime activation, and neither changed project files or settings.
