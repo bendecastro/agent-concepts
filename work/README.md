@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [047-release-soak-and-withdraw](1-planned/047-release-soak-and-withdraw.md) | planned, ready for agent | — | — | Agents release without asking, the npm install is unpinned and the Pi package loads the kernel into every session, so a bad agent-written release reaches every… | 0/1 |
+| 1 | [047-release-soak-and-withdraw](2-active/047-release-soak-and-withdraw.md) | active, ready for agent | — | — | Agents release without asking, the npm install is unpinned and the Pi package loads the kernel into every session, so a bad agent-written release reaches every… | 0/1 |
 | 2 | [048-stranger-report-channel](1-planned/048-stranger-report-channel.md) | planned, ready for agent | — | — | There is no SECURITY.md, no issue template and no "report a problem" line, so a misfiring skill, a broken install or a security report has no way in and the ow… | 0/1 |
 | 3 | [049-ci-latest-agents-and-kernel-load](1-planned/049-ci-latest-agents-and-kernel-load.md) | planned, ready for agent | — | — | CI runs only on push against pinned Pi, Claude Code and Codex (Pi 1.6.0 while the README says the kernel needs 1.6.1+), and the install test runs Pi with exten… | 0/1 |
 | 4 | [050-ship-setup-migrations](1-planned/050-ship-setup-migrations.md) | planned, ready for agent | — | — | `concepts/bc-setup-project/MIGRATIONS.md` sits outside `body/`, so npm, plugin and `npx skills` installs do not ship it, yet the CHANGELOG and `scaffold.py` po… | 0/1 |
