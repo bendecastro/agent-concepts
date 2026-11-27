@@ -121,7 +121,7 @@ The plan→execute lifecycle as composable skills. User-invoked orchestrators co
 - [docs/status.md](docs/status.md) — generated board: what needs testing, what is undeployed, what passes with a known gap. Regenerate with `python3 scripts/lint.py --write-status`; lint fails while it is stale.
 - [docs/guides/harnesses.md](docs/guides/harnesses.md) — compatibility matrix and deploy/bootstrap rules for Claude Code, Pi, Codex, OpenCode, Grok, Gemini, and manual harnesses.
 - [docs/guides/pressure-test-harness.md](docs/guides/pressure-test-harness.md) — Pi harness for pressure tests: hiding deployed skills, flags, headless pitfalls, dry runs for skills that launch subagents.
-- [scripts/stranger-end-to-end.md](scripts/stranger-end-to-end.md) — clean-home Pi recipe to exercise the public install through setup, planning and landing; includes a generated Python fixture and local bare remote.
+- [scripts/stranger-end-to-end.md](scripts/stranger-end-to-end.md) — Pi stranger test: `stranger_end_to_end.sh` installs this checkout into a sandbox with no private config and drives setup, planning and the pipeline over RPC on a generated fixture with a local bare remote.
 - [docs/guides/bootstrap.md](docs/guides/bootstrap.md) — copy/paste session prompts per harness.
 - [scripts/lint.py](scripts/lint.py) — mechanical drift checks for concept/index/provenance/test/link/deploy hygiene and missing handoffs for named workflow moments.
 - [concepts/relationships.json](concepts/relationships.json) — the one home for skill-to-skill relationships, declared once as forward edges and rendered into per-concept `RELATIONSHIPS.md` views carrying both outgoing relationships and incoming callers. Regenerate with `python3 scripts/lint.py --write-relationships`; lint fails while a view is stale. Maintainer metadata for change-impact review, never a runtime loader.
@@ -157,7 +157,7 @@ Plans are work items under `work/`; [work/README.md](work/README.md) lists the o
 
 Research reports and source evidence live under [docs/research/](docs/research/README.md). The top-level `docs/research/raw/` directory is the to-ingest inbox; `docs/research/raw/ingested/` holds sources whose ideas have been taken up (even partially — picking a couple of ideas counts).
 
-- [Stranger end-to-end test](docs/research/2026-11-27-stranger-end-to-end/README.md) — isolated Pi preflight results and live-test grading; live run not yet executed.
+- [Stranger end-to-end test](docs/research/2026-11-27-stranger-end-to-end/README.md) — first live Pi stranger run: setup and planning pass, the build stopped choosing between work items and GitHub issues; three stalls filed as work items.
 - [cross-provider-code-review.md](docs/research/2026-10-26-cross-provider-code-review/README.md) — research report: whether a fresh code reviewer must come from a different model provider. Answer: second-order hedge; executed checks, withheld builder reasoning, reviewer capability, and a second independent review matter more. Two researcher reports under `evidence/`.
 - [iso-24495-1-operationalization.md](docs/research/2026-08-17-iso-24495-1-operationalization/README.md) — research report on ISO 24495-1 operationalization and related bc-plain-language standards.
 - [2026-08-27-agent-vault-read-path/](docs/research/2026-08-27-agent-vault-read-path/README.md) — the full read-path plan record (formerly an active plan): problem, resolved decisions, W1–W5, the W4 benchmark result, deferred items and open risks. Work item `007-agent-vault-read-path` closed it in reduced scope.

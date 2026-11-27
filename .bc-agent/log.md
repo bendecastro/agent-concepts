@@ -2302,5 +2302,5 @@ Setup checks the active harness without installing the kernel; the README separa
 ## [2026-11-27] test | Naming Things under first-release pressure
 Three real Terra low runs per arm; neither arm held (0/3 each). Treatment recorded glossary persistence but still used the misleading proposed name in derived IDs and hashes. Deployment remains off; cases A–F were not run.
 
-## [2026-11-27] test | Pi stranger end-to-end fixture
-Added the isolated public-install recipe and Python fixture. Corrected sandbox preflight passed, including local bare `main` and the exact Terra model in the catalog; live setup, planning and pipeline phases were not run (zero model requests).
+## [2026-11-27] test | Pi stranger end-to-end run
+Added `scripts/stranger_end_to_end.sh`, its RPC driver and fixture: a sandbox with no private config installs this checkout and drives setup, planning and `bc-pipeline-to-done` on a generated repository with a local bare remote. First live run (Terra low, two attempts): setup and planning pass; the build stopped asking whether GitHub issues were also ready in a project with no GitHub remote, so building and landing were not reached. Three skill stalls became work items; the driver's own stalls were fixed.
