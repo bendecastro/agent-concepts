@@ -77,7 +77,7 @@ def test_json_prints_every_item_with_header_steps_and_outcome(tmp_path):
             "why": "people want a dashboard. Second sentence.", "done_when": "it prints JSON.", "stage": "now",
             "blocked_by": "001-base", "kind": "feature", "needs_owner": None, "changes_ui": None, "source": "bc-plan-to-pipeline",
             "planned": "bc-plan-to-pipeline 2026-11-25", "ready_for_agent": "yes", "waiting_on_owner": None,
-            "held_by": None,
+            "replanning": None, "rounds": None, "held_by": None,
         },
         "steps": [
             {"text": "First step: does a thing.", "checked": True, "notes": "done 2026-11-25; see the test.", "review": [], "gate": []},
@@ -85,7 +85,7 @@ def test_json_prints_every_item_with_header_steps_and_outcome(tmp_path):
             {"text": "Third step\nspans two lines.", "checked": True, "notes": None, "review": [], "gate": []},
         ],
         "outcome": "<Filled when the item is finished or dropped.>",
-        "history": [], "held_by": None, "spent": None,
+        "history": [], "held_by": None, "replanning": None, "rounds": None, "spent": None,
     }
     done, dropped = data["items"][2], data["items"][3]
     assert done["path"] == "3-done/2026-11/001-base/plan.md"

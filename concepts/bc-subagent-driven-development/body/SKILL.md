@@ -41,6 +41,8 @@ Never make the implementer read the whole plan to find its task. Paste the exact
 6. Fix/re-review until spec compliant.
 7. Run code-quality review: bugs, tests, maintainability, architecture, edge cases.
 8. Fix/re-review until quality issues are resolved or explicitly deferred.
+
+Load `bc-code-review` and stop either fix loop (steps 6 and 8) as its Review loops section says; two blocking reviews in a row on new sequences end the task's loop with a return to planning, even under ship-without-asking instructions.
 9. Parent verifies and marks task complete.
 
 Do not dispatch multiple implementers in parallel unless tasks are proven independent and isolated; use `bc-dispatching-parallel-agents` for that case.

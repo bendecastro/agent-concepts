@@ -10,6 +10,7 @@ User-invoked plan execution pattern where a controller dispatches fresh implemen
 
 ## Design decisions
 
+- **Fix loops stop by bc-code-review's rule (2026-11-28, item 068-replan-protocol).** Steps 6 and 8 used to loop until resolved with no stop; they now load `bc-code-review`'s Review loops section, so two blocking reviews in a row on new sequences return the task to planning. Source: the replan-experience study (run folder `2026-11-28-replan-experience`).
 - **No links into other concepts (updated 2026-11-28, item 054-safe-runs-module).** The body loads `bc-safe-runs` by name and keeps a one-line fallback. The module derives its storage and worktree-removal rules from the agent kernel; installers can copy the skill without links into other concept folders.
 
 - **Controller-owned context.** The body keeps the upstream rule that subagents receive curated task text, not the whole parent session.

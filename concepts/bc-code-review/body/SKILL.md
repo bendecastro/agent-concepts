@@ -85,7 +85,7 @@ This does not license adding defensive code for impossible states — see *Findi
 
 Inside `/bc-pipeline-to-done`, the reviewed artifact is a worker’s uncommitted, GREEN worktree, and nothing lands until every axis stands approved on the exact diff being landed. A rebase that changes that diff invalidates the approval it carried, so the driver obtains fresh approval before retrying push or close.
 
-**The drain owns its own parameters and this section does not restate them.** Which tier applies, how many reviewers a round dispatches, which axes a rework round re-runs, and how many rework cycles are permitted all live in `bc-pipeline-to-done`' review contract, and reading them from there is not optional politeness — an earlier version of this section carried its own copy of the cycle budget and dispatch rule, both of which silently went stale when that loop changed. One home per fact applies to canon describing canon.
+**The drain owns its own parameters and this section does not restate them.** Which tier applies, how many reviewers a round dispatches and which axes a rework round re-runs all live in `bc-pipeline-to-done`' review contract (when the loop stops lives in Review loops below), and reading them from there is not optional politeness — an earlier version of this section carried its own copy of the cycle budget and dispatch rule, both of which silently went stale when that loop changed. One home per fact applies to canon describing canon.
 
 What this skill contributes inside that loop is the part that is genuinely its own: the two scopes stay distinct, reviewers work from the fixed packet and never from implementation reasoning, and evidence a reviewer lacks is blocking rather than an invitation to guess.
 
@@ -105,6 +105,28 @@ Before implementing feedback:
 6. Push back with technical evidence when feedback is wrong or over-scoped.
 
 Never respond with performative agreement (`You're absolutely right`, `Great point`, `Thanks`). Either act, ask a precise question, or give technical reasoning.
+
+## Review loops: when to stop fixing
+
+This is the one home of the stop rule for every fix-and-re-review loop: interactive, `bc-subagent-driven-development` and `bc-pipeline-to-done`.
+
+After each **blocking review** (one with Critical or Important findings) of the same change or work item, sort its blocking findings:
+
+- **failed fix:** a finding an earlier round named, still reachable;
+- **new sequence:** a path no earlier round named (a state, event, ordering, writer or version pairing nobody modelled).
+
+Then:
+
+1. **The same finding still reachable after two attempted fixes stops fixing it.** Inside `bc-pipeline-to-done`, defer the unit as its review contract says; elsewhere, ask the owner. The drain also stops at the initial review plus three rework cycles, continuing before that only while material findings are resolved or the failure class materially changes.
+2. **Two blocking reviews in a row on new sequences stop the loop for that item.** Dispatch no further fixer, even when the owner said to ship without asking or to "just fix it". Why: on 2026-11-25 two sync-safety items took ten blocking reviews and seven hours without shipping; each round found a sequence nobody had modelled, so each fix only moved the hole. The plan is wrong, not the patch. In one commit to the work item, following the project's work-item rules for each line:
+   - write `Replanning: <reason> — decides: owner` and remove `Ready for agent:`; the item stays in its folder;
+   - add a `## Replan notes` entry: the date; the trigger, naming the reviews and each unmodelled state, event, ordering or version pairing with the outcome it must reach; the owner's choice (pending); what you expect to change;
+   - keep landed steps ticked, and mark a step whose result is now invalid as superseded;
+   - update `Rounds:`.
+   Optionally ask an `oracle` (or another fresh reviewer) whether the design or the patch is wrong. Then ask the owner how to go on, recommending a return to planning (`/bc-plan-to-pipeline` on the item), where the owner sees questions (as for `Waiting on owner:`), and say so in your reply.
+3. **Count every blocking review on the item's `Rounds:` line,** adding the line at the first one.
+
+Without work items, record the same facts in the run's plan or report and ask the owner.
 
 ## External reviewer skepticism
 

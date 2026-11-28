@@ -83,6 +83,7 @@
     ],
     "bc-performance-guardrails": [],
     "bc-pipeline-to-done": [
+      "bc-code-review",
       "bc-codebase-docs",
       "bc-durable-subagents",
       "bc-performance-guardrails",
@@ -121,6 +122,7 @@
       "bc-wiki-maintain"
     ],
     "bc-subagent-driven-development": [
+      "bc-code-review",
       "bc-durable-subagents",
       "bc-safe-runs"
     ],

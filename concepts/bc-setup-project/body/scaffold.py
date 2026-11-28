@@ -1500,6 +1500,29 @@ __WORKTREE_NUMBERING_RULE__
   not ready until the owner's answer is recorded in the item, the waiting line is removed and the
   ready line restored. `work_index.py` marks both lines in the table and rejects an item with both.
   Why: a question the owner has not answered must stop unattended work on it, visibly.
+- **`Replanning: <reason> — decides: owner|agent` marks an item whose plan is being redone.**
+  Write it in the item header (in `plan.md` for a folder item) when a review loop stops, a
+  pressure test fails or the owner changes scope, and remove the `Ready for agent:` line in the
+  same commit. The item stays in its folder. `decides:` names who settles the new plan; when it
+  is the owner, ask where the owner sees questions, as for `Waiting on owner:`, which may stand
+  beside it for that question. `bc-plan-to-pipeline` removes the line once the item is replanned.
+  `work_index.py` marks it in the table and rejects it next to `Ready for agent:`.
+  Why: an item being reworked otherwise looks like normal progress, and the real story sits in
+  run folders nobody reads.
+- **Each replan gets an entry under `## Replan notes`,** newest last: the date; the trigger (which
+  reviews or tests, and the unmodelled states, events, orderings or version pairings they
+  exposed, each with the outcome it must reach); the owner's choice; what changed in the
+  requirements and steps. Why: the next planner needs to know why the last plan failed.
+- **A replan never unticks a landed step.** A step whose result the replan invalidates gets an
+  indented `Superseded <date>: <why>; replaced by <step title>` line. Scope cut from the item
+  becomes a new planned item without a `Planned:` line, or an ideas line; a slice that was its
+  own item and is dropped moves to dropped with its reason. Rewrite stale pending notes under
+  the steps rather than leaving them. Why: ticks are the history the dashboard reads, and an
+  untick erases what landed.
+- **`Rounds: <n> blocking reviews, <m> replans` counts the churn.** Add it to the header at the
+  item's first blocking review, raise a count at each blocking review and each replan, never
+  reset it, and keep the line when the item is done. Why: counts that restart with each replan
+  hide what an item cost.
 - **A `Held by:` line says who is working on an item.** Its form is
   `Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>`: your agent tool
   (`pi`, `claude-code`, `codex`, ...), your session name or id without spaces, and when you
@@ -1653,6 +1676,8 @@ Planned: <written by bc-plan-to-pipeline once it has planned this item, e.g. bc-
 Ready for agent: <optional: yes when every step states its done-criteria and out of scope, so bc-pipeline-to-done may build it unattended; delete the line otherwise>
 Dependencies: <required with Ready for agent: yes: none new, may add <name> (<why>) (owner's answer, <date>), or the owner's refusal; written by bc-plan-to-pipeline>
 Waiting on owner: <optional: the question that parks this item; delete the line when there is none, and never keep it with Ready for agent>
+Replanning: <optional: why the plan is being redone — decides: owner or agent; never kept with Ready for agent; delete the line when there is none>
+Rounds: <optional: <n> blocking reviews, <m> replans; added at the first blocking review, counts never reset; delete the line until then>
 
 ## Steps
 
@@ -1687,8 +1712,8 @@ number (see [.bc-agent/AGENTS.md](../.bc-agent/AGENTS.md#work-items)).
 It is generated: run `python3 .bc-agent/scripts/work_index.py` after changing an item or
 `order.md`; `--check` fails while it is out of date.
 An item with a `Ready for agent: yes` line may be built unattended by `bc-pipeline-to-done`;
-one with a `Waiting on owner: <question>` line is parked until the owner answers. The Folder
-column marks both.
+one with a `Waiting on owner: <question>` line is parked until the owner answers, and one with
+a `Replanning:` line is having its plan redone. The Folder column marks all three.
 Write project-specific notes outside the markers; the script keeps them.
 
 <!-- work-index:start -->
