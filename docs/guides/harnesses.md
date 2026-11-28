@@ -40,7 +40,7 @@ Use a manual instruction source **instead of** the package. A delta is a shorten
 | GitHub Copilot | Copilot CLI: `~/.copilot/copilot-instructions.md`; VS Code: the repository's `.github/copilot-instructions.md`. |
 | Other harnesses | Name the instructions file the harness actually loads. |
 
-For a marked block, run `npx -y agent-concepts kernel install <file>` (or `kernel remove <file>`); the npm package's bin runs `packages/agent-kernel/install.py` beside its packaged `AGENT-KERNEL.md`, so it needs Node.js and Python 3.9 or later (not Windows) but no checkout; a missing parent folder is created. From a checkout, run `install.py` directly, keeping it and `AGENT-KERNEL.md` together. The installer appends the block, or prepends it if there is no final newline, leaving other bytes unchanged. Leave marker lines to the installer: malformed or duplicate markers cause it to refuse the edit.
+For a marked block, run `npx -y agent-concepts@<version> kernel install <file>` (or `kernel remove <file>`), with the version the README's Install section pins (the bin ships from 0.5.1); the npm package's bin runs `packages/agent-kernel/install.py` beside its packaged `AGENT-KERNEL.md`, so it needs Node.js and Python 3.9 or later (not Windows) but no checkout; a missing parent folder is created. From a checkout, run `install.py` directly, keeping it and `AGENT-KERNEL.md` together. The installer appends the block, or prepends it if there is no final newline, leaving other bytes unchanged. Leave marker lines to the installer: malformed or duplicate markers cause it to refuse the edit.
 
 ## Compatibility matrix
 
