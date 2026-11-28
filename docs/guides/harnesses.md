@@ -35,9 +35,12 @@ Use a manual instruction source **instead of** the package. A delta is a shorten
 | OpenCode | Global `~/.config/opencode/AGENTS.md` or a loaded project instructions file. OpenCode 1.18.3 cannot run the V2 plugin; point its native [`instructions` array](https://opencode.ai/docs/rules/#configuration) at the packaged `AGENT-KERNEL.md` instead. Remove that entry if switching to the V2 plugin. |
 | Grok | `~/.grok/AGENTS.md`. |
 | Muse Code | `~/.config/muse/AGENTS.md`, a regular file (not a symlink). Don't symlink the config directory; it also holds auth data. |
+| Cursor | No global file; the project's `AGENTS.md` (usually committed, so the block reaches collaborators). |
+| Gemini CLI | `~/.gemini/GEMINI.md`. |
+| GitHub Copilot | Copilot CLI: `~/.copilot/copilot-instructions.md`; VS Code: the repository's `.github/copilot-instructions.md`. |
 | Other harnesses | Name the instructions file the harness actually loads. |
 
-For a marked block, keep `install.py` and `AGENT-KERNEL.md` together from `packages/agent-kernel/`. The installer appends the block, or prepends it if there is no final newline, leaving other bytes unchanged. Leave marker lines to the installer: malformed or duplicate markers cause it to refuse the edit.
+For a marked block, run `npx -y agent-concepts@<version> kernel install <file>` (or `kernel remove <file>`), with the version the README's Install section pins (the bin ships from 0.5.1); the npm package's bin runs `packages/agent-kernel/install.py` beside its packaged `AGENT-KERNEL.md`, so it needs Node.js and Python 3.9 or later (not Windows) but no checkout; a missing parent folder is created. From a checkout, run `install.py` directly, keeping it and `AGENT-KERNEL.md` together. The installer appends the block, or prepends it if there is no final newline, leaving other bytes unchanged. Leave marker lines to the installer: malformed or duplicate markers cause it to refuse the edit.
 
 ## Compatibility matrix
 

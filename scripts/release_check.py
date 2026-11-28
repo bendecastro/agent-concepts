@@ -31,7 +31,7 @@ ANY_TAG = re.compile(r"\bv\d+\.\d+\.\d+\b")
 NPM_PACKAGE = "agent-concepts"
 NPM_UNPINNED = re.compile(rf"pi install npm:{NPM_PACKAGE}(?![@\w-])")
 # A version pin starts with a digit; `@next` names a dist-tag, not a version.
-NPM_PIN = re.compile(rf"npm:{NPM_PACKAGE}@(\d\S*?)(?=[`\s]|$)", re.MULTILINE)
+NPM_PIN = re.compile(rf"(?:npm:|npx -y ){NPM_PACKAGE}@(\d\S*?)(?=[`\s]|$)", re.MULTILINE)
 
 
 def readme_install_problems(root: Path, tag: str) -> list[str]:
@@ -50,7 +50,7 @@ def readme_install_problems(root: Path, tag: str) -> list[str]:
         problems.append(f"{README} section `## Install` does not show `pi install npm:{NPM_PACKAGE}`")
     version = tag[1:]
     for pinned in sorted(set(NPM_PIN.findall(body)) - {version}):
-        problems.append(f"{README} section `## Install` pins npm:{NPM_PACKAGE}@{pinned}, not {version}")
+        problems.append(f"{README} section `## Install` pins {NPM_PACKAGE}@{pinned}, not {version}")
     return problems
 
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Install the bundled agent kernel into a named Markdown instructions file."""
 
+from __future__ import annotations
+
 import argparse
 import re
 import stat
@@ -39,6 +41,7 @@ def _marker_span(content: bytes) -> tuple[int, int] | None:
 
 
 def _replace_bytes(path: Path, content: bytes, mode: int | None) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     stream = NamedTemporaryFile(dir=path.parent, prefix=".agent-kernel-", delete=False)
     pending = Path(stream.name)
     try:

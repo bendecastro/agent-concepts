@@ -62,6 +62,8 @@ METHODS = ("pi", "pi-npm", "claude", "codex", "claude-kernel", "codex-kernel", "
 # Files the npm package must carry besides the skill bodies; npm adds README and LICENSE itself.
 PACKED_ALWAYS = ("package.json", "README.md", "LICENSE")
 PACKED_REQUIRED = ("LICENSE", "packages/agent-kernel-pi/index.js", "packages/agent-kernel-pi/AGENT-KERNEL.md",
+                   "packages/agent-kernel/cli.js", "packages/agent-kernel/install.py",
+                   "packages/agent-kernel/AGENT-KERNEL.md",
                    *sorted(p.relative_to(ROOT).as_posix()
                            for p in (ROOT / "concepts/bc-pipeline-to-done/body/agents").glob("*.md")))
 

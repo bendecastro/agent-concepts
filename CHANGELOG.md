@@ -22,6 +22,9 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 - The fresh-install test gains `claude-kernel` and `codex-kernel`: each adds the marketplace (from the
   release tag in the release workflow) and installs `agent-kernel`, then checks its SessionStart hooks
   deliver the canonical kernel text.
+- `npx -y agent-concepts kernel install <file>` and `kernel remove <file>` add or remove the agent kernel's
+  marked block in any instructions file, from the npm package with no checkout (needs Python 3.9 or later). The
+  README's Cursor, Gemini CLI, GitHub Copilot, OpenCode and other-agent boxes name the file to use.
 
 ### Changed
 

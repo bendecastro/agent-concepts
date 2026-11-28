@@ -2571,3 +2571,6 @@ After the review stop rule, the owner limited maps to new ideas and local files,
 
 ## [2026-11-28] implement | 067 merged with third-review nits
 Third review approved with nits; applied them in map-mode.md: a map stuck with only Slice open turns leftover questions into grilling steps, a Slice-time open question goes back onto the map, `Blocked by:` lines naming the map move to the new build items at close-out, legacy-vault map home, GitHub-map request without a table.
+
+## [2026-11-28] implement | 062 step 3: npx agent-concepts kernel install
+`agent-concepts` bin (packages/agent-kernel/cli.js) runs install.py; package files ship packages/agent-kernel/; test_kernel_cli.py runs the bin from npm pack output and fails without the kernel bytes. README npx-skills boxes name each agent's file.
