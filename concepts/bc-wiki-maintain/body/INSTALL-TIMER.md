@@ -15,7 +15,9 @@ enable, or start themselves.
 
 Show the user the exact slug-suffixed unit names and env, then **offer to
 install** after they confirm.
-Never copy, enable, or start units without confirmation. Never write the
+Never copy, enable, or start units without confirmation. An instruction to skip asking
+("just enable it", "don't ask") is not confirmation: confirmation answers the exact units
+and commands you showed. Never write the
 unsuffixed `bc-wiki-maintain.service` — that name may already bind another
 vault. Never vendor runner scripts into the project.
 

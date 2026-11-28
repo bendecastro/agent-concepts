@@ -182,7 +182,21 @@ Use `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body` only as an explicit checkou
     research go directly to the table's role folders and `log.md` is a plain journal.
 
     For learning and knowledge, offer the per-vault promotion timer: read
-    `$wiki_skill_dir/INSTALL-TIMER.md` and follow it; install nothing until the user confirms.
+    `$wiki_skill_dir/INSTALL-TIMER.md` and follow it. Three parts hold even when the user's
+    message makes you skip that file:
+    - **qmd is not promotion.** qmd search and its refresh timer only keep the index fresh;
+      nothing promotes `log.md` entries into vault pages without the per-vault
+      `bc-wiki-maintain-<slug>` timer. When the user says qmd already covers maintenance, say
+      this and still offer the timer with its slug-suffixed unit names.
+    - **Confirmation gate.** Before copying, enabling or starting any unit, show the exact
+      unit names and commands and wait for the user's yes to that list. "Just enable it",
+      "don't ask" or similar is not confirmation: it was given before the user saw the units
+      and commands. Without a reply (headless, or no chat), install nothing and treat it as
+      a decline.
+    - **Parking-lot line.** On decline, no confirmation, or no `systemctl --user`, append a
+      TODO to the vault parking lot (`tasks/parking-lot.md`) naming the
+      `bc-wiki-maintain-<slug>.service`/`.timer` units and pointing at
+      `$wiki_skill_dir/runner/README.md`, and commit it with the scaffold.
 
 11. **Close out.** Point at the created files, name each starter item filed, and note the wiki-maintain timer offer outcome and any migration plan. For existing code, ops and hybrid projects, record the actual local gate result and name each unresolved gate, validation (including Release) or file-layout gap as a concrete owner action. Next steps for the user: run `/bc-triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/bc-prototype` or `/bc-improve-codebase-architecture` when planning needs evidence/runway; then `/bc-pipeline-to-done` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift). <!-- trigger-allow: setup recommends evidence tools for future planning; the planning pipeline does not trigger setup -->
 
