@@ -20,8 +20,8 @@ Owner decisions (2026-11-28, in chat, rec): 1a planning never builds: a go-ahead
 
 ## Steps
 
-- [ ] **Rule and scenario (held until the pressure test passes).** Add the go-ahead wording to `bc-plan-to-pipeline` and write the scenario file. Done when the rule has one home, the scenario states its pass criteria from artifacts, `relationships.json` reasons still match, and lint passes. Out of scope: `bc-pipeline-to-done`, `bc-grilling`, the kernel.
-- [ ] **Pressure test, then land.** Blocked by: Rule and scenario. Done when the results file shows master and changed arms, 3 runs each on Haiku low, graded from artifacts, the changed arm passes 3/3 and master fails at least once, and the change is merged to master. Out of scope: tuning other planning rules.
+- [x] **Rule and scenario (held until the pressure test passes).** Add the go-ahead wording to `bc-plan-to-pipeline` and write the scenario file. Done when the rule has one home, the scenario states its pass criteria from artifacts, `relationships.json` reasons still match, and lint passes. Out of scope: `bc-pipeline-to-done`, `bc-grilling`, the kernel.
+- [ ] **Pressure test, then land.** (Pressure test passed 2026-11-28 on the worktree branch, [results](../../concepts/bc-plan-to-pipeline/tests/pressure-go-ahead-is-not-build-results-2026-11-28.md); tick once the integrating session merges it to master.) Blocked by: Rule and scenario. Done when the results file shows master and changed arms, 3 runs each on Haiku low, graded from artifacts, the changed arm passes 3/3 and master fails at least once, and the change is merged to master. Out of scope: tuning other planning rules.
 - [ ] **Stranger rerun.** Blocked by: Pressure test, then land. Done when the stranger end-to-end test on Haiku low passes its Planning and Pipeline roles rows, with the results recorded. Out of scope: a release or npm promotion.
 
 ## Outcome
