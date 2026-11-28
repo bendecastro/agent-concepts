@@ -1520,7 +1520,8 @@ __WORKTREE_NUMBERING_RULE__
   the steps rather than leaving them. Why: ticks are the history the dashboard reads, and an
   untick erases what landed.
 - **`Rounds: <n> blocking reviews, <m> replans` counts the churn.** Add it to the header at the
-  item's first blocking review, raise a count at each blocking review and each replan, never
+  item's first blocking review, raise a count at each blocking review and at each completed
+  replan (when `bc-plan-to-pipeline` removes `Replanning:`, not when fixing stops), never
   reset it, and keep the line when the item is done. Why: counts that restart with each replan
   hide what an item cost.
 - **A `Held by:` line says who is working on an item.** Its form is
