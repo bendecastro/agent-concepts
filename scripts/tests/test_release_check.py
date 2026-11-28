@@ -58,6 +58,7 @@ class ReleaseCheckTests(unittest.TestCase):
             self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)
             with (self.root / "README.md").open("a") as f:
                 f.write("uniquefixturesecret\n")
+            subprocess.run(["git", "add", "README.md"], cwd=self.root, check=True)
             self.assertEqual(release_check.main(["v1.2.3"], self.root), 1)
 
     @given(st.booleans(), st.lists(st.sampled_from(("--no-personal-terms", "--unknown")), max_size=4),
@@ -96,15 +97,18 @@ class ReleaseCheckTests(unittest.TestCase):
             "error-failure": lint.Issue("ERROR", "personal terms: cannot read tracked file a.md"),
         }
 
-        def report_scan_results(issues, root, *, required):
-            issues.extend(scan_results[outcome] for outcome in outcomes)
+        warnings, problems = release_check.classify_scan([scan_results[outcome] for outcome in outcomes])
+        self.assertEqual((len(problems), len(warnings)),
+                         (sum(outcome != "warning-hit" for outcome in outcomes), outcomes.count("warning-hit")))
 
-        output = io.StringIO()
-        with patch.object(lint, "lint_personal_terms", report_scan_results), redirect_stdout(output):
-            result = release_check.main([], self.root)
-        self.assertEqual((result, output.getvalue().count("release check: warning: ")),
-                         (int(any(outcome != "warning-hit" for outcome in outcomes)),
-                          outcomes.count("warning-hit")))
+    def test_release_fails_when_git_cannot_list_the_snapshot(self):
+        config = self.root / "denylist"
+        config.write_text("uniquefixturesecret\n")
+        output = io.StringIO()  # self.root is not a git repository, so the real scanner's git call fails.
+        with patch.dict(os.environ, {"AGENT_CONCEPTS_PERSONAL_TERMS": str(config),
+                                     "GIT_CEILING_DIRECTORIES": str(self.root.parent)}), redirect_stdout(output):
+            self.assertEqual(release_check.main(["v1.2.3"], self.root), 1)
+        self.assertIn("release check: personal terms: cannot list", output.getvalue())
 
     def test_publish_job_inputs_are_pinned(self):
         text = (release_check.ROOT / ".github/workflows/release.yml").read_text()

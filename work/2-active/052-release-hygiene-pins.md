@@ -16,3 +16,7 @@ Ready for agent: yes
 ## Outcome
 
 Release checks require the private list and fail on scan issues unless explicitly opted out; CI opts out. The npm publishing job pins its actions and npm, and promotion uses the same exact npm version. Targeted regression tests cover the release scan and publishing inputs.
+
+The release check scans the staged snapshot read from git, not the working copy: symlinks are scanned as their stored text, submodule links are skipped, and a tracked file that differs from the staged snapshot is an error, so the scan covers what the release commit takes. Two reviews blocked; the owner chose on 2026-11-28 to bind the scan to the snapshot and finish without a third full review.
+
+Accepted gap (owner, 2026-11-28): the publish-pin test reads `uses:` lines and `npm install` text, so a quoted `"uses":` key or the `npm i` alias would slip past it. Catching those means parsing the workflow's YAML; it guards our own workflow against deliberate evasion of our own check, so it is left for a later item if it ever matters.

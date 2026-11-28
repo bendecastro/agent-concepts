@@ -59,7 +59,9 @@ removal version.
    the unpinned `pi install npm:agent-concepts`, or pins npm to another version.
    It also scans the private personal-terms list (`AGENT_CONCEPTS_PERSONAL_TERMS` overrides
    `~/.config/agent-concepts/personal-terms.txt`) and fails if missing or the scan reports
-   errors or cannot complete; lint's warning-only matches remain warnings. CI has no private list and explicitly uses `--no-personal-terms`; strangers without
+   errors or cannot complete; lint's warning-only matches remain warnings. Stage your release
+   changes first: it scans the staged snapshot from git (the bytes step 6 commits) and fails when a
+   tracked file differs from it. CI has no private list and explicitly uses `--no-personal-terms`; strangers without
    a list may use the same opt-out. Run `python3 scripts/lint.py` too (0 ERROR).
 6. Commit and push these changes, and wait for the `gate` run on that commit to be green.
 

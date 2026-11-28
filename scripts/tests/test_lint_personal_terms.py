@@ -105,16 +105,39 @@ class PersonalTermsTests(unittest.TestCase):
             self.assertEqual((self.check(), [(i.severity, "no usable terms" in i.message) for i in required]),
                              ([], [("ERROR", True)]))
 
-    def test_only_required_mode_reports_unreadable_tracked_files(self):
+    def required(self):
+        issues = []
+        lint.lint_personal_terms(issues, self.repo, required=True)
+        return [(i.severity, i.message) for i in issues]
+
+    def test_required_mode_scans_the_staged_snapshot(self):
         self.deny("fakehost\n")
-        for name in ("a.md", "concepts/x/body/a.md", "docs/research/raw/a.md"):
-            self.track(name, "fakehost\n")
-            (self.repo / name).unlink()  # Still tracked, but reading fails even as root.
-        required = []
-        lint.lint_personal_terms(required, self.repo, required=True)
-        self.assertEqual((self.check(), [(i.severity, i.message.split(": ")[1]) for i in required]),
-                         ([], [("ERROR", "cannot read tracked file a.md"),
-                               ("ERROR", "cannot read tracked file concepts/x/body/a.md")]))
+        self.track("a.md", "fakehost\n")
+        (self.repo / "a.md").write_text("clean\n")  # The next commit still takes the staged bytes.
+        self.assertIn(("ERROR", "personal term in a.md:1: 'fakehost'"), self.required())
+
+    def test_required_mode_rejects_unstaged_tracked_changes(self):
+        self.deny("fakehost\n")
+        self.track("a.md", "clean\n")
+        self.track("b.md", "clean\n")
+        (self.repo / "a.md").write_text("fakehost\n")  # `git commit -a` would ship this.
+        (self.repo / "b.md").unlink()
+        self.assertEqual(self.required(), [("ERROR", "personal terms: tracked files differ from the staged "
+                                           "snapshot (a.md, b.md); stage or restore them before the release check")])
+        # Plain lint still reads the working copy and skips what it cannot read.
+        self.assertEqual([(i.severity, i.message) for i in self.check()],
+                         [("ERROR", "personal term in a.md:1: 'fakehost'")])
+
+    def test_required_mode_reads_symlinks_and_skips_submodules_from_git(self):
+        self.deny("fakehost\n")
+        (self.repo / "link").symlink_to("missing/fakehost")  # Dangling: only git holds its text.
+        subprocess.run(["git", "-C", str(self.repo), "add", "link"], check=True)
+        sub = self.repo / "sub"
+        subprocess.run(["git", "init", "-q", str(sub)], check=True)
+        subprocess.run(["git", "-C", str(sub), "-c", "user.name=t", "-c", "user.email=t@t",
+                        "commit", "-q", "--allow-empty", "-m", "fakehost"], check=True)
+        subprocess.run(["git", "-C", str(self.repo), "add", "sub"], check=True, capture_output=True)
+        self.assertEqual(self.required(), [("ERROR", "personal term in link:1: 'fakehost'")])
 
     def test_hit_reports_file_line_and_matched_term_only(self):
         self.deny("# comment\nfakehost\nsecretthing\n")

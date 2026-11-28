@@ -725,9 +725,26 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None, *, requir
     except re.error as exc:
         issues.append(Issue("WARN", f"personal terms: invalid regex in {display(config)}: {exc}"))
         return
+    def git(*args):
+        return subprocess.run(["git", "-C", str(root), *args], capture_output=True, check=True).stdout
+
+    blobs = {}
     try:
-        tracked = subprocess.run(["git", "-C", str(root), "ls-files", "-z"],
-                                 capture_output=True, check=True).stdout.decode().split("\0")
+        if required:
+            # The release check scans the staged snapshot (what the next commit takes), read from git,
+            # so symlinks are scanned as their stored text and submodule links are skipped.
+            changed = sorted(filter(None, git("diff", "--name-only", "-z").decode().split("\0")))
+            if changed:
+                issues.append(Issue("ERROR", "personal terms: tracked files differ from the staged snapshot "
+                                    f"({', '.join(changed)}); stage or restore them before the release check"))
+            for entry in filter(None, git("ls-files", "-s", "-z").decode().split("\0")):
+                info, name = entry.split("\t", 1)
+                mode, sha, _stage = info.split()
+                if mode != "160000":
+                    blobs[name] = sha
+            tracked = sorted(blobs)
+        else:
+            tracked = git("ls-files", "-z").decode().split("\0")
     except (subprocess.CalledProcessError, FileNotFoundError):
         issues.append(Issue("WARN", "personal terms: cannot list tracked files with git"))
         return
@@ -742,12 +759,11 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None, *, requir
             "concepts/agent-kernel/tests/pressure-full-suite-owner.md",
         }
         severity = "WARN" if (len(parts) > 3 and parts[0] == "concepts" and parts[2] == "body") or name in mixed_results else "ERROR"
-        path = root / name
         try:
-            data = path.read_bytes()
-        except OSError as exc:
+            data = git("cat-file", "blob", blobs[name]) if required else (root / name).read_bytes()
+        except (OSError, subprocess.CalledProcessError):
             if required:
-                issues.append(Issue("ERROR", f"personal terms: cannot read tracked file {name}: {exc.strerror}"))
+                issues.append(Issue("ERROR", f"personal terms: cannot read tracked file {name} from git"))
             continue
         if b"\0" in data:
             continue

@@ -134,6 +134,15 @@ def previous_release_problems(root: Path, tag: str) -> list[str]:
     return removed_skill_problems(old, current, match.group(1) if match else "")
 
 
+def classify_scan(issues) -> tuple[list[str], list[str]]:
+    """Split personal-terms scan issues: only warning-severity term matches are nonblocking."""
+    warnings, problems = [], []
+    for issue in issues:
+        nonblocking = issue.severity == "WARN" and issue.message.startswith("personal term in ")
+        (warnings if nonblocking else problems).append(issue.message)
+    return warnings, problems
+
+
 def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     args = sys.argv[1:] if argv is None else argv
     args = list(args)
@@ -149,11 +158,10 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         import lint  # Local import: lint imports release_check for version checks.
         issues = []
         lint.lint_personal_terms(issues, root, required=True)
-        for issue in issues:
-            if issue.severity == "WARN" and issue.message.startswith("personal term in "):
-                print(f"release check: warning: {issue.message}")
-            else:
-                problems.append(issue.message)
+        warnings, scan_problems = classify_scan(issues)
+        for warning in warnings:
+            print(f"release check: warning: {warning}")
+        problems.extend(scan_problems)
     if tag and TAG_PATTERN.fullmatch(tag) and (root / ".git").exists():
         problems.extend(previous_release_problems(root, tag))
     for problem in problems:
