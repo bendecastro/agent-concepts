@@ -14,8 +14,8 @@ package.json `files`, unpacks it and installs the unpacked folder (Pi 1.6 record
 `.tgz` path but loads no skills from it). It packs the checkout even with `--ref`; the release
 workflow's checkout is the tag, so that is the tarball the release publishes.
 
-No logins, API keys or model calls. The agent CLIs come from PATH (CI installs pinned versions
-from npm). `--drop-needed SKILL` installs the pack without one of its needed skills, to show the
+No logins, API keys or model calls. The agent CLIs come from PATH; each workflow chooses their
+versions. `--drop-needed SKILL` installs the pack without one of its needed skills, to show the
 check fails when a needed skill is missing. `--ref REF` installs from the GitHub repository at
 that tag or commit instead of the local checkout, the way a stranger installs a release; the
 expected skill lists still come from the local checkout, so check out the same ref first.
@@ -245,9 +245,10 @@ class PiNpmPackage(PiPackage):
         kernel = (self.box.root / "package/packages/agent-kernel-pi/AGENT-KERNEL.md").read_text()
         if not kernel.strip():
             raise CheckFailed("packaged kernel is empty")
-        if kernel not in prompt:
-            raise CheckFailed("kernel missing from Pi system prompt")
-        print("  ok: kernel present in Pi system prompt", flush=True)
+        # Pi wraps each systemPromptOptions section as <name>\ncontent\n</name>.
+        if f"<agent-kernel>\n{kernel}\n</agent-kernel>" not in prompt:
+            raise CheckFailed("kernel section missing from Pi system prompt")
+        print("  ok: kernel section present in Pi system prompt", flush=True)
 
     def install(self):
         tarball = self.box.run("npm", "pack", "--silent", "--pack-destination", str(self.box.root),

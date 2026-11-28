@@ -21,4 +21,4 @@ Ready for agent: yes
 
 ## Outcome
 
-Weekly and manual latest-CLI installs report failures to one issue; pinned Pi is 1.6.1. The packed Pi test checks the assembled kernel prompt without a model request, and fails when the extension is removed. Actionlint validates the workflows.
+Weekly and manual latest-CLI installs report failures to one issue; pinned Pi is 1.6.1. The packed Pi test checks for the `<agent-kernel>` section in the assembled system prompt without a model request, and fails when the extension is removed. Reviewed (changes requested, fixed, re-review approved). Actionlint validates the workflows.

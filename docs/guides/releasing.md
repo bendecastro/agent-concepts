@@ -154,7 +154,9 @@ The packed Pi install also checks that the kernel reaches Pi’s assembled syste
 a model request. A weekly and manually dispatchable `latest agents` workflow runs the same
 install test against npm's `latest` tag for each CLI, with read-only repository access and no
 persisted checkout credential. On failure, a separate job with issue-write access opens or
-comments on one issue. Reporting jobs run one at a time to avoid duplicate issues.
+comments on one issue it opened earlier. Reporting jobs run one at a time to avoid duplicate
+issues; in a burst of failures GitHub may drop a waiting report, so not every failed run gets
+its own comment.
 
 The test runs the update commands against the same tag. Moving an install from one tag to a
 newer one has not been tested yet; until it is, the safe way is to uninstall and install again

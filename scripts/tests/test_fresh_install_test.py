@@ -157,6 +157,27 @@ def test_pi_npm_rejects_empty_kernel_even_with_prompt_text(packed_pi, monkeypatc
         agent.check_kernel_prompt()
 
 
+def test_pi_npm_rejects_kernel_text_outside_its_section(packed_pi, monkeypatch):
+    agent, kernel = packed_pi
+
+    def run(args, **kwargs):
+        return subprocess.CompletedProcess(args, 0, json.dumps(f"<addendum>\n{kernel.read_text()}\n</addendum>"), "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(fit.CheckFailed, match="kernel section missing from Pi system prompt"):
+        agent.check_kernel_prompt()
+
+
+def test_pi_npm_accepts_kernel_in_its_section(packed_pi, monkeypatch):
+    agent, kernel = packed_pi
+
+    def run(args, **kwargs):
+        return subprocess.CompletedProcess(args, 0, json.dumps(f"x\n<agent-kernel>\n{kernel.read_text()}\n</agent-kernel>\ny"), "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    agent.check_kernel_prompt()
+
+
 def test_pi_npm_reports_failed_probe_even_with_valid_stdout(packed_pi, monkeypatch):
     agent, kernel = packed_pi
 
@@ -198,7 +219,7 @@ def test_pi_npm_checks_kernel_in_system_prompt(tmp_path):
             extension.unlink()
             with pytest.raises(fit.CheckFailed) as exc:
                 agent.check_kernel_prompt()
-            assert str(exc.value) == "kernel missing from Pi system prompt"
+            assert str(exc.value) == "kernel section missing from Pi system prompt"
             print(f"  expected failure: {exc.value}")
         finally:
             extension.write_text(contents)
