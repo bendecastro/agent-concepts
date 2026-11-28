@@ -9,6 +9,10 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ## [Unreleased]
 
+### Changed
+
+- `agent-kernel`: when no one can answer, take the recommended option on a judgment call and record the assumption; stop on destructive, publishing and owner-only steps. `bc-design` and `bc-tdd` keep only their skill-specific records.
+
 ## [0.5.0] - 2026-11-28
 
 ### Renamed

@@ -17,6 +17,7 @@ Ready for agent: yes
 ## Steps
 
 - [ ] Add the kernel rule, trim the copies, pressure-test. Done when the scenario (headless run, one judgment call, one destructive step) shows the agent assume-and-record the first and stop on the second, with and without the rule compared, and lint passes.
+  - 2026-11-28: rule added, `bc-design`/`bc-tdd` trimmed, packages staged, scenario written (`concepts/agent-kernel/tests/pressure-unattended-default.md`); pressure run pending (Terra low quota).
 
 ## Outcome
 

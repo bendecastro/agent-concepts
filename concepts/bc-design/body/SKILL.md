@@ -44,6 +44,6 @@ For each image, check the applicable items; capture focus and other states separ
 
 ## Report
 
-In a non-interactive run, when no one can answer a question, take the recommended option, record the assumption in the report and continue rather than stopping.
+In a non-interactive run, record each assumed answer in this report.
 
 List each image path, surface/host, dimensions and state, then its written checklist critique and any fixes or remaining defects. State separate interaction/accessibility checks and results, unverified items, and whether visual verification was possible. Give the user enough evidence to inspect the result independently.

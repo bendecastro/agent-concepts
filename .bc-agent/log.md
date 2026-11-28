@@ -2449,3 +2449,5 @@ Require a reboot-safe run folder, wire in audit and work-sync reviewers, clarify
 Private swarm-mode kernel drops its durability copy for a pointer; routing-decision/recovery-rule words; overlay renamed; pointer check PASS 2/2 (Terra low).
 ## [2026-11-28] deploy | release v0.5.0 prep
 Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-audit.md (no gaps).
+## [2026-11-28] implement | 058 kernel unattended default
+Kernel gains one rule: with no one to answer, assume-and-record judgment calls, stop on destructive/publishing/owner-only steps; bc-design/bc-tdd trimmed to deltas; packages staged; scenario written, not run.
