@@ -8,6 +8,7 @@ Kind: build
 Source: owner pick 1, 2026-11-27 (drift prevention after the modularity scan)
 Planned: bc-plan-to-pipeline 2026-11-27
 Ready for agent: yes
+Dependencies: none new
 
 ## Requirements
 

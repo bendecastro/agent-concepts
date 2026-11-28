@@ -22,11 +22,11 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 4/5 |
-| 2 | [061-lint-repeated-text-and-copies](1-planned/061-lint-repeated-text-and-copies.md) | planned, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 2/3 |
-| 3 | [064-wiki-read-path-reads-whole-vault](1-planned/064-wiki-read-path-reads-whole-vault.md) | planned | — | — | In the read-path pressure scenario 5 (qmd absent), all four Haiku runs opened every tracked page, including `index.md`, both with and without the 059 change; t… | 0/1 |
-| 4 | [065-timer-install-includes-notifier](1-planned/065-timer-install-includes-notifier.md) | planned | — | — | every wiki runner service sets `OnFailure=bc-wiki-notify@%n.service`, but `bc-wiki-maintain`'s `INSTALL-TIMER.md` (the path setup step 10 loads) never installs… | 0/1 |
-| 5 | [067-planning-map-mode](1-planned/067-planning-map-mode.md) | planned, ready for agent | — | — | `bc-plan-to-pipeline` assumes one grill settles every decision before it drafts a PRD and slices. | 0/2 |
+| 1 | [061-lint-repeated-text-and-copies](2-active/061-lint-repeated-text-and-copies.md) | active, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 2/3 |
+| 2 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 4/5 |
+| 3 | [067-planning-map-mode](2-active/067-planning-map-mode.md) | active, ready for agent | — | — | `bc-plan-to-pipeline` assumes one grill settles every decision before it drafts a PRD and slices. | 0/2 |
+| 4 | [064-wiki-read-path-reads-whole-vault](1-planned/064-wiki-read-path-reads-whole-vault.md) | planned | — | — | In the read-path pressure scenario 5 (qmd absent), all four Haiku runs opened every tracked page, including `index.md`, both with and without the 059 change; t… | 0/1 |
+| 5 | [065-timer-install-includes-notifier](1-planned/065-timer-install-includes-notifier.md) | planned | — | — | every wiki runner service sets `OnFailure=bc-wiki-notify@%n.service`, but `bc-wiki-maintain`'s `INSTALL-TIMER.md` (the path setup step 10 loads) never installs… | 0/1 |
 
 - [Ideas](0-ideas.md): 10
 - [Done](3-done/): 61
