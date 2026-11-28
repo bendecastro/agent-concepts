@@ -31,6 +31,14 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Step 4 synthesizes the PRD from the grill and the codebase.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
+- hands off to `bc-prototype` — optional, when working a map's prototype step.
+  bc-prototype is user-invoked: a prototype step gives the owner the command with the step's question and records its verdict.
+  Source: [body/map-mode.md](body/map-mode.md)
+
+- loads `bc-research` — required, when a map has research steps.
+  A map's research steps are resolved with bc-research, several in parallel as subagents.
+  Source: [body/map-mode.md](body/map-mode.md)
+
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule.
   Source: [CONCEPT.md](CONCEPT.md)

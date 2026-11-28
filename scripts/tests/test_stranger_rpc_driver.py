@@ -84,3 +84,9 @@ def test_plan_phase_answers_a_numbered_choice_without_a_question_mark(tmp_path):
     script = FAKE_PI.replace('replies = ["Which layout?", "Is that test seam okay?", "Done."]',
                              'replies = ["1. **Recommended:** add it.\\n2. Do not.\\n\\nReply `1` or `2`.", "Done.", "Done."]')
     assert run_driver(tmp_path, script, "plan", None) == ["Start", "Scripted answer."]
+
+
+def test_follow_up_answer_comes_from_the_environment(tmp_path, monkeypatch):
+    monkeypatch.setenv("STRANGER_FOLLOW_UP", "Not sure yet; anything else is fine.")
+    assert run_driver(tmp_path, BUILD_PI, "plan", None) == [
+        "Start", "Scripted answer.", "Not sure yet; anything else is fine.", "Not sure yet; anything else is fine."]

@@ -2553,3 +2553,5 @@ Graded the completed Haiku-low pack-source stranger run from its evidence (the r
 
 ## [2026-11-28] lint | 061 repeated text is an ERROR
 Switched the repeated-text check to ERROR, widened copy-of sources to the anchor's whole section, and added a repeated-text-allow marker; marked the SDD fallback as a copy and four deliberate restatements as allowed (kernel unchanged).
+## [2026-11-28] ingest | bc-plan-to-pipeline map mode (067, wayfinder)
+After the grill, any question this session cannot settle charts a map (body/map-mode.md: three homes, Destination/Decisions so far/Not yet specified/Out of scope, typed decision steps, work-the-map one per session, Slice last); the edge-of-the-map line sits beside the go-ahead rule. Terra low: map scenario master 0/3, changed 3/3; settled both 3/3. Wayfinder moved to raw/ingested.
