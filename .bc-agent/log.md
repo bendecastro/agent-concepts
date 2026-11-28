@@ -2491,3 +2491,6 @@ Step 10 states inline that qmd search is not promotion, that "just enable"/"don'
 
 ## [2026-11-28] implement | 063 step 1: Dependencies line check and template
 work_index.py (both copies) errors on a ready item without `Dependencies:` planned on/after 2026-11-28, warns on older ones; template, scaffold and MIGRATIONS gain the line. Test: concepts/bc-setup-project/tests/test_work_index_dependencies.py.
+
+## [2026-11-28] test | v0.5.0 stranger end-to-end on Terra: pass
+Terra low (Codex quota reset): planning left one ready item and no code; the build ran worker plus spec and standards reviewers and landed on the bare remote main. One resolved park (property-test rule vs no-new-dependency). Not promoted here; no dist-tag change.
