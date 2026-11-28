@@ -10,6 +10,8 @@ User-invoked throwaway exploration step for design uncertainty: build a small ru
 
 ## Design decisions
 
+- **Loads `bc-safe-runs` (2026-11-28, item 054-safe-runs-module).** The skill runs code (reproductions, prototypes) and had no storage rules; it now loads the module and keeps its one-line fallback.
+
 - **Question-first.** The artifact shape follows the question; otherwise prototypes become mini-features.
 - **Feeds planning, not drain.** Prototype verdicts become PRD/ADR/issue context; prototype code should not become unattended execution scope unless explicitly absorbed.
 - **No polish by design.** Tests and abstractions are intentionally omitted to preserve speed and throwaway semantics.

@@ -9,7 +9,9 @@ Improve code along a measurable axis (speed, output size, memory, allocations, A
 
 **The core idea:** the *check* owns truth; you propose *bounded* changes; a change survives only if it proves **both** that correctness still holds **and** that the chosen metric improved enough to justify it. Anything else gets reverted.
 
-Use targeted correctness checks, run pytest through the guarded test runner the project's or machine's instructions name (otherwise plain `pytest`, with `tmp_path` for test fixtures and cleanup even on failure; never custom `--basetemp`), and make scratch folders with `mktemp -d`, never under `/tmp`. Run the full suite once, for landing, not on each iteration. If the machine names a storage health check, require it to pass first. If no storage health check is configured, skip it and note that in one line in the report. The `agent-kernel` concept's Storage safety section holds the temp-file and scratch-folder rules, when loaded. Why: repeated experiments multiply temporary storage.
+Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+
+Run the full suite once, for landing, not on each iteration. Why: repeated experiments multiply temporary storage.
 
 ## Before you touch code
 

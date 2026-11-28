@@ -19,6 +19,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Scope, hunted kinds, candidate block, reproduction, report and filing have one home in bc-find-bugs.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- loads `bc-safe-runs` — required, when launching the reproduction worker.
+  The reproduction worker gets bc-safe-runs in its skill list and its packet line in the task, since children do not load skills on their own.
+  Source: [body/SKILL.md](body/SKILL.md#reproduction)
+
 ## Incoming
 
 None.

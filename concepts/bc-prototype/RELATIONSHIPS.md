@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md#rules)
+
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves research, decisions and requirements in the scaffolded table, with its earlier paths as fallback.
   Source: [CONCEPT.md](CONCEPT.md)

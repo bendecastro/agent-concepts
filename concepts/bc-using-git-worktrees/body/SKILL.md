@@ -7,7 +7,9 @@ description: Use when starting feature work that needs isolation, before executi
 
 Work in an isolated workspace when it reduces risk. Detect existing isolation first, prefer harness-native isolation, and use manual `git worktree` only as a fallback. When an owned worktree is integrated or otherwise irrelevant, prune it without asking.
 
-Before either creation path, run the machine's storage health check if one exists, and stop and report on critical or unknown health or if the configured check cannot run. If no storage health check is configured, skip it and note that in one line in the report. Reuse the once-per-base baseline. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof; remove with `git worktree remove`, never `--force`. The `agent-kernel` concept's Storage safety section holds the temp-file and scratch-folder rules, when loaded. Why: native isolation still consumes disk.
+Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+
+Reuse the once-per-base baseline. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` and record that proof (section Cleanup below); remove with `git worktree remove`, never `--force`. Why: native isolation still consumes disk.
 
 ## Step 0: detect current state
 

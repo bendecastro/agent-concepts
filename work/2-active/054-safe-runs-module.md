@@ -17,7 +17,7 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Create `bc-safe-runs` and replace the restated blocks. Done when lint passes, `rg "guarded test runner" concepts/*/body` hits only the module and one-line fallbacks, and the re-run `bc-tdd/tests/pressure-storage-inline.md` and the matching bc-code-review scenario hold on the pressure-test model.
+- [x] Create `bc-safe-runs` and replace the restated blocks. Done when lint passes, `rg "guarded test runner" concepts/*/body` hits only the module and one-line fallbacks, and the re-run `bc-tdd/tests/pressure-storage-inline.md` and the matching bc-code-review scenario hold on the pressure-test model.
 
 ## Outcome
 

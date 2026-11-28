@@ -7,10 +7,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
-  Source: [body/SKILL.md](body/SKILL.md)
-
 - loads `bc-codebase-docs` — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
   Reviewers check source-tree documentation against the diff.
   Source: [body/review-contract.md](body/review-contract.md#independent-scopes)
@@ -34,6 +30,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - depends on `bc-plan-to-pipeline`'s contract — required, when work-item source.
   Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope.
   Source: [body/source-work-items.md](body/source-work-items.md#eligibility)
+
+- loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines, writes and removes the `Held by:` line and records the steps' `Review:` and `Gate:` lines in the formats of its work-item rules, pastes the `Spent:` line its spent script prints when finishing an item, and reruns the work index script.

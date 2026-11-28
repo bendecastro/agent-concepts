@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-27 results-claims Standards sentence: Terra low NO_DEFECT, overclaim flagged in 3 of 3 comparison runs and 3 of 3 treatment runs (tests/pressure-results-claims.md); 2026-11-25 inline Storage safety + tdd name references PASS on Terra low (without 1/5, with 5/5; pressure-storage-inline.md); earlier data-size and test-layout checks PASS 2026-11-19
-tested: 2026-11-27
+test_status: partial # 2026-11-28 storage rules moved to bc-safe-runs: Terra low PASS 5/5 with the module, fallback line alone 4/5 (../bc-safe-runs/tests/pressure-safe-runs.md); 2026-11-27 results-claims Standards sentence: Terra low NO_DEFECT, overclaim flagged in 3 of 3 comparison runs and 3 of 3 treatment runs (tests/pressure-results-claims.md); 2026-11-25 inline Storage safety + tdd name references PASS on Terra low (without 1/5, with 5/5; pressure-storage-inline.md); earlier data-size and test-layout checks PASS 2026-11-19
+tested: 2026-11-28
 deployed: yes
 ---
 # Concept: bc-code-review
@@ -10,7 +10,7 @@ Model-invoked review discipline for both sides of code review: independently ass
 
 ## Design decisions
 
-- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Other skills are named, not linked (`bc-tdd`, section Test levels and friends), with a `loads` edge.
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Other skills are named, not linked (`bc-tdd`, section Test levels and friends), with a `loads` edge. Since 2026-11-28 (item 054-safe-runs-module) those storage and worktree-removal rules live in `bc-safe-runs`, which the body loads by name; the body keeps one fallback line.
 
 - **Data size across changed boundaries (2026-11-19).** One conditional Standards question: where changed code moves or accumulates data across a prompt, message, snapshot, payload or file boundary, trace maximum size, amplification and growth, and the behaviour at the limit. Source: the owner’s private weekly reflection of 2026-11-19, proposal 1 (three of 20 sessions: a 430,642-byte prompt against 400,000, a 33.6 MB snapshot against 32 MiB, a 31.8 MiB file becoming a 63.5 MiB message), owner-approved. Pressure test: [tests/pressure-data-size.md](tests/pressure-data-size.md).
 - **Test-layout Standards check (2026-11-19).** One Standards sentence checks new test files against tdd's Test layout section and names the three findable breaches. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in a private project) and the owner's decisions of that date.

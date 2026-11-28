@@ -240,114 +240,6 @@
       "reason": "Legacy glossary discovery and rename proposals have one home in bc-domain-modeling."
     },
     {
-      "from": "bc-delegate-investigation",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-delegate-investigation/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-using-git-worktrees",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-using-git-worktrees/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-subagent-driven-development",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-subagent-driven-development/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-dispatching-parallel-agents",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-dispatching-parallel-agents/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-executing-plans",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-executing-plans/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-finishing-development-branch",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-finishing-development-branch/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-tdd",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-tdd/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-optimize-code",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-optimize-code/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-diagnosing-bugs",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-diagnosing-bugs/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-code-review",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-code-review/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-writing-plans",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-writing-plans/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
-      "from": "bc-pipeline-to-done",
-      "to": "agent-kernel",
-      "relation": "depends_on_contract",
-      "required": true,
-      "when": "test, fan-out or worktree lifecycle",
-      "source": "concepts/bc-pipeline-to-done/body/SKILL.md",
-      "reason": "The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy."
-    },
-    {
       "from": "bc-brainstorming",
       "to": "naming-things",
       "relation": "loads",
@@ -1105,6 +997,159 @@
       "when": "reviewing tests, the Test levels block or a Level 3 proof",
       "source": "concepts/bc-code-review/body/SKILL.md#2-review-independently",
       "reason": "Spec and Standards review apply tdd's Test levels, Tests that lie, Test layout and formal.md; the body names the skill instead of linking into its folder."
+    },
+    {
+      "from": "bc-delegate-investigation",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-delegate-investigation/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-code-review",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-code-review/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-optimize-code",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-optimize-code/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-pipeline-to-done",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-pipeline-to-done/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-dispatching-parallel-agents",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-dispatching-parallel-agents/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-executing-plans",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-executing-plans/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-writing-plans",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-writing-plans/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-tdd",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-tdd/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-finishing-development-branch",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-finishing-development-branch/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-using-git-worktrees",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-using-git-worktrees/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-subagent-driven-development",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-subagent-driven-development/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-diagnosing-bugs",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-diagnosing-bugs/body/SKILL.md",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-find-bugs",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-find-bugs/body/SKILL.md#3-reproduce",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-council-find-bugs",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "launching the reproduction worker",
+      "source": "concepts/bc-council-find-bugs/body/SKILL.md#reproduction",
+      "reason": "The reproduction worker gets bc-safe-runs in its skill list and its packet line in the task, since children do not load skills on their own."
+    },
+    {
+      "from": "bc-prototype",
+      "to": "bc-safe-runs",
+      "relation": "loads",
+      "required": true,
+      "when": "running tests, making scratch folders, full suites, worktrees, workers or worktree removal",
+      "source": "concepts/bc-prototype/body/SKILL.md#rules",
+      "reason": "Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-safe-runs",
+      "to": "agent-kernel",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "any invocation",
+      "source": "concepts/bc-safe-runs/body/SKILL.md",
+      "reason": "The module derives from the kernel's Storage safety and Verification sections (targeted tests, shared full-suite evidence); a kernel change to those rules must update the module and its callers' one-line fallbacks."
+    },
+    {
+      "from": "bc-safe-runs",
+      "to": "bc-using-git-worktrees",
+      "relation": "loads",
+      "required": false,
+      "when": "removing a worktree or deleting its branch",
+      "source": "concepts/bc-safe-runs/body/SKILL.md#removing-a-worktree-or-branch",
+      "reason": "The full removal recipe (resolved conflict picks, branch deletion) stays in bc-using-git-worktrees section Cleanup; the module states the proof rule and names that section."
     }
   ]
 }

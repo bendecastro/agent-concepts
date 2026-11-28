@@ -2427,3 +2427,6 @@ Added a lint warning for similar concept-body paragraphs and errors for drifting
 
 ## [2026-11-28] implement | repeated-text lint and copy-of markers
 Lint warns on concept-body paragraphs repeated across skills (80% trigram overlap or a 40-word exact run) and fails drifted, malformed or self-referencing `copy-of` copies. After two blocking reviews the owner chose a single-pass block reader. Step 3 (ERROR) waits on 054-058.
+
+## [2026-11-28] implement | bc-safe-runs module
+New `bc-safe-runs` holds the storage-safe run and worktree-removal rules (derived from the kernel's Storage safety); 14 skills load it with a one-line fallback under the repeated-text threshold. Pressure: bc-tdd and bc-code-review storage scenarios PASS 5/5 with the module on Terra low, fallback alone 4/5 each. Not deployed.

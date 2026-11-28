@@ -11,7 +11,9 @@ Go wide. While this skill is active, delegating is the default and **keeping** w
 
 It composes `bc-dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
 
-Before fan-out or worktree creation, run the machine's storage health check if one exists, and stop and report on critical or unknown health or if the configured check cannot run. If no storage health check is configured, skip it and note that in one line in the report. After integrating a worker, prove its commits are in `HEAD` (its tip is an ancestor, or every commit is patch-equivalent), record that proof, and only then remove its worktree and branch. Copy into worker packets: run pytest through the guarded test runner the project's or machine's instructions name (otherwise plain `pytest`, with `tmp_path` for test fixtures and cleanup even on failure; never custom `--basetemp`); make scratch folders with `mktemp -d`, never under `/tmp`; run targeted tests only, never the full suite or gate. The `agent-kernel` concept's Storage safety (temp files, scratch folders) and Verification sections hold their rules, when loaded. Why: children do not inherit the kernel and retained worktrees consume storage.
+Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+
+Put the `bc-safe-runs` packet line in every worker or reviewer task. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof. Why: children do not inherit the kernel, and retained worktrees consume storage.
 
 ## Recovery rule — before routing
 

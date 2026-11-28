@@ -7,16 +7,16 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
-  Source: [body/SKILL.md](body/SKILL.md)
-
 - depends on `bc-domain-modeling`'s contract — required, when glossary discovery in legacy projects.
   Legacy glossary discovery and rename proposals have one home in bc-domain-modeling.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-improve-codebase-architecture`'s contract — required, when bug fixed without a correct test seam.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
+  Source: [body/SKILL.md](body/SKILL.md)
+
+- loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.

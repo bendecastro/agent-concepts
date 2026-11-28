@@ -16,6 +16,10 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 - `bc-ui-design` is now `bc-design`. The old name remains a compatibility alias.
   Earliest removal: v0.6.0.
 
+### Added
+
+- `bc-safe-runs`: one skill for storage-safe test runs, scratch folders and worktree removal. Eleven skills that restated these rules now load it and keep a one-line fallback; `bc-find-bugs`, `bc-council-find-bugs` and `bc-prototype` load it too.
+
 ### Changed
 
 - Workspace lint warns about repeated concept prose and verifies explicitly marked copies against their source.

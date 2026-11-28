@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # 2026-11-27 owner's-answer Dependencies line as waiver: Terra low, new 3 of 3 wrote example tests, old also 3 of 3 (non-discriminating; ../bc-pipeline-to-done/tests/pressure-planned-dependencies-results-2026-11-27.md); 2026-11-25 inline Storage safety PASS on Terra low (without 4/5, with 5/5; pressure-storage-inline.md); 2026-11-19 test-layout scenario non-discriminating
-tested: 2026-11-27
+test_status: partial # 2026-11-28 storage rules moved to bc-safe-runs: Terra low PASS 5/5 with the module, fallback line alone 4/5 (../bc-safe-runs/tests/pressure-safe-runs.md); 2026-11-27 owner's-answer Dependencies line as waiver: Terra low, new 3 of 3 wrote example tests, old also 3 of 3 (non-discriminating; ../bc-pipeline-to-done/tests/pressure-planned-dependencies-results-2026-11-27.md); 2026-11-25 inline Storage safety PASS on Terra low (without 4/5, with 5/5; pressure-storage-inline.md); 2026-11-19 test-layout scenario non-discriminating
+tested: 2026-11-28
 deployed: yes
 ---
 # Concept: tdd
@@ -10,7 +10,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Design decisions
 
-- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder.
+- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Since 2026-11-28 (item 054-safe-runs-module) those storage and worktree-removal rules live in `bc-safe-runs`, which the body loads by name; the body keeps one fallback line.
 
 - **Test layout norms (2026-11-19).** Browser/integration tests only for behaviour a fake cannot show; each file builds its own state; files under about 25 tests or 60 s; parallel runner and `slow` marker from the first test commit. Each rule carries a time Why. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in project A) and the owner's decisions of that date. `bc-code-review` checks them on new test files (same change). Other tdd consumers (bc-pipeline-to-done, bc-executing-plans, bc-subagent-driven-development) load tdd for authoring and pick the section up unchanged; no consumer contract changed.
 - **Broad invocation.** Test edits, bug fixes and features with tests trigger the discipline even when tests are incidental; opt-in test-first wording missed ordinary work.

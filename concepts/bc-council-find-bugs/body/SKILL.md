@@ -59,7 +59,7 @@ This order only chooses what is reproduced first and how the suspected tier is r
 
 ## Reproduction
 
-After pass 2, launch ONE `worker` to run `bc-find-bugs` §3 on the top `--max-repro` candidates of the queue: its own worktree on branch `find-bugs/<hunt-name>`, one test per candidate, kept only if it fails for the stated reason, committed on the hunt branch. Launch it with `skill: ["bc-find-bugs", "bc-minimal-solution-ladder", "bc-codebase-design", "bc-codebase-docs", "bc-diagnosing-bugs", "bc-tdd"]`. Why: a launch skill list replaces the role's default skills, so the defaults are listed with it. Give it the queue in order with each candidate block, and ask it to return, per candidate, the test path and name with the failing assertion lines, or its suspected reason (`bc-find-bugs` §3 wording). Advisors stay read-only and write no reproductions.
+After pass 2, launch ONE `worker` to run `bc-find-bugs` §3 on the top `--max-repro` candidates of the queue: its own worktree on branch `find-bugs/<hunt-name>`, one test per candidate, kept only if it fails for the stated reason, committed on the hunt branch. Launch it with `skill: ["bc-find-bugs", "bc-safe-runs", "bc-minimal-solution-ladder", "bc-codebase-design", "bc-codebase-docs", "bc-diagnosing-bugs", "bc-tdd"]`. Why: a launch skill list replaces the role's default skills, so the defaults are listed with it. Give it the queue in order with each candidate block, and ask it to return, per candidate, the test path and name with the failing assertion lines, or its suspected reason (`bc-find-bugs` §3 wording). Put the `bc-safe-runs` packet line in its task. Advisors stay read-only and write no reproductions.
 
 ## Report and filing
 

@@ -15,6 +15,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through bc-find-bugs §5.
   Source: [body/SKILL.md](body/SKILL.md#5-file-after-the-owner-answers)
 
+- loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md#3-reproduce)
+
 - hands off to `bc-security-audit` — optional, when a security hole is seen in passing.
   Security holes are reported with a pointer and audited by bc-security-audit, not here.
   Source: [body/SKILL.md](body/SKILL.md#2-hunt)

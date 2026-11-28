@@ -7,7 +7,9 @@ description: Use when executing a written implementation plan in the current ses
 
 A controller executes a plan by giving each task to a fresh implementer agent, then running spec-compliance and code-quality review before moving on.
 
-At preflight, run the machine's storage health check if one exists, and stop and report on critical or unknown health or if the configured check cannot run. If no storage health check is configured, skip it and note that in one line in the report. At completion, prove each worker's commits are in `HEAD` (ancestor or patch-equivalent) and record that proof before removing worktrees or branches. Every implementer/reviewer packet says: run pytest through the guarded test runner the project's or machine's instructions name (otherwise plain `pytest`, with `tmp_path` for test fixtures and cleanup even on failure; never custom `--basetemp`); make scratch folders with `mktemp -d`, never under `/tmp`; run targeted tests only and reuse the shared full-suite evidence. The `agent-kernel` concept's Storage safety section holds the temp-file and scratch-folder rules, when loaded. Why: fresh agents cannot infer shared storage ownership.
+Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+
+At completion, prove each worker's commits are in `HEAD` (ancestor or patch-equivalent) and record that proof before removing worktrees or branches. Put the `bc-safe-runs` packet line in every worker or reviewer task. Workers run targeted tests only and reuse the shared full-suite evidence. Why: fresh agents cannot infer shared storage ownership.
 
 ## Use when
 

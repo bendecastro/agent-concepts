@@ -26,6 +26,8 @@ If ambiguous and the user is not reachable, choose the branch that matches the s
 6. **Surface state.** Print/render relevant state after each action or variant switch.
 7. **Delete or absorb.** When the question is answered, either delete the prototype or fold the validated decision into real work.
 
+Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+
 ## Handoff to the bc loop
 
 Before moving to `/bc-plan-to-pipeline` or implementation, capture:

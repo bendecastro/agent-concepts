@@ -7,13 +7,13 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
-  Source: [body/SKILL.md](body/SKILL.md)
-
 - loads `bc-codebase-docs` — optional, when the diff touches a README, docs page, architecture page or contract JSDoc.
   The standards reviewer flags stale or change-narrating docs.
   Source: [body/SKILL.md](body/SKILL.md#2-review-independently)
+
+- loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-tdd`'s contract — required, when Spec review of property-based tests, the Test levels block, or a Level 3 proof.
   Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical.

@@ -7,10 +7,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- depends on `agent-kernel`'s contract — required, when test, fan-out or worktree lifecycle.
-  The skill restates inline the parts of the kernel's Storage safety (scratch folders, temp-file cleanup) and Verification (targeted tests, shared full-suite evidence) it relies on, since installers copy it alone; a kernel change to those rules must update the inline copy.
-  Source: [body/SKILL.md](body/SKILL.md)
-
 - hands off to `bc-diagnosing-bugs` — required, when bugs without a tight repro.
   Diagnosis belongs to bc-diagnosing-bugs before the regression-test RED/GREEN cycle.
   Source: [body/SKILL.md](body/SKILL.md)
@@ -26,6 +22,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - depends on `bc-plan-to-pipeline`'s contract — optional, when a work item's Dependencies line says to manage without the property library.
   A `Dependencies:` line marked as the owner's answer, the form bc-plan-to-pipeline writes when the owner answered, counts as quoting the owner for skipping the property library; an unmarked line does not.
   Source: [body/SKILL.md](body/SKILL.md#test-levels)
+
+- loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
 

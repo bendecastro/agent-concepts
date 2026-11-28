@@ -12,6 +12,8 @@ User-invoked bug hunt over a named area (or a small whole repo). It collects can
 
 All from the owner-approved [council bug hunt plan](../../work/3-done/2026-11/019-council-find-bugs.md); numbers below are that plan's decisions.
 
+- **Loads `bc-safe-runs` (2026-11-28, item 054-safe-runs-module).** The skill runs code (reproductions) and had no storage rules; it now loads the module and keeps its one-line fallback.
+
 - **Standalone parent, council chain later (decision 1).** This skill is the single-agent form. A later `bc-council-find-bugs` chain reuses its candidate block (section 2), reproduction step (3), report (4) and filing (5) unchanged and adds only the council steps; keep those sections self-contained so the chain can point at them.
 - **Bounded scope (decision 2).** A named area, or the whole repo only when small; `--since <ref>` narrows to changed code.
 - **Proof, not confidence (decision 3).** Only a reproduction watched failing for the stated reason confirms a bug; the test asserts the expected behaviour so it turns green when the bug is fixed. This applies `bc-tdd`'s "watch it fail for the right reason" to bug reports.

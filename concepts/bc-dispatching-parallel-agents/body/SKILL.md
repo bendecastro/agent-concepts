@@ -7,7 +7,9 @@ description: Use when there are two or more independent investigations, reviews,
 
 Dispatch one fresh agent per independent problem domain. Parallelism is useful only when the domains do not depend on each other and agents will not edit or rely on the same mutable state.
 
-Before dispatch or worktree isolation, run the machine's storage health check if one exists, and stop and report on critical or unknown health or if the configured check cannot run. If no storage health check is configured, skip it and note that in one line in the report. Put in each packet: run pytest through the guarded test runner the project's or machine's instructions name (otherwise plain `pytest`, with `tmp_path` for test fixtures and cleanup even on failure; never custom `--basetemp`); make scratch folders with `mktemp -d`, never under `/tmp`; run targeted tests only, never the full suite or gate. After integrating, prove each worker's commits are in `HEAD` (ancestor or patch-equivalent) and record that proof before removing its worktree or branch. The `agent-kernel` concept's Storage safety (temp files, scratch folders) and Verification sections hold their rules, when loaded. Why: parallel checks multiply disk use.
+Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+
+Put the `bc-safe-runs` packet line in every worker or reviewer task. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof. Why: parallel checks multiply disk use.
 
 ## Use when
 

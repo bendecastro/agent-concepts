@@ -2,7 +2,7 @@
 
 # Status
 
-55 concepts. 0 need testing, 1 not deployed, 33 deployed with a known gap.
+56 concepts. 0 need testing, 2 not deployed, 33 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -11,10 +11,11 @@ Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page wi
 
 Nothing. Every deployed concept has a recorded run.
 
-## Not deployed (1)
+## Not deployed (2)
 
 | concept | kind | test status | tested |
 |---|---|---|---|
+| [bc-safe-runs](../concepts/bc-safe-runs/CONCEPT.md) | pressure | pass | 2026-11-28 |
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | fail | 2026-11-27 |
 
 ## Deployed with a known gap (33)
@@ -25,7 +26,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | concept | kind | tested | deployed |
 |---|---|---|---|
 | [agent-kernel](../concepts/agent-kernel/CONCEPT.md) | pressure | 2026-11-27 | 2026-11-15 |
-| [bc-code-review](../concepts/bc-code-review/CONCEPT.md) | pressure | 2026-11-27 | yes |
+| [bc-code-review](../concepts/bc-code-review/CONCEPT.md) | pressure | 2026-11-28 | yes |
 | [bc-council-chain](../concepts/bc-council-chain/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-council-improve-architecture](../concepts/bc-council-improve-architecture/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-council-mode](../concepts/bc-council-mode/CONCEPT.md) | pressure | 2026-11-24 | yes |
@@ -49,7 +50,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-self-improve](../concepts/bc-self-improve/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-setup-project](../concepts/bc-setup-project/CONCEPT.md) | pressure | 2026-11-27 | 2026-06-21 |
 | [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-11-25 | yes |
-| [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-27 | yes |
+| [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-28 | yes |
 | [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
 | [bc-to-tickets](../concepts/bc-to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [bc-triage](../concepts/bc-triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
