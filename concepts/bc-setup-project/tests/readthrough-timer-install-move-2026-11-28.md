@@ -2,7 +2,7 @@
 
 Work item `060-wiki-timer-install-to-wiki-maintain`. A read-through check, not a model run:
 it follows setup step 10 into the moved file literally on a throwaway fixture and compares
-what an agent would reach with the pre-move text (`git show ae13159:concepts/bc-setup-project/body/SKILL.md`, step 10).
+what an agent would reach with the pre-move text (`git show f2eda93:concepts/bc-setup-project/body/SKILL.md`, step 10).
 
 ## Fixture
 

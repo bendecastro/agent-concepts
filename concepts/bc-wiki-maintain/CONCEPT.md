@@ -396,7 +396,7 @@ is how a human uses it.
 Deployed 2026-08-23 via `scripts/deploy-local-skills.py` to the three relative skill symlinks:
 `~/.agents/skills/bc-wiki-maintain` (shared bus — also serves Composer and Grok),
 `~/.pi/agent/skills/bc-wiki-maintain`, and `~/.claude/skills/bc-wiki-maintain`. Each resolves to
-`body/`, carrying `SKILL.md`, `wiki_lint.py`, and `runner/`.
+`body/`, carrying `SKILL.md`, `wiki_lint.py`, `INSTALL-TIMER.md`, and `runner/`.
 
 The systemd user timer is a separate runner with its own install step (`body/runner/README.md`; the per-vault install `bc-setup-project` offers is `body/INSTALL-TIMER.md`, 2026-11-28);
 it is scoped to one vault chosen at install time and is not part of the skill deploy.
