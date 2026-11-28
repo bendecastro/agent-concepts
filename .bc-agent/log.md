@@ -2554,10 +2554,8 @@ Graded the completed Haiku-low pack-source stranger run from its evidence (the r
 ## [2026-11-28] lint | 061 repeated text is an ERROR
 Switched the repeated-text check to ERROR, widened copy-of sources to the anchor's whole section, and added a repeated-text-allow marker; marked the SDD fallback as a copy and four deliberate restatements as allowed (kernel unchanged).
 
-<<<<<<< HEAD
 ## [2026-11-28] implement | 065 timer install includes the notifier
 `INSTALL-TIMER.md` now copies and verifies `bc-wiki-notify@.service` with the slug units; `runner/README.md` points there instead of its own notifier and promotion-install recipes. Sandboxed scripted install showed the template in the unit folder and `systemd-analyze --user verify` accepted all three units.
-=======
+
 ## [2026-11-28] test | 064 wiki read path stops whole-vault reads
 Reworded the bc-wiki-maintain read-path block (two copy-as-written command lines, top-three reading, no whole-vault or index.md read under user pressure) and its scaffold copy. Scenario 5 on Haiku low: changed 3/3 held, master failed 2/3.
->>>>>>> pi-subagents/w064-2ee92fa-6490-s0-t0

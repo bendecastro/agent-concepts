@@ -39,12 +39,10 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Fixed
 
-<<<<<<< HEAD
 - `bc-wiki-maintain`: the per-vault timer install (`INSTALL-TIMER.md`) now installs and verifies the `bc-wiki-notify@.service` failure notifier, so a vault set up through `bc-setup-project` is told when promotion fails; the runner README points there instead of keeping its own recipe.
-=======
 - `bc-wiki-maintain`: the vault read path no longer leads agents to read the whole vault. The search is two copy-as-written lines that keep the `AGENT_CONCEPTS` checkout, and a lookup opens at most the top three returned pages, never `index.md`, even when the user asks to read everything or qmd is missing (existing vaults: see `bc-setup-project` MIGRATIONS).
->>>>>>> pi-subagents/w064-2ee92fa-6490-s0-t0
 - `bc-qmd` no longer calls `qmd query` the default: use `qmd search` with 2–4 keywords first, and rerun once as `qmd query --no-rerank` when it finds nothing relevant or the concept may be worded differently. `bc-wiki-maintain` and the generated vault block now ban `qmd query` only as an inline read. Earlier projects narrow their vault block by the new "Vault read path: `qmd query` ban narrowed" migration.
+
 ### Changed
 
 - `agent-kernel`: when no one can answer, take the recommended option on a judgment call and record the assumption; stop on destructive, publishing and owner-only steps. `bc-design` and `bc-tdd` keep only their skill-specific records.
