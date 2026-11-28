@@ -2462,3 +2462,6 @@ Tuned the "When no one can answer" bullet to name where the record goes (commit 
 
 ## [2026-11-28] test | agent-kernel unattended-default round 3 (058)
 Tuned the bullet so each skipped step and its open question go into the same record as the assumption; regenerated package copies. Terra low, 3 runs/arm/prompt: FAIL strict, new 1/6 (lenient 6/6) vs old 0/6; question now in the record 6/6, but 5/6 records state the layout as a choice without calling it an assumption. Status frontmatter unchanged.
+
+## [2026-11-28] test | agent-kernel unattended-default round 4 (058)
+Tuned the "When no one can answer" bullet: the record is worded as an assumption made because no one could answer. Rerun on Haiku 5.5 low (Codex quota out): FAIL, new kernel 5/6 (A 3/3, B 2/3; one run wrote "chosen as the default"), old 0/6. Results in concepts/agent-kernel/tests/pressure-unattended-default-results-2026-11-28-round4.md.
