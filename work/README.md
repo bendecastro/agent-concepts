@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [052-release-hygiene-pins](1-planned/052-release-hygiene-pins.md) | planned, ready for agent | — | — | The personal-terms lint returns silently when the private list is missing, so a release cut on a machine without it proves nothing about privacy; and the job h… | 0/1 |
+| 1 | [052-release-hygiene-pins](2-active/052-release-hygiene-pins.md) | active, ready for agent | — | — | The personal-terms lint returns silently when the private list is missing, so a release cut on a machine without it proves nothing about privacy; and the job h… | 0/1 |
 | 2 | [061-lint-repeated-text-and-copies](1-planned/061-lint-repeated-text-and-copies.md) | planned, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 0/3 |
 | 3 | [054-safe-runs-module](1-planned/054-safe-runs-module.md) | planned, ready for agent | — | 053-split-swarm-and-durable-subagents | The storage-safe preamble (guarded test runner, `mktemp -d` not `/tmp`, targeted tests only, storage health check) is restated in 11 skill bodies with drifting… | 0/1 |
 | 4 | [053-split-swarm-and-durable-subagents](1-planned/053-split-swarm-and-durable-subagents.md) | planned | [054-safe-runs-module](1-planned/054-safe-runs-module.md) | — | `bc-delegate-investigation` does two jobs under a name that fits neither the way the owner calls it ("swarm", "go wide") nor how swarm mode uses it. | 0/3 |
