@@ -2457,3 +2457,6 @@ Migration arrives in 0.5.1 with a no-paragraph anchor; find-bugs/architecture st
 
 ## [2026-11-28] test | bc-plan-to-pipeline worktree numbering (055) — inconclusive
 Haiku 5.5 low runs of pressure-worktree-numbering hit 429 rate limits on every attempt (~36 min); recorded as not run, status unchanged.
+
+## [2026-11-28] test | bc-plan-to-pipeline worktree numbering rerun (Haiku, multiprovider)
+Reran pressure-worktree-numbering on claude-haiku-5-5 low (owner-approved Terra substitute) with pi-multiprovider loaded. with-block 2/2 PASS; skill-only (04eb706 scaffold) FAIL: it numbered and committed 003 in the worktree. Status unchanged; no skill text changed.
