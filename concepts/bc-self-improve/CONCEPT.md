@@ -12,6 +12,7 @@ Owner-invoked retrospective over one Pi session or a batch of them. It reads tar
 
 ## Design decisions
 
+- **Loads `bc-file-findings` when a pick becomes later project work (2026-11-28, item 056-file-findings-module).** A picked proposal not acted on now is filed through the module (`Source: self-improve`) and its decision line names the item.
 - **Renamed from `bc-agent-reflect` (2026-11-24, owner decision).** In `bc-setup-project` "agent" means the `.bc-agent/` folder; here it meant the AI agent, and this skill never touches that folder. Old name stays as a deploy alias; the report directory, `BC_AGENT_REFLECT_REPORT_DIR`, the weekly job and the reminder extension keep their names so stored reports and timers keep working.
 - **Reports carry their decisions.** A report is decided once it has `## Decisions` (one line per proposal: acted with commit/file, declined, deferred with trigger). Interactive runs show an undecided latest report first; headless batches carry its proposals over under `## Still undecided from <date>`, outside the sample. Why: weekly reports went unanswered with no record of what was acted on. Owner-approved 2026-11-19.
 

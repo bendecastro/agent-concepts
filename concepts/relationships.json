@@ -1222,6 +1222,69 @@
       "when": "before launching the fresh reviewer after owner approval",
       "source": "concepts/bc-work-sync/body/SKILL.md",
       "reason": "The single reviewer launch uses the shared durability contract and fallback; owner review launches nothing."
+    },
+    {
+      "from": "bc-find-bugs",
+      "to": "bc-file-findings",
+      "relation": "loads",
+      "required": true,
+      "when": "after the owner answers the filing question",
+      "source": "concepts/bc-find-bugs/body/SKILL.md#5-file-after-the-owner-answers",
+      "reason": "Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-improve-codebase-architecture",
+      "to": "bc-file-findings",
+      "relation": "loads",
+      "required": true,
+      "when": "after the owner picks findings in a project with a Where things go table",
+      "source": "concepts/bc-improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table",
+      "reason": "Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-council-audit-security",
+      "to": "bc-file-findings",
+      "relation": "loads",
+      "required": true,
+      "when": "after the owner picks which findings to file",
+      "source": "concepts/bc-council-audit-security/body/SKILL.md#report-and-filing",
+      "reason": "Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-self-improve",
+      "to": "bc-file-findings",
+      "relation": "loads",
+      "required": false,
+      "when": "when a picked proposal becomes later work in a project with a work pipeline",
+      "source": "concepts/bc-self-improve/body/SKILL.md#decisions-record",
+      "reason": "Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-prototype",
+      "to": "bc-file-findings",
+      "relation": "loads",
+      "required": false,
+      "when": "when the verdict becomes project work",
+      "source": "concepts/bc-prototype/body/SKILL.md#handoff-to-the-bc-loop",
+      "reason": "Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-council-challenge-plan",
+      "to": "bc-file-findings",
+      "relation": "loads",
+      "required": false,
+      "when": "when the owner accepts an objection but wants it handled outside the plan",
+      "source": "concepts/bc-council-challenge-plan/body/SKILL.md#grill-and-plan-edits",
+      "reason": "Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update."
+    },
+    {
+      "from": "bc-file-findings",
+      "to": "bc-plan-to-pipeline",
+      "relation": "hands_off",
+      "required": true,
+      "when": "after the filing is committed",
+      "source": "concepts/bc-file-findings/body/SKILL.md#with-a-project-work-pipeline",
+      "reason": "Runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's answer and the caller's evidence as settled; a sequential handoff, not a nested call."
     }
   ]
 }

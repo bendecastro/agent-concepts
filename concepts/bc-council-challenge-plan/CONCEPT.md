@@ -10,6 +10,7 @@ Challenges a plan or PRD through the advisor council (`bc-council-chain` + `bc-c
 
 ## Design decisions
 
+- **Loads `bc-file-findings` for objections handled outside the plan (2026-11-28, item 056-file-findings-module).** An objection the owner accepts but defers out of the plan is filed through the module (`Source: council-challenge-plan`) instead of being lost.
 All from the owner-approved [later council chains plan](../../work/3-done/2026-11/020-council-later-chains.md); numbers are that plan's decisions.
 
 - **Thin chain.** Loads `bc-council-chain`, `bc-council-mode`, `bc-grilling` and `bc-plan-to-pipeline` and defines only what `bc-council-chain`'s "What a chain must define" list leaves open. The parent is the plan itself; its pre-reading is reading the plan and numbering its parts. `bc-plan-to-pipeline`'s modes are referenced by name, never copied, so its own edits stay in one home.

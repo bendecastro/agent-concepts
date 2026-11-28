@@ -75,18 +75,11 @@ Write the report as Markdown, `find-bugs-report.md` at the root of the hunt work
 
 ## 5. File (after the owner answers)
 
-Wait for the owner's answer. Why: the hunt proposes; only the owner decides what becomes work. When the message that invokes you already carries that answer (for example `all`), it is the answer: file and plan in that same reply, and do not end the reply on a summary of what you will file.
+Load `bc-file-findings` and file as it says. Else: wait for the owner's pick (an answer in the invoking message is the pick); chosen → numbered work-planned items, rejected → work-dropped with the reason, the rest → ideas lines, numbered only from the main checkout; then plan each filed item with `bc-plan-to-pipeline` in the same reply; without a project work pipeline, file nothing and say so.
 
-**With a project work pipeline** (a "Where things go" table in `.bc-agent/AGENTS.md` with work-planned, work-dropped and ideas roles):
+What this hunt supplies to it:
 
-- **Each confirmed bug filed** (`all` files every confirmed one) → a numbered work item in work-planned from the project's work-item template, with `Kind: bug` and `Source: find-bugs`, the branch name, the test path and name, and the failing output. Place it in `work/order.md` where the project's work-item rules say, and run `.bc-agent/scripts/work_index.py --check` until it passes.
-- **Each suspected bug the owner picks** → an investigation item the same way (`Kind: bug`, `Source: find-bugs`), stating it is unconfirmed and quoting the evidence.
+- **Chosen** is every confirmed bug (`all`) plus each suspected bug the owner picks. Each item gets `Kind: bug` and `Source: find-bugs`, the hunt branch name, and for a confirmed bug the test path and name and the failing output; a picked suspected bug becomes an investigation item stating it is unconfirmed and quoting the evidence.
 - **Security candidates picked** → items with `Kind: security`, pointing at `bc-security-audit`.
-- **Rejected** → a numbered item in work-dropped whose `## Outcome` states the owner's reason.
-- **Everything else** → one line each in the ideas file, pointing at the report on the hunt branch.
-
-Number items as the project's work-item rules say; from a worktree each ideas line states the owner's choice and reason. Keep the hunt branch: filed items point at it.
-
-When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each work-planned item you filed, one after another in the same reply, without stopping between items, passing the owner's filing answer and the report: the answer settles which bugs are filed and each reproduction test settles its test seam, so neither is asked again. Planning is not starting: leave the items in work-planned. Why: every planned item gets requirements and sliced steps before anyone starts it, a one-line fix included; this is a handoff after this skill's own work ends, not a nested call.
-
-**Without a project work pipeline**, do not invent one: leave the report and branch, list the owner's choices in the reply, and say the findings are not filed.
+- Ideas lines point at the report on the hunt branch. Keep the hunt branch: filed items point at it.
+- When planning a filed item, each reproduction test settles its test seam.

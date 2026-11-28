@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- loads `bc-file-findings` — required, when after the owner answers the filing question.
+  Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md#5-file-after-the-owner-answers)
+
 - adapts `bc-improve-codebase-architecture` — required, when filing after the owner answers.
   Report-then-owner filing, roles and the no-pipeline fallback mirror bc-improve-codebase-architecture.
   Source: [CONCEPT.md](CONCEPT.md)

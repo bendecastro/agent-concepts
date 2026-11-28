@@ -11,7 +11,7 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Create the skill from `bc-find-bugs` §5, point the three callers and the three would-be callers at it, add `loads` edges. Done when lint passes and `bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md`'s scenario holds when run against the new skill.
+- [x] Create the skill from `bc-find-bugs` §5, point the three callers and the three would-be callers at it, add `loads` edges. Done when lint passes and `bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md`'s scenario holds when run against the new skill.
 
 ## Outcome
 

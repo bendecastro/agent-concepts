@@ -10,6 +10,7 @@ Runs a `bc-security-audit` full audit through the advisor council (`bc-council-c
 
 ## Design decisions
 
+- **Loads `bc-file-findings` (2026-11-28, item 056-file-findings-module).** Filing goes through the module, so rejected findings now get a work-dropped item, unpicked ones an ideas line, and filed items are planned with `bc-plan-to-pipeline`; the skill keeps its Kind/Source lines, the no-exploit-steps rule and a one-line fallback.
 From the owner-decided plan [Two more council chains](../../work/3-done/2026-11/020-council-later-chains.md), decisions 1–4.
 
 - **Thin chain.** Loads `bc-council-chain`, `bc-security-audit` and `bc-council-mode` and defines only what `bc-council-chain`'s "What a chain must define" list leaves open. Steps, gates, schemas and the validator stay in `bc-security-audit`.

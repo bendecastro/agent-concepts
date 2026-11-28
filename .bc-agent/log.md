@@ -2488,3 +2488,6 @@ Reran pressure-wiki-maintain-timer on Haiku 5.5 low (owner-approved Terra substi
 
 ## [2026-11-28] test | 060 wiki-maintain timer close-out after step 10 tune: PASS
 Step 10 states inline that qmd search is not promotion, that "just enable"/"don't ask" is not confirmation of the shown units and commands, and the parking-lot TODO on decline/no systemd; INSTALL-TIMER.md adds the "don't ask" clause. Terra low rerun: tuned 4/4, master 1/4 (master installed units unconfirmed). Results: concepts/bc-setup-project/tests/pressure-wiki-maintain-timer-results-terra-2026-11-28.md.
+
+## [2026-11-28] implement | bc-file-findings module (056-file-findings-module)
+New model-invoked bc-file-findings holds the filing rules from bc-find-bugs §5; bc-find-bugs, bc-improve-codebase-architecture and bc-council-audit-security load it (with one-line fallbacks), bc-self-improve, bc-prototype and bc-council-challenge-plan load it when their output becomes project work. Pressure C2 on Haiku low (Terra quota out): first wording 1/3, tuned to numbered steps 3/3; inline master 3/3. Not deployed.

@@ -15,6 +15,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Briefing, launch, relay, resume and the pass cap have one home in bc-council-mode.
   Source: [body/SKILL.md](body/SKILL.md)
 
+- loads `bc-file-findings` — required, when after the owner picks which findings to file.
+  Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md#report-and-filing)
+
 - loads `bc-security-audit` — required, when every council security audit.
   Recon, Output gate, execution boundary, fresh verification, JSON records, validator and report have one home in bc-security-audit.
   Source: [body/SKILL.md](body/SKILL.md)

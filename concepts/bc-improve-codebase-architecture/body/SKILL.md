@@ -57,17 +57,13 @@ If the owner rejects a candidate for a load-bearing reason, offer to record a de
 
 ## 4. Record every finding (projects with the table)
 
-Wait until the owner has seen the report and said which findings they want. Why: a review proposes; only the owner decides what becomes work, and a planned item created on the agent's own judgment reads as a decision nobody made. Then give every finding in the report exactly one home:
+Load `bc-file-findings` and file as it says. Else: wait for the owner's pick; chosen → numbered work-planned items, rejected → work-dropped with the owner's reason, the rest → ideas lines, numbered only from the main checkout; then plan each filed item with `bc-plan-to-pipeline` in the same reply.
 
-- **Chosen** → a numbered work item in the work-planned folder, made from the project's work-item template, citing the report folder, with the lines `Kind: architecture` and `Source: improve-codebase-architecture`. Place it in the work-order file where the project's work-item rules say (a top kind goes near the top). Grilling outcomes go into the item.
-- **Rejected** → a numbered work item in the work-dropped folder whose `## Outcome` states the owner's reason. Why: a recorded "no, because" stops the next review re-proposing it; a rejection without its reason is lost at the next review.
-- **Everything else** (not chosen, not rejected, including discarded observations still worth watching) → one line in the ideas file pointing at the report folder.
+What this review supplies to it:
 
-Delete each ideas line that seeded a chosen or rejected finding, in the same commit as its item; replace a line that seeded an "everything else" finding instead of adding a second line. Why: the ideas file lists only what is undecided, and a decided line left there would seed the next review again.
-
-Number items as the project's `.bc-agent/AGENTS.md` work-item rules say; from a worktree each ideas line states the owner's choice and reason.
-
-When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each chosen item you filed, one after another in the same reply, without stopping between items, passing the grilling's settled answers so the owner is not asked them again. Why: every planned item gets requirements and sliced steps before anyone starts it; this is a handoff after this skill's own work ends, not a nested call.
+- **Chosen** findings get `Kind: architecture` and `Source: improve-codebase-architecture`, cite the report folder, and carry the grilling outcomes. Pass the grilling's settled answers to `bc-plan-to-pipeline` so the owner is not asked them again.
+- Ideas lines (everything else, including discarded observations still worth watching) point at the report folder.
+- Delete each ideas line that seeded a chosen or rejected finding, in the same commit as its item; replace a line that seeded an "everything else" finding instead of adding a second line. Why: the ideas file lists only what is undecided, and a decided line left there would seed the next review again.
 
 Observations you make outside a review, in any later task, are also single lines in the ideas file, naming the module, the seam and the evidence. Why: the next review reads them there, and the ideas file is the one place that shows what is undecided.
 

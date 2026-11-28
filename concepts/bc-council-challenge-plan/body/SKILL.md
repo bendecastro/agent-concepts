@@ -67,7 +67,7 @@ Pass 2: each advisor attacks the objections it did not raise. It confirms with i
 
 Grill the owner on the surviving objections only, one at a time, in verdict order, following `bc-grilling`: state the objection, the quoted plan line, its evidence and agreement line, and the recommended answer. The owner may answer, accept the recommendation, or reject the objection.
 
-After each answer, write it into the plan at the line it concerns, as the owner's decision with its why. A rejected objection changes nothing in the plan. Edit only what the answer settles.
+After each answer, write it into the plan at the line it concerns, as the owner's decision with its why. A rejected objection changes nothing in the plan. Edit only what the answer settles. When the owner accepts an objection but wants it handled outside this plan, file it through `bc-file-findings` with `Source: council-challenge-plan`, the `Kind:` that fits it, and the report path. Else: add it as one line in the project's ideas file.
 
 ## Report
 

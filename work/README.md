@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [056-file-findings-module](2-active/056-file-findings-module.md) | active, ready for agent | — | 061-lint-repeated-text-and-copies | `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` each restate how findings become work items, and only `bc-find-bugs` has the… | 0/1 |
+| 1 | [056-file-findings-module](2-active/056-file-findings-module.md) | active, ready for agent | — | 061-lint-repeated-text-and-copies | `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` each restate how findings become work items, and only `bc-find-bugs` has the… | 1/1 |
 | 2 | [058-kernel-unattended-default](2-active/058-kernel-unattended-default.md) | active, ready for agent | — | 061-lint-repeated-text-and-copies | About six skills restate "when no one can answer (delegated child, headless job, owner away), take the recommended option and record the assumption" in differe… | 0/1 |
 | 3 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 2/5 |
 | 4 | [063-plan-always-asks-dependencies](2-active/063-plan-always-asks-dependencies.md) | active, ready for agent | — | — | In the v0.4.1 stranger test, `bc-plan-to-pipeline` wrote a ready item without a `Dependencies:` line and asked no dependency question, although the project's t… | 0/3 |

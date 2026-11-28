@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- loads `bc-file-findings` — optional, when when the verdict becomes project work.
+  Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md#handoff-to-the-bc-loop)
+
 - loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
   Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [body/SKILL.md](body/SKILL.md#rules)

@@ -49,6 +49,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill.
   Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md)
 
+- incoming from [bc-file-findings](../bc-file-findings/RELATIONSHIPS.md): hands off to this concept — required, when after the filing is committed.
+  Runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's answer and the caller's evidence as settled; a sequential handoff, not a nested call.
+  Source: [bc-file-findings/body/SKILL.md](../bc-file-findings/body/SKILL.md#with-a-project-work-pipeline)
+
 - incoming from [bc-find-bugs](../bc-find-bugs/RELATIONSHIPS.md): hands off to this concept — required, when after filing into a project work pipeline.
   Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through bc-find-bugs §5.
   Source: [bc-find-bugs/body/SKILL.md](../bc-find-bugs/body/SKILL.md#5-file-after-the-owner-answers)

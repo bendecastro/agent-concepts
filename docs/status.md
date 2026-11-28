@@ -2,7 +2,7 @@
 
 # Status
 
-57 concepts. 0 need testing, 1 not deployed, 33 deployed with a known gap.
+58 concepts. 0 need testing, 2 not deployed, 33 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -11,10 +11,11 @@ Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page wi
 
 Nothing. Every deployed concept has a recorded run.
 
-## Not deployed (1)
+## Not deployed (2)
 
 | concept | kind | test status | tested |
 |---|---|---|---|
+| [bc-file-findings](../concepts/bc-file-findings/CONCEPT.md) | pressure | pass | 2026-11-28 |
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | fail | 2026-11-27 |
 
 ## Deployed with a known gap (33)

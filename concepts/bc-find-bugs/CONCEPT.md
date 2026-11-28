@@ -10,6 +10,7 @@ User-invoked bug hunt over a named area (or a small whole repo). It collects can
 
 ## Design decisions
 
+- **Loads `bc-file-findings` (2026-11-28, item 056-file-findings-module).** §5's filing rules moved to that module; §5 keeps what the hunt supplies (Kind, Source, branch, test, failing output, suspected → investigation items, security items) and a one-line fallback.
 All from the owner-approved [council bug hunt plan](../../work/3-done/2026-11/019-council-find-bugs.md); numbers below are that plan's decisions.
 
 - **Loads `bc-safe-runs` (2026-11-28, item 054-safe-runs-module).** The body loads `bc-safe-runs` by name and keeps a one-line fallback for running code.

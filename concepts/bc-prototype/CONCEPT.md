@@ -10,6 +10,7 @@ User-invoked throwaway exploration step for design uncertainty: build a small ru
 
 ## Design decisions
 
+- **Loads `bc-file-findings` when the verdict becomes project work (2026-11-28, item 056-file-findings-module).** The follow-up item is filed through the module (`Source: prototype`, citing the writeup), which then runs `/bc-plan-to-pipeline` on it.
 - **Loads `bc-safe-runs` (2026-11-28, item 054-safe-runs-module).** The body loads `bc-safe-runs` by name and keeps a one-line fallback for running code.
 
 - **Question-first.** The artifact shape follows the question; otherwise prototypes become mini-features.
