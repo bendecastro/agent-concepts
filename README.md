@@ -356,18 +356,15 @@ pi remove npm:agent-concepts
 <details>
 <summary><b>Claude Code</b></summary>
 
-**Install** — adds this repository as a plugin source and installs the plugin:
+**Install** — adds this repository as a plugin source and installs the skills plugin and the [agent kernel](#optional-agent-kernel) (requires `python3`):
 
 ```bash
 claude plugin marketplace add bendecastro/agent-concepts#v0.5.0 && \
-  claude plugin install -y agent-concepts@agent-concepts
+  claude plugin install -y agent-concepts@agent-concepts && \
+  claude plugin install agent-kernel@agent-concepts --scope user
 ```
 
-**Optional [agent kernel](#optional-agent-kernel)** (requires `python3`), from the same release tag, no checkout:
-
-```bash
-claude plugin install agent-kernel@agent-concepts --scope user
-```
+To skip the kernel, leave out the last line.
 
 **Refresh** (stays on the release you installed):
 
@@ -381,7 +378,8 @@ claude plugin marketplace update agent-concepts && \
 **Uninstall:**
 
 ```bash
-claude plugin uninstall agent-concepts@agent-concepts && \
+claude plugin uninstall agent-kernel@agent-concepts --scope user && \
+  claude plugin uninstall agent-concepts@agent-concepts && \
   claude plugin marketplace remove agent-concepts
 ```
 
@@ -716,12 +714,12 @@ The kernel is a short instruction file loaded into every session, whatever the t
 <details>
 <summary><b>Install, disable or remove the kernel</b> (Claude Code, Codex, OpenCode, other agents)</summary>
 
-Codex installs the kernel with its skills and Claude Code installs it from the same release tag; for the other agents, the commands below use a local Agent Concepts checkout. Use one kernel source per agent: a package, a manual include or a marked block, not several. To pin the kernel, check out a release tag that contains the kernel package, or a full commit SHA, in a dedicated checkout and use that path; to upgrade, select another revision and refresh or reinstall from it.
+Claude Code and Codex install the kernel with their skills, from the same release tag; for the other agents, the commands below use a local Agent Concepts checkout. Use one kernel source per agent: a package, a manual include or a marked block, not several. To pin the kernel, check out a release tag that contains the kernel package, or a full commit SHA, in a dedicated checkout and use that path; to upgrade, select another revision and refresh or reinstall from it.
 
 | Harness | Install | Disable | Remove |
 |---|---|---|---|
 | Pi 1.6.1+ | Included in the [Pi package](#pi). Only with the contributor install (no package): from the checkout root, `pi install ./packages/agent-kernel-pi`. | Disable the kernel extension in `pi config`. | Package: remove the package. Standalone: from the same checkout root, `pi remove ./packages/agent-kernel-pi`. |
-| Claude Code (requires `python3`) | After the [Claude Code install](#claude-code), which adds the marketplace from the release tag: `claude plugin install agent-kernel@agent-concepts --scope user`. No checkout needed. | `claude plugin disable agent-kernel@agent-concepts --scope user`. | `claude plugin uninstall agent-kernel@agent-concepts --scope user`. Keep the marketplace if you still use its skills. |
+| Claude Code (requires `python3`) | Included in the [Claude Code install](#claude-code); no checkout needed. | `claude plugin disable agent-kernel@agent-concepts --scope user`. | `claude plugin uninstall agent-kernel@agent-concepts --scope user`. Keep the marketplace if you still use its skills. |
 | Codex (requires `python3`) | Included in the [Codex install](#codex); no checkout needed. Review and trust the SessionStart hook with `/hooks`; it won't load until trusted. | Disable the kernel plugin in `/plugins`. | `codex plugin remove agent-kernel@agent-concepts`. Keep the marketplace if you still use its skills. |
 | OpenCode V2 | In global `opencode.json(c)`, add the absolute path to `packages/agent-kernel-opencode/` to `plugins`. | Delete that entry from `plugins`; leave the package files in place to re-enable later. | Delete the same entry; the checkout can stay. |
 | OpenCode V1 | In global `opencode.json(c)`, add the absolute path to the checkout's `packages/agent-kernel/AGENT-KERNEL.md` to `instructions`. There is no V1 kernel plugin. | Delete that entry from `instructions`; keep the file to re-enable later. | Delete the same entry; the checkout can stay. |

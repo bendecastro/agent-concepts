@@ -27,10 +27,10 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 - The README's Codex install also installs the `agent-kernel` plugin from the release tag, with no
   checkout; trust its SessionStart hook in `/hooks` or the kernel does not load. Uninstall removes both
   plugins. Running the README's Codex refresh on a skills-only install adds the kernel.
-- The README's Claude Code box gains an optional `agent-kernel` line installed from the release tag, with no
-  checkout; the kernel table's Claude Code row drops the local-checkout marketplace. It stays out of the
-  default command: a with/without test in Claude Code on Haiku 5.5 found three gains and one regression
-  (`concepts/agent-kernel/tests/claude-code-with-without-results-2026-11-28.md`).
+- The README's Claude Code install also installs the `agent-kernel` plugin from the release tag, with no
+  checkout; uninstall removes both plugins, and the kernel table's Claude Code row drops the local-checkout
+  marketplace. A with/without test in Claude Code on Haiku 5.5 found three gains and one regression
+  (`concepts/agent-kernel/tests/claude-code-with-without-results-2026-11-28.md`); the owner chose the default.
 - `bc-setup-project`'s generated `.bc-agent/AGENTS.md` now states once how skills resolve a project file's role and the full worktree numbering rule; the skills that restated them point at it and keep only their own no-table fallback, except `bc-plan-to-pipeline`, which keeps the full numbering rule so projects set up earlier stay safe. Earlier projects add the block by the new "Role lookup and worktree numbering" migration.
 - The per-vault wiki-maintain timer install procedure moved from `bc-setup-project` step 10 to `bc-wiki-maintain`'s `INSTALL-TIMER.md`; setup still offers the timer and loads it, so the `bc-setup-project` install pack now includes `bc-wiki-maintain`.
 - `bc-setup-project` step 10 states inline that qmd search does not replace the promotion timer, that "just enable" or "don't ask" is not confirmation of the shown units and commands, and that a declined or impossible install leaves a parking-lot TODO.

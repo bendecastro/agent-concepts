@@ -2538,3 +2538,6 @@ Owner accepted the round 4 result (Haiku low, new 5/6, old 0/6) despite the unme
 
 ## [2026-11-28] test | agent-kernel in Claude Code on Haiku (062)
 Real Claude Code 2.1.329, Haiku 5.5, plugin vs none in isolated scratch configs, four scenarios: argue 0/3→3/3, bare yes 0/3→2/3, unattended 0/3→3/3 lenient, question-is-not-an-edit 6/6→5/6 (pre-declared extension). Verdict no gain under the item's rule; README Claude Code box gets an optional kernel line from the release tag, CONCEPT.md keeps the verdict and cites the results.
+
+## [2026-11-28] deploy | agent-kernel default in Claude Code (062)
+Owner chose the kernel plugin as part of the Claude Code default install despite the with/without test's pre-set no-gain verdict (three gains, one restored-edit regression); README box, uninstall, harnesses, CONCEPT, index and CHANGELOG updated.
