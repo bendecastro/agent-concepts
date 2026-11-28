@@ -42,5 +42,5 @@ Reply with approvals or changes (for example "all, but 2.2") and answer the ques
 Rules for the plan:
 
 - Every proposed item, move and fix names the doc, issue or commit it comes from. Why: the owner checks a claim against its source, not against your summary.
-- Numbers in "New items" stay `new` in the plan; real numbers are assigned when writing, in the main checkout.
+- Numbers in "New items" stay `new` in the plan; real numbers are assigned when writing, as the project's work-item rules say.
 - A disagreement between two docs goes under Questions, never under Fixes.

@@ -48,7 +48,7 @@ No auditor, worker, or worktree starts on a unit until the driver has claimed it
 
 ## Where project files go
 
-This skill names project files by role: the **work-planned**, **work-active** and **work-done** folders, which hold work items, and the **ideas** file. Resolve each role in the "Where things go" table in the project's `.bc-agent/AGENTS.md`, and follow the work-item rules in the same file. Why: each project has one table, so a project that keeps something elsewhere changes one place and every skill follows.
+This skill names project files by role: the **work-planned**, **work-active** and **work-done** folders, which hold work items, and the **ideas** file. Resolve each role from the "Where things go" table in the project's `.bc-agent/AGENTS.md`; that file says how. Without the table there are no work items; see [source-issues.md](source-issues.md#where-issues-and-work-items-meet).
 
 ## Preflight — before the loop
 

@@ -78,7 +78,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Incoming
 
 - incoming from [bc-council-audit-security](../bc-council-audit-security/RELATIONSHIPS.md): depends on this concept's contract — required, when filing into a work pipeline.
-  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
+  Relies on the work-item template, Kind placement in order.md and work_index.py --check. Numbers items under its worktree numbering rule.
   Source: [bc-council-audit-security/body/SKILL.md](../bc-council-audit-security/body/SKILL.md)
 
 - incoming from [bc-design](../bc-design/RELATIONSHIPS.md): depends on this concept's contract — required, when project has no docs/design/README.md.
@@ -94,7 +94,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-domain-modeling/CONCEPT.md](../bc-domain-modeling/CONCEPT.md)
 
 - incoming from [bc-find-bugs](../bc-find-bugs/RELATIONSHIPS.md): depends on this concept's contract — required, when filing into a work pipeline.
-  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
+  Relies on the work-item template, Kind placement in order.md and work_index.py --check. Numbers items under its worktree numbering rule.
   Source: [bc-find-bugs/CONCEPT.md](../bc-find-bugs/CONCEPT.md)
 
 - incoming from [bc-handoff](../bc-handoff/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
@@ -102,7 +102,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-handoff/CONCEPT.md](../bc-handoff/CONCEPT.md)
 
 - incoming from [bc-improve-codebase-architecture](../bc-improve-codebase-architecture/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject.
+  Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject. Numbers items under its worktree numbering rule.
   Source: [bc-improve-codebase-architecture/CONCEPT.md](../bc-improve-codebase-architecture/CONCEPT.md)
 
 - incoming from [bc-performance-guardrails](../bc-performance-guardrails/RELATIONSHIPS.md): depends on this concept's contract — required, when project has no docs/guardrails/README.md.
@@ -114,7 +114,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-pipeline-to-done/CONCEPT.md](../bc-pipeline-to-done/CONCEPT.md)
 
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
+  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule.
   Source: [bc-plan-to-pipeline/CONCEPT.md](../bc-plan-to-pipeline/CONCEPT.md)
 
 - incoming from [bc-prototype](../bc-prototype/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
@@ -126,7 +126,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-teach/body/SKILL.md](../bc-teach/body/SKILL.md#hosted-bc-agent-adapter)
 
 - incoming from [bc-triage](../bc-triage/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules.
+  Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules. Numbers items under its worktree numbering rule.
   Source: [bc-triage/CONCEPT.md](../bc-triage/CONCEPT.md)
 
 - incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
@@ -134,5 +134,5 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-wiki-maintain/CONCEPT.md](../bc-wiki-maintain/CONCEPT.md)
 
 - incoming from [bc-work-sync](../bc-work-sync/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.
-  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py.
+  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py. Numbers items under its worktree numbering rule.
   Source: [bc-work-sync/body/SKILL.md](../bc-work-sync/body/SKILL.md)

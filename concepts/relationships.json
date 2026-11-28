@@ -451,7 +451,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-triage/CONCEPT.md",
-      "reason": "Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules."
+      "reason": "Resolves glossary, decisions, work-dropped and ideas in the scaffolded table and records rejections as dropped work items under its work-item rules. Numbers items under its worktree numbering rule."
     },
     {
       "from": "bc-pipeline-to-done",
@@ -469,7 +469,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-plan-to-pipeline/CONCEPT.md",
-      "reason": "Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template."
+      "reason": "Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule."
     },
     {
       "from": "bc-improve-codebase-architecture",
@@ -478,7 +478,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-improve-codebase-architecture/CONCEPT.md",
-      "reason": "Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject."
+      "reason": "Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject. Numbers items under its worktree numbering rule."
     },
     {
       "from": "bc-diagnosing-bugs",
@@ -595,7 +595,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-work-sync/body/SKILL.md",
-      "reason": "Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py."
+      "reason": "Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py. Numbers items under its worktree numbering rule."
     },
     {
       "from": "bc-swarm",
@@ -746,7 +746,7 @@
       "required": true,
       "when": "filing into a work pipeline",
       "source": "concepts/bc-find-bugs/CONCEPT.md",
-      "reason": "Relies on the work-item template, Kind placement in order.md and work_index.py --check."
+      "reason": "Relies on the work-item template, Kind placement in order.md and work_index.py --check. Numbers items under its worktree numbering rule."
     },
     {
       "from": "bc-council-find-bugs",
@@ -809,7 +809,7 @@
       "required": true,
       "when": "filing into a work pipeline",
       "source": "concepts/bc-council-audit-security/body/SKILL.md",
-      "reason": "Relies on the work-item template, Kind placement in order.md and work_index.py --check."
+      "reason": "Relies on the work-item template, Kind placement in order.md and work_index.py --check. Numbers items under its worktree numbering rule."
     },
     {
       "from": "bc-council-challenge-plan",

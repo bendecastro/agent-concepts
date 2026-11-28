@@ -17,7 +17,7 @@ Every tracker comment you post during triage starts with:
 
 ## Where project files go
 
-This skill names project files by role: the **glossary**, the **decisions** folder, the **work-dropped** folder and the **ideas** file. Resolve each role in the "Where things go" table in the project's `.bc-agent/AGENTS.md`. Why: each project has one table, so a project that keeps something elsewhere changes one place and every skill follows. When the project has no such table, use these paths instead:
+This skill names project files by role: the **glossary**, the **decisions** folder, the **work-dropped** folder and the **ideas** file. Resolve each role from the "Where things go" table in the project's `.bc-agent/AGENTS.md`. When the project has no such table, use these paths instead:
 
 - glossary: the Glossary section of `.bc-agent/project/overview.md` when it exists, otherwise `glossary.md`;
 - decisions: `.bc-agent/decisions/` when it exists, otherwise `docs/adr/`;

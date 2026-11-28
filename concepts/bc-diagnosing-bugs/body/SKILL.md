@@ -7,7 +7,7 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 A discipline for hard bugs and performance regressions. It complements `bc-tdd`: first build a tight red-capable feedback loop for the bug, then fix and regression-test it.
 
-Read the project's glossary and relevant decision records before editing so hypotheses use project vocabulary. Find each by its role (glossary, decisions, ideas) in the "Where things go" table in `.bc-agent/AGENTS.md`. Why: one table per project means a project that keeps something elsewhere changes one place. Without that table, use `glossary.md` (or `.bc-agent/project/overview.md` in a `bc-setup-project` vault) and the ADRs under `docs/adr/` (or `.bc-agent/decisions/`).
+Read the project's glossary and relevant decision records before editing so hypotheses use project vocabulary. Resolve each role (glossary, decisions, ideas) from the "Where things go" table in `.bc-agent/AGENTS.md`. Without that table, use `glossary.md` (or `.bc-agent/project/overview.md` in a `bc-setup-project` vault) and the ADRs under `docs/adr/` (or `.bc-agent/decisions/`).
 
 Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 

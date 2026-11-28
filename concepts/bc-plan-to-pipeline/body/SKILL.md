@@ -23,7 +23,7 @@ This orchestrator composes **model-invoked disciplines only** (`bc-grilling`, `b
 
 ## Where project files go
 
-This skill names project files by role: the **glossary**, the **decisions** folder, the **work-planned** folder, the **ideas** file, the **research** folder and **requirements** (the product-level spec). Resolve each role in the "Where things go" table in the project's `.bc-agent/AGENTS.md`, and follow the work-item rules in the same file (naming, numbering, template). Why: each project has one table, so a project that keeps something elsewhere changes one place and every skill follows.
+This skill names project files by role: the **glossary**, the **decisions** folder, the **work-planned** folder, the **ideas** file, the **research** folder and **requirements** (the product-level spec). Resolve each role from the "Where things go" table in the project's `.bc-agent/AGENTS.md`; that file says how.
 
 When the project has no such table, use the paths this skill used before:
 
@@ -42,7 +42,7 @@ Call the feature's requirements document by the project's term: the requirements
   - `requirements.md` — the PRD.
   Why two files: the steps already are the slice map, so a separate slices file would be a second copy that drifts.
 
-Number items only from the main checkout: the next number is the highest across all stage folders plus one. In a git worktree, stop after step 2, add one line for the plan to the ideas file, and resume from step 3 in the main checkout; tell the user so. Why: two worktrees cannot see each other's numbers and would pick the same one. Never write a `Status:` line; the item stays in work-planned, and the agent that starts the work moves it.
+Number the item as the project's work-item rules say. When they forbid numbering here (a git worktree), stop after step 2, record the plan as those rules say, and resume from step 3 where numbering is allowed. Never write a `Status:` line; the item stays in work-planned, and the agent that starts the work moves it.
 
 In a hybrid project the glossary is shared with `bc-teach`: follow the shared-glossary rule in `bc-domain-modeling` (ask before removing or redefining a term you did not add this session).
 

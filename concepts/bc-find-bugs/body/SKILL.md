@@ -85,7 +85,7 @@ Wait for the owner's answer. Why: the hunt proposes; only the owner decides what
 - **Rejected** → a numbered item in work-dropped whose `## Outcome` states the owner's reason.
 - **Everything else** → one line each in the ideas file, pointing at the report on the hunt branch.
 
-Number items only from the main checkout; from a worktree, write ideas-file lines stating the owner's choice instead. Keep the hunt branch: filed items point at it.
+Number items as the project's work-item rules say. Keep the hunt branch: filed items point at it.
 
 When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each work-planned item you filed, one after another in the same reply, without stopping between items, passing the owner's filing answer and the report: the answer settles which bugs are filed and each reproduction test settles its test seam, so neither is asked again. Planning is not starting: leave the items in work-planned. Why: every planned item gets requirements and sliced steps before anyone starts it, a one-line fix included; this is a handoff after this skill's own work ends, not a nested call.
 
