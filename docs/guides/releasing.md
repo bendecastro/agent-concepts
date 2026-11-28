@@ -152,7 +152,9 @@ it runs the all-skills command and one pack command from [install-packs.md](inst
 The README commands must be kept matching by hand; the test will not catch a drift between them.
 The packed Pi install also checks that the kernel reaches Pi’s assembled system prompt without
 a model request. A weekly and manually dispatchable `latest agents` workflow runs the same
-install test on the latest CLI releases and opens or comments on one issue when it fails.
+install test against npm's `latest` tag for each CLI, with read-only repository access and no
+persisted checkout credential. On failure, a separate job with issue-write access opens or
+comments on one issue. Reporting jobs run one at a time to avoid duplicate issues.
 
 The test runs the update commands against the same tag. Moving an install from one tag to a
 newer one has not been tested yet; until it is, the safe way is to uninstall and install again

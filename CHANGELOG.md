@@ -8,7 +8,8 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ### Changed
 
-- CI checks fresh installs against new agent CLI releases each week, including whether Pi loads the packaged kernel.
+- Each week CI checks fresh installs against npm's `latest` tag for each agent CLI, including
+  whether Pi loads the packaged kernel. A separate job opens or updates one issue on failure.
 
 ## [0.4.1] - 2026-11-27
 

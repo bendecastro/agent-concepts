@@ -2399,3 +2399,6 @@ First soak: stranger test on npm@0.4.1 (`next`) passed setup, planning, build an
 
 ## [2026-11-28] implement | latest-agent CI and packed Pi kernel
 Weekly latest-CLI installs report failures; the packed Pi test checks the kernel in the assembled prompt without a provider request. Aligned pinned Pi to 1.6.1.
+
+## [2026-11-28] implement | latest-agent CI review fixes
+Require npm's latest tags, isolate and serialize failure reporting, and validate the packed Pi kernel prompt. The integration test now skips Pi shims and restores and removes its scratch install.

@@ -104,8 +104,9 @@ class CheckFailed(Exception):
 def install_sources(ref: str | None) -> dict[str, list[str]]:
     """What each method installs from: the local checkout, or the GitHub repository at `ref`.
 
-    Each CLI takes the ref in its own syntax. CI pins Pi 1.6.1, Claude Code 2.1.329,
-    Codex 0.153.1 and skills 1.9.0; the ref forms were checked against a pushed commit.
+    Each CLI takes the ref in its own syntax; the ref forms were checked against a pushed
+    commit. See the CLI setup in .github/workflows/gate.yml and .github/workflows/release.yml
+    for pinned versions, and .github/workflows/latest-agents.yml for the latest-release check.
     """
     if ref is None:
         local = str(ROOT)
@@ -239,7 +240,11 @@ class PiNpmPackage(PiPackage):
             prompt = json.loads(out)
         except (CheckFailed, json.JSONDecodeError) as exc:
             raise CheckFailed(f"kernel check could not read Pi system prompt: {exc}") from exc
+        if not isinstance(prompt, str) or not prompt.strip():
+            raise CheckFailed("Pi system prompt is not non-empty text")
         kernel = (self.box.root / "package/packages/agent-kernel-pi/AGENT-KERNEL.md").read_text()
+        if not kernel.strip():
+            raise CheckFailed("packaged kernel is empty")
         if kernel not in prompt:
             raise CheckFailed("kernel missing from Pi system prompt")
         print("  ok: kernel present in Pi system prompt", flush=True)

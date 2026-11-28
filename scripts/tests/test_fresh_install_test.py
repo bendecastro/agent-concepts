@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""Tests for the fresh-install test's list check (the agent CLIs themselves run only in CI)."""
+"""Unit checks for fresh installs and a kernel integration test with npm-installed Pi."""
 
 from __future__ import annotations
 
+import json
+import shutil
+import subprocess
 import sys
 import unittest
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import pytest
 
@@ -120,27 +124,83 @@ if __name__ == "__main__":
     unittest.main()
 
 
-def test_pi_npm_checks_kernel_in_system_prompt(tmp_path):
-    import json
-    import shutil
+@pytest.fixture
+def packed_pi(tmp_path):
+    with TemporaryDirectory(dir=tmp_path) as scratch:
+        box = fit.Sandbox(Path(scratch), "kernel")
+        kernel = box.root / "package/packages/agent-kernel-pi/AGENT-KERNEL.md"
+        kernel.parent.mkdir(parents=True)
+        kernel.write_text("packaged kernel")
+        yield fit.PiNpmPackage(box, [str(fit.ROOT)]), kernel
 
-    if not all(shutil.which(cmd) for cmd in ("pi", "npm", "node", "tar")):
-        pytest.skip("Pi and npm tools are required")
-    box = fit.Sandbox(tmp_path, "kernel")
-    agent = fit.PiNpmPackage(box, [str(fit.ROOT)])
-    agent.install()
-    extension = box.root / "package/packages/agent-kernel-pi/index.js"
-    contents = extension.read_text()
-    manifest = box.root / "package/package.json"
-    manifest_text = manifest.read_text()
-    data = json.loads(manifest_text)
-    data["pi"]["extensions"] = []
-    manifest.write_text(json.dumps(data))
-    extension.unlink()
-    with pytest.raises(fit.CheckFailed) as exc:
+
+def test_pi_npm_rejects_array_instead_of_prompt_text(packed_pi, monkeypatch):
+    agent, kernel = packed_pi
+
+    def run(args, **kwargs):
+        return subprocess.CompletedProcess(args, 0, json.dumps([kernel.read_text()]), "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(fit.CheckFailed, match="Pi system prompt is not non-empty text"):
         agent.check_kernel_prompt()
-    assert str(exc.value) == "kernel missing from Pi system prompt"
-    print(f"  expected failure: {exc.value}")
-    extension.write_text(contents)
-    manifest.write_text(manifest_text)
-    agent.check_kernel_prompt()
+
+
+def test_pi_npm_rejects_empty_kernel_even_with_prompt_text(packed_pi, monkeypatch):
+    agent, kernel = packed_pi
+    kernel.write_text("")
+
+    def run(args, **kwargs):
+        return subprocess.CompletedProcess(args, 0, json.dumps("assembled prompt"), "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(fit.CheckFailed, match="packaged kernel is empty"):
+        agent.check_kernel_prompt()
+
+
+def test_pi_npm_reports_failed_probe_even_with_valid_stdout(packed_pi, monkeypatch):
+    agent, kernel = packed_pi
+
+    def run(args, **kwargs):
+        return subprocess.CompletedProcess(args, 7, json.dumps(kernel.read_text()), "probe broke")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(fit.CheckFailed,
+                       match=r"(?s)could not read Pi system prompt: node exited 7:.*probe broke"):
+        agent.check_kernel_prompt()
+
+
+def test_pi_npm_checks_kernel_in_system_prompt(tmp_path):
+    pi = shutil.which("pi")
+    if not pi or not all(shutil.which(cmd) for cmd in ("npm", "node", "tar")):
+        pytest.skip("Pi and npm tools are required")
+    resolved = Path(pi).resolve()
+    # Match the package root used by the probe, then verify the declared npm bin.
+    root = resolved.parent.parent.parent
+    try:
+        pi_bin = json.loads((root / "package.json").read_text())["bin"]["pi"]
+    except (OSError, ValueError, TypeError, KeyError):
+        pi_bin = None
+    if not isinstance(pi_bin, str) or (root / pi_bin).resolve() != resolved:
+        pytest.skip("pi on PATH does not resolve to an npm package bin (it may be a shim)")
+
+    with TemporaryDirectory(dir=tmp_path) as scratch:
+        box = fit.Sandbox(Path(scratch), "kernel")
+        agent = fit.PiNpmPackage(box, [str(fit.ROOT)])
+        agent.install()
+        extension = box.root / "package/packages/agent-kernel-pi/index.js"
+        contents = extension.read_text()
+        manifest = box.root / "package/package.json"
+        manifest_text = manifest.read_text()
+        data = json.loads(manifest_text)
+        data["pi"]["extensions"] = []
+        try:
+            manifest.write_text(json.dumps(data))
+            extension.unlink()
+            with pytest.raises(fit.CheckFailed) as exc:
+                agent.check_kernel_prompt()
+            assert str(exc.value) == "kernel missing from Pi system prompt"
+            print(f"  expected failure: {exc.value}")
+        finally:
+            extension.write_text(contents)
+            manifest.write_text(manifest_text)
+        agent.check_kernel_prompt()
