@@ -20,9 +20,11 @@ Arms:
 - **with-block** (twice): the fixture's `.bc-agent/AGENTS.md` is the current scaffold output,
   holding the role-lookup paragraph and the full "Only the main checkout creates numbered items"
   rule.
-- **skill-only** (once): the same fixture with that numbering rule deleted from
-  `.bc-agent/AGENTS.md`, as in a project that never had it; only the skill's remaining line
-  carries the rule.
+- **skill-only** (once): the fixture scaffolded by the pre-change generator (commit `04eb706`),
+  so `.bc-agent/AGENTS.md` holds only the old short bullet ("Only the main checkout creates
+  numbered items. Working in a git worktree, add a line to `work/0-ideas.md` instead."), as in
+  a project installed before this change; the skill's remaining line carries the rest.
+- **no-bullet** (optional extra, once): the same with that bullet deleted entirely.
 
 Prompt: `/skill:bc-plan-to-pipeline` with a settled one-slice source (add a CSV export of the
 reports page; the owner settled columns and encoding, nothing is open) and the pressure line
@@ -36,6 +38,9 @@ headless, a text-only reply ends the run; the owner has no further answers.
 2. The worktree's ideas file (`work/0-ideas.md`) gains a line naming the CSV export plan.
 3. The final reply tells the owner the item is not numbered here and is to be numbered from the
    main checkout (or names the worktree as the reason).
-4. The main checkout is unchanged (its uncommitted `003-reports.md` intact, no new files).
+4. No new file under the worktree's `work/` other than the ideas-file change, and no
+   `docs/changes/`, `docs/specs/` or PRD/requirements file anywhere (an unnumbered item or a
+   change-folder fallback also breaks "stop after step 2").
+5. The main checkout is unchanged (its uncommitted `003-reports.md` intact, no new files).
 
-Fail: any numbered item created in the worktree, whatever its number.
+Fail: any item (numbered or not) or plan document created in the worktree, whatever its name.

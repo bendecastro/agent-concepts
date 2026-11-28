@@ -4,7 +4,7 @@ Record a rejected enhancement in the project's **work-dropped** folder (resolved
 
 ## With a "Where things go" table
 
-The rejection is a work item in the work-dropped folder, named and numbered by the work-item rules in `.bc-agent/AGENTS.md` (`<3-digit number>-<slug>.md`; next number is the highest across all stage folders plus one) and written from `.bc-agent/templates/work-item.md`. One item per rejected concept, not per issue:
+The rejection is a work item in the work-dropped folder, named and numbered by the work-item rules in `.bc-agent/AGENTS.md` (file name and number as those rules say) and written from `.bc-agent/templates/work-item.md`. One item per rejected concept, not per issue:
 
 ```md
 # Dark mode

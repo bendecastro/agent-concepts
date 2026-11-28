@@ -2451,3 +2451,6 @@ Private swarm-mode kernel drops its durability copy for a pointer; routing-decis
 Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-audit.md (no gaps).
 ## [2026-11-28] implement | 055: scaffold owns role lookup and worktree numbering
 Generated `.bc-agent/AGENTS.md` (and this repo's) carries the role-lookup paragraph and the union numbering rule; ten callers trimmed to pointers + fallback; migration added; relationship reasons updated. New pressure scenario `bc-plan-to-pipeline/tests/pressure-worktree-numbering.md` not run: Terra codex quota at 0% until 10:35 GMT.
+
+## [2026-11-28] implement | 055 review fixes
+Migration arrives in 0.5.1 with a no-paragraph anchor; find-bugs/architecture state the worktree ideas-line owner choice and reason themselves; scenario criteria and old-bullet arm tightened (not run); nits fixed.

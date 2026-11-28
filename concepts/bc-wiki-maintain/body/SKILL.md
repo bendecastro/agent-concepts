@@ -28,8 +28,8 @@ detector rather than guessing from folder names, because both layouts use `.bc-a
   create `index.md`, `tasks/`, `project/overview.md`, `findings/` or `open-questions/` there:
   the project chose to keep that knowledge visible, and a recreated vault page becomes a
   second, unread copy. Wherever this skill names a destination by role (glossary, decisions,
-  research, ideas), take the path from that table; one table per project means a project
-  with a justified exception changes one place.
+  research, ideas), take the path from that table (the reason is in the project's
+  `.bc-agent/AGENTS.md`, under the table).
 
 **Promotion does not apply to the visible layout.** Promotion existed to move log entries into
 vault pages; in the visible layout agents write decisions and research straight to the table's

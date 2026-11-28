@@ -458,7 +458,7 @@ Without step 3 the line is still written and read from the item file; only the J
 
 ## Role lookup and worktree numbering
 
-Arrived in: 0.4.2
+Arrived in: 0.5.1
 
 Since 2026-11-28 the generated `.bc-agent/AGENTS.md` is the one home of two rules that shared skills
 used to restate: how a skill resolves a project file's role (a paragraph under the "Where things go"
@@ -470,8 +470,9 @@ rules, so a project without these rules loses the details. Check: the project's
 `.bc-agent/AGENTS.md` lacks the sentence "Shared skills name project files by role". To adopt it:
 
 1. Copy the paragraph that starts "Shared skills name project files by role" from a fresh
-   scaffold's `.bc-agent/AGENTS.md` to the end of the "Where things go" section, after the
-   paragraph about skill default paths.
+   scaffold's `.bc-agent/AGENTS.md` to the end of the "Where things go" section: after the
+   paragraph about skill default paths, or directly after the role table when the project has no
+   such paragraph.
 2. Replace the project's "Only the main checkout creates numbered items" rule in the Work items
    section with the fresh scaffold's wording. Where the project's ideas file is not
    `work/0-ideas.md`, keep the project's path.

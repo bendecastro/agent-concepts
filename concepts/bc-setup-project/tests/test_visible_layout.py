@@ -928,6 +928,7 @@ def test_agents_states_role_lookup_and_worktree_numbering_once(tmp_path, archety
                     'no row', '`glossary.md`', '`docs/adr/`', 'Why:'):
         assert meaning in lookup, meaning
     assert flat.count(numbering) == 1 and flat.index('## Work items') < flat.index(numbering)
+    assert 'Working in a git worktree, add a line' not in flat
     for meaning in ('main checkout', '--git-common-dir', 'even when the owner names',
                     'one line to `work/0-ideas.md`', "owner's choice and its reason",
                     'still to be numbered', 'until the item exists', 'Why:'):

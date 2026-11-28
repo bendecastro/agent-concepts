@@ -65,7 +65,7 @@ Wait until the owner has seen the report and said which findings they want. Why:
 
 Delete each ideas line that seeded a chosen or rejected finding, in the same commit as its item; replace a line that seeded an "everything else" finding instead of adding a second line. Why: the ideas file lists only what is undecided, and a decided line left there would seed the next review again.
 
-Number items as the project's `.bc-agent/AGENTS.md` work-item rules say.
+Number items as the project's `.bc-agent/AGENTS.md` work-item rules say; from a worktree each ideas line states the owner's choice and reason.
 
 When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each chosen item you filed, one after another in the same reply, without stopping between items, passing the grilling's settled answers so the owner is not asked them again. Why: every planned item gets requirements and sliced steps before anyone starts it; this is a handoff after this skill's own work ends, not a nested call.
 

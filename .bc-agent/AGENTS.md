@@ -31,8 +31,8 @@ project's own answer.
 Shared skills name project files by role (glossary, decisions, research, requirements,
 ideas, the work folders), not by path. Resolve each role in this table, and follow the Work
 items rules below for an item's naming, numbering and template. A role with no row here, or
-with `—` as its path, has no home in this project yet: use the skill's own default for it,
-for the common roles `glossary.md` for the glossary and `docs/adr/` for decisions. Why: each
+with `—` as its path, has no home in this project yet: use the skill's own default for it
+(for example `glossary.md` for the glossary and `docs/adr/` for decisions). Why: each
 project has one table, so a project that keeps something elsewhere changes one place and
 every skill follows.
 
