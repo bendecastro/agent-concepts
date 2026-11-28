@@ -50,3 +50,19 @@ scenario) so the provider question stayed open; in the settled scenario the defa
 "Yes, that's fine. Go ahead." answered the dependency question, so every run recorded Hypothesis
 as allowed. Work-the-map and Slice modes, and the GitHub and change-folder homes, were not run;
 they are checked by reading.
+
+## Review-patch regression (2026-11-28)
+
+One changed-arm run per scenario on `openai-codex/gpt-6.1-terra`, thinking `low`, using the same
+small fixture (setup commit `d6739bf`), scripted prompts, Pi 1.6.1 RPC driver, sandbox and nine
+skill copies. Both sandbox checks passed; no quota failure or Agents workspace reference appeared
+in the session transcripts. Private evidence: `logs067-patch/` in the review run folder.
+
+| Scenario | Fixture artifact | Verdict |
+| --- | --- | --- |
+| Map | `001-label-suggestion-map`: `Kind: map`, Destination, pickup command, Task (company policy) → Grilling (provider) → Slice last; no readiness line, requirements or build step. | PASS 1/1 |
+| Settled | `001-normalize-internal-whitespace`: `Kind: feature`, requirements, one unchecked build step and `Ready for agent: yes`. | PASS 1/1 |
+
+Both fixture diffs contained only the new planned item and the generated work index. Neither
+changed code or tests, nor filed an active or done item. Existing-item conversion, work-the-map,
+Slice, and the GitHub and change-folder homes were checked by reading, not run.

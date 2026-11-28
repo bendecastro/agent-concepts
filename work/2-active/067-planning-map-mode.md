@@ -23,7 +23,7 @@ Owner decisions (2026-11-28, in chat): 1a, 2a, 3a, 4b, 5a, 6a, as below.
 - **Working the map (3a).** A "work the map" mode of `bc-plan-to-pipeline` resolves one decision step per session (research steps may run in parallel as subagents), records the answer in the step's home, adds a line to Decisions so far, graduates fog, rules things out of scope. `bc-pipeline-to-done` never builds a map; a map never carries `Ready for agent: yes`. Moving the map to active follows the project's normal rule.
 - **When the way is clear (2a).** The map's last step is "slice": run the normal PRD and slicing steps, which create ordinary build items (or issues); the map moves to done with Decisions so far as its Outcome.
 - **"Plan, don't do".** Carry wayfinder's line that the pull to just do the work signals the edge of the map, next to 066's go-ahead rule (one home, pointer elsewhere).
-- **Credit.** CONCEPT.md provenance cites `docs/research/raw/ingested/pocock-wayfinder/` (MIT); the raw source moves to `ingested/` when done.
+- **Credit.** CONCEPT.md provenance cites `docs/research/raw/ingested/pocock-wayfinder/` (MIT).
 - **Test (4b).** Terra low (`openai-codex/gpt-6.1-terra`), master skill vs changed, real Pi 1.6.1 via `scripts/pi_sandbox.py` with pi-multiprovider; blind baseline. If Codex is out of quota, wait for its reset rather than substituting (owner chose Terra).
 
 ## Steps
