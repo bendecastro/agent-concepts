@@ -61,3 +61,17 @@ None open. The integrating session read-checked three clauses the audit found af
 - `065-timer-install-includes-notifier` was verified mechanically, not by a pressure test; `runner/README.md` still has its own commands for the lint-all and all-vault installs.
 - `064` caveat: one passing run typed the two search lines as one, so the `AGENT_CONCEPTS` branch was skipped and the default path happened to work.
 - `056`: the find-bugs scenario showed parity (3/3 with and without), so it shows the move kept behaviour, not that the module improves it.
+
+## Stranger end-to-end test (releasing step 11)
+
+Run 2026-11-28 17:57–18:33 UTC against `npm:agent-concepts@0.5.1` as published (Pi 1.6.1, pi-subagents 0.90.0, `openai-codex/gpt-6.1-terra` thinking low). Isolation check `ok`; saved system prompts grep clean against the private phrase list (exit 1). Graded from the evidence files:
+
+| Row | Result | Evidence |
+|---|---|---|
+| Setup | pass | `AGENTS.md`, `glossary.md`, `work/` and `scripts/gate` created in commit "Set up project agent workspace" |
+| Planning | pass | item `001-normalize-internal-whitespace` with requirements, one buildable step and `Ready for agent: yes` |
+| Build | pass | change and its test in `60b38cc` on the bare remote's `main` (cherry-picked from the worker's `b842012`, proven with `git cherry`); item moved to `3-done` in `3eb8ec4`, also on `main` |
+| Full suite | pass | the builder ran targeted `unittest` only; the driver ran `scripts/gate` twice (baseline, then once on the change) |
+| Stalls | none | no stop, private-tool need or failure in the three phases |
+
+Minor, not filed: the step's `Gate:` line names the base commit `dce83a7` although the gate ran on the worktree holding the uncommitted change (the manifest records base plus diff hash); and the driver kept the worker branch after `git branch -d` refused a cherry-picked branch, instead of deleting it with `-D` after its patch-equivalence proof. Result: **pass**; promote.
