@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [053-split-swarm-and-durable-subagents](1-planned/053-split-swarm-and-durable-subagents.md) | planned | — | — | `bc-delegate-investigation` does two jobs under a name that fits neither the way the owner calls it ("swarm", "go wide") nor how swarm mode uses it. | 0/3 |
+| 1 | [053-split-swarm-and-durable-subagents](2-active/053-split-swarm-and-durable-subagents.md) | active | — | — | `bc-delegate-investigation` does two jobs under a name that fits neither the way the owner calls it ("swarm", "go wide") nor how swarm mode uses it. | 0/3 |
 | 2 | [055-project-files-in-scaffold](1-planned/055-project-files-in-scaffold.md) | planned, ready for agent | — | 056-file-findings-module, 061-lint-repeated-text-and-copies | 12 skills each explain how to resolve a project file through the "Where things go" table, and the "number work items only in the main checkout; in a worktree a… | 0/1 |
 | 3 | [056-file-findings-module](1-planned/056-file-findings-module.md) | planned, ready for agent | [055-project-files-in-scaffold](1-planned/055-project-files-in-scaffold.md) | 061-lint-repeated-text-and-copies | `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` each restate how findings become work items, and only `bc-find-bugs` has the… | 0/1 |
 | 4 | [057-teach-hosting-module](1-planned/057-teach-hosting-module.md) | planned, ready for agent | — | 061-lint-repeated-text-and-copies | `bc-teach` (about 1,650 words) defines the hosted path map and marker, `bc-wiki-maintain` § Teach adapter boundary copies it, and `bc-setup-project/body/scaffo… | 0/1 |
