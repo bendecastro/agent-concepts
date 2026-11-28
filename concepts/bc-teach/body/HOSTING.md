@@ -2,9 +2,9 @@
 
 This file is the one home for how `bc-teach` state maps onto a hosted `.bc-agent` vault: the
 marker, the two path maps and the never-create rules. `bc-teach` resolves its hosted paths from
-it, `bc-setup-project`'s scaffold generates the marker from it, and `bc-wiki-maintain` reads its
-teach-owned boundary from it. Why: three copies drifted silently; a test in `bc-setup-project`
-now fails when the generated marker and these maps disagree.
+it, `bc-setup-project`'s scaffold keeps its marker text in step with it (a test fails when they
+disagree), and `bc-wiki-maintain` reads its teach-owned boundary from it. Why: three copies could
+drift silently.
 
 ## The marker
 

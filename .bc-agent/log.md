@@ -2494,3 +2494,6 @@ work_index.py (both copies) errors on a ready item without `Dependencies:` plann
 
 ## [2026-11-28] implement | 057 teach hosting module
 Moved the teach-host marker rule, vault and hybrid path maps and never-create rules into `concepts/bc-teach/body/HOSTING.md`; `bc-teach`, `bc-wiki-maintain` and `bc-setup-project` point at it (two new `loads` edges), and `test_teach_adapter.py` now fails when scaffold output and the home file disagree. Hosted-vault scenario 1 re-run: PASS 3/3 on Haiku (Codex out of quota).
+
+## [2026-11-28] test | 057 review follow-up: bc-wiki-maintain boundary scenario 4 PASS (Haiku low)
+Scenario 4 re-run against the HOSTING.md pointer, new arm, 3 runs: PASS 3/3 on artifacts, but HOSTING.md was read in only 1 of 3 (valid marker decided the rest). Scenario 1 HOSTING.md row: logs not kept. Also: dangling "as above" removed, fail-closed sentence in bc-wiki-maintain, HOSTING.md opening reworded, bc-setup-project pointers, CHANGELOG install note.

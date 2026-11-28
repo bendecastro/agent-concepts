@@ -101,10 +101,7 @@ untouched.
 | `index.md` | shared `index.md` | every teach catalog entry represented without replacing host orientation |
 | `log.md` | shared `log.md` | every teach history entry represented without replacing host history |
 
-When the adapter maps the Glossary to the Glossary section of `project/overview.md` (vault
-host), `bc-teach` owns that section; planning and maintenance skills must leave it alone, and
-non-glossary host sections remain available to their existing owners. When it maps the Glossary
-to the hybrid host's root `glossary.md`, the file is shared and the project owns it, as above. The host search path is for knowledge and learning-record retrieval;
+Glossary ownership in each host type is defined in [HOSTING.md](./HOSTING.md). The host search path is for knowledge and learning-record retrieval;
 direct reads of known mission, review queue, and notes state remain correct. Use the host's
 canonical search path rather than `index.md` to locate knowledge pages or learning records.
 

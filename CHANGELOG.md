@@ -11,7 +11,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Added
 
-- `bc-teach` now keeps the hosted-vault marker, both path maps and the never-create rules in one file, `HOSTING.md`; `bc-setup-project` and `bc-wiki-maintain` point at it, and a test fails when the scaffolded marker drifts from it.
+- `bc-teach` now keeps the hosted-vault marker, both path maps and the never-create rules in one file, `HOSTING.md`; `bc-setup-project` and `bc-wiki-maintain` point at it, and a test fails when the scaffolded marker drifts from it; installing `bc-wiki-maintain` now also installs `bc-teach`.
 - Work items gain a `Dependencies:` line (`none new`, `may add <name> (<why>) (owner's answer, <date>)`,
   or the owner's refusal). `work_index.py --check` fails on a ready item without it planned on or after
   2026-11-28 and warns on older ones; MIGRATIONS.md has the upgrade step.

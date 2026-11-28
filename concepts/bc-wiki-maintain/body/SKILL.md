@@ -56,7 +56,9 @@ When the target vault contains an explicit `references/teach-skill.md` marker, l
 valid and which paths it maps to teach (mission, review queue, learning records, sessions,
 notes, raw sources, compiled concepts, the teach resource catalog and the Glossary). Read the
 marker's own path map; a marker that is not valid under `HOSTING.md` is not a contract. The
-`bc-teach` skill remains the authority for every mapped teach path.
+`bc-teach` skill remains the authority for every mapped teach path. If `HOSTING.md` cannot be
+found, treat every path the marker's table maps as teach-owned and classify candidates there as
+`skip`.
 
 This maintenance pass may search those pages as context, and may promote ordinary non-teach
 host evidence elsewhere, but it must never fabricate demonstrated learning, create or rewrite
