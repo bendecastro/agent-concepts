@@ -665,7 +665,7 @@ def _body_blocks(text: str):
     `>` quotes) and standalone HTML comments other than copy-of markers yield nothing. A heading,
     marker or comment line ends the paragraph before it; so does a blank line.
     """
-    lines = text.splitlines()
+    lines = text.split("\n")
     fence = ""
     paragraph, start = [], 0
     index = 0

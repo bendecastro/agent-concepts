@@ -26,3 +26,5 @@ Ready for agent: yes
 ## Outcome
 
 _To be filled when finished or dropped._
+
+Progress 2026-11-28: steps 1–2 landed. The check reads each concept body in one pass (fenced code, quoted fences and standalone comments are not paragraphs; malformed, self-referencing, ambiguous or drifted `copy-of` markers are errors) and warns on paragraphs sharing 80% of word trigrams or an exact run of 40+ words. The real tree has 25 warnings, 22 of them the storage instruction repeated across skills, which 054 is meant to replace with a module. Two reviews blocked on new parser cases; the owner chose a single-pass block reader by the parent, checked by a fix-verifier. Step 3 waits until 054–058 land.

@@ -2424,3 +2424,6 @@ After two blocking reviews the owner chose to bind the release scan to the stage
 
 ## [2026-11-28] implement | repeated prose and tracked copies
 Added a lint warning for similar concept-body paragraphs and errors for drifting or unresolved tracked copies; documented authoring and modularity review guidance.
+
+## [2026-11-28] implement | repeated-text lint and copy-of markers
+Lint warns on concept-body paragraphs repeated across skills (80% trigram overlap or a 40-word exact run) and fails drifted, malformed or self-referencing `copy-of` copies. After two blocking reviews the owner chose a single-pass block reader. Step 3 (ERROR) waits on 054-058.
