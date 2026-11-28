@@ -7,6 +7,7 @@ disable-model-invocation: true
 
 # Agent reflection
 
+<!-- repeated-text-allow: bc-durable-subagents — standard private-overlay sentence each skill carries -->
 If `~/.config/agent-concepts/overlays/bc-self-improve.md` exists, read it: it supplies tool names and paths for the generic steps below that this machine's agent instructions do not already name. It never changes behaviour, and the project's own instructions take precedence.
 
 Look back at what happened in a session and propose changes to the agent's **environment**, not to the code it produced. You propose only: change nothing until the owner picks.

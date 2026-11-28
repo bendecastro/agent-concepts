@@ -33,6 +33,7 @@ Separate agent-authored changes from unrelated user drift before any commit/merg
 - Linked worktree on a named branch: standard options, but cleanup only if this agent created/owns it.
 - Detached or harness-owned workspace: no local merge option unless a branch is created intentionally.
 
+<!-- repeated-text-allow: bc-executing-plans — both skills must resolve the same target branch when run standalone -->
 Use the target branch already recorded for this run, if any. Otherwise resolve it once from an explicit project instruction, then `git symbolic-ref refs/remotes/origin/HEAD` (strip `refs/remotes/origin/`), then the current named branch only if no Git remote is configured. Ask if the target is unresolved or if a no-remote branch is not clearly the intended merge base. Use that target as `<base>` for the merge or PR.
 
 ## 3. Present options

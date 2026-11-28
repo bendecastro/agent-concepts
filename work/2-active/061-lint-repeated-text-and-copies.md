@@ -22,7 +22,7 @@ Dependencies: none new
 
 - [x] Add the repeated-text warning and the `copy-of` sync check with tests. Done when a fixture with a repeated paragraph warns, a marked copy that matches passes, a drifted marked copy fails, and `python3 scripts/lint.py` on the tree has 0 ERROR.
 - [x] Add the authoring sentence, the prompting-agents clause and the release-audit note. Done when lint passes and the three places say the same rule.
-- [ ] After 054–058 land, switch the repeated-text check to ERROR. Done when lint on that tree has 0 ERROR with the stricter level.
+- [x] After 054–058 land, switch the repeated-text check to ERROR. Done when lint on that tree has 0 ERROR with the stricter level.
 
 ## Outcome
 

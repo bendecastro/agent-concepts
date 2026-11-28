@@ -2550,3 +2550,6 @@ Filed Matt Pocock's wayfinder skill (MIT) in docs/research/raw/pocock-wayfinder/
 
 ## [2026-11-28] test | 066 stranger rerun graded: pass
 Graded the completed Haiku-low pack-source stranger run from its evidence (the running worker hit a quota limit first): planning left a ready item and no code, the build ran builder and reviewer and landed on the bare main. Step 3 ticked; drain-profile preflight stall filed as an idea.
+
+## [2026-11-28] lint | 061 repeated text is an ERROR
+Switched the repeated-text check to ERROR, widened copy-of sources to the anchor's whole section, and added a repeated-text-allow marker; marked the SDD fallback as a copy and four deliberate restatements as allowed (kernel unchanged).

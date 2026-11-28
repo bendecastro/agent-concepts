@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [061-lint-repeated-text-and-copies](2-active/061-lint-repeated-text-and-copies.md) | active, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 2/3 |
+| 1 | [061-lint-repeated-text-and-copies](2-active/061-lint-repeated-text-and-copies.md) | active, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 3/3 |
 | 2 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 4/5 |
 | 3 | [067-planning-map-mode](2-active/067-planning-map-mode.md) | active, ready for agent | — | — | `bc-plan-to-pipeline` assumes one grill settles every decision before it drafts a PRD and slices. | 0/2 |
 | 4 | [064-wiki-read-path-reads-whole-vault](1-planned/064-wiki-read-path-reads-whole-vault.md) | planned | — | — | In the read-path pressure scenario 5 (qmd absent), all four Haiku runs opened every tracked page, including `index.md`, both with and without the 059 change; t… | 0/1 |

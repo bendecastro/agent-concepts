@@ -26,13 +26,17 @@ Before writing a rule, use `rg` to search concept bodies for its owner; if owned
 elsewhere, load it or mark a tracked `copy-of`, and if already held by two other
 concepts, split it into a module. Place `<!-- copy-of: <concept>#<anchor> -->`
 on its own line before the copied paragraph. It covers the next paragraph; the
-source is the first paragraph after the heading with that anchor in that concept's
-body Markdown. The anchor is the heading's slug as `scripts/relationships.py`
+source is any paragraph between the heading with that anchor in that concept's
+body Markdown and the next heading. The anchor is the heading's slug as `scripts/relationships.py`
 makes it (lowercase, ASCII punctuation removed, spaces as dashes) and must be
 unique within that concept. Fenced code, including fences inside `>` quotes, and
 HTML comments other than markers are not paragraphs. Lint compares the
 paragraphs after whitespace normalization and reports a malformed marker, a
 missing source or anchor, a marker that points at its own paragraph, or a
 mismatch as an error. Paragraphs in different concepts that are not tracked
-copies of each other warn when both have at least 40 words and share at least
+copies of each other are an error when both have at least 40 words and share at least
 80% of their word trigrams, or when they share an exact run of at least 40 words.
+A deliberate restatement that cannot be an exact copy carries
+`<!-- repeated-text-allow: <other-concept> — <reason> -->` on its own line before
+the paragraph; it excuses only the pair with the named concept, and a marker with
+no reason or naming a concept that shares no repeated text is an error.

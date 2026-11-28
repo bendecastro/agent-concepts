@@ -656,6 +656,8 @@ REPEATED_TEXT_THRESHOLD = 0.8
 _FENCE = re.compile(r"^[ \t]*(?:>[ \t]?)*[ \t]*(`{3,}|~{3,})(.*)$")
 _COPY_OF = re.compile(r"<!--\s*copy-of:(.*?)-->", re.S)
 _COPY_REF = re.compile(r"([\w-]+)#(\S+)")
+_REPEATED_ALLOW = re.compile(r"<!--\s*repeated-text-allow:(.*?)-->", re.S)
+_ALLOW_REF = re.compile(r"([\w-]+)\s+(?:—|-)\s+(\S.*)", re.S)
 
 
 def _body_blocks(text: str):
@@ -700,8 +702,11 @@ def _body_blocks(text: str):
                 index += 1
             joined = "\n".join(comment)
             marker = _COPY_OF.fullmatch(joined.strip())
+            allow = _REPEATED_ALLOW.fullmatch(joined.strip())
             if marker:
                 yield number, "marker", marker[1].strip()
+            elif allow:
+                yield number, "allow", allow[1].strip()
             continue
         if relationships._ATX_HEADING.fullmatch(line):
             if block := flush():
@@ -724,6 +729,7 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
     headings = {}
     ambiguous = set()
     copies = []
+    allows = {}
     for path in sorted((root / "concepts").glob("*/body/**/*.md")):
         relative_path = path.relative_to(root)
         concept = relative_path.parts[1]
@@ -732,7 +738,9 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
         if re.match(r"\s*<!--\s*generated\b", text, re.I):
             continue
         heading = None
+        section = None
         marker = None
+        allow = None
         for line, kind, block in _body_blocks(text):
             location = f"{relative_path}:{line}"
             if kind == "heading":
@@ -740,7 +748,18 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
                 heading = (concept, relationships._heading_slug(title))
                 if heading in headings:
                     ambiguous.add(heading)
-                headings[heading] = None
+                headings[heading] = []
+                section = heading
+                continue
+            if kind == "allow":
+                match = _ALLOW_REF.fullmatch(block)
+                if not match:
+                    issues.append(Issue("ERROR", f"repeated-text-allow malformed at {location}: {block!r}; "
+                                        "write <!-- repeated-text-allow: <other-concept> — <reason> -->"))
+                elif allow:
+                    issues.append(Issue("ERROR", f"repeated-text-allow at {location} while another is pending at {allow[1]}"))
+                else:
+                    allow = (match[1], location)
                 continue
             if kind == "marker":
                 match = _COPY_REF.fullmatch(block)
@@ -754,11 +773,13 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
                     marker_location = location
                 continue
             words = re.findall(r"\w+", block.lower())
-            if heading is not None or marker:
-                normalized = " ".join(block.split())
-            if heading is not None:
-                headings[heading] = (location, normalized)
-                heading = None
+            normalized = " ".join(block.split())
+            if section is not None:
+                headings[section].append((location, normalized))
+            heading = None
+            if allow:
+                allows[location] = [*allow, False]
+                allow = None
             if marker:
                 copies.append((marker_location, location, normalized, marker))
             if len(words) >= REPEATED_TEXT_MIN_WORDS:
@@ -767,19 +788,24 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
             marker = None
         if marker:
             issues.append(Issue("ERROR", f"copy-of has no paragraph: {marker_location} -> {marker[0]}#{marker[1]}"))
+        if allow:
+            issues.append(Issue("ERROR", f"repeated-text-allow has no paragraph: {allow[1]} -> {allow[0]}"))
     resolved = {}
+    # The source is any paragraph between the anchor heading and the next heading.
     for marker_location, location, normalized, marker in copies:
-        source = headings.get(marker)
+        section_paragraphs = headings.get(marker)
+        others = [p for p in section_paragraphs or [] if p[0] != location]
+        match = next((p for p in others if p[1] == normalized), None)
         if marker in ambiguous:
             issues.append(Issue("ERROR", f"copy-of ambiguous source: {marker_location} -> {marker[0]}#{marker[1]}"))
-        elif not source:
+        elif not section_paragraphs:
             issues.append(Issue("ERROR", f"copy-of missing source: {marker_location} -> {marker[0]}#{marker[1]}"))
-        elif source[0] == location:
+        elif not others:
             issues.append(Issue("ERROR", f"copy-of points at itself: {marker_location} -> {marker[0]}#{marker[1]}"))
-        elif normalized != source[1]:
-            issues.append(Issue("ERROR", f"copy-of mismatch: {marker_location} and {source[0]}#{marker[1]}"))
+        elif not match:
+            issues.append(Issue("ERROR", f"copy-of mismatch: {marker_location} and {others[0][0]}#{marker[1]}"))
         else:
-            resolved[location] = source[0]
+            resolved[location] = match[0]
     # Each posting lists earlier paragraphs that contain the shingle at least once.
     trigrams_index = defaultdict(list)
     spans_index = defaultdict(list)
@@ -812,6 +838,11 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
             other_source = resolved.get(other)
             if source == other or other_source == path or (source is not None and source == other_source):
                 continue
+            allowed = [a for a, c in ((allows.get(path), other_concept), (allows.get(other), concept)) if a and a[0] == c]
+            if allowed:
+                for a in allowed:
+                    a[2] = True
+                continue
             overlap = shared[j] / max(size, sizes[j])
             if overlap >= REPEATED_TEXT_THRESHOLD:
                 detail = f"{overlap:.0%} overlap"
@@ -820,7 +851,11 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
                 detail = f"{span}-word shared span"
             else:
                 continue
-            issues.append(Issue("WARN", f"repeated text: {other} and {path}: {detail}"))
+            issues.append(Issue("ERROR", f"repeated text: {other} and {path}: {detail}"))
+    for concept, marker_location, used in allows.values():
+        if not used:
+            issues.append(Issue("ERROR", f"repeated-text-allow at {marker_location} names {concept}, "
+                                "which shares no repeated text with that paragraph"))
 
 
 def lint_kernel_copies(issues: list[Issue]) -> None:

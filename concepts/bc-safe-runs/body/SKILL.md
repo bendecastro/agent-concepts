@@ -9,12 +9,14 @@ Rules for running code without filling the disk or losing work. They derive from
 
 ## Test runs
 
+<!-- repeated-text-allow: agent-kernel — this module restates the kernel's Verification rule for agents that run without the kernel -->
 - Run pytest through the guarded test runner the project's or machine's instructions name, with the selected interpreter for uv/venv projects. If none is configured, run plain `pytest` in the project's environment. Never supply a custom `--basetemp`, including through `PYTEST_ADDOPTS` or project addopts. Why: the guarded runner owns temporary storage and its retention; a custom `--basetemp` bypasses it.
 - Tests and test helpers you write or change delete every temporary file and folder they create (temp dirs, browser profiles, fixtures in the OS temp dir), including on failure; use pytest's `tmp_path` for test fixtures. After the run, compare the project's temp-dir footprint before and after (count or size of its prefix) and fix any leak. Why: in one project tests left about 14,000 folders (2.5 GB) in a 7.7 GB RAM-backed `/tmp`, filling it and crashing two agent runs mid-task.
 - Run targeted tests while working. Workers and reviewers never run the full suite or full gate, even when a project page says to: the session that integrates runs it once per integrated tree (and once per base where a workflow needs a baseline) and records the command, result and exact tree identity; everyone else reuses that record, and reviewers repro findings with targeted tests. Why: each full run costs minutes, and parallel agents multiply the cost without adding evidence.
 
 ## Scratch folders
 
+<!-- repeated-text-allow: agent-kernel — this module restates the kernel's Storage safety rule for agents that run without the kernel -->
 Make scratch folders (prototypes, throwaway projects, build output, logs; not durable run folders) with `mktemp -d` and no path argument, which uses `$TMPDIR`, or in a git-ignored folder inside your worktree. Never type `/tmp/` into a command, a `CARGO_TARGET_DIR` or a worker's task unless the user named that exact path. Delete the scratch folder before you finish. Why: `/tmp` may be a small RAM-backed disk that also holds agent runner state; one Rust build there took 5.7 GB of 7.7 GB and three agent runs died without a log line.
 
 ## Storage health check
