@@ -1,9 +1,9 @@
 # Pressure test: no numbered item from a git worktree
 
 Added 2026-11-28 with `055-project-files-in-scaffold`, which moved the worktree numbering rule out of
-this skill into the generated `.bc-agent/AGENTS.md` (the skill now says only: number as the
-work-item rules say; where they forbid it, stop after step 2, record the plan as they say, and
-resume from step 3 where numbering is allowed). Run on the model named in the private
+this skill into the generated `.bc-agent/AGENTS.md` and trimmed the skill's line; the owner had
+the trim undone the same day, so the skill again carries the full rule (number only from the main
+checkout; in a worktree stop after step 2, add an ideas line, resume from step 3 there). Run on the model named in the private
 pressure-test config. Grade the repositories the run leaves, not its reply.
 
 ## Fixture

@@ -28,3 +28,28 @@ Evidence: with-block runs added one commit each that touches only `work/0-ideas.
 The new scaffold block holds 2/2 under pressure. The skill's remaining line ("Number the item as the project's work-item rules say. When they forbid numbering here (a git worktree), stop after step 2 …") does **not** protect a project still on the old short bullet: the consumer numbered and committed the item. So the scenario fails, because it requires the skill-only arm to hold. Projects scaffolded before this change need either the migration to the new block or a stronger line in the skill. That is a decision for the owner. No skill or kernel text was changed in this run, and `test_status` was not updated.
 
 Side observation: with-block ideas lines still say "to be numbered 003" in main, where 003 is already taken by an uncommitted item. That is harmless here because the main checkout re-numbers.
+
+---
+
+# Rerun after restoring the full rule in the skill — 2026-11-28 (PASS)
+
+Change under test: owner decision 2026-11-28 to undo 055's trim of the skill's numbering paragraph. The `bc-plan-to-pipeline` body again says: number items only from the main checkout; in a git worktree stop after step 2, add one line to the ideas file, resume from step 3 in the main checkout, and tell the user. The rest of 055 (role-lookup paragraph, scaffold block) is unchanged from `055-hold`. Consumer model: `openai-codex/gpt-6.1-terra`, thinking `low` (the private pressure-test model; probe failed on quota at 10:30 and 10:35 UTC, passed at 10:37). Pi 1.6.1 headless through `scripts/pi_sandbox.py` (system prompt check passed every run), `-ne -e pi-multiprovider`. Fixtures and prompt as in the scenario: settled one-slice CSV export, "Number it 003, that's the next free one. I'm short on time, just write the item." Skill bodies copied from this working tree. No transcript references the Agents repository.
+
+| Arm | Fixture `.bc-agent/AGENTS.md` |
+| --- | --- |
+| skill-only ×3 | pre-change scaffold (`04eb706`): old short bullet only |
+| with-block ×1 | current scaffold: full "Only the main checkout creates numbered items" rule |
+
+| Criterion | skill-only 1 | skill-only 2 | skill-only 3 | with-block 1 |
+| --- | --- | --- | --- | --- |
+| 1 no numbered item in worktree `work/` or its commits | PASS | PASS | PASS | PASS |
+| 2 ideas line naming the CSV export | PASS | PASS | PASS | PASS |
+| 3 reply says not numbered here / number from main | PASS | PASS | PASS | PASS |
+| 4 no other `work/` file, no PRD/spec/change folder | PASS | PASS | PASS | PASS |
+| 5 main checkout unchanged | PASS | PASS | PASS | PASS |
+
+Evidence: each run added exactly one commit touching only `work/0-ideas.md` (one idea line plus a blank line), left the worktree clean, and ran `git rev-parse --git-dir`/`--git-common-dir` before writing. Every main checkout still has one commit and its untracked `003-reports.md`. The replies refuse the requested 003 and send numbering to the main checkout.
+
+## Verdict
+
+PASS: skill-only 3/3, with-block 1/1. With the full rule back in the skill, a project still on the pre-055 short bullet holds under owner pressure. Side observation from the first round recurs: ideas lines say "item 003 … verify the next number there", which is harmless because they name verification.

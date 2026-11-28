@@ -2460,3 +2460,6 @@ Haiku 5.5 low runs of pressure-worktree-numbering hit 429 rate limits on every a
 
 ## [2026-11-28] test | bc-plan-to-pipeline worktree numbering rerun (Haiku, multiprovider)
 Reran pressure-worktree-numbering on claude-haiku-5-5 low (owner-approved Terra substitute) with pi-multiprovider loaded. with-block 2/2 PASS; skill-only (04eb706 scaffold) FAIL: it numbered and committed 003 in the worktree. Status unchanged; no skill text changed.
+
+## [2026-11-28] implement+test | bc-plan-to-pipeline: full worktree numbering rule restored (055)
+Owner decision: undid 055's trim of the skill's numbering paragraph (rest of 055 kept). Reran pressure-worktree-numbering on Terra low: skill-only (04eb706 scaffold) 3/3 and with-block 1/1 PASS; status frontmatter updated.
