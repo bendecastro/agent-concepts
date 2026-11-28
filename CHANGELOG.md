@@ -11,6 +11,9 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Added
 
+- Work items gain a `Dependencies:` line (`none new`, `may add <name> (<why>) (owner's answer, <date>)`,
+  or the owner's refusal). `work_index.py --check` fails on a ready item without it planned on or after
+  2026-11-28 and warns on older ones; MIGRATIONS.md has the upgrade step.
 - The fresh-install test gains `claude-kernel` and `codex-kernel`: each adds the marketplace (from the
   release tag in the release workflow) and installs `agent-kernel`, then checks its SessionStart hooks
   deliver the canonical kernel text.

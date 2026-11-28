@@ -53,7 +53,10 @@ architecture; `none` turns top placement off).
 item in 1-planned/ that has no `Planned:` line: it has not been through
 bc-plan-to-pipeline, so it must be planned before it moves to 2-active/. It also warns
 about a malformed `Held by: <tool> <session> since <YYYY-MM-DD HH:MM> <UTC or +HH:MM>`
-line, and about any `Held by:` line in a done or dropped item.
+line, and about any `Held by:` line in a done or dropped item. An item with
+`Ready for agent: yes` and no `Dependencies:` line is an error when its `Planned:`
+date is on or after DEPENDENCIES_REQUIRED_FROM (the date this check shipped), and
+a warning otherwise.
 Python 3.9 or later, standard library only.
 """
 from __future__ import annotations
@@ -67,6 +70,7 @@ from pathlib import Path
 
 DEFAULT_STAGES = ("now", "next", "later", "unscheduled")
 DEFAULT_TOP_KINDS = ("security", "bug", "build", "architecture")
+DEPENDENCIES_REQUIRED_FROM = "2026-11-28"
 START = "<!-- work-index:start -->"
 END = "<!-- work-index:end -->"
 COMMAND = "python3 .bc-agent/scripts/work_index.py"
@@ -588,6 +592,25 @@ def unplanned_items(work: Path) -> list[str]:
     return missing
 
 
+def missing_dependencies(work: Path) -> tuple[list[str], list[str]]:
+    """Ready items without a `Dependencies:` line: (errors for items planned on or after
+    DEPENDENCIES_REQUIRED_FROM, warnings for older or undated ones)."""
+    errors, warnings = [], []
+    for folder in ("1-planned", "2-active"):
+        for name in entries(work, folder):
+            rel = f"{folder}/{name}/plan.md" if (work / folder / name).is_dir() else f"{folder}/{name}"
+            if not (work / rel).is_file():
+                continue
+            text = read_text(work / rel)
+            if not re.search(r"^Ready for agent:[ \t]*yes[ \t]*$", text, re.M | re.I) or re.search(r"^Dependencies:", text, re.M):
+                continue
+            planned = re.search(r"^Planned:.*?(\d{4}-\d{2}-\d{2})", text, re.M)
+            message = (f"{rel} is ready for an agent but has no Dependencies: line; write `Dependencies: none new`, "
+                       "`Dependencies: may add <name> (<why>) (owner's answer, <date>)`, or the owner's refusal")
+            (errors if planned and planned.group(1) >= DEPENDENCIES_REQUIRED_FROM else warnings).append(message)
+    return errors, warnings
+
+
 def main(argv: list[str]) -> int:
     check = "--check" in argv
     paths = [arg for arg in argv if arg not in ("--check", "--json")]
@@ -609,7 +632,10 @@ def main(argv: list[str]) -> int:
                 print(f"work-index: warning: {rel} has no Planned: line; run bc-plan-to-pipeline on it before it moves to 2-active/", file=sys.stderr)
             for warning in held_by_warnings(work) + step_record_warnings(work) + spent_warnings(work):
                 print(f"work-index: warning: {warning}", file=sys.stderr)
-            errors = owner_order_errors(work, read_stages(project), read_top_kinds(project))
+            dependency_errors, dependency_warnings = missing_dependencies(work)
+            for warning in dependency_warnings:
+                print(f"work-index: warning: {warning}", file=sys.stderr)
+            errors = owner_order_errors(work, read_stages(project), read_top_kinds(project)) + dependency_errors
             if updated != readme:
                 errors.insert(0, f"work/README.md is out of date; run {COMMAND}")
             if errors:

@@ -2488,3 +2488,6 @@ Reran pressure-wiki-maintain-timer on Haiku 5.5 low (owner-approved Terra substi
 
 ## [2026-11-28] test | 060 wiki-maintain timer close-out after step 10 tune: PASS
 Step 10 states inline that qmd search is not promotion, that "just enable"/"don't ask" is not confirmation of the shown units and commands, and the parking-lot TODO on decline/no systemd; INSTALL-TIMER.md adds the "don't ask" clause. Terra low rerun: tuned 4/4, master 1/4 (master installed units unconfirmed). Results: concepts/bc-setup-project/tests/pressure-wiki-maintain-timer-results-terra-2026-11-28.md.
+
+## [2026-11-28] implement | 063 step 1: Dependencies line check and template
+work_index.py (both copies) errors on a ready item without `Dependencies:` planned on/after 2026-11-28, warns on older ones; template, scaffold and MIGRATIONS gain the line. Test: concepts/bc-setup-project/tests/test_work_index_dependencies.py.

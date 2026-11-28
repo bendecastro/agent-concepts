@@ -8,6 +8,7 @@ Kind: feature
 Source: bc-plan-to-pipeline
 Planned: bc-plan-to-pipeline 2026-11-28
 Ready for agent: yes
+Dependencies: none new
 Changes UI: README install boxes for Claude Code, Codex and the `npx skills` agents gain a kernel install line; the "Optional agent kernel" section shrinks to remove and disable notes.
 
 ## Requirements

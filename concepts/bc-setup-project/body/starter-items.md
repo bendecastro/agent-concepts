@@ -17,6 +17,7 @@ Kind: design
 Source: bc-setup-project
 Planned: bc-setup-project {{date}}
 Ready for agent: yes
+Dependencies: none new
 
 ## Steps
 
@@ -43,6 +44,7 @@ Kind: performance
 Source: bc-setup-project
 Planned: bc-setup-project {{date}}
 Ready for agent: yes
+Dependencies: none new; ask the owner before adding a measuring tool
 
 ## Steps
 
@@ -119,6 +121,7 @@ Kind: performance
 Source: bc-setup-project
 Planned: bc-setup-project {{date}}
 Ready for agent: yes
+Dependencies: none new; ask the owner before adding a measuring tool
 
 ## Steps
 
@@ -145,6 +148,7 @@ Kind: design
 Source: bc-setup-project
 Planned: bc-setup-project {{date}}
 Ready for agent: yes
+Dependencies: none new
 
 ## Steps
 

@@ -486,3 +486,19 @@ rules, so a project without these rules loses the details. Check: the project's
 2. Replace the project's "Only the main checkout creates numbered items" rule in the Work items
    section with the fresh scaffold's wording. Where the project's ideas file is not
    `work/0-ideas.md`, keep the project's path.
+
+## Dependencies line
+
+Arrived in: 0.5.1
+
+Since 2026-11-28 the work-item template has a `Dependencies:` line, required on every item with
+`Ready for agent: yes`: `none new`, `may add <name> (<why>) (owner's answer, <date>)`, or the
+owner's refusal. `work_index.py --check` fails on a ready item without it whose `Planned:` date is
+2026-11-28 or later, and warns on an older one; items that are not ready are not checked. Check:
+the project's `.bc-agent/templates/work-item.md` lacks a `Dependencies:` line. To adopt it:
+
+1. Copy the `Dependencies:` line from a fresh scaffold's `.bc-agent/templates/work-item.md` into
+   the project's template, below `Ready for agent:`.
+2. Copy the script: `cp "$AGENT_CONCEPTS"/concepts/bc-setup-project/body/work_index.py .bc-agent/scripts/`.
+3. Add the line to each ready item planned on or after 2026-11-28, and when you next plan an
+   older ready item.

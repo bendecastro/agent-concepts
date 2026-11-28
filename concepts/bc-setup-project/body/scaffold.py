@@ -1649,6 +1649,7 @@ Changes UI: <optional: what the user will see change, e.g. new launcher box in t
 Source: <optional: the skill or review that produced this item, e.g. bc-plan-to-pipeline; delete the line when unknown>
 Planned: <written by bc-plan-to-pipeline once it has planned this item, e.g. bc-plan-to-pipeline 2026-11-24; delete the line until then>
 Ready for agent: <optional: yes when every step states its done-criteria and out of scope, so bc-pipeline-to-done may build it unattended; delete the line otherwise>
+Dependencies: <required with Ready for agent: yes: none new, may add <name> (<why>) (owner's answer, <date>), or the owner's refusal; written by bc-plan-to-pipeline>
 Waiting on owner: <optional: the question that parks this item; delete the line when there is none, and never keep it with Ready for agent>
 
 ## Steps
