@@ -30,6 +30,8 @@
 | `outcome` | the text under `## Outcome`, trimmed; `null` when the section is missing or empty (may still be the template placeholder) | best-effort |
 | `history` | folder moves and step ticks, oldest first, from one `git log --follow` on the item file (renames followed); `[]` when the file is uncommitted, outside a git repository or git is missing. Uncommitted moves and ticks are not shown yet | best-effort |
 | `held_by` | the `Held by:` line parsed (below); `null` when the item has none | best-effort |
+| `replanning` | the `Replanning:` line parsed (below); `null` when the item has none | best-effort |
+| `rounds` | the `Rounds:` line parsed (below); `null` when the item has none | best-effort |
 | `spent` | the `Spent:` line in the Outcome, parsed (below); `null` when the Outcome has none | best-effort |
 
 ## Header lines (`header`)
@@ -49,6 +51,8 @@ Each value is the text after the label on its line, trimmed, or `null` when the 
 | `planned` | `Planned:` | best-effort |
 | `ready_for_agent` | `Ready for agent:` (`yes` when set) | best-effort |
 | `waiting_on_owner` | `Waiting on owner:` (the owner question) | best-effort |
+| `replanning` | `Replanning:` (the raw line; parsed in the item's `replanning` field) | best-effort |
+| `rounds` | `Rounds:` (the raw line; parsed in the item's `rounds` field) | best-effort |
 | `held_by` | `Held by:` (the raw line; parsed in the item's `held_by` field) | best-effort |
 
 ## Held by (`held_by`)
@@ -60,6 +64,16 @@ Each value is the text after the label on its line, trimmed, or `null` when the 
 | `tool`, `session`, `since` | the parts of the line; all `null` when the line does not match the format (`--check` warns) | best-effort |
 | `committed` | committer date (ISO 8601) of the last commit that added or removed this exact line, from `git log -S`; `null` when the line is uncommitted or there is no git | best-effort |
 | `age_seconds` | seconds from `committed` to now; `null` with it | best-effort |
+
+## Replanning and Rounds (`replanning`, `rounds`)
+
+`Replanning: <reason> — decides: owner|agent` marks an item whose plan is being redone; it stays in its folder, and the non-JSON run rejects it next to `Ready for agent:`. `Rounds: <n> blocking reviews, <m> replans` counts the item's blocking reviews and replans, cumulative across replans (a singular `1 blocking review, 1 replan` also parses). The project's `.bc-agent/AGENTS.md` work-item rules say who writes them and when.
+
+| Field | Source | Reliability |
+|---|---|---|
+| `replanning.reason`, `replanning.decider` | the text before ` — decides:` and `owner` or `agent`; both `null` when the line does not match the format | best-effort |
+| `rounds.blocking_reviews`, `rounds.replans` | the two counts as integers; both `null` when the line does not match the format | best-effort |
+| `text` (both) | the line after its label, trimmed | best-effort |
 
 ## History events (`history[]`)
 

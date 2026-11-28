@@ -11,7 +11,9 @@ item names (`012-search-ranking`, comma-separated) or `nothing`. A `Stage:` line
 is optional; an unknown stage is an error. A `Kind:` line (security, bug, feature, ...)
 is optional and free text, as are `Needs owner:` and `Changes UI:` lines. An optional `Ready for agent: yes` line (bc-pipeline-to-done
 may build the item unattended) or `Waiting on owner: <question>` line (parked) is shown
-in the Folder column; an item with both is an error. Unknown names, dropped blockers, self-blocks and cycles among open
+in the Folder column; an item with both is an error. A `Replanning: <reason> — decides: owner|agent`
+line (the item's plan is being redone; it stays in its folder) is shown there too, may stand
+next to `Waiting on owner:`, and is an error next to `Ready for agent:`. Unknown names, dropped blockers, self-blocks and cycles among open
 items are errors. A blocker in 3-done/ is satisfied; an item is ready when all
 its blockers are done.
 
@@ -84,7 +86,10 @@ JSON_FORMAT_VERSION = 1
 HEADER_LINES = {"why": "Why", "done_when": "Done when", "stage": "Stage", "blocked_by": "Blocked by",
                 "kind": "Kind", "needs_owner": "Needs owner", "changes_ui": "Changes UI",
                 "source": "Source", "planned": "Planned", "ready_for_agent": "Ready for agent",
-                "waiting_on_owner": "Waiting on owner", "held_by": "Held by"}
+                "waiting_on_owner": "Waiting on owner", "replanning": "Replanning", "rounds": "Rounds",
+                "held_by": "Held by"}
+REPLANNING = re.compile(r"^(\S.*?)[ \t]+—[ \t]+decides:[ \t]*(owner|agent)$")
+ROUNDS = re.compile(r"^(\d+) blocking reviews?, (\d+) replans?$")
 HELD_BY = re.compile(r"^(\S+) (\S+) since (\d{4}-\d{2}-\d{2} \d{2}:\d{2} (?:UTC|[+-]\d{2}:\d{2}))$")
 STEP = re.compile(r"^- \[([ xX])\] ?(.*)$")
 REVIEW = re.compile(r"^(approved|changes requested) by (\S.*?) (\d{4}-\d{2}-\d{2})$")
@@ -178,7 +183,12 @@ def read_item(work: Path, folder: str, name: str, stages: tuple[str, ...]) -> di
     if ready and waiting:
         raise StageError(f"{rel}: has both Waiting on owner and Ready for agent: yes; "
                          "remove the ready line until the owner's answer is recorded")
-    marker = ", waiting on owner" if waiting else ", ready for agent" if ready else ""
+    replanning = re.search(r"^Replanning:[ \t]*\S", text, re.M) is not None
+    if replanning and re.search(r"^Ready for agent:", text, re.M | re.I):
+        raise StageError(f"{rel}: has both Replanning and Ready for agent; "
+                         "remove the ready line until bc-plan-to-pipeline has replanned the item")
+    marker = ((", replanning" if replanning else "") + (", waiting on owner" if waiting else "")
+              or (", ready for agent" if ready else ""))
     blockers = [] if blocked == "nothing" else [b.strip() for b in blocked.split(",") if b.strip()]
     return {
         "blockers": blockers,
@@ -512,6 +522,24 @@ def held_by_data(path: Path, text: str | None) -> dict | None:
     return {"tool": tool, "session": session, "since": since, "committed": committed, "age_seconds": age}
 
 
+def replanning_data(text: str | None) -> dict | None:
+    """The `Replanning:` line parsed; `reason` and `decider` are `None` when it is malformed."""
+    if text is None:
+        return None
+    match = REPLANNING.match(text)
+    reason, decider = match.groups() if match else (None, None)
+    return {"reason": reason, "decider": decider, "text": text}
+
+
+def rounds_data(text: str | None) -> dict | None:
+    """The `Rounds:` line parsed; the counts are `None` when it is malformed."""
+    if text is None:
+        return None
+    match = ROUNDS.match(text)
+    reviews, replans = (int(n) for n in match.groups()) if match else (None, None)
+    return {"blocking_reviews": reviews, "replans": replans, "text": text}
+
+
 def spent_data(outcome: str | None) -> dict | None:
     """The `Spent:` line in the Outcome, parsed; fields `None` when it is malformed."""
     found = re.search(r"^Spent:[ \t]*(.*)$", outcome or "", re.M)
@@ -572,6 +600,7 @@ def item_data(work: Path, folder: str, name: str) -> dict:
         "title": title.group(1).strip() if title else None, "header": header, "steps": parse_steps(text),
         "outcome": outcome.strip() or None if outcome is not None else None,
         "history": item_history(work / rel), "held_by": held_by_data(work / rel, header["held_by"]),
+        "replanning": replanning_data(header["replanning"]), "rounds": rounds_data(header["rounds"]),
         "spent": spent_data(outcome),
     }
 

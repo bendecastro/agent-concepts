@@ -514,3 +514,26 @@ the project's `.bc-agent/templates/work-item.md` lacks a `Dependencies:` line. T
 2. Copy the script: `cp "$AGENT_CONCEPTS"/concepts/bc-setup-project/body/work_index.py .bc-agent/scripts/`.
 3. Add the line to each ready item planned on or after 2026-11-28, and when you next plan an
    older ready item.
+
+## Replanning and Rounds lines
+
+Arrived in: 0.6.0
+
+Since 2026-11-28 the Work items rules in `.bc-agent/AGENTS.md` describe how an item shows that its
+plan is being redone: a `Replanning: <reason> — decides: owner|agent` header line that replaces
+`Ready for agent:` while the item stays in its folder, a `## Replan notes` section, `Superseded`
+notes on landed steps instead of unticking them, and a cumulative
+`Rounds: <n> blocking reviews, <m> replans` line. `work_index.py` marks a replanning item in the
+Folder column, fails on `Replanning:` next to `Ready for agent:`, and `--json` reports `replanning`
+and `rounds`. Check: the project's `.bc-agent/AGENTS.md` lacks the sentence starting
+"`Replanning: <reason> — decides: owner|agent` marks". To adopt it:
+
+1. In `.bc-agent/AGENTS.md`, copy the four rules from `Replanning:` through `Rounds:` from the Work
+   items section of a fresh scaffold, below the `Waiting on owner:` rule.
+2. Copy the `Replanning:` and `Rounds:` lines from a fresh scaffold's
+   `.bc-agent/templates/work-item.md` into the project's template, below `Waiting on owner:`.
+3. Copy the script: `cp "$AGENT_CONCEPTS"/concepts/bc-setup-project/body/work_index.py .bc-agent/scripts/`.
+4. Optionally copy the `Replanning:` sentence from a fresh scaffold's `work/README.md` intro.
+
+Without step 3 the lines are still written and read from the item files; only the table marker,
+the error and the JSON fields are missing.
