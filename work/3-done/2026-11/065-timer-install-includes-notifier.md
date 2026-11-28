@@ -22,4 +22,4 @@ Dependencies: none new
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Done 2026-11-28. `INSTALL-TIMER.md` now installs and verifies the `bc-wiki-notify@.service` template in its per-vault block, and `runner/README.md` links there instead of keeping its own notifier recipe. A scripted sandbox install (scratch HOME, systemctl shim) showed the byte-identical template beside the slug service and timer, and `systemd-analyze verify` accepted all three; the real unit folder was untouched. Two new tests in `test_wiki_maintain.py` (red first). Not done: `runner/README.md` still has its own commands for the lint-all and all-vault installs and unsuffixed unit names in its check/disable examples; the agent-confirm path was not exercised.

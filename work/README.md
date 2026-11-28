@@ -24,10 +24,9 @@ Write project-specific notes outside the markers; the script keeps them.
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 4/5 |
 | 2 | [064-wiki-read-path-reads-whole-vault](2-active/064-wiki-read-path-reads-whole-vault.md) | active, ready for agent | — | — | In the read-path pressure scenario 5 (qmd absent), all four Haiku runs opened every tracked page, including `index.md`, both with and without the 059 change; t… | 0/2 |
-| 3 | [065-timer-install-includes-notifier](2-active/065-timer-install-includes-notifier.md) | active, ready for agent | — | — | every wiki runner service sets `OnFailure=bc-wiki-notify@%n.service`, but `bc-wiki-maintain`'s `INSTALL-TIMER.md` (the path setup step 10 loads) never installs… | 2/2 |
-| 4 | [067-planning-map-mode](2-active/067-planning-map-mode.md) | active, ready for agent | — | — | `bc-plan-to-pipeline` assumes one grill settles every decision before it drafts a PRD and slices. | 0/2 |
+| 3 | [067-planning-map-mode](2-active/067-planning-map-mode.md) | active, ready for agent | — | — | `bc-plan-to-pipeline` assumes one grill settles every decision before it drafts a PRD and slices. | 0/2 |
 
 - [Ideas](0-ideas.md): 10
-- [Done](3-done/): 62
+- [Done](3-done/): 63
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->
