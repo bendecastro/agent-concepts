@@ -12,6 +12,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 ### Added
 
 - Lint: a paragraph repeated across concept bodies is now an ERROR; a `copy-of` source may be any paragraph in the anchor's section, and `<!-- repeated-text-allow: <concept> — <reason> -->` excuses a deliberate restatement of one named concept.
+- `bc-plan-to-pipeline`: map mode. When the grill leaves a question this session cannot settle (research, a prototype, a task first, or the owner's "not sure yet"), it charts a map (a `Kind: map` work item, a `map`-labelled issue with typed child steps, or `docs/changes/<slug>/map.md`) of typed decision steps worked one per session, whose last step slices the build; adapted from Matt Pocock's wayfinder. `stranger_rpc_driver.py` takes its follow-up answer from `STRANGER_FOLLOW_UP`.
 - `bc-plan-to-pipeline`: a go-ahead given while planning ("go ahead with the plan", "yes", "do it") finishes the plan and marks it ready; the run never edits code or tests or files its item as done, and ends by naming `/bc-pipeline-to-done`.
 - `bc-teach` now keeps the hosted-vault marker, both path maps and the never-create rules in one file, `HOSTING.md`; `bc-setup-project` and `bc-wiki-maintain` point at it, and a test fails when the scaffolded marker drifts from it; installing `bc-wiki-maintain` now also installs `bc-teach`.
 - Work items gain a `Dependencies:` line (`none new`, `may add <name> (<why>) (owner's answer, <date>)`,
