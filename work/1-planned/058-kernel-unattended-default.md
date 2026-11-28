@@ -7,7 +7,7 @@ Blocked by: nothing
 Kind: architecture
 Source: modularity scan 2026-11-27 (run ~/.local/state/bc-swarm/2026-11-27-agents-modularity/memo.md), owner pick 1 (candidate E; owner: put it in the kernel)
 Planned: bc-plan-to-pipeline 2026-11-27
-Ready for agent: yes
+Waiting on owner: parked after the fourth tuning round failed its pre-set bar (owner answer, 2026-11-28). Round 4 on Haiku: new kernel 5/6, old kernel 0/6; Terra round 3 was 1/6 strict. Decide: accept 5/6, or redesign the rule or the test. Kernel text and results are on branch `058-hold` (`pressure-unattended-default-results-2026-11-28-round4.md`).
 
 ## Requirements
 
