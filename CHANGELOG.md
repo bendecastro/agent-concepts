@@ -14,6 +14,8 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 - Work items gain a `Dependencies:` line (`none new`, `may add <name> (<why>) (owner's answer, <date>)`,
   or the owner's refusal). `work_index.py --check` fails on a ready item without it planned on or after
   2026-11-28 and warns on older ones; MIGRATIONS.md has the upgrade step.
+- `bc-plan-to-pipeline` checks dependencies in its own step on every plan, even when no other question is
+  open, and marks an item ready only when it has its `Dependencies:` line. Later steps are renumbered.
 - The fresh-install test gains `claude-kernel` and `codex-kernel`: each adds the marketplace (from the
   release tag in the release workflow) and installs `agent-kernel`, then checks its SessionStart hooks
   deliver the canonical kernel text.

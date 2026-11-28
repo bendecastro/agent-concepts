@@ -2491,3 +2491,6 @@ Step 10 states inline that qmd search is not promotion, that "just enable"/"don'
 
 ## [2026-11-28] implement | 063 step 1: Dependencies line check and template
 work_index.py (both copies) errors on a ready item without `Dependencies:` planned on/after 2026-11-28, warns on older ones; template, scaffold and MIGRATIONS gain the line. Test: concepts/bc-setup-project/tests/test_work_index_dependencies.py.
+
+## [2026-11-28] implement | 063 step 2: dependency check as its own planning step (held)
+bc-plan-to-pipeline: the dependency check is step 2 (runs on every plan, always writes the line), step 8's ready bar requires it, the "ask nothing" sentences name the exception; steps renumbered. Scenario gains Part 1b (stranger-like) and expects the owner mark. Held on branch until the pressure test passes.
