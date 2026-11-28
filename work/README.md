@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [069-plan-models-state-first](1-planned/069-plan-models-state-first.md) | planned, ready for agent | — | — | most long review loops in the replan study came from interactions nobody modelled before building: several writers, delivery order between machines, versions i… | 0/2 |
+| 1 | [069-plan-models-state-first](2-active/069-plan-models-state-first.md) | active, ready for agent | — | — | most long review loops in the replan study came from interactions nobody modelled before building: several writers, delivery order between machines, versions i… | 0/2 |
 | 2 | [070-integration-amendments-and-removals](1-planned/070-integration-amendments-and-removals.md) | planned, ready for agent | — | — | in another project's integration a planned detail was disproved by the merged tree (a shortcut row that made a list scroll) and reverted mid-integration; the a… | 0/2 |
 | 3 | [071-obligations-without-todo-tool](1-planned/071-obligations-without-todo-tool.md) | planned | — | — | `bc-durable-subagents` tells the reader to record obligations in a session `todo` tool whose list is re-shown every turn. | — |
 | 4 | [072-background-job-wake-recipe](1-planned/072-background-job-wake-recipe.md) | planned | — | — | `bc-durable-subagents` requires a completion wake for the background full gate, but only the owner's private wake helper arranges one for a shell job; native s… | — |
