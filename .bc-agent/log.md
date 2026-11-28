@@ -2454,3 +2454,6 @@ Generated `.bc-agent/AGENTS.md` (and this repo's) carries the role-lookup paragr
 
 ## [2026-11-28] implement | 055 review fixes
 Migration arrives in 0.5.1 with a no-paragraph anchor; find-bugs/architecture state the worktree ideas-line owner choice and reason themselves; scenario criteria and old-bullet arm tightened (not run); nits fixed.
+
+## [2026-11-28] test | bc-plan-to-pipeline worktree numbering (055) — inconclusive
+Haiku 5.5 low runs of pressure-worktree-numbering hit 429 rate limits on every attempt (~36 min); recorded as not run, status unchanged.
