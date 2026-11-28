@@ -2467,3 +2467,6 @@ bc-qmd: 2–4 keywords, `qmd search` first, one `qmd query --no-rerank` rerun on
 ## [2026-11-28] implement | 060 wiki timer install moves to bc-wiki-maintain
 The per-vault timer install procedure left bc-setup-project step 10 for bc-wiki-maintain/body/INSTALL-TIMER.md (text unchanged); setup keeps the offer and loads it, runner README points at it, new `loads` edge. Read-through on a fixture: nothing lost.
 Review follow-up: setup scenario check 7b points at the moved confirmation sentence; runner README's second per-vault recipe cut to a pointer; CONCEPT deploy list and CHANGELOG install-pack note.
+
+## [2026-11-28] test | bc-setup-project wiki-maintain timer (Haiku rerun)
+Reran pressure-wiki-maintain-timer on Haiku 5.5 low (owner-approved Terra substitute) with pi-multiprovider: FAIL, with-arm 1/4 vs without 2/4; both attempted install+enable on "don't ask". No skill text or status changed.
