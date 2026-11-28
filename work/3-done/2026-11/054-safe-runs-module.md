@@ -21,4 +21,4 @@ Ready for agent: yes
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Done 2026-11-28. `bc-safe-runs` holds the storage-safe run rules and the prove-commits-in-HEAD rule; 14 skills load it (the pipeline builder gets it in its packet) and keep a one-line fallback that stops on critical or unknown storage health. Pressure runs on the pressure-test model: with the module 5/5 for both the bc-tdd and bc-code-review storage scenarios, fallback alone 4/5 each, so the owner chose to deploy it (shared bus, Pi, Claude, npm package). Review asked for builder wiring, the `git cherry` wording and stronger fallbacks; fix-verifier approved. Repeated-text warnings fell from 25 to 5. Three regression scenarios added after review are written but not yet run.

@@ -2433,3 +2433,6 @@ New `bc-safe-runs` holds the storage-safe run and worktree-removal rules (derive
 
 ## [2026-11-28] implement | bc-safe-runs review fixes
 The pipeline passes the module to builders and the task packet preserves the uv/venv interpreter. Fallbacks stop on critical, unknown or uncheckable storage health; cleanup requires successful `git cherry` proof. Updated caller notes and documented the two accepted kernel overlaps. Deployment unchanged.
+
+## [2026-11-28] deploy | bc-safe-runs
+Owner chose to deploy the module (with it the two storage scenarios score 5/5, fallback alone 4/5); regenerated public skills, Pi package, plugin manifests, install packs and status. 054 done.

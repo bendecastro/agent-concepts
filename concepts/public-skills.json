@@ -4,6 +4,7 @@
     "bc-brainstorming": [],
     "bc-code-review": [
       "bc-codebase-docs",
+      "bc-safe-runs",
       "bc-tdd"
     ],
     "bc-codebase-design": [],
@@ -26,7 +27,8 @@
     "bc-council-find-bugs": [
       "bc-council-chain",
       "bc-council-mode",
-      "bc-find-bugs"
+      "bc-find-bugs",
+      "bc-safe-runs"
     ],
     "bc-council-improve-architecture": [
       "bc-council-chain",
@@ -35,16 +37,27 @@
     ],
     "bc-council-mode": [],
     "bc-delegate-investigation": [
+      "bc-safe-runs",
       "bc-tdd"
     ],
     "bc-design": [],
-    "bc-diagnosing-bugs": [],
-    "bc-dispatching-parallel-agents": [],
+    "bc-diagnosing-bugs": [
+      "bc-safe-runs"
+    ],
+    "bc-dispatching-parallel-agents": [
+      "bc-safe-runs"
+    ],
     "bc-domain-modeling": [],
-    "bc-executing-plans": [],
+    "bc-executing-plans": [
+      "bc-safe-runs"
+    ],
     "bc-explain-visually": [],
-    "bc-find-bugs": [],
-    "bc-finishing-development-branch": [],
+    "bc-find-bugs": [
+      "bc-safe-runs"
+    ],
+    "bc-finishing-development-branch": [
+      "bc-safe-runs"
+    ],
     "bc-grilling": [],
     "bc-handoff": [],
     "bc-improve-codebase-architecture": [],
@@ -52,11 +65,14 @@
     "bc-minimal-solution-ladder": [],
     "bc-obsidian-bases": [],
     "bc-obsidian-markdown": [],
-    "bc-optimize-code": [],
+    "bc-optimize-code": [
+      "bc-safe-runs"
+    ],
     "bc-performance-guardrails": [],
     "bc-pipeline-to-done": [
       "bc-codebase-docs",
       "bc-performance-guardrails",
+      "bc-safe-runs",
       "bc-tdd"
     ],
     "bc-plain-language": [],
@@ -69,17 +85,26 @@
     ],
     "bc-prd-drafting": [],
     "bc-prompting-agents": [],
-    "bc-prototype": [],
+    "bc-prototype": [
+      "bc-safe-runs"
+    ],
     "bc-qmd": [],
     "bc-research": [],
+    "bc-safe-runs": [
+      "bc-using-git-worktrees"
+    ],
     "bc-security-audit": [],
     "bc-self-improve": [],
     "bc-seo": [],
     "bc-setup-project": [
       "bc-teach"
     ],
-    "bc-subagent-driven-development": [],
-    "bc-tdd": [],
+    "bc-subagent-driven-development": [
+      "bc-safe-runs"
+    ],
+    "bc-tdd": [
+      "bc-safe-runs"
+    ],
     "bc-teach": [],
     "bc-to-spec": [],
     "bc-to-tickets": [],
@@ -88,9 +113,13 @@
       "bc-design"
     ],
     "bc-unslop": [],
-    "bc-using-git-worktrees": [],
+    "bc-using-git-worktrees": [
+      "bc-safe-runs"
+    ],
     "bc-wiki-maintain": [],
     "bc-work-sync": [],
-    "bc-writing-plans": []
+    "bc-writing-plans": [
+      "bc-safe-runs"
+    ]
   }
 }

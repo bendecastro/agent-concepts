@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass # 2026-11-28 Terra low: bc-tdd and bc-code-review storage scenarios 5/5 with the module; fallback-only arms 4/5 each (tests/pressure-safe-runs.md)
 tested: 2026-11-28
-deployed: no
+deployed: yes
 ---
 # Concept: safe-runs
 
@@ -28,4 +28,4 @@ Model-invoked module that holds the storage-safe run rules (guarded test runner,
 
 ## Deploy targets
 
-Not deployed yet: `deployed: no` keeps `scripts/deploy-local-skills.py` from linking it. Until it is deployed, callers' load instruction fails and their one-line fallback applies.
+Deployed 2026-11-28 (owner choice) by `scripts/deploy-local-skills.py` to `~/.agents/skills/bc-safe-runs`, `~/.pi/agent/skills/bc-safe-runs` and `~/.claude/skills/bc-safe-runs`, and shipped in the npm package through `concepts/public-skills.json`. The three regression scenarios added after review (builder in a uv/venv project, fallback health-check stops, failed `git cherry`) have not been pressure-run yet; the deployed form passed the two storage scenarios.
