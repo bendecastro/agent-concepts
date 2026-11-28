@@ -40,3 +40,5 @@ No other rule change lacks a test or read check recorded after it.
 ## Soak on `next` (releasing step 11)
 
 2026-11-28: [stranger end-to-end test of v0.5.0](2026-11-28-stranger-end-to-end-0.5.0.md) is **inconclusive**: both allowed attempts on `anthropic/claude-haiku-5-5` low were refused by the provider (HTTP 429) on every call, so no phase ran. v0.5.0 stays on `next`; not promoted.
+
+2026-11-28 rerun (09:22 UTC, with the operator's account-pooling extension, no 429): **fail**. Setup passed, but the planning session built, committed and filed the change as done instead of leaving a ready item, and the build session pushed it without running any pipeline role. v0.5.0 stays on `next`; not promoted.

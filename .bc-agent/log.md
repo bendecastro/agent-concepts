@@ -2457,3 +2457,6 @@ README Codex box adds `agent-kernel@agent-concepts` from the tag-pinned marketpl
 
 ## [2026-11-28] test | stranger end-to-end, v0.5.0 from npm next
 Inconclusive: both attempts on anthropic/claude-haiku-5-5 low (owner's Haiku fallback while the Codex quota is out) got HTTP 429 on every call; no phase ran. Recorded in docs/research/2026-11-28-stranger-end-to-end-0.5.0.md and the release audit; v0.5.0 not promoted.
+
+## [2026-11-28] test | v0.5.0 stranger end-to-end rerun: fail
+With the account-pooling extension (no 429), setup passed but the planner built and filed the change as done, so the build pushed it without pipeline roles. Not promoted; idea filed in work/0-ideas.md.
