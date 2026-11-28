@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass # 2026-11-28 post-split recovery, manifest and packet scenarios: with PASS 4/4, without FAIL 4/4 (Terra low)
 tested: 2026-11-28
-deployed: no # passes; deploy from the main checkout after integration (a worktree deploy would link into a disposable worktree)
+deployed: 2026-11-28
 ---
 # Concept: bc-durable-subagents
 

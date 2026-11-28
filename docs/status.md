@@ -2,7 +2,7 @@
 
 # Status
 
-57 concepts. 0 need testing, 2 not deployed, 33 deployed with a known gap.
+57 concepts. 0 need testing, 1 not deployed, 33 deployed with a known gap.
 
 Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page with
 `python3 scripts/lint.py --write-status`; `python3 scripts/lint.py` fails if it is stale.
@@ -11,11 +11,10 @@ Source of truth is the frontmatter in each `CONCEPT.md`. Regenerate this page wi
 
 Nothing. Every deployed concept has a recorded run.
 
-## Not deployed (2)
+## Not deployed (1)
 
 | concept | kind | test status | tested |
 |---|---|---|---|
-| [bc-durable-subagents](../concepts/bc-durable-subagents/CONCEPT.md) | pressure | pass | 2026-11-28 |
 | [naming-things](../concepts/naming-things/CONCEPT.md) | pressure | fail | 2026-11-27 |
 
 ## Deployed with a known gap (33)
@@ -49,7 +48,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-self-improve](../concepts/bc-self-improve/CONCEPT.md) | pressure | 2026-11-19 | yes |
 | [bc-setup-project](../concepts/bc-setup-project/CONCEPT.md) | pressure | 2026-11-27 | 2026-06-21 |
 | [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-11-25 | yes |
-| [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-28 | 2026-08-18 |
+| [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-28 | 2026-11-28 |
 | [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-28 | yes |
 | [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
 | [bc-to-tickets](../concepts/bc-to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |
@@ -59,6 +58,6 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-work-sync](../concepts/bc-work-sync/CONCEPT.md) | pressure | 2026-11-25 | 2026-11-16 |
 | [bc-writing-plans](../concepts/bc-writing-plans/CONCEPT.md) | pressure | 2026-11-25 | yes |
 
-## Passing and deployed (22)
+## Passing and deployed (23)
 
-[bc-brainstorming](../concepts/bc-brainstorming/CONCEPT.md), [bc-codebase-design](../concepts/bc-codebase-design/CONCEPT.md), [bc-codebase-docs](../concepts/bc-codebase-docs/CONCEPT.md), [bc-council-audit-security](../concepts/bc-council-audit-security/CONCEPT.md), [bc-council-challenge-plan](../concepts/bc-council-challenge-plan/CONCEPT.md), [bc-council-find-bugs](../concepts/bc-council-find-bugs/CONCEPT.md), [bc-find-bugs](../concepts/bc-find-bugs/CONCEPT.md), [bc-grilling](../concepts/bc-grilling/CONCEPT.md), [bc-json-canvas](../concepts/bc-json-canvas/CONCEPT.md), [bc-minimal-solution-ladder](../concepts/bc-minimal-solution-ladder/CONCEPT.md), [bc-obsidian-bases](../concepts/bc-obsidian-bases/CONCEPT.md), [bc-obsidian-markdown](../concepts/bc-obsidian-markdown/CONCEPT.md), [bc-performance-guardrails](../concepts/bc-performance-guardrails/CONCEPT.md), [bc-plain-language](../concepts/bc-plain-language/CONCEPT.md), [bc-prd-drafting](../concepts/bc-prd-drafting/CONCEPT.md), [bc-qmd](../concepts/bc-qmd/CONCEPT.md), [bc-safe-runs](../concepts/bc-safe-runs/CONCEPT.md), [bc-security-audit](../concepts/bc-security-audit/CONCEPT.md), [bc-seo](../concepts/bc-seo/CONCEPT.md), [bc-to-spec](../concepts/bc-to-spec/CONCEPT.md), [bc-unslop](../concepts/bc-unslop/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md)
+[bc-brainstorming](../concepts/bc-brainstorming/CONCEPT.md), [bc-codebase-design](../concepts/bc-codebase-design/CONCEPT.md), [bc-codebase-docs](../concepts/bc-codebase-docs/CONCEPT.md), [bc-council-audit-security](../concepts/bc-council-audit-security/CONCEPT.md), [bc-council-challenge-plan](../concepts/bc-council-challenge-plan/CONCEPT.md), [bc-council-find-bugs](../concepts/bc-council-find-bugs/CONCEPT.md), [bc-durable-subagents](../concepts/bc-durable-subagents/CONCEPT.md), [bc-find-bugs](../concepts/bc-find-bugs/CONCEPT.md), [bc-grilling](../concepts/bc-grilling/CONCEPT.md), [bc-json-canvas](../concepts/bc-json-canvas/CONCEPT.md), [bc-minimal-solution-ladder](../concepts/bc-minimal-solution-ladder/CONCEPT.md), [bc-obsidian-bases](../concepts/bc-obsidian-bases/CONCEPT.md), [bc-obsidian-markdown](../concepts/bc-obsidian-markdown/CONCEPT.md), [bc-performance-guardrails](../concepts/bc-performance-guardrails/CONCEPT.md), [bc-plain-language](../concepts/bc-plain-language/CONCEPT.md), [bc-prd-drafting](../concepts/bc-prd-drafting/CONCEPT.md), [bc-qmd](../concepts/bc-qmd/CONCEPT.md), [bc-safe-runs](../concepts/bc-safe-runs/CONCEPT.md), [bc-security-audit](../concepts/bc-security-audit/CONCEPT.md), [bc-seo](../concepts/bc-seo/CONCEPT.md), [bc-to-spec](../concepts/bc-to-spec/CONCEPT.md), [bc-unslop](../concepts/bc-unslop/CONCEPT.md), [herdr](../concepts/herdr/CONCEPT.md)

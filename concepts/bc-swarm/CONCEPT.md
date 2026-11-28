@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: partial # check 4 accepted gap; 2026-11-28 post-split recovery/manifest/packet rerun PASS 4/4 with bc-durable-subagents (without FAIL 4/4); earlier: 2026-10-31 todo/manifest PASS, 2026-11-19 targeted packets + overlay PASS, 2026-11-25 inline storage PASS, 2026-11-18 test levels PASS
 tested: 2026-11-28
-deployed: 2026-08-18 # as bc-delegate-investigation (bc-swarm was its local alias); redeploy under the new name from the main checkout after integration
+deployed: 2026-11-28 # first as bc-delegate-investigation (2026-08-18); old name stays an alias
 ---
 # Concept: bc-swarm
 
