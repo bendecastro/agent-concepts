@@ -24,4 +24,4 @@ Dependencies: none new
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Done 2026-11-28. Wording fix, no helper command: the block's search is now two copy-as-written lines (the `AGENT_CONCEPTS` choice is a `${:+}` expansion instead of a multi-line `if`), and the read path opens at most the top three returned pages, stops at the first that answers, and never lists or reads every page or opens `index.md`, `map.md` or `log.md`, even when qmd is missing or the user asks for the whole vault. The scaffold copy matches (byte-equality test) and MIGRATIONS covers existing vaults. Read-path scenario 5 on Haiku low (blind baseline): master 2/3 failed (one dropped the branch and read every file including `index.md`; one grepped `index.md` after a rank-1 hit), changed 3/3 ran the command and read only the verified page. Parent checked the transcripts. Caveat: changed-3 typed the two lines as one without a separator, so the `AGENT_CONCEPTS` branch was silently skipped and the default skill path happened to work. Scenarios 1–4 were not rerun.
