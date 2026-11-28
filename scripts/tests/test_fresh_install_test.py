@@ -101,7 +101,7 @@ def test_claude_install_checks_for_bundled_publish_checker(tmp_path, monkeypatch
 
     def run(box, *args, **kwargs):
         if args[:3] == ("claude", "plugin", "list"):
-            return '[{"id":"agent-concepts"}]' if not removed else "[]"
+            return '[{"id":"agent-concepts@agent-concepts"}]' if not removed else "[]"
         if args[:3] == ("claude", "plugin", "details"):
             return f"Skills (2) {skill}, {fit.HELPER_SKILL}"
         if args[0] == sys.executable and args[-1] == "--help":
@@ -119,6 +119,21 @@ def test_claude_install_checks_for_bundled_publish_checker(tmp_path, monkeypatch
         with pytest.raises(fit.CheckFailed, match=r"bc-pipeline-to-done/scripts/publish-check\.py"):
             fit.run_method("claude", tmp_path, listing, fit.DEFAULT_PACK, None)
 
+
+
+def test_claude_listing_ignores_builtin_plugins(tmp_path, monkeypatch):
+    """Claude Code 2.1.332+ lists its built-in plugins, so a non-empty list is not our install."""
+    builtin = '[{"id":"cc-plugin-privacy@builtin","enabled":true}]'
+
+    def run(box, *args, **kwargs):
+        if args[:3] == ("claude", "plugin", "list"):
+            return builtin
+        if args[:3] == ("claude", "plugin", "details"):
+            raise fit.CheckFailed('claude exited 1:\nPlugin "agent-concepts@agent-concepts" not found.')
+        pytest.fail(f"unexpected sandbox command: {args}")
+
+    monkeypatch.setattr(fit.Sandbox, "run", run)
+    assert fit.ClaudePlugin(fit.Sandbox(tmp_path, "claude"), []).listed() == {}
 
 if __name__ == "__main__":
     unittest.main()

@@ -2402,3 +2402,6 @@ Weekly latest-CLI installs report failures; the packed Pi test checks the kernel
 
 ## [2026-11-28] implement | latest-agent CI review fixes
 Require npm's latest tags, isolate and serialize failure reporting, and validate the packed Pi kernel prompt. The integration test now skips Pi shims and restores and removes its scratch install.
+
+## [2026-11-28] implement | 049 done; install test handles Claude Code 2.1.332
+049 landed: weekly/manual `latest agents` workflow (read-only test job, separate serialized issue reporter), Pi pin 1.6.1, packed-Pi `<agent-kernel>` section probe. Its first manual run failed on Claude Code 2.1.332, which lists built-in plugins; the Claude listing now matches this plugin's ID (regression test failed first; method passes on 2.1.329 and 2.1.332).

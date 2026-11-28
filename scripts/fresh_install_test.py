@@ -275,7 +275,8 @@ class ClaudePlugin:
 
     def listed(self) -> dict[str, Path]:
         installed = json.loads(self.box.run("claude", "plugin", "list", "--json"))
-        if not installed:
+        # Claude Code 2.1.332+ also lists its built-in plugins; look for ours only.
+        if not any(p.get("id") == PLUGIN_ID for p in installed):
             return {}
         out = self.box.run("claude", "plugin", "details", PLUGIN_ID)
         match = re.search(r"Skills \(\d+\)\s+(.*)", out)

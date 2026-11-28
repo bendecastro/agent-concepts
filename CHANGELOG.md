@@ -11,6 +11,11 @@ release rather than `master`: `master` changes many times a day and can hold unf
 - Each week CI checks fresh installs against npm's `latest` tag for each agent CLI, including
   whether Pi loads the packaged kernel. A separate job opens or updates one issue on failure.
 
+### Fixed
+
+- The install test no longer fails on Claude Code 2.1.332 and later, which list their built-in
+  plugins: it now looks for this plugin by ID. The new weekly check found this on its first run.
+
 ## [0.4.1] - 2026-11-27
 
 New releases soak on npm before they reach you, and there is a way to report problems.
