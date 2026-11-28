@@ -109,3 +109,25 @@ def test_install_then_remove_restores_all_original_bytes(instructions, original)
         assert instructions.read_bytes() == original
     finally:
         instructions.unlink()
+
+
+def test_installer_runs_on_python_3_9():
+    # `X | None` in an annotation is evaluated at import before Python 3.10, so it needs the
+    # future import; no 3.9 interpreter is guaranteed here, so check the source instead.
+    import ast
+    tree = ast.parse(INSTALLER.read_text(encoding="utf-8"), feature_version=(3, 9))
+    future = any(isinstance(n, ast.ImportFrom) and n.module == "__future__"
+                 and any(a.name == "annotations" for a in n.names) for n in tree.body)
+    annotations = [n.annotation for n in ast.walk(tree) if isinstance(n, (ast.arg, ast.AnnAssign)) and n.annotation]
+    annotations += [n.returns for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.returns]
+    unions = [a for a in annotations if any(isinstance(x, ast.BinOp) and isinstance(x.op, ast.BitOr)
+                                            for x in ast.walk(a))]
+    assert future or not unions
+
+
+def test_install_creates_a_missing_parent_folder(instructions):
+    target = instructions.parent / "new-home" / "nested" / "GEMINI.md"
+    result = subprocess.run([sys.executable, "-I", str(INSTALLER), str(target)],
+                            cwd=instructions.parent, capture_output=True)
+    assert result.returncode == 0, result.stderr
+    assert target.read_bytes() == block()

@@ -15,7 +15,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
   release tag in the release workflow) and installs `agent-kernel`, then checks its SessionStart hooks
   deliver the canonical kernel text.
 - `npx -y agent-concepts kernel install <file>` and `kernel remove <file>` add or remove the agent kernel's
-  marked block in any instructions file, from the npm package with no checkout (needs Python 3). The
+  marked block in any instructions file, from the npm package with no checkout (needs Python 3.9 or later). The
   README's Cursor, Gemini CLI, GitHub Copilot, OpenCode and other-agent boxes name the file to use.
 
 ## [0.5.0] - 2026-11-28

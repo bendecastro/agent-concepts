@@ -104,7 +104,7 @@ Candidate targets for manual deltas, in order of expected value: thin custom har
 
 ### Opt-in packages
 
-- **Any agent with an instructions file (npm bin, 2026-11-28):** `npx -y agent-concepts kernel install <file>` (and `kernel remove <file>`) manages the marked block from the npm package with no checkout; needs Node.js and Python 3. The README's `npx skills` boxes name each agent's file.
+- **Any agent with an instructions file (npm bin, 2026-11-28):** `npx -y agent-concepts kernel install <file>` (and `kernel remove <file>`) manages the marked block from the npm package with no checkout; needs Node.js and Python 3.9 or later (not Windows). The README's `npx skills` boxes name each agent's file.
 - **Claude Code (opt-in plugin):** [`agent-kernel`](../../packages/agent-kernel-claude/.claude-plugin/plugin.json) is a separate target from the existing skills plugin. See [local installation and removal](../../docs/guides/harnesses.md#standalone-kernel).
 - **Codex (opt-in plugin):** [`agent-kernel`](../../packages/agent-kernel-codex/.codex-plugin/plugin.json) is a separate [local marketplace entry](../../.agents/plugins/marketplace.json) from the skills plugin. See [installation, hook trust and removal](../../docs/guides/harnesses.md#standalone-kernel).
 - **OpenCode V2 (opt-in plugin):** [`agent-kernel-opencode`](../../packages/agent-kernel-opencode/package.json) is independent of skill discovery. See [installation and removal](../../docs/guides/harnesses.md#standalone-kernel).

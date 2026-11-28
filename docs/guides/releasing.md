@@ -52,12 +52,13 @@ removal version.
    and update the comparison links at the bottom.
    Then replace the old tag with the new one everywhere in the
    [Install section of the README](../../README.md#install), including "The newest release is",
-   and the old version in the Pi pin example (`npm:agent-concepts@MAJOR.MINOR.PATCH`). The Pi
-   install itself names no version.
+   and the old version in the Pi pin example (`npm:agent-concepts@MAJOR.MINOR.PATCH`) and in
+   every `npx -y agent-concepts@MAJOR.MINOR.PATCH kernel install|remove ...` line and table
+   row. The Pi install itself names no version.
 5. Run `python3 scripts/release_check.py vMAJOR.MINOR.PATCH`. It exits nonzero when any
    description's version differs from the tag, `CHANGELOG.md` has no entry for it, or the
    README's Install section does not name the tag or still names another one, does not show
-   the unpinned `pi install npm:agent-concepts`, or pins npm to another version.
+   the unpinned `pi install npm:agent-concepts`, or pins `npm:agent-concepts@` or `npx -y agent-concepts@` to another version.
    It also scans the private personal-terms list (`AGENT_CONCEPTS_PERSONAL_TERMS` overrides
    `~/.config/agent-concepts/personal-terms.txt`) and fails if missing or the scan reports
    errors or cannot complete; lint's warning-only matches remain warnings. Stage your release
@@ -160,7 +161,7 @@ A trusted publisher can only be connected to a package that exists, so the first
 published by hand:
 
 1. On the maintainer's machine, from a clean checkout of the tag: `npm login`, then
-   `npm pack --dry-run` to review the file list (skill bodies, `packages/agent-kernel-pi/`,
+   `npm pack --dry-run` to review the file list (skill bodies, `packages/agent-kernel-pi/`, `packages/agent-kernel/`,
    README, LICENSE, package.json, nothing else), then `npm publish --access public`.
 2. On npmjs.com, open the package's Settings → Trusted publishing, choose GitHub Actions and
    enter this repository and the workflow file `release.yml`. npm expires a new trusted
