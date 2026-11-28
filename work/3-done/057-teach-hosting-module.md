@@ -16,4 +16,4 @@ Dependencies: none new
 
 ## Outcome
 
-_To be filled when finished or dropped._
+The marker rule, both path maps and the never-create rules live in `bc-teach`'s `HOSTING.md`; `bc-wiki-maintain` and `bc-setup-project` point at it (with `loads` edges), `bc-wiki-maintain` fails closed when it is missing, and `test_scaffold_maps_match_teach_hosting_home` fails when the scaffold's marker drifts. Pressure tests on Haiku low (Codex out of quota): hosted-vault scenario 1 3/3, cross-skill upkeep scenario 4 3/3 on artifacts (`concepts/bc-teach/tests/pressure-host-integration-results-2026-11-28.md`). Open: in scenario 4 `HOSTING.md` was read in only 1 of 3 runs (the valid marker carries the map, so it decided); the fail-closed sentence is untested; not run on Terra.
