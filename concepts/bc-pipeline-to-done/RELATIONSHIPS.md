@@ -31,8 +31,8 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Selects only items carrying the `Ready for agent: yes` line, which bc-plan-to-pipeline writes when every step states its done-criteria and out of scope.
   Source: [body/source-work-items.md](body/source-work-items.md#eligibility)
 
-- loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
-  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+- loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal; every implementation packet.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update. The builder gets the skill explicitly, and worker and reviewer tasks get its packet line.
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.

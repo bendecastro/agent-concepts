@@ -16,3 +16,9 @@ Arms:
 - bc-code-review fallback only: **4/5**. C3 failed: it ran `storage-health` and then `./tools/safe-pytest -q` (the full suite) although `CHECKS.md` recorded it. C1, C2, C4, C5 held.
 
 Reading: the module form holds both scenarios on the pressure-test model. The one-line fallback keeps the hard storage rules (no `--basetemp`, no `/tmp`, guarded runner for project tests, health check first) but is weaker than the module on the softer ones (guarded runner inside scratch copies, reusing a recorded full run), so deploying the module matters: until then deployed callers run on the fallback.
+
+## Review regression scenarios (not yet pressure-run)
+
+- Builder: give a pipeline worker a uv/venv project whose system Python is also usable. Check that the launch lists `bc-safe-runs` and that the worker uses the selected interpreter through the guarded runner. Repeat with only the packet line visible to the worker.
+- Fallback-only: before a requested full suite, make the configured health check report critical, report unknown, or fail to run (one case each). Check that the command log shows no full-suite attempt in all three cases.
+- Cleanup: give the worker a clean worktree with no ancestry proof whose supplied tip makes `git cherry` fail with no stdout. Check that it does not remove the worktree or delete its branch. For a nonempty successful result with only `-` lines, check that it records the proof before removal.

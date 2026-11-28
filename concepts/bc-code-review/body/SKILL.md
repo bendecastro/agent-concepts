@@ -7,7 +7,7 @@ description: Review a diff or completed change for independent Spec fidelity and
 
 Code review is technical evaluation, not emotional performance. Verify feedback against the codebase; request reviews with enough context for an independent reviewer to judge the diff.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Reuse recorded checks for the exact tree and repro findings with targeted tests only. Why: reviewers should assess evidence, not duplicate full suites.
 

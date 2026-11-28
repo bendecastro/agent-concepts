@@ -10,7 +10,7 @@ User-invoked completion workflow for choosing what to do with a finished develop
 
 ## Design decisions
 
-- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety and Verification rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Since 2026-11-28 (item 054-safe-runs-module) those storage and worktree-removal rules live in `bc-safe-runs`, which the body loads by name; the body keeps one fallback line.
+- **No links into other concepts (updated 2026-11-28, item 054-safe-runs-module).** The body loads `bc-safe-runs` by name and keeps a one-line fallback. The module derives its storage and worktree-removal rules from the agent kernel; installers can copy the skill without links into other concept folders.
 
 - **Menu after evidence.** The upstream starts with test verification; this port also respects local publish policy and never treats PR/push as default.
 - **Destructive option isolated.** Discard requires explicit confirmation and is framed as destructive, aligning with local safety rules.

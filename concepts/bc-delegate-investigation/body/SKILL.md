@@ -11,7 +11,7 @@ Go wide. While this skill is active, delegating is the default and **keeping** w
 
 It composes `bc-dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Put the `bc-safe-runs` packet line in every worker or reviewer task. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof. Why: children do not inherit the kernel, and retained worktrees consume storage.
 

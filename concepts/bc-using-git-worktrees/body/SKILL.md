@@ -7,7 +7,7 @@ description: Use when starting feature work that needs isolation, before executi
 
 Work in an isolated workspace when it reduces risk. Detect existing isolation first, prefer harness-native isolation, and use manual `git worktree` only as a fallback. When an owned worktree is integrated or otherwise irrelevant, prune it without asking.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Reuse the once-per-base baseline. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` and record that proof (section Cleanup below); remove with `git worktree remove`, never `--force`. Why: native isolation still consumes disk.
 

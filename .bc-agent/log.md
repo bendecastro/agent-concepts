@@ -2430,3 +2430,6 @@ Lint warns on concept-body paragraphs repeated across skills (80% trigram overla
 
 ## [2026-11-28] implement | bc-safe-runs module
 New `bc-safe-runs` holds the storage-safe run and worktree-removal rules (derived from the kernel's Storage safety); 14 skills load it with a one-line fallback under the repeated-text threshold. Pressure: bc-tdd and bc-code-review storage scenarios PASS 5/5 with the module on Terra low, fallback alone 4/5 each. Not deployed.
+
+## [2026-11-28] implement | bc-safe-runs review fixes
+The pipeline passes the module to builders and the task packet preserves the uv/venv interpreter. Fallbacks stop on critical, unknown or uncheckable storage health; cleanup requires successful `git cherry` proof. Updated caller notes and documented the two accepted kernel overlaps. Deployment unchanged.

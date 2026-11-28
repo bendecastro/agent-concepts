@@ -7,7 +7,7 @@ description: Use when implementation is complete and the user needs options for 
 
 Finish work by verifying first, then presenting clear options. Do not publish, merge, or discard by implication.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof. Keep anything dirty, unmerged or unclear. Reuse recorded full-suite evidence for the same tree instead of running the suite again. Why: completion is not a reason to duplicate suites or delete unproven work.
 

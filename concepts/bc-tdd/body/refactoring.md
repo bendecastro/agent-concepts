@@ -9,6 +9,6 @@ After a green TDD cycle (all tests passing), look for:
 - **Primitive obsession** → introduce value objects.
 - **Existing code** the new code reveals as problematic.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Run affected targeted tests after each refactor step and share full-suite evidence rather than re-running the suite. Why: refactoring needs fast feedback, not repeated full suites. **Never refactor while RED** — get to green first; the passing tests are what make refactoring safe.

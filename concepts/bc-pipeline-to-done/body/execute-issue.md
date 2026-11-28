@@ -28,7 +28,7 @@ For metric-bearing work only, load and follow `bc-optimize-code` after GREEN: es
 
 When the change alters behavior that a README, an existing `docs/` page, an architecture page, or contract-stating JSDoc already describes, update that owning page in the same diff and follow the repo-available `bc-codebase-docs` for placement. Do not invent a new `docs/` tree, do not restate a contract that already has a home, and do not narrate this issue in a documentation page — the acceptance matrix records what the slice did, and a docs page that narrates a change is stale the moment the next one lands. A repository that keeps no documentation for this surface needs none written to satisfy this rule.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Preserve the driver's baseline cache. Run targeted tests/checks while editing and record commands, outcomes, failing IDs, and concise baseline deltas. Do not run the full project suite; final landing validation belongs to the driver.
 

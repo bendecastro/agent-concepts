@@ -5,7 +5,7 @@ description: Use when writing new tests or behaviour-changing assertions, includ
 
 # Test-Driven Development
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Use targeted RED/GREEN checks; tests you write delete every temporary file and folder they create, even on failure; run the full suite, after the health check, not each cycle. Why: fast feedback does not require repeated full suites.
 

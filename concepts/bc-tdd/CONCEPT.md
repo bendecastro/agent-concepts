@@ -10,7 +10,7 @@ Model-invoked discipline for test-driven development: a red-green-refactor loop 
 
 ## Design decisions
 
-- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Since 2026-11-28 (item 054-safe-runs-module) those storage and worktree-removal rules live in `bc-safe-runs`, which the body loads by name; the body keeps one fallback line.
+- **No links into other concepts (updated 2026-11-28, item 054-safe-runs-module).** The body loads `bc-safe-runs` by name and keeps a one-line fallback. The module derives its storage and worktree-removal rules from the agent kernel; installers can copy the skill without links into other concept folders.
 
 - **Test layout norms (2026-11-19).** Browser/integration tests only for behaviour a fake cannot show; each file builds its own state; files under about 25 tests or 60 s; parallel runner and `slow` marker from the first test commit. Each rule carries a time Why. Source: the agent-time-sinks council memo (2026-11-19: worker e2e and pasted full gates dominated agent wait time in project A) and the owner's decisions of that date. `bc-code-review` checks them on new test files (same change). Other tdd consumers (bc-pipeline-to-done, bc-executing-plans, bc-subagent-driven-development) load tdd for authoring and pick the section up unchanged; no consumer contract changed.
 - **Broad invocation.** Test edits, bug fixes and features with tests trigger the discipline even when tests are incidental; opt-in test-first wording missed ordinary work.

@@ -48,7 +48,7 @@ Rank candidates by the strength of the quoted evidence.
 
 ## 3. Reproduce
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Work in a separate git worktree on a new branch `find-bugs/<hunt-name>` (`git worktree add -b bc-find-bugs/<hunt-name> <path>`). Never write reproductions in the owner's checkout. Why: the branch is what the filed items point at, and the owner's tree stays untouched.
 

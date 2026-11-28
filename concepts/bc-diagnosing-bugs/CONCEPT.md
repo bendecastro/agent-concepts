@@ -10,7 +10,7 @@ Model-invoked debugging discipline for hard bugs and performance regressions: bu
 
 ## Design decisions
 
-- **No links into other concepts (2026-11-25).** Installers copy each skill alone, so the body states inline the parts of the kernel's Storage safety rules it relies on and names `agent-kernel` as optional extra context instead of linking into its folder. Since 2026-11-28 (item 054-safe-runs-module) those storage and worktree-removal rules live in `bc-safe-runs`, which the body loads by name; the body keeps one fallback line.
+- **No links into other concepts (updated 2026-11-28, item 054-safe-runs-module).** The body loads `bc-safe-runs` by name and keeps a one-line fallback. The module derives its storage and worktree-removal rules from the agent kernel; installers can copy the skill without links into other concept folders.
 
 - **Feedback-loop gate before hypotheses.** This is the failure mode normal agents hit: plausible code-reading before a bug-specific signal exists.
 - **Complements, not replaces, TDD.** TDD is for planned features and simple fixes; bc-diagnosing-bugs handles uncertain failures, flaky bugs, and performance regressions.

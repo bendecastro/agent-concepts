@@ -53,8 +53,8 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [bc-optimize-code/body/SKILL.md](../bc-optimize-code/body/SKILL.md)
 
-- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): loads this concept — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
-  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): loads this concept — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal; every implementation packet.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update. The builder gets the skill explicitly, and worker and reviewer tasks get its packet line.
   Source: [bc-pipeline-to-done/body/SKILL.md](../bc-pipeline-to-done/body/SKILL.md)
 
 - incoming from [bc-prototype](../bc-prototype/RELATIONSHIPS.md): loads this concept — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.

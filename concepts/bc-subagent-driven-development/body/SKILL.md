@@ -7,7 +7,7 @@ description: Use when executing a written implementation plan in the current ses
 
 A controller executes a plan by giving each task to a fresh implementer agent, then running spec-compliance and code-quality review before moving on.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 At completion, prove each worker's commits are in `HEAD` (ancestor or patch-equivalent) and record that proof before removing worktrees or branches. Put the `bc-safe-runs` packet line in every worker or reviewer task. Workers run targeted tests only and reuse the shared full-suite evidence. Why: fresh agents cannot infer shared storage ownership.
 

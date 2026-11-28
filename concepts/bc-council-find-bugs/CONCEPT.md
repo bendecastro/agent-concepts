@@ -12,7 +12,7 @@ Runs `bc-find-bugs` through the advisor council (`bc-council-chain` + `bc-counci
 
 All from the owner-approved [council bug hunt plan](../../work/3-done/2026-11/019-council-find-bugs.md); numbers are that plan's decisions.
 
-- **Reproduction worker gets `bc-safe-runs` (2026-11-28, item 054-safe-runs-module).** Its launch skill list includes the module and its task carries the module's packet line, since the worker runs tests and children do not load skills on their own.
+- **Reproduction worker gets `bc-safe-runs` (2026-11-28, item 054-safe-runs-module).** The reproduction worker loads `bc-safe-runs` from its launch skill list and runs `bc-find-bugs` §3, which keeps the one-line fallback. Its task also carries the module’s packet line, since children do not load skills on their own.
 
 - **Thin chain (decisions 1, 6).** Loads `bc-council-chain`, `bc-find-bugs` and `bc-council-mode` and defines only what `bc-council-chain`'s "What a chain must define" list leaves open: pre-reading and map contents, focuses, candidate format, duplicate rule, verdict rule, report additions and filing. Scope, reproduction, report sections and filing stay in `bc-find-bugs`.
 - **Agreement orders, never confirms (decision 3).** Pass 2 attacks; an unanswered code-evidenced dispute drops a candidate; agreement shares of N only order the reproduction queue and the suspected tier. Only a reproduction watched failing confirms.

@@ -7,7 +7,7 @@ description: Use when the user provides or selects a written implementation plan
 
 Execute written plans deliberately: review the plan, verify preconditions, complete each task, and stop instead of guessing when the plan is wrong.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Run targeted checks per task and one shared landing run of the full suite. Why: task-by-task execution must not duplicate full suites.
 

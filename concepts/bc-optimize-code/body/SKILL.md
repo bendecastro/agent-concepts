@@ -9,7 +9,7 @@ Improve code along a measurable axis (speed, output size, memory, allocations, A
 
 **The core idea:** the *check* owns truth; you propose *bounded* changes; a change survives only if it proves **both** that correctness still holds **and** that the chosen metric improved enough to justify it. Anything else gets reverted.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Run the full suite once, for landing, not on each iteration. Why: repeated experiments multiply temporary storage.
 

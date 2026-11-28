@@ -7,7 +7,7 @@ description: Use when an approved spec or resolved requirements need to become a
 
 Write plans for a capable engineer or fresh agent with little project context. The plan must be concrete enough to execute task-by-task without guessing.
 
-Load the `bc-safe-runs` skill. Else: guarded test runner (otherwise plain `pytest`; never custom `--basetemp`), scratch via `mktemp -d` not `/tmp`, targeted tests, configured storage health check (stop if critical) before full suites, worktrees or fan-out.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Plans must be storage-safe: every command follows `bc-safe-runs`, worktree cleanup comes only after proving the work's commits are in `HEAD`, and the plan has targeted task checks plus one shared baseline and one landing run of the full suite. Why: unsafe commands in plans become unsafe execution.
 
