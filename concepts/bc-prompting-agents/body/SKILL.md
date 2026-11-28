@@ -5,7 +5,7 @@ description: Use when writing or revising instructions for a coding agent — co
 
 # Prompting Agents
 
-Reusable instruction blocks and principles distilled from OpenAI's GPT-5.2 and Codex prompting guides, Anthropic's prompting/context-engineering guidance, and Google's prompt-engineering whitepaper (see CONCEPT.md for provenance), rewritten agent-agnostically. When authoring or tuning instructions for any agent, adapt the relevant block rather than writing one from scratch — these phrasings have been optimized against production evals. Tag origin when copying verbatim so future updates can be traced.
+Reusable instruction blocks and principles distilled from OpenAI's GPT-5.2 and Codex prompting guides, Anthropic's prompting/context-engineering guidance, and Google's prompt-engineering whitepaper (see CONCEPT.md for provenance), rewritten agent-agnostically. When authoring or tuning instructions for any agent, adapt the relevant block rather than writing one from scratch — these phrasings have been optimized against production evals. Before writing a rule, use `rg` to search concept bodies for its owner; if owned elsewhere, load it or mark a tracked `copy-of`, and if already held by two other concepts, split it into a module. Tag origin when copying verbatim so future updates can be traced.
 
 ## First: choose the altitude
 

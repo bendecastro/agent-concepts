@@ -41,6 +41,7 @@ removal version.
      checked by reading instead.
    - **Wording changes** (renames, links, moved text, plainer wording with the same meaning)
      need no retest.
+   Optionally rerun the [modularity scan](modularity-scan-brief.md): before writing a rule, use `rg` to search concept bodies for its owner; if owned elsewhere, load it or mark a tracked `copy-of`, and if already held by two other concepts, split it into a module.
    No concept may be under "Needs testing". Why: retesting every edited skill made each
    release wait on dozens of runs, so fixes stopped reaching users.
 3. Set the version. Its one home is `version` in `package.json`. Edit it, then run

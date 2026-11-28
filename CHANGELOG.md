@@ -18,6 +18,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Changed
 
+- Workspace lint warns about repeated concept prose and verifies explicitly marked copies against their source.
 - Release checks require the private personal-terms scan unless explicitly opted out, and scan
   the staged snapshot from git rather than the working copy; the npm publish job uses fixed
   action commits and an exact npm version.

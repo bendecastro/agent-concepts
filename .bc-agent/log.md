@@ -2421,3 +2421,6 @@ After two blocking reviews the owner chose to close with parent fixes: Removed e
 ## [2026-11-28] implement | release hygiene pins
 Release checks require the personal-terms scan unless explicitly opted out; CI opts out. Pinned publishing actions and npm, with promotion using the same npm version.
 After two blocking reviews the owner chose to bind the release scan to the staged git snapshot (symlinks as stored text, submodules skipped, unstaged tracked changes block) and accept two pin-test gaps (quoted `"uses":`, `npm i`).
+
+## [2026-11-28] implement | repeated prose and tracked copies
+Added a lint warning for similar concept-body paragraphs and errors for drifting or unresolved tracked copies; documented authoring and modularity review guidance.

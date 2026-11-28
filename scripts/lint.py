@@ -647,6 +647,71 @@ def display(path: Path) -> str:
     return str(Path("~") / path.relative_to(home)) if path.is_relative_to(home) else str(path)
 
 
+REPEATED_TEXT_MIN_WORDS = 40
+REPEATED_TEXT_THRESHOLD = 0.8
+
+
+def lint_repeated_text(issues: list[Issue], root: Path) -> None:
+    paragraphs = []
+    headings = {}
+    ambiguous = set()
+    copies = []
+    for path in sorted((root / "concepts").glob("*/body/**/*.md")):
+        concept = path.relative_to(root / "concepts").parts[0]
+        text = read(path)
+        if re.match(r"\s*<!--\s*generated\b", text, re.I):
+            continue
+        text = re.sub(r"\A---[^\n]*\n.*?^---[ \t]*$", lambda m: "\n" * m.group().count("\n"), text, flags=re.M | re.S)
+        text = re.sub(r"^[ \t]*(`{3,}|~{3,})[^\n]*\n.*?^[ \t]*\1[ \t]*$", lambda m: "\n" * m.group().count("\n"), text, flags=re.M | re.S)
+        blocks = list(re.finditer(r"^#{1,6} +[^\n]+$|^<!-- copy-of: [^\n]+ -->$|^\S[^\n]*(?:\n(?!\s*\n|#{1,6} +|<!-- copy-of: )[^\n]+)*", text, re.M))
+        heading = None
+        marker = None
+        for block_match in blocks:
+            block = block_match.group()
+            line = text.count("\n", 0, block_match.start()) + 1
+            location = f"{path}:{line}"
+            if re.fullmatch(r"#{1,6} +[^\n]+", block):
+                heading = relationships._heading_slug(re.sub(r"^#+\s+", "", block))
+                continue
+            match = re.fullmatch(r"<!-- copy-of: ([\w-]+)#([\w-]+) -->", block.strip())
+            if match:
+                marker = match.groups()
+                marker_location = location
+                continue
+            words = re.findall(r"\w+", block.lower())
+            if heading:
+                key = (concept, heading)
+                if key in headings:
+                    ambiguous.add(key)
+                headings[key] = (location, block)
+                heading = None
+            if marker:
+                copies.append((marker_location, block, marker))
+            if len(words) >= REPEATED_TEXT_MIN_WORDS:
+                paragraphs.append((concept, location, block, set(zip(words, words[1:], words[2:])), marker))
+            marker = None
+        if marker:
+            issues.append(Issue("ERROR", f"copy-of has no paragraph: {marker_location} -> {marker[0]}#{marker[1]}"))
+    for path, block, marker in copies:
+        source = headings.get(marker)
+        if marker in ambiguous:
+            issues.append(Issue("ERROR", f"copy-of ambiguous source: {path} -> {marker[0]}#{marker[1]}"))
+        elif not source:
+            issues.append(Issue("ERROR", f"copy-of missing source: {path} -> {marker[0]}#{marker[1]}"))
+        elif " ".join(block.split()) != " ".join(source[1].split()):
+            issues.append(Issue("ERROR", f"copy-of mismatch: {path} and {source[0]}#{marker[1]}"))
+    for i, (concept, path, block, words, marker) in enumerate(paragraphs):
+        for other_concept, other, other_block, other_words, other_marker in paragraphs[:i]:
+            if concept == other_concept:
+                continue
+            if ((marker and marker[0] == other_concept and " ".join((headings.get(marker, (None, ""))[1]).split()) == " ".join(block.split()))
+                    or (other_marker and other_marker[0] == concept and " ".join((headings.get(other_marker, (None, ""))[1]).split()) == " ".join(other_block.split()))):
+                continue
+            overlap = len(words & other_words) / max(len(words), len(other_words))
+            if overlap >= REPEATED_TEXT_THRESHOLD:
+                issues.append(Issue("WARN", f"repeated text: {other} and {path}: {overlap:.0%} overlap"))
+
+
 def lint_kernel_copies(issues: list[Issue]) -> None:
     """Check optional machine-local copies without making them repo errors."""
     config = Path.home() / ".config/agent-concepts/kernel-copies.json"
@@ -916,6 +981,7 @@ def main() -> int:
     lint_links(issues)
     lint_inline_paths(issues)
     lint_cross_concept_links(issues)
+    lint_repeated_text(issues, ROOT)
     lint_concepts(issues, index)
     lint_status(issues)
     lint_status_doc(issues)

@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [061-lint-repeated-text-and-copies](2-active/061-lint-repeated-text-and-copies.md) | active, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 0/3 |
+| 1 | [061-lint-repeated-text-and-copies](2-active/061-lint-repeated-text-and-copies.md) | active, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 2/3 |
 | 2 | [054-safe-runs-module](1-planned/054-safe-runs-module.md) | planned, ready for agent | — | 053-split-swarm-and-durable-subagents | The storage-safe preamble (guarded test runner, `mktemp -d` not `/tmp`, targeted tests only, storage health check) is restated in 11 skill bodies with drifting… | 0/1 |
 | 3 | [053-split-swarm-and-durable-subagents](1-planned/053-split-swarm-and-durable-subagents.md) | planned | [054-safe-runs-module](1-planned/054-safe-runs-module.md) | — | `bc-delegate-investigation` does two jobs under a name that fits neither the way the owner calls it ("swarm", "go wide") nor how swarm mode uses it. | 0/3 |
 | 4 | [055-project-files-in-scaffold](1-planned/055-project-files-in-scaffold.md) | planned, ready for agent | — | 056-file-findings-module | 12 skills each explain how to resolve a project file through the "Where things go" table, and the "number work items only in the main checkout; in a worktree a… | 0/1 |
