@@ -294,3 +294,32 @@ def test_kernel_methods_install_agent_kernel_from_the_tag_marketplace():
     assert sources["codex"] == [fit.GITHUB_REPO, "--ref", "v1.2.3"]
     assert {"claude-kernel", "codex-kernel"} <= set(fit.METHODS)
     assert fit.KERNEL_PLUGIN_ID == "agent-kernel@agent-concepts"
+
+
+def test_codex_hook_context_over_its_declared_limit_fails():
+    # Codex counts ceil(UTF-8 bytes / 4) tokens per hook's additionalContext.
+    limit = 5000
+    fit.check_context_within_limit("x" * (limit * 4), limit, "codex-kernel")
+    fit.check_context_within_limit("x" * (limit * 4 + 1), 0, "codex-kernel")  # 0 disables the limit
+    with pytest.raises(fit.CheckFailed, match="5001 approximate tokens, over its limit of 5000"):
+        fit.check_context_within_limit("x" * (limit * 4 + 1), limit, "codex-kernel")
+    with pytest.raises(fit.CheckFailed, match="limit of 2500"):  # Codex's default when none is declared
+        fit.check_context_within_limit("é" * 5001, fit.CODEX_DEFAULT_CONTEXT_LIMIT, "codex-kernel")
+
+
+@pytest.mark.parametrize("limit,fails", [(5000, False), (100, True)])
+def test_codex_kernel_check_applies_the_hooks_declared_limit(tmp_path, monkeypatch, limit, fails):
+    plugin_root = tmp_path / "agent-kernel-codex"
+    shutil.copytree(fit.ROOT / "packages" / "agent-kernel-codex", plugin_root)
+    hooks_file = plugin_root / "hooks" / "hooks.json"
+    config = json.loads(hooks_file.read_text())
+    config["hooks"]["SessionStart"][0]["hooks"][0]["additionalContextLimit"] = limit
+    hooks_file.write_text(json.dumps(config))
+    box = fit.Sandbox(tmp_path, "codex-kernel-limit")
+    plugin = fit.CodexKernelPlugin(box, [fit.GITHUB_REPO])
+    monkeypatch.setattr(fit.CodexKernelPlugin, "listed", lambda self: {"agent-kernel": plugin_root})
+    if fails:
+        with pytest.raises(fit.CheckFailed, match=f"limit of {limit}"):
+            plugin.check_kernel()
+    else:
+        plugin.check_kernel()

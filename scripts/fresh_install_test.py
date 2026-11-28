@@ -355,10 +355,28 @@ def check_kernel_delivered(contexts: list[str], label: str):
     print(f"  ok: {label}: SessionStart hooks deliver the kernel text", flush=True)
 
 
+# Codex counts ceil(UTF-8 bytes / 4) tokens of each hook's additionalContext against that hook's
+# `additionalContextLimit` (default 2,500; 0 disables); past it Codex spills the text to a file and
+# keeps only a truncated preview (openai/codex codex-rs/hooks/src/output_spill.rs and
+# codex-rs/utils/string/src/truncate.rs, `approx_token_count`).
+CODEX_DEFAULT_CONTEXT_LIMIT = 2500
+
+
+def check_context_within_limit(context: str, limit: int, label: str):
+    tokens = (len(context.encode("utf-8")) + 3) // 4
+    if limit and tokens > limit:
+        raise CheckFailed(f"{label}: a hook's additionalContext is {tokens} approximate tokens, over its "
+                          f"limit of {limit}; Codex would spill it to a file and keep a truncated preview")
+
+
 def hook_contexts(box: Sandbox, commands: list[list[str]]) -> list[str]:
     contexts = []
     for command in commands:
-        out = json.loads(box.run(*command) or "{}")
+        raw = box.run(*command)
+        try:
+            out = json.loads(raw or "{}")
+        except ValueError as e:
+            raise CheckFailed(f"hook {command} printed output that is not JSON: {raw[:200]!r}") from e
         context = out.get("hookSpecificOutput", {}).get("additionalContext")
         if context:
             contexts.append(context)
@@ -369,7 +387,10 @@ def session_start_hooks(root: Path) -> list[dict]:
     hooks_file = root / "hooks" / "hooks.json"
     if not hooks_file.is_file():
         raise CheckFailed(f"installed kernel plugin has no {hooks_file}")
-    groups = json.loads(hooks_file.read_text(encoding="utf-8"))["hooks"].get("SessionStart", [])
+    try:
+        groups = json.loads(hooks_file.read_text(encoding="utf-8"))["hooks"].get("SessionStart", [])
+    except (ValueError, KeyError, TypeError) as e:
+        raise CheckFailed(f"{hooks_file} is not a hooks file with a \"hooks\" object: {e!r}") from e
     return [hook for group in groups for hook in group["hooks"] if hook["type"] == "command"]
 
 
@@ -382,7 +403,7 @@ class ClaudeKernelPlugin(ClaudePlugin):
 
     def install_path(self) -> Path | None:
         installed = json.loads(self.box.run("claude", "plugin", "list", "--json"))
-        paths = [p["installPath"] for p in installed if p.get("id") == KERNEL_PLUGIN_ID]
+        paths = [p["installPath"] for p in installed if p.get("id") == KERNEL_PLUGIN_ID and "installPath" in p]
         return Path(paths[0]) if paths else None
 
     def check_kernel(self):
@@ -420,17 +441,25 @@ class CodexKernelPlugin(CodexPlugin):
         out = self.box.run("codex", "plugin", "list")
         if not re.search(rf"^{re.escape(KERNEL_PLUGIN_ID)}\s+installed", out, re.M):
             return {}
-        roots = sorted((self.box.home / ".codex/plugins/cache/agent-concepts/agent-kernel").glob("*/hooks"))
+        roots = sorted((self.box.home / ".codex/plugins/cache/agent-concepts/agent-kernel").glob("*/hooks"),
+                       key=lambda p: [int(n) for n in re.findall(r"\d+", p.parent.name)])
         return {"agent-kernel": roots[-1].parent} if roots else {}
 
     def check_kernel(self):
         root = self.listed().get("agent-kernel")
         if root is None:
             raise CheckFailed(f"codex plugin list shows no installed {KERNEL_PLUGIN_ID}")
-        commands = [["sh", "-c", h["command"]] for h in session_start_hooks(root)]
+        hooks = session_start_hooks(root)
         self.box.env["PLUGIN_ROOT"] = str(root)
         try:
-            check_kernel_delivered(hook_contexts(self.box, commands), "codex-kernel")
+            contexts = []
+            for hook in hooks:
+                got = hook_contexts(self.box, [["sh", "-c", hook["command"]]])
+                for context in got:
+                    check_context_within_limit(
+                        context, hook.get("additionalContextLimit", CODEX_DEFAULT_CONTEXT_LIMIT), "codex-kernel")
+                contexts += got
+            check_kernel_delivered(contexts, "codex-kernel")
         finally:
             del self.box.env["PLUGIN_ROOT"]
 
