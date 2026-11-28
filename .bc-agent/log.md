@@ -2491,3 +2491,6 @@ Step 10 states inline that qmd search is not promotion, that "just enable"/"don'
 
 ## [2026-11-28] implement | 063 step 1: Dependencies line check and template
 work_index.py (both copies) errors on a ready item without `Dependencies:` planned on/after 2026-11-28, warns on older ones; template, scaffold and MIGRATIONS gain the line. Test: concepts/bc-setup-project/tests/test_work_index_dependencies.py.
+
+## [2026-11-28] implement | 057 teach hosting module
+Moved the teach-host marker rule, vault and hybrid path maps and never-create rules into `concepts/bc-teach/body/HOSTING.md`; `bc-teach`, `bc-wiki-maintain` and `bc-setup-project` point at it (two new `loads` edges), and `test_teach_adapter.py` now fails when scaffold output and the home file disagree. Hosted-vault scenario 1 re-run: PASS 3/3 on Haiku (Codex out of quota).

@@ -19,6 +19,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue.
   Source: [body/SKILL.md](body/SKILL.md#teach-adapter-boundary)
 
+- loads `bc-teach` — required, when teach adapter marker present.
+  bc-teach's HOSTING.md is the one home for the marker rule and the teach-owned path maps that host maintenance must leave alone.
+  Source: [body/SKILL.md](body/SKILL.md#teach-adapter-boundary)
+
 ## Incoming
 
 - incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when generated map links.

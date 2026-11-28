@@ -50,7 +50,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-11-25 | yes |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-28 | 2026-11-28 |
 | [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-28 | yes |
-| [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-09-05 | 2026-06-12 |
+| [bc-teach](../concepts/bc-teach/CONCEPT.md) | pressure | 2026-11-28 | 2026-06-12 |
 | [bc-to-tickets](../concepts/bc-to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [bc-triage](../concepts/bc-triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-using-git-worktrees](../concepts/bc-using-git-worktrees/CONCEPT.md) | pressure | 2026-11-25 | yes |

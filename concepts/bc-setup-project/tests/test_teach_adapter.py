@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[3]
 SCAFFOLD = ROOT / "concepts/bc-setup-project/body/scaffold.py"
 DUE = ROOT / "concepts/bc-teach/body/scripts/due.py"
 TEACH_SKILL = ROOT / "concepts/bc-teach/body/SKILL.md"
+TEACH_HOSTING = ROOT / "concepts/bc-teach/body/HOSTING.md"
 
 
 def hosted_map(marker: str) -> list[tuple[str, str, str]]:
@@ -170,10 +171,32 @@ class TeachAdapterTests(unittest.TestCase):
             self.assertIn("standalone teach state exists", result.stdout)
             self.assertIn("competing homes", result.stdout)
 
+    def test_scaffold_maps_match_teach_hosting_home(self) -> None:
+        """bc-teach's HOSTING.md is the one home; scaffold output must not drift from it."""
+        hosting = TEACH_HOSTING.read_text(encoding="utf-8")
+        home_maps = hosted_maps(hosting)
+        self.assertEqual(len(home_maps), 2, "HOSTING.md holds the vault map and the hybrid row")
+        vault_map, (hybrid_row,) = home_maps
+        hybrid_map = [hybrid_row if row[0] == "Glossary" else row for row in vault_map]
+        self.assertIn("`<!-- teach-host-adapter: v1 -->`", hosting)
+        for archetype, expected in (("learning", vault_map), ("hybrid", hybrid_map)):
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                result = self.run_scaffold(root, archetype)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                marker = (root / ".bc-agent/references/teach-skill.md").read_text(encoding="utf-8")
+                self.assertTrue(marker.startswith("<!-- teach-host-adapter: v1 -->\n"))
+                self.assertEqual(hosted_map(marker), expected, archetype)
+
     def test_teach_resolution_checks_project_root_from_vault_context(self) -> None:
         teach = TEACH_SKILL.read_text(encoding="utf-8")
         self.assertIn("marker-owning project root", teach)
-        self.assertEqual(hosted_maps(teach)[:2], [EXPECTED_HOST_MAP, [HYBRID_GLOSSARY_ROW]])
+        self.assertEqual(
+            hosted_maps(TEACH_HOSTING.read_text(encoding="utf-8")),
+            [EXPECTED_HOST_MAP, [HYBRID_GLOSSARY_ROW]],
+        )
+        self.assertEqual(hosted_maps(teach), [], "the maps live only in HOSTING.md")
+        self.assertIn("[HOSTING.md](./HOSTING.md)", teach)
         self.assertIn("invoked from `<project>/.bc-agent`", teach)
         self.assertIn("also inspect its marker-owning project root", teach)
         self.assertIn("For hosted knowledge pages and learning records, use the host's canonical", teach)

@@ -51,15 +51,12 @@ find the last dedicated promotion commit and the filesystem to find the current 
 
 ## Teach adapter boundary
 
-When the target vault contains a structurally valid explicit `references/teach-skill.md` marker,
-read its path map before classifying candidates. Valid means the first line is exactly
-`<!-- teach-host-adapter: v1 -->` and the complete `## Hosted teach path map` table matches the
-approved map in that adapter; a prefix-only, missing-row, or altered-map file is not a contract.
-The standalone `bc-teach` skill remains the authority for the mapped learning state: mission
-(`learning/plan.md`), review queue (`learning/review.md`), learning records
-(`learning/records/`), session/lesson artifacts (`sessions/`), notes (`learning/notes.md`),
-raw sources (`sources/`), compiled concepts (`concepts/`), the teach resource catalog
-(`references/teach-resources.md`), and the Glossary section of `project/overview.md`.
+When the target vault contains an explicit `references/teach-skill.md` marker, load the
+`bc-teach` skill's `HOSTING.md` before classifying candidates: it defines when the marker is
+valid and which paths it maps to teach (mission, review queue, learning records, sessions,
+notes, raw sources, compiled concepts, the teach resource catalog and the Glossary). Read the
+marker's own path map; a marker that is not valid under `HOSTING.md` is not a contract. The
+`bc-teach` skill remains the authority for every mapped teach path.
 
 This maintenance pass may search those pages as context, and may promote ordinary non-teach
 host evidence elsewhere, but it must never fabricate demonstrated learning, create or rewrite

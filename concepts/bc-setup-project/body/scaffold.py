@@ -48,6 +48,8 @@ DATE = "__DATE__"
 
 # --- explicit teach host adapter (learning/hybrid overlays) -------------------
 # This is a pointer and storage map, not a second copy of teach's pedagogy.
+# The marker and path maps must match concepts/bc-teach/body/HOSTING.md, their one home;
+# tests/test_teach_adapter.py fails when they disagree.
 TEACH_ADAPTER_MARKER = "<!-- teach-host-adapter: v1 -->"
 TEACH_ADAPTER = """<!-- teach-host-adapter: v1 -->
 # Teach Skill Host Adapter

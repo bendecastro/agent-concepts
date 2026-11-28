@@ -45,15 +45,10 @@ Archetypes:
 
 - **learning** — bc agents helping the human learn. The generated
   `.bc-agent/references/teach-skill.md` is an explicit thin adapter for the existing
-  standalone `bc-teach` skill: mission → `learning/plan.md`, review queue →
-  `learning/review.md`, records → `learning/records/`, notes → `learning/notes.md`,
-  raw sources → `sources/`, compiled knowledge → `concepts/`, resources →
-  `references/teach-resources.md`, glossary → the existing Glossary section of
-  `project/overview.md`, and catalog/history → shared `index.md` / `log.md`.
-  Lessons and session artifacts reuse existing `sessions/`; no `learning/sessions/`
-  directory is created. When the marker is valid, teach owns the Glossary section of
-  `project/overview.md`; planning and maintenance skills leave it alone. (Hybrid's adapter maps
-  the glossary to the root `glossary.md` instead; see **hybrid**.) The adapter points
+  standalone `bc-teach` skill. The marker, its vault and hybrid path maps and the paths a
+  hosted workspace never creates have one home, the `bc-teach` skill's `HOSTING.md`; load it
+  before changing the adapter text in `scaffold.py`, and keep the two in step
+  (`tests/test_teach_adapter.py` fails when they disagree). The adapter points
   at teach; it does not copy pedagogy, auto-run initialization, or migrate standalone files.
   A host choice alone never migrates state; teach's separate explicit migration operation is
   destructive and verifies every destination before deleting standalone originals. `questions/`

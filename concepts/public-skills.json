@@ -130,7 +130,9 @@
     "bc-using-git-worktrees": [
       "bc-safe-runs"
     ],
-    "bc-wiki-maintain": [],
+    "bc-wiki-maintain": [
+      "bc-teach"
+    ],
     "bc-work-sync": [
       "bc-durable-subagents"
     ],

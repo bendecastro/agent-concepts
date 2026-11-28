@@ -1222,6 +1222,24 @@
       "when": "before launching the fresh reviewer after owner approval",
       "source": "concepts/bc-work-sync/body/SKILL.md",
       "reason": "The single reviewer launch uses the shared durability contract and fallback; owner review launches nothing."
+    },
+    {
+      "from": "bc-wiki-maintain",
+      "to": "bc-teach",
+      "relation": "loads",
+      "required": true,
+      "when": "teach adapter marker present",
+      "source": "concepts/bc-wiki-maintain/body/SKILL.md#teach-adapter-boundary",
+      "reason": "bc-teach's HOSTING.md is the one home for the marker rule and the teach-owned path maps that host maintenance must leave alone."
+    },
+    {
+      "from": "bc-setup-project",
+      "to": "bc-teach",
+      "relation": "loads",
+      "required": true,
+      "when": "changing the generated teach adapter",
+      "source": "concepts/bc-setup-project/body/SKILL.md#learning-archetype-adapter",
+      "reason": "bc-teach's HOSTING.md is the one home for the marker and path maps the scaffold's adapter text must match."
     }
   ]
 }

@@ -25,11 +25,11 @@ Before reading or writing any teaching state, resolve `<teach-root>` and both ca
    and its marker at `references/teach-skill.md`; its marker-owning project root is the parent of
    `.bc-agent`. Otherwise inspect the current directory and nearest ancestors for the explicit
    marker at `.bc-agent/references/teach-skill.md`; the directory containing that `.bc-agent` is
-   the marker-owning project root. A valid marker is structurally complete only when its first
-   line is exactly `<!-- teach-host-adapter: v1 -->` and its complete `## Hosted teach path map`
-   table exactly matches one of the two approved maps below (they differ only in the Glossary
-   row). A prefix-only, missing-row, or altered-map file is incomplete and is not a host contract. Read a valid marker before using host paths; it is
-   the opt-in adapter for an existing initializer host, not an instruction to run `bc-setup-project`.
+   the marker-owning project root. Whether a marker is valid is defined in [HOSTING.md](./HOSTING.md)
+   § The marker: exact first line `<!-- teach-host-adapter: v1 -->` and a complete map table
+   matching one of its two maps; anything less is not a host contract. Read a valid marker
+   before using host paths; it is the opt-in adapter for an existing initializer host, not an
+   instruction to run `bc-setup-project`.
 2. Check standalone state (`MISSION.md`, `REVIEW.md`, `GLOSSARY.md`, `RESOURCES.md`, `NOTES.md`,
    `learning-records/`, or `lessons/`) in the current directory first. When a marker candidate is
    found, also inspect its marker-owning project root for those same paths. This second check is
@@ -40,7 +40,7 @@ Before reading or writing any teaching state, resolve `<teach-root>` and both ca
    even where a case-insensitive filesystem also answers to `GLOSSARY.md`.
 3. With a valid marker and no competing standalone state, use the marked `.bc-agent` directory as
    `<teach-root>` — `.bc-agent` when invoked from the project root and the current vault when
-   invoked from vault context. Resolve every mapped path below relative to `<teach-root>`.
+   invoked from vault context. Resolve every mapped path in [HOSTING.md](./HOSTING.md) relative to `<teach-root>`.
 4. Without a valid marker, use the current directory as `<teach-root>` and keep the standalone
    paths below authoritative. Do not treat an arbitrary `.bc-agent` directory as a host and do
    not auto-run initialization.
@@ -53,45 +53,16 @@ Before reading or writing any teaching state, resolve `<teach-root>` and both ca
 
 The host's schema and orientation remain owned by `bc-setup-project`; `bc-teach` owns the mapped
 pedagogy, evidence, source/knowledge content, spaced-repetition state, and the glossary terms
-the learner needs (in a hybrid host the glossary is shared with the project; see below).
+the learner needs (in a hybrid host the glossary is shared with the project; see [HOSTING.md](./HOSTING.md)).
 The marker is intentionally a thin path adapter, not a generic config framework or copied
 teach body.
 
 ### Hosted path map
 
-With a valid adapter, these logical teach surfaces use the existing host paths. The host's
-adapter file is the authority for the map: read it and use the paths it names. All paths below
-are relative to `<teach-root>`. A vault host (the `learning` archetype) uses this map:
-
-| Teach surface | Hosted path | Owner |
-|---|---|---|
-| Mission | `learning/plan.md` (no hosted `MISSION.md`) | `bc-teach` |
-| Review queue | `learning/review.md` | `bc-teach` |
-| Learning records | `learning/records/` | `bc-teach` |
-| Lessons and session artifacts | existing `sessions/` (never `learning/sessions/`) | `bc-teach` |
-| Notes | `learning/notes.md` | `bc-teach` |
-| Raw sources | existing `sources/` | `bc-teach` |
-| Compiled knowledge / wiki concepts | existing `concepts/` | `bc-teach` |
-| Resource catalog | `references/teach-resources.md` | `bc-teach` |
-| Glossary | the existing Glossary section of `project/overview.md` | `bc-teach` |
-| Catalog and history | shared `index.md` and `log.md` | `bc-setup-project` host schema; `bc-teach` updates teach entries |
-
-A visible-layout hybrid host (code or operations work plus learning) uses the same map except
-for the Glossary row, which names the project's root `glossary.md`, one level above `<teach-root>`:
-
-| Teach surface | Hosted path | Owner |
-|---|---|---|
-| Glossary | the project's root `glossary.md` (`../glossary.md`), shared with the project | the project; `bc-teach` adds and refines learner terms |
-
-In a hybrid host there is one glossary. Add and refine the terms the learner needs there, in
-that file's one-line format, and do not remove or redefine project terms without asking the
-user; `bc-domain-modeling` and planning skills keep using the same file.
-
-Do not create duplicate root `MISSION.md`, `REVIEW.md`, `GLOSSARY.md`, `RESOURCES.md`, or
-`NOTES.md` files in a hosted workspace. Do not create `learning/sessions/`; lessons and
-session artifacts use the existing `sessions/` directory. The host `index.md` and `log.md`
-are shared catalog/history surfaces and must receive teach entries without replacing host
-orientation or unrelated project history.
+With a valid adapter, read [HOSTING.md](./HOSTING.md) before reading or writing any hosted
+teach state: it holds the marker rule, the vault and hybrid path maps (they differ only in the
+Glossary row), and the paths a hosted workspace never creates. The host's adapter file is the
+authority for the map: read it and use the paths it names, relative to `<teach-root>`.
 
 ### Explicit destructive migration — only on a user request
 

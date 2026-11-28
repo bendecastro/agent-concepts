@@ -29,6 +29,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md#learning-archetype-adapter)
 
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): loads this concept — required, when changing the generated teach adapter.
+  bc-teach's HOSTING.md is the one home for the marker and path maps the scaffold's adapter text must match.
+  Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md#learning-archetype-adapter)
+
 - incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): loads this concept — optional, when learning workspace and the owner wants tutoring records.
   Multi-session tutoring records come from the bc-teach skill.
   Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md)
@@ -39,4 +43,8 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 - incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): depends on this concept's contract — required, when teach adapter marker present.
   Host maintenance must preserve teach-owned evidence and review state instead of promoting claims into learning records or the queue.
+  Source: [bc-wiki-maintain/body/SKILL.md](../bc-wiki-maintain/body/SKILL.md#teach-adapter-boundary)
+
+- incoming from [bc-wiki-maintain](../bc-wiki-maintain/RELATIONSHIPS.md): loads this concept — required, when teach adapter marker present.
+  bc-teach's HOSTING.md is the one home for the marker rule and the teach-owned path maps that host maintenance must leave alone.
   Source: [bc-wiki-maintain/body/SKILL.md](../bc-wiki-maintain/body/SKILL.md#teach-adapter-boundary)
