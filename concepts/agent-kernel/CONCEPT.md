@@ -101,7 +101,7 @@ Candidate targets for manual deltas, in order of expected value: thin custom har
 
 ## Deploys
 
-### Opt-in packages
+### Packages
 
 - **Claude Code (opt-in plugin):** [`agent-kernel`](../../packages/agent-kernel-claude/.claude-plugin/plugin.json) is a separate target from the existing skills plugin. See [local installation and removal](../../docs/guides/harnesses.md#standalone-kernel).
 - **Codex (default plugin, 2026-11-28):** [`agent-kernel`](../../packages/agent-kernel-codex/.codex-plugin/plugin.json) is a separate [marketplace entry](../../.agents/plugins/marketplace.json) from the skills plugin; the README's Codex install command adds both from the release tag (owner decision 2026-11-28: default with no behaviour test), and the kernel loads only once its SessionStart hook is trusted in `/hooks`. See [installation, hook trust and removal](../../docs/guides/harnesses.md#standalone-kernel).

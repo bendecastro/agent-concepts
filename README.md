@@ -289,7 +289,7 @@ Skills marked `/name` are ones you type yourself; the rest load automatically wh
 
 </details>
 
-The [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md) supplies always-on rules for how the agent behaves and checks its work. The skills do not load it. To use it, [install the optional kernel](#optional-agent-kernel) separately.
+The [agent kernel](concepts/agent-kernel/body/AGENT-KERNEL.md) supplies always-on rules for how the agent behaves and checks its work. The Pi and Codex installs include it; for other agents, [install the optional kernel](#optional-agent-kernel) separately.
 
 Every concept is listed in [index.md](index.md). To see how agents test the code they change, read [workflows.md § How the skills test code](docs/guides/workflows.md#how-the-skills-test-code).
 
@@ -705,7 +705,7 @@ A symlink pointing to a skill this checkout does not own is reported and left al
 
 ### Optional agent kernel
 
-The kernel is a short instruction file loaded into every session, whatever the task: answer questions before editing, check claims before reporting them, keep changes small, and ask before choices you might weigh differently. The [Pi package](#pi) already includes it; for other agents it is a separate, optional install.
+The kernel is a short instruction file loaded into every session, whatever the task: answer questions before editing, check claims before reporting them, keep changes small, and ask before choices you might weigh differently. The [Pi package](#pi) and the [Codex install](#codex) include it; for other agents it is a separate, optional install.
 
 <details>
 <summary><b>Install, disable or remove the kernel</b> (Claude Code, Codex, OpenCode, other agents)</summary>

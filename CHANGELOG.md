@@ -19,7 +19,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 - The README's Codex install also installs the `agent-kernel` plugin from the release tag, with no
   checkout; trust its SessionStart hook in `/hooks` or the kernel does not load. Uninstall removes both
-  plugins.
+  plugins. Running the README's Codex refresh on a skills-only install adds the kernel.
 
 ## [0.5.0] - 2026-11-28
 
