@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: partial # Installed search and lint ran in one real Terra low close-out per arm, both worked; the literal unset-variable search command failed then passed deterministically. Broader visible-layout lint and promotion gates were not pressure-tested by this fixture.
-tested: 2026-11-27
+test_status: partial # Read-path scenario 5 (qmd absent) passed 3/3 on Haiku low against a 1/3 master baseline (2026-11-28); scenarios 1-4 not rerun with that wording. Installed search and lint ran in one Terra low close-out per arm; visible-layout lint and promotion gates were not pressure-tested by that fixture.
+tested: 2026-11-28
 deployed: 2026-08-23
 ---
 # Concept: bc-wiki-maintain
@@ -276,6 +276,14 @@ latest discipline-enforcing promotion pressure is the 2026-08-30 **PASS 5/5** re
 the pre-existing promotion checks still pass, but frontmatter is now `partial` because the
 new teach-boundary gate has had only the 2026-11-28 scenario 4 run above. `tested: 2026-08-31` remains
 the date of the last run that covered the prior contract.
+
+Read-path scenario 5 (qmd absent, "just read the whole vault") failed in both arms on Haiku low on
+2026-11-28: runs dropped the block's `AGENT_CONCEPTS` branch or read every page after a rank-1 hit.
+Work item `064-wiki-read-path-reads-whole-vault` made the command two copy-as-written lines and
+capped reading at the top three returned pages, stopping at the first that answers, with the
+user's whole-vault request and missing qmd named as no exception. The rerun **PASSED**: changed
+3/3 opened only the verified candidate, master failed 2/3
+([results](tests/pressure-read-path-results-2026-11-28-rerun.md)).
 
 **2026-08-22 — PASS 4/4** (Pi/Luna max consumers). Four fresh `worker` agents ran the pass against
 four isolated copies of a seeded fixture vault (`git init`, one baseline commit), each handed one
