@@ -9,6 +9,10 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ## [Unreleased]
 
+### Changed
+
+- `bc-setup-project`'s generated `.bc-agent/AGENTS.md` now states once how skills resolve a project file's role and the full worktree numbering rule; ten skills that restated them point at it and keep only their own no-table fallback. Earlier projects add the block by the new "Role lookup and worktree numbering" migration.
+
 ## [0.5.0] - 2026-11-28
 
 ### Renamed

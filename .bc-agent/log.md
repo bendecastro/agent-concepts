@@ -2449,3 +2449,5 @@ Require a reboot-safe run folder, wire in audit and work-sync reviewers, clarify
 Private swarm-mode kernel drops its durability copy for a pointer; routing-decision/recovery-rule words; overlay renamed; pointer check PASS 2/2 (Terra low).
 ## [2026-11-28] deploy | release v0.5.0 prep
 Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-audit.md (no gaps).
+## [2026-11-28] implement | 055: scaffold owns role lookup and worktree numbering
+Generated `.bc-agent/AGENTS.md` (and this repo's) carries the role-lookup paragraph and the union numbering rule; ten callers trimmed to pointers + fallback; migration added; relationship reasons updated. New pressure scenario `bc-plan-to-pipeline/tests/pressure-worktree-numbering.md` not run: Terra codex quota at 0% until 10:35 GMT.

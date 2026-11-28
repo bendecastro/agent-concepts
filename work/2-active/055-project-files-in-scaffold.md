@@ -18,6 +18,7 @@ Ready for agent: yes
 ## Steps
 
 - [ ] Add the block to the scaffold, trim the callers, add the migration step. Done when a new scaffold carries the block (test), the five numbering wordings are gone (`rg`), lint passes, and `bc-plan-to-pipeline`'s numbering pressure scenario still holds.
+  Notes: block, callers, migration and test landed (worker 2026-11-28); lint 0 ERROR. Pressure scenario written (`concepts/bc-plan-to-pipeline/tests/pressure-worktree-numbering.md`); run blocked: Terra codex quota 0% until 10:35 GMT. Step stays open until it runs.
 
 ## Outcome
 
