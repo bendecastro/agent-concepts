@@ -84,7 +84,7 @@ Issue #29 recorded 16 child implementation/review runs totaling about 1.89M chil
 - [bc-plan-to-pipeline body](../bc-plan-to-pipeline/body/SKILL.md) and [concept](../bc-plan-to-pipeline/CONCEPT.md) — the human-gated planner that receives this feedback edge.
 - [improve-codebase-architecture body](../bc-improve-codebase-architecture/body/SKILL.md) and [concept](../bc-improve-codebase-architecture/CONCEPT.md) — the bounded consumer and its verification/disposition contract.
 - `../bc-codebase-docs/body/SKILL.md` — source-tree documentation placement, loaded by the worker and the Standards axis (2026-08-20).
-- `../bc-delegate-investigation/body/SKILL.md` — rule 4, recover before relaunch, adapted into the resume contract (2026-08-20).
+- `../bc-durable-subagents/body/SKILL.md` (split from `bc-delegate-investigation` 2026-11-28) — rule 4, recover before relaunch, adapted into the resume contract (2026-08-20).
 - `../bc-minimal-solution-ladder/CONCEPT.md` and `../bc-codebase-design/body/SKILL.md` — the sizing discipline the worker now loads and the shape vocabulary the Standards axis now speaks; arbitration 1 in the former is the reason they compose instead of conflicting (2026-08-20).
 - [unclebob/Acceptance-Pipeline-Specification](https://github.com/unclebob/Acceptance-Pipeline-Specification) — acceptance mutation: an example value earns credit only if the suite fails when it changes. Transposed here from spec example values to acceptance-matrix evidence. See [`docs/research/raw/ingested/unclebob-quality-tools/`](../../docs/research/raw/ingested/unclebob-quality-tools/SOURCE.md). (2026-08-20)
 

@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # check 4 accepted gap; 2026-11-28 post-split recovery/manifest/packet rerun PASS 4/4 with bc-durable-subagents (without FAIL 4/4); earlier: 2026-10-31 todo/manifest PASS, 2026-11-19 targeted packets + overlay PASS, 2026-11-25 inline storage PASS, 2026-11-18 test levels PASS
+test_status: partial # check 4 accepted gap; Fan-out width paragraph (added 2026-11-28) not yet pressure-run; 2026-11-28 post-split recovery/manifest/packet rerun PASS 4/4 with bc-durable-subagents (without FAIL 4/4); earlier: 2026-10-31 todo/manifest PASS, 2026-11-19 targeted packets + overlay PASS, 2026-11-25 inline storage PASS, 2026-11-18 test levels PASS
 tested: 2026-11-28
 deployed: 2026-11-28 # first as bc-delegate-investigation (2026-08-18); old name stays an alias
 ---
@@ -22,7 +22,7 @@ read-only boundary, and the Test levels packet rules.
 
 ## Design decisions
 
-- **Split into `bc-swarm` and `bc-durable-subagents` (2026-11-28, owner decision in bc-self-improve 2026-11-27).** The durability rules had three drifting copies (this skill, the Pi swarm-mode prompt, `bc-pipeline-to-done`) and other launching skills had none. The durability contract, recovery rule, evidence anchors, the durability and storage packet bullets, the `bc-safe-runs` load, the private overlay and all of `pi.md` moved to `bc-durable-subagents`; this body keeps the posture and loads it in one line. Fan-out width came over from the swarm-mode prompt, since the requirements name it as job A. The name returns to `bc-swarm` (reversing decision 0004 for this skill) because that is how the owner calls it. This supersedes "One concept, not two" below. Design decisions below about the manifest, async, artifacts, Commit/Branch records and recovery are kept as history; their rules now live in `bc-durable-subagents`, whose tests hold the moved scenarios.
+- **Split into `bc-swarm` and `bc-durable-subagents` (2026-11-28, owner decision in bc-self-improve 2026-11-27).** The durability rules had three drifting copies (this skill, the Pi swarm-mode prompt, `bc-pipeline-to-done`) and other launching skills had none. The durability contract, recovery rule, evidence anchors, the durability and storage packet bullets, the `bc-safe-runs` load, the private overlay and all of `pi.md` moved to `bc-durable-subagents`; this body keeps the posture and loads it in one line. Fan-out width came over from the swarm-mode prompt, since the requirements name it as job A. The name returns to `bc-swarm` (reversing decision 0004 for this skill) because that is how the owner calls it. This supersedes "One concept, not two" below. Design decisions below about the manifest, async, artifacts, Commit/Branch records and recovery are kept as history; their rules now live in `bc-durable-subagents`, whose tests hold the moved scenarios. The `bc-safe-runs` load, the example tool-budget settings (`body/examples/`), the private overlay read and its test also moved to `bc-durable-subagents`; the bullets below about them are history.
 
 - **No links into other concepts (updated 2026-11-28, item 054-safe-runs-module).** The body loads `bc-safe-runs` by name and keeps a one-line fallback. The module derives its storage and worktree-removal rules from the agent kernel; installers can copy the skill without links into other concept folders. Other skills are named, not linked (`bc-tdd`, section Test levels and friends), with a `loads` edge.
 
@@ -342,12 +342,11 @@ re-add a copy that cannot fire.
 
 ## Deploy targets
 
-Deployed 2026-08-18 via `scripts/deploy-local-skills.py` after the 4/5 pass:
+Deployed 2026-11-28 via `scripts/deploy-local-skills.py` from the main checkout (first deployed 2026-08-18 as `bc-delegate-investigation`, which is now an alias linking the same `body/`):
 
-- Shared bus: `~/.agents/skills/bc-delegate-investigation` → `body/` (also reaches Composer
-  and Grok).
-- Pi: `~/.pi/agent/skills/bc-delegate-investigation` → `body/`.
-- Claude Code: `~/.claude/skills/bc-delegate-investigation` → `body/`.
+- Shared bus: `~/.agents/skills/bc-swarm` and `~/.agents/skills/bc-delegate-investigation` → `body/` (also reaches Composer and Grok).
+- Pi: `~/.pi/agent/skills/bc-swarm` and `~/.pi/agent/skills/bc-delegate-investigation` → `body/`.
+- Claude Code: `~/.claude/skills/bc-swarm` and `~/.claude/skills/bc-delegate-investigation` → `body/`.
 
 Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.
 

@@ -9,7 +9,7 @@ Harness: `docs/guides/pressure-test-harness.md` as written (`mktemp -d` scratch,
 unset, `scripts/pi_sandbox.py` masking global instructions, deployed skills and overlays). Consumer
 `openai-codex/gpt-6.1-terra`, thinking low, one run per arm, `XDG_STATE_HOME` inside the fixture.
 With: `--skill` bc-swarm, bc-durable-subagents, bc-safe-runs, bc-tdd, bc-dispatching-parallel-agents, prompt
-prefixed `/skill:bc-swarm`. Without: no `--skill`, same prompt without the prefix; none of the four without
+prefixed `/skill:bc-swarm`. Without: no `--skill`, same prompt without the prefix; the repository's `concepts/` folder was not hidden from the without arm (`pi_sandbox.py` masks only deployed skills and overlays), but none of the four without
 transcripts mention `bc-swarm/`, `bc-durable-subagents`, `delegate-investigation` or a concepts path.
 Dry run (skills that launch subagents): every prompt ends "Launch no subagents. Write plan.md ... every launch
 (role, model and thinking, worktree, branch), the full task text of every packet, every file you write before

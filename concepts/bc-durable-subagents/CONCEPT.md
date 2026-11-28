@@ -44,9 +44,4 @@ The post-split rerun of the recovery, manifest and packet scenarios is in
 
 ## Deploy targets
 
-Not deployed yet: the tests pass, but this change was made in a disposable worktree and
-`scripts/deploy-local-skills.py` links to the checkout it runs from, so the deploy runs from the main
-checkout after integration. On deploy, `scripts/deploy-local-skills.py` links `body/` to the shared bus
-`~/.agents/skills/bc-durable-subagents`, Pi `~/.pi/agent/skills/bc-durable-subagents` and Claude
-Code `~/.claude/skills/bc-durable-subagents`. Other harnesses: manual bootstrap; see
-`../../docs/guides/harnesses.md`.
+Deployed 2026-11-28 via `scripts/deploy-local-skills.py` from the main checkout after integration: shared bus `~/.agents/skills/bc-durable-subagents`, Pi `~/.pi/agent/skills/bc-durable-subagents` and Claude Code `~/.claude/skills/bc-durable-subagents`, each a relative symlink to `body/`; also shipped in the npm package through `concepts/public-skills.json`. Other harnesses: manual bootstrap; see `../../docs/guides/harnesses.md`.
