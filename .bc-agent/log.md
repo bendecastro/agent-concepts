@@ -2577,3 +2577,9 @@ Third review approved with nits; applied them in map-mode.md: a map stuck with o
 
 ## [2026-11-28] deploy | release 0.5.1 prepared
 Merged 062 step 3 (npx kernel install), moved 062 to done, set version 0.5.1, moved Unreleased under [0.5.1], README pins v0.5.1/0.5.1.
+
+## [2026-11-28] test | release audit since v0.5.0
+Wrote `docs/research/2026-11-28-release-audit-0.5.1.md` (releasing step 2 for v0.5.1): rule changes from work items 055–067 with their tests and commit times. Gaps: 056 fallback lines, 057 fail-closed sentence, 063 review-nit paths; 067's five post-test nits are owner-approved.
+
+## [2026-11-28] test | release audit 0.5.1 gaps settled by read check
+The three audit gaps (056 fallback placement, 057 fail-closed when HOSTING.md is missing, 063 where the Dependencies answer goes) are one-line routing or stop clauses with no judgment; read-checked per releasing step 2. Owner kept the name agent-kernel (bc-kernel rename declined).
