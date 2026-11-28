@@ -6,10 +6,19 @@ Stage: next
 Blocked by: nothing
 Kind: bug
 Source: 060 review (2026-11-28)
+Planned: bc-plan-to-pipeline 2026-11-28
+Ready for agent: yes
+Dependencies: none new
+
+## Requirements
+
+- Owner decision (2026-11-28, 1a): `INSTALL-TIMER.md` holds the full install, timer units and the `bc-wiki-notify@.service` template together, with its verify step covering the template; `runner/README.md` points to `INSTALL-TIMER.md` instead of keeping its own recipe (one home).
+- Check: the timer pressure sandbox install shows the template in the unit folder and `systemd-analyze verify` (or the existing verify step) accepts the units.
 
 ## Steps
 
-- [ ] Add the notifier template to the timer install and its verify step; check it in the timer pressure sandbox.
+- [ ] Move the notifier template install and its verify into `INSTALL-TIMER.md`; make `runner/README.md` point there.
+- [ ] Run the timer install in the pressure sandbox and record that the template is present.
 
 ## Outcome
 

@@ -6,10 +6,21 @@ Stage: next
 Blocked by: nothing
 Kind: bug
 Source: 059 Haiku rerun 2026-11-28 (`concepts/bc-wiki-maintain/tests/pressure-read-path-results-2026-11-28.md`)
+Planned: bc-plan-to-pipeline 2026-11-28
+Ready for agent: yes
+Dependencies: none new
+
+## Requirements
+
+- Owner decisions (2026-11-28): test on Haiku low (2a, the model all four failing runs used); wording first, and if Haiku still loses the `AGENT_CONCEPTS` branch the fix may replace that branch with one helper command whose output lists only the candidate pages (3a).
+- The read path must never tell an agent to open `index.md` or every page after a ranked hit; verify the top candidates only.
+- Test: read-path scenario 5 (qmd absent), Haiku low, 3 runs master vs 3 changed with a blind baseline, graded from artifacts (which files the run opened). Pass: changed 3/3 open only verified candidates and no `index.md`; master shows the failure at least once.
+- Hold the changed skill text off master until the test passes.
 
 ## Steps
 
-- [ ] Find why the command loses its `AGENT_CONCEPTS` branch and why a top-ranked hit still leads to a full read, then fix the read-path wording; rerun scenario 5 old vs new.
+- [ ] Find why the command loses its `AGENT_CONCEPTS` branch and why a top-ranked hit still leads to a full read; fix the read-path wording (helper command only if wording alone fails).
+- [ ] Rerun scenario 5 on Haiku low, master vs changed, 3 runs each; record results beside the existing read-path results.
 
 ## Outcome
 
