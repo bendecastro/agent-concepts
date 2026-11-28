@@ -109,6 +109,20 @@ class ReleaseCheckTests(unittest.TestCase):
         self.assertEqual(release_check.removed_skill_problems(
             previous, current, "## [Unreleased]\n### Removed\n- `bc-old`: removed.\n"), [])
 
+    def test_hidden_removed_entries_do_not_exempt(self):
+        previous = {"bc-old", "bc-a"}
+        current = {"bc-a"}
+        expected = ["skill `bc-old` disappeared without an alias or CHANGELOG Removed entry"]
+        for hidden in ("<!--\n- `bc-old`: replaced.\n-->\n",
+                       "<!-- - `bc-old`: replaced. -->\n",
+                       "```\n- `bc-old`: replaced.\n```\n",
+                       "~~~md\n- `bc-old`: replaced.\n~~~\n"):
+            with self.subTest(hidden=hidden):
+                self.assertEqual(release_check.removed_skill_problems(
+                    previous, current, "### Removed\n" + hidden), expected)
+        self.assertEqual(release_check.removed_skill_problems(
+            previous, current, "### Removed\n<!-- note -->\n- `bc-old`: replaced.\n"), [])
+
     @given(st.dictionaries(st.from_regex(r"bc-[a-z]{1,8}", fullmatch=True), st.tuples(
         st.booleans(), st.booleans(),
         st.sampled_from(("none", "valid", "mention", "wrong-release", "wrong-heading")),

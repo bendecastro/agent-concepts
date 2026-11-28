@@ -9,7 +9,9 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
 A renamed skill keeps its old name working across every install method that can carry it
 for at least one minor release. Announce the rename and its earliest removal version under
 `### Renamed` in the changelog. At removal, write a separate ``- `<old-name>`: <reason>``
-entry under `### Removed` in that release. Only the leading backticked name counts. The
+entry under `### Removed` in that release. Only the leading backticked name counts, and an
+entry inside an HTML comment or fenced code block does not. Alias names follow the `bc-`
+prefix rule like any public skill. The
 release check compares the previous release tag's public skill names with this release
 and rejects an unannounced disappearance. Fetch tags and history before running it.
 

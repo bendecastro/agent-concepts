@@ -260,12 +260,13 @@ def test_pi_npm_checks_kernel_in_system_prompt(tmp_path):
             extension.write_text(contents)
             manifest.write_text(manifest_text)
         data = json.loads(manifest_text)
-        data["pi"]["skills"].remove("./skills/bc-ui-design")
-        try:
-            # Leave the packed stub intact; only Pi's registration is broken.
-            manifest.write_text(json.dumps(data))
-            with pytest.raises(fit.CheckFailed, match=r"/skill:bc-ui-design did not expand to the bc-design redirect"):
-                agent.check_kernel_prompt()
-        finally:
-            manifest.write_text(manifest_text)
+        if "./skills/bc-ui-design" in data["pi"]["skills"]:  # absent once the alias is retired
+            data["pi"]["skills"].remove("./skills/bc-ui-design")
+            try:
+                # Leave the packed stub intact; only Pi's registration is broken.
+                manifest.write_text(json.dumps(data))
+                with pytest.raises(fit.CheckFailed, match=r"/skill:bc-ui-design did not expand to the bc-design redirect"):
+                    agent.check_kernel_prompt()
+            finally:
+                manifest.write_text(manifest_text)
         agent.check_kernel_prompt()

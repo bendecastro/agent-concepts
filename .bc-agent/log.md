@@ -2414,3 +2414,6 @@ Added a bc-ui-design compatibility stub across distributed installs, a rename/re
 
 ## [2026-11-28] implement | 050 setup migrations ship with the skill
 MIGRATIONS.md moved into bc-setup-project/body/ (ships with npm, plugin and npx installs; scaffold hints name the installed path). Owner chose option a: a fresh scaffold writes .bc-agent/.scaffold-version once; reruns, --force, --allow-earlier-layout and --migrate never add or change it; each migration section has an Arrived in: line.
+
+## [2026-11-28] implement | 051 review follow-ups
+After two blocking reviews the owner chose to close with parent fixes: Removed entries in HTML comments or fenced code no longer exempt a disappearance, alias names obey the bc- prefix rule, kernel test tolerates alias retirement. Accepted gap: packed-Pi probe calls the private resolver directly.

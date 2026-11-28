@@ -91,6 +91,16 @@ class PublicSkillsTests(unittest.TestCase):
         alias.mkdir(parents=True, exist_ok=True)
         (alias / "SKILL.md").write_text(f"This skill was renamed. Load `{target}` and follow it instead.\n")
 
+    def test_unprefixed_alias_is_reported(self):
+        self.concept("bc-tdd")
+        self.write_graph()
+        self.alias("tdd", "bc-tdd")
+
+        errors = public_skills.unprefixed_names(self.root)
+
+        self.assertEqual(len(errors), 1)
+        self.assertIn("`tdd`", errors[0])
+
     def test_alias_is_installable_and_depends_on_its_target_without_a_concept(self):
         self.concept("bc-new")
         self.write_graph()
