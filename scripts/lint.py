@@ -14,7 +14,9 @@ import os
 import re
 import subprocess
 import sys
+from collections import Counter, defaultdict
 from dataclasses import dataclass
+from difflib import SequenceMatcher
 from pathlib import Path
 
 import install_packs
@@ -651,65 +653,129 @@ REPEATED_TEXT_MIN_WORDS = 40
 REPEATED_TEXT_THRESHOLD = 0.8
 
 
+def _without_fences(text: str) -> str:
+    lines = []
+    fence = ""
+    for line in text.splitlines():
+        match = re.match(r"^[ \t]*(`{3,}|~{3,})(.*)$", line)
+        if fence:
+            if match and match[1][0] == fence[0] and len(match[1]) >= len(fence) and not match[2].strip():
+                fence = ""
+            lines.append("")
+        elif match:
+            fence = match[1]
+            lines.append("")
+        else:
+            lines.append(line)
+    return "\n".join(lines)
+
+
 def lint_repeated_text(issues: list[Issue], root: Path) -> None:
     paragraphs = []
     headings = {}
     ambiguous = set()
     copies = []
     for path in sorted((root / "concepts").glob("*/body/**/*.md")):
-        concept = path.relative_to(root / "concepts").parts[0]
+        relative_path = path.relative_to(root)
+        concept = relative_path.parts[1]
         text = read(path)
+        text = re.sub(r"\A---[^\n]*\n.*?^---[ \t]*$", lambda m: "\n" * m.group().count("\n"), text, flags=re.M | re.S)
         if re.match(r"\s*<!--\s*generated\b", text, re.I):
             continue
-        text = re.sub(r"\A---[^\n]*\n.*?^---[ \t]*$", lambda m: "\n" * m.group().count("\n"), text, flags=re.M | re.S)
-        text = re.sub(r"^[ \t]*(`{3,}|~{3,})[^\n]*\n.*?^[ \t]*\1[ \t]*$", lambda m: "\n" * m.group().count("\n"), text, flags=re.M | re.S)
-        blocks = list(re.finditer(r"^#{1,6} +[^\n]+$|^<!-- copy-of: [^\n]+ -->$|^\S[^\n]*(?:\n(?!\s*\n|#{1,6} +|<!-- copy-of: )[^\n]+)*", text, re.M))
+        text = _without_fences(text)
+        heading_pattern = relationships._ATX_HEADING.pattern
+        blocks = re.finditer(
+            rf"{heading_pattern}|^<!-- copy-of: [^\n]+ -->$|^\S[^\n]*(?:\n(?!\s*\n|{heading_pattern}|<!-- copy-of: )[^\n]+)*",
+            text, re.M,
+        )
         heading = None
         marker = None
         for block_match in blocks:
             block = block_match.group()
             line = text.count("\n", 0, block_match.start()) + 1
-            location = f"{path}:{line}"
-            if re.fullmatch(r"#{1,6} +[^\n]+", block):
-                heading = relationships._heading_slug(re.sub(r"^#+\s+", "", block))
+            location = f"{relative_path}:{line}"
+            heading_match = relationships._ATX_HEADING.fullmatch(block)
+            if heading_match:
+                title = re.sub(r"[ \t]+#+[ \t]*$", "", heading_match[1])
+                heading = (concept, relationships._heading_slug(title))
+                if heading in headings:
+                    ambiguous.add(heading)
+                headings[heading] = None
                 continue
             match = re.fullmatch(r"<!-- copy-of: ([\w-]+)#([\w-]+) -->", block.strip())
             if match:
-                marker = match.groups()
-                marker_location = location
+                if marker:
+                    issues.append(Issue("ERROR", f"copy-of marker at {location} while another is pending at {marker_location}"))
+                else:
+                    marker = match.groups()
+                    marker_location = location
                 continue
             words = re.findall(r"\w+", block.lower())
-            if heading:
-                key = (concept, heading)
-                if key in headings:
-                    ambiguous.add(key)
-                headings[key] = (location, block)
+            if heading is not None or marker:
+                normalized = " ".join(block.split())
+            if heading is not None:
+                headings[heading] = (location, normalized)
                 heading = None
             if marker:
-                copies.append((marker_location, block, marker))
+                copies.append((marker_location, location, normalized, marker))
             if len(words) >= REPEATED_TEXT_MIN_WORDS:
-                paragraphs.append((concept, location, block, set(zip(words, words[1:], words[2:])), marker))
+                trigrams = set(zip(words, words[1:], words[2:]))
+                paragraphs.append((concept, location, words, trigrams))
             marker = None
         if marker:
             issues.append(Issue("ERROR", f"copy-of has no paragraph: {marker_location} -> {marker[0]}#{marker[1]}"))
-    for path, block, marker in copies:
+    resolved = {}
+    for marker_location, location, normalized, marker in copies:
         source = headings.get(marker)
         if marker in ambiguous:
-            issues.append(Issue("ERROR", f"copy-of ambiguous source: {path} -> {marker[0]}#{marker[1]}"))
+            issues.append(Issue("ERROR", f"copy-of ambiguous source: {marker_location} -> {marker[0]}#{marker[1]}"))
         elif not source:
-            issues.append(Issue("ERROR", f"copy-of missing source: {path} -> {marker[0]}#{marker[1]}"))
-        elif " ".join(block.split()) != " ".join(source[1].split()):
-            issues.append(Issue("ERROR", f"copy-of mismatch: {path} and {source[0]}#{marker[1]}"))
-    for i, (concept, path, block, words, marker) in enumerate(paragraphs):
-        for other_concept, other, other_block, other_words, other_marker in paragraphs[:i]:
+            issues.append(Issue("ERROR", f"copy-of missing source: {marker_location} -> {marker[0]}#{marker[1]}"))
+        elif normalized != source[1]:
+            issues.append(Issue("ERROR", f"copy-of mismatch: {marker_location} and {source[0]}#{marker[1]}"))
+        else:
+            resolved[location] = source[0]
+    # Each posting lists earlier paragraphs that contain the shingle at least once.
+    trigrams_index = defaultdict(list)
+    spans_index = defaultdict(list)
+    sizes = [len(trigrams) for _, _, _, trigrams in paragraphs]
+    for i, (concept, path, words, trigrams) in enumerate(paragraphs):
+        size = sizes[i]
+        shared = Counter()
+        for trigram in trigrams:
+            posting = trigrams_index[trigram]
+            for j in posting:
+                other_size = sizes[j]
+                if min(size, other_size) >= REPEATED_TEXT_THRESHOLD * max(size, other_size):
+                    shared[j] += 1
+            posting.append(i)
+
+        # An exact minimum-length word window is enough to identify span candidates.
+        span_matches = set()
+        width = REPEATED_TEXT_MIN_WORDS
+        windows = {tuple(words[k:k + width]) for k in range(len(words) - width + 1)}
+        for window in windows:
+            posting = spans_index[window]
+            span_matches.update(posting)
+            posting.append(i)
+
+        source = resolved.get(path)
+        for j in sorted(shared.keys() | span_matches):
+            other_concept, other, other_words, _ = paragraphs[j]
             if concept == other_concept:
                 continue
-            if ((marker and marker[0] == other_concept and " ".join((headings.get(marker, (None, ""))[1]).split()) == " ".join(block.split()))
-                    or (other_marker and other_marker[0] == concept and " ".join((headings.get(other_marker, (None, ""))[1]).split()) == " ".join(other_block.split()))):
+            other_source = resolved.get(other)
+            if source == other or other_source == path or (source is not None and source == other_source):
                 continue
-            overlap = len(words & other_words) / max(len(words), len(other_words))
+            overlap = shared[j] / max(size, sizes[j])
             if overlap >= REPEATED_TEXT_THRESHOLD:
-                issues.append(Issue("WARN", f"repeated text: {other} and {path}: {overlap:.0%} overlap"))
+                detail = f"{overlap:.0%} overlap"
+            elif j in span_matches:
+                span = SequenceMatcher(None, other_words, words, autojunk=False).find_longest_match().size
+                detail = f"{span}-word shared span"
+            else:
+                continue
+            issues.append(Issue("WARN", f"repeated text: {other} and {path}: {detail}"))
 
 
 def lint_kernel_copies(issues: list[Issue]) -> None:
