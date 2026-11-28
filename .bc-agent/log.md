@@ -2541,3 +2541,6 @@ Real Claude Code 2.1.329, Haiku 5.5, plugin vs none in isolated scratch configs,
 
 ## [2026-11-28] deploy | agent-kernel default in Claude Code (062)
 Owner chose the kernel plugin as part of the Claude Code default install despite the with/without test's pre-set no-gain verdict (three gains, one restored-edit regression); README box, uninstall, harnesses, CONCEPT, index and CHANGELOG updated.
+
+## [2026-11-28] test | bc-plan-to-pipeline go-ahead is not a build (066)
+Step 2 now says a go-ahead during planning approves the plan, not a build; step 9 and the guard rail point to it. New scenario replays the stranger planning turn on Haiku low: master 1/3 (one run built and filed the item done), changed 3/3 after one tune round (the ready line is part of finishing the plan).
