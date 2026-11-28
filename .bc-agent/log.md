@@ -2589,3 +2589,6 @@ Filed 068-replan-protocol, 069-plan-models-state-first and 070-integration-amend
 
 ## [2026-11-28] implement | file private-to-public gaps
 An audit of the owner's private layer against the public skills found behaviour strangers lack; filed 071-079 (not planned yet), with the review stop rule already in 068. Fixed two stale private pointers to bc-prompting-agents.
+
+## [2026-11-28] implement | file 080 starter item for seeing your work
+Owner picked option 1: a setup starter item that builds the view a person wants from work_index --json, and scaffold reasons that stop citing the owner's dashboard.

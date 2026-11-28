@@ -34,6 +34,7 @@ Write project-specific notes outside the markers; the script keeps them.
 | 10 | [077-private-parity-check](1-planned/077-private-parity-check.md) | planned | [068-replan-protocol](1-planned/068-replan-protocol.md) | — | the owner's sessions always load the private layer, so the owner cannot see a stranger's experience; the review stop rule and the items filed with this one wer… | — |
 | 11 | [078-step-tick-ownership](1-planned/078-step-tick-ownership.md) | planned | — | — | the owner's preferences tell each worker to tick its own steps and regenerate the index; `bc-pipeline-to-done` says only the driver writes results, never build… | — |
 | 12 | [079-overlays-hold-only-tool-names](1-planned/079-overlays-hold-only-tool-names.md) | planned | — | — | overlays are meant to name only the owner's tools. | — |
+| 13 | [080-starter-item-see-your-work](1-planned/080-starter-item-see-your-work.md) | planned | — | — | the scaffold justifies about six work-item rules (`Needs owner:`, `Changes UI:`, `Held by:`, review results, costs, order placement) with "the owner's dashboar… | — |
 
 - [Ideas](0-ideas.md): 12
 - [Done](3-done/): 66
