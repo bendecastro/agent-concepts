@@ -14,5 +14,5 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 ## Incoming
 
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): loads this concept — required.
-  Step 3 synthesizes the PRD from the grill and the codebase.
+  Step 4 synthesizes the PRD from the grill and the codebase.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)

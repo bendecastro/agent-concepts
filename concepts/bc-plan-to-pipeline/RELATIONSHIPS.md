@@ -12,7 +12,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md)
 
 - loads `bc-domain-modeling` — required.
-  Step 2 captures terms and decisions inline during the grill.
+  Step 3 captures terms and decisions inline during the grill.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - loads `bc-grilling` — required.
@@ -24,16 +24,20 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - loads `bc-plan-slicing` — required.
-  Step 6 slices the PRD; the agent finalizes slices without an approval stop.
+  Step 7 slices the PRD; the agent finalizes slices without an approval stop.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - loads `bc-prd-drafting` — required.
-  Step 3 synthesizes the PRD from the grill and the codebase.
+  Step 4 synthesizes the PRD from the grill and the codebase.
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule.
   Source: [CONCEPT.md](CONCEPT.md)
+
+- depends on `bc-tdd`'s contract — required.
+  Step 2 reads its test levels to find required test libraries; a builder may skip a level only on the owner's words.
+  Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - depends on `bc-teach`'s contract — required, when visible-layout hybrid project.
   In a visible-layout hybrid project the root glossary.md is shared with teach; planning edits it under bc-domain-modeling's shared-glossary rule.

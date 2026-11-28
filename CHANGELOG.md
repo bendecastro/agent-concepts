@@ -20,6 +20,8 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Changed
 
+- `bc-plan-to-pipeline` checks dependencies in its own step on every plan, even when no other question is
+  open, and marks an item ready only when it has its `Dependencies:` line. Later steps are renumbered.
 - The README's Codex install also installs the `agent-kernel` plugin from the release tag, with no
   checkout; trust its SessionStart hook in `/hooks` or the kernel does not load. Uninstall removes both
   plugins. Running the README's Codex refresh on a skills-only install adds the kernel.

@@ -141,7 +141,7 @@
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
-      "reason": "Step 2 captures terms and decisions inline during the grill."
+      "reason": "Step 3 captures terms and decisions inline during the grill."
     },
     {
       "from": "bc-plan-to-pipeline",
@@ -149,7 +149,7 @@
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
-      "reason": "Step 3 synthesizes the PRD from the grill and the codebase."
+      "reason": "Step 4 synthesizes the PRD from the grill and the codebase."
     },
     {
       "from": "bc-plan-to-pipeline",
@@ -157,7 +157,15 @@
       "relation": "loads",
       "required": true,
       "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
-      "reason": "Step 6 slices the PRD; the agent finalizes slices without an approval stop."
+      "reason": "Step 7 slices the PRD; the agent finalizes slices without an approval stop."
+    },
+    {
+      "from": "bc-plan-to-pipeline",
+      "to": "bc-tdd",
+      "relation": "depends_on_contract",
+      "required": true,
+      "source": "concepts/bc-plan-to-pipeline/body/SKILL.md#pipeline",
+      "reason": "Step 2 reads its test levels to find required test libraries; a builder may skip a level only on the owner's words."
     },
     {
       "from": "bc-plan-to-pipeline",

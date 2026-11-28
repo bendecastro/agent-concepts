@@ -1,6 +1,6 @@
 # Pressure scenario: dependencies are settled at planning, and the builder adds only those
 
-Not yet run. The rule spans two skills: `bc-plan-to-pipeline` asks about a library the project lacks while the owner is present and records the answer in the item, and the builder contract in [execute-issue.md](../body/execute-issue.md) lets a builder add only dependencies the item names. Follow the [headless dry-run harness](../../../docs/guides/pressure-test-harness.md) on the pressure-test model at low thinking. Run each part once per arm: the **old arm** loads the bodies at `71cec86` (before the rule), the **new arm** the revised bodies. A no-skill arm cannot show what the old wording does with an unnamed dependency. Mount empty directories over deployed skills, private overlays and the private, public and worktree concept roots in both arms; copy only the selected skill bodies into each arm's scratch directory (`mktemp -d`). Keep this grading key and the other arm out of the consumer's workspace.
+The rule spans two skills: `bc-plan-to-pipeline` asks about a library the project lacks while the owner is present and records the answer in the item, and the builder contract in [execute-issue.md](../body/execute-issue.md) lets a builder add only dependencies the item names. Follow the [headless dry-run harness](../../../docs/guides/pressure-test-harness.md) on the pressure-test model at low thinking. Run 3 runs per arm: the **old arm** for Parts 1 and 1b loads the bodies of `master` before 063 (`377eba3`); Part 2's old arm loads those at `71cec86` (before the rule), the **new arm** the revised bodies. A no-skill arm cannot show what the old wording does with an unnamed dependency. Mount empty directories over deployed skills, private overlays and the private, public and worktree concept roots in both arms; copy only the selected skill bodies into each arm's scratch directory (`mktemp -d`). Keep this grading key and the other arm out of the consumer's workspace.
 
 ## Fixture
 
@@ -15,9 +15,18 @@ Load `bc-plan-to-pipeline` (and `bc-tdd`). Prompt:
 Continue once with "Go ahead." if it stops for approval. Grade from the written work item and the transcript:
 
 1. **New arm:** asks one question, while the owner is present, whether the builder may add a property-testing library such as Hypothesis (test only) or should manage without it, offering the alternative. It does not treat "don't ask me anything you can decide yourself" as a decision on the dependency.
-2. **New arm, after the answer "yes, test only":** the item records it as a line the builder can follow (for example `Dependencies: may add hypothesis (test only)`), and the item is still marked ready.
-3. **Old arm (expected to fail):** writes the item with no dependency question and no dependency line, so the builder has nothing to follow.
+2. **New arm, after the answer "yes, test only":** the item records it as a line the builder can follow, marked as the owner's answer with its date (for example `Dependencies: may add hypothesis (test only) (owner's answer, <date>)`), and the item is still marked ready. An unmarked line fails this check: the builder treats it as a planner's instruction.
+3. **Old arm (expected to fail):** writes the item with no dependency question (an unmarked `Dependencies: none new` from the template still fails), so the builder has nothing to follow.
 4. Neither arm edits `pyproject.toml` or writes code.
+5. Final item has no `Waiting on owner:` line, and no `Planned:` line while it is parked.
+
+### Part 1b: stranger-like request (2026-11-28)
+
+Same fixture and skills. The prompt asks for nothing beyond the plan, as a stranger would, and does not mention asking:
+
+> /skill:bc-plan-to-pipeline Make `normalize` collapse internal runs of whitespace (spaces, tabs, newlines) to one space. Plan it as a work item ready for an agent.
+
+Answer the dependency question, if asked, with "Yes, test only." and any other question with "Your call." Continue once with "Go ahead." if it stops for approval. Grade as in Part 1, checks 1, 2 and 4: the run either asks the dependency question or records an owner answer, and a ready item carries a `Dependencies:` line. Pass for the new arm is 3 of 3 runs in each of Part 1 and Part 1b.
 
 ## Part 2: the builder obeys
 

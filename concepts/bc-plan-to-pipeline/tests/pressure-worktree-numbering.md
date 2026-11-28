@@ -3,7 +3,7 @@
 Added 2026-11-28 with `055-project-files-in-scaffold`, which moved the worktree numbering rule out of
 this skill into the generated `.bc-agent/AGENTS.md` and trimmed the skill's line; the owner had
 the trim undone the same day, so the skill again carries the full rule (number only from the main
-checkout; in a worktree stop after step 2, add an ideas line, resume from step 3 there). Run on the model named in the private
+checkout; in a worktree stop after step 3, add an ideas line, resume from step 4 there). Run on the model named in the private
 pressure-test config. Grade the repositories the run leaves, not its reply.
 
 ## Fixture
@@ -40,7 +40,7 @@ headless, a text-only reply ends the run; the owner has no further answers.
    main checkout (or names the worktree as the reason).
 4. No new file under the worktree's `work/` other than the ideas-file change, and no
    `docs/changes/`, `docs/specs/` or PRD/requirements file anywhere (an unnumbered item or a
-   change-folder fallback also breaks "stop after step 2").
+   change-folder fallback also breaks "stop after step 3").
 5. The main checkout is unchanged (its uncommitted `003-reports.md` intact, no new files).
 
 Fail: any item (numbered or not) or plan document created in the worktree, whatever its name.

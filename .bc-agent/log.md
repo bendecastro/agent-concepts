@@ -2494,3 +2494,12 @@ work_index.py (both copies) errors on a ready item without `Dependencies:` plann
 
 ## [2026-11-28] test | v0.5.0 stranger end-to-end on Terra: pass
 Terra low (Codex quota reset): planning left one ready item and no code; the build ran worker plus spec and standards reviewers and landed on the bare remote main. One resolved park (property-test rule vs no-new-dependency). Not promoted here; no dist-tag change.
+
+## [2026-11-28] implement | 063 step 2: dependency check as its own planning step (held)
+bc-plan-to-pipeline: the dependency check is step 2 (runs on every plan, always writes the line), step 8's ready bar requires it, the "ask nothing" sentences name the exception; steps renumbered. Scenario gains Part 1b (stranger-like) and expects the owner mark. Held on branch until the pressure test passes.
+
+## [2026-11-28] test | 063 step 3: planning dependency question PASS (Haiku low)
+Terra out of quota, Haiku low substituted. New bc-plan-to-pipeline asked and wrote the marked Dependencies line 6/6 (Part 1 and stranger-like 1b), master 377eba3 0/6. Step 2 tuned mid-run to read the project's test rules. Results: concepts/bc-pipeline-to-done/tests/pressure-planned-dependencies-results-2026-11-28.md.
+
+## [2026-11-28] implement | 063 review nits (P1-1..3, P2-1..7), text only
+bc-plan-to-pipeline: guard rail and CONCEPT name the dependency question as part of the human checkpoint; step 2 writes the line once the item exists (worktree: ideas line; no table: prd.md); ready-bar report names a missing `Dependencies:` line; stale step numbers fixed in relationships reasons, worktree scenario and CONCEPT; bc-tdd depends_on_contract edge added; scenario and results file aligned with the run; CHANGELOG entry moved to Changed. No reruns.
