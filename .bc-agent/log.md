@@ -2571,3 +2571,6 @@ After the review stop rule, the owner limited maps to new ideas and local files,
 
 ## [2026-11-28] implement | 067 merged with third-review nits
 Third review approved with nits; applied them in map-mode.md: a map stuck with only Slice open turns leftover questions into grilling steps, a Slice-time open question goes back onto the map, `Blocked by:` lines naming the map move to the new build items at close-out, legacy-vault map home, GitHub-map request without a table.
+
+## [2026-11-28] test | release audit since v0.5.0
+Wrote `docs/research/2026-11-28-release-audit-0.5.1.md` (releasing step 2 for v0.5.1): rule changes from work items 055–067 with their tests and commit times. Gaps: 056 fallback lines, 057 fail-closed sentence, 063 review-nit paths; 067's five post-test nits are owner-approved.
