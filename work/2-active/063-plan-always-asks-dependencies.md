@@ -23,4 +23,4 @@ Owner decisions (2026-11-28, bc-ask): 1a all three fixes; 2a error only for newl
 
 - [x] **Index check and template.** Done when a unit test shows a newly planned ready item without the line fails `work_index.py --check`, an older one only warns, a parked item passes, both template copies carry the line, MIGRATIONS has the step, and lint passes. Out of scope: skill text.
 - [x] **Skill step and ready bar (held until the pressure test passes).** Done when the step, ready bar and exception read as one rule, the scenario file has both cases, and lint passes. Out of scope: changing the builder side (`bc-pipeline-to-done`).
-- [ ] **Pressure test, then land.** Blocked by: Skill step and ready bar. Done when the results file shows each case's 3 runs per arm graded from artifacts, the new arm passes 3 of 3, and the skill change is merged to master.
+- [x] **Pressure test, then land.** (Pressure test PASS 2026-11-28; merge to master left to the parent.) Blocked by: Skill step and ready bar. Done when the results file shows each case's 3 runs per arm graded from artifacts, the new arm passes 3 of 3, and the skill change is merged to master.

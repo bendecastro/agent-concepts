@@ -2494,3 +2494,6 @@ work_index.py (both copies) errors on a ready item without `Dependencies:` plann
 
 ## [2026-11-28] implement | 063 step 2: dependency check as its own planning step (held)
 bc-plan-to-pipeline: the dependency check is step 2 (runs on every plan, always writes the line), step 8's ready bar requires it, the "ask nothing" sentences name the exception; steps renumbered. Scenario gains Part 1b (stranger-like) and expects the owner mark. Held on branch until the pressure test passes.
+
+## [2026-11-28] test | 063 step 3: planning dependency question PASS (Haiku low)
+Terra out of quota, Haiku low substituted. New bc-plan-to-pipeline asked and wrote the marked Dependencies line 6/6 (Part 1 and stranger-like 1b), master 377eba3 0/6. Step 2 tuned mid-run to read the project's test rules. Results: concepts/bc-pipeline-to-done/tests/pressure-planned-dependencies-results-2026-11-28.md.
