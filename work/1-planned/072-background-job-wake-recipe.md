@@ -1,6 +1,6 @@
 # A portable way to resume when a background job finishes
 
-Why: `bc-durable-subagents` requires a completion wake for the background full gate, but only the owner's private `bc-pi-wake` arranges one for a shell job; native subagent wakes do not cover it. A stranger's agent polls or waits for the user. Evidence: the run folder `2026-11-28-private-to-public` (rules, pi-ext and concepts reports).
+Why: `bc-durable-subagents` requires a completion wake for the background full gate, but only the owner's private wake helper arranges one for a shell job; native subagent wakes do not cover it. A stranger's agent polls or waits for the user. Evidence: the run folder `2026-11-28-private-to-public` (rules, pi-ext and concepts reports).
 Stage: next
 Blocked by: nothing
 Kind: feature
