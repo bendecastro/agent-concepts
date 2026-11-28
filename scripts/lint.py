@@ -680,7 +680,7 @@ def lint_kernel_copies(issues: list[Issue]) -> None:
             issues.append(Issue("WARN", f"{label}: bytes differ; re-copy source to runtime"))
 
 
-def lint_personal_terms(issues: list[Issue], root: Path | None = None) -> None:
+def lint_personal_terms(issues: list[Issue], root: Path | None = None, *, required: bool = False) -> None:
     """Flag owner-personal terms from an optional private denylist in tracked files.
 
     The denylist lives outside the repo because the list itself is personal;
@@ -693,6 +693,8 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None) -> None:
     try:
         lines = config.read_text(encoding="utf-8").splitlines()
     except FileNotFoundError:
+        if required:
+            issues.append(Issue("ERROR", f"personal terms: list missing at {display(config)}; use --no-personal-terms to opt out"))
         return
     except OSError as exc:
         issues.append(Issue("WARN", f"personal terms: cannot read {display(config)}: {exc.strerror}"))

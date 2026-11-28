@@ -2417,3 +2417,6 @@ MIGRATIONS.md moved into bc-setup-project/body/ (ships with npm, plugin and npx 
 
 ## [2026-11-28] implement | 051 review follow-ups
 After two blocking reviews the owner chose to close with parent fixes: Removed entries in HTML comments or fenced code no longer exempt a disappearance, alias names obey the bc- prefix rule, kernel test tolerates alias retirement. Accepted gap: packed-Pi probe calls the private resolver directly.
+
+## [2026-11-28] implement | release hygiene pins
+Release checks require the personal-terms scan unless explicitly opted out; CI opts out. Pinned publishing actions and npm, with promotion using the same npm version.

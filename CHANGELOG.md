@@ -18,6 +18,8 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Changed
 
+- Release checks require the private personal-terms scan unless explicitly opted out; the npm
+  publish job uses fixed action commits and an exact npm version.
 - A freshly created project records the agent-concepts version in `.bc-agent/.scaffold-version`
   (never added or changed on a rerun, `--force` or a migration), and each section of setup's
   migration guide says which release it arrived in, so you can tell which upgrades may apply.

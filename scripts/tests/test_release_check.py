@@ -4,6 +4,11 @@
 from __future__ import annotations
 
 import json
+import io
+import os
+import re
+from contextlib import redirect_stdout
+from unittest.mock import patch
 import sys
 import subprocess
 import tempfile
@@ -37,6 +42,45 @@ class ReleaseCheckTests(unittest.TestCase):
 
     def write_json(self, relative: str, document: dict) -> None:
         (self.root / relative).write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
+
+    def test_release_personal_terms_and_opt_out(self):
+        config = self.root / "denylist"
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        subprocess.run(["git", "add", "README.md"], cwd=self.root, check=True)
+        with patch.dict(os.environ, {"AGENT_CONCEPTS_PERSONAL_TERMS": str(config)}):
+            output = io.StringIO()
+            with redirect_stdout(output):
+                self.assertEqual(release_check.main(["v1.2.3"], self.root), 1)
+            self.assertIn("--no-personal-terms", output.getvalue())
+            self.assertEqual(release_check.main(["--no-personal-terms", "v1.2.3"], self.root), 0)
+            config.write_text("uniquefixturesecret\n")
+            self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)
+            with (self.root / "README.md").open("a") as f:
+                f.write("uniquefixturesecret\n")
+            self.assertEqual(release_check.main(["v1.2.3"], self.root), 1)
+
+    def test_personal_terms_warning_only_hit_does_not_block_release(self):
+        config = self.root / "denylist"
+        config.write_text("uniquefixturesecret\n")
+        body = self.root / "concepts/example/body/SKILL.md"
+        body.parent.mkdir(parents=True)
+        body.write_text("uniquefixturesecret\n")
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        subprocess.run(["git", "add", "concepts/example/body/SKILL.md"], cwd=self.root, check=True)
+        with patch.dict(os.environ, {"AGENT_CONCEPTS_PERSONAL_TERMS": str(config)}):
+            output = io.StringIO()
+            with redirect_stdout(output):
+                self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)
+            self.assertIn("uniquefixturesecret", output.getvalue())
+
+    def test_publish_job_inputs_are_pinned(self):
+        text = (release_check.ROOT / ".github/workflows/release.yml").read_text()
+        job = text.split("  publish-npm:\n", 1)[1].split("\n  github-release:", 1)[0]
+        actions = re.findall(r"^\s*- uses: ([^\n]+)", job, re.M)
+        self.assertTrue(actions)
+        for action in actions:
+            self.assertRegex(action, r"^[^@]+@[0-9a-f]{40} # v\d+\.\d+\.\d+$")
+        self.assertRegex(job, r'(?m)^\s*- run: npm install -g ["\']?npm@11\.\d+\.\d+["\']?\s*$')
 
     def test_generated_manifests_carry_the_package_version(self):
         self.assertEqual(set(release_check.declared_versions(self.root).values()), {"1.2.3"})
@@ -97,8 +141,8 @@ class ReleaseCheckTests(unittest.TestCase):
         self.assertEqual(release_check.version_problems(self.root, "v1.2.3"), [])
 
     def test_main_exits_nonzero_on_mismatch(self):
-        self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)
-        self.assertEqual(release_check.main(["v9.9.9"], self.root), 1)
+        self.assertEqual(release_check.main(["--no-personal-terms", "v1.2.3"], self.root), 0)
+        self.assertEqual(release_check.main(["--no-personal-terms", "v9.9.9"], self.root), 1)
 
     def test_missing_previous_skill_requires_alias_or_removed_entry(self):
         previous = {"bc-old", "bc-a"}

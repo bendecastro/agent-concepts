@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - run: python3 scripts/release_check.py "${{ github.ref_name }}"
+      - run: python3 scripts/release_check.py --no-personal-terms "${{ github.ref_name }}"
   install-tag:
     if: github.event_name == 'push'
     needs: release-check
@@ -70,12 +70,12 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
-      - run: npm install -g "npm@>=11.5.1"
+      - run: npm install -g "npm@11.21.3"
       # The first release is published by hand before the trusted publisher exists, so a
       # version already on npm is skipped with a notice rather than failing the tag's run.
       - name: Publish unless this version is on npm
@@ -122,7 +122,7 @@ jobs:
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
-      - run: npm install -g "npm@>=11.21.0"
+      - run: npm install -g "npm@11.21.3"
       - name: Point latest at the version
         env:
           ACTION: ${{ inputs.action }}

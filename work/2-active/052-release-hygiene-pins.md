@@ -11,8 +11,8 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Make a missing personal-terms list an error in the release path (not in plain lint for strangers), and pin the publish job's npm and actions. Done when `release_check.py` fails with the list absent and passes with it, and `release.yml`'s publish job has no version range or moving action tag. Out of scope: pinning every workflow's actions.
+- [x] Make a missing personal-terms list an error in the release path (not in plain lint for strangers), and pin the publish job's npm and actions. Done when `release_check.py` fails with the list absent and passes with it, and `release.yml`'s publish job has no version range or moving action tag. Out of scope: pinning every workflow's actions.
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Release checks require the private list and fail on scan issues unless explicitly opted out; CI opts out. The npm publishing job pins its actions and npm, and promotion uses the same exact npm version. Targeted regression tests cover the release scan and publishing inputs.

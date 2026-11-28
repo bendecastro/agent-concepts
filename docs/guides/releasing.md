@@ -57,7 +57,10 @@ removal version.
    description's version differs from the tag, `CHANGELOG.md` has no entry for it, or the
    README's Install section does not name the tag or still names another one, does not show
    the unpinned `pi install npm:agent-concepts`, or pins npm to another version. Run
-   `python3 scripts/lint.py` too (0 ERROR).
+   It also scans the private personal-terms list (`AGENT_CONCEPTS_PERSONAL_TERMS` overrides
+   `~/.config/agent-concepts/personal-terms.txt`) and fails if missing or the scan reports
+   errors or cannot complete; lint's warning-only matches remain warnings. CI has no private list and explicitly uses `--no-personal-terms`; strangers without
+   a list may use the same opt-out. Run `python3 scripts/lint.py` too (0 ERROR).
 6. Commit and push these changes, and wait for the `gate` run on that commit to be green.
 
 ## Tag and push

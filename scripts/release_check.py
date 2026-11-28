@@ -136,11 +136,24 @@ def previous_release_problems(root: Path, tag: str) -> list[str]:
 
 def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     args = sys.argv[1:] if argv is None else argv
-    if len(args) > 1:
-        print("usage: release_check.py [vMAJOR.MINOR.PATCH]", file=sys.stderr)
+    args = list(args)
+    skip_personal_terms = "--no-personal-terms" in args
+    if skip_personal_terms:
+        args.remove("--no-personal-terms")
+    if len(args) > 1 or any(arg.startswith("--") for arg in args):
+        print("usage: release_check.py [--no-personal-terms] [vMAJOR.MINOR.PATCH]", file=sys.stderr)
         return 2
     tag = args[0] if args else None
     problems = version_problems(root, tag)
+    if not skip_personal_terms:
+        import lint  # Local import: lint imports release_check for version checks.
+        issues = []
+        lint.lint_personal_terms(issues, root, required=True)
+        for issue in issues:
+            if issue.severity == "WARN" and issue.message.startswith("personal term in "):
+                print(f"release check: warning: {issue.message}")
+            else:
+                problems.append(issue.message)
     if tag and TAG_PATTERN.fullmatch(tag) and (root / ".git").exists():
         problems.extend(previous_release_problems(root, tag))
     for problem in problems:
