@@ -11,13 +11,13 @@
       "name": "agent-concepts",
       "source": "./",
       "description": "Every public agent-concepts skill: planning, TDD, code review, debugging, subagent workflows and upkeep, with bc- names.",
-      "version": "0.4.1"
+      "version": "0.5.0"
     },
     {
       "name": "agent-kernel",
       "source": "./packages/agent-kernel-claude",
       "description": "Opt-in always-on instructions for coding agents.",
-      "version": "0.4.1"
+      "version": "0.5.0"
     }
   ]
 }

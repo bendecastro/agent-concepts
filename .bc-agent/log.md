@@ -2447,3 +2447,5 @@ Work item 053 step 2: `bc-council-mode`, `bc-subagent-driven-development`, `bc-d
 Require a reboot-safe run folder, wire in audit and work-sync reviewers, clarify drain rule precedence and correct council/overlay docs; Terra low council dry-run rerun PASS 5/5.
 ## [2026-11-28] implement | 053 step 3: swarm-mode prompt loads bc-durable-subagents
 Private swarm-mode kernel drops its durability copy for a pointer; routing-decision/recovery-rule words; overlay renamed; pointer check PASS 2/2 (Terra low).
+## [2026-11-28] deploy | release v0.5.0 prep
+Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-audit.md (no gaps).

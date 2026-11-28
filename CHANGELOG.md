@@ -9,6 +9,8 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-28
+
 ### Renamed
 
 <a id="bc-delegate-investigation-rename"></a>
@@ -28,6 +30,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Changed
 
+- `bc-swarm` caps how many subagents a narrow question gets: one for a question about one or two named files (two only when each file is its own surface), and never an extra track the question did not name.
 - Skills that launch subagents (`bc-council-mode` and through it every council chain, `bc-subagent-driven-development`, `bc-dispatching-parallel-agents`, `bc-pipeline-to-done`, `bc-security-audit`, `bc-work-sync`) now load `bc-durable-subagents`, so every run gets a reboot-safe run folder and manifest before its first launch; each keeps a one-line fallback. Council advisors now write their reports to files in the run folder.
 - Workspace lint warns about repeated concept prose and verifies explicitly marked copies against their source.
 - Release checks require the private personal-terms scan unless explicitly opted out, and scan
@@ -184,7 +187,8 @@ The first release you can install without cloning this repository.
 - Agents other than Pi, Claude Code and Codex. `npx skills` supports many more, but this
   release was checked only through its Pi target.
 
-[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/bendecastro/agent-concepts/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/bendecastro/agent-concepts/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/bendecastro/agent-concepts/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bendecastro/agent-concepts/compare/v0.2.0...v0.3.0
