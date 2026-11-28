@@ -208,6 +208,9 @@ weakens its three write-safety gates. The `bc-` prefix is the user's personal na
   pass may search teach-owned pages as context but never fabricate learning evidence, edit
   learning records, or advance the review queue. Teach owns mapped pedagogy/evidence/SRS state;
   maintenance promotes only ordinary host context and classifies teach-state candidates for teach.
+  The validity rule and the mapped teach paths are not restated here: the body loads `bc-teach`'s
+  `HOSTING.md` (a `loads` edge; installing this skill also installs `bc-teach`) and, if it cannot
+  be found, treats every path the marker maps as teach-owned and skips candidates there.
 
 ## Provenance
 
@@ -258,6 +261,12 @@ project fact, classified the learner claim as teach-owned and skipped, refused t
 date, and left every learning-state file byte-identical (only an additive `index.md` link changed).
 Frontmatter remains `partial` because that run predates the `afbb86b` glossary-section and
 valid-marker changes, which have not had their own consumer run.
+2026-11-28 (`057-teach-hosting-module`): the boundary text now loads `bc-teach`'s `HOSTING.md`
+instead of stating the marker rule inline. Scenario 4 re-run, new arm only, 3 runs on Haiku low (Terra
+out of quota): **PASS 3/3** on the artifacts (ordinary fact promoted, learner claim skipped, review
+date and learning state byte-identical). `HOSTING.md` was read in only 1 of 3 runs; the valid marker's
+own map decided in the others, so the pointer is followed inconsistently and the fail-closed fallback
+is unexercised. Results: `../bc-teach/tests/pressure-host-integration-results-2026-11-28.md`.
 The valid-marker rule also protects the boundary: the first line and complete hosted path map must
 match, and maintenance leaves the teach-owned Glossary section untouched while retaining access
 to non-glossary host sections. `tests/pressure-read-path.md` defines the five read-path
@@ -265,7 +274,7 @@ rationalisation attacks: index shortcut,
 empty-result-as-absence, whole-question query, hub-page result, and missing-qmd fallback. The
 latest discipline-enforcing promotion pressure is the 2026-08-30 **PASS 5/5** record below;
 the pre-existing promotion checks still pass, but frontmatter is now `partial` because the
-new teach-boundary gate has not yet had its consumer pressure run. `tested: 2026-08-31` remains
+new teach-boundary gate has had only the 2026-11-28 scenario 4 run above. `tested: 2026-08-31` remains
 the date of the last run that covered the prior contract.
 
 **2026-08-22 — PASS 4/4** (Pi/Luna max consumers). Four fresh `worker` agents ran the pass against

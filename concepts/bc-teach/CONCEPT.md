@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
 test_status: partial # hosted glossary map changed 2026-11-12 (hybrid shares root glossary.md); not yet pressure-tested
-tested: 2026-09-05
+tested: 2026-11-28
 deployed: 2026-06-12
 ---
 # Concept: teach
@@ -72,6 +72,8 @@ Against `afbb86b` (post-hardening):
 Scenarios 1 and 4 have not been re-run against `afbb86b`, which changed hosted retrieval wording, marker validation, and the maintenance glossary-section rule; their evidence is against the earlier commit. Frontmatter stays `partial`, since `pressure-session.md` Attack 1 also remains open from 2026-08-21.
 
 2026-11-12 (W3 review): step 2's standalone probe now matches names by exact case, so a hybrid host's shared root `glossary.md` is not standalone state on a case-insensitive filesystem; `bc-setup-project`'s scaffold check does the same (`tests/test_visible_layout.py`). Not pressure-tested.
+
+2026-11-28 (work item `057-teach-hosting-module`): the marker rule, both hosted path maps and the never-create rules moved from `body/SKILL.md` to `body/HOSTING.md`, their one home; `bc-setup-project` and `bc-wiki-maintain` load it (`loads` edges), and `test_teach_adapter.py` fails when the scaffold's generated marker and `HOSTING.md` disagree. Scenario 1 re-run against the changed text: **PASS 3/3** on Haiku (Codex out of quota); see `tests/pressure-host-integration-results-2026-11-28.md`.
 
 ## Deploy targets
 

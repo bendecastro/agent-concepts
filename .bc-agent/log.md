@@ -2509,3 +2509,9 @@ New model-invoked bc-file-findings holds the filing rules from bc-find-bugs §5;
 
 ## [2026-11-28] implement | bc-file-findings review fixes (item 056)
 Blocking review: bc-council-audit-security keeps owner decision 3 (only picked findings filed; unpicked and reviewer-rejected stay in the git-ignored run folder), CONCEPT/CHANGELOG claim reverted; bc-file-findings marked deployed and added to the public-skills list, package and plugin manifests, install packs, index and harnesses.md (the parent runs deploy-local-skills.py); audit-security scenario criterion 11 updated and re-run 2/2 on Haiku low (tests/results-2026-11-28.md); C1 for bc-improve-codebase-architecture noted pending; relationship reasons reworded, the module's plan-to-pipeline edge is now `loads` (lint), optional `when` fields lose the leading "when"; find-bugs, prototype and self-improve fallbacks fixed.
+
+## [2026-11-28] implement | 057 teach hosting module
+Moved the teach-host marker rule, vault and hybrid path maps and never-create rules into `concepts/bc-teach/body/HOSTING.md`; `bc-teach`, `bc-wiki-maintain` and `bc-setup-project` point at it (two new `loads` edges), and `test_teach_adapter.py` now fails when scaffold output and the home file disagree. Hosted-vault scenario 1 re-run: PASS 3/3 on Haiku (Codex out of quota).
+
+## [2026-11-28] test | 057 review follow-up: bc-wiki-maintain boundary scenario 4 PASS (Haiku low)
+Scenario 4 re-run against the HOSTING.md pointer, new arm, 3 runs: PASS 3/3 on artifacts, but HOSTING.md was read in only 1 of 3 (valid marker decided the rest). Scenario 1 HOSTING.md row: logs not kept. Also: dangling "as above" removed, fail-closed sentence in bc-wiki-maintain, HOSTING.md opening reworded, bc-setup-project pointers, CHANGELOG install note.

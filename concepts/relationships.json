@@ -1293,6 +1293,24 @@
       "when": "after the filing is committed",
       "source": "concepts/bc-file-findings/body/SKILL.md#with-a-project-work-pipeline",
       "reason": "Runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's answer and the caller's evidence as settled; a sequential handoff, not a nested call."
+    },
+    {
+      "from": "bc-wiki-maintain",
+      "to": "bc-teach",
+      "relation": "loads",
+      "required": true,
+      "when": "teach adapter marker present",
+      "source": "concepts/bc-wiki-maintain/body/SKILL.md#teach-adapter-boundary",
+      "reason": "bc-teach's HOSTING.md is the one home for the marker rule and the teach-owned path maps that host maintenance must leave alone."
+    },
+    {
+      "from": "bc-setup-project",
+      "to": "bc-teach",
+      "relation": "loads",
+      "required": true,
+      "when": "changing the generated teach adapter",
+      "source": "concepts/bc-setup-project/body/SKILL.md#learning-archetype-adapter",
+      "reason": "bc-teach's HOSTING.md is the one home for the marker and path maps the scaffold's adapter text must match."
     }
   ]
 }

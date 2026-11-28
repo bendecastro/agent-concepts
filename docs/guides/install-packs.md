@@ -199,6 +199,12 @@ npx skills add <source> -g -a <agent> -y --skill bc-ui-design bc-design
 npx skills add <source> -g -a <agent> -y --skill bc-using-git-worktrees bc-safe-runs
 ```
 
+### bc-wiki-maintain
+
+```bash
+npx skills add <source> -g -a <agent> -y --skill bc-wiki-maintain bc-teach
+```
+
 ### bc-work-sync
 
 ```bash

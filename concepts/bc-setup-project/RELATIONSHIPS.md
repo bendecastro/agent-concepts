@@ -51,6 +51,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The initializer emits a thin host path adapter for teach without copying its pedagogy or migrating standalone state.
   Source: [body/SKILL.md](body/SKILL.md#learning-archetype-adapter)
 
+- loads `bc-teach` — required, when changing the generated teach adapter.
+  bc-teach's HOSTING.md is the one home for the marker and path maps the scaffold's adapter text must match.
+  Source: [body/SKILL.md](body/SKILL.md#learning-archetype-adapter)
+
 - loads `bc-teach` — optional, when learning workspace and the owner wants tutoring records.
   Multi-session tutoring records come from the bc-teach skill.
   Source: [body/SKILL.md](body/SKILL.md)
