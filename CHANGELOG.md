@@ -9,6 +9,10 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ## [Unreleased]
 
+### Changed
+
+- A review loop now stops in every mode, by one rule in `bc-code-review`: two blocking reviews in a row on new sequences stop fixing even under "just ship it", mark the work item `Replanning:` with a Replan note and a cumulative `Rounds:` count, and ask the owner, recommending a return to planning. `bc-pipeline-to-done`'s three-cycle cap and `bc-subagent-driven-development`'s fix loops point at it, and `bc-plan-to-pipeline` replans such an item in place. `work_index.py` shows a replanning item, rejects `Replanning:` next to `Ready for agent:`, and `--json` reports `replanning` and `rounds`; existing projects adopt the lines through `MIGRATIONS.md`.
+
 ## [0.5.1] - 2026-11-28
 
 ### Added

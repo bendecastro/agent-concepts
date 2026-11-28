@@ -2592,3 +2592,6 @@ An audit of the owner's private layer against the public skills found behaviour 
 
 ## [2026-11-28] implement | file 080 starter item for seeing your work
 Owner picked option 1: a setup starter item that builds the view a person wants from work_index --json, and scaffold reasons that stop citing the owner's dashboard.
+
+## [2026-11-28] implement | 068 replan protocol
+One review-loop stop rule in bc-code-review (drain cap merged in, pointers from the drain and subagent-driven-development); Replanning, Replan notes, superseded steps and cumulative Rounds lines in the scaffold's work-item rules and work_index; bc-plan-to-pipeline replans such items in place. Terra low: changed 3/3, master 0/3 (master also declined to fix, so the test proves the bookkeeping, not the stop).
