@@ -2547,3 +2547,6 @@ Step 2 now says a go-ahead during planning approves the plan, not a build; step 
 
 ## [2026-11-28] ingest | wayfinder filed; planned 067-planning-map-mode
 Filed Matt Pocock's wayfinder skill (MIT) in docs/research/raw/pocock-wayfinder/ and planned a map mode for bc-plan-to-pipeline (owner answers 1a 2a 3a 4b 5a 6a).
+
+## [2026-11-28] test | 066 stranger rerun graded: pass
+Graded the completed Haiku-low pack-source stranger run from its evidence (the running worker hit a quota limit first): planning left a ready item and no code, the build ran builder and reviewer and landed on the bare main. Step 3 ticked; drain-profile preflight stall filed as an idea.
