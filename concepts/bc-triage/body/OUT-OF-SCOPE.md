@@ -4,7 +4,7 @@ Record a rejected enhancement in the project's **work-dropped** folder (resolved
 
 ## With a "Where things go" table
 
-The rejection is a work item in the work-dropped folder, named and numbered by the work-item rules in `.bc-agent/AGENTS.md` (`<3-digit number>-<slug>.md`; next number is the highest across all stage folders plus one) and written from `.bc-agent/templates/work-item.md`. One item per rejected concept, not per issue:
+The rejection is a work item in the work-dropped folder, named and numbered by the work-item rules in `.bc-agent/AGENTS.md` (file name and number as those rules say) and written from `.bc-agent/templates/work-item.md`. One item per rejected concept, not per issue:
 
 ```md
 # Dark mode
@@ -23,7 +23,7 @@ Prior requests:
 - #42 — "Add dark mode support"
 ```
 
-Create numbered items only from the main checkout. Why: two git worktrees cannot see each other's numbers and would pick the same one. In a worktree, add a one-line note to the ideas file instead, tell the maintainer the rejection still needs recording, and do not close the issue until the item exists. Why: closed with only an ideas line, the reason could be lost.
+Number the item as the work-item rules say. Where they forbid numbering (a git worktree), also tell the maintainer the rejection still needs recording, and do not close the issue until the item exists.
 
 ## Without a table
 

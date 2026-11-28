@@ -17,8 +17,9 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Add the block to the scaffold, trim the callers, add the migration step. Done when a new scaffold carries the block (test), the five numbering wordings are gone (`rg`), lint passes, and `bc-plan-to-pipeline`'s numbering pressure scenario still holds.
+- [x] Add the block to the scaffold, trim the callers, add the migration step. Done when a new scaffold carries the block (test), the five numbering wordings are gone (`rg`), lint passes, and `bc-plan-to-pipeline`'s numbering pressure scenario still holds.
+  Notes: block, callers, migration and test landed (worker 2026-11-28); lint 0 ERROR. Pressure scenario written (`concepts/bc-plan-to-pipeline/tests/pressure-worktree-numbering.md`); run blocked: Terra codex quota 0% until 10:35 GMT. Step stays open until it runs.
 
 ## Outcome
 
-_To be filled when finished or dropped._
+The scaffold's generated `.bc-agent/AGENTS.md` owns the role-lookup paragraph and the full worktree numbering rule, with a migration ("Role lookup and worktree numbering", arrives in 0.5.1); the callers point at it. By owner choice (2026-11-28) `bc-plan-to-pipeline` keeps the full numbering rule too: with only the trimmed line, a project set up before this change numbered and committed an item in a worktree (Haiku rerun). With the rule restored, the numbering scenario passed on Terra low: old-scaffold arm 3/3, new-scaffold arm 1/1 (`concepts/bc-plan-to-pipeline/tests/pressure-worktree-numbering-results-2026-11-28.md`).

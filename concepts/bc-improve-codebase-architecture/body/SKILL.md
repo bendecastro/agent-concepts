@@ -13,7 +13,7 @@ Use `bc-codebase-design` vocabulary exactly: **module**, **interface**, **depth*
 
 ## Find the project's paths
 
-This skill names roles — glossary, decisions, research, ideas, work-planned, work-dropped — not paths. Resolve each role from the "Where things go" table in the project's `.bc-agent/AGENTS.md`. Why: each project has one table, so a project that keeps something elsewhere changes one place and every skill follows. When the project has no such table, use the earlier defaults: glossary `glossary.md` (or `.bc-agent/project/overview.md` in a `bc-setup-project` vault), decisions `docs/adr/` (or `.bc-agent/decisions/` in a vault), and the observation inbox and disposition ledger described under [Projects without the table](#projects-without-the-table). Those projects have no ideas, work-planned or work-dropped role, so step 4 does not apply to them.
+This skill names roles — glossary, decisions, research, ideas, work-planned, work-dropped — not paths. Resolve each role from the "Where things go" table in the project's `.bc-agent/AGENTS.md`. When the project has no such table, use the earlier defaults: glossary `glossary.md` (or `.bc-agent/project/overview.md` in a `bc-setup-project` vault), decisions `docs/adr/` (or `.bc-agent/decisions/` in a vault), and the observation inbox and disposition ledger described under [Projects without the table](#projects-without-the-table). Those projects have no ideas, work-planned or work-dropped role, so step 4 does not apply to them.
 
 ## 1. Explore
 
@@ -65,7 +65,7 @@ Wait until the owner has seen the report and said which findings they want. Why:
 
 Delete each ideas line that seeded a chosen or rejected finding, in the same commit as its item; replace a line that seeded an "everything else" finding instead of adding a second line. Why: the ideas file lists only what is undecided, and a decided line left there would seed the next review again.
 
-Number items as the project's `.bc-agent/AGENTS.md` work-item rules say, and create numbered items only from the main checkout. In a git worktree, add an ideas-file line for each chosen or rejected finding instead, stating the owner's choice and reason, so the main checkout can number it later. Why: two worktrees cannot see each other's numbers and would pick the same one.
+Number items as the project's `.bc-agent/AGENTS.md` work-item rules say; from a worktree each ideas line states the owner's choice and reason.
 
 When the filing is committed, run `bc-plan-to-pipeline` from a settled source on each chosen item you filed, one after another in the same reply, without stopping between items, passing the grilling's settled answers so the owner is not asked them again. Why: every planned item gets requirements and sliced steps before anyone starts it; this is a handoff after this skill's own work ends, not a nested call.
 

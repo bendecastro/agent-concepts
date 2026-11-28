@@ -20,7 +20,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md#4-record-every-finding-projects-with-the-table)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
-  Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject.
+  Resolves research, ideas, work-planned and work-dropped in the scaffolded table; the generated runway convention finds a review by its architecture review commit subject. Numbers items under its worktree numbering rule.
   Source: [CONCEPT.md](CONCEPT.md)
 
 ## Incoming

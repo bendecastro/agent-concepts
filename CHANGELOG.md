@@ -20,6 +20,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 - The README's Codex install also installs the `agent-kernel` plugin from the release tag, with no
   checkout; trust its SessionStart hook in `/hooks` or the kernel does not load. Uninstall removes both
   plugins. Running the README's Codex refresh on a skills-only install adds the kernel.
+- `bc-setup-project`'s generated `.bc-agent/AGENTS.md` now states once how skills resolve a project file's role and the full worktree numbering rule; the skills that restated them point at it and keep only their own no-table fallback, except `bc-plan-to-pipeline`, which keeps the full numbering rule so projects set up earlier stay safe. Earlier projects add the block by the new "Role lookup and worktree numbering" migration.
 
 ### Fixed
 

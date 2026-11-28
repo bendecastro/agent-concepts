@@ -915,3 +915,21 @@ def test_work_item_rules_paste_the_spent_line_when_finishing(tmp_path, archetype
     keep = text.split('## Keep it current')[1].split('\n## ')[0]
     row = next(line for line in keep.splitlines() if line.startswith('| Finish or drop an item |'))
     assert '`Spent:` line' in row and 'work_spent.py' in row
+
+
+@pytest.mark.parametrize('archetype', VISIBLE)
+def test_agents_states_role_lookup_and_worktree_numbering_once(tmp_path, archetype):
+    text = (_scaffold(tmp_path, archetype) / '.bc-agent/AGENTS.md').read_text()
+    flat = ' '.join(text.split())
+    lookup = ' '.join(_module().ROLE_LOOKUP_RULE.split())
+    numbering = ' '.join(_module().WORKTREE_NUMBERING_RULE.split())
+    assert flat.count(lookup) == 1 and flat.index(lookup) < flat.index('## Work items')
+    for meaning in ('name project files by role', 'naming, numbering and template',
+                    'no row', '`glossary.md`', '`docs/adr/`', 'Why:'):
+        assert meaning in lookup, meaning
+    assert flat.count(numbering) == 1 and flat.index('## Work items') < flat.index(numbering)
+    assert 'Working in a git worktree, add a line' not in flat
+    for meaning in ('main checkout', '--git-common-dir', 'even when the owner names',
+                    'one line to `work/0-ideas.md`', "owner's choice and its reason",
+                    'still to be numbered', 'until the item exists', 'Why:'):
+        assert meaning in numbering, meaning

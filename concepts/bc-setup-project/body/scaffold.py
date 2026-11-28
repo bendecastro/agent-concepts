@@ -1392,6 +1392,8 @@ __TABLE__
 
 __DEFAULT_PATH_RULE__
 
+__ROLE_LOOKUP_RULE__
+
 ## Work items
 
 - **Carry on with active work first.** When told to carry on without a named item, read every item
@@ -1417,9 +1419,7 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
 - **Names are `<3-digit number>-<slug>`**, for example `012-search-ranking`. The next number
   is the highest number in any status folder, including the month folders under `3-done/`,
   plus one. Why: a short number is easy to cite and survives a rename of the slug.
-- **Only the main checkout creates numbered items.** Working in a git worktree, add a line
-  to `work/0-ideas.md` instead. Why: two worktrees cannot see each other's numbers and
-  would pick the same one.
+__WORKTREE_NUMBERING_RULE__
 - **A small item is one file; a large one is a folder** `NNN-slug/` holding `plan.md` (its
   `## Steps` are the slices) and `requirements.md`, plus any evidence worth keeping. The folder
   moves as a whole. Why: everything about a feature stays in one place through its whole
@@ -1732,6 +1732,26 @@ DEFAULT_PATH_RULE = """When a skill names a default path for one of these roles 
 role instead. Why: shared skills are written for several layouts, and this table is the
 project's own answer."""
 
+# Role lookup for every shared skill: callers say only "resolve <role> from the table"
+# plus their own fallback for projects without one.
+ROLE_LOOKUP_RULE = """Shared skills name project files by role (glossary, decisions, research, requirements,
+ideas, the work folders), not by path. Resolve each role in this table, and follow the Work
+items rules below for an item's naming, numbering and template. A role with no row here, or
+with `—` as its path, has no home in this project yet: use the skill's own default for it
+(for example `glossary.md` for the glossary and `docs/adr/` for decisions). Why: each
+project has one table, so a project that keeps something elsewhere changes one place and
+every skill follows."""
+
+WORKTREE_NUMBERING_RULE = """- **Only the main checkout creates numbered items.** You are in the main checkout when
+  `git rev-parse --path-format=absolute --git-dir` equals
+  `git rev-parse --path-format=absolute --git-common-dir`. In a git worktree number nothing,
+  even when the owner names the number: add one line to `work/0-ideas.md` for each item you
+  would have created, stating the owner's choice and its reason when there is one, and tell
+  the user the item is still to be numbered in the main checkout. Do nothing that needs the
+  item to exist (such as closing the issue it records) until the item exists. Why: a
+  worktree cannot see items another worktree or the uncommitted main checkout created, so it
+  would pick a taken number; and with only an ideas line, a decision's reason can be lost."""
+
 VISIBLE_OPS_KEEP_CURRENT = """| Check the state of a real system | Update its page under `docs/components/` from [templates/component.md](templates/component.md). |
 | Record a finding | Write it under `docs/research/` from [templates/finding.md](templates/finding.md). |
 """
@@ -1911,6 +1931,8 @@ def visible_targets(root: Path, slug: str, date: str, archetype: str) -> list[tu
     has_ops = archetype in {"ops", "hybrid"}
     agents = (VISIBLE_AGENTS.replace("__TABLE__", where_things_go_table(archetype))
               .replace("__DEFAULT_PATH_RULE__", DEFAULT_PATH_RULE)
+              .replace("__ROLE_LOOKUP_RULE__", ROLE_LOOKUP_RULE)
+              .replace("__WORKTREE_NUMBERING_RULE__", WORKTREE_NUMBERING_RULE)
               .replace("__OPS_KEEP_CURRENT__", VISIBLE_OPS_KEEP_CURRENT if has_ops else ""))
     map_text = VISIBLE_MAP.replace("__OPS_MAP__", VISIBLE_OPS_MAP if has_ops else "")
     if archetype == "hybrid":

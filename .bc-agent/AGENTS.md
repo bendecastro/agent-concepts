@@ -28,6 +28,14 @@ When a skill names a default path for one of these roles (for example `docs/adr/
 role instead. Why: shared skills are written for several layouts, and this table is the
 project's own answer.
 
+Shared skills name project files by role (glossary, decisions, research, requirements,
+ideas, the work folders), not by path. Resolve each role in this table, and follow the Work
+items rules below for an item's naming, numbering and template. A role with no row here, or
+with `—` as its path, has no home in this project yet: use the skill's own default for it
+(for example `glossary.md` for the glossary and `docs/adr/` for decisions). Why: each
+project has one table, so a project that keeps something elsewhere changes one place and
+every skill follows.
+
 ## Work items
 
 A work item is one feature or plan. Template: [templates/work-item.md](templates/work-item.md).
@@ -47,9 +55,15 @@ A work item is one feature or plan. Template: [templates/work-item.md](templates
 - **Names are `<3-digit number>-<slug>`**, for example `012-search-ranking`. The next number
   is the highest number in any status folder, including the month folders under `3-done/`,
   plus one. Why: a short number is easy to cite and survives a rename of the slug.
-- **Only the main checkout creates numbered items.** Working in a git worktree, add a line
-  to `work/0-ideas.md` instead. Why: two worktrees cannot see each other's numbers and
-  would pick the same one.
+- **Only the main checkout creates numbered items.** You are in the main checkout when
+  `git rev-parse --path-format=absolute --git-dir` equals
+  `git rev-parse --path-format=absolute --git-common-dir`. In a git worktree number nothing,
+  even when the owner names the number: add one line to `work/0-ideas.md` for each item you
+  would have created, stating the owner's choice and its reason when there is one, and tell
+  the user the item is still to be numbered in the main checkout. Do nothing that needs the
+  item to exist (such as closing the issue it records) until the item exists. Why: a
+  worktree cannot see items another worktree or the uncommitted main checkout created, so it
+  would pick a taken number; and with only an ideas line, a decision's reason can be lost.
 - **A small item is one file; a large one is a folder** `NNN-slug/` holding `plan.md` (its
   `## Steps` are the slices) and `requirements.md`, plus any evidence worth keeping. The folder
   moves as a whole. Why: everything about a feature stays in one place through its whole

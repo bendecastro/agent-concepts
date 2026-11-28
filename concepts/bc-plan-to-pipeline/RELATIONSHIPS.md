@@ -32,7 +32,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md#pipeline)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
-  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template.
+  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule.
   Source: [CONCEPT.md](CONCEPT.md)
 
 - depends on `bc-teach`'s contract — required, when visible-layout hybrid project.

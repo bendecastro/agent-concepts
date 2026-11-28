@@ -12,7 +12,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
-  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py.
+  Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py. Numbers items under its worktree numbering rule.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming

@@ -20,7 +20,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md)
 
 - depends on `bc-setup-project`'s contract — required, when filing into a work pipeline.
-  Relies on the work-item template, Kind placement in order.md and work_index.py --check.
+  Relies on the work-item template, Kind placement in order.md and work_index.py --check. Numbers items under its worktree numbering rule.
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming

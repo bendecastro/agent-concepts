@@ -23,7 +23,7 @@ This orchestrator composes **model-invoked disciplines only** (`bc-grilling`, `b
 
 ## Where project files go
 
-This skill names project files by role: the **glossary**, the **decisions** folder, the **work-planned** folder, the **ideas** file, the **research** folder and **requirements** (the product-level spec). Resolve each role in the "Where things go" table in the project's `.bc-agent/AGENTS.md`, and follow the work-item rules in the same file (naming, numbering, template). Why: each project has one table, so a project that keeps something elsewhere changes one place and every skill follows.
+This skill names project files by role: the **glossary**, the **decisions** folder, the **work-planned** folder, the **ideas** file, the **research** folder and **requirements** (the product-level spec). Resolve each role from the "Where things go" table in the project's `.bc-agent/AGENTS.md`; that file says how.
 
 When the project has no such table, use the paths this skill used before:
 

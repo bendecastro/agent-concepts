@@ -465,3 +465,24 @@ allows one `qmd query --no-rerank` rerun of a deliberate cross-vault search that
 relevant. Check: the vault's `AGENTS.md` block ends "or use `qmd query`. If `wiki_search.py`
 cannot run". To adopt it, replace the block between `<!-- BEGIN canonical vault read path -->` and
 `<!-- END canonical vault read path -->` with a fresh scaffold's.
+
+## Role lookup and worktree numbering
+
+Arrived in: 0.5.1
+
+Since 2026-11-28 the generated `.bc-agent/AGENTS.md` is the one home of two rules that shared skills
+used to restate: how a skill resolves a project file's role (a paragraph under the "Where things go"
+table, with the defaults for a role the table lacks), and the worktree numbering rule (the
+"Only the main checkout creates numbered items" rule in the Work items section, now with the
+main-checkout check, one ideas line per item with the owner's choice and reason, and nothing
+that needs the item until it exists). The skills now only point at the table and the work-item
+rules, so a project without these rules loses the details. Check: the project's
+`.bc-agent/AGENTS.md` lacks the sentence "Shared skills name project files by role". To adopt it:
+
+1. Copy the paragraph that starts "Shared skills name project files by role" from a fresh
+   scaffold's `.bc-agent/AGENTS.md` to the end of the "Where things go" section: after the
+   paragraph about skill default paths, or directly after the role table when the project has no
+   such paragraph.
+2. Replace the project's "Only the main checkout creates numbered items" rule in the Work items
+   section with the fresh scaffold's wording. Where the project's ideas file is not
+   `work/0-ideas.md`, keep the project's path.

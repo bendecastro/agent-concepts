@@ -2463,3 +2463,18 @@ With the account-pooling extension (no 429), setup passed but the planner built 
 
 ## [2026-11-28] implement | 059 bc-qmd owns the qmd query rule
 bc-qmd: 2–4 keywords, `qmd search` first, one `qmd query --no-rerank` rerun on a miss; bc-wiki-maintain and the generated vault block ban `qmd query` only inline (migration "Vault read path: `qmd query` ban narrowed"). Round 2 paraphrase rerun PASS 2/2 on Haiku 5.5 low (41–44s vs 167–237s). Read-path scenario 5 failed in both arms (whole-vault reads, predates 059). Moved onto master without 055 by owner choice.
+
+## [2026-11-28] implement | 055: scaffold owns role lookup and worktree numbering
+Generated `.bc-agent/AGENTS.md` (and this repo's) carries the role-lookup paragraph and the union numbering rule; ten callers trimmed to pointers + fallback; migration added; relationship reasons updated. New pressure scenario `bc-plan-to-pipeline/tests/pressure-worktree-numbering.md` not run: Terra codex quota at 0% until 10:35 GMT.
+
+## [2026-11-28] implement | 055 review fixes
+Migration arrives in 0.5.1 with a no-paragraph anchor; find-bugs/architecture state the worktree ideas-line owner choice and reason themselves; scenario criteria and old-bullet arm tightened (not run); nits fixed.
+
+## [2026-11-28] test | bc-plan-to-pipeline worktree numbering (055) — inconclusive
+Haiku 5.5 low runs of pressure-worktree-numbering hit 429 rate limits on every attempt (~36 min); recorded as not run, status unchanged.
+
+## [2026-11-28] test | bc-plan-to-pipeline worktree numbering rerun (Haiku, multiprovider)
+Reran pressure-worktree-numbering on claude-haiku-5-5 low (owner-approved Terra substitute) with pi-multiprovider loaded. with-block 2/2 PASS; skill-only (04eb706 scaffold) FAIL: it numbered and committed 003 in the worktree. Status unchanged; no skill text changed.
+
+## [2026-11-28] implement+test | bc-plan-to-pipeline: full worktree numbering rule restored (055)
+Owner decision: undid 055's trim of the skill's numbering paragraph (rest of 055 kept). Reran pressure-worktree-numbering on Terra low: skill-only (04eb706 scaffold) 3/3 and with-block 1/1 PASS; status frontmatter updated.
