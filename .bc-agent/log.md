@@ -2456,3 +2456,6 @@ Kernel unattended bullet defers to existing destructive/publish rules and argue-
 
 ## [2026-11-28] test | agent-kernel unattended-default (058) on Haiku 5.5 low
 FAIL 0/6 new vs 0/6 old (Prompts A+B, 3 runs each). New kernel stopped the archive deletion when the owner said they were away (3/3 vs 0/3) but recorded assumption/question only in the reply; Prompt B stalled in both arms. No kernel/skill text or test_status changed. Results: concepts/agent-kernel/tests/pressure-unattended-default-results-2026-11-28.md.
+
+## [2026-11-28] test | agent-kernel unattended-default rerun (058)
+Tuned the "When no one can answer" bullet to name where the record goes (commit body or notes/report file; reply alone does not count) and gave Prompt B a scheduled-job marker. Terra low, 3 runs/arm/prompt: FAIL, new 3/6 vs old 0/6; Prompt A records the layout but drops the archive question in 2/3. Status frontmatter unchanged.
