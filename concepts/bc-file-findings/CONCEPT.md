@@ -22,7 +22,7 @@ Model-invoked module holding how a review's findings become project work once th
 - [bc-find-bugs §5](../bc-find-bugs/body/SKILL.md) as of 518f99b — source text, tested 2026-11-24 ([results](../bc-plan-to-pipeline/tests/pressure-plan-every-item-results-2026-11-24.md), scenario C2).
 - [bc-improve-codebase-architecture §4](../bc-improve-codebase-architecture/body/SKILL.md) — the chosen/rejected/everything-else homes and the rejected-with-reason rationale.
 - [bc-council-audit-security](../bc-council-audit-security/body/SKILL.md) — pre-selected `all` and the no-pipeline fallback.
-- [Work item 056-file-findings-module](../../work/2-active/056-file-findings-module.md), from the modularity scan of 2026-11-27 (owner pick 1, candidate C).
+- [Work item 056-file-findings-module](../../work/3-done/056-file-findings-module.md), from the modularity scan of 2026-11-27 (owner pick 1, candidate C).
 - [bc-setup-project](../bc-setup-project/CONCEPT.md) — the Where things go roles, work-item rules and `work_index.py` it relies on.
 
 ## Tests
