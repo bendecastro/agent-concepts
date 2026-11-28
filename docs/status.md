@@ -42,7 +42,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-pipeline-to-done](../concepts/bc-pipeline-to-done/CONCEPT.md) | pressure | 2026-11-27 | 2026-11-25 |
 | [bc-plan-slicing](../concepts/bc-plan-slicing/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-plan-to-pipeline](../concepts/bc-plan-to-pipeline/CONCEPT.md) | pressure | 2026-11-27 | 2026-06-21 |
-| [bc-prompting-agents](../concepts/bc-prompting-agents/CONCEPT.md) | accuracy | 2026-08-21 | yes |
+| [bc-prompting-agents](../concepts/bc-prompting-agents/CONCEPT.md) | accuracy | 2026-11-28 | yes |
 | [bc-prototype](../concepts/bc-prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-research](../concepts/bc-research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [bc-self-improve](../concepts/bc-self-improve/CONCEPT.md) | pressure | 2026-11-19 | yes |

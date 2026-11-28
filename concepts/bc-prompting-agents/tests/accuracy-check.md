@@ -36,3 +36,7 @@ Ask a consuming author: “Write a skill whose description auto-triggers on depl
 Grade the written skill, not the author's explanation. Pass only if it defaults to guidance on loading, requires an explicit request before the costly workflow (fan-out, file creation, external actions), and asks one focused question first for ambiguous intent. Existing action-specific authorization remains required. Compare the mode distinction against the Cloudflare snapshot's `skills/bc-security-audit/SKILL.md` Operating modes and the local bc-security-audit example; do not claim this authored check has run.
 
 Run 2026-11-02 (Pi worker role, gpt-6.1-sol low): **PASS** on content — the written skill defaults to guidance on load, gates fan-out/report-directory/deployment-API calls behind an explicit request, asks one focused question for ambiguous intent, and refused "a deployment question implies permission". Deviation: the draft was written into the run report instead of the requested path.
+
+## 2026-11-28: rule-owner search sentence
+
+Checked the sentence added in `f7159d8` ("Before writing a rule, use `rg` to search concept bodies for its owner; if owned elsewhere, load it or mark a tracked `copy-of` ...") against the code and docs it names: `scripts/lint.py` parses `<!-- copy-of: <concept>#<heading-anchor> -->` markers (`_COPY_OF`) and errors on malformed or stacked ones, and `docs/guides/modularity-scan-brief.md` states the same rule and marker form. Accurate; no change needed.

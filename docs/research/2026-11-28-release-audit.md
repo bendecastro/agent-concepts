@@ -27,7 +27,7 @@ Sorts each discipline concept's body changes since v0.4.1 into rule changes and 
 
 ## Gaps
 
-- **bc-prompting-agents, rule-owner search (`f7159d8`).** Adds a requirement: "Before writing a rule, use `rg` to search concept bodies for its owner; if owned elsewhere, load it or mark a tracked `copy-of`, and if already held by two other concepts, split it into a module." The concept is `test_kind: accuracy` and was last checked on 2026-08-21, so no check covers this sentence. It is a reference concept, so the test rule asks for an accuracy check, not a pressure test, and the same sentence is in `AGENTS.md` and `releasing.md` step 2. Whether that is enough, or the check must be recorded before tagging, is the parent's decision.
+None open. The bc-prompting-agents rule-owner search sentence (`f7159d8`) was accuracy-checked by the integrating session on 2026-11-28 against `scripts/lint.py` and `docs/guides/modularity-scan-brief.md` ([accuracy check](../../concepts/bc-prompting-agents/tests/accuracy-check.md)); it is a reference concept, so that is the check the test rule asks for.
 
 No other rule change lacks a test or read check recorded after it.
 

@@ -1,7 +1,7 @@
 ---
 test_kind: accuracy
 test_status: partial
-tested: 2026-08-21
+tested: 2026-11-28
 deployed: yes
 ---
 # Concept: bc-prompting-agents
