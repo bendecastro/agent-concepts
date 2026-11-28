@@ -29,6 +29,7 @@ Write project-specific notes outside the markers; the script keeps them.
 | 5 | [061-lint-repeated-text-and-copies](1-planned/061-lint-repeated-text-and-copies.md) | planned, ready for agent | [056-file-findings-module](1-planned/056-file-findings-module.md), [057-teach-hosting-module](1-planned/057-teach-hosting-module.md), [058-kernel-unattended-default](2-active/058-kernel-unattended-default.md) | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 2/3 |
 | 6 | [063-plan-always-asks-dependencies](1-planned/063-plan-always-asks-dependencies.md) | planned, ready for agent | — | — | In the v0.4.1 stranger test, `bc-plan-to-pipeline` wrote a ready item without a `Dependencies:` line and asked no dependency question, although the project's t… | 0/3 |
 | 7 | [064-wiki-read-path-reads-whole-vault](1-planned/064-wiki-read-path-reads-whole-vault.md) | planned | — | — | In the read-path pressure scenario 5 (qmd absent), all four Haiku runs opened every tracked page, including `index.md`, both with and without the 059 change; t… | 0/1 |
+| 8 | [065-timer-install-includes-notifier](1-planned/065-timer-install-includes-notifier.md) | planned | — | — | every wiki runner service sets `OnFailure=bc-wiki-notify@%n.service`, but `bc-wiki-maintain`'s `INSTALL-TIMER.md` (the path setup step 10 loads) never installs… | 0/1 |
 
 - [Ideas](0-ideas.md): 9
 - [Done](3-done/): 56
