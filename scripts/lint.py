@@ -733,7 +733,7 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None, *, requir
         if required:
             # The release check scans the staged snapshot (what the next commit takes), read from git,
             # so symlinks are scanned as their stored text and submodule links are skipped.
-            changed = sorted(filter(None, git("diff", "--name-only", "-z").decode().split("\0")))
+            changed = sorted(filter(None, git("diff", "--name-only", "--ignore-submodules=dirty", "-z").decode().split("\0")))
             if changed:
                 issues.append(Issue("ERROR", "personal terms: tracked files differ from the staged snapshot "
                                     f"({', '.join(changed)}); stage or restore them before the release check"))
