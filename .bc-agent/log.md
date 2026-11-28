@@ -2411,3 +2411,6 @@ Moved the migration guide into the shipped skill body and updated references; sc
 
 ## [2026-11-28] implement | renamed skill compatibility
 Added a bc-ui-design compatibility stub across distributed installs, a rename/removal release policy, and a previous-release disappearance check.
+
+## [2026-11-28] implement | 050 setup migrations ship with the skill
+MIGRATIONS.md moved into bc-setup-project/body/ (ships with npm, plugin and npx installs; scaffold hints name the installed path). Owner chose option a: a fresh scaffold writes .bc-agent/.scaffold-version once; reruns, --force, --allow-earlier-layout and --migrate never add or change it; each migration section has an Arrived in: line.

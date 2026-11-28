@@ -15,4 +15,4 @@ Ready for agent: yes
 
 ## Outcome
 
-The earlier partial commit fec697b shipped the guide and updated references. This commit adds the first-scaffold version marker, release annotations and regression tests; review and integration remain with the parent.
+The earlier partial commit fec697b shipped the guide and updated references. The second commit (owner decision 2026-11-28, option a) adds `.bc-agent/.scaffold-version`, written only when a scaffold creates `.bc-agent/` (reruns, `--force`, `--allow-earlier-layout` and `--migrate` never add or change it; `unknown` when the package version cannot be read), a "Which migrations may apply?" section and an `Arrived in:` line per migration. `npm pack --dry-run` lists `concepts/bc-setup-project/body/MIGRATIONS.md`; tests `test_fresh_scaffold_records_package_version` (failed first) and `test_existing_scaffold_never_adds_or_changes_stamp`; lint clean; full gate green on the integrated tree.

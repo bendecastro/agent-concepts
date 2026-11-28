@@ -18,6 +18,9 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Changed
 
+- A freshly created project records the agent-concepts version in `.bc-agent/.scaffold-version`
+  (never added or changed on a rerun, `--force` or a migration), and each section of setup's
+  migration guide says which release it arrived in, so you can tell which upgrades may apply.
 - Each week CI checks fresh installs against npm's `latest` tag for each agent CLI, including
   whether Pi loads the packaged kernel. A separate job opens or updates one issue on failure.
 
