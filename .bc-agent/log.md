@@ -2559,3 +2559,15 @@ Switched the repeated-text check to ERROR, widened copy-of sources to the anchor
 
 ## [2026-11-28] test | 064 wiki read path stops whole-vault reads
 Reworded the bc-wiki-maintain read-path block (two copy-as-written command lines, top-three reading, no whole-vault or index.md read under user pressure) and its scaffold copy. Scenario 5 on Haiku low: changed 3/3 held, master failed 2/3.
+
+## [2026-11-28] ingest | bc-plan-to-pipeline map mode (067, wayfinder)
+After the grill, any question this session cannot settle charts a map (body/map-mode.md: three homes, Destination/Decisions so far/Not yet specified/Out of scope, typed decision steps, work-the-map one per session, Slice last); the edge-of-the-map line sits beside the go-ahead rule. Terra low: map scenario master 0/3, changed 3/3; settled both 3/3. Wayfinder moved to raw/ingested.
+
+## [2026-11-28] implement | 067 planning map mode review fixes
+Separated map charting, pickup and Slice from build-item planning; clarified issue ownership, fallback close-out and open-question handling. Terra low changed-arm regression: map 1/1, settled 1/1; filed a scaffold pickup and migration follow-up.
+
+## [2026-11-28] implement | 067 narrow planning map mode
+After the review stop rule, the owner limited maps to new ideas and local files, made Slice a fresh planning run, and kept research graduation during charting. Terra low changed-arm regression: map 1/1, settled 1/1; no code built.
+
+## [2026-11-28] implement | 067 merged with third-review nits
+Third review approved with nits; applied them in map-mode.md: a map stuck with only Slice open turns leftover questions into grilling steps, a Slice-time open question goes back onto the map, `Blocked by:` lines naming the map move to the new build items at close-out, legacy-vault map home, GitHub-map request without a table.

@@ -23,9 +23,9 @@ Write project-specific notes outside the markers; the script keeps them.
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 4/5 |
-| 2 | [067-planning-map-mode](2-active/067-planning-map-mode.md) | active, ready for agent | — | — | `bc-plan-to-pipeline` assumes one grill settles every decision before it drafts a PRD and slices. | 0/2 |
+| 2 | [067-planning-map-mode](2-active/067-planning-map-mode.md) | active, ready for agent | — | — | `bc-plan-to-pipeline` assumes one grill settles every decision before it drafts a PRD and slices. | 1/2 |
 
-- [Ideas](0-ideas.md): 11
+- [Ideas](0-ideas.md): 12
 - [Done](3-done/): 64
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->
