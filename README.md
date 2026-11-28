@@ -297,7 +297,7 @@ Every concept is listed in [index.md](index.md). To see how agents test the code
 
 ## Install
 
-Pick your agent, open its box, and paste the command. Each installs a **release** — a fixed, named version (its name, such as `v0.5.0`, is called a tag) — not the newest code, which can hold unfinished work. The newest release is `v0.5.0`; if the [releases page](https://github.com/bendecastro/agent-concepts/releases) lists a newer tag, use it in place of `v0.5.0`.
+Pick your agent, open its box, and paste the command. Each installs a **release** — a fixed, named version (its name, such as `v0.5.1`, is called a tag) — not the newest code, which can hold unfinished work. The newest release is `v0.5.1`; if the [releases page](https://github.com/bendecastro/agent-concepts/releases) lists a newer tag, use it in place of `v0.5.1`.
 
 | Agent | Method |
 |---|---|
@@ -332,7 +332,7 @@ The council skills run only in Pi, through `pi-subagents`; other install methods
 <details>
 <summary>Try a release early, or stay on one release</summary>
 
-`pi install npm:agent-concepts` installs the release on npm's `latest` tag, and `pi update --extensions` moves you to each new one. A new release goes first to the `next` tag and moves to `latest` after it passes an end-to-end test; to try it before then, install `pi install npm:agent-concepts@next`, which `pi update --extensions` keeps on `next`. To stay on one release instead, name its version (updates then skip it): `pi install npm:agent-concepts@0.5.0`, or from GitHub by tag, `pi install git:github.com/bendecastro/agent-concepts@v0.5.0`.
+`pi install npm:agent-concepts` installs the release on npm's `latest` tag, and `pi update --extensions` moves you to each new one. A new release goes first to the `next` tag and moves to `latest` after it passes an end-to-end test; to try it before then, install `pi install npm:agent-concepts@next`, which `pi update --extensions` keeps on `next`. To stay on one release instead, name its version (updates then skip it): `pi install npm:agent-concepts@0.5.1`, or from GitHub by tag, `pi install git:github.com/bendecastro/agent-concepts@v0.5.1`.
 
 </details>
 
@@ -359,7 +359,7 @@ pi remove npm:agent-concepts
 **Install** — adds this repository as a plugin source and installs the skills plugin and the [agent kernel](#optional-agent-kernel) (requires `python3`):
 
 ```bash
-claude plugin marketplace add bendecastro/agent-concepts#v0.5.0 && \
+claude plugin marketplace add bendecastro/agent-concepts#v0.5.1 && \
   claude plugin install -y agent-concepts@agent-concepts && \
   claude plugin install agent-kernel@agent-concepts --scope user
 ```
@@ -392,7 +392,7 @@ claude plugin uninstall agent-kernel@agent-concepts --scope user && \
 **Install:**
 
 ```bash
-codex plugin marketplace add bendecastro/agent-concepts --ref v0.5.0 && \
+codex plugin marketplace add bendecastro/agent-concepts --ref v0.5.1 && \
   codex plugin add agent-concepts@agent-concepts && \
   codex plugin add agent-kernel@agent-concepts
 ```
@@ -434,7 +434,7 @@ For a smaller install (one skill plus the skills it needs), see [docs/guides/ins
 Install all public skills:
 
 ```bash
-npx -y skills add bendecastro/agent-concepts@v0.5.0 -g -a cursor -y \
+npx -y skills add bendecastro/agent-concepts@v0.5.1 -g -a cursor -y \
   --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
   bc-council-audit-security bc-council-chain bc-council-challenge-plan \
   bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
@@ -487,7 +487,7 @@ Remove it with `npx -y agent-concepts@0.5.1 kernel remove AGENTS.md`; this delet
 Install all public skills:
 
 ```bash
-npx -y skills add bendecastro/agent-concepts@v0.5.0 -g -a gemini-cli -y \
+npx -y skills add bendecastro/agent-concepts@v0.5.1 -g -a gemini-cli -y \
   --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
   bc-council-audit-security bc-council-chain bc-council-challenge-plan \
   bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
@@ -540,7 +540,7 @@ Remove it with `npx -y agent-concepts@0.5.1 kernel remove ~/.gemini/GEMINI.md`; 
 Install all public skills:
 
 ```bash
-npx -y skills add bendecastro/agent-concepts@v0.5.0 -g -a github-copilot -y \
+npx -y skills add bendecastro/agent-concepts@v0.5.1 -g -a github-copilot -y \
   --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
   bc-council-audit-security bc-council-chain bc-council-challenge-plan \
   bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
@@ -593,7 +593,7 @@ Remove it with `npx -y agent-concepts@0.5.1 kernel remove ~/.copilot/copilot-ins
 Install all public skills:
 
 ```bash
-npx -y skills add bendecastro/agent-concepts@v0.5.0 -g -a opencode -y \
+npx -y skills add bendecastro/agent-concepts@v0.5.1 -g -a opencode -y \
   --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
   bc-council-audit-security bc-council-chain bc-council-challenge-plan \
   bc-council-find-bugs bc-council-improve-architecture bc-council-mode \
@@ -648,7 +648,7 @@ Change `<agent>` to your agent's id from [the `skills` agent list](https://githu
 Install all public skills:
 
 ```bash
-npx -y skills add bendecastro/agent-concepts@v0.5.0 -g -a <agent> -y \
+npx -y skills add bendecastro/agent-concepts@v0.5.1 -g -a <agent> -y \
   --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs \
   bc-council-audit-security bc-council-chain bc-council-challenge-plan \
   bc-council-find-bugs bc-council-improve-architecture bc-council-mode \

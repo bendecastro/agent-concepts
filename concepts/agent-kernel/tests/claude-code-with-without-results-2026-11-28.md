@@ -1,6 +1,6 @@
 # Claude Code with/without the kernel plugin, Haiku 5.5 (2026-11-28)
 
-Work item: `work/2-active/062-kernel-in-every-install.md`, step "Claude Code with/without test on Haiku".
+Work item: `work/3-done/2026-11/062-kernel-in-every-install.md`, step "Claude Code with/without test on Haiku".
 
 ## Extension declared before running it
 

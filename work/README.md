@@ -22,9 +22,8 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 5/5 |
 
 - [Ideas](0-ideas.md): 12
-- [Done](3-done/): 65
+- [Done](3-done/): 66
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->

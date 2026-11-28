@@ -9,6 +9,8 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-11-28
+
 ### Added
 
 - Lint: a paragraph repeated across concept bodies is now an ERROR; a `copy-of` source may be any paragraph in the anchor's section, and `<!-- repeated-text-allow: <concept> — <reason> -->` excuses a deliberate restatement of one named concept.
@@ -28,6 +30,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Changed
 
+- `agent-kernel`: when no one can answer, take the recommended option on a judgment call and record the assumption; stop on destructive, publishing and owner-only steps. `bc-design` and `bc-tdd` keep only their skill-specific records.
 - `bc-plan-to-pipeline` checks dependencies in its own step on every plan, even when no other question is
   open, and marks an item ready only when it has its `Dependencies:` line. Later steps are renumbered.
 - The README's Codex install also installs the `agent-kernel` plugin from the release tag, with no
@@ -46,10 +49,6 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 - `bc-wiki-maintain`: the per-vault timer install (`INSTALL-TIMER.md`) now installs and verifies the `bc-wiki-notify@.service` failure notifier, so a vault set up through `bc-setup-project` is told when promotion fails; the runner README points there instead of keeping its own recipe.
 - `bc-wiki-maintain`: the vault read path no longer leads agents to read the whole vault. The search is two copy-as-written lines that keep the `AGENT_CONCEPTS` checkout, and a lookup opens at most the top three returned pages, never `index.md`, even when the user asks to read everything or qmd is missing (existing vaults: see `bc-setup-project` MIGRATIONS).
 - `bc-qmd` no longer calls `qmd query` the default: use `qmd search` with 2–4 keywords first, and rerun once as `qmd query --no-rerank` when it finds nothing relevant or the concept may be worded differently. `bc-wiki-maintain` and the generated vault block now ban `qmd query` only as an inline read. Earlier projects narrow their vault block by the new "Vault read path: `qmd query` ban narrowed" migration.
-
-### Changed
-
-- `agent-kernel`: when no one can answer, take the recommended option on a judgment call and record the assumption; stop on destructive, publishing and owner-only steps. `bc-design` and `bc-tdd` keep only their skill-specific records.
 
 ## [0.5.0] - 2026-11-28
 
@@ -229,7 +228,8 @@ The first release you can install without cloning this repository.
 - Agents other than Pi, Claude Code and Codex. `npx skills` supports many more, but this
   release was checked only through its Pi target.
 
-[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/bendecastro/agent-concepts/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/bendecastro/agent-concepts/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/bendecastro/agent-concepts/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/bendecastro/agent-concepts/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/bendecastro/agent-concepts/compare/v0.3.0...v0.4.0

@@ -2574,3 +2574,6 @@ Third review approved with nits; applied them in map-mode.md: a map stuck with o
 
 ## [2026-11-28] implement | 062 step 3: npx agent-concepts kernel install
 `agent-concepts` bin (packages/agent-kernel/cli.js) runs install.py; package files ship packages/agent-kernel/; test_kernel_cli.py runs the bin from npm pack output and fails without the kernel bytes. README npx-skills boxes name each agent's file.
+
+## [2026-11-28] deploy | release 0.5.1 prepared
+Merged 062 step 3 (npx kernel install), moved 062 to done, set version 0.5.1, moved Unreleased under [0.5.1], README pins v0.5.1/0.5.1.
