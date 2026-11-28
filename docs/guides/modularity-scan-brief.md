@@ -27,6 +27,12 @@ elsewhere, load it or mark a tracked `copy-of`, and if already held by two other
 concepts, split it into a module. Place `<!-- copy-of: <concept>#<anchor> -->`
 on its own line before the copied paragraph. It covers the next paragraph; the
 source is the first paragraph after the heading with that anchor in that concept's
-body Markdown; the anchor must be unique within that concept. Lint compares the paragraphs after whitespace normalization and
-reports a missing source, missing anchor or mismatch as an error. Paragraphs of
-at least 40 words with at least 80% shared word trigrams warn if not tracked.
+body Markdown. The anchor is the heading's slug as `scripts/relationships.py`
+makes it (lowercase, ASCII punctuation removed, spaces as dashes) and must be
+unique within that concept. Fenced code, including fences inside `>` quotes, and
+HTML comments other than markers are not paragraphs. Lint compares the
+paragraphs after whitespace normalization and reports a malformed marker, a
+missing source or anchor, a marker that points at its own paragraph, or a
+mismatch as an error. Paragraphs in different concepts that are not tracked
+copies of each other warn when both have at least 40 words and share at least
+80% of their word trigrams, or when they share an exact run of at least 40 words.

@@ -653,21 +653,70 @@ REPEATED_TEXT_MIN_WORDS = 40
 REPEATED_TEXT_THRESHOLD = 0.8
 
 
-def _without_fences(text: str) -> str:
-    lines = []
+_FENCE = re.compile(r"^[ \t]*(?:>[ \t]?)*[ \t]*(`{3,}|~{3,})(.*)$")
+_COPY_OF = re.compile(r"<!--\s*copy-of:(.*?)-->", re.S)
+_COPY_REF = re.compile(r"([\w-]+)#(\S+)")
+
+
+def _body_blocks(text: str):
+    """Sort a concept body's lines into blocks, in one pass.
+
+    Yields (line, kind, content) with kind heading, marker, or paragraph. Fenced code (also inside
+    `>` quotes) and standalone HTML comments other than copy-of markers yield nothing. A heading,
+    marker or comment line ends the paragraph before it; so does a blank line.
+    """
+    lines = text.splitlines()
     fence = ""
-    for line in text.splitlines():
-        match = re.match(r"^[ \t]*(`{3,}|~{3,})(.*)$", line)
+    paragraph, start = [], 0
+    index = 0
+
+    def flush():
+        nonlocal paragraph
+        block = (start, "paragraph", "\n".join(paragraph)) if paragraph else None
+        paragraph = []
+        return block
+
+    while index < len(lines):
+        line = lines[index]
+        number = index + 1
+        index += 1
+        fence_match = _FENCE.match(line)
         if fence:
-            if match and match[1][0] == fence[0] and len(match[1]) >= len(fence) and not match[2].strip():
+            if fence_match and fence_match[1][0] == fence[0] and len(fence_match[1]) >= len(fence) \
+                    and not fence_match[2].strip():
                 fence = ""
-            lines.append("")
-        elif match:
-            fence = match[1]
-            lines.append("")
-        else:
-            lines.append(line)
-    return "\n".join(lines)
+            continue
+        if fence_match:
+            if block := flush():
+                yield block
+            fence = fence_match[1]
+            continue
+        if line.lstrip().startswith("<!--"):
+            if block := flush():
+                yield block
+            comment = [line]
+            while "-->" not in comment[-1] and index < len(lines):
+                comment.append(lines[index])
+                index += 1
+            joined = "\n".join(comment)
+            marker = _COPY_OF.fullmatch(joined.strip())
+            if marker:
+                yield number, "marker", marker[1].strip()
+            continue
+        if relationships._ATX_HEADING.fullmatch(line):
+            if block := flush():
+                yield block
+            yield number, "heading", line
+            continue
+        if not line.strip():
+            if block := flush():
+                yield block
+            continue
+        if not paragraph:
+            start = number
+        paragraph.append(line)
+    if block := flush():
+        yield block
 
 
 def lint_repeated_text(issues: list[Issue], root: Path) -> None:
@@ -682,29 +731,23 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
         text = re.sub(r"\A---[^\n]*\n.*?^---[ \t]*$", lambda m: "\n" * m.group().count("\n"), text, flags=re.M | re.S)
         if re.match(r"\s*<!--\s*generated\b", text, re.I):
             continue
-        text = _without_fences(text)
-        heading_pattern = relationships._ATX_HEADING.pattern
-        blocks = re.finditer(
-            rf"{heading_pattern}|^<!-- copy-of: [^\n]+ -->$|^\S[^\n]*(?:\n(?!\s*\n|{heading_pattern}|<!-- copy-of: )[^\n]+)*",
-            text, re.M,
-        )
         heading = None
         marker = None
-        for block_match in blocks:
-            block = block_match.group()
-            line = text.count("\n", 0, block_match.start()) + 1
+        for line, kind, block in _body_blocks(text):
             location = f"{relative_path}:{line}"
-            heading_match = relationships._ATX_HEADING.fullmatch(block)
-            if heading_match:
-                title = re.sub(r"[ \t]+#+[ \t]*$", "", heading_match[1])
+            if kind == "heading":
+                title = re.sub(r"[ \t]+#+[ \t]*$", "", relationships._ATX_HEADING.fullmatch(block)[1])
                 heading = (concept, relationships._heading_slug(title))
                 if heading in headings:
                     ambiguous.add(heading)
                 headings[heading] = None
                 continue
-            match = re.fullmatch(r"<!-- copy-of: ([\w-]+)#([\w-]+) -->", block.strip())
-            if match:
-                if marker:
+            if kind == "marker":
+                match = _COPY_REF.fullmatch(block)
+                if not match:
+                    issues.append(Issue("ERROR", f"copy-of malformed at {location}: {block!r}; "
+                                        "write <!-- copy-of: <concept>#<heading-anchor> -->"))
+                elif marker:
                     issues.append(Issue("ERROR", f"copy-of marker at {location} while another is pending at {marker_location}"))
                 else:
                     marker = match.groups()
@@ -731,6 +774,8 @@ def lint_repeated_text(issues: list[Issue], root: Path) -> None:
             issues.append(Issue("ERROR", f"copy-of ambiguous source: {marker_location} -> {marker[0]}#{marker[1]}"))
         elif not source:
             issues.append(Issue("ERROR", f"copy-of missing source: {marker_location} -> {marker[0]}#{marker[1]}"))
+        elif source[0] == location:
+            issues.append(Issue("ERROR", f"copy-of points at itself: {marker_location} -> {marker[0]}#{marker[1]}"))
         elif normalized != source[1]:
             issues.append(Issue("ERROR", f"copy-of mismatch: {marker_location} and {source[0]}#{marker[1]}"))
         else:

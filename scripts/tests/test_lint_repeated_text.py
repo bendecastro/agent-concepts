@@ -296,3 +296,42 @@ def test_ambiguous_source_anchor_is_error(tmp_path):
     write(tmp_path, "alpha", "# Source\n\ntext\n\n# Source\n\ntext")
     write(tmp_path, "beta", "<!-- copy-of: alpha#source -->\n\ntext")
     assert any(i.severity == "ERROR" for i in check(tmp_path))
+
+
+import pytest
+
+
+@pytest.mark.parametrize("marker", ["alpha#", "#source", "alpha", "alpha#source extra", ""])
+def test_malformed_copy_marker_is_error(tmp_path, marker):
+    write(tmp_path, "alpha", "# Source\n\ntext")
+    write(tmp_path, "beta", f"<!-- copy-of: {marker} -->\n\ntext")
+    issues = check(tmp_path)
+    assert [(i.severity, "malformed" in i.message) for i in issues] == [("ERROR", True)]
+
+
+def test_marker_accepts_any_heading_slug(tmp_path):
+    write(tmp_path, "alpha", "## Phase 1 — build a loop\n\ntext")
+    slug = lint.relationships._heading_slug("Phase 1 — build a loop")
+    write(tmp_path, "beta", f"<!-- copy-of: alpha#{slug} -->\n\ntext")
+    assert check(tmp_path) == []
+    write(tmp_path, "beta", f"<!-- copy-of: alpha#{slug} -->\n\ndrifted")
+    assert [(i.severity, "mismatch" in i.message) for i in check(tmp_path)] == [("ERROR", True)]
+
+
+def test_standalone_comment_is_not_the_source_paragraph(tmp_path):
+    write(tmp_path, "alpha", "# Source\n\n<!-- origin note\nspans lines -->\n\ntext")
+    write(tmp_path, "beta", "<!-- copy-of: alpha#source -->\n\ntext")
+    assert check(tmp_path) == []
+
+
+def test_marker_resolving_to_itself_is_error(tmp_path):
+    write(tmp_path, "alpha", "# Source\n\n<!-- copy-of: alpha#source -->\n\ntext")
+    issues = check(tmp_path)
+    assert [(i.severity, "itself" in i.message) for i in issues] == [("ERROR", True)]
+
+
+def test_quoted_fenced_code_is_not_prose(tmp_path):
+    quoted = "> ```text\n> " + PARAGRAPH + "\n> ```\n"
+    write(tmp_path, "alpha", "# A\n\n" + quoted)
+    write(tmp_path, "beta", "# B\n\n" + quoted)
+    assert check(tmp_path) == []
