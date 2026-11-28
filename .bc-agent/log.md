@@ -2439,3 +2439,6 @@ Owner chose to deploy the module (with it the two storage scenarios score 5/5, f
 
 ## [2026-11-28] implement | split bc-delegate-investigation into bc-swarm and bc-durable-subagents
 Work item 053 step 1: durability contract, recovery rule, evidence anchors, durability/storage packet bullets, full gate and all of `pi.md` moved verbatim to the new `bc-durable-subagents`; the concept is renamed `bc-swarm` (posture plus fan-out width) and loads it; `bc-delegate-investigation` is a compatibility alias (stub skill + deploy alias). Post-split pressure rerun on Terra low: with PASS 4/4, without FAIL 4/4. Not deployed from the worktree; deploy from the main checkout after integration.
+
+## [2026-11-28] implement | launching skills load bc-durable-subagents
+Work item 053 step 2: `bc-council-mode`, `bc-subagent-driven-development`, `bc-dispatching-parallel-agents` and `bc-pipeline-to-done` load `bc-durable-subagents` with a one-line run-folder/manifest fallback (`loads` edges added; pipeline keeps its drain run state). Council advisors write to run-folder outputs instead of `output: false`. `bc-handoff` pointer and stale `bc-delegate-investigation` mentions repointed. Council dry run on Terra low: PASS (run folder + manifest before launch).

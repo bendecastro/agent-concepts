@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Reviewers check source-tree documentation against the diff.
   Source: [body/review-contract.md](body/review-contract.md#independent-scopes)
 
+- loads `bc-durable-subagents` — required, when every drain run before the first dispatch.
+  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest. The drain's claims, run artifact root and recovery root stay its own run state.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - depends on `bc-improve-codebase-architecture`'s contract — required, when architecture observation after landing.
   Its ideas-file observation line names module, seam, friction and deletion-test consequence, the fields bc-improve-codebase-architecture parses to seed review candidates.
   Source: [CONCEPT.md](CONCEPT.md)

@@ -28,7 +28,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-code-review](../concepts/bc-code-review/CONCEPT.md) | pressure | 2026-11-28 | yes |
 | [bc-council-chain](../concepts/bc-council-chain/CONCEPT.md) | pressure | 2026-11-24 | yes |
 | [bc-council-improve-architecture](../concepts/bc-council-improve-architecture/CONCEPT.md) | pressure | 2026-11-24 | yes |
-| [bc-council-mode](../concepts/bc-council-mode/CONCEPT.md) | pressure | 2026-11-24 | yes |
+| [bc-council-mode](../concepts/bc-council-mode/CONCEPT.md) | pressure | 2026-11-28 | yes |
 | [bc-design](../concepts/bc-design/CONCEPT.md) | pressure | 2026-11-21 | yes |
 | [bc-diagnosing-bugs](../concepts/bc-diagnosing-bugs/CONCEPT.md) | pressure | 2026-11-25 | 2026-06-21 |
 | [bc-dispatching-parallel-agents](../concepts/bc-dispatching-parallel-agents/CONCEPT.md) | pressure | 2026-11-25 | yes |

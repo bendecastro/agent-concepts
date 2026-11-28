@@ -13,6 +13,22 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-council-mode](../bc-council-mode/RELATIONSHIPS.md): loads this concept — required, when every council launch and every advisor pass.
+  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest.
+  Source: [bc-council-mode/body/SKILL.md](../bc-council-mode/body/SKILL.md)
+
+- incoming from [bc-dispatching-parallel-agents](../bc-dispatching-parallel-agents/RELATIONSHIPS.md): loads this concept — required, when every parallel dispatch.
+  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest.
+  Source: [bc-dispatching-parallel-agents/body/SKILL.md](../bc-dispatching-parallel-agents/body/SKILL.md)
+
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): loads this concept — required, when every drain run before the first dispatch.
+  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest. The drain's claims, run artifact root and recovery root stay its own run state.
+  Source: [bc-pipeline-to-done/body/SKILL.md](../bc-pipeline-to-done/body/SKILL.md)
+
+- incoming from [bc-subagent-driven-development](../bc-subagent-driven-development/RELATIONSHIPS.md): loads this concept — required, when dispatching implementers and reviewers.
+  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest.
+  Source: [bc-subagent-driven-development/body/SKILL.md](../bc-subagent-driven-development/body/SKILL.md)
+
 - incoming from [bc-swarm](../bc-swarm/RELATIONSHIPS.md): loads this concept — required, when every launch and every recovery of a prior run.
   Run folder, manifest, async fan-out, artifacts with Commit/Branch records, durability packet bullets and recover-before-relaunch have one home in bc-durable-subagents; bc-swarm keeps only the delegate-by-default posture.
   Source: [bc-swarm/body/SKILL.md](../bc-swarm/body/SKILL.md)

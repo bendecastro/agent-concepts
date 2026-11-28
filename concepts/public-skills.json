@@ -35,7 +35,9 @@
       "bc-council-mode",
       "bc-improve-codebase-architecture"
     ],
-    "bc-council-mode": [],
+    "bc-council-mode": [
+      "bc-durable-subagents"
+    ],
     "bc-delegate-investigation": [
       "bc-swarm"
     ],
@@ -44,6 +46,7 @@
       "bc-safe-runs"
     ],
     "bc-dispatching-parallel-agents": [
+      "bc-durable-subagents",
       "bc-safe-runs"
     ],
     "bc-domain-modeling": [],
@@ -73,6 +76,7 @@
     "bc-performance-guardrails": [],
     "bc-pipeline-to-done": [
       "bc-codebase-docs",
+      "bc-durable-subagents",
       "bc-performance-guardrails",
       "bc-safe-runs",
       "bc-tdd"
@@ -102,6 +106,7 @@
       "bc-teach"
     ],
     "bc-subagent-driven-development": [
+      "bc-durable-subagents",
       "bc-safe-runs"
     ],
     "bc-swarm": [

@@ -38,6 +38,8 @@ By default the jobs run as the roles this skill's Pi package ships (see [roles.m
 
 Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
+Load `bc-durable-subagents` for the generic launch rules (manifest before dispatch, async fan-out, child artifacts with `Commit:`/`Branch:` records, recover before relaunch); the drain's claims, run artifact root and recovery root below are its own run state. Else: write the run manifest before the first dispatch and state its path in chat.
+
 Put the `bc-safe-runs` packet line in every worker or reviewer task. Before releasing an integrated worktree or branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that landing proof in the run manifest. Why: unattended loops multiply storage leaks.
 
 ## Claim before work
@@ -86,7 +88,7 @@ For remaining held claims, apply these dispositions only with the required claim
 - **Neither, and the unit is untouched** — release the claim and the source's claim marks, then treat it as ready, unless the source page excludes it.
 - **Anything else** — leave the claim, report it, and skip the unit for this run. Never release a claim you cannot account for, and never delete a worktree to make an inconsistency go away: the inconsistency is the evidence.
 
-State the run artifact root and the recovery root in the run's opening report, not only in the final one. A path announced only at the end is announced only if the run reaches the end.
+State the run artifact root and the recovery root in the run's opening report, as `bc-durable-subagents` states a run folder before launch.
 
 ## Select, classify, and claim
 Select the next eligible unit as the chosen source page says, skipping live claims (not valid marker refs) and in-flight units. Prioritize units with a valid local recovery bundle. Vague or decision-incomplete work becomes `HUMAN_BLOCKED`, not guessed work.

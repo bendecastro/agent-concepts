@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- loads `bc-durable-subagents` — required, when every parallel dispatch.
+  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
   Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [body/SKILL.md](body/SKILL.md)

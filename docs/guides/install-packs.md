@@ -34,31 +34,37 @@ npx skills add <source> -g -a <agent> -y --skill bc-codebase-docs bc-explain-vis
 ### bc-council-audit-security
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-audit-security bc-council-chain bc-council-mode bc-security-audit
+npx skills add <source> -g -a <agent> -y --skill bc-council-audit-security bc-council-chain bc-council-mode bc-durable-subagents bc-safe-runs bc-security-audit bc-using-git-worktrees
 ```
 
 ### bc-council-chain
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-chain bc-council-mode
+npx skills add <source> -g -a <agent> -y --skill bc-council-chain bc-council-mode bc-durable-subagents bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-council-challenge-plan
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-challenge-plan bc-council-chain bc-council-mode bc-grilling
+npx skills add <source> -g -a <agent> -y --skill bc-council-challenge-plan bc-council-chain bc-council-mode bc-durable-subagents bc-grilling bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-council-find-bugs
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-find-bugs bc-council-chain bc-council-mode bc-find-bugs bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-council-find-bugs bc-council-chain bc-council-mode bc-durable-subagents bc-find-bugs bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-council-improve-architecture
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-improve-architecture bc-council-chain bc-council-mode bc-improve-codebase-architecture
+npx skills add <source> -g -a <agent> -y --skill bc-council-improve-architecture bc-council-chain bc-council-mode bc-durable-subagents bc-improve-codebase-architecture bc-safe-runs bc-using-git-worktrees
+```
+
+### bc-council-mode
+
+```bash
+npx skills add <source> -g -a <agent> -y --skill bc-council-mode bc-durable-subagents bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-delegate-investigation
@@ -76,7 +82,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-diagnosing-bugs bc-safe-runs
 ### bc-dispatching-parallel-agents
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-dispatching-parallel-agents bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-dispatching-parallel-agents bc-durable-subagents bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-durable-subagents
@@ -112,7 +118,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-optimize-code bc-safe-runs b
 ### bc-pipeline-to-done
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-codebase-docs bc-explain-visually bc-performance-guardrails bc-safe-runs bc-tdd bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-codebase-docs bc-durable-subagents bc-explain-visually bc-performance-guardrails bc-safe-runs bc-tdd bc-using-git-worktrees
 ```
 
 ### bc-plan-to-pipeline
@@ -142,7 +148,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-setup-project bc-teach
 ### bc-subagent-driven-development
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-subagent-driven-development bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-subagent-driven-development bc-durable-subagents bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-swarm

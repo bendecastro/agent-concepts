@@ -28,6 +28,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Changed
 
+- Skills that launch subagents (`bc-council-mode` and through it every council chain, `bc-subagent-driven-development`, `bc-dispatching-parallel-agents`, `bc-pipeline-to-done`) now load `bc-durable-subagents`, so every run gets a run folder and manifest before its first launch; each keeps a one-line fallback. Council advisors now write their reports to files in the run folder.
 - Workspace lint warns about repeated concept prose and verifies explicitly marked copies against their source.
 - Release checks require the private personal-terms scan unless explicitly opted out, and scan
   the staged snapshot from git rather than the working copy; the npm publish job uses fixed

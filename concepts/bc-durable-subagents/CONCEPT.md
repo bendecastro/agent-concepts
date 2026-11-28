@@ -18,8 +18,9 @@ the entry file is harness-neutral.
 
 Job B of the 2026-11-28 split of `bc-delegate-investigation` (work item
 053-split-swarm-and-durable-subagents); job A, the delegate-by-default posture,
-is `bc-swarm`, which loads this skill in one line. Step 2 of that item makes
-the other launching skills load it too.
+is `bc-swarm`, which loads this skill in one line. Step 2 of that item made
+`bc-council-mode`, `bc-subagent-driven-development`, `bc-dispatching-parallel-agents`
+and `bc-pipeline-to-done` load it too, each with a one-line fallback.
 
 ## Design decisions
 

@@ -11,6 +11,8 @@ The parent selects the roster, relays only curated claims, decides validity, and
 
 Before launch, read [references/pass-contracts.md](references/pass-contracts.md).
 
+Load `bc-durable-subagents` before the first launch. Else: before any launch, create a run folder, write `manifest.md` there (key → artifact path → advisor → model + thinking → task) and state its path in chat.
+
 ## Roster
 
 If the `subagent` tool is missing, stop and tell the user to install `pi-subagents` and restart Pi. Otherwise run `subagent({ action: "list" })`, then choose 2-3 executable advisor names that start with `council-`. The prefix is convention only. Never use more than four advisors. If the user has no `council-*` profiles, point them to [examples/agents/](examples/agents/README.md): ready profiles with distinct stances and a placeholder model.
@@ -27,12 +29,12 @@ Pass 1 is independent reports. Pass 2 is one cross-exam. Run Pass 3 only when `-
 
 ## Protocol
 
-1. Write the council brief: question, scope, non-goals, evidence targets, roster, known advisor context modes, and pass cap.
+1. Create the run folder and manifest, and write the council brief there: question, scope, non-goals, evidence targets, roster, known advisor context modes, and pass cap.
 2. Tell the user the roster, context modes, and pass cap.
-3. Launch one async workflow script for Pass 1 with the script inside the call: `subagent({ async: true, options: { script: "<js using runs.all>" } })`. Do not use the `workflow: true` form, which needs a separate ```` ```js workflow ```` block in the same reply; when that block goes missing the launch fails with no advisors run. Use stable keys, `phase: "Council pass 1"`, concise labels, and `output: false` unless separate artifacts are useful. Set `context` only when the profile context is known or a fallback rule requires it.
+3. Launch one async workflow script for Pass 1 with the script inside the call: `subagent({ async: true, options: { script: "<js using runs.all>" } })`. Do not use the `workflow: true` form, which needs a separate ```` ```js workflow ```` block in the same reply; when that block goes missing the launch fails with no advisors run. Use stable keys, `phase: "Council pass 1"`, concise labels, and a distinct `output` path in the run folder per advisor. Set `context` only when the profile context is known or a fallback rule requires it.
 4. Return one aggregate Pass 1 receipt. On completion, tell the user completion count, agreement count, dispute count, and whether Pass 2 is needed.
 5. Synthesize the claim matrix in the parent: agreements, disputed claims, missing proof, owner decisions, and at most five material relay claims per advisor.
-6. For Pass 2, tell the user which claims are relayed and why they matter. Resume each advisor with a curated challenge packet. In the `runs.all` script each resume entry has the shape `{ key: "cross-<advisor>", resume: "<Pass 1 runId>", task: "<challenge packet>", output: false }`: the run id goes in `resume` (not `id`), and the entry excludes `agent` and rejects `gate`. Record each new run id; Pass 3 resumes those latest ids with new stable keys.
+6. For Pass 2, tell the user which claims are relayed and why they matter. Resume each advisor with a curated challenge packet. In the `runs.all` script each resume entry has the shape `{ key: "cross-<advisor>", resume: "<Pass 1 runId>", task: "<challenge packet>", output: "<run folder>/cross-<advisor>.md" }`: the run id goes in `resume` (not `id`), and the entry excludes `agent` and rejects `gate`. Record each new run id; Pass 3 resumes those latest ids with new stable keys.
 7. Stop at convergence, pass cap, failed fallback, or user interruption. The parent writes the final memo.
 
 If an advisor is not resumable, run the same profile fresh with its Pass 1 report and challenge packet. Label it a fresh-context fallback, not true cross-exam.

@@ -7,7 +7,9 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-None.
+- loads `bc-durable-subagents` — required, when every council launch and every advisor pass.
+  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest.
+  Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
 
