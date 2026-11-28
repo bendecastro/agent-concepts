@@ -12,7 +12,7 @@ Each command names its skills, so concepts not published as skills are never ins
 ## All public skills
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs bc-council-audit-security bc-council-chain bc-council-challenge-plan bc-council-find-bugs bc-council-improve-architecture bc-council-mode bc-delegate-investigation bc-design bc-diagnosing-bugs bc-dispatching-parallel-agents bc-domain-modeling bc-durable-subagents bc-executing-plans bc-explain-visually bc-find-bugs bc-finishing-development-branch bc-grilling bc-handoff bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder bc-obsidian-bases bc-obsidian-markdown bc-optimize-code bc-performance-guardrails bc-pipeline-to-done bc-plain-language bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents bc-prototype bc-qmd bc-research bc-safe-runs bc-security-audit bc-self-improve bc-seo bc-setup-project bc-subagent-driven-development bc-swarm bc-tdd bc-teach bc-to-spec bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees bc-wiki-maintain bc-work-sync bc-writing-plans
+npx skills add <source> -g -a <agent> -y --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs bc-council-audit-security bc-council-chain bc-council-challenge-plan bc-council-find-bugs bc-council-improve-architecture bc-council-mode bc-delegate-investigation bc-design bc-diagnosing-bugs bc-dispatching-parallel-agents bc-domain-modeling bc-durable-subagents bc-executing-plans bc-explain-visually bc-file-findings bc-find-bugs bc-finishing-development-branch bc-grilling bc-handoff bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder bc-obsidian-bases bc-obsidian-markdown bc-optimize-code bc-performance-guardrails bc-pipeline-to-done bc-plain-language bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents bc-prototype bc-qmd bc-research bc-safe-runs bc-security-audit bc-self-improve bc-seo bc-setup-project bc-subagent-driven-development bc-swarm bc-tdd bc-teach bc-to-spec bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
 ## Packs
@@ -34,7 +34,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-codebase-docs bc-explain-vis
 ### bc-council-audit-security
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-audit-security bc-council-chain bc-council-mode bc-durable-subagents bc-safe-runs bc-security-audit bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-council-audit-security bc-council-chain bc-council-mode bc-domain-modeling bc-durable-subagents bc-file-findings bc-grilling bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-safe-runs bc-security-audit bc-using-git-worktrees
 ```
 
 ### bc-council-chain
@@ -46,19 +46,19 @@ npx skills add <source> -g -a <agent> -y --skill bc-council-chain bc-council-mod
 ### bc-council-challenge-plan
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-challenge-plan bc-council-chain bc-council-mode bc-durable-subagents bc-grilling bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-council-challenge-plan bc-council-chain bc-council-mode bc-domain-modeling bc-durable-subagents bc-file-findings bc-grilling bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-council-find-bugs
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-find-bugs bc-council-chain bc-council-mode bc-durable-subagents bc-find-bugs bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-council-find-bugs bc-council-chain bc-council-mode bc-domain-modeling bc-durable-subagents bc-file-findings bc-find-bugs bc-grilling bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-council-improve-architecture
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-council-improve-architecture bc-council-chain bc-council-mode bc-durable-subagents bc-improve-codebase-architecture bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-council-improve-architecture bc-council-chain bc-council-mode bc-domain-modeling bc-durable-subagents bc-file-findings bc-grilling bc-improve-codebase-architecture bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-council-mode
@@ -97,16 +97,28 @@ npx skills add <source> -g -a <agent> -y --skill bc-durable-subagents bc-safe-ru
 npx skills add <source> -g -a <agent> -y --skill bc-executing-plans bc-safe-runs bc-using-git-worktrees
 ```
 
+### bc-file-findings
+
+```bash
+npx skills add <source> -g -a <agent> -y --skill bc-file-findings bc-domain-modeling bc-grilling bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting
+```
+
 ### bc-find-bugs
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-find-bugs bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-find-bugs bc-domain-modeling bc-file-findings bc-grilling bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-finishing-development-branch
 
 ```bash
 npx skills add <source> -g -a <agent> -y --skill bc-finishing-development-branch bc-safe-runs bc-using-git-worktrees
+```
+
+### bc-improve-codebase-architecture
+
+```bash
+npx skills add <source> -g -a <agent> -y --skill bc-improve-codebase-architecture bc-domain-modeling bc-file-findings bc-grilling bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting
 ```
 
 ### bc-optimize-code
@@ -130,7 +142,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-plan-to-pipeline bc-domain-m
 ### bc-prototype
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-prototype bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-prototype bc-domain-modeling bc-file-findings bc-grilling bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-safe-runs
@@ -143,6 +155,12 @@ npx skills add <source> -g -a <agent> -y --skill bc-safe-runs bc-using-git-workt
 
 ```bash
 npx skills add <source> -g -a <agent> -y --skill bc-security-audit bc-durable-subagents bc-safe-runs bc-using-git-worktrees
+```
+
+### bc-self-improve
+
+```bash
+npx skills add <source> -g -a <agent> -y --skill bc-self-improve bc-domain-modeling bc-file-findings bc-grilling bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting
 ```
 
 ### bc-setup-project

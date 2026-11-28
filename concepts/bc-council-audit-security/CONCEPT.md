@@ -1,7 +1,7 @@
 ---
 test_kind: pressure
-test_status: pass # dry run 2/2 on Terra low after one body fix: plan.md met all 12 criteria; no live run yet
-tested: 2026-11-24
+test_status: pass # dry run 2/2 on Terra low after one body fix: plan.md met all 12 criteria (2026-11-24); filing contract (criterion 11) re-run 2026-11-28 on Haiku low 2/2 (tests/results-2026-11-28.md); no live run yet
+tested: 2026-11-28
 deployed: yes
 ---
 # Concept: bc-council-audit-security
@@ -10,7 +10,7 @@ Runs a `bc-security-audit` full audit through the advisor council (`bc-council-c
 
 ## Design decisions
 
-- **Loads `bc-file-findings` (2026-11-28, item 056-file-findings-module).** Filing goes through the module, so rejected findings now get a work-dropped item, unpicked ones an ideas line, and filed items are planned with `bc-plan-to-pipeline`; the skill keeps its Kind/Source lines, the no-exploit-steps rule and a one-line fallback.
+- **Loads `bc-file-findings` (2026-11-28, item 056-file-findings-module).** Filing goes through the module and filed items are planned with `bc-plan-to-pipeline`, but decision 3 ("Nothing else is filed unless picked") stays: only picked findings are filed, and unpicked or reviewer-rejected candidates stay in the git-ignored run folder (no work-dropped item, no ideas line) unless the owner asks. The no-exploit rule covers every committed line. Why: review 2026-11-28 found the module's rejected/ideas homes would have put unconfirmed vulnerability locations into history.
 From the owner-decided plan [Two more council chains](../../work/3-done/2026-11/020-council-later-chains.md), decisions 1–4.
 
 - **Thin chain.** Loads `bc-council-chain`, `bc-security-audit` and `bc-council-mode` and defines only what `bc-council-chain`'s "What a chain must define" list leaves open. Steps, gates, schemas and the validator stay in `bc-security-audit`.

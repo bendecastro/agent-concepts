@@ -11,7 +11,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks.
   Source: [body/SKILL.md](body/SKILL.md#every-proposal-names-its-home)
 
-- loads `bc-file-findings` — optional, when when a picked proposal becomes later work in a project with a work pipeline.
+- loads `bc-file-findings` — optional, when a picked proposal becomes later work in a project with a work pipeline.
   Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [body/SKILL.md](body/SKILL.md#decisions-record)
 

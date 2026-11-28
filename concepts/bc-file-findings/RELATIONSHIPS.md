@@ -7,17 +7,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- hands off to `bc-plan-to-pipeline` — required, when after the filing is committed.
+- loads `bc-plan-to-pipeline` — required, when after the filing is committed.
   Runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's answer and the caller's evidence as settled; a sequential handoff, not a nested call.
   Source: [body/SKILL.md](body/SKILL.md#with-a-project-work-pipeline)
 
 ## Incoming
 
 - incoming from [bc-council-audit-security](../bc-council-audit-security/RELATIONSHIPS.md): loads this concept — required, when after the owner picks which findings to file.
-  Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update. It narrows the module: only picked findings are filed; unpicked and reviewer-rejected candidates stay in the git-ignored run folder.
   Source: [bc-council-audit-security/body/SKILL.md](../bc-council-audit-security/body/SKILL.md#report-and-filing)
 
-- incoming from [bc-council-challenge-plan](../bc-council-challenge-plan/RELATIONSHIPS.md): loads this concept — optional, when when the owner accepts an objection but wants it handled outside the plan.
+- incoming from [bc-council-challenge-plan](../bc-council-challenge-plan/RELATIONSHIPS.md): loads this concept — optional, when the owner accepts an objection but wants it handled outside the plan.
   Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md#grill-and-plan-edits)
 
@@ -29,10 +29,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [bc-improve-codebase-architecture/body/SKILL.md](../bc-improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table)
 
-- incoming from [bc-prototype](../bc-prototype/RELATIONSHIPS.md): loads this concept — optional, when when the verdict becomes project work.
+- incoming from [bc-prototype](../bc-prototype/RELATIONSHIPS.md): loads this concept — optional, when the verdict becomes project work.
   Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [bc-prototype/body/SKILL.md](../bc-prototype/body/SKILL.md#handoff-to-the-bc-loop)
 
-- incoming from [bc-self-improve](../bc-self-improve/RELATIONSHIPS.md): loads this concept — optional, when when a picked proposal becomes later work in a project with a work pipeline.
+- incoming from [bc-self-improve](../bc-self-improve/RELATIONSHIPS.md): loads this concept — optional, when a picked proposal becomes later work in a project with a work pipeline.
   Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [bc-self-improve/body/SKILL.md](../bc-self-improve/body/SKILL.md#decisions-record)

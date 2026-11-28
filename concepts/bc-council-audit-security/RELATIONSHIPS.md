@@ -16,7 +16,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md)
 
 - loads `bc-file-findings` — required, when after the owner picks which findings to file.
-  Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update. It narrows the module: only picked findings are filed; unpicked and reviewer-rejected candidates stay in the git-ignored run folder.
   Source: [body/SKILL.md](body/SKILL.md#report-and-filing)
 
 - loads `bc-security-audit` — required, when every council security audit.

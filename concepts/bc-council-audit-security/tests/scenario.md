@@ -18,8 +18,8 @@ nothing, so the fixture only needs recon-able boundaries.
    work pipeline with `python3 concepts/bc-setup-project/body/scaffold.py --root . --slug docapi
    --archetype code`, add a `work/order.md` holding only a heading, add `.security-audit/` to
    `.git/info/exclude`, commit.
-2. Copy the bodies of `bc-council-audit-security`, `bc-council-chain`, `bc-security-audit` and
-   `bc-council-mode` into `$scratch/skills/` with `cp -rL`.
+2. Copy the bodies of `bc-council-audit-security`, `bc-council-chain`, `bc-security-audit`,
+   `bc-council-mode`, `bc-file-findings` and `bc-plan-to-pipeline` (with the skills it loads) into `$scratch/skills/` with `cp -rL`.
 3. Unset every `PI_SUBAGENT*` variable, then from `$scratch/<run>`:
    `bwrap --dev-bind / / --tmpfs ~/.agents/skills --tmpfs ~/.pi/agent/skills --tmpfs
    ~/.claude/skills --tmpfs <overlays folder> pi -p --model <model> --thinking low --no-swarm -nc
@@ -33,7 +33,7 @@ every launch (role, model/thinking, skills, arguments), each brief and relay, fo
 the verification queue, records, validator command, report contents, filing and cleanup. Assume
 `subagent list` returns `council-alpha`, `council-beta`, `council-gamma`, `scout`, `worker`,
 `reviewer`, `oracle`. Assume pass 2 leaves five candidates, one of them under an unanswered
-code-evidenced dispute, and two reviewers return `confirmed`. The owner answers `all` at the
+code-evidenced dispute, two reviewers return `confirmed` and one returns `rejected`. The owner answers `all` at the
 filing question; show what filing would write and the commands.
 
 ## Pass (each run, graded from `plan.md`, not the reply; the checkout has no other change)
@@ -55,8 +55,12 @@ filing question; show what filing would write and the commands.
 9. `findings.json`, ledger update and `validate_audit.py <run-dir>` as the parent says.
 10. Report additions: agreement line per candidate that never changes a verdict, disputes,
     boundary, roster with dealt boundaries.
-11. Filing: confirmed pre-selected; `all` files the two as `Kind: security`,
-    `Source: bc-council-audit-security` items naming area and fix, pointing at the run folder,
-    with no exploit steps; `work/order.md` placement and `work_index.py --check`; no added
-    "recommend `/bc-plan-to-pipeline`" step.
+11. Filing (contract of 2026-11-28, review of item 056): confirmed pre-selected; `all` files only
+    the two confirmed as numbered work-planned `Kind: security`, `Source: bc-council-audit-security`
+    items naming area and fix, pointing at the run folder and finding ID, with no exploit steps,
+    input or payload in any committed line; `work/order.md` placement and `work_index.py --check`;
+    a commit; then each filed item is planned with `bc-plan-to-pipeline` in the same reply
+    (requirements, sliced steps, `Planned:` line). The three not-picked candidates (including any
+    reviewer-`rejected` one) stay only in the git-ignored run folder: no work-dropped item and no
+    ideas line.
 12. Cleanup of any `.git/council-*` copy.

@@ -14,6 +14,7 @@
     "bc-council-audit-security": [
       "bc-council-chain",
       "bc-council-mode",
+      "bc-file-findings",
       "bc-security-audit"
     ],
     "bc-council-chain": [
@@ -22,6 +23,7 @@
     "bc-council-challenge-plan": [
       "bc-council-chain",
       "bc-council-mode",
+      "bc-file-findings",
       "bc-grilling"
     ],
     "bc-council-find-bugs": [
@@ -57,7 +59,11 @@
       "bc-safe-runs"
     ],
     "bc-explain-visually": [],
+    "bc-file-findings": [
+      "bc-plan-to-pipeline"
+    ],
     "bc-find-bugs": [
+      "bc-file-findings",
       "bc-safe-runs"
     ],
     "bc-finishing-development-branch": [
@@ -65,7 +71,9 @@
     ],
     "bc-grilling": [],
     "bc-handoff": [],
-    "bc-improve-codebase-architecture": [],
+    "bc-improve-codebase-architecture": [
+      "bc-file-findings"
+    ],
     "bc-json-canvas": [],
     "bc-minimal-solution-ladder": [],
     "bc-obsidian-bases": [],
@@ -92,6 +100,7 @@
     "bc-prd-drafting": [],
     "bc-prompting-agents": [],
     "bc-prototype": [
+      "bc-file-findings",
       "bc-safe-runs"
     ],
     "bc-qmd": [],
@@ -102,7 +111,9 @@
     "bc-security-audit": [
       "bc-durable-subagents"
     ],
-    "bc-self-improve": [],
+    "bc-self-improve": [
+      "bc-file-findings"
+    ],
     "bc-seo": [],
     "bc-setup-project": [
       "bc-teach",

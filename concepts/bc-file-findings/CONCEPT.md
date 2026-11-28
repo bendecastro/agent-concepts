@@ -2,7 +2,7 @@
 test_kind: pressure
 test_status: pass # 2026-11-28 find-bugs filing scenario C2 on Haiku low (Terra out of quota): tuned module 3/3, inline master text 3/3; first wording 1/3 (tests/pressure-file-findings-results-2026-11-28.md)
 tested: 2026-11-28
-deployed: no
+deployed: yes
 ---
 # Concept: bc-file-findings
 
@@ -14,7 +14,7 @@ Model-invoked module holding how a review's findings become project work once th
 - **The caller supplies Kind, Source and contents.** What an item must carry (reproduction test, report folder, no exploit steps) is evidence only the caller knows, so it stays in the caller's filing section; the module owns only the homes, numbering, placement and handoff.
 - **Four numbered steps, finished only when every filed item has a `Planned:` line (2026-11-28 tune).** As first written, the planning handoff closed the section as a paragraph and two of three Haiku runs stopped after the filing commit; numbered steps with that finish line held 3/3.
 - **Callers keep a one-line fallback,** as `bc-safe-runs`' callers do, so a stranger who installed one skill without the module still files correctly. A change to the module's rules must update those fallbacks.
-- **`bc-council-audit-security` gains rejected/ideas homes and the planning handoff** by loading the module; before, it filed only picked findings and did not plan them. This is the uniformity the item asked for.
+- **`bc-council-audit-security` gains the planning handoff only.** It narrows the module: only picked findings are filed, with no work-dropped item or ideas line for unpicked or reviewer-rejected candidates (owner decision 3 of 020-council-later-chains; vulnerability detail must stay in the git-ignored run folder). Uniform rejected/ideas homes for security would be a separate owner decision.
 - **Would-be callers load it conditionally:** `bc-self-improve` when a picked proposal becomes later project work, `bc-prototype` when its verdict becomes project work, `bc-council-challenge-plan` when the owner accepts an objection but wants it handled outside the plan. Their wording at each site is this change's choice; the item named them as callers but did not say where.
 
 ## Provenance
@@ -31,4 +31,4 @@ Model-invoked module holding how a review's findings become project work once th
 
 ## Deploy targets
 
-Not deployed. When deployed: the shared skill bus via `scripts/deploy-local-skills.py`, and the npm package and plugin manifests like its callers.
+Deployed (`deployed: yes`, set 2026-11-28 in the change that points six callers at it, as for `bc-safe-runs`): the shared skill bus, Pi and Claude via `scripts/deploy-local-skills.py` (run by the parent from the main checkout), and the npm package and plugin manifests through the generated public-skills list.

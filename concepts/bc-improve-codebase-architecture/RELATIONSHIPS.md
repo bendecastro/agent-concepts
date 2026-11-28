@@ -20,7 +20,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md#4-record-every-finding-projects-with-the-table)
 
 - hands off to `bc-plan-to-pipeline` — required, when after filing chosen findings in a project with a Where things go table.
-  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-architecture inherits this through its filing step.
+  Via bc-file-findings, or directly in its fallback: once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-architecture inherits this through its filing step.
   Source: [body/SKILL.md](body/SKILL.md#4-record-every-finding-projects-with-the-table)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
@@ -42,7 +42,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-explain-visually/body/SKILL.md](../bc-explain-visually/body/SKILL.md)
 
 - incoming from [bc-find-bugs](../bc-find-bugs/RELATIONSHIPS.md): adapts this concept — required, when filing after the owner answers.
-  Report-then-owner filing, roles and the no-pipeline fallback mirror bc-improve-codebase-architecture.
+  The no-pipeline fallback and the report-then-owner filing mirror bc-improve-codebase-architecture; the shared filing rules themselves now come from bc-file-findings.
   Source: [bc-find-bugs/CONCEPT.md](../bc-find-bugs/CONCEPT.md)
 
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when architecture observation after landing.

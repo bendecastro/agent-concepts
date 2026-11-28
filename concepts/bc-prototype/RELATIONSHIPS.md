@@ -7,7 +7,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
-- loads `bc-file-findings` — optional, when when the verdict becomes project work.
+- loads `bc-file-findings` — optional, when the verdict becomes project work.
   Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [body/SKILL.md](body/SKILL.md#handoff-to-the-bc-loop)
 

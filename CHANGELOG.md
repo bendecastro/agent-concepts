@@ -11,7 +11,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Added
 
-- `bc-file-findings`: one skill for filing a review's findings after the owner picks (chosen → planned item, rejected → dropped with the reason, the rest → ideas, then planning). `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` load it, so security-audit filings now also record rejections and plan filed items; `bc-self-improve`, `bc-prototype` and `bc-council-challenge-plan` use it when their output becomes project work.
+- `bc-file-findings`: one skill for filing a review's findings after the owner picks (chosen → planned item, rejected → dropped with the reason, the rest → ideas, then planning). `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` load it (the security audit still files only picked findings and plans them); `bc-self-improve`, `bc-prototype` and `bc-council-challenge-plan` use it when their output becomes project work.
 - The fresh-install test gains `claude-kernel` and `codex-kernel`: each adds the marketplace (from the
   release tag in the release workflow) and installs `agent-kernel`, then checks its SessionStart hooks
   deliver the canonical kernel text.

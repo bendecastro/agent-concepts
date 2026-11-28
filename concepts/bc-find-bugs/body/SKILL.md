@@ -81,5 +81,5 @@ What this hunt supplies to it:
 
 - **Chosen** is every confirmed bug (`all`) plus each suspected bug the owner picks. Each item gets `Kind: bug` and `Source: find-bugs`, the hunt branch name, and for a confirmed bug the test path and name and the failing output; a picked suspected bug becomes an investigation item stating it is unconfirmed and quoting the evidence.
 - **Security candidates picked** → items with `Kind: security`, pointing at `bc-security-audit`.
-- Ideas lines point at the report on the hunt branch. Keep the hunt branch: filed items point at it.
+- Ideas lines point at the report on the hunt branch. Keep the hunt branch: filed items point at it. Without a pipeline, keep the report and hunt branch.
 - When planning a filed item, each reproduction test settles its test seam.
