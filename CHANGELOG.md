@@ -6,6 +6,10 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ## [Unreleased]
 
+### Changed
+
+- CI checks fresh installs against new agent CLI releases each week, including whether Pi loads the packaged kernel.
+
 ## [0.4.1] - 2026-11-27
 
 New releases soak on npm before they reach you, and there is a way to report problems.

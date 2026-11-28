@@ -118,3 +118,29 @@ def test_claude_install_checks_for_bundled_publish_checker(tmp_path, monkeypatch
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_pi_npm_checks_kernel_in_system_prompt(tmp_path):
+    import json
+    import shutil
+
+    if not all(shutil.which(cmd) for cmd in ("pi", "npm", "node", "tar")):
+        pytest.skip("Pi and npm tools are required")
+    box = fit.Sandbox(tmp_path, "kernel")
+    agent = fit.PiNpmPackage(box, [str(fit.ROOT)])
+    agent.install()
+    extension = box.root / "package/packages/agent-kernel-pi/index.js"
+    contents = extension.read_text()
+    manifest = box.root / "package/package.json"
+    manifest_text = manifest.read_text()
+    data = json.loads(manifest_text)
+    data["pi"]["extensions"] = []
+    manifest.write_text(json.dumps(data))
+    extension.unlink()
+    with pytest.raises(fit.CheckFailed) as exc:
+        agent.check_kernel_prompt()
+    assert str(exc.value) == "kernel missing from Pi system prompt"
+    print(f"  expected failure: {exc.value}")
+    extension.write_text(contents)
+    manifest.write_text(manifest_text)
+    agent.check_kernel_prompt()

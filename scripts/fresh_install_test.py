@@ -78,6 +78,25 @@ if (result.diagnostics.length) process.exit(3);
 """
 
 
+# Exercise Pi's own pre-run prompt assembly without starting a provider request.
+# _prepareRun is private; a Pi upgrade that changes it must fail this compatibility check.
+PI_KERNEL_PROMPT = r"""
+import { realpathSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { pathToFileURL } from "node:url";
+const root = join(dirname(realpathSync(process.argv[2])), "..", "..");
+const pi = await import(pathToFileURL(join(root, "dist", "index.js")).href);
+const { session, extensionsResult } = await pi.createAgentSession({
+  cwd: process.cwd(), agentDir: join(process.env.HOME, ".pi", "agent"),
+  sessionManager: pi.SessionManager.inMemory(),
+});
+if (extensionsResult.errors.length) throw new Error(JSON.stringify(extensionsResult.errors));
+await session.bindExtensions({});
+await session._prepareRun({ messageType: "user", prompt: "check", images: [] });
+console.log(JSON.stringify(session.systemPrompt));
+"""
+
+
 class CheckFailed(Exception):
     pass
 
@@ -85,8 +104,8 @@ class CheckFailed(Exception):
 def install_sources(ref: str | None) -> dict[str, list[str]]:
     """What each method installs from: the local checkout, or the GitHub repository at `ref`.
 
-    Each pinned CLI takes the ref in its own syntax; all four were checked against a pushed
-    commit (Pi 1.6.0, Claude Code 2.1.329, Codex 0.153.1, skills 1.9.0).
+    Each CLI takes the ref in its own syntax. CI pins Pi 1.6.1, Claude Code 2.1.329,
+    Codex 0.153.1 and skills 1.9.0; the ref forms were checked against a pushed commit.
     """
     if ref is None:
         local = str(ROOT)
@@ -211,6 +230,19 @@ def packed_problems(paths: list[str]) -> list[str]:
 
 class PiNpmPackage(PiPackage):
     """The tarball `npm publish` would upload, unpacked and installed as a local Pi package."""
+
+    def check_kernel_prompt(self):
+        probe = self.box.root / "check-pi-kernel.mjs"
+        probe.write_text(PI_KERNEL_PROMPT, encoding="utf-8")
+        try:
+            out = self.box.run("node", str(probe), shutil.which("pi") or "pi")
+            prompt = json.loads(out)
+        except (CheckFailed, json.JSONDecodeError) as exc:
+            raise CheckFailed(f"kernel check could not read Pi system prompt: {exc}") from exc
+        kernel = (self.box.root / "package/packages/agent-kernel-pi/AGENT-KERNEL.md").read_text()
+        if kernel not in prompt:
+            raise CheckFailed("kernel missing from Pi system prompt")
+        print("  ok: kernel present in Pi system prompt", flush=True)
 
     def install(self):
         tarball = self.box.run("npm", "pack", "--silent", "--pack-destination", str(self.box.root),
@@ -339,6 +371,8 @@ def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: 
         agent, expected = NpxSkills(box, sources["npx"], pack, drop), expected_skills(listing, pack)
     print(f"== {method} (HOME={box.home})", flush=True)
     agent.install()
+    if method == "pi-npm":
+        agent.check_kernel_prompt()
     listed = agent.listed()
     check_listed("after install", expected, listed)
     if PUBLISH_SKILL in listed:

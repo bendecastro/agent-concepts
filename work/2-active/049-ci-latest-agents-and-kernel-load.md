@@ -17,8 +17,8 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Add the scheduled latest-agents run, align the Pi pin, and load the kernel extension in the install test. Done when the new method fails with the kernel extension removed and passes with it, and the scheduled workflow validates (`workflow_dispatch` run green or `actionlint` clean). Out of scope: Windows.
+- [x] Add the scheduled latest-agents run, align the Pi pin, and load the kernel extension in the install test. Done when the new method fails with the kernel extension removed and passes with it, and the scheduled workflow validates (`workflow_dispatch` run green or `actionlint` clean). Out of scope: Windows.
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Weekly and manual latest-CLI installs report failures to one issue; pinned Pi is 1.6.1. The packed Pi test checks the assembled kernel prompt without a model request, and fails when the extension is removed. Actionlint validates the workflows.

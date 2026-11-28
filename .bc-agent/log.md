@@ -2396,3 +2396,6 @@ Owner chose to drop it: Pi install covers it, setup checks gh. Its content moved
 
 ## [2026-11-28] deploy | v0.4.1 promoted to npm latest
 First soak: stranger test on npm@0.4.1 (`next`) passed setup, planning, build and full-suite checks; private-term audit clean. One stall (planning skipped the dependency question; builder parked correctly) filed as 063. `gh workflow run release.yml -f action=promote -f version=0.4.1` (run 46090008369) moved `latest` to 0.4.1 — the first live run of `set-latest`.
+
+## [2026-11-28] implement | latest-agent CI and packed Pi kernel
+Weekly latest-CLI installs report failures; the packed Pi test checks the kernel in the assembled prompt without a provider request. Aligned pinned Pi to 1.6.1.
