@@ -2451,3 +2451,5 @@ Private swarm-mode kernel drops its durability copy for a pointer; routing-decis
 Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-audit.md (no gaps).
 ## [2026-11-28] implement | 062 step 1: kernel plugins in the fresh-install test
 `claude-kernel`/`codex-kernel` methods install `agent-kernel` from the marketplace (tag under --ref) and check the hooks deliver the kernel text; fail with agent-kernel removed from the marketplace files, pass with it.
+## [2026-11-28] implement | 062 step 3: npx agent-concepts kernel install
+`agent-concepts` bin (packages/agent-kernel/cli.js) runs install.py; package files ship packages/agent-kernel/; test_kernel_cli.py runs the bin from npm pack output and fails without the kernel bytes. README npx-skills boxes name each agent's file.

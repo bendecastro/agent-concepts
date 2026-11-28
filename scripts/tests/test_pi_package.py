@@ -44,7 +44,8 @@ class PiPackageTests(unittest.TestCase):
         pi_package.write_manifest(self.root)
         manifest = self.manifest()
         self.assertEqual(manifest["files"], ["concepts/bc-a/body/", "concepts/bc-b/body/",
-                                             "packages/agent-kernel-pi/"])
+                                             "packages/agent-kernel-pi/", "packages/agent-kernel/"])
+        self.assertEqual(manifest["bin"], {"agent-concepts": "packages/agent-kernel/cli.js"})
         self.assertNotIn("private", manifest)
 
     def test_check_fails_when_files_drift_from_the_skill_list(self):

@@ -135,6 +135,10 @@
     "concepts/bc-wiki-maintain/body/",
     "concepts/bc-work-sync/body/",
     "concepts/bc-writing-plans/body/",
-    "packages/agent-kernel-pi/"
-  ]
+    "packages/agent-kernel-pi/",
+    "packages/agent-kernel/"
+  ],
+  "bin": {
+    "agent-concepts": "packages/agent-kernel/cli.js"
+  }
 }

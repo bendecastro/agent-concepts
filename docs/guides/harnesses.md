@@ -37,7 +37,7 @@ Use a manual instruction source **instead of** the package. A delta is a shorten
 | Muse Code | `~/.config/muse/AGENTS.md`, a regular file (not a symlink). Don't symlink the config directory; it also holds auth data. |
 | Other harnesses | Name the instructions file the harness actually loads. |
 
-For a marked block, keep `install.py` and `AGENT-KERNEL.md` together from `packages/agent-kernel/`. The installer appends the block, or prepends it if there is no final newline, leaving other bytes unchanged. Leave marker lines to the installer: malformed or duplicate markers cause it to refuse the edit.
+For a marked block, run `npx -y agent-concepts kernel install <file>` (or `kernel remove <file>`); the npm package's bin runs `packages/agent-kernel/install.py` beside its packaged `AGENT-KERNEL.md`, so it needs Node.js and Python 3 but no checkout. From a checkout, run `install.py` directly, keeping it and `AGENT-KERNEL.md` together. The installer appends the block, or prepends it if there is no final newline, leaving other bytes unchanged. Leave marker lines to the installer: malformed or duplicate markers cause it to refuse the edit.
 
 ## Compatibility matrix
 

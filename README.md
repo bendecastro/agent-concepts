@@ -462,6 +462,14 @@ npx -y skills remove -g -a cursor -y \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
+Add the [agent kernel](#optional-agent-kernel) (needs Python 3). Cursor has no global instructions file, so run this from each project's root to add the kernel to that project's `AGENTS.md`:
+
+```bash
+npx -y agent-concepts kernel install AGENTS.md
+```
+
+Remove it with `npx -y agent-concepts kernel remove AGENTS.md`; this deletes only the kernel's marked block.
+
 </details>
 
 <details>
@@ -506,6 +514,14 @@ npx -y skills remove -g -a gemini-cli -y \
   bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
+
+Add the [agent kernel](#optional-agent-kernel) (needs Python 3). Gemini CLI loads `~/.gemini/GEMINI.md`:
+
+```bash
+npx -y agent-concepts kernel install ~/.gemini/GEMINI.md
+```
+
+Remove it with `npx -y agent-concepts kernel remove ~/.gemini/GEMINI.md`; this deletes only the kernel's marked block.
 
 </details>
 
@@ -552,6 +568,14 @@ npx -y skills remove -g -a github-copilot -y \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
+Add the [agent kernel](#optional-agent-kernel) (needs Python 3). Copilot CLI loads `~/.copilot/copilot-instructions.md`:
+
+```bash
+npx -y agent-concepts kernel install ~/.copilot/copilot-instructions.md
+```
+
+Remove it with `npx -y agent-concepts kernel remove ~/.copilot/copilot-instructions.md`; this deletes only the kernel's marked block.
+
 </details>
 
 <details>
@@ -596,6 +620,14 @@ npx -y skills remove -g -a opencode -y \
   bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
+
+Add the [agent kernel](#optional-agent-kernel) (needs Python 3). OpenCode V1 loads `~/.config/opencode/AGENTS.md` (for the V2 plugin, see [Optional agent kernel](#optional-agent-kernel)):
+
+```bash
+npx -y agent-concepts kernel install ~/.config/opencode/AGENTS.md
+```
+
+Remove it with `npx -y agent-concepts kernel remove ~/.config/opencode/AGENTS.md`; this deletes only the kernel's marked block.
 
 </details>
 
@@ -643,6 +675,14 @@ npx -y skills remove -g -a <agent> -y \
   bc-to-tickets bc-triage bc-design bc-unslop bc-using-git-worktrees \
   bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
+
+Add the [agent kernel](#optional-agent-kernel) (needs Python 3). Name the instructions file your agent loads:
+
+```bash
+npx -y agent-concepts kernel install /path/to/instructions.md
+```
+
+Remove it with `npx -y agent-concepts kernel remove /path/to/instructions.md`; this deletes only the kernel's marked block.
 
 </details>
 
@@ -714,9 +754,9 @@ The commands below use a local Agent Concepts checkout. Use one kernel source pe
 | Codex (requires `python3`) | `codex plugin marketplace add /path/to/agent-concepts`, then `codex plugin add agent-kernel@agent-concepts`. If the marketplace is already registered, use its checkout if it contains the package. Review and trust the SessionStart hook with `/hooks`; it won't load until trusted. | Disable the kernel plugin in `/plugins`. | `codex plugin remove agent-kernel@agent-concepts`. Keep the marketplace if you still use its skills. |
 | OpenCode V2 | In global `opencode.json(c)`, add the absolute path to `packages/agent-kernel-opencode/` to `plugins`. | Delete that entry from `plugins`; leave the package files in place to re-enable later. | Delete the same entry; the checkout can stay. |
 | OpenCode V1 | In global `opencode.json(c)`, add the absolute path to the checkout's `packages/agent-kernel/AGENT-KERNEL.md` to `instructions`. There is no V1 kernel plugin. | Delete that entry from `instructions`; keep the file to re-enable later. | Delete the same entry; the checkout can stay. |
-| Other harnesses or manual file install | `python3 /path/to/agent-concepts/packages/agent-kernel/install.py /path/to/instructions.md`, naming the instructions file your harness loads. | There is no separate switch; remove the block and rerun install to re-enable it. | Run the same command with `--remove`; it removes only the marked block. |
+| Other harnesses or manual file install | `npx -y agent-concepts kernel install /path/to/instructions.md` (needs Node.js and Python 3), naming the instructions file your harness loads. From a checkout, `python3 packages/agent-kernel/install.py /path/to/instructions.md` does the same. | There is no separate switch; remove the block and rerun install to re-enable it. | Run `npx -y agent-concepts kernel remove /path/to/instructions.md` (or the checkout command with `--remove`); it removes only the marked block. |
 
-Start a fresh session after install, disable or removal; an old session may still carry earlier instructions. For OpenCode, restart the server before starting the new session. The manual installer pins the **copied bytes**: to change versions, run the installer from the new pinned checkout against the same file. See [delivery behavior and manual deltas](docs/guides/harnesses.md#standalone-kernel) for details.
+Start a fresh session after install, disable or removal; an old session may still carry earlier instructions. For OpenCode, restart the server before starting the new session. The manual installer pins the **copied bytes**: to change versions, rerun install (from the new package or pinned checkout) against the same file. See [delivery behavior and manual deltas](docs/guides/harnesses.md#standalone-kernel) for details.
 
 </details>
 
