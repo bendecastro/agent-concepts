@@ -2559,3 +2559,6 @@ After the grill, any question this session cannot settle charts a map (body/map-
 
 ## [2026-11-28] implement | 067 planning map mode review fixes
 Separated map charting, pickup and Slice from build-item planning; clarified issue ownership, fallback close-out and open-question handling. Terra low changed-arm regression: map 1/1, settled 1/1; filed a scaffold pickup and migration follow-up.
+
+## [2026-11-28] implement | 067 narrow planning map mode
+After the review stop rule, the owner limited maps to new ideas and local files, made Slice a fresh planning run, and kept research graduation during charting. Terra low changed-arm regression: map 1/1, settled 1/1; no code built.

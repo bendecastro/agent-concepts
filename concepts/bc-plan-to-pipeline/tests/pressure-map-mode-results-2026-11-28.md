@@ -66,3 +66,43 @@ in the session transcripts. Private evidence: `logs067-patch/` in the review run
 Both fixture diffs contained only the new planned item and the generated work index. Neither
 changed code or tests, nor filed an active or done item. Existing-item conversion, work-the-map,
 Slice, and the GitHub and change-folder homes were checked by reading, not run.
+
+## Owner-narrowed regression (2026-11-28) — PASS
+
+One changed-arm run per scenario against fixture `d6739bf`, with the existing Pi 1.6.1 RPC
+harness and masked skills. Both processes exited 0 and passed the sandbox's system-prompt check.
+Both transcripts used only `openai-codex/gpt-6.1-terra` at low thinking; no quota failure or
+Agents checkout reference was found. Private artifacts and transcripts: `logs067-narrow/` in the
+review run folder.
+
+| Scenario | What the fixture produced | Verdict |
+| --- | --- | --- |
+| Map | `001-label-suggestion-map`: `Kind: map`, Destination, the map-mode pickup line, typed Task (company model policy) and Grilling (provider), then Slice. No requirements, readiness line or build step. | PASS 1/1 |
+| Settled | `001-normalize-internal-whitespace`: `Kind: feature`, `Ready for agent: yes`, the owner's dependency answer, requirements and one unchecked build step. | PASS 1/1 |
+
+Each fixture changed only the new planned item and its generated work index. No code, tests,
+active items or done items changed. Targeted RPC driver tests: 6 passed.
+
+### Re-review disposition (read-through, not additional RPC runs)
+
+- **Existing-item conversion and dependants:** removed. The Map or plan check keeps the item's
+  kind and identity and routes unresolved questions to absent-owner handling or `Needs owner:`;
+  closing a map cannot release an existing build item's dependants.
+- **GitHub labels, child issues and hybrid authority:** removed. Map homes are local; an explicit
+  GitHub map request becomes an ideas line. Ordinary build issue publication is unchanged.
+- **Go-ahead and dependency approval during Slice:** resolved. Charting's no-readiness rule lives
+  in the map check, not in the go-ahead rule. Slice starts a fresh settled-source run, whose
+  ordinary dependency answer continues into PRD and publication/filing. It never plans the map
+  in place or marks it ready. The Slice gate still requires all other steps resolved and no fog.
+- **Change-folder close-out:** resolved. Step 4 reuses the map's folder for `prd.md` and `tasks.md`;
+  Slice records Outcome after the artifacts and any required issues exist, so tracker-free
+  close-out does not depend on issue publication.
+- **Research during charting:** resolved. Work the map steps 3 and 4 both apply; newly sharp
+  questions become steps, and Slice waits for them.
+- **Wayfinder credit:** verified against the ingested MIT source linked from the work item and
+  CONCEPT.md. Map pickup, prototype/triage routing, the no-guess override, long-answer storage
+  and the `bc-research` discipline were retained.
+
+The extra paths above were checked against the narrowed instructions, not exercised live. The
+setup, research and prototype relationship edges remain applicable; no edge depended on map
+conversion or tracker-backed maps.

@@ -66,3 +66,18 @@ no change outside planning files; nothing in `work/2-active/` or `work/3-done/`.
 at 3/3.
 
 Arms run 3 times per scenario.
+
+## Narrowing regression (changed arm only)
+
+Run each scenario once. Also require the map item to carry its `/bc-plan-to-pipeline`
+map-mode pickup line, and require the settled item to retain `Kind: feature`.
+
+Read-through fixtures for the narrowed paths (not extra RPC runs):
+
+| Setup | Expected route and artifact |
+| --- | --- |
+| An existing feature has an unsettled question and another item is blocked by it. | Keep the feature's kind and identity. Use absent-owner handling or `Needs owner:`. Do not close the feature or change what the dependant waits on. |
+| Slice is the only open step, nothing is unspecified, and the owner says "yes" to a new dependency. | Continue the fresh settled-source run to build artifacts, not the charting report. Only the new build item can be marked ready. Tick Slice and record the Outcome after the artifacts and any required issues exist. |
+| The settled map lives at `docs/changes/<slug>/map.md`, with no tracker. | Write `prd.md` and `tasks.md` in that folder, then record the Outcome in `map.md`; no issue publication is needed. |
+| A research answer returns during charting and makes an unspecified question actionable. | Record the answer and tick the research step, turn the newly sharp question into a step, and keep Slice blocked by it. |
+| The project has both a work table and a GitHub tracker, or the owner asks to put the map in GitHub. | The tracker does not change the local map home. If the owner requests a GitHub map instead, write an ideas line, not an issue. |
