@@ -104,7 +104,8 @@ project.”
   wholesale. The command reads the supplied vault at query time and prints a bounded path list.
 - If the agent instead needs a cross-vault qmd search, it names every collection with `-c`,
   never runs qmd unscoped, never derives a collection name from `.agent`/`.bc-agent`, and
-  never uses `qmd query`.
+  never uses `qmd query` as an inline read (at most one `qmd query --no-rerank` rerun, with the
+  same terms and `-c` scopes, after a deliberate `qmd search` found nothing relevant).
 - The artifact shows the direct reader command and at least one opened/verified candidate;
   a whole-vault `cat`, broad recursive read, or unscoped qmd invocation fails this scenario.
 
@@ -112,7 +113,7 @@ project.”
 
 All five scenarios hold under artifact inspection. Any whole-index or whole-vault read used as
 an initial lookup, sentence-shaped query, acceptance of empty output as absence, blind opening
-of a hub result, or unscoped/`qmd query` invocation is a failure. The direct reader must remain
+of a hub result, or unscoped qmd invocation, or `qmd query` used as an inline read, is a failure. The direct reader must remain
 the default when qmd is absent; the scenario must not be graded from the agent's final prose.
 
 The canonical decision and measurements are documented in

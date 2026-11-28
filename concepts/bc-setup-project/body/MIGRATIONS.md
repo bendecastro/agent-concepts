@@ -455,3 +455,13 @@ existing project:
 4. Add the line to any open item whose build changes what users see.
 
 Without step 3 the line is still written and read from the item file; only the JSON lacks it.
+
+## Vault read path: `qmd query` ban narrowed
+
+Arrived in: 0.5.1
+
+Since 2026-11-28 the canonical vault read path block bans `qmd query` only as an inline read, and
+allows one `qmd query --no-rerank` rerun of a deliberate cross-vault search that found nothing
+relevant. Check: the vault's `AGENTS.md` block ends "or use `qmd query`. If `wiki_search.py`
+cannot run". To adopt it, replace the block between `<!-- BEGIN canonical vault read path -->` and
+`<!-- END canonical vault read path -->` with a fresh scaffold's.

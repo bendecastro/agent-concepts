@@ -27,3 +27,16 @@ Two fresh general-purpose subagents, identical question, ground truth verified b
 1. Known keyword → grep; qmd adds nothing. The skill's "grep is still fine" caveat is load-bearing, not politeness.
 2. Concept/decision recall ("have I thought about this before?") → qmd finds what grep cannot find at all; its value is preventing false "no prior art", not saving tokens on successful searches.
 3. Measured tiers reconfirmed: `search` 0.47s, `--no-rerank` 20.7s.
+
+## Plan 2026-11-28: re-run Round 2 against the reworded body (not yet run on a model)
+
+The body now says: short keywords always, `qmd search` first, one `qmd query --no-rerank` rerun on a miss or a likely paraphrase, full `qmd query` only when ranking quality matters. The Round 2 result above predates it and does not show that a cold agent reaches ground truth under it.
+
+Baseline measured 2026-11-28 (qmd, `music` collection present, plain BM25, no model): `qmd search "stop two machines doing duplicate work on the same ticket" -c music --format files -n 10` returned **no results** (2.7s). Unscoped, the same query returned one unrelated hit (`agents` collection, `work/3-done/2026-11/024-skill-delivery/evidence/2026-11-25-repo-scout.md`, score 90%, 3.6s), not the ground truth. Note the original Round 2 ground truth was in the `bc-pipeline-to-done` / `bc-dispatching-parallel-agents` bodies and the `music` collection holds the music corpus, so this checks the BM25 inference only; the model run must use the collections Round 2 used.
+
+Run when quota returns (openai-codex/gpt-6.1-terra, thinking low), one cold agent given only the new `bc-qmd` body and the Round 2 question, grep forbidden:
+
+1. Record the first command it picks and every follow-up, with wall time.
+2. Record whether it reaches the ground truth (`bc-pipeline-to-done` claim-branch/worktree section) and at which rank.
+3. PASS: it starts with `qmd search`, reruns as `qmd query --no-rerank` after the miss, and reports the ground truth. FAIL: it concludes "no prior art" after `search` alone, accepts an unrelated `search` hit (such as the 90% `agents` hit recorded above) as the answer, or picks full `query` for an exploratory lookup. If `search` itself returns the ground truth, record it as INCONCLUSIVE for the fallback (the rule was not exercised) and rerun with the question unchanged on the same collections as Round 2.
+4. Only then tick the work item step and update `CONCEPT.md`'s "has not been re-run" note.

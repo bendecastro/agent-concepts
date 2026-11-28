@@ -16,11 +16,18 @@ whole, grep and a repo's own index files are still fine.
 
 ## Searching
 
-- `qmd query "<terms>"` — hybrid + reranking, best quality; the default. Add `--intent "<what
-  you're actually after>"` when terms are ambiguous. Unscoped queries search all collections;
-  scope with `-c <collection>` (repeatable).
-- `qmd search "<terms>"` — BM25 keyword only, fast, no LLM; use for exact identifiers.
-  `qmd vsearch` — semantic only.
+- **Query shape: 2–4 meaningful content keywords, never the user's full question.** In a
+  pre-registered 20-question benchmark (bc-wiki-maintain's retrieval benchmark), `qmd search`
+  with full sentences missed 17/20 (Wilson 95% CI [0.64, 0.95]); the same questions as keywords
+  missed 5/20 (CI [0.11, 0.47]). Short terms for `qmd query` are the same default, not a
+  measured finding.
+- Order: `qmd search "<terms>"` first (BM25 keyword only, fast, no LLM; right for inline lookups
+  and exact identifiers). If it returns nothing relevant, or the concept may be worded
+  differently in the corpus (a paraphrase, "have we decided this before?"), rerun once as
+  `qmd query --no-rerank "<same short terms>"` before concluding there is no prior art. Full
+  `qmd query` (hybrid + reranking) only when ranking quality matters; add `--intent "<what
+  you're actually after>"` when terms are ambiguous. `qmd vsearch` — semantic only.
+- Unscoped commands search all collections; scope with `-c <collection>` (repeatable).
 - Latency (measured, ~1k docs, cold CLI): `search` ≈ 0.5s, `query --no-rerank` ≈ 20s, full
   `query` ≈ 55s (models reload per invocation). Pick the cheapest tier that answers: identifiers
   → `search`; exploring → `--no-rerank`; full `query` when ranking quality actually matters.

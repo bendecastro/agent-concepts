@@ -1,7 +1,7 @@
 ---
 test_kind: accuracy
 test_status: pass
-tested: 2026-07-14
+tested: 2026-11-28
 deployed: 2026-07-13
 ---
 # Concept: qmd
@@ -27,6 +27,7 @@ The bc-agent wiki pattern hands cold agents a growing markdown vault and tells t
 - **Synced canon + convergence script own the collection set.** The registry lives at `<owner-scripts>/config/qmd-collections.yml` (`~/`-based paths; contexts with authority labels; five initial collections: agents, wiki, music, scripts, project B); `<owner-scripts>/bin/setup/<qmd-setup-script>` idempotently converges each machine via the qmd CLI (ignore lists are YAML-only upstream, so those alone are patched into the machine registry), installs the daily `<qmd-refresh-job>.timer` where systemd exists, and is run by `qmd.pkg`'s `post_install`. Ad-hoc `qmd collection add` outside the canon is disallowed — machines would drift.
 - **New vaults register by default (opt-out).** `bc-setup-project`'s close-out appends the new vault to the canon and runs `<qmd-setup-script>`, asking only whether the user wants the vault *excluded*. Chosen over opt-in because the realistic failure is a vault silently never joining the index. A visible-layout project (knowledge at the repository root, `.bc-agent/` for mechanics) registers two collections, because qmd skips every hidden path part (`reindexCollection`, v2.5.3), so a repository-rooted collection cannot index `.bc-agent/`; `bc-wiki-maintain`'s `wiki_lint.py --qmd-entry` prints them (2026-11-12).
 - **Body describes the pattern, not one machine's commands (2026-08-03).** The skill body originally named this workspace's own wrapper scripts and collections file, which made it useless to anyone else and implied tooling they do not have. It now states the rule — collection definitions in one version-controlled file, applied by a single setup command, one owner for mutations — and marks the author's implementation as one example. The durable findings (project-local `.qmd/` shadowing, latency tiers, authority-labelled contexts) are the reusable part and stay stated plainly.
+- **Keyword `qmd search` first, `qmd query --no-rerank` on a miss (2026-11-28).** The body used to call `qmd query` "the default" while `bc-wiki-maintain` forbade it for inline reads, so agents got opposite advice depending on which skill loaded. This skill now owns the rule: 2–4 content keywords, `qmd search` first; if it returns nothing relevant or the concept may be worded differently, rerun once as `qmd query --no-rerank` with the same short terms before concluding there is no prior art; full `qmd query` only when ranking quality matters. The fallback exists because the 2026-07-14 paraphrase round found ground truth only via `qmd query --no-rerank` while grep got 0 hits. The query-shape evidence is `bc-wiki-maintain`'s pre-registered benchmark, [`retrieval-results.md`](../bc-wiki-maintain/tests/retrieval-results.md): `qmd search` with full sentences missed 17/20, with keywords 5/20. It measured `qmd search` only, so it supports the keyword rule for `search`, not a ranking claim between the commands; `search` first rests on latency.
 - **Reference concept.** No runtime discipline gates of its own (the indexing-authority rule is enforced by the consuming pipeline concepts), so the test bar is an accuracy check against the live tool, not a pressure scenario.
 
 ## Provenance
@@ -41,7 +42,8 @@ The bc-agent wiki pattern hands cold agents a growing markdown vault and tells t
 
 `tests/accuracy-check.md` — verify commands/flags against a live qmd install before deploy (reference concept, no pressure scenario). **Run 2026-07-13 on Arch (qmd 2.5.3): PASS**; surfaced the absolute-collection-paths finding that fed the global-mode decision.
 
-`tests/grep-baseline-comparison.md` — A/B against a grep-only cold agent. **Run 2026-07-14: PASS.** Keyword-friendly questions are a tie (grep is equally fast/cheap/correct); paraphrase questions with zero keyword overlap are grep-unanswerable (0 hits) while `qmd query --no-rerank` hit ground truth first attempt. Also validated that a cold agent picks the correct latency tier from the skill text alone. Grounds the skill's "when to reach for it" line empirically.
+`tests/grep-baseline-comparison.md` — A/B against a grep-only cold agent. **Run 2026-07-14: PASS.** Keyword-friendly questions are a tie (grep is equally fast/cheap/correct); paraphrase questions with zero keyword overlap are grep-unanswerable (0 hits) while `qmd query --no-rerank` hit ground truth first attempt. Also validated that a cold agent picks the correct latency tier from the skill text alone. Grounds the skill's "when to reach for it" line empirically. The 2026-11-28 wording change (`search` first, `--no-rerank` fallback) was re-run on 2026-11-28 with `anthropic/claude-haiku-5-5` (thinking low), an owner-approved substitute for Terra: **PASS**. Both clean with-change runs started with keyword `search` and reran as `query --no-rerank`, then reported the claim mechanism in 41–44s. Both old-body runs used full `qmd query`, taking 167s in one and timing out in the other. Details in [`grep-baseline-results-2026-11-28.md`](tests/grep-baseline-results-2026-11-28.md).
+Accuracy check of the 2026-11-28 figures against the benchmark (scope: `qmd search` only): appended to `tests/accuracy-check.md`, PASS.
 
 ## Deploy targets
 

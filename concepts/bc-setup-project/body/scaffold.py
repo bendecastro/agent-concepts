@@ -356,8 +356,11 @@ qmd search "term one term two" -c vault-a -c vault-b --format files -n 15
 ```
 
 Never run qmd unscoped, guess a collection from a `.agent`/`.bc-agent` basename, treat exit 0
-or `[]` as proof of an answer's absence, or use `qmd query`. If `wiki_search.py` cannot run,
-do not read the whole vault; use a bounded lexical candidate search and verify its pages.
+or `[]` as proof of an answer's absence, or use `qmd query` as an inline read. If a deliberate
+cross-vault `qmd search` returns nothing relevant and the concept may be worded differently, rerun it
+once as `qmd query --no-rerank` with the same short terms and `-c` scopes before concluding there is no prior art.
+If `wiki_search.py` cannot run, do not read the whole vault; use a bounded lexical candidate search
+and verify its pages.
 
 Read `index.md` only for broad project orientation ("what is this project?"); never load it
 whole or grep its rows to locate a page.

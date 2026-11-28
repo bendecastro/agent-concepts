@@ -31,3 +31,11 @@ Authored 2026-07-13. **Run 2026-07-13 on Arch (qmd 2.5.3 via `installers/package
 - Check 5: `qmd update && qmd embed` on an unchanged corpus is a clean no-op ("0 new, 3 unchanged", "already have embeddings").
 - Check 6: models land in `~/.cache/qmd/models/`, 2.2GB total (via `qmd pull`); Node ≥ 22 confirmed required by upstream docs, ran on 26.x.
 - Deviations from the 2.6.3-based docs at 2.5.3: none encountered in the skill's command surface. Minor upstream nit: `qmd status` crashes with EPIPE when its stdout pipe closes early (e.g. `| head`).
+
+## Accuracy check 2026-11-28: query-shape wording against the benchmark
+
+Claim checked: the body's figures (full-sentence qmd searches missed 17/20, Wilson 95% CI [0.64, 0.95]; keyword searches missed 5/20, CI [0.11, 0.47]) and the rule that inline lookups use 2–4 keywords.
+
+- Source: `concepts/bc-wiki-maintain/tests/retrieval-results.md` table rows `C_qmd_keywords` 0.25 (5/20) and `C2_qmd_sentence` 0.85 (17/20); the CIs match `concepts/bc-wiki-maintain/body/SKILL.md` § Find context before reading it.
+- Scope: both benchmark arms used `qmd search` (BM25). The body attributes the 17/20 and 5/20 figures to `qmd search` only and presents short terms for `qmd query` as a default, not a measured finding. It makes no claim that `qmd query` ranks worse or better; ordering `search` first rests on measured latency (≈55s full, ≈20s `--no-rerank`), and the `--no-rerank` fallback on the 2026-07-14 paraphrase round, not on this benchmark.
+- Result: PASS for the figures and their `qmd search` scope. The `search`-then-fallback ordering is a design choice, checked by the scenario re-run planned in `grep-baseline-comparison.md`, not by this check.

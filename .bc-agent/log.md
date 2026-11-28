@@ -2460,3 +2460,6 @@ Inconclusive: both attempts on anthropic/claude-haiku-5-5 low (owner's Haiku fal
 
 ## [2026-11-28] test | v0.5.0 stranger end-to-end rerun: fail
 With the account-pooling extension (no 429), setup passed but the planner built and filed the change as done, so the build pushed it without pipeline roles. Not promoted; idea filed in work/0-ideas.md.
+
+## [2026-11-28] implement | 059 bc-qmd owns the qmd query rule
+bc-qmd: 2–4 keywords, `qmd search` first, one `qmd query --no-rerank` rerun on a miss; bc-wiki-maintain and the generated vault block ban `qmd query` only inline (migration "Vault read path: `qmd query` ban narrowed"). Round 2 paraphrase rerun PASS 2/2 on Haiku 5.5 low (41–44s vs 167–237s). Read-path scenario 5 failed in both arms (whole-vault reads, predates 059). Moved onto master without 055 by owner choice.

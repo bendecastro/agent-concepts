@@ -21,6 +21,10 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
   checkout; trust its SessionStart hook in `/hooks` or the kernel does not load. Uninstall removes both
   plugins. Running the README's Codex refresh on a skills-only install adds the kernel.
 
+### Fixed
+
+- `bc-qmd` no longer calls `qmd query` the default: use `qmd search` with 2–4 keywords first, and rerun once as `qmd query --no-rerank` when it finds nothing relevant or the concept may be worded differently. `bc-wiki-maintain` and the generated vault block now ban `qmd query` only as an inline read. Earlier projects narrow their vault block by the new "Vault read path: `qmd query` ban narrowed" migration.
+
 ## [0.5.0] - 2026-11-28
 
 ### Renamed
