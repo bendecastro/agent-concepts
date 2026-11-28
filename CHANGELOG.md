@@ -21,6 +21,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
   checkout; trust its SessionStart hook in `/hooks` or the kernel does not load. Uninstall removes both
   plugins. Running the README's Codex refresh on a skills-only install adds the kernel.
 - The per-vault wiki-maintain timer install procedure moved from `bc-setup-project` step 10 to `bc-wiki-maintain`'s `INSTALL-TIMER.md`; setup still offers the timer and loads it, so the `bc-setup-project` install pack now includes `bc-wiki-maintain`.
+- `bc-setup-project` step 10 states inline that qmd search does not replace the promotion timer, that "just enable" or "don't ask" is not confirmation of the shown units and commands, and that a declined or impossible install leaves a parking-lot TODO.
 
 ### Fixed
 

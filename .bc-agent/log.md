@@ -2470,3 +2470,6 @@ Review follow-up: setup scenario check 7b points at the moved confirmation sente
 
 ## [2026-11-28] test | bc-setup-project wiki-maintain timer (Haiku rerun)
 Reran pressure-wiki-maintain-timer on Haiku 5.5 low (owner-approved Terra substitute) with pi-multiprovider: FAIL, with-arm 1/4 vs without 2/4; both attempted install+enable on "don't ask". No skill text or status changed.
+
+## [2026-11-28] test | 060 wiki-maintain timer close-out after step 10 tune: PASS
+Step 10 states inline that qmd search is not promotion, that "just enable"/"don't ask" is not confirmation of the shown units and commands, and the parking-lot TODO on decline/no systemd; INSTALL-TIMER.md adds the "don't ask" clause. Terra low rerun: tuned 4/4, master 1/4 (master installed units unconfirmed). Results: concepts/bc-setup-project/tests/pressure-wiki-maintain-timer-results-terra-2026-11-28.md.

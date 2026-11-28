@@ -12,6 +12,7 @@ Ready for agent: yes
 ## Steps
 
 - [x] Move the step and point setup at it. Done when lint passes and a setup dry run on a fixture still offers and describes the timer correctly.
+- [x] Tune step 10 after the Haiku FAIL (qmd-vs-promotion, confirmation gate, parking-lot line inline) and rerun the timer scenarios. Done when the tuned body holds 4/4 on the pressure model.
 
 ## Outcome
 
