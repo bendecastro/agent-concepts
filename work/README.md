@@ -23,12 +23,11 @@ Write project-specific notes outside the markers; the script keeps them.
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 2/5 |
-| 2 | [058-kernel-unattended-default](1-planned/058-kernel-unattended-default.md) | planned, waiting on owner | — | 061-lint-repeated-text-and-copies | About six skills restate "when no one can answer (delegated child, headless job, owner away), take the recommended option and record the assumption" in differe… | 0/1 |
-| 3 | [061-lint-repeated-text-and-copies](1-planned/061-lint-repeated-text-and-copies.md) | planned, ready for agent | [058-kernel-unattended-default](1-planned/058-kernel-unattended-default.md) | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 2/3 |
-| 4 | [064-wiki-read-path-reads-whole-vault](1-planned/064-wiki-read-path-reads-whole-vault.md) | planned | — | — | In the read-path pressure scenario 5 (qmd absent), all four Haiku runs opened every tracked page, including `index.md`, both with and without the 059 change; t… | 0/1 |
-| 5 | [065-timer-install-includes-notifier](1-planned/065-timer-install-includes-notifier.md) | planned | — | — | every wiki runner service sets `OnFailure=bc-wiki-notify@%n.service`, but `bc-wiki-maintain`'s `INSTALL-TIMER.md` (the path setup step 10 loads) never installs… | 0/1 |
+| 2 | [061-lint-repeated-text-and-copies](1-planned/061-lint-repeated-text-and-copies.md) | planned, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 2/3 |
+| 3 | [064-wiki-read-path-reads-whole-vault](1-planned/064-wiki-read-path-reads-whole-vault.md) | planned | — | — | In the read-path pressure scenario 5 (qmd absent), all four Haiku runs opened every tracked page, including `index.md`, both with and without the 059 change; t… | 0/1 |
+| 4 | [065-timer-install-includes-notifier](1-planned/065-timer-install-includes-notifier.md) | planned | — | — | every wiki runner service sets `OnFailure=bc-wiki-notify@%n.service`, but `bc-wiki-maintain`'s `INSTALL-TIMER.md` (the path setup step 10 loads) never installs… | 0/1 |
 
 - [Ideas](0-ideas.md): 10
-- [Done](3-done/): 59
+- [Done](3-done/): 60
 - [Dropped](4-dropped/): 1
 <!-- work-index:end -->

@@ -2532,3 +2532,6 @@ Tuned the bullet so each skipped step and its open question go into the same rec
 
 ## [2026-11-28] test | agent-kernel unattended-default round 4 (058)
 Tuned the "When no one can answer" bullet: the record is worded as an assumption made because no one could answer. Rerun on Haiku 5.5 low (Codex quota out): FAIL, new kernel 5/6 (A 3/3, B 2/3; one run wrote "chosen as the default"), old 0/6. Results in concepts/agent-kernel/tests/pressure-unattended-default-results-2026-11-28-round4.md.
+
+## [2026-11-28] deploy | agent-kernel unattended default (058)
+Owner accepted the round 4 result (Haiku low, new 5/6, old 0/6) despite the unmet 3/3 bar; merged the held kernel text and closed 058.
