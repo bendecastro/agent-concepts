@@ -134,7 +134,7 @@ Ask: "What should the public interface look like? Which behaviors matter most to
 
 **Small bug fixes:** when the requested behaviour and unchanged interface are clear, state the regression to test and proceed without interactive plan approval; still watch RED before the fix and GREEN after it. Ask if behaviour or interface needs a decision.
 
-**Unattended mode:** with no user to approve the plan, record the behavior list and interface decision in your output or commit message; keep the other planning checks.
+**Unattended mode:** with no user to approve the plan (delegated child, headless job), proceed: record the behavior list and interface decision in your output or commit message; keep the other planning checks.
 
 ### 2. Tracer bullet
 Write ONE test that confirms ONE thing. **RED:** test fails (watch it fail for the right reason). **GREEN:** minimal code to pass. This proves the path works end-to-end. [confirm-red.py](scripts/confirm-red.py) can run current changed tests against old code in a disposable tree (a full tracked-tree copy under `$TMPDIR` per run — on a large repo, require the configured storage health check to pass first; if none is configured, skip it with one report line): `python3 "$AGENT_CONCEPTS/concepts/bc-tdd/body/scripts/confirm-red.py" --base HEAD -- <test command...>` (for pytest, follow the runner and temp-file rules above; see `--help` for environment limits). Inspect the failure reason, not just its exit status.

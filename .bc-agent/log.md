@@ -2451,3 +2451,5 @@ Private swarm-mode kernel drops its durability copy for a pointer; routing-decis
 Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-audit.md (no gaps).
 ## [2026-11-28] implement | 058 kernel unattended default
 Kernel gains one rule: with no one to answer, assume-and-record judgment calls, stop on destructive/publishing/owner-only steps; bc-design/bc-tdd trimmed to deltas; packages staged; scenario written, not run.
+## [2026-11-28] implement | 058 review fixes
+Kernel unattended bullet defers to existing destructive/publish rules and argue-for-best-outcome, child must be unable to reach parent; bc-tdd restores "proceed"; scenario arms now old vs new kernel plus headless prompt B; CONCEPT precedence clause; packages restaged.
