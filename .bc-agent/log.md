@@ -2583,3 +2583,6 @@ Wrote `docs/research/2026-11-28-release-audit-0.5.1.md` (releasing step 2 for v0
 
 ## [2026-11-28] test | release audit 0.5.1 gaps settled by read check
 The three audit gaps (056 fallback placement, 057 fail-closed when HOSTING.md is missing, 063 where the Dependencies answer goes) are one-line routing or stop clauses with no judgment; read-checked per releasing step 2. Owner kept the name agent-kernel (bc-kernel rename declined).
+
+## [2026-11-28] implement | plan the replan experience
+Filed 068-replan-protocol, 069-plan-models-state-first and 070-integration-amendments-and-removals from the study of plans that failed review (this repo and another project); owner picked all recommended options. The dashboard display is its own item in the dashboard project.

@@ -40,3 +40,6 @@
 40. 064-wiki-read-path-reads-whole-vault
 41. 065-timer-install-includes-notifier
 42. 067-planning-map-mode
+43. 068-replan-protocol
+44. 069-plan-models-state-first
+45. 070-integration-amendments-and-removals
