@@ -4,9 +4,9 @@
 For each install method (Pi package, Claude Code plugin, Codex plugin, `npx skills` all-skills
 command, one `npx skills` pack) the test runs in a new empty HOME with a scrubbed environment:
 install, check the installed skill list equals the expected list (`concepts/public-skills.json`,
-or for a pack the pack's skill plus every skill it needs), run one bundled helper from the
-installed copy, check that any installed pipeline skill includes its publish checker, update,
-check the skill list again, uninstall and check nothing is left listed.
+or for a pack the pack's skill plus every skill it needs), run a bundled helper from the
+installed copy when its skill is present, check that any installed pipeline skill includes its
+publish checker, update, check the skill list again, uninstall and check nothing is left listed.
 
 `pi-npm` installs what `npm publish` would ship: it runs `npm pack` on this checkout, checks the
 tarball holds the kernel extension, the pipeline roles and the licence and nothing outside
@@ -46,8 +46,7 @@ PLUGIN_ID = "agent-concepts@agent-concepts"
 MARKETPLACE = "agent-concepts"
 NPX_AGENT = "pi"  # global skills dir ~/.agents/skills, real copies
 DEFAULT_PACK = "bc-code-review"
-# Helper run from the installed copy: argparse --help, no side effects. bc-tdd is in every
-# install the test makes (all skills, and the default pack needs it).
+# Helper run from the installed copy when bc-tdd is present: argparse --help, no side effects.
 HELPER_SKILL = "bc-tdd"
 HELPER_RELPATH = "scripts/confirm-red.py"
 PUBLISH_SKILL = "bc-pipeline-to-done"
@@ -79,7 +78,7 @@ if (result.diagnostics.length) process.exit(3);
 
 
 # Exercise Pi's own pre-run prompt assembly without starting a provider request.
-# _prepareRun is private; a Pi upgrade that changes it must fail this compatibility check.
+# Pi's _prepareRun and _expandSkillCommand are private; changes to either must fail this check.
 PI_KERNEL_PROMPT = r"""
 import { realpathSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -92,6 +91,14 @@ const { session, extensionsResult } = await pi.createAgentSession({
 });
 if (extensionsResult.errors.length) throw new Error(JSON.stringify(extensionsResult.errors));
 await session.bindExtensions({});
+const command = process.argv[3];
+if (command) {
+  // This is the same expansion used by _preparePrompt, before it validates model/auth.
+  const expanded = session._expandSkillCommand(command);
+  if (!expanded.startsWith('<skill name="bc-ui-design" ') || !expanded.includes('Load `bc-design`')) {
+    throw new Error(`${command} did not expand to the bc-design redirect`);
+  }
+}
 await session._prepareRun({ messageType: "user", prompt: "check", images: [] });
 console.log(JSON.stringify(session.systemPrompt));
 """
@@ -235,8 +242,11 @@ class PiNpmPackage(PiPackage):
     def check_kernel_prompt(self):
         probe = self.box.root / "check-pi-kernel.mjs"
         probe.write_text(PI_KERNEL_PROMPT, encoding="utf-8")
+        # Expect the command if the alias is shipped, even if Pi fails to discover it.
+        alias = self.box.root / "package/skills/bc-ui-design/SKILL.md"
+        commands = ["/skill:bc-ui-design"] if alias.is_file() else []
         try:
-            out = self.box.run("node", str(probe), shutil.which("pi") or "pi")
+            out = self.box.run("node", str(probe), shutil.which("pi") or "pi", *commands)
             prompt = json.loads(out)
         except (CheckFailed, json.JSONDecodeError) as exc:
             raise CheckFailed(f"kernel check could not read Pi system prompt: {exc}") from exc
@@ -249,6 +259,8 @@ class PiNpmPackage(PiPackage):
         if f"<agent-kernel>\n{kernel}\n</agent-kernel>" not in prompt:
             raise CheckFailed("kernel section missing from Pi system prompt")
         print("  ok: kernel section present in Pi system prompt", flush=True)
+        if commands:
+            print("  ok: /skill:bc-ui-design expanded to the bc-design redirect", flush=True)
 
     def install(self):
         tarball = self.box.run("npm", "pack", "--silent", "--pack-destination", str(self.box.root),
@@ -382,21 +394,17 @@ def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: 
         agent.check_kernel_prompt()
     listed = agent.listed()
     check_listed("after install", expected, listed)
-    if method == "pi-npm" and "bc-ui-design" in listed:
-        alias = (listed["bc-ui-design"] / "SKILL.md").read_text(encoding="utf-8")
-        if "Load `bc-design`" not in alias:
-            raise CheckFailed("bc-ui-design alias does not point to bc-design")
-        print("  ok: installed bc-ui-design: " + alias.splitlines()[-1], flush=True)
     if PUBLISH_SKILL in listed:
         checker = agent.helper(listed, PUBLISH_SKILL, PUBLISH_RELPATH)
         if not checker.is_file():
             raise CheckFailed(f"no installed copy of {PUBLISH_SKILL}/{PUBLISH_RELPATH} at {checker}")
         print(f"  ok: publish checker present in the installed skill: {checker}", flush=True)
-    helper = agent.helper(listed, HELPER_SKILL, HELPER_RELPATH)
-    out = box.run(sys.executable, str(helper), "--help")
-    if "usage" not in out.lower():
-        raise CheckFailed(f"helper {helper} --help printed no usage")
-    print(f"  ok: helper ran from the installed copy: {helper}", flush=True)
+    if HELPER_SKILL in expected:
+        helper = agent.helper(listed, HELPER_SKILL, HELPER_RELPATH)
+        out = box.run(sys.executable, str(helper), "--help")
+        if "usage" not in out.lower():
+            raise CheckFailed(f"helper {helper} --help printed no usage")
+        print(f"  ok: helper ran from the installed copy: {helper}", flush=True)
     agent.update()
     check_listed("after update", expected, agent.listed())
     agent.uninstall()

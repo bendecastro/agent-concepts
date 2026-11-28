@@ -11,7 +11,10 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Renamed
 
-- `bc-ui-design` is now `bc-design`. The old name remains an alias until at least v0.6.0.
+<a id="bc-ui-design-rename"></a>
+
+- `bc-ui-design` is now `bc-design`. The old name remains a compatibility alias.
+  Earliest removal: v0.6.0.
 
 ### Changed
 

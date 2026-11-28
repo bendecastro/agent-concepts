@@ -83,6 +83,26 @@ class FreshInstallCheckTest(unittest.TestCase):
         self.assertTrue((fit.ROOT / "concepts" / fit.HELPER_SKILL / "body" / fit.HELPER_RELPATH).is_file())
 
 
+def test_npx_pack_alias_completes_without_the_unrelated_helper(tmp_path, monkeypatch):
+    def run(args, *, env, **kwargs):
+        skills_dir = Path(env["HOME"]) / ".agents" / "skills"
+        if args[:2] == ("skills", "add"):
+            for name in args[args.index("--skill") + 1:]:
+                skill = skills_dir / name / "SKILL.md"
+                skill.parent.mkdir(parents=True)
+                skill.touch()
+        elif args[:2] == ("skills", "remove"):
+            for name in args[args.index("-y") + 1:]:
+                shutil.rmtree(skills_dir / name)
+        elif args[:2] != ("skills", "update"):
+            pytest.fail(f"unexpected command: {args}")
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with TemporaryDirectory(dir=tmp_path) as scratch:
+        fit.run_method("npx-pack", Path(scratch), load_listing(fit.ROOT), "bc-ui-design", None)
+
+
 @pytest.mark.parametrize("has_checker", [False, True], ids=["missing", "present"])
 def test_claude_install_checks_for_bundled_publish_checker(tmp_path, monkeypatch, has_checker):
     skill = "bc-pipeline-to-done"
@@ -238,5 +258,14 @@ def test_pi_npm_checks_kernel_in_system_prompt(tmp_path):
             print(f"  expected failure: {exc.value}")
         finally:
             extension.write_text(contents)
+            manifest.write_text(manifest_text)
+        data = json.loads(manifest_text)
+        data["pi"]["skills"].remove("./skills/bc-ui-design")
+        try:
+            # Leave the packed stub intact; only Pi's registration is broken.
+            manifest.write_text(json.dumps(data))
+            with pytest.raises(fit.CheckFailed, match=r"/skill:bc-ui-design did not expand to the bc-design redirect"):
+                agent.check_kernel_prompt()
+        finally:
             manifest.write_text(manifest_text)
         agent.check_kernel_prompt()

@@ -10,7 +10,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from hypothesis import given, strategies as st
+from hypothesis import example, given, strategies as st
 
 SCRIPTS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SCRIPTS))
@@ -109,25 +109,46 @@ class ReleaseCheckTests(unittest.TestCase):
         self.assertEqual(release_check.removed_skill_problems(
             previous, current, "## [Unreleased]\n### Removed\n- `bc-old`: removed.\n"), [])
 
-    @given(st.sets(st.from_regex(r"bc-[a-z]{1,8}", fullmatch=True), max_size=12),
-           st.sets(st.from_regex(r"bc-[a-z]{1,8}", fullmatch=True), max_size=12))
-    def test_unannounced_disappearances_are_exactly_previous_minus_current(self, previous, current):
-        problems = release_check.removed_skill_problems(previous, current, "")
-        self.assertEqual(set(problems), {
+    @given(st.dictionaries(st.from_regex(r"bc-[a-z]{1,8}", fullmatch=True), st.tuples(
+        st.booleans(), st.booleans(),
+        st.sampled_from(("none", "valid", "mention", "wrong-release", "wrong-heading")),
+    ), max_size=12))
+    @example({"bc-old": (True, False, "mention")})
+    @example({"bc-old": (True, False, "wrong-release")})
+    @example({"bc-old": (True, False, "wrong-heading")})
+    @example({"bc-old": (True, False, "valid")})
+    def test_only_current_release_removed_entries_exempt_disappearances(self, skills):
+        previous = {name: [] for name, (old, _, _) in skills.items() if old}
+        current = {name: [] for name, (_, new, _) in skills.items() if new}
+        entries = {kind: "" for kind in ("valid", "mention", "wrong-release", "wrong-heading")}
+        for name, (_, _, kind) in skills.items():
+            if kind != "none":
+                entries[kind] += (f"- Removed screenshots; see `{name}` for context.\n" if kind == "mention"
+                                  else f"- `{name}`: replaced.\n")
+        self.tag_previous_release(previous)
+        self.write_json("concepts/public-skills.json", {"skills": current})
+        (self.root / "CHANGELOG.md").write_text(
+            "## [1.2.3] - 2026-11-25\n### Removed\n" + entries["valid"] + entries["mention"]
+            + "### Changed\n" + entries["wrong-heading"]
+            + "## [1.2.2] - 2026-11-24\n### Removed\n" + entries["wrong-release"])
+        self.assertEqual(set(release_check.previous_release_problems(self.root, "v1.2.3")), {
             f"skill `{name}` disappeared without an alias or CHANGELOG Removed entry"
-            for name in previous - current
+            for name in previous.keys() - current.keys() if skills[name][2] != "valid"
         })
 
-    def test_previous_tag_comparison_uses_current_release_removed_section(self):
+    def tag_previous_release(self, skills):
         def git(*args):
             return subprocess.run(["git", *args], cwd=self.root, check=True, capture_output=True, text=True)
         git("init", "-q")
         git("config", "user.email", "test@example.invalid")
         git("config", "user.name", "Test")
-        self.write_json("concepts/public-skills.json", {"skills": {"bc-old": []}})
+        self.write_json("concepts/public-skills.json", {"skills": skills})
         git("add", "concepts/public-skills.json")
-        git("commit", "-qm", "previous release")
-        git("tag", "v1.2.2")
+        git("commit", "--allow-empty", "-qm", "previous release")
+        git("tag", "-f", "v1.2.2")
+
+    def test_previous_tag_comparison_uses_current_release_removed_section(self):
+        self.tag_previous_release({"bc-old": []})
         self.write_json("concepts/public-skills.json", {"skills": {"bc-new": []}})
         self.assertIn("bc-old", release_check.previous_release_problems(self.root, "v1.2.3")[0])
         (self.root / "CHANGELOG.md").write_text(

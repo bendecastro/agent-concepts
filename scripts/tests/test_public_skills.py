@@ -86,16 +86,36 @@ class PublicSkillsTests(unittest.TestCase):
 
         self.assertEqual(public_skills.unlisted_load_references(self.root), [])
 
+    def alias(self, name: str, target: str) -> None:
+        alias = self.root / "skills" / name
+        alias.mkdir(parents=True, exist_ok=True)
+        (alias / "SKILL.md").write_text(f"This skill was renamed. Load `{target}` and follow it instead.\n")
+
     def test_alias_is_installable_and_depends_on_its_target_without_a_concept(self):
         self.concept("bc-new")
         self.write_graph()
-        alias = self.root / "skills" / "bc-old"
-        alias.mkdir(parents=True)
-        (alias / "SKILL.md").write_text("This skill was renamed. Load `bc-new` and follow it instead.\n")
+        self.alias("bc-old", "bc-new")
         self.assertEqual(public_skills.public_skill_list(self.root),
                          {"bc-new": [], "bc-old": ["bc-new"]})
         self.assertEqual(public_skills.skill_path(self.root, "bc-old"), "./skills/bc-old")
         self.assertEqual(public_skills.unlisted_load_references(self.root), [])
+
+    def test_alias_requires_an_existing_public_target(self):
+        self.concept("bc-hidden", deployed="no")
+        self.write_graph()
+        for target in ("bc-hidden", "bc-missing"):
+            with self.subTest(target=target):
+                self.alias("bc-old", target)
+                with self.assertRaisesRegex(ValueError, f"invalid alias bc-old -> {target}"):
+                    public_skills.public_skill_list(self.root)
+
+    def test_alias_cannot_shadow_a_canonical_name(self):
+        self.concept("bc-old")
+        self.concept("bc-new")
+        self.write_graph()
+        self.alias("bc-old", "bc-new")
+        with self.assertRaisesRegex(ValueError, "invalid alias bc-old -> bc-new"):
+            public_skills.public_skill_list(self.root)
 
     def test_committed_list_staleness(self):
         self.concept("alpha")

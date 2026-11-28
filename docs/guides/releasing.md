@@ -7,11 +7,11 @@ so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
 ## Renaming and removing skills
 
 A renamed skill keeps its old name working across every install method that can carry it
-for at least one minor release. Announce the rename and the first removal version under
-`### Renamed` in the changelog. At removal, list the exact backticked old name under
-`### Removed` in that release. The release check compares the previous release tag's
-public skill names with this release and rejects an unannounced disappearance. Fetch tags
-and history before running it.
+for at least one minor release. Announce the rename and its earliest removal version under
+`### Renamed` in the changelog. At removal, write a separate ``- `<old-name>`: <reason>``
+entry under `### Removed` in that release. Only the leading backticked name counts. The
+release check compares the previous release tag's public skill names with this release
+and rejects an unannounced disappearance. Fetch tags and history before running it.
 
 Local deployments use the alias map in `scripts/deploy-local-skills.py`. For distributed
 installs, put a compatibility `SKILL.md` under `skills/<old-name>/` which says it was
@@ -20,8 +20,9 @@ regenerate the public list, Pi package, plugin manifests and install packs with 
 corresponding `scripts/lint.py --write-*` commands. Pi uses `pi.skills` and npm `files`;
 Claude and Codex use their plugin skill paths; `npx skills` discovers the stub and the
 all-skills command explicitly includes it. Aliases count as installable names, not concepts,
-so they have no concept status or relationship node. The `bc-ui-design` alias may be
-removed no earlier than v0.6.0, after it has shipped through the v0.5 minor release.
+so they have no concept status or relationship node. See the
+[changelog entry for `bc-ui-design`](../../CHANGELOG.md#bc-ui-design-rename) for its earliest
+removal version.
 
 ## Before you tag
 

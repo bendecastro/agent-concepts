@@ -101,7 +101,7 @@ def version_problems(root: Path, tag: str | None = None) -> list[str]:
 
 def removed_skill_problems(previous: set[str], current: set[str], changelog: str) -> list[str]:
     sections = re.findall(r"^### Removed\s*\n(.*?)(?=^## |^### |\Z)", changelog, re.M | re.S)
-    removed = set(re.findall(r"`([a-z0-9-]+)`", "\n".join(sections)))
+    removed = set(re.findall(r"^- `([a-z0-9-]+)`:[ \t]+\S", "\n".join(sections), re.M))
     return [f"skill `{name}` disappeared without an alias or CHANGELOG Removed entry"
             for name in sorted(previous - current - removed)]
 
