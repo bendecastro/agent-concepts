@@ -24,8 +24,11 @@ vault. Never vendor runner scripts into the project.
 If `systemctl --user` is unavailable, skip install and append a
 TODO in the vault parking lot pointing at `$wiki_skill_dir/runner/README.md`.
 
-On confirm, copy — do not symlink — the templates to slug-suffixed
-names, edit the placeholders from the runner README (WorkingDirectory,
+On confirm, copy — do not symlink — the failure notifier template `bc-wiki-notify@.service`
+under its own name and the runner templates to slug-suffixed names. The notifier is required:
+every runner service sets `OnFailure=bc-wiki-notify@%n.service`, so without it a failed run
+notifies nobody. It is instanced per failed unit, so one copy serves every vault; if it is
+already installed with local edits, keep that copy and still verify it. Edit the placeholders from the runner README (WorkingDirectory,
 VAULT_ROOT, PI_BIN, SyslogIdentifier, ExecStart for a non-default skill directory, the timer's
 `Unit=`), stagger `OnCalendar` at least 15 minutes away from any
 existing `bc-wiki-maintain*.timer`, then reload and enable:
@@ -34,17 +37,24 @@ existing `bc-wiki-maintain*.timer`, then reload and enable:
 unit_dir="$HOME/.config/systemd/user"
 slug="<slug>"
 vault="<repo-root>/.bc-agent"
+install -Dm644 "$wiki_skill_dir/runner/bc-wiki-notify@.service" \
+  "$unit_dir/bc-wiki-notify@.service"
 install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.service" \
   "$unit_dir/bc-wiki-maintain-${slug}.service"
 install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.timer" \
   "$unit_dir/bc-wiki-maintain-${slug}.timer"
 # edit placeholders, then:
+systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"
 systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-${slug}.service"
 systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-${slug}.timer"
 systemctl --user daemon-reload
 systemctl --user enable --now "bc-wiki-maintain-${slug}.timer"
 systemctl --user status "bc-wiki-maintain-${slug}.timer"
 ```
+
+The notifier's `ExecStart=` runs `notify-failure.sh` from `~/.agents/skills/bc-wiki-maintain/runner/`;
+edit it only when `$wiki_skill_dir` is elsewhere. The lint-all and all-vault services in the
+runner README use the same notifier; install it once with this step.
 
 Resolve `PI_BIN` with `command -v pi` falling back to `$HOME/.local/bin/pi`.
 If a matching slug-suffixed unit already exists for this `VAULT_ROOT`, report it and skip.

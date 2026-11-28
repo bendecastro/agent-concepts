@@ -2553,3 +2553,6 @@ Graded the completed Haiku-low pack-source stranger run from its evidence (the r
 
 ## [2026-11-28] lint | 061 repeated text is an ERROR
 Switched the repeated-text check to ERROR, widened copy-of sources to the anchor's whole section, and added a repeated-text-allow marker; marked the SDD fallback as a copy and four deliberate restatements as allowed (kernel unchanged).
+
+## [2026-11-28] implement | 065 timer install includes the notifier
+`INSTALL-TIMER.md` now copies and verifies `bc-wiki-notify@.service` with the slug units; `runner/README.md` points there instead of its own notifier and promotion-install recipes. Sandboxed scripted install showed the template in the unit folder and `systemd-analyze --user verify` accepted all three units.

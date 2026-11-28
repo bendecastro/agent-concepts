@@ -26,19 +26,9 @@ status checks.
 
 Install the notifier template alongside whichever runner service(s) you use. It runs
 `notify-failure.sh` from the installed skill (`~/.agents/skills/bc-wiki-maintain/runner/`), so it
-needs no checkout of this repository; edit its `ExecStart=` only if the skill lives elsewhere:
-
-```bash
-wiki_skill_dir="$HOME/.agents/skills/bc-wiki-maintain"
-unit_dir="$HOME/.config/systemd/user"
-install -Dm644 "$wiki_skill_dir/runner/bc-wiki-notify@.service" \
-  "$unit_dir/bc-wiki-notify@.service"
-systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"
-```
-
-Copy the notifier template, the matching runner service, and its timer before running
-`systemctl --user daemon-reload`. Do not symlink the templates, so local edits survive updates.
-Every runner service names it in `OnFailure=`; without it a failed run notifies nobody.
+needs no checkout of this repository. The install and verify commands for it live with the
+promotion timer install in [../INSTALL-TIMER.md](../INSTALL-TIMER.md); every runner service names
+it in `OnFailure=`, so without it a failed run notifies nobody.
 
 ## Lint all configured vaults (detection only)
 
@@ -407,31 +397,12 @@ refuse the vault until the complete worktree is clean.
 
 ## Install after review
 
-Copy the unit templates from the installed skill's `runner/` directory. Leave the
-wrapper with the skill: it finds the detector and `SKILL.md` beside `runner/`.
-
-```bash
-wiki_skill_dir="$HOME/.agents/skills/bc-wiki-maintain"
-unit_dir="$HOME/.config/systemd/user"
-install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.service" \
-  "$unit_dir/bc-wiki-maintain.service"
-install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.timer" \
-  "$unit_dir/bc-wiki-maintain.timer"
-# Required: the service's OnFailure= points here. Without it a failed run notifies nobody.
-install -Dm644 "$wiki_skill_dir/runner/bc-wiki-notify@.service" \
-  "$unit_dir/bc-wiki-notify@.service"
-$EDITOR "$unit_dir/bc-wiki-maintain.service"  # set the paths below
-systemctl --user daemon-reload
-systemctl --user enable --now bc-wiki-maintain.timer
-```
-
-For more vaults, install one unit pair per vault (a dirty tree in one project must not skip the
-others) with the procedure below. The notifier template is instanced per failed unit, so one
-copy of it serves every vault. The wrapper already accepts `.bc-agent/`, `.agent/`, or any other
-vault subdirectory.
-
-The slug-suffixed per-vault install that `bc-setup-project` offers, with its confirmation
-and stagger rules, is in [../INSTALL-TIMER.md](../INSTALL-TIMER.md).
+Install the promotion timer with [../INSTALL-TIMER.md](../INSTALL-TIMER.md): it copies the
+failure notifier template and one slug-suffixed service/timer pair per vault from the installed
+skill's `runner/` directory, verifies all three, and holds the confirmation and stagger rules.
+Leave the wrapper with the skill: it finds the detector and `SKILL.md` beside `runner/`. One unit
+pair per vault means a dirty tree in one project does not skip the others; the wrapper accepts
+`.bc-agent/`, `.agent/`, or any other vault subdirectory.
 
 The supplied unit uses `%h` (the systemd user home specifier) and placeholder paths:
 

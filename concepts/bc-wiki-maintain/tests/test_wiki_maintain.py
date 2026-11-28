@@ -92,6 +92,24 @@ def test_installed_runners_use_bundled_files_without_a_checkout(tmp_path, monkey
     assert "promotion is not applicable to visible-layout projects" in promotion.stdout
 
 
+def test_install_timer_installs_and_verifies_the_failure_notifier():
+    # Every runner service sets OnFailure=bc-wiki-notify@%n.service; the setup install path
+    # must install that template, or a failed promotion run notifies nobody.
+    install = (ROOT / "concepts/bc-wiki-maintain/body/INSTALL-TIMER.md").read_text(encoding="utf-8")
+    assert '"$wiki_skill_dir/runner/bc-wiki-notify@.service"' in install
+    assert 'systemd-analyze --user verify "$unit_dir/bc-wiki-notify@.service"' in install
+
+
+def test_runner_readme_points_to_install_timer_for_the_notifier_and_timer_install():
+    # One home: the runner README links to INSTALL-TIMER.md instead of its own recipe.
+    readme = (RUNNER_DIR / "README.md").read_text(encoding="utf-8")
+    install_after_review = readme.split("## Install after review", 1)[1].split("\n## ", 1)[0]
+    failure_notifications = readme.split("## Failure notifications", 1)[1].split("\n## ", 1)[0]
+    for section in (install_after_review, failure_notifications):
+        assert "install -Dm644" not in section
+        assert "../INSTALL-TIMER.md" in section
+
+
 class WikiLintCliTests(unittest.TestCase):
     def test_code_examples_and_log_links_are_not_graph_findings(self) -> None:
         temp, repo, vault = make_repo("## [2026-08-01] evidence\n\nSee [[missing-log]].\n")

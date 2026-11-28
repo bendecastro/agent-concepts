@@ -17,8 +17,8 @@ Dependencies: none new
 
 ## Steps
 
-- [ ] Move the notifier template install and its verify into `INSTALL-TIMER.md`; make `runner/README.md` point there.
-- [ ] Run the timer install in the pressure sandbox and record that the template is present.
+- [x] Move the notifier template install and its verify into `INSTALL-TIMER.md`; make `runner/README.md` point there.
+- [x] Run the timer install in the pressure sandbox and record that the template is present.
 
 ## Outcome
 
