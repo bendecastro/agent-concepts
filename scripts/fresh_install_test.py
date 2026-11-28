@@ -8,6 +8,11 @@ or for a pack the pack's skill plus every skill it needs), run a bundled helper 
 installed copy when its skill is present, check that any installed pipeline skill includes its
 publish checker, update, check the skill list again, uninstall and check nothing is left listed.
 
+`claude-kernel` and `codex-kernel` add the same marketplace and install the `agent-kernel` plugin
+from it, then run the installed plugin's SessionStart hooks the way each CLI runs them (Codex runs
+its hook once the user trusts it in `/hooks`) and check their context is the canonical kernel
+text, `concepts/agent-kernel/body/AGENT-KERNEL.md`.
+
 `pi-npm` installs what `npm publish` would ship: it runs `npm pack` on this checkout, checks the
 tarball holds the kernel extension, the pipeline roles and the licence and nothing outside
 package.json `files`, unpacks it and installs the unpacked folder (Pi 1.6 records a local
@@ -51,7 +56,9 @@ HELPER_SKILL = "bc-tdd"
 HELPER_RELPATH = "scripts/confirm-red.py"
 PUBLISH_SKILL = "bc-pipeline-to-done"
 PUBLISH_RELPATH = "scripts/publish-check.py"
-METHODS = ("pi", "pi-npm", "claude", "codex", "npx-all", "npx-pack")
+KERNEL_PLUGIN_ID = "agent-kernel@agent-concepts"
+KERNEL_SOURCE = ROOT / "concepts/agent-kernel/body/AGENT-KERNEL.md"
+METHODS = ("pi", "pi-npm", "claude", "codex", "claude-kernel", "codex-kernel", "npx-all", "npx-pack")
 # Files the npm package must carry besides the skill bodies; npm adds README and LICENSE itself.
 PACKED_ALWAYS = ("package.json", "README.md", "LICENSE")
 PACKED_REQUIRED = ("LICENSE", "packages/agent-kernel-pi/index.js", "packages/agent-kernel-pi/AGENT-KERNEL.md",
@@ -337,6 +344,106 @@ class CodexPlugin:
         self.box.run("codex", "plugin", "marketplace", "remove", MARKETPLACE)
 
 
+def check_kernel_delivered(contexts: list[str], label: str):
+    """The hooks' SessionStart context, labels removed, must be the canonical kernel text."""
+    kernel = KERNEL_SOURCE.read_text(encoding="utf-8")
+    delivered = "".join(re.sub(r"\AAgent Kernel, part \d+ of \d+ \(sections may arrive in any order\)\n",
+                               "", c) for c in contexts)
+    if delivered != kernel:
+        raise CheckFailed(f"{label}: SessionStart hook context is not {KERNEL_SOURCE.relative_to(ROOT)} "
+                          f"({len(delivered)} vs {len(kernel)} characters)")
+    print(f"  ok: {label}: SessionStart hooks deliver the kernel text", flush=True)
+
+
+def hook_contexts(box: Sandbox, commands: list[list[str]]) -> list[str]:
+    contexts = []
+    for command in commands:
+        out = json.loads(box.run(*command) or "{}")
+        context = out.get("hookSpecificOutput", {}).get("additionalContext")
+        if context:
+            contexts.append(context)
+    return contexts
+
+
+def session_start_hooks(root: Path) -> list[dict]:
+    hooks_file = root / "hooks" / "hooks.json"
+    if not hooks_file.is_file():
+        raise CheckFailed(f"installed kernel plugin has no {hooks_file}")
+    groups = json.loads(hooks_file.read_text(encoding="utf-8"))["hooks"].get("SessionStart", [])
+    return [hook for group in groups for hook in group["hooks"] if hook["type"] == "command"]
+
+
+class ClaudeKernelPlugin(ClaudePlugin):
+    """`agent-kernel` from the same marketplace; its SessionStart hooks run the way Claude Code runs them."""
+
+    def install(self):
+        self.box.run("claude", "plugin", "marketplace", "add", *self.source)
+        self.box.run("claude", "plugin", "install", KERNEL_PLUGIN_ID, "--scope", "user")
+
+    def install_path(self) -> Path | None:
+        installed = json.loads(self.box.run("claude", "plugin", "list", "--json"))
+        paths = [p["installPath"] for p in installed if p.get("id") == KERNEL_PLUGIN_ID]
+        return Path(paths[0]) if paths else None
+
+    def check_kernel(self):
+        root = self.install_path()
+        if root is None:
+            raise CheckFailed(f"claude plugin list has no {KERNEL_PLUGIN_ID}")
+        commands = [[h["command"], *(a.replace("${CLAUDE_PLUGIN_ROOT}", str(root)) for a in h.get("args", []))]
+                    for h in session_start_hooks(root)]
+        self.box.env["CLAUDE_PLUGIN_ROOT"] = str(root)
+        try:
+            check_kernel_delivered(hook_contexts(self.box, commands), "claude-kernel")
+        finally:
+            del self.box.env["CLAUDE_PLUGIN_ROOT"]
+
+    def listed(self) -> dict[str, Path]:
+        return {"agent-kernel": path} if (path := self.install_path()) else {}
+
+    def update(self):
+        self.box.run("claude", "plugin", "marketplace", "update", MARKETPLACE)
+        self.box.run("claude", "plugin", "update", KERNEL_PLUGIN_ID)
+
+    def uninstall(self):
+        self.box.run("claude", "plugin", "uninstall", KERNEL_PLUGIN_ID)
+        self.box.run("claude", "plugin", "marketplace", "remove", MARKETPLACE)
+
+
+class CodexKernelPlugin(CodexPlugin):
+    """`agent-kernel` from the same marketplace; its SessionStart hook runs the way Codex runs it after trust."""
+
+    def install(self):
+        self.box.run("codex", "plugin", "marketplace", "add", *self.source)
+        self.box.run("codex", "plugin", "add", KERNEL_PLUGIN_ID)
+
+    def listed(self) -> dict[str, Path]:
+        out = self.box.run("codex", "plugin", "list")
+        if not re.search(rf"^{re.escape(KERNEL_PLUGIN_ID)}\s+installed", out, re.M):
+            return {}
+        roots = sorted((self.box.home / ".codex/plugins/cache/agent-concepts/agent-kernel").glob("*/hooks"))
+        return {"agent-kernel": roots[-1].parent} if roots else {}
+
+    def check_kernel(self):
+        root = self.listed().get("agent-kernel")
+        if root is None:
+            raise CheckFailed(f"codex plugin list shows no installed {KERNEL_PLUGIN_ID}")
+        commands = [["sh", "-c", h["command"]] for h in session_start_hooks(root)]
+        self.box.env["PLUGIN_ROOT"] = str(root)
+        try:
+            check_kernel_delivered(hook_contexts(self.box, commands), "codex-kernel")
+        finally:
+            del self.box.env["PLUGIN_ROOT"]
+
+    def update(self):
+        if len(self.source) > 1:
+            self.box.run("codex", "plugin", "marketplace", "upgrade", MARKETPLACE)
+        self.box.run("codex", "plugin", "add", KERNEL_PLUGIN_ID)
+
+    def uninstall(self):
+        self.box.run("codex", "plugin", "remove", KERNEL_PLUGIN_ID)
+        self.box.run("codex", "plugin", "marketplace", "remove", MARKETPLACE)
+
+
 class NpxSkills:
     def __init__(self, box: Sandbox, source: list[str], pack: str, drop: str | None = None):
         self.box = box
@@ -384,6 +491,10 @@ def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: 
         agent, expected = ClaudePlugin(box, sources["claude"]), expected_skills(listing)
     elif method == "codex":
         agent, expected = CodexPlugin(box, sources["codex"]), expected_skills(listing)
+    elif method in ("claude-kernel", "codex-kernel"):
+        agent = (ClaudeKernelPlugin if method == "claude-kernel" else CodexKernelPlugin)(
+            box, sources[method.removesuffix("-kernel")])
+        expected = {"agent-kernel"}
     elif method == "npx-all":
         agent, expected = NpxSkills(box, sources["npx"], "all"), expected_skills(listing)
     else:
@@ -392,6 +503,8 @@ def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: 
     agent.install()
     if method == "pi-npm":
         agent.check_kernel_prompt()
+    if method.endswith("-kernel"):
+        agent.check_kernel()
     listed = agent.listed()
     check_listed("after install", expected, listed)
     if PUBLISH_SKILL in listed:

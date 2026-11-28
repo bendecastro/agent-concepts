@@ -2449,3 +2449,5 @@ Require a reboot-safe run folder, wire in audit and work-sync reviewers, clarify
 Private swarm-mode kernel drops its durability copy for a pointer; routing-decision/recovery-rule words; overlay renamed; pointer check PASS 2/2 (Terra low).
 ## [2026-11-28] deploy | release v0.5.0 prep
 Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-audit.md (no gaps).
+## [2026-11-28] implement | 062 step 1: kernel plugins in the fresh-install test
+`claude-kernel`/`codex-kernel` methods install `agent-kernel` from the marketplace (tag under --ref) and check the hooks deliver the kernel text; fail with agent-kernel removed from the marketplace files, pass with it.

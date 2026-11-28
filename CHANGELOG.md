@@ -9,6 +9,12 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ## [Unreleased]
 
+### Added
+
+- The fresh-install test gains `claude-kernel` and `codex-kernel`: each adds the marketplace (from the
+  release tag in the release workflow) and installs `agent-kernel`, then checks its SessionStart hooks
+  deliver the canonical kernel text.
+
 ## [0.5.0] - 2026-11-28
 
 ### Renamed

@@ -270,3 +270,27 @@ def test_pi_npm_checks_kernel_in_system_prompt(tmp_path):
             finally:
                 manifest.write_text(manifest_text)
         agent.check_kernel_prompt()
+
+
+def test_kernel_delivery_accepts_the_canonical_kernel_in_labelled_slices():
+    kernel = fit.KERNEL_SOURCE.read_text(encoding="utf-8")
+    cut = kernel.index("\n## ", 1) + 1
+    fit.check_kernel_delivered([
+        "Agent Kernel, part 1 of 2 (sections may arrive in any order)\n" + kernel[:cut],
+        "Agent Kernel, part 2 of 2 (sections may arrive in any order)\n" + kernel[cut:],
+    ], "claude-kernel")
+    fit.check_kernel_delivered([kernel], "codex-kernel")
+
+
+@pytest.mark.parametrize("contexts", [[], ["not the kernel"]])
+def test_kernel_delivery_rejects_missing_or_other_text(contexts):
+    with pytest.raises(fit.CheckFailed, match="not concepts/agent-kernel/body/AGENT-KERNEL.md"):
+        fit.check_kernel_delivered(contexts, "codex-kernel")
+
+
+def test_kernel_methods_install_agent_kernel_from_the_tag_marketplace():
+    sources = fit.install_sources("v1.2.3")
+    assert sources["claude"] == [f"{fit.GITHUB_REPO}#v1.2.3"]
+    assert sources["codex"] == [fit.GITHUB_REPO, "--ref", "v1.2.3"]
+    assert {"claude-kernel", "codex-kernel"} <= set(fit.METHODS)
+    assert fit.KERNEL_PLUGIN_ID == "agent-kernel@agent-concepts"
