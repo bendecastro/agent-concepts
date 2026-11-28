@@ -2544,3 +2544,6 @@ Owner chose the kernel plugin as part of the Claude Code default install despite
 
 ## [2026-11-28] test | bc-plan-to-pipeline go-ahead is not a build (066)
 Step 2 now says a go-ahead during planning approves the plan, not a build; step 9 and the guard rail point to it. New scenario replays the stranger planning turn on Haiku low: master 1/3 (one run built and filed the item done), changed 3/3 after one tune round (the ready line is part of finishing the plan).
+
+## [2026-11-28] ingest | wayfinder filed; planned 067-planning-map-mode
+Filed Matt Pocock's wayfinder skill (MIT) in docs/research/raw/pocock-wayfinder/ and planned a map mode for bc-plan-to-pipeline (owner answers 1a 2a 3a 4b 5a 6a).

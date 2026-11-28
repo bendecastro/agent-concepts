@@ -39,3 +39,4 @@
 39. 063-plan-always-asks-dependencies
 40. 064-wiki-read-path-reads-whole-vault
 41. 065-timer-install-includes-notifier
+42. 067-planning-map-mode
