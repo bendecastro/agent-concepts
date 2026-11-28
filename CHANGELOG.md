@@ -39,6 +39,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Fixed
 
+- `bc-wiki-maintain`: the vault read path no longer leads agents to read the whole vault. The search is two copy-as-written lines that keep the `AGENT_CONCEPTS` checkout, and a lookup opens at most the top three returned pages, never `index.md`, even when the user asks to read everything or qmd is missing (existing vaults: see `bc-setup-project` MIGRATIONS).
 - `bc-qmd` no longer calls `qmd query` the default: use `qmd search` with 2–4 keywords first, and rerun once as `qmd query --no-rerank` when it finds nothing relevant or the concept may be worded differently. `bc-wiki-maintain` and the generated vault block now ban `qmd query` only as an inline read. Earlier projects narrow their vault block by the new "Vault read path: `qmd query` ban narrowed" migration.
 ### Changed
 

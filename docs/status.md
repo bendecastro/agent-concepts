@@ -54,7 +54,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-to-tickets](../concepts/bc-to-tickets/CONCEPT.md) | pressure | 2026-07-16 | yes |
 | [bc-triage](../concepts/bc-triage/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-using-git-worktrees](../concepts/bc-using-git-worktrees/CONCEPT.md) | pressure | 2026-11-25 | yes |
-| [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-11-27 | 2026-08-23 |
+| [bc-wiki-maintain](../concepts/bc-wiki-maintain/CONCEPT.md) | pressure | 2026-11-28 | 2026-08-23 |
 | [bc-work-sync](../concepts/bc-work-sync/CONCEPT.md) | pressure | 2026-11-25 | 2026-11-16 |
 | [bc-writing-plans](../concepts/bc-writing-plans/CONCEPT.md) | pressure | 2026-11-25 | yes |
 

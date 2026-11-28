@@ -466,6 +466,18 @@ relevant. Check: the vault's `AGENTS.md` block ends "or use `qmd query`. If `wik
 cannot run". To adopt it, replace the block between `<!-- BEGIN canonical vault read path -->` and
 `<!-- END canonical vault read path -->` with a fresh scaffold's.
 
+## Vault read path: copy-as-written command, top-three reading
+
+Arrived in: 0.5.1
+
+Since 2026-11-28 the canonical vault read path block runs `wiki_search.py` with two lines and no
+`if` (the `AGENT_CONCEPTS` choice is a parameter expansion), and caps a lookup at the top three
+returned pages, stopping at the first that answers, with no whole-vault or `index.md` read even
+when the user asks for one. Check: the vault's `AGENTS.md` block still has
+`if [ -n "${AGENT_CONCEPTS:-}" ]`. To adopt it, replace the block between
+`<!-- BEGIN canonical vault read path -->` and `<!-- END canonical vault read path -->` with a
+fresh scaffold's.
+
 ## Role lookup and worktree numbering
 
 Arrived in: 0.5.1

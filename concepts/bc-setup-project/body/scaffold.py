@@ -327,23 +327,23 @@ OBSIDIAN_APPEARANCE = """{
 CANONICAL_VAULT_READ_PATH = """<!-- BEGIN canonical vault read path -->
 ## First move: search the vault, do not read the index
 
-For any task that needs a fact from this vault, run from the directory containing this
-`AGENTS.md`. Find `wiki_search.py` next to the installed `bc-wiki-maintain` skill's
-`SKILL.md`. Use that directory if your install differs from the default below;
-`AGENT_CONCEPTS`, when set, overrides it with a contributor checkout.
+For any task that needs a fact from this vault, run these two lines from the directory
+containing this `AGENTS.md`. Copy them as written and change only the search terms: the first
+line picks a contributor checkout when `AGENT_CONCEPTS` is set, and the second falls back to
+the default install. If `bc-wiki-maintain` is installed elsewhere, replace the default with the
+directory holding its `SKILL.md` and `wiki_search.py`.
 
 ```bash
-VAULT_ROOT="$PWD"
-wiki_skill_dir="$HOME/.agents/skills/bc-wiki-maintain"
-if [ -n "${AGENT_CONCEPTS:-}" ]; then
-  wiki_skill_dir="$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body"
-fi
-python3 "$wiki_skill_dir/wiki_search.py" \\
-  --limit 15 "$VAULT_ROOT" "term one" "term two"
+wiki_skill_dir="${AGENT_CONCEPTS:+$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body}"
+python3 "${wiki_skill_dir:-$HOME/.agents/skills/bc-wiki-maintain}/wiki_search.py" --limit 15 "$PWD" "term one" "term two"
 ```
 
-Use **2–4 meaningful content keywords**, not the user's full question. Open the relevant
-returned path(s) and verify the answer in the page text. The corpus is tracked Markdown only:
+Use **2–4 meaningful content keywords**, not the user's full question. Open the returned pages
+in rank order, at most the top three, and stop at the first whose text answers: that page is
+the answer and its path is the citation. Never list the vault's files to open them, read every
+page, or open `index.md`, `map.md` or `log.md` for a lookup: not before the search, not after an
+answer to double-check it, and not because the user said to just read the whole vault or qmd is
+not set up. Why: the search is how this vault is read, and it needs no qmd. The corpus is tracked Markdown only:
 a newly created page is invisible until `git add` registers it with Git. If the fact may be in
 an untracked page, do not interpret an empty result as absence; add the page and rerun the
 search. Otherwise, if output is empty, reformulate once with a different 2–4 keyword set;

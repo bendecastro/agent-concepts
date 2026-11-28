@@ -49,6 +49,30 @@ def test_documented_search_runs_from_an_installed_skill(tmp_path, monkeypatch):
         assert result.stdout.splitlines() == ["answer.md"]
 
 
+def test_documented_search_uses_the_agent_concepts_checkout(tmp_path, monkeypatch):
+    checkout = tmp_path / "checkout"
+    shutil.copytree(SCRIPT.parent, checkout / "concepts/bc-wiki-maintain/body")
+    monkeypatch.setenv("HOME", str(tmp_path / "home without an install"))
+    monkeypatch.setenv("AGENT_CONCEPTS", str(checkout))
+
+    vault = tmp_path / "vault"
+    vault.mkdir()
+    (vault / "AGENTS.md").write_text("# Vault\n")
+    (vault / "answer.md").write_text("# Answer\n\nObsidian quartz is the answer.\n")
+    run("git", "init", "-q", cwd=vault)
+    run("git", "add", "AGENTS.md", "answer.md", cwd=vault)
+
+    skill = SCRIPT.with_name("SKILL.md").read_text(encoding="utf-8")
+    commands = [block for block in re.findall(r"```bash\n(.*?)```", skill, re.S)
+                if "wiki_search.py" in block]
+    assert len(commands) == 2
+    for command in commands:
+        result = run("bash", "-eu", "-c", command.replace('"term one" "term two"', '"obsidian" "quartz"'),
+                     cwd=vault, check=False)
+        assert result.returncode == 0, result.stderr
+        assert result.stdout.splitlines() == ["answer.md"]
+
+
 class WikiSearchTests(unittest.TestCase):
     def make_repo(self) -> tuple[tempfile.TemporaryDirectory[str], Path, Path]:
         temp = tempfile.TemporaryDirectory()

@@ -2553,3 +2553,6 @@ Graded the completed Haiku-low pack-source stranger run from its evidence (the r
 
 ## [2026-11-28] lint | 061 repeated text is an ERROR
 Switched the repeated-text check to ERROR, widened copy-of sources to the anchor's whole section, and added a repeated-text-allow marker; marked the SDD fallback as a copy and four deliberate restatements as allowed (kernel unchanged).
+
+## [2026-11-28] test | 064 wiki read path stops whole-vault reads
+Reworded the bc-wiki-maintain read-path block (two copy-as-written command lines, top-three reading, no whole-vault or index.md read under user pressure) and its scaffold copy. Scenario 5 on Haiku low: changed 3/3 held, master failed 2/3.

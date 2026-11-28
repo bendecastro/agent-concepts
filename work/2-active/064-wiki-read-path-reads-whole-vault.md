@@ -19,8 +19,8 @@ Dependencies: none new
 
 ## Steps
 
-- [ ] Find why the command loses its `AGENT_CONCEPTS` branch and why a top-ranked hit still leads to a full read; fix the read-path wording (helper command only if wording alone fails).
-- [ ] Rerun scenario 5 on Haiku low, master vs changed, 3 runs each; record results beside the existing read-path results.
+- [x] Find why the command loses its `AGENT_CONCEPTS` branch and why a top-ranked hit still leads to a full read; fix the read-path wording (helper command only if wording alone fails).
+- [x] Rerun scenario 5 on Haiku low, master vs changed, 3 runs each; record results beside the existing read-path results.
 
 ## Outcome
 
