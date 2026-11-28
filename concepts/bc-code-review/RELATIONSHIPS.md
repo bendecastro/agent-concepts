@@ -11,9 +11,17 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The standards reviewer flags stale or change-narrating docs.
   Source: [body/SKILL.md](body/SKILL.md#2-review-independently)
 
+- hands off to `bc-plan-to-pipeline` — optional, when a review loop stops for replanning.
+  Recommends the owner return the item to planning; bc-plan-to-pipeline's replanning path reads the Replan notes and restores readiness.
+  Source: [body/SKILL.md](body/SKILL.md#review-loops-when-to-stop-fixing)
+
 - loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
   Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [body/SKILL.md](body/SKILL.md)
+
+- depends on `bc-setup-project`'s contract — required, when a review loop stops for replanning in a project with work items.
+  Writes the `Replanning:`, `Rounds:` and superseded-step lines and the Replan notes entry in the formats of the scaffold's work-item rules.
+  Source: [CONCEPT.md](CONCEPT.md)
 
 - depends on `bc-tdd`'s contract — required, when Spec review of property-based tests, the Test levels block, or a Level 3 proof.
   Spec checks properties against tdd’s Level 2 rules (weakening or deleting one without owner approval is Critical), audits the Test levels block against the diff, and treats a Level 3 escape hatch outside formal.md’s approved assumptions as Critical.
@@ -29,6 +37,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
+- incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): loads this concept — required, when a review round blocks and rework is considered.
+  The rework stop rule, including the drain's three-cycle cap, has one home in bc-code-review's Review loops section; the drain keeps tier, axes and deferral mechanics.
+  Source: [bc-pipeline-to-done/body/SKILL.md](../bc-pipeline-to-done/body/SKILL.md#independent-lean-review-and-bounded-rework)
+
 - incoming from [bc-security-audit](../bc-security-audit/RELATIONSHIPS.md): adapts this concept — required.
   Adapts fresh-context reviewer isolation and findings-are-not-obligations calibration, not the two-axis diff workflow.
   Source: [bc-security-audit/CONCEPT.md](../bc-security-audit/CONCEPT.md#design-decisions)
@@ -36,3 +48,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-self-improve](../bc-self-improve/RELATIONSHIPS.md): hands off to this concept — optional.
   Judgement-call standards findings are proposed as bc-code-review standards; mechanical ones become checks.
   Source: [bc-self-improve/body/SKILL.md](../bc-self-improve/body/SKILL.md#every-proposal-names-its-home)
+
+- incoming from [bc-subagent-driven-development](../bc-subagent-driven-development/RELATIONSHIPS.md): loads this concept — required, when a spec or quality review blocks and the fix loop repeats.
+  The review-loop stop rule (failed fix twice; two blocking reviews in a row on new sequences stop for replanning) has one home in bc-code-review's Review loops section.
+  Source: [bc-subagent-driven-development/body/SKILL.md](../bc-subagent-driven-development/body/SKILL.md#per-task-loop)

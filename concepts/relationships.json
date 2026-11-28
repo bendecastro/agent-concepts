@@ -477,7 +477,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-pipeline-to-done/CONCEPT.md",
-      "reason": "Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:` and `Waiting on owner:` lines, writes and removes the `Held by:` line and records the steps' `Review:` and `Gate:` lines in the formats of its work-item rules, pastes the `Spent:` line its spent script prints when finishing an item, and reruns the work index script."
+      "reason": "Resolves work stage folders and the ideas file in the scaffolded table, moves work items under its work-item rules, and on the work-item source reads and writes the `Ready for agent:`, `Waiting on owner:`, `Replanning:` and `Rounds:` lines and Replan notes, writes and removes the `Held by:` line and records the steps' `Review:` and `Gate:` lines in the formats of its work-item rules, pastes the `Spent:` line its spent script prints when finishing an item, and reruns the work index script."
     },
     {
       "from": "bc-plan-to-pipeline",
@@ -486,7 +486,7 @@
       "required": true,
       "when": "project has a Where things go table",
       "source": "concepts/bc-plan-to-pipeline/CONCEPT.md",
-      "reason": "Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule."
+      "reason": "Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule. Replans an item with a `Replanning:` line in place, superseding steps and completing its Replan notes under the work-item rules."
     },
     {
       "from": "bc-improve-codebase-architecture",
@@ -1329,6 +1329,42 @@
       "when": "changing the generated teach adapter",
       "source": "concepts/bc-setup-project/body/SKILL.md#learning-archetype-adapter",
       "reason": "bc-teach's HOSTING.md is the one home for the marker and path maps the scaffold's adapter text must match."
+    },
+    {
+      "from": "bc-subagent-driven-development",
+      "to": "bc-code-review",
+      "relation": "loads",
+      "required": true,
+      "when": "a spec or quality review blocks and the fix loop repeats",
+      "source": "concepts/bc-subagent-driven-development/body/SKILL.md#per-task-loop",
+      "reason": "The review-loop stop rule (failed fix twice; two blocking reviews in a row on new sequences stop for replanning) has one home in bc-code-review's Review loops section."
+    },
+    {
+      "from": "bc-pipeline-to-done",
+      "to": "bc-code-review",
+      "relation": "loads",
+      "required": true,
+      "when": "a review round blocks and rework is considered",
+      "source": "concepts/bc-pipeline-to-done/body/SKILL.md#independent-lean-review-and-bounded-rework",
+      "reason": "The rework stop rule, including the drain's three-cycle cap, has one home in bc-code-review's Review loops section; the drain keeps tier, axes and deferral mechanics."
+    },
+    {
+      "from": "bc-code-review",
+      "to": "bc-setup-project",
+      "relation": "depends_on_contract",
+      "required": true,
+      "when": "a review loop stops for replanning in a project with work items",
+      "source": "concepts/bc-code-review/CONCEPT.md",
+      "reason": "Writes the `Replanning:`, `Rounds:` and superseded-step lines and the Replan notes entry in the formats of the scaffold's work-item rules."
+    },
+    {
+      "from": "bc-code-review",
+      "to": "bc-plan-to-pipeline",
+      "relation": "hands_off",
+      "required": false,
+      "when": "a review loop stops for replanning",
+      "source": "concepts/bc-code-review/body/SKILL.md#review-loops-when-to-stop-fixing",
+      "reason": "Recommends the owner return the item to planning; bc-plan-to-pipeline's replanning path reads the Replan notes and restores readiness."
     }
   ]
 }

@@ -40,7 +40,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/map-mode.md](body/map-mode.md)
 
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
-  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule.
+  Resolves roles in the scaffolded table and writes the plan as a work item from the generated work-item template. Numbers items under its worktree numbering rule. Replans an item with a `Replanning:` line in place, superseding steps and completing its Replan notes under the work-item rules.
   Source: [CONCEPT.md](CONCEPT.md)
 
 - depends on `bc-tdd`'s contract — required.
@@ -56,6 +56,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [body/SKILL.md](body/SKILL.md)
 
 ## Incoming
+
+- incoming from [bc-code-review](../bc-code-review/RELATIONSHIPS.md): hands off to this concept — optional, when a review loop stops for replanning.
+  Recommends the owner return the item to planning; bc-plan-to-pipeline's replanning path reads the Replan notes and restores readiness.
+  Source: [bc-code-review/body/SKILL.md](../bc-code-review/body/SKILL.md#review-loops-when-to-stop-fixing)
 
 - incoming from [bc-council-challenge-plan](../bc-council-challenge-plan/RELATIONSHIPS.md): hands off to this concept — required, when after the owner's answers are written into the plan.
   Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill.

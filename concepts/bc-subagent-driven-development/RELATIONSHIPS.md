@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- loads `bc-code-review` — required, when a spec or quality review blocks and the fix loop repeats.
+  The review-loop stop rule (failed fix twice; two blocking reviews in a row on new sequences stop for replanning) has one home in bc-code-review's Review loops section.
+  Source: [body/SKILL.md](body/SKILL.md#per-task-loop)
+
 - loads `bc-durable-subagents` — required, when dispatching implementers and reviewers.
   Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest.
   Source: [body/SKILL.md](body/SKILL.md)

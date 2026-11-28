@@ -130,7 +130,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-optimize-code bc-safe-runs b
 ### bc-pipeline-to-done
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-codebase-docs bc-durable-subagents bc-explain-visually bc-performance-guardrails bc-safe-runs bc-tdd bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-pipeline-to-done bc-code-review bc-codebase-docs bc-durable-subagents bc-explain-visually bc-performance-guardrails bc-safe-runs bc-tdd bc-using-git-worktrees
 ```
 
 ### bc-plan-to-pipeline
@@ -172,7 +172,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-setup-project bc-teach bc-wi
 ### bc-subagent-driven-development
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-subagent-driven-development bc-durable-subagents bc-safe-runs bc-using-git-worktrees
+npx skills add <source> -g -a <agent> -y --skill bc-subagent-driven-development bc-code-review bc-codebase-docs bc-durable-subagents bc-explain-visually bc-safe-runs bc-tdd bc-using-git-worktrees
 ```
 
 ### bc-swarm
