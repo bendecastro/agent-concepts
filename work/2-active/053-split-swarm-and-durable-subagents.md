@@ -20,7 +20,7 @@ Planned: bc-plan-to-pipeline 2026-11-27
 
 - [x] Create `bc-durable-subagents` and `bc-swarm` from the current body, with the alias. Done when lint passes, the alias loads `bc-swarm`, and the recovery, manifest and packet pressure scenarios from `bc-delegate-investigation`'s tests (now `concepts/bc-swarm/tests/` and `concepts/bc-durable-subagents/tests/`) pass against the new skills on the pressure-test model.
 - [x] Make every launching skill load `bc-durable-subagents`. Done when each caller has its `loads` edge and one line in its body, the council dry-run plan creates a reboot-safe run folder and manifest, and lint passes.
-- [ ] Point the swarm-mode prompt and private files at the new skills. Done when the swarm prompt holds no durability copy and a fresh Pi session in swarm mode reads `bc-durable-subagents` before its first launch.
+- [x] Point the swarm-mode prompt and private files at the new skills. Done when the swarm prompt holds no durability copy and a fresh Pi session in swarm mode reads `bc-durable-subagents` before its first launch.
 
 ## Outcome
 

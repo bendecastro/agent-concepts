@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: pass # 2026-11-28 post-split recovery, manifest and packet scenarios: with PASS 4/4, without FAIL 4/4 (Terra low)
+test_status: pass # 2026-11-28 post-split recovery, manifest and packet scenarios: with PASS 4/4, without FAIL 4/4 (Terra low); swarm-mode pointer check PASS 2/2 (tests/swarm-mode-pointer-2026-11-28.md)
 tested: 2026-11-28
 deployed: 2026-11-28
 ---
