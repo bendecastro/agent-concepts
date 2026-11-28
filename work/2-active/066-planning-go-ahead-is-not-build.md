@@ -16,7 +16,7 @@ Owner decisions (2026-11-28, in chat, rec): 1a planning never builds: a go-ahead
 
 - **Rule.** In `concepts/bc-plan-to-pipeline/body/SKILL.md`, the planning-not-building guard rail names the go-ahead case: an approval, go-ahead or "do it" given while planning approves the plan, not a build; the run never edits code or tests, never files its item in work-done, and ends at step 9. Place it where the agent meets it at the moment of the go-ahead (the step 1/2 checkpoint and step 9), adapted from `bc-prompting-agents` blocks; keep one home for the rule and point from the other spot.
 - **Scenario.** A new scenario in `concepts/bc-plan-to-pipeline/tests/` replaying the stranger fixture's planning turn: a small code project with a work pipeline, one grill question answered, then "Go ahead with the plan." Pass from artifacts: a work-planned item with `Ready for agent: yes`, no tracked change outside `work/` (and `.bc-agent/` if the skill writes there), no item in work-done. Arms: master skill vs changed skill, 3 runs each, Haiku low, real Pi 1.6.1 via `scripts/pi_sandbox.py` with pi-multiprovider.
-- **Stranger rerun.** After the change is on master, run releasing step 11 per `scripts/stranger-end-to-end.md` with `STRANGER_SOURCE=local` (or the recipe's equivalent for an unreleased tree) on Haiku low; record it in `docs/research/2026-11-28-stranger-end-to-end-0.5.0.md` or a new dated file.
+- **Stranger rerun.** After the change is on master, run releasing step 11 per `scripts/stranger-end-to-end.md` with `STRANGER_SOURCE=pack` (the unpacked `npm pack` of master) on Haiku low; record it in `docs/research/2026-11-28-stranger-end-to-end-0.5.0.md` or a new dated file.
 
 ## Steps
 
