@@ -1,6 +1,6 @@
 ---
 test_kind: pressure
-test_status: partial # check 4 accepted gap; Fan-out width paragraph (added 2026-11-28) not yet pressure-run; 2026-11-28 post-split recovery/manifest/packet rerun PASS 4/4 with bc-durable-subagents (without FAIL 4/4); earlier: 2026-10-31 todo/manifest PASS, 2026-11-19 targeted packets + overlay PASS, 2026-11-25 inline storage PASS, 2026-11-18 test levels PASS
+test_status: partial # check 4 accepted gap; Fan-out width 2026-11-28: narrow case FAIL with skill (3 children for a two-file question; without 5), multi-surface and broad PASS both arms (non-discriminating), narrow wording tightened and S1 rerun pending (tests/pressure-fan-out-width.md); 2026-11-28 post-split recovery/manifest/packet rerun PASS 4/4 with bc-durable-subagents (without FAIL 4/4); earlier: 2026-10-31 todo/manifest PASS, 2026-11-19 targeted packets + overlay PASS, 2026-11-25 inline storage PASS, 2026-11-18 test levels PASS
 tested: 2026-11-28
 deployed: 2026-11-28 # first as bc-delegate-investigation (2026-08-18); old name stays an alias
 ---

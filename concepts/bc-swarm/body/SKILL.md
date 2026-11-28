@@ -29,7 +29,7 @@ This binds **whichever way you decide, including when you decide to dispatch not
 
 ## Fan-out width
 
-One child for a bounded fact or single-file read, two to four for comparisons and multi-surface recon, and more only for genuinely broad investigation. The default settles whether to delegate, never how wide. Why: multi-agent runs cost roughly 15x a single session, and an uncapped default drifts toward five children for a two-file question.
+One child for a bounded fact or a question about one or two named files (two only when each file is its own surface), two to four for comparisons and multi-surface recon, and more only for genuinely broad investigation. Never add a track the question did not name (tests, docs, background semantics) to reach a count. The default settles whether to delegate, never how wide. Why: multi-agent runs cost roughly 15x a single session, and an uncapped default drifts toward five children for a two-file question.
 
 ## What bc-swarm packets add
 
