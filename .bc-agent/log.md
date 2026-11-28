@@ -2454,3 +2454,6 @@ Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-au
 
 ## [2026-11-28] implement | Codex installs the kernel by default
 README Codex box adds `agent-kernel@agent-concepts` from the tag-pinned marketplace, with the `/hooks` trust line, and uninstall removes both plugins; harnesses.md, agent-kernel CONCEPT.md, CHANGELOG match. `fresh_install_test.py --method codex --method codex-kernel --ref v0.5.0` passed (work item 062 step 2).
+
+## [2026-11-28] test | stranger end-to-end, v0.5.0 from npm next
+Inconclusive: both attempts on anthropic/claude-haiku-5-5 low (owner's Haiku fallback while the Codex quota is out) got HTTP 429 on every call; no phase ran. Recorded in docs/research/2026-11-28-stranger-end-to-end-0.5.0.md and the release audit; v0.5.0 not promoted.

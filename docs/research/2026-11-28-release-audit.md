@@ -36,3 +36,7 @@ No other rule change lacks a test or read check recorded after it.
 - The one-line fallback is weaker than the module: the fallback-only arms scored 4/5 in both scenarios (bc-tdd ran raw pytest inside a scratch copy; bc-code-review reran a full suite that `CHECKS.md` had recorded). Every install pack that ships a caller also ships `bc-safe-runs` ([install-packs](../guides/install-packs.md)), so the module form is the one users get. bc-code-review and bc-tdd mark this as `partial`.
 - The council and swarm-mode tests are dry runs with no baseline arm. The packets did not exercise the literal `~/.pi/agent/skills/...` path of the swarm-mode pointer (the sandbox masks it).
 - Tests recorded in the change's own commit (safe-runs module arms in `0ca52dd`, council criterion 5 in `3cc98a4`) count as run after the change, following the v0.3.0 audit's treatment of bc-code-review.
+
+## Soak on `next` (releasing step 11)
+
+2026-11-28: [stranger end-to-end test of v0.5.0](2026-11-28-stranger-end-to-end-0.5.0.md) is **inconclusive**: both allowed attempts on `anthropic/claude-haiku-5-5` low were refused by the provider (HTTP 429) on every call, so no phase ran. v0.5.0 stays on `next`; not promoted.
