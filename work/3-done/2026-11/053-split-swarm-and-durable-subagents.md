@@ -25,3 +25,5 @@ Planned: bc-plan-to-pipeline 2026-11-27
 ## Outcome
 
 _To be filled when finished or dropped._
+
+Gate: pass — `bc-offload -- scripts/gate` (721 passed, 5 skipped) on abbcdf1, 2026-11-28.
