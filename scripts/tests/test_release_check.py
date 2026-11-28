@@ -5,9 +5,12 @@ from __future__ import annotations
 
 import json
 import sys
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+
+from hypothesis import given, strategies as st
 
 SCRIPTS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SCRIPTS))
@@ -96,6 +99,43 @@ class ReleaseCheckTests(unittest.TestCase):
     def test_main_exits_nonzero_on_mismatch(self):
         self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)
         self.assertEqual(release_check.main(["v9.9.9"], self.root), 1)
+
+    def test_missing_previous_skill_requires_alias_or_removed_entry(self):
+        previous = {"bc-old", "bc-a"}
+        current = {"bc-new", "bc-a"}
+        self.assertEqual(release_check.removed_skill_problems(previous, current, ""),
+                         ["skill `bc-old` disappeared without an alias or CHANGELOG Removed entry"])
+        self.assertEqual(release_check.removed_skill_problems(previous, current | {"bc-old"}, ""), [])
+        self.assertEqual(release_check.removed_skill_problems(
+            previous, current, "## [Unreleased]\n### Removed\n- `bc-old`: removed.\n"), [])
+
+    @given(st.sets(st.from_regex(r"bc-[a-z]{1,8}", fullmatch=True), max_size=12),
+           st.sets(st.from_regex(r"bc-[a-z]{1,8}", fullmatch=True), max_size=12))
+    def test_unannounced_disappearances_are_exactly_previous_minus_current(self, previous, current):
+        problems = release_check.removed_skill_problems(previous, current, "")
+        self.assertEqual(set(problems), {
+            f"skill `{name}` disappeared without an alias or CHANGELOG Removed entry"
+            for name in previous - current
+        })
+
+    def test_previous_tag_comparison_uses_current_release_removed_section(self):
+        def git(*args):
+            return subprocess.run(["git", *args], cwd=self.root, check=True, capture_output=True, text=True)
+        git("init", "-q")
+        git("config", "user.email", "test@example.invalid")
+        git("config", "user.name", "Test")
+        self.write_json("concepts/public-skills.json", {"skills": {"bc-old": []}})
+        git("add", "concepts/public-skills.json")
+        git("commit", "-qm", "previous release")
+        git("tag", "v1.2.2")
+        self.write_json("concepts/public-skills.json", {"skills": {"bc-new": []}})
+        self.assertIn("bc-old", release_check.previous_release_problems(self.root, "v1.2.3")[0])
+        (self.root / "CHANGELOG.md").write_text(
+            "## [1.2.3] - 2026-11-25\n### Removed\n- `bc-old`: removed.\n")
+        self.assertEqual(release_check.previous_release_problems(self.root, "v1.2.3"), [])
+        self.write_json("concepts/public-skills.json", {"skills": {"bc-old": ["bc-new"], "bc-new": []}})
+        (self.root / "CHANGELOG.md").write_text("## [1.2.3] - 2026-11-25\n")
+        self.assertEqual(release_check.previous_release_problems(self.root, "v1.2.3"), [])
 
     def test_repository_versions_agree(self):
         self.assertEqual(release_check.version_problems(release_check.ROOT), [])

@@ -14,6 +14,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from public_skills import skill_path
+
 
 MANIFEST_PATH = "package.json"
 PUBLIC_LIST_PATH = "concepts/public-skills.json"
@@ -28,7 +30,7 @@ BASE_MANIFEST = {
 
 def skill_paths(root: Path) -> list[str]:
     listing = json.loads((root / PUBLIC_LIST_PATH).read_text(encoding="utf-8"))
-    return [f"./concepts/{name}/body" for name in sorted(listing["skills"])]
+    return [skill_path(root, name) for name in sorted(listing["skills"])]
 
 
 def shipped_files(root: Path) -> list[str]:

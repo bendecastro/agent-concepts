@@ -86,6 +86,17 @@ class PublicSkillsTests(unittest.TestCase):
 
         self.assertEqual(public_skills.unlisted_load_references(self.root), [])
 
+    def test_alias_is_installable_and_depends_on_its_target_without_a_concept(self):
+        self.concept("bc-new")
+        self.write_graph()
+        alias = self.root / "skills" / "bc-old"
+        alias.mkdir(parents=True)
+        (alias / "SKILL.md").write_text("This skill was renamed. Load `bc-new` and follow it instead.\n")
+        self.assertEqual(public_skills.public_skill_list(self.root),
+                         {"bc-new": [], "bc-old": ["bc-new"]})
+        self.assertEqual(public_skills.skill_path(self.root, "bc-old"), "./skills/bc-old")
+        self.assertEqual(public_skills.unlisted_load_references(self.root), [])
+
     def test_committed_list_staleness(self):
         self.concept("alpha")
         self.write_graph()

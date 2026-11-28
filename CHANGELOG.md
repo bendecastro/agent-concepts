@@ -4,7 +4,14 @@ Each release of the public skills, newest first. Versions follow `vMAJOR.MINOR.P
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Install a tagged
 release rather than `master`: `master` changes many times a day and can hold unfinished work.
 
+Renames and removals use `### Renamed` and `### Removed` sections; see the
+[release policy](docs/guides/releasing.md#renaming-and-removing-skills).
+
 ## [Unreleased]
+
+### Renamed
+
+- `bc-ui-design` is now `bc-design`. The old name remains an alias until at least v0.6.0.
 
 ### Changed
 

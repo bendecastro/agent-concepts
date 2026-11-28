@@ -4,6 +4,25 @@ How a maintainer cuts a release of the public skills. People outside this reposi
 tagged releases, never `master` ([decision 0002](../decisions/0002-tagged-releases-for-strangers.md)),
 so a release is a deliberate step. Tags are `vMAJOR.MINOR.PATCH`.
 
+## Renaming and removing skills
+
+A renamed skill keeps its old name working across every install method that can carry it
+for at least one minor release. Announce the rename and the first removal version under
+`### Renamed` in the changelog. At removal, list the exact backticked old name under
+`### Removed` in that release. The release check compares the previous release tag's
+public skill names with this release and rejects an unannounced disappearance. Fetch tags
+and history before running it.
+
+Local deployments use the alias map in `scripts/deploy-local-skills.py`. For distributed
+installs, put a compatibility `SKILL.md` under `skills/<old-name>/` which says it was
+renamed and loads the new skill. The generated public list records the stub and its target:
+regenerate the public list, Pi package, plugin manifests and install packs with the
+corresponding `scripts/lint.py --write-*` commands. Pi uses `pi.skills` and npm `files`;
+Claude and Codex use their plugin skill paths; `npx skills` discovers the stub and the
+all-skills command explicitly includes it. Aliases count as installable names, not concepts,
+so they have no concept status or relationship node. The `bc-ui-design` alias may be
+removed no earlier than v0.6.0, after it has shipped through the v0.5 minor release.
+
 ## Before you tag
 
 1. Pick the commit to release, normally the tip of `master`. Check that its `gate` workflow

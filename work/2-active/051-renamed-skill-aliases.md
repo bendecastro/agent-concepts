@@ -16,8 +16,8 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Write the rename policy, ship a `bc-ui-design` alias in the package, and add the check. Done when a fresh npm-pack install answers `/skill:bc-ui-design` by pointing to bc-design, and the check fails on a fixture rename with no alias. Out of scope: local deploy aliases (already work).
+- [x] Write the rename policy, ship a `bc-ui-design` alias in the package, and add the check. Done when a fresh npm-pack install answers `/skill:bc-ui-design` by pointing to bc-design, and the check fails on a fixture rename with no alias. Out of scope: local deploy aliases (already work).
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Added a compatibility stub across package, plugins and npx skill installs, with a documented removal policy (bc-ui-design no earlier than v0.6.0). Release checks compare public names against the previous tag and require a Removed entry for any missing name. Fresh packed Pi install listed the alias and loaded its target instruction; npx-all could not run locally because the skills CLI is unavailable.

@@ -54,6 +54,7 @@
     "./concepts/bc-to-spec/body",
     "./concepts/bc-to-tickets/body",
     "./concepts/bc-triage/body",
+    "./skills/bc-ui-design",
     "./concepts/bc-unslop/body",
     "./concepts/bc-using-git-worktrees/body",
     "./concepts/bc-wiki-maintain/body",

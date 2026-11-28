@@ -16,6 +16,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -98,6 +99,34 @@ def version_problems(root: Path, tag: str | None = None) -> list[str]:
     return problems
 
 
+def removed_skill_problems(previous: set[str], current: set[str], changelog: str) -> list[str]:
+    sections = re.findall(r"^### Removed\s*\n(.*?)(?=^## |^### |\Z)", changelog, re.M | re.S)
+    removed = set(re.findall(r"`([a-z0-9-]+)`", "\n".join(sections)))
+    return [f"skill `{name}` disappeared without an alias or CHANGELOG Removed entry"
+            for name in sorted(previous - current - removed)]
+
+
+def previous_release_problems(root: Path, tag: str) -> list[str]:
+    version = tuple(map(int, tag[1:].split(".")))
+    tags = subprocess.run(["git", "tag", "--list", "v*"], cwd=root, text=True, capture_output=True)
+    if tags.returncode:
+        return ["cannot read release tags: " + tags.stderr.strip()]
+    candidates = [(tuple(map(int, t[1:].split("."))), t) for t in tags.stdout.splitlines()
+                  if TAG_PATTERN.fullmatch(t) and tuple(map(int, t[1:].split("."))) < version]
+    if not candidates:
+        return []
+    previous = max(candidates)[1]
+    result = subprocess.run(["git", "show", f"{previous}:concepts/public-skills.json"],
+                            cwd=root, text=True, capture_output=True)
+    if result.returncode:
+        return [f"cannot read public skills from {previous}: {result.stderr.strip()}"]
+    old = set(json.loads(result.stdout)["skills"])
+    current = set(_read(root, "concepts/public-skills.json")["skills"])
+    text = (root / CHANGELOG).read_text(encoding="utf-8")
+    match = re.search(rf"^## \[{re.escape(tag[1:])}\][^\n]*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+    return removed_skill_problems(old, current, match.group(1) if match else "")
+
+
 def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     args = sys.argv[1:] if argv is None else argv
     if len(args) > 1:
@@ -105,6 +134,8 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         return 2
     tag = args[0] if args else None
     problems = version_problems(root, tag)
+    if tag and TAG_PATTERN.fullmatch(tag) and (root / ".git").exists():
+        problems.extend(previous_release_problems(root, tag))
     for problem in problems:
         print(f"release check: {problem}")
     if not problems:

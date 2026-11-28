@@ -382,6 +382,11 @@ def run_method(method: str, scratch: Path, listing: dict[str, list[str]], pack: 
         agent.check_kernel_prompt()
     listed = agent.listed()
     check_listed("after install", expected, listed)
+    if method == "pi-npm" and "bc-ui-design" in listed:
+        alias = (listed["bc-ui-design"] / "SKILL.md").read_text(encoding="utf-8")
+        if "Load `bc-design`" not in alias:
+            raise CheckFailed("bc-ui-design alias does not point to bc-design")
+        print("  ok: installed bc-ui-design: " + alias.splitlines()[-1], flush=True)
     if PUBLISH_SKILL in listed:
         checker = agent.helper(listed, PUBLISH_SKILL, PUBLISH_RELPATH)
         if not checker.is_file():

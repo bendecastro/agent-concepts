@@ -12,7 +12,7 @@ Each command names its skills, so concepts not published as skills are never ins
 ## All public skills
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs bc-council-audit-security bc-council-chain bc-council-challenge-plan bc-council-find-bugs bc-council-improve-architecture bc-council-mode bc-delegate-investigation bc-design bc-diagnosing-bugs bc-dispatching-parallel-agents bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs bc-finishing-development-branch bc-grilling bc-handoff bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder bc-obsidian-bases bc-obsidian-markdown bc-optimize-code bc-performance-guardrails bc-pipeline-to-done bc-plain-language bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec bc-to-tickets bc-triage bc-unslop bc-using-git-worktrees bc-wiki-maintain bc-work-sync bc-writing-plans
+npx skills add <source> -g -a <agent> -y --skill bc-brainstorming bc-code-review bc-codebase-design bc-codebase-docs bc-council-audit-security bc-council-chain bc-council-challenge-plan bc-council-find-bugs bc-council-improve-architecture bc-council-mode bc-delegate-investigation bc-design bc-diagnosing-bugs bc-dispatching-parallel-agents bc-domain-modeling bc-executing-plans bc-explain-visually bc-find-bugs bc-finishing-development-branch bc-grilling bc-handoff bc-improve-codebase-architecture bc-json-canvas bc-minimal-solution-ladder bc-obsidian-bases bc-obsidian-markdown bc-optimize-code bc-performance-guardrails bc-pipeline-to-done bc-plain-language bc-plan-slicing bc-plan-to-pipeline bc-prd-drafting bc-prompting-agents bc-prototype bc-qmd bc-research bc-security-audit bc-self-improve bc-seo bc-setup-project bc-subagent-driven-development bc-tdd bc-teach bc-to-spec bc-to-tickets bc-triage bc-ui-design bc-unslop bc-using-git-worktrees bc-wiki-maintain bc-work-sync bc-writing-plans
 ```
 
 ## Packs
@@ -83,4 +83,10 @@ npx skills add <source> -g -a <agent> -y --skill bc-plan-to-pipeline bc-domain-m
 
 ```bash
 npx skills add <source> -g -a <agent> -y --skill bc-setup-project bc-teach
+```
+
+### bc-ui-design
+
+```bash
+npx skills add <source> -g -a <agent> -y --skill bc-ui-design bc-design
 ```

@@ -14,6 +14,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from public_skills import skill_path
+
 
 PLUGIN_NAME = "agent-concepts"
 # The release version has one home, `version` in package.json; the manifests copy it.
@@ -36,7 +38,7 @@ CODEX_KERNEL_PLUGIN = f"{CODEX_KERNEL_ROOT}/{CODEX_PLUGIN}"
 
 def _skill_paths(root: Path) -> list[str]:
     listing = json.loads((root / LIST_PATH).read_text(encoding="utf-8"))
-    return [f"./concepts/{name}/body" for name in sorted(listing["skills"])]
+    return [skill_path(root, name) for name in sorted(listing["skills"])]
 
 
 def plugin_version(root: Path) -> str:

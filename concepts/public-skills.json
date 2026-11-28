@@ -84,6 +84,9 @@
     "bc-to-spec": [],
     "bc-to-tickets": [],
     "bc-triage": [],
+    "bc-ui-design": [
+      "bc-design"
+    ],
     "bc-unslop": [],
     "bc-using-git-worktrees": [],
     "bc-wiki-maintain": [],

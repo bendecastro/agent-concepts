@@ -59,11 +59,30 @@ def _loads(root: Path) -> dict[str, set[str]]:
     return loads
 
 
+def skill_aliases(root: Path) -> dict[str, str]:
+    aliases = {}
+    for path in sorted((root / "skills").glob("*/SKILL.md")):
+        match = re.search(r"^This skill was renamed\. Load `([a-z0-9-]+)`", path.read_text(encoding="utf-8"), re.MULTILINE)
+        if not match:
+            raise ValueError(f"invalid alias stub: {path}")
+        aliases[path.parent.name] = match.group(1)
+    return aliases
+
+
+def skill_path(root: Path, name: str) -> str:
+    return f"./skills/{name}" if name in skill_aliases(root) else f"./concepts/{name}/body"
+
+
 def public_skill_list(root: Path) -> dict[str, list[str]]:
     names = public_skills(root)
     public = set(names)
     loads = _loads(root)
-    return {name: sorted(loads.get(name, set()) & public) for name in names}
+    listing = {name: sorted(loads.get(name, set()) & public) for name in names}
+    for alias, target in skill_aliases(root).items():
+        if alias in listing or target not in public:
+            raise ValueError(f"invalid alias {alias} -> {target}")
+        listing[alias] = [target]
+    return dict(sorted(listing.items()))
 
 
 def render_list(root: Path) -> str:
