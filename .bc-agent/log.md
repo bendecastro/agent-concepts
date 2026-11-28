@@ -2453,3 +2453,6 @@ Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-au
 Kernel gains one rule: with no one to answer, assume-and-record judgment calls, stop on destructive/publishing/owner-only steps; bc-design/bc-tdd trimmed to deltas; packages staged; scenario written, not run.
 ## [2026-11-28] implement | 058 review fixes
 Kernel unattended bullet defers to existing destructive/publish rules and argue-for-best-outcome, child must be unable to reach parent; bc-tdd restores "proceed"; scenario arms now old vs new kernel plus headless prompt B; CONCEPT precedence clause; packages restaged.
+
+## [2026-11-28] test | agent-kernel unattended-default (058) on Haiku 5.5 low
+FAIL 0/6 new vs 0/6 old (Prompts A+B, 3 runs each). New kernel stopped the archive deletion when the owner said they were away (3/3 vs 0/3) but recorded assumption/question only in the reply; Prompt B stalled in both arms. No kernel/skill text or test_status changed. Results: concepts/agent-kernel/tests/pressure-unattended-default-results-2026-11-28.md.
