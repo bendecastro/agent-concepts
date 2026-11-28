@@ -36,6 +36,7 @@ Write project-specific notes outside the markers; the script keeps them.
 | 12 | [059-qmd-query-contradiction](1-planned/059-qmd-query-contradiction.md) | planned, ready for agent | — | — | `bc-qmd/body/SKILL.md` says `qmd query` is "best quality; the default" while `bc-wiki-maintain/body/SKILL.md` says "Never use `qmd query`" for inline reads and… | 0/1 |
 | 13 | [060-wiki-timer-install-to-wiki-maintain](1-planned/060-wiki-timer-install-to-wiki-maintain.md) | planned, ready for agent | — | — | `bc-setup-project` step 10 (about 350 words) describes installing the wiki-maintain systemd timer, while the runner and its README live in `bc-wiki-maintain`;… | 0/1 |
 | 14 | [062-kernel-in-every-install](1-planned/062-kernel-in-every-install.md) | planned, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 0/5 |
+| 15 | [063-plan-always-asks-dependencies](1-planned/063-plan-always-asks-dependencies.md) | planned | — | — | In the v0.4.1 stranger test, `bc-plan-to-pipeline` wrote a ready item without a `Dependencies:` line and asked no dependency question, although the project's t… | — |
 
 - [Ideas](0-ideas.md): 9
 - [Done](3-done/): 47

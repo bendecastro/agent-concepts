@@ -56,3 +56,18 @@ agent-kernel, bc-brainstorming, bc-code-review (its rule change of 2026-11-27 wa
 `git diff v0.4.0..HEAD -- concepts/*/body` touches one file: `concepts/bc-delegate-investigation/body/pi.md` (c613156), two added lines in "Failure modes observed on this machine" saying commands over about 20 minutes run from the parent, detached, not inside a worktree worker. It is an observed-failure reference note, accuracy-checked against the session log when written (`.bc-agent/log.md`, 2026-11-27 "long scripts out of worktree workers"): no new stop, requirement or prohibition on the skill's contract. Wording change; no retest. No concept is under "Needs testing".
 
 The rest of this release is release tooling and docs (npm `next` soak, `set-latest` and `github-release` jobs, SECURITY.md, issue form, README fixes), checked by the gate and the release workflow, not by pressure tests.
+
+## v0.4.1 soak (2026-11-28)
+
+Stranger test on the published package: `STRANGER_SOURCE=npm STRANGER_VERSION=0.4.1`, openai-codex/gpt-6.1-terra low, 00:06–00:49, one run, no retry. Installed `npm:agent-concepts@0.4.1` from the `next` tag. Private-term audit of the four saved system prompts: no match.
+
+| Phase | Evidence | Grade |
+|---|---|---|
+| Setup | `AGENTS.md`, `.bc-agent/` and `scripts/gate` exist; the gate passes on the final tree | pass |
+| Planning | item `001-normalize-internal-whitespace` with requirements, one step, `Ready for agent: yes` | pass |
+| Build | `Normalize internal label whitespace` on the remote's `main`, with the code change (`" ".join(label.split()).lower()`) and its tests; both reviewers approved | pass |
+| Full suite | the worker ran `python3 -m unittest discover -s tests -p 'test_labels.py'` only | pass |
+
+Stall: planning wrote no dependency line and asked no dependency question, though the project's test rules call for property tests. The builder parked the item with "Add Hypothesis as a test dependency for required property tests, …?" instead of adding it, then finished after the scripted answer. The rule that held is in 0.4.0 too, and planning asked the question in the 0.4.0 run (attempt 4), so this is model variance on unchanged text, not a 0.4.1 regression. Filed as `063-plan-always-asks-dependencies`.
+
+Result: promoted, release run 46090008369 (`set-latest` green); npm shows `latest: 0.4.1`.

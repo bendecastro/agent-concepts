@@ -2393,3 +2393,6 @@ Owner chose Pi first and open, plus 1a 2a 3a: Pi box opens by default with `next
 
 ## [2026-11-28] implement | README: pipeline prerequisites section removed
 Owner chose to drop it: Pi install covers it, setup checks gh. Its content moved to docs/guides/pipeline.md "What the pipeline needs"; harnesses.md link repointed; spacer before "Working on this repository" to match other top-level headings.
+
+## [2026-11-28] deploy | v0.4.1 promoted to npm latest
+First soak: stranger test on npm@0.4.1 (`next`) passed setup, planning, build and full-suite checks; private-term audit clean. One stall (planning skipped the dependency question; builder parked correctly) filed as 063. `gh workflow run release.yml -f action=promote -f version=0.4.1` (run 46090008369) moved `latest` to 0.4.1 — the first live run of `set-latest`.
