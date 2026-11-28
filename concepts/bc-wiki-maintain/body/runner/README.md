@@ -432,6 +432,9 @@ template is instanced per failed unit, so one copy of it serves every vault. One
 vault: a dirty tree in one project must not skip the others. The wrapper already accepts
 `.bc-agent/`, `.agent/`, or any other vault subdirectory.
 
+The slug-suffixed per-vault install that `bc-setup-project` offers, with its confirmation
+and stagger rules, is in [../INSTALL-TIMER.md](../INSTALL-TIMER.md).
+
 The supplied unit uses `%h` (the systemd user home specifier) and placeholder paths:
 
 - `WorkingDirectory=%h/path/to/your/project`

@@ -2463,3 +2463,6 @@ With the account-pooling extension (no 429), setup passed but the planner built 
 
 ## [2026-11-28] implement | 059 bc-qmd owns the qmd query rule
 bc-qmd: 2–4 keywords, `qmd search` first, one `qmd query --no-rerank` rerun on a miss; bc-wiki-maintain and the generated vault block ban `qmd query` only inline (migration "Vault read path: `qmd query` ban narrowed"). Round 2 paraphrase rerun PASS 2/2 on Haiku 5.5 low (41–44s vs 167–237s). Read-path scenario 5 failed in both arms (whole-vault reads, predates 059). Moved onto master without 055 by owner choice.
+
+## [2026-11-28] implement | 060 wiki timer install moves to bc-wiki-maintain
+The per-vault timer install procedure left bc-setup-project step 10 for bc-wiki-maintain/body/INSTALL-TIMER.md (text unchanged); setup keeps the offer and loads it, runner README points at it, new `loads` edge. Read-through on a fixture: nothing lost.

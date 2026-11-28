@@ -20,6 +20,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 - The README's Codex install also installs the `agent-kernel` plugin from the release tag, with no
   checkout; trust its SessionStart hook in `/hooks` or the kernel does not load. Uninstall removes both
   plugins. Running the README's Codex refresh on a skills-only install adds the kernel.
+- The per-vault wiki-maintain timer install procedure moved from `bc-setup-project` step 10 to `bc-wiki-maintain`'s `INSTALL-TIMER.md`; setup still offers the timer and loads it.
 
 ### Fixed
 

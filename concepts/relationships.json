@@ -85,6 +85,15 @@
     {
       "from": "bc-setup-project",
       "to": "bc-wiki-maintain",
+      "relation": "loads",
+      "required": false,
+      "when": "learning or knowledge vault and the owner is offered the promotion timer",
+      "source": "concepts/bc-setup-project/body/SKILL.md#process",
+      "reason": "The per-vault timer install procedure has one home, bc-wiki-maintain's INSTALL-TIMER.md next to runner/; setup owns only the offer."
+    },
+    {
+      "from": "bc-setup-project",
+      "to": "bc-wiki-maintain",
       "relation": "depends_on_contract",
       "required": true,
       "when": "generating the canonical vault read block for learning, knowledge and hybrid",

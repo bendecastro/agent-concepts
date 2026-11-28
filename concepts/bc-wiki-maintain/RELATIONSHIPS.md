@@ -32,3 +32,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when registering for search and linting a scaffolded project.
   Setup runs the installed wiki_lint.py for all archetypes. For visible layouts, step 9 appends its --qmd-entry output; the registration check expects exactly that shape and a test pins the setup sample to it. Only classic vaults get the promotion timer offer.
   Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md)
+
+- incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): loads this concept — optional, when learning or knowledge vault and the owner is offered the promotion timer.
+  The per-vault timer install procedure has one home, bc-wiki-maintain's INSTALL-TIMER.md next to runner/; setup owns only the offer.
+  Source: [bc-setup-project/body/SKILL.md](../bc-setup-project/body/SKILL.md#process)

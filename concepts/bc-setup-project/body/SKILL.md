@@ -120,7 +120,7 @@ Archetypes:
 
 8. **Wire publish authorization (offer).** `/bc-pipeline-to-done` needs this repo authorized in `publish.yaml` for AFK push. Detect the remote (`git remote get-url origin`). Draft a repo-specific allow rule following the existing publish-policy schema, with `paths`/`remotes` filled from this repo. Show it to the user and **offer to append it** to `~/.config/agent-concepts/publish.yaml` after they confirm. Never push that change (self-amendment immunity) — leave the user to push it. If they decline, record a line in `work/0-ideas.md` for the visible layout, or `tasks/parking-lot.md` for legacy learning/knowledge vaults.
 
-For steps 9 and 10, `wiki_lint.py` and `runner/` sit next to the installed `bc-wiki-maintain`
+For steps 9 and 10, `wiki_lint.py`, `INSTALL-TIMER.md` and `runner/` sit next to the installed `bc-wiki-maintain`
 `SKILL.md`. It loads only by command, so it is not in your skills list; find it from `<dir>`, the
 directory this `bc-setup-project` `SKILL.md` was loaded from. Set `wiki_skill_dir` to the first
 candidate where `test -f <candidate>/wiki_lint.py` succeeds (`test -f` follows symlinks; do not
@@ -181,48 +181,8 @@ Use `$AGENT_CONCEPTS/concepts/bc-wiki-maintain/body` only as an explicit checkou
     For code, ops and hybrid, skip the promotion offer and go to step 11: decisions and
     research go directly to the table's role folders and `log.md` is a plain journal.
 
-    For learning and knowledge, capture into
-    `.bc-agent/log.md` is cheap; promotion is not. Without a per-vault user
-    timer, the new wiki will not promote overnight. This is not qmd:
-    `bc-qmd-refresh.timer` only refreshes search indexes. `/bc-wiki-maintain`
-    is the maintenance skill; its systemd templates
-    (`$wiki_skill_dir/runner/`) do not install,
-    enable, or start themselves.
-
-    Show the user the exact slug-suffixed unit names and env, then **offer to
-    install** after they confirm.
-    Never copy, enable, or start units without confirmation. Never write the
-    unsuffixed `bc-wiki-maintain.service` — that name may already bind another
-    vault. Never vendor runner scripts into the project.
-
-    If `systemctl --user` is unavailable, skip install and append a
-    TODO in the vault parking lot pointing at `$wiki_skill_dir/runner/README.md`.
-
-    On confirm, copy — do not symlink — the templates to slug-suffixed
-    names, edit the placeholders from the runner README (WorkingDirectory,
-    VAULT_ROOT, PI_BIN, SyslogIdentifier, ExecStart for a non-default skill directory, the timer's
-    `Unit=`), stagger `OnCalendar` at least 15 minutes away from any
-    existing `bc-wiki-maintain*.timer`, then reload and enable:
-
-    ```bash
-    unit_dir="$HOME/.config/systemd/user"
-    slug="<slug>"
-    vault="<repo-root>/.bc-agent"
-    install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.service" \
-      "$unit_dir/bc-wiki-maintain-${slug}.service"
-    install -Dm644 "$wiki_skill_dir/runner/bc-wiki-maintain.timer" \
-      "$unit_dir/bc-wiki-maintain-${slug}.timer"
-    # edit placeholders, then:
-    systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-${slug}.service"
-    systemd-analyze --user verify "$unit_dir/bc-wiki-maintain-${slug}.timer"
-    systemctl --user daemon-reload
-    systemctl --user enable --now "bc-wiki-maintain-${slug}.timer"
-    systemctl --user status "bc-wiki-maintain-${slug}.timer"
-    ```
-
-    Resolve `PI_BIN` with `command -v pi` falling back to `$HOME/.local/bin/pi`.
-    If a matching slug-suffixed unit already exists for this `VAULT_ROOT`, report it and skip.
-    On decline, append the same TODO as the no-systemd case.
+    For learning and knowledge, offer the per-vault promotion timer: read
+    `$wiki_skill_dir/INSTALL-TIMER.md` and follow it; install nothing until the user confirms.
 
 11. **Close out.** Point at the created files, name each starter item filed, and note the wiki-maintain timer offer outcome and any migration plan. For existing code, ops and hybrid projects, record the actual local gate result and name each unresolved gate, validation (including Release) or file-layout gap as a concrete owner action. Next steps for the user: run `/bc-triage` on existing issues or `/bc-plan-to-pipeline` for a new feature; use `/bc-prototype` or `/bc-improve-codebase-architecture` when planning needs evidence/runway; then `/bc-pipeline-to-done` to execute. Commit the scaffold (it's the user's repo — stage the new files explicitly, concise message; don't sweep unrelated drift). <!-- trigger-allow: setup recommends evidence tools for future planning; the planning pipeline does not trigger setup -->
 

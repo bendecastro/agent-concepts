@@ -93,6 +93,9 @@ Later work packages and other skills read project paths through this contract, n
   Confirmed by the user as offer-then-install, not mention-only and not
   default-on. The scaffold stays timer-free. qmd refresh is not this
   timer. Provenance: `concepts/bc-wiki-maintain/body/runner/`.
+- **Timer install procedure lives in bc-wiki-maintain (2026-11-28).** Step 10 keeps the
+  offer and loads `bc-wiki-maintain/body/INSTALL-TIMER.md` for the procedure, so the runner
+  and its install steps have one home. Read-through: [tests/readthrough-timer-install-move-2026-11-28.md](tests/readthrough-timer-install-move-2026-11-28.md).
 - **TODO stubs, not invented facts.** `validation.md`, `file-layout.md`, `references/*`, and the glossary ship as explicit TODO stubs for the project's agents to fill — preserving epistemic honesty rather than fabricating project facts.
 - **Teach integration is an explicit adapter, not a second tutor.** Learning and hybrid overlays
   emit `.bc-agent/references/teach-skill.md` with the approved mission/review/records/knowledge/

@@ -11,7 +11,7 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Move the step and point setup at it. Done when lint passes and a setup dry run on a fixture still offers and describes the timer correctly.
+- [x] Move the step and point setup at it. Done when lint passes and a setup dry run on a fixture still offers and describes the timer correctly.
 
 ## Outcome
 
