@@ -2390,3 +2390,6 @@ Lint check for repeated text across skill bodies, copy-of markers kept in sync, 
 
 ## [2026-11-27] implement | README install section tidied
 Owner chose Pi first and open, plus 1a 2a 3a: Pi box opens by default with `next`/pin details folded; IMPORTANT trimmed to two bullets (council and update notes moved into the boxes); kernel section opens with what the kernel is and folds its per-agent table; pipeline prerequisites cut to one paragraph, optional machine-tools table moved to docs/guides/pipeline.md.
+
+## [2026-11-28] implement | README: pipeline prerequisites section removed
+Owner chose to drop it: Pi install covers it, setup checks gh. Its content moved to docs/guides/pipeline.md "What the pipeline needs"; harnesses.md link repointed; spacer before "Working on this repository" to match other top-level headings.

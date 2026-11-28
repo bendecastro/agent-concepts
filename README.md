@@ -720,10 +720,7 @@ Start a fresh session after install, disable or removal; an old session may stil
 
 </details>
 
-
-### Install prerequisites for the pipeline
-
-`/bc-pipeline-to-done` needs separate agents to build and review changes. The [Pi install](#pi) sets them up; other agents need equivalent roles and isolation. To work from GitHub issues, also install and sign in to the [GitHub CLI](https://cli.github.com/) (`gh`); local work items do not need it.
+<br>
 
 ## Working on this repository
 

@@ -53,7 +53,9 @@ Run `/bc-setup-project` once. For a fresh code project it creates a root `AGENTS
 
 Setup can also offer a `publish.yaml` push-authorization rule if the project will use unattended pushes.
 
-Before running the executor, follow the [pipeline install prerequisites](../../README.md#install-prerequisites-for-the-pipeline). If the harness cannot launch the required jobs, the pipeline stops before claiming work.
+### What the pipeline needs
+
+`/bc-pipeline-to-done` needs separate agents to build and review changes. If the harness cannot launch them, the pipeline stops before claiming work. Other agents need equivalent roles and isolation. To work from GitHub issues, also install and sign in to the [GitHub CLI](https://cli.github.com/) (`gh`); `/bc-setup-project` checks it when the project has a GitHub remote, and local work items do not need it.
 
 In Pi, the [Pi install](../../README.md#pi) brings `pi-subagents` and the pipeline's auditor, builder and reviewer [roles](../../concepts/bc-pipeline-to-done/body/roles.md), with nothing to copy. If `pi-subagents` is missing, the pipeline offers to install it, then asks you to restart Pi.
 
