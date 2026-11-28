@@ -21,4 +21,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Incoming
 
-None.
+- incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): hands off to this concept — optional, when working a map's prototype step.
+  bc-prototype is user-invoked: a prototype step gives the owner the command with the step's question and records its verdict.
+  Source: [bc-plan-to-pipeline/body/map-mode.md](../bc-plan-to-pipeline/body/map-mode.md)

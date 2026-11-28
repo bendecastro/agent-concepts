@@ -597,6 +597,24 @@
       "reason": "The shared-glossary rule for a hybrid project's root glossary.md has one home in bc-domain-modeling; planning points to it."
     },
     {
+      "from": "bc-plan-to-pipeline",
+      "to": "bc-research",
+      "relation": "loads",
+      "required": true,
+      "when": "a map has research steps",
+      "source": "concepts/bc-plan-to-pipeline/body/map-mode.md",
+      "reason": "A map's research steps are resolved with bc-research, several in parallel as subagents."
+    },
+    {
+      "from": "bc-plan-to-pipeline",
+      "to": "bc-prototype",
+      "relation": "hands_off",
+      "required": false,
+      "when": "working a map's prototype step",
+      "source": "concepts/bc-plan-to-pipeline/body/map-mode.md",
+      "reason": "bc-prototype is user-invoked: a prototype step gives the owner the command with the step's question and records its verdict."
+    },
+    {
       "from": "bc-wiki-maintain",
       "to": "bc-domain-modeling",
       "relation": "depends_on_contract",

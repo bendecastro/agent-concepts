@@ -95,7 +95,8 @@
       "bc-domain-modeling",
       "bc-grilling",
       "bc-plan-slicing",
-      "bc-prd-drafting"
+      "bc-prd-drafting",
+      "bc-research"
     ],
     "bc-prd-drafting": [],
     "bc-prompting-agents": [],
