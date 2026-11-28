@@ -105,7 +105,8 @@
     "bc-self-improve": [],
     "bc-seo": [],
     "bc-setup-project": [
-      "bc-teach"
+      "bc-teach",
+      "bc-wiki-maintain"
     ],
     "bc-subagent-driven-development": [
       "bc-durable-subagents",

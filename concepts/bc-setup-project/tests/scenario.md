@@ -12,10 +12,11 @@ Mostly a deterministic check of `body/scaffold.py` plus a process check of the s
 6. **Slug validation.** A slug with spaces or uppercase is rejected (exit 1).
 7. **Archetype overlays.** `--archetype ops` adds `docs/components/` and the component/finding templates, and no open-questions folder or template; `--archetype learning` creates the mapped learning paths plus sources/concepts/questions/sessions and teach adapter; `--archetype knowledge` independently creates raw + compiled wiki seed files; `--archetype hybrid` creates the ops layout plus exactly the teach adapter's mapped paths under `.bc-agent/`, keeping entities/syntheses under the mapped `concepts/` home without parallel `raw/` or `wiki/` trees, and no `project/overview.md`: its adapter maps the glossary to the shared root `glossary.md`. Default `code` creates the visible layout without archetype folders. Code, ops and hybrid scaffolds include `conventions/architecture-runway.md` with a computed Git-history planning-surface signal, not a hand-maintained counter.
 7a. **Generated read-path and heading contract (vault archetypes).** In a fresh throwaway Git repo, run `scaffold.py --root <tmp> --slug demo-proj --date 2026-08-29 --archetype learning` and assert that root `AGENTS.md` lists `.bc-agent/AGENTS.md` as read 1, vault `AGENTS.md` contains the marker-delimited canonical search block (including the empty-result and hub-page rules), and `decisions/adr-0001-local-project-agent-wiki.md` plus `tasks/active.md` describe search before page lookup. Assert `index.md` says `## Orientation`, HOME/MAP call themselves human-facing orientation, and both generated date-bearing pages use `## [2026-08-29]`; any `index.md` occurrence in the generated tree must be orientation guidance rather than an instruction to load it for lookup.
-7b. **Timer offer is skill-only.** `body/SKILL.md` contains the step title
-    `Offer rolling wiki maintenance` and the sentence `Never copy, enable, or
-    start units without confirmation.` `body/scaffold.py` contains no
-    `systemctl`. Generated trees must not claim a promotion timer is already
+7b. **Timer offer is skill-only.** `body/SKILL.md` step 10 contains
+    `install nothing until the user confirms` and loads
+    `$wiki_skill_dir/INSTALL-TIMER.md`; `bc-wiki-maintain/body/INSTALL-TIMER.md`
+    contains the sentence `Never copy, enable, or start units without
+    confirmation.` `body/scaffold.py` contains no `systemctl`. Generated trees must not claim a promotion timer is already
     installed.
 7c. **Teach host adapter is explicit and thin.** `test_teach_adapter.py` runs the real
     scaffold for `learning` and `hybrid`, parses the exact approved map (vault map for learning,

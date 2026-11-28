@@ -46,7 +46,7 @@ tested. See the concept's `## Tests` section for what is missing.
 | [bc-prototype](../concepts/bc-prototype/CONCEPT.md) | pressure | 2026-08-21 | 2026-06-21 |
 | [bc-research](../concepts/bc-research/CONCEPT.md) | pressure | 2026-08-21 | yes |
 | [bc-self-improve](../concepts/bc-self-improve/CONCEPT.md) | pressure | 2026-11-19 | yes |
-| [bc-setup-project](../concepts/bc-setup-project/CONCEPT.md) | pressure | 2026-11-27 | 2026-06-21 |
+| [bc-setup-project](../concepts/bc-setup-project/CONCEPT.md) | pressure | 2026-11-28 | 2026-06-21 |
 | [bc-subagent-driven-development](../concepts/bc-subagent-driven-development/CONCEPT.md) | pressure | 2026-11-25 | yes |
 | [bc-swarm](../concepts/bc-swarm/CONCEPT.md) | pressure | 2026-11-28 | 2026-11-28 |
 | [bc-tdd](../concepts/bc-tdd/CONCEPT.md) | pressure | 2026-11-28 | yes |

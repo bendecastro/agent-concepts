@@ -148,7 +148,7 @@ npx skills add <source> -g -a <agent> -y --skill bc-security-audit bc-durable-su
 ### bc-setup-project
 
 ```bash
-npx skills add <source> -g -a <agent> -y --skill bc-setup-project bc-teach
+npx skills add <source> -g -a <agent> -y --skill bc-setup-project bc-teach bc-wiki-maintain
 ```
 
 ### bc-subagent-driven-development

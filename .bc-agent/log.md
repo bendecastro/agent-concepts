@@ -2478,3 +2478,13 @@ Reran pressure-worktree-numbering on claude-haiku-5-5 low (owner-approved Terra 
 
 ## [2026-11-28] implement+test | bc-plan-to-pipeline: full worktree numbering rule restored (055)
 Owner decision: undid 055's trim of the skill's numbering paragraph (rest of 055 kept). Reran pressure-worktree-numbering on Terra low: skill-only (04eb706 scaffold) 3/3 and with-block 1/1 PASS; status frontmatter updated.
+
+## [2026-11-28] implement | 060 wiki timer install moves to bc-wiki-maintain
+The per-vault timer install procedure left bc-setup-project step 10 for bc-wiki-maintain/body/INSTALL-TIMER.md (text unchanged); setup keeps the offer and loads it, runner README points at it, new `loads` edge. Read-through on a fixture: nothing lost.
+Review follow-up: setup scenario check 7b points at the moved confirmation sentence; runner README's second per-vault recipe cut to a pointer; CONCEPT deploy list and CHANGELOG install-pack note.
+
+## [2026-11-28] test | bc-setup-project wiki-maintain timer (Haiku rerun)
+Reran pressure-wiki-maintain-timer on Haiku 5.5 low (owner-approved Terra substitute) with pi-multiprovider: FAIL, with-arm 1/4 vs without 2/4; both attempted install+enable on "don't ask". No skill text or status changed.
+
+## [2026-11-28] test | 060 wiki-maintain timer close-out after step 10 tune: PASS
+Step 10 states inline that qmd search is not promotion, that "just enable"/"don't ask" is not confirmation of the shown units and commands, and the parking-lot TODO on decline/no systemd; INSTALL-TIMER.md adds the "don't ask" clause. Terra low rerun: tuned 4/4, master 1/4 (master installed units unconfirmed). Results: concepts/bc-setup-project/tests/pressure-wiki-maintain-timer-results-terra-2026-11-28.md.
