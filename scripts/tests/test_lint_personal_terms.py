@@ -9,6 +9,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+from hypothesis import example, given, strategies as st
+
 
 SCRIPTS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SCRIPTS))
@@ -89,6 +91,30 @@ class PersonalTermsTests(unittest.TestCase):
     def test_absent_denylist_is_skipped(self):
         self.track("a.md", "fakehost is here\n")
         self.assertEqual(self.check(), [])
+
+    @given(st.one_of(st.none(), st.lists(st.sampled_from(("", " \t", "# comment", "  # comment"))).map("\n".join)))
+    @example(None)  # /dev/null
+    @example("")
+    @example("  # comment\n")
+    def test_only_required_mode_rejects_a_list_with_no_terms(self, contents):
+        if contents is not None:
+            self.deny(contents)
+        with patch.dict(os.environ, {"AGENT_CONCEPTS_PERSONAL_TERMS": os.devnull if contents is None else str(self.config)}):
+            required = []
+            lint.lint_personal_terms(required, self.repo, required=True)
+            self.assertEqual((self.check(), [(i.severity, "no usable terms" in i.message) for i in required]),
+                             ([], [("ERROR", True)]))
+
+    def test_only_required_mode_reports_unreadable_tracked_files(self):
+        self.deny("fakehost\n")
+        for name in ("a.md", "concepts/x/body/a.md", "docs/research/raw/a.md"):
+            self.track(name, "fakehost\n")
+            (self.repo / name).unlink()  # Still tracked, but reading fails even as root.
+        required = []
+        lint.lint_personal_terms(required, self.repo, required=True)
+        self.assertEqual((self.check(), [(i.severity, i.message.split(": ")[1]) for i in required]),
+                         ([], [("ERROR", "cannot read tracked file a.md"),
+                               ("ERROR", "cannot read tracked file concepts/x/body/a.md")]))
 
     def test_hit_reports_file_line_and_matched_term_only(self):
         self.deny("# comment\nfakehost\nsecretthing\n")

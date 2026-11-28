@@ -56,7 +56,7 @@ removal version.
 5. Run `python3 scripts/release_check.py vMAJOR.MINOR.PATCH`. It exits nonzero when any
    description's version differs from the tag, `CHANGELOG.md` has no entry for it, or the
    README's Install section does not name the tag or still names another one, does not show
-   the unpinned `pi install npm:agent-concepts`, or pins npm to another version. Run
+   the unpinned `pi install npm:agent-concepts`, or pins npm to another version.
    It also scans the private personal-terms list (`AGENT_CONCEPTS_PERSONAL_TERMS` overrides
    `~/.config/agent-concepts/personal-terms.txt`) and fails if missing or the scan reports
    errors or cannot complete; lint's warning-only matches remain warnings. CI has no private list and explicitly uses `--no-personal-terms`; strangers without

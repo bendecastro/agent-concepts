@@ -716,6 +716,9 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None, *, requir
         else:
             alternatives.append(re.escape(term))
     if not alternatives:
+        if required:
+            issues.append(Issue("ERROR", f"personal terms: no usable terms in {display(config)}; "
+                                "use --no-personal-terms to opt out"))
         return
     try:
         pattern = re.compile(r"(?<!\w)(?:" + "|".join(alternatives) + r")(?!\w)", re.IGNORECASE)
@@ -742,7 +745,9 @@ def lint_personal_terms(issues: list[Issue], root: Path | None = None, *, requir
         path = root / name
         try:
             data = path.read_bytes()
-        except OSError:
+        except OSError as exc:
+            if required:
+                issues.append(Issue("ERROR", f"personal terms: cannot read tracked file {name}: {exc.strerror}"))
             continue
         if b"\0" in data:
             continue

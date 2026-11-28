@@ -7,7 +7,7 @@ import json
 import io
 import os
 import re
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 from unittest.mock import patch
 import sys
 import subprocess
@@ -22,6 +22,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 import plugin_manifests  # noqa: E402
 import release_check  # noqa: E402
+import lint  # noqa: E402
 
 
 class ReleaseCheckTests(unittest.TestCase):
@@ -59,6 +60,18 @@ class ReleaseCheckTests(unittest.TestCase):
                 f.write("uniquefixturesecret\n")
             self.assertEqual(release_check.main(["v1.2.3"], self.root), 1)
 
+    @given(st.booleans(), st.lists(st.sampled_from(("--no-personal-terms", "--unknown")), max_size=4),
+           st.booleans())
+    @example(tagged=True, options=["--no-personal-terms"], reverse=False)
+    def test_only_one_explicit_opt_out_is_accepted(self, tagged, options, reverse):
+        args = (["v1.2.3"] if tagged else []) + options
+        if reverse:
+            args.reverse()
+        expected = 1 if not options else 0 if options == ["--no-personal-terms"] else 2
+        with patch.dict(os.environ, {"AGENT_CONCEPTS_PERSONAL_TERMS": str(self.root / "missing")}), \
+                redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            self.assertEqual(release_check.main(args, self.root), expected)
+
     def test_personal_terms_warning_only_hit_does_not_block_release(self):
         config = self.root / "denylist"
         config.write_text("uniquefixturesecret\n")
@@ -73,14 +86,39 @@ class ReleaseCheckTests(unittest.TestCase):
                 self.assertEqual(release_check.main(["v1.2.3"], self.root), 0)
             self.assertIn("uniquefixturesecret", output.getvalue())
 
+    @given(st.lists(st.sampled_from(("warning-hit", "error-hit", "warning-failure", "error-failure")), max_size=8))
+    @example(["warning-failure"])
+    def test_only_warning_matches_are_nonblocking(self, outcomes):
+        scan_results = {
+            "warning-hit": lint.Issue("WARN", "personal term in body.md:1: 'fixture'"),
+            "error-hit": lint.Issue("ERROR", "personal term in README.md:1: 'fixture'"),
+            "warning-failure": lint.Issue("WARN", "personal terms: cannot list tracked files with git"),
+            "error-failure": lint.Issue("ERROR", "personal terms: cannot read tracked file a.md"),
+        }
+
+        def report_scan_results(issues, root, *, required):
+            issues.extend(scan_results[outcome] for outcome in outcomes)
+
+        output = io.StringIO()
+        with patch.object(lint, "lint_personal_terms", report_scan_results), redirect_stdout(output):
+            result = release_check.main([], self.root)
+        self.assertEqual((result, output.getvalue().count("release check: warning: ")),
+                         (int(any(outcome != "warning-hit" for outcome in outcomes)),
+                          outcomes.count("warning-hit")))
+
     def test_publish_job_inputs_are_pinned(self):
         text = (release_check.ROOT / ".github/workflows/release.yml").read_text()
         job = text.split("  publish-npm:\n", 1)[1].split("\n  github-release:", 1)[0]
-        actions = re.findall(r"^\s*- uses: ([^\n]+)", job, re.M)
+        actions = re.findall(r"^[ \t]*(?:-[ \t]+)?uses:[ \t]*(.*)$", job, re.M)
         self.assertTrue(actions)
         for action in actions:
             self.assertRegex(action, r"^[^@]+@[0-9a-f]{40} # v\d+\.\d+\.\d+$")
-        self.assertRegex(job, r'(?m)^\s*- run: npm install -g ["\']?npm@11\.\d+\.\d+["\']?\s*$')
+        commands = re.sub(r"(?m)^[ \t]*#.*$", "", job)
+        installs = re.findall(r"\bnpm\s+install\b", commands)
+        exact_installs = re.findall(
+            r'''(?m)^[ \t]*(?:-[ \t]+)?run:[ \t]+npm install -g (["']?)npm@11\.\d+\.\d+\1[ \t]*$''', commands)
+        self.assertEqual((len(installs), len(exact_installs)), (1, 1),
+                         "publish-npm must have exactly one npm install, at an exact npm version")
 
     def test_generated_manifests_carry_the_package_version(self):
         self.assertEqual(set(release_check.declared_versions(self.root).values()), {"1.2.3"})
