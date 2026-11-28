@@ -2459,3 +2459,6 @@ FAIL 0/6 new vs 0/6 old (Prompts A+B, 3 runs each). New kernel stopped the archi
 
 ## [2026-11-28] test | agent-kernel unattended-default rerun (058)
 Tuned the "When no one can answer" bullet to name where the record goes (commit body or notes/report file; reply alone does not count) and gave Prompt B a scheduled-job marker. Terra low, 3 runs/arm/prompt: FAIL, new 3/6 vs old 0/6; Prompt A records the layout but drops the archive question in 2/3. Status frontmatter unchanged.
+
+## [2026-11-28] test | agent-kernel unattended-default round 3 (058)
+Tuned the bullet so each skipped step and its open question go into the same record as the assumption; regenerated package copies. Terra low, 3 runs/arm/prompt: FAIL strict, new 1/6 (lenient 6/6) vs old 0/6; question now in the record 6/6, but 5/6 records state the layout as a choice without calling it an assumption. Status frontmatter unchanged.
