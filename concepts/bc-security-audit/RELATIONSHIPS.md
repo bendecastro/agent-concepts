@@ -11,6 +11,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Adapts fresh-context reviewer isolation and findings-are-not-obligations calibration, not the two-axis diff workflow.
   Source: [CONCEPT.md](CONCEPT.md#design-decisions)
 
+- loads `bc-durable-subagents` — required, when before the first fresh reviewer launch in a full audit.
+  Fresh reviewer launches use the shared durability contract and fallback within the audit's own Output gate.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - adapts `bc-prompting-agents` — required.
   Adapts scope, ambiguity, evidence and enforced privileged-action phrasing for guidance versus explicit audit mode.
   Source: [CONCEPT.md](CONCEPT.md#design-decisions)

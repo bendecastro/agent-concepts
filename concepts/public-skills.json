@@ -99,7 +99,9 @@
     "bc-safe-runs": [
       "bc-using-git-worktrees"
     ],
-    "bc-security-audit": [],
+    "bc-security-audit": [
+      "bc-durable-subagents"
+    ],
     "bc-self-improve": [],
     "bc-seo": [],
     "bc-setup-project": [
@@ -128,7 +130,9 @@
       "bc-safe-runs"
     ],
     "bc-wiki-maintain": [],
-    "bc-work-sync": [],
+    "bc-work-sync": [
+      "bc-durable-subagents"
+    ],
     "bc-writing-plans": [
       "bc-safe-runs"
     ]

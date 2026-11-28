@@ -1194,7 +1194,25 @@
       "required": true,
       "when": "every drain run before the first dispatch",
       "source": "concepts/bc-pipeline-to-done/body/SKILL.md",
-      "reason": "Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest. The drain's claims, run artifact root and recovery root stay its own run state."
+      "reason": "Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback. The drain's claims, run artifact root and recovery root stay its own run state, and its resume and landing rules take precedence."
+    },
+    {
+      "from": "bc-security-audit",
+      "to": "bc-durable-subagents",
+      "relation": "loads",
+      "required": true,
+      "when": "before the first fresh reviewer launch in a full audit",
+      "source": "concepts/bc-security-audit/body/SKILL.md",
+      "reason": "Fresh reviewer launches use the shared durability contract and fallback within the audit's own Output gate."
+    },
+    {
+      "from": "bc-work-sync",
+      "to": "bc-durable-subagents",
+      "relation": "loads",
+      "required": true,
+      "when": "before launching the fresh reviewer after owner approval",
+      "source": "concepts/bc-work-sync/body/SKILL.md",
+      "reason": "The single reviewer launch uses the shared durability contract and fallback; owner review launches nothing."
     }
   ]
 }

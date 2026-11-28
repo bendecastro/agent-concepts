@@ -22,8 +22,12 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-dispatching-parallel-agents/body/SKILL.md](../bc-dispatching-parallel-agents/body/SKILL.md)
 
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): loads this concept — required, when every drain run before the first dispatch.
-  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest. The drain's claims, run artifact root and recovery root stay its own run state.
+  Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback. The drain's claims, run artifact root and recovery root stay its own run state, and its resume and landing rules take precedence.
   Source: [bc-pipeline-to-done/body/SKILL.md](../bc-pipeline-to-done/body/SKILL.md)
+
+- incoming from [bc-security-audit](../bc-security-audit/RELATIONSHIPS.md): loads this concept — required, when before the first fresh reviewer launch in a full audit.
+  Fresh reviewer launches use the shared durability contract and fallback within the audit's own Output gate.
+  Source: [bc-security-audit/body/SKILL.md](../bc-security-audit/body/SKILL.md)
 
 - incoming from [bc-subagent-driven-development](../bc-subagent-driven-development/RELATIONSHIPS.md): loads this concept — required, when dispatching implementers and reviewers.
   Run folder, manifest, async fan-out, child artifacts with Commit/Branch records and recover-before-relaunch have one home in bc-durable-subagents; the body keeps a one-line fallback so a skipped load still leaves a run folder and manifest.
@@ -32,3 +36,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-swarm](../bc-swarm/RELATIONSHIPS.md): loads this concept — required, when every launch and every recovery of a prior run.
   Run folder, manifest, async fan-out, artifacts with Commit/Branch records, durability packet bullets and recover-before-relaunch have one home in bc-durable-subagents; bc-swarm keeps only the delegate-by-default posture.
   Source: [bc-swarm/body/SKILL.md](../bc-swarm/body/SKILL.md)
+
+- incoming from [bc-work-sync](../bc-work-sync/RELATIONSHIPS.md): loads this concept — required, when before launching the fresh reviewer after owner approval.
+  The single reviewer launch uses the shared durability contract and fallback; owner review launches nothing.
+  Source: [bc-work-sync/body/SKILL.md](../bc-work-sync/body/SKILL.md)

@@ -38,7 +38,7 @@ By default the jobs run as the roles this skill's Pi package ships (see [roles.m
 
 Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
-Load `bc-durable-subagents` for the generic launch rules (manifest before dispatch, async fan-out, child artifacts with `Commit:`/`Branch:` records, recover before relaunch); the drain's claims, run artifact root and recovery root below are its own run state. Else: write the run manifest before the first dispatch and state its path in chat.
+Load `bc-durable-subagents` for the generic launch rules (manifest before dispatch, async fan-out, child artifacts with `Commit:`/`Branch:` records, recover before relaunch); the drain's claims, run artifact root and recovery root below are its own run state; where they differ, the drain's resume and landing rules below win. Else: before the first dispatch, write the run manifest in a run folder that survives a reboot (use the drain's run artifact root) and state the folder path in chat.
 
 Put the `bc-safe-runs` packet line in every worker or reviewer task. Before releasing an integrated worktree or branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that landing proof in the run manifest. Why: unattended loops multiply storage leaks.
 

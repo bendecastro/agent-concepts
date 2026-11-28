@@ -139,6 +139,12 @@ npx skills add <source> -g -a <agent> -y --skill bc-prototype bc-safe-runs bc-us
 npx skills add <source> -g -a <agent> -y --skill bc-safe-runs bc-using-git-worktrees
 ```
 
+### bc-security-audit
+
+```bash
+npx skills add <source> -g -a <agent> -y --skill bc-security-audit bc-durable-subagents bc-safe-runs bc-using-git-worktrees
+```
+
 ### bc-setup-project
 
 ```bash
@@ -173,6 +179,12 @@ npx skills add <source> -g -a <agent> -y --skill bc-ui-design bc-design
 
 ```bash
 npx skills add <source> -g -a <agent> -y --skill bc-using-git-worktrees bc-safe-runs
+```
+
+### bc-work-sync
+
+```bash
+npx skills add <source> -g -a <agent> -y --skill bc-work-sync bc-durable-subagents bc-safe-runs bc-using-git-worktrees
 ```
 
 ### bc-writing-plans

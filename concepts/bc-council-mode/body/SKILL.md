@@ -11,7 +11,7 @@ The parent selects the roster, relays only curated claims, decides validity, and
 
 Before launch, read [references/pass-contracts.md](references/pass-contracts.md).
 
-Load `bc-durable-subagents` before the first launch. Else: before any launch, create a run folder, write `manifest.md` there (key → artifact path → advisor → model + thinking → task) and state its path in chat.
+Load `bc-durable-subagents` before the first launch. Else: before any launch, create a run folder that survives a reboot, write `manifest.md` there (key → artifact path → advisor → model + thinking → task) and state its path in chat.
 
 ## Roster
 

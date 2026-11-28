@@ -15,7 +15,7 @@ Rules for running code without filling the disk or losing work. They derive from
 
 ## Scratch folders
 
-Make scratch folders (prototypes, throwaway projects, build output, logs) with `mktemp -d` and no path argument, which uses `$TMPDIR`, or in a git-ignored folder inside your worktree. Never type `/tmp/` into a command, a `CARGO_TARGET_DIR` or a worker's task unless the user named that exact path. Delete the scratch folder before you finish. Why: `/tmp` may be a small RAM-backed disk that also holds agent runner state; one Rust build there took 5.7 GB of 7.7 GB and three agent runs died without a log line.
+Make scratch folders (prototypes, throwaway projects, build output, logs; not durable run folders) with `mktemp -d` and no path argument, which uses `$TMPDIR`, or in a git-ignored folder inside your worktree. Never type `/tmp/` into a command, a `CARGO_TARGET_DIR` or a worker's task unless the user named that exact path. Delete the scratch folder before you finish. Why: `/tmp` may be a small RAM-backed disk that also holds agent runner state; one Rust build there took 5.7 GB of 7.7 GB and three agent runs died without a log line.
 
 ## Storage health check
 

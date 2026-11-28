@@ -12,14 +12,14 @@ Planned: bc-plan-to-pipeline 2026-11-27
 
 - Job B (`bc-durable-subagents`): the Durability contract and Recovery rule sections of today's SKILL.md, the Evidence anchors and packet bullets that serve durability (Commit/Branch records, append-as-you-go), and all of `body/pi.md`. Harness-neutral entry file; Pi mechanics stay a linked file.
 - Job A (`bc-swarm`): the inversion, the routing decision, keep cases, fan-out width, the read-only boundary; one line loading `bc-durable-subagents`. Description keeps the triggers swarm, go wide, fan out.
-- Callers that load job B with a `loads` edge in `concepts/relationships.json` (check each actually launches children before adding): `bc-council-mode` (and through it `bc-council-chain`, `bc-council-find-bugs`, `bc-council-improve-architecture`, `bc-council-challenge-plan`), `bc-subagent-driven-development`, `bc-dispatching-parallel-agents`, `bc-pipeline-to-done` (keep its drain-specific run state; replace only the overlapping generic rules), and `bc-handoff`'s pointer. Account for every edge in each RELATIONSHIPS.md.
+- Callers that load job B with a `loads` edge in `concepts/relationships.json` (check each actually launches children before adding): `bc-council-mode` (and through it `bc-council-chain`, `bc-council-find-bugs`, `bc-council-improve-architecture`, `bc-council-challenge-plan`), `bc-subagent-driven-development`, `bc-dispatching-parallel-agents`, `bc-pipeline-to-done` (keep its drain-specific run state; replace only the overlapping generic rules), `bc-security-audit` (fresh verifier per candidate) and `bc-work-sync` (the optional single reviewer launch). Update `bc-handoff`'s pointer only; it launches nothing. Account for every edge in each RELATIONSHIPS.md.
 - Outside the repo (parent or owner, not a worker): `~/.pi/agent/extensions/swarm-mode/kernel.md` replaces its durability copy with "load `bc-durable-subagents`" and fixes the stale words listed in `work/0-ideas.md` (then delete that ideas line); the private overlay and `pi-subagent-routing` follow the rename. Keep the extension prompt constant within a session (extensions AGENTS.md cache rule).
 - Rename through 051's policy: `bc-delegate-investigation` stays an alias for at least one minor release; CHANGELOG Renamed entry.
 
 ## Steps
 
 - [x] Create `bc-durable-subagents` and `bc-swarm` from the current body, with the alias. Done when lint passes, the alias loads `bc-swarm`, and the recovery, manifest and packet pressure scenarios from `bc-delegate-investigation`'s tests (now `concepts/bc-swarm/tests/` and `concepts/bc-durable-subagents/tests/`) pass against the new skills on the pressure-test model.
-- [x] Make every launching skill load `bc-durable-subagents`. Done when each caller has its `loads` edge and one line in its body, the council skill creates a run folder and manifest in a dry-run plan, and lint passes.
+- [x] Make every launching skill load `bc-durable-subagents`. Done when each caller has its `loads` edge and one line in its body, the council dry-run plan creates a reboot-safe run folder and manifest, and lint passes.
 - [ ] Point the swarm-mode prompt and private files at the new skills. Done when the swarm prompt holds no durability copy and a fresh Pi session in swarm mode reads `bc-durable-subagents` before its first launch.
 
 ## Outcome

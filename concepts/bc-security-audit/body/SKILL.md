@@ -105,6 +105,8 @@ See [validation and reporting](VALIDATION-AND-REPORTING.md) for evidence handlin
    confirmed findings, blocked hypotheses, rejections, hardening and coverage gaps.
    Validation checks consistency, not truth or independent verification.
 
+Before the first reviewer launch, load `bc-durable-subagents`; its manifest and reviewer artifacts go in the audit run folder approved by the Output gate below. Else: before launching, verify the approved run folder survives a reboot, write `manifest.md` there (key → artifact path → reviewer → model + thinking → task), state the folder path in chat, and give each reviewer its own artifact.
+
 ## Output gate (full audit only)
 
 Use only `.security-audit/run-N/` inside the target repository, with N the next

@@ -7,6 +7,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- loads `bc-durable-subagents` — required, when before launching the fresh reviewer after owner approval.
+  The single reviewer launch uses the shared durability contract and fallback; owner review launches nothing.
+  Source: [body/SKILL.md](body/SKILL.md)
+
 - depends on `bc-setup-project`'s contract — required, when project has a Where things go table.
   Resolves requirements, decisions, research, ideas and the work folders in the scaffolded table, writes items under its work-item rules and template, reads the Stages line, Blocked by lines and Held by lines (reporting stale ones), and runs the scaffolded .bc-agent/scripts/work_index.py.
   Source: [body/SKILL.md](body/SKILL.md)

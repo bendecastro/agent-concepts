@@ -9,7 +9,7 @@ Dispatch one fresh agent per independent problem domain. Parallelism is useful o
 
 Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
-Load `bc-durable-subagents` before the first launch. Else: before launching, write a run folder and `manifest.md` (key → artifact path → role → model + thinking → task), state its path in chat, and have each child append to its own artifact.
+Load `bc-durable-subagents` before the first launch. Else: before launching, write a run folder that survives a reboot and `manifest.md` (key → artifact path → role → model + thinking → task), state its path in chat, and have each child append to its own artifact.
 
 Put the `bc-safe-runs` packet line in every worker or reviewer task. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof. Why: parallel checks multiply disk use.
 

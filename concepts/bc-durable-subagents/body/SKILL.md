@@ -9,7 +9,7 @@ If `~/.config/agent-concepts/overlays/bc-durable-subagents.md` exists, read it: 
 
 Any skill that launches subagents loads this one. It covers how not to lose the results; how hard to delegate and how to split the work belong to the launching skill. The rules are harness-neutral; Pi mechanics (run directory, dispatch syntax, observed failure modes, recovery commands) are in [pi.md](pi.md).
 
-Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
+Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp` for scratch, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Put the `bc-safe-runs` packet line in every worker or reviewer task. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof. Why: children do not inherit the kernel, and retained worktrees consume storage.
 
@@ -23,7 +23,7 @@ The parent's context is not a storage medium. A lost tool result, a compaction, 
 
 Four rules. They are cheap. The failure they prevent is not.
 
-**1. Manifest before dispatch.** Before launching anything, write a scratch file listing each dispatched track: key → artifact path → role → effective route (model + thinking) → one-line task. Then **state the run directory path in chat.** Why: a path that exists only in your context dies with your context, and rule 4 cannot fire without it. Telling the user makes the user your backup index. Record the same routing name the user just read so the durable copy matches. Preserve that route through whatever launch controls the harness provides; keep harness-specific field rules in its reference.
+**1. Manifest before dispatch.** Before launching anything, write the manifest in a run directory that survives a reboot (not `/tmp` or `mktemp -d`'s default; in Pi, see [Run directory](pi.md#run-directory)). List each dispatched track: key → artifact path → role → effective route (model + thinking) → one-line task. Then **state the run directory path in chat.** Why: a path that exists only in your context dies with your context, and rule 4 cannot fire without it. Telling the user makes the user your backup index. Record the same routing name the user just read so the durable copy matches. Preserve that route through whatever launch controls the harness provides; keep harness-specific field rules in its reference.
 
 **Manifest events, todo obligations.** The run manifest records events — dispatched, launched, landed, recovered — as durable history; the session `todo` tool tracks open obligations that outlive the turn (owner waits, deferred items, out-of-sight runs, partial work), with a trigger for deferred checks. They are complementary: do not copy the manifest into todos or use todos as the manifest; later verification or integration of a dispatched run is a todo obligation (which may auto-create from the run), while its launch/landing is a manifest line. Why: a deferred item left only in the manifest was never re-checked after compaction; the todo snapshot is re-injected every turn, the manifest is not.
 

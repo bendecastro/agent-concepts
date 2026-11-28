@@ -2442,3 +2442,6 @@ Work item 053 step 1: durability contract, recovery rule, evidence anchors, dura
 
 ## [2026-11-28] implement | launching skills load bc-durable-subagents
 Work item 053 step 2: `bc-council-mode`, `bc-subagent-driven-development`, `bc-dispatching-parallel-agents` and `bc-pipeline-to-done` load `bc-durable-subagents` with a one-line run-folder/manifest fallback (`loads` edges added; pipeline keeps its drain run state). Council advisors write to run-folder outputs instead of `output: false`. `bc-handoff` pointer and stale `bc-delegate-investigation` mentions repointed. Council dry run on Terra low: PASS (run folder + manifest before launch).
+
+## [2026-11-28] implement | durable subagent launch review fixes
+Require a reboot-safe run folder, wire in audit and work-sync reviewers, clarify drain rule precedence and correct council/overlay docs; Terra low council dry-run rerun PASS 5/5.
