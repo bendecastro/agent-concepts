@@ -176,9 +176,10 @@ def test_long_matching_copy_with_different_whitespace_has_no_warning(tmp_path):
     assert check(tmp_path) == []
 
 
-from hypothesis import example, given, strategies as st
+from hypothesis import example, given, strategies as st, settings
 
 
+@settings(deadline=None)  # Each example writes fixture files; disk latency is not a defect.
 @given(st.lists(st.text(alphabet="abcdefghijklmnopqrstuvwxyz", min_size=1, max_size=8), min_size=1, max_size=15))
 def test_copy_accepts_all_whitespace_wrapping(words):
     with tempfile.TemporaryDirectory() as directory:
@@ -202,6 +203,7 @@ def test_near_verbatim_threshold_is_eighty_percent(tmp_path):
     assert any(i.severity == "WARN" and "80%" in i.message for i in check(tmp_path))
 
 
+@settings(deadline=None)  # Each example writes fixture files; disk latency is not a defect.
 @given(st.integers(min_value=14, max_value=30))
 @example(24)  # The independent shared-trigram count is exactly 80%.
 @example(23)  # Just below, with no 40-word shared span.
@@ -221,6 +223,7 @@ def test_whole_paragraph_score_matches_constructed_trigram_count(second_run):
         )
 
 
+@settings(deadline=None)  # Each example writes fixture files; disk latency is not a defect.
 @given(st.lists(st.tuples(st.integers(0, 2), st.integers(0, 65), st.integers(35, 70)), max_size=8))
 @example([(0, 40, 40), (1, 40, 70)])  # Span must survive the size-ratio rejection.
 @example([(0, 39, 40), (1, 39, 70)])  # Below both thresholds.
