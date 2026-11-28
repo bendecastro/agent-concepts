@@ -34,6 +34,9 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 ### Fixed
 
 - `bc-qmd` no longer calls `qmd query` the default: use `qmd search` with 2–4 keywords first, and rerun once as `qmd query --no-rerank` when it finds nothing relevant or the concept may be worded differently. `bc-wiki-maintain` and the generated vault block now ban `qmd query` only as an inline read. Earlier projects narrow their vault block by the new "Vault read path: `qmd query` ban narrowed" migration.
+### Changed
+
+- `agent-kernel`: when no one can answer, take the recommended option on a judgment call and record the assumption; stop on destructive, publishing and owner-only steps. `bc-design` and `bc-tdd` keep only their skill-specific records.
 
 ## [0.5.0] - 2026-11-28
 

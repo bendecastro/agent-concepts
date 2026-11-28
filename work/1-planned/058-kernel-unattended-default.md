@@ -17,6 +17,8 @@ Waiting on owner: parked after the fourth tuning round failed its pre-set bar (o
 ## Steps
 
 - [ ] Add the kernel rule, trim the copies, pressure-test. Done when the scenario (headless run, one judgment call, one destructive step) shows the agent assume-and-record the first and stop on the second, with and without the rule compared, and lint passes.
+  - 2026-11-28: rule added, `bc-design`/`bc-tdd` trimmed, packages staged, scenario written (`concepts/agent-kernel/tests/pressure-unattended-default.md`); pressure run pending (Terra low quota).
+  - 2026-11-28 round 4 (final tune round, Haiku 5.5 low since Codex quota was out): record worded as an assumption made because no one could answer; FAIL strict, new 5/6 (A 3/3, B 2/3), old 0/6. Owner decides next step.
 
 ## Outcome
 

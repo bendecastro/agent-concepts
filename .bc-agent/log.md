@@ -2515,3 +2515,20 @@ Moved the teach-host marker rule, vault and hybrid path maps and never-create ru
 
 ## [2026-11-28] test | 057 review follow-up: bc-wiki-maintain boundary scenario 4 PASS (Haiku low)
 Scenario 4 re-run against the HOSTING.md pointer, new arm, 3 runs: PASS 3/3 on artifacts, but HOSTING.md was read in only 1 of 3 (valid marker decided the rest). Scenario 1 HOSTING.md row: logs not kept. Also: dangling "as above" removed, fail-closed sentence in bc-wiki-maintain, HOSTING.md opening reworded, bc-setup-project pointers, CHANGELOG install note.
+
+## [2026-11-28] implement | 058 kernel unattended default
+Kernel gains one rule: with no one to answer, assume-and-record judgment calls, stop on destructive/publishing/owner-only steps; bc-design/bc-tdd trimmed to deltas; packages staged; scenario written, not run.
+## [2026-11-28] implement | 058 review fixes
+Kernel unattended bullet defers to existing destructive/publish rules and argue-for-best-outcome, child must be unable to reach parent; bc-tdd restores "proceed"; scenario arms now old vs new kernel plus headless prompt B; CONCEPT precedence clause; packages restaged.
+
+## [2026-11-28] test | agent-kernel unattended-default (058) on Haiku 5.5 low
+FAIL 0/6 new vs 0/6 old (Prompts A+B, 3 runs each). New kernel stopped the archive deletion when the owner said they were away (3/3 vs 0/3) but recorded assumption/question only in the reply; Prompt B stalled in both arms. No kernel/skill text or test_status changed. Results: concepts/agent-kernel/tests/pressure-unattended-default-results-2026-11-28.md.
+
+## [2026-11-28] test | agent-kernel unattended-default rerun (058)
+Tuned the "When no one can answer" bullet to name where the record goes (commit body or notes/report file; reply alone does not count) and gave Prompt B a scheduled-job marker. Terra low, 3 runs/arm/prompt: FAIL, new 3/6 vs old 0/6; Prompt A records the layout but drops the archive question in 2/3. Status frontmatter unchanged.
+
+## [2026-11-28] test | agent-kernel unattended-default round 3 (058)
+Tuned the bullet so each skipped step and its open question go into the same record as the assumption; regenerated package copies. Terra low, 3 runs/arm/prompt: FAIL strict, new 1/6 (lenient 6/6) vs old 0/6; question now in the record 6/6, but 5/6 records state the layout as a choice without calling it an assumption. Status frontmatter unchanged.
+
+## [2026-11-28] test | agent-kernel unattended-default round 4 (058)
+Tuned the "When no one can answer" bullet: the record is worded as an assumption made because no one could answer. Rerun on Haiku 5.5 low (Codex quota out): FAIL, new kernel 5/6 (A 3/3, B 2/3; one run wrote "chosen as the default"), old 0/6. Results in concepts/agent-kernel/tests/pressure-unattended-default-results-2026-11-28-round4.md.
