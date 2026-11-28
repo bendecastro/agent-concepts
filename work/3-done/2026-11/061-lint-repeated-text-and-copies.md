@@ -26,6 +26,4 @@ Dependencies: none new
 
 ## Outcome
 
-_To be filled when finished or dropped._
-
-Progress 2026-11-28: steps 1–2 landed. The check reads each concept body in one pass (fenced code, quoted fences and standalone comments are not paragraphs; malformed, self-referencing, ambiguous or drifted `copy-of` markers are errors) and warns on paragraphs sharing 80% of word trigrams or an exact run of 40+ words. The real tree has 25 warnings, 22 of them the storage instruction repeated across skills, which 054 is meant to replace with a module. Two reviews blocked on new parser cases; the owner chose a single-pass block reader by the parent, checked by a fix-verifier. Step 3 waits until 054–058 land.
+Done 2026-11-28. Steps 1–2 landed earlier. Step 3 landed 2026-11-28. Repeated text across concept bodies is now an ERROR. A `copy-of` source may be any paragraph in the anchor's section. A new `repeated-text-allow: <concept> — <reason>` marker excuses one deliberate restatement of one named concept, and lint checks it. The bc-subagent-driven-development fallback paragraph is now a tracked copy. Four restatements are allowed and remain dedupe candidates: finishing-branch/executing-plans, two bc-safe-runs/agent-kernel passages, and self-improve/durable-subagents. Lint shows 0 ERROR and the kernel is unchanged. Property-test gap: no Hypothesis property for the allow-marker parse (example tests only).
