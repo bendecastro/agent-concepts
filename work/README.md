@@ -22,9 +22,18 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [068-replan-protocol](1-planned/068-replan-protocol.md) | planned, ready for agent | — | 069-plan-models-state-first, 070-integration-amendments-and-removals | when a plan turns out wrong (two or more blocking reviews, a failed pressure test, the owner changing scope), the item keeps looking normal: it sits in `2-acti… | 0/3 |
+| 1 | [068-replan-protocol](1-planned/068-replan-protocol.md) | planned, ready for agent | — | 069-plan-models-state-first, 070-integration-amendments-and-removals, 074-public-review-roles, 077-private-parity-check | when a plan turns out wrong (two or more blocking reviews, a failed pressure test, the owner changing scope), the item keeps looking normal: it sits in `2-acti… | 0/3 |
 | 2 | [069-plan-models-state-first](1-planned/069-plan-models-state-first.md) | planned, ready for agent | [068-replan-protocol](1-planned/068-replan-protocol.md) | — | most long review loops in the replan study came from interactions nobody modelled before building: several writers, delivery order between machines, versions i… | 0/2 |
 | 3 | [070-integration-amendments-and-removals](1-planned/070-integration-amendments-and-removals.md) | planned, ready for agent | [068-replan-protocol](1-planned/068-replan-protocol.md) | — | in another project's integration a planned detail was disproved by the merged tree (a shortcut row that made a list scroll) and reverted mid-integration; the a… | 0/2 |
+| 4 | [071-obligations-without-todo-tool](1-planned/071-obligations-without-todo-tool.md) | planned | — | — | `bc-durable-subagents` tells the reader to record obligations in a session `todo` tool whose list is re-shown every turn. | — |
+| 5 | [072-background-job-wake-recipe](1-planned/072-background-job-wake-recipe.md) | planned | — | — | `bc-durable-subagents` requires a completion wake for the background full gate, but only the owner's private `bc-pi-wake` arranges one for a shell job; native… | — |
+| 6 | [073-audit-pi-subagents-patches](1-planned/073-audit-pi-subagents-patches.md) | planned | — | — | the owner's Pi reapplies local patches to `pi-subagents` (the private `bc-subagents-carry-patches` extension), and strangers install the stock package. | — |
+| 7 | [074-public-review-roles](1-planned/074-public-review-roles.md) | planned | [068-replan-protocol](1-planned/068-replan-protocol.md) | — | the owner's review loops use private roles: `re-reviewer` (the first re-review covers the whole change plus fixes), `post-review-patcher` (fixes only cited fin… | — |
+| 8 | [075-launch-skill-replaces-defaults](1-planned/075-launch-skill-replaces-defaults.md) | planned | — | — | on Pi, passing `skill` when launching a subagent replaces the role's default skills instead of adding to them. | — |
+| 9 | [076-swarm-mode-for-strangers](1-planned/076-swarm-mode-for-strangers.md) | planned | — | — | the owner works in a private swarm mode that delegates implementation to workers in worktrees by default. | — |
+| 10 | [077-private-parity-check](1-planned/077-private-parity-check.md) | planned | [068-replan-protocol](1-planned/068-replan-protocol.md) | — | the owner's sessions always load the private layer, so the owner cannot see a stranger's experience; the review stop rule and the items filed with this one wer… | — |
+| 11 | [078-step-tick-ownership](1-planned/078-step-tick-ownership.md) | planned | — | — | the owner's preferences tell each worker to tick its own steps and regenerate the index; `bc-pipeline-to-done` says only the driver writes results, never build… | — |
+| 12 | [079-overlays-hold-only-tool-names](1-planned/079-overlays-hold-only-tool-names.md) | planned | — | — | overlays are meant to name only the owner's tools. | — |
 
 - [Ideas](0-ideas.md): 12
 - [Done](3-done/): 66

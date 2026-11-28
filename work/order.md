@@ -43,3 +43,12 @@
 43. 068-replan-protocol
 44. 069-plan-models-state-first
 45. 070-integration-amendments-and-removals
+46. 071-obligations-without-todo-tool
+47. 072-background-job-wake-recipe
+48. 073-audit-pi-subagents-patches
+49. 074-public-review-roles
+50. 075-launch-skill-replaces-defaults
+51. 076-swarm-mode-for-strangers
+52. 077-private-parity-check
+53. 078-step-tick-ownership
+54. 079-overlays-hold-only-tool-names

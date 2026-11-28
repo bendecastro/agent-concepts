@@ -2586,3 +2586,6 @@ The three audit gaps (056 fallback placement, 057 fail-closed when HOSTING.md is
 
 ## [2026-11-28] implement | plan the replan experience
 Filed 068-replan-protocol, 069-plan-models-state-first and 070-integration-amendments-and-removals from the study of plans that failed review (this repo and another project); owner picked all recommended options. The dashboard display is its own item in the dashboard project.
+
+## [2026-11-28] implement | file private-to-public gaps
+An audit of the owner's private layer against the public skills found behaviour strangers lack; filed 071-079 (not planned yet), with the review stop rule already in 068. Fixed two stale private pointers to bc-prompting-agents.
