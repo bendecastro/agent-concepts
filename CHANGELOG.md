@@ -14,6 +14,7 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 - Work items gain a `Dependencies:` line (`none new`, `may add <name> (<why>) (owner's answer, <date>)`,
   or the owner's refusal). `work_index.py --check` fails on a ready item without it planned on or after
   2026-11-28 and warns on older ones; MIGRATIONS.md has the upgrade step.
+- `bc-file-findings`: one skill for filing a review's findings after the owner picks (chosen → planned item, rejected → dropped with the reason, the rest → ideas, then planning). `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` load it (the security audit still files only picked findings and plans them); `bc-self-improve`, `bc-prototype` and `bc-council-challenge-plan` use it when their output becomes project work.
 - The fresh-install test gains `claude-kernel` and `codex-kernel`: each adds the marketplace (from the
   release tag in the release workflow) and installs `agent-kernel`, then checks its SessionStart hooks
   deliver the canonical kernel text.

@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [056-file-findings-module](2-active/056-file-findings-module.md) | active, ready for agent | — | 061-lint-repeated-text-and-copies | `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` each restate how findings become work items, and only `bc-find-bugs` has the… | 0/1 |
+| 1 | [056-file-findings-module](2-active/056-file-findings-module.md) | active, ready for agent | — | 061-lint-repeated-text-and-copies | `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` each restate how findings become work items, and only `bc-find-bugs` has the… | 1/1 |
 | 2 | [057-teach-hosting-module](2-active/057-teach-hosting-module.md) | active, ready for agent | — | 061-lint-repeated-text-and-copies | `bc-teach` (about 1,650 words) defines the hosted path map and marker, `bc-wiki-maintain` § Teach adapter boundary copies it, and `bc-setup-project/body/scaffo… | 0/1 |
 | 3 | [062-kernel-in-every-install](2-active/062-kernel-in-every-install.md) | active, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 2/5 |
 | 4 | [058-kernel-unattended-default](1-planned/058-kernel-unattended-default.md) | planned, waiting on owner | — | 061-lint-repeated-text-and-copies | About six skills restate "when no one can answer (delegated child, headless job, owner away), take the recommended option and record the assumption" in differe… | 0/1 |

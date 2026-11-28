@@ -102,3 +102,5 @@ When the owner picks, append to that report file, before starting work:
 
 One line per proposal number, every number covered: a number the owner did not pick is `declined` unless the owner defers it. For carried items, map the displayed numbers back to their original proposal numbers and append their decisions to each original report at its recorded path, not the carrying report. Update a line as its work lands.
 Why: the record is what makes a report decided and lets the next reflection see what was done.
+
+A picked proposal that becomes work for later in a project with a work pipeline, rather than a change you make now, is filed through `bc-file-findings` with `Source: self-improve`, the `Kind:` that fits the change, and the report path; its decision line is `acted` and names the item. Else: after the owner agrees, file it as a numbered work-planned item (only from the main checkout); place it in `work/order.md` and run `work_index.py --check`; then plan it with `bc-plan-to-pipeline`.

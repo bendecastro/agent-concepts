@@ -10,6 +10,8 @@ User-invoked architecture review for the bc loop. It scans for deep-module oppor
 
 ## Design decisions
 
+- **Pending: scenario C1 (2026-11-28 review of item 056-file-findings-module).** §4 was rewritten to load `bc-file-findings`, so `bc-plan-to-pipeline`'s scenario C1 (passing the grilling's answers on to planning) has not been re-run through the module; run it before relying on that path.
+- **Loads `bc-file-findings` (2026-11-28, item 056-file-findings-module).** §4's chosen/rejected/everything-else homes, numbering and planning handoff moved to that module; §4 keeps the Kind/Source lines, the report-folder citation, grilling outcomes, the ideas-line deletion rule and a one-line fallback.
 - **Chosen findings carry `Kind: architecture` (owner decision 2026-11-24).** Placement in `work/order.md` follows the kind, not the filing skill; the project's work-item rules put top kinds below the existing top group so new items cannot flood ahead of the owner's.
 - **Review before implementation.** The skill surfaces candidates and grills one; production changes should go through `bc-plan-to-pipeline` so they become vertical slices.
 - **Visual report, not repo artifact.** The report goes to temp storage to avoid committing speculative architecture HTML.

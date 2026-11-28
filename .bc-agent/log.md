@@ -2503,3 +2503,9 @@ Terra out of quota, Haiku low substituted. New bc-plan-to-pipeline asked and wro
 
 ## [2026-11-28] implement | 063 review nits (P1-1..3, P2-1..7), text only
 bc-plan-to-pipeline: guard rail and CONCEPT name the dependency question as part of the human checkpoint; step 2 writes the line once the item exists (worktree: ideas line; no table: prd.md); ready-bar report names a missing `Dependencies:` line; stale step numbers fixed in relationships reasons, worktree scenario and CONCEPT; bc-tdd depends_on_contract edge added; scenario and results file aligned with the run; CHANGELOG entry moved to Changed. No reruns.
+
+## [2026-11-28] implement | bc-file-findings module (056-file-findings-module)
+New model-invoked bc-file-findings holds the filing rules from bc-find-bugs §5; bc-find-bugs, bc-improve-codebase-architecture and bc-council-audit-security load it (with one-line fallbacks), bc-self-improve, bc-prototype and bc-council-challenge-plan load it when their output becomes project work. Pressure C2 on Haiku low (Terra quota out): first wording 1/3, tuned to numbered steps 3/3; inline master 3/3. Not deployed.
+
+## [2026-11-28] implement | bc-file-findings review fixes (item 056)
+Blocking review: bc-council-audit-security keeps owner decision 3 (only picked findings filed; unpicked and reviewer-rejected stay in the git-ignored run folder), CONCEPT/CHANGELOG claim reverted; bc-file-findings marked deployed and added to the public-skills list, package and plugin manifests, install packs, index and harnesses.md (the parent runs deploy-local-skills.py); audit-security scenario criterion 11 updated and re-run 2/2 on Haiku low (tests/results-2026-11-28.md); C1 for bc-improve-codebase-architecture noted pending; relationship reasons reworded, the module's plan-to-pipeline edge is now `loads` (lint), optional `when` fields lose the leading "when"; find-bugs, prototype and self-improve fallbacks fixed.

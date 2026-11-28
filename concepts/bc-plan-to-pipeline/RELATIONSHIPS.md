@@ -53,12 +53,16 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Slicing runs in bc-plan-to-pipeline's settled-source mode with the grill answers passed as settled; depends on that mode's name and its open-questions-only grill.
   Source: [bc-council-challenge-plan/body/SKILL.md](../bc-council-challenge-plan/body/SKILL.md)
 
+- incoming from [bc-file-findings](../bc-file-findings/RELATIONSHIPS.md): loads this concept — required, when after the filing is committed.
+  Runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's answer and the caller's evidence as settled; a sequential handoff, not a nested call.
+  Source: [bc-file-findings/body/SKILL.md](../bc-file-findings/body/SKILL.md#with-a-project-work-pipeline)
+
 - incoming from [bc-find-bugs](../bc-find-bugs/RELATIONSHIPS.md): hands off to this concept — required, when after filing into a project work pipeline.
-  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through bc-find-bugs §5.
+  Via bc-file-findings, or directly in its fallback: once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through bc-find-bugs §5.
   Source: [bc-find-bugs/body/SKILL.md](../bc-find-bugs/body/SKILL.md#5-file-after-the-owner-answers)
 
 - incoming from [bc-improve-codebase-architecture](../bc-improve-codebase-architecture/RELATIONSHIPS.md): hands off to this concept — required, when after filing chosen findings in a project with a Where things go table.
-  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-architecture inherits this through its filing step.
+  Via bc-file-findings, or directly in its fallback: once its filing is committed it runs bc-plan-to-pipeline from a settled source on each chosen item, passing the grilling's settled answers; a sequential handoff, not a nested call. bc-council-improve-architecture inherits this through its filing step.
   Source: [bc-improve-codebase-architecture/body/SKILL.md](../bc-improve-codebase-architecture/body/SKILL.md#4-record-every-finding-projects-with-the-table)
 
 - incoming from [bc-pipeline-to-done](../bc-pipeline-to-done/RELATIONSHIPS.md): depends on this concept's contract — required, when project has a Where things go table.

@@ -7,12 +7,16 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 
 ## Outgoing
 
+- loads `bc-file-findings` — required, when after the owner answers the filing question.
+  Filing rules (wait for the owner's pick, chosen/rejected/rest homes, main-checkout numbering, order placement and index check, plan each filed item) have one home in bc-file-findings; the caller supplies Kind, Source and item contents and keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [body/SKILL.md](body/SKILL.md#5-file-after-the-owner-answers)
+
 - adapts `bc-improve-codebase-architecture` — required, when filing after the owner answers.
-  Report-then-owner filing, roles and the no-pipeline fallback mirror bc-improve-codebase-architecture.
+  The no-pipeline fallback and the report-then-owner filing mirror bc-improve-codebase-architecture; the shared filing rules themselves now come from bc-file-findings.
   Source: [CONCEPT.md](CONCEPT.md)
 
 - hands off to `bc-plan-to-pipeline` — required, when after filing into a project work pipeline.
-  Once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through bc-find-bugs §5.
+  Via bc-file-findings, or directly in its fallback: once its filing is committed it runs bc-plan-to-pipeline from a settled source on each work-planned item it filed, passing the owner's filing answer and the report; bc-council-find-bugs inherits this through bc-find-bugs §5.
   Source: [body/SKILL.md](body/SKILL.md#5-file-after-the-owner-answers)
 
 - loads `bc-safe-runs` — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
