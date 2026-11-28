@@ -3,7 +3,7 @@
 Why: The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with another's. Some copies are deliberate (children do not load the kernel; a skill installed alone must work), so the goal is that every copy is either a load or a tracked copy.
 Done when: `scripts/lint.py` warns on a paragraph of about 40+ words repeated near-verbatim in two concept bodies unless one is marked `<!-- copy-of: <concept>#<anchor> -->`; marked copies fail lint when they no longer match their source; the Implement operation in AGENTS.md and `bc-prompting-agents` tell authors to search for an owner before writing a rule; the repeated-text warning becomes an ERROR once 054–058 have landed.
 Stage: now
-Blocked by: nothing
+Blocked by: 054-safe-runs-module, 055-project-files-in-scaffold, 056-file-findings-module, 057-teach-hosting-module, 058-kernel-unattended-default
 Kind: build
 Source: owner pick 1, 2026-11-27 (drift prevention after the modularity scan)
 Planned: bc-plan-to-pipeline 2026-11-27
