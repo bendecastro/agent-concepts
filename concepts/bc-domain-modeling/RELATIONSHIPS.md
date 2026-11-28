@@ -38,7 +38,7 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md)
 
 - incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): loads this concept — required.
-  Step 2 captures terms and decisions inline during the grill.
+  Step 3 captures terms and decisions inline during the grill.
   Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)
 
 - incoming from [bc-prd-drafting](../bc-prd-drafting/RELATIONSHIPS.md): depends on this concept's contract — required, when glossary discovery in legacy projects.

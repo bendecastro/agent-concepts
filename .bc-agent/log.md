@@ -2497,3 +2497,6 @@ bc-plan-to-pipeline: the dependency check is step 2 (runs on every plan, always 
 
 ## [2026-11-28] test | 063 step 3: planning dependency question PASS (Haiku low)
 Terra out of quota, Haiku low substituted. New bc-plan-to-pipeline asked and wrote the marked Dependencies line 6/6 (Part 1 and stranger-like 1b), master 377eba3 0/6. Step 2 tuned mid-run to read the project's test rules. Results: concepts/bc-pipeline-to-done/tests/pressure-planned-dependencies-results-2026-11-28.md.
+
+## [2026-11-28] implement | 063 review nits (P1-1..3, P2-1..7), text only
+bc-plan-to-pipeline: guard rail and CONCEPT name the dependency question as part of the human checkpoint; step 2 writes the line once the item exists (worktree: ideas line; no table: prd.md); ready-bar report names a missing `Dependencies:` line; stale step numbers fixed in relationships reasons, worktree scenario and CONCEPT; bc-tdd depends_on_contract edge added; scenario and results file aligned with the run; CHANGELOG entry moved to Changed. No reruns.

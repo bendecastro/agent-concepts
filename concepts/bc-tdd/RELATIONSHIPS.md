@@ -57,6 +57,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Feature workers follow red-green-refactor.
   Source: [bc-pipeline-to-done/body/execute-issue.md](../bc-pipeline-to-done/body/execute-issue.md#build-loop)
 
+- incoming from [bc-plan-to-pipeline](../bc-plan-to-pipeline/RELATIONSHIPS.md): depends on this concept's contract — required.
+  Step 2 reads its test levels to find required test libraries; a builder may skip a level only on the owner's words.
+  Source: [bc-plan-to-pipeline/body/SKILL.md](../bc-plan-to-pipeline/body/SKILL.md#pipeline)
+
 - incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when generated visible-layout validation page.
   The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats.
   Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)

@@ -31,4 +31,4 @@ Observation: 3 of the 6 new-arm runs parked the item with `Waiting on owner:` in
 
 ## Limits
 
-n=3 per arm per case; Haiku substituted for Terra; Part 2 (builder) not rerun.
+n=3 per arm per case; Haiku substituted for Terra; Part 2 (builder) not rerun. The new arm changed two things at once (the separate step and the "read the test rules" sentence), so the result cannot say which one did the work, and the run logs and fixtures were not kept, so the table cannot be rechecked.
