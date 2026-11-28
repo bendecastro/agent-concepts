@@ -2451,3 +2451,6 @@ Private swarm-mode kernel drops its durability copy for a pointer; routing-decis
 Version 0.5.0, CHANGELOG, README pins; audit docs/research/2026-11-28-release-audit.md (no gaps).
 ## [2026-11-28] implement | 062 step 1: kernel plugins in the fresh-install test
 `claude-kernel`/`codex-kernel` methods install `agent-kernel` from the marketplace (tag under --ref) and check the hooks deliver the kernel text; fail with agent-kernel removed from the marketplace files, pass with it.
+
+## [2026-11-28] implement | Codex installs the kernel by default
+README Codex box adds `agent-kernel@agent-concepts` from the tag-pinned marketplace, with the `/hooks` trust line, and uninstall removes both plugins; harnesses.md, agent-kernel CONCEPT.md, CHANGELOG match. `fresh_install_test.py --method codex --method codex-kernel --ref v0.5.0` passed (work item 062 step 2).

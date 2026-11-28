@@ -14,7 +14,7 @@ The kernel is a small Markdown include for always-on instructions, not an on-dem
 
 ### Package delivery
 
-Use the [README commands to install, disable, remove or pin the kernel](../../README.md#optional-agent-kernel). The Pi skills package includes it: the root `package.json` lists `packages/agent-kernel-pi/index.js` under `pi.extensions`, so `pi install` of the package loads the kernel by default and `pi config` turns that extension off. Elsewhere it is opt-in: `deploy-local-skills.py` and the Claude Code and Codex skills plugins do not install it.
+Use the [README commands to install, disable, remove or pin the kernel](../../README.md#optional-agent-kernel). The Pi skills package includes it: the root `package.json` lists `packages/agent-kernel-pi/index.js` under `pi.extensions`, so `pi install` of the package loads the kernel by default and `pi config` turns that extension off. The README's [Codex install](../../README.md#codex) adds the `agent-kernel` plugin from the same tag-pinned marketplace as the skills plugin, with no checkout; the kernel loads only after the user trusts its SessionStart hook in `/hooks`. Elsewhere it is opt-in: `deploy-local-skills.py` and the Claude Code skills plugin do not install it.
 
 | Harness | How the kernel reaches the model |
 |---|---|

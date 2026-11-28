@@ -389,14 +389,18 @@ claude plugin uninstall agent-concepts@agent-concepts && \
 
 ```bash
 codex plugin marketplace add bendecastro/agent-concepts --ref v0.5.0 && \
-  codex plugin add agent-concepts@agent-concepts
+  codex plugin add agent-concepts@agent-concepts && \
+  codex plugin add agent-kernel@agent-concepts
 ```
+
+This also installs the [agent kernel](#optional-agent-kernel). Trust its SessionStart hook in `/hooks`, or the kernel does not load.
 
 **Refresh** (stays on the release you installed):
 
 ```bash
 codex plugin marketplace upgrade agent-concepts && \
-  codex plugin add agent-concepts@agent-concepts
+  codex plugin add agent-concepts@agent-concepts && \
+  codex plugin add agent-kernel@agent-concepts
 ```
 
 **To move to a newer release**, uninstall, then install again with the new tag.
@@ -405,6 +409,7 @@ codex plugin marketplace upgrade agent-concepts && \
 
 ```bash
 codex plugin remove agent-concepts@agent-concepts && \
+  codex plugin remove agent-kernel@agent-concepts && \
   codex plugin marketplace remove agent-concepts
 ```
 
@@ -705,13 +710,13 @@ The kernel is a short instruction file loaded into every session, whatever the t
 <details>
 <summary><b>Install, disable or remove the kernel</b> (Claude Code, Codex, OpenCode, other agents)</summary>
 
-The commands below use a local Agent Concepts checkout. Use one kernel source per agent: a package, a manual include or a marked block, not several. To pin the kernel, check out a release tag that contains the kernel package, or a full commit SHA, in a dedicated checkout and use that path; to upgrade, select another revision and refresh or reinstall from it.
+Codex installs the kernel with its skills; for the other agents, the commands below use a local Agent Concepts checkout. Use one kernel source per agent: a package, a manual include or a marked block, not several. To pin the kernel, check out a release tag that contains the kernel package, or a full commit SHA, in a dedicated checkout and use that path; to upgrade, select another revision and refresh or reinstall from it.
 
 | Harness | Install | Disable | Remove |
 |---|---|---|---|
 | Pi 1.6.1+ | Included in the [Pi package](#pi). Only with the contributor install (no package): from the checkout root, `pi install ./packages/agent-kernel-pi`. | Disable the kernel extension in `pi config`. | Package: remove the package. Standalone: from the same checkout root, `pi remove ./packages/agent-kernel-pi`. |
 | Claude Code (requires `python3`) | `claude plugin marketplace add /path/to/agent-concepts`, then `claude plugin install agent-kernel@agent-concepts --scope user`. If the marketplace is already registered, use its checkout if it contains the package. | `claude plugin disable agent-kernel@agent-concepts --scope user`. | `claude plugin uninstall agent-kernel@agent-concepts --scope user`. Keep the marketplace if you still use its skills. |
-| Codex (requires `python3`) | `codex plugin marketplace add /path/to/agent-concepts`, then `codex plugin add agent-kernel@agent-concepts`. If the marketplace is already registered, use its checkout if it contains the package. Review and trust the SessionStart hook with `/hooks`; it won't load until trusted. | Disable the kernel plugin in `/plugins`. | `codex plugin remove agent-kernel@agent-concepts`. Keep the marketplace if you still use its skills. |
+| Codex (requires `python3`) | Included in the [Codex install](#codex); no checkout needed. Review and trust the SessionStart hook with `/hooks`; it won't load until trusted. | Disable the kernel plugin in `/plugins`. | `codex plugin remove agent-kernel@agent-concepts`. Keep the marketplace if you still use its skills. |
 | OpenCode V2 | In global `opencode.json(c)`, add the absolute path to `packages/agent-kernel-opencode/` to `plugins`. | Delete that entry from `plugins`; leave the package files in place to re-enable later. | Delete the same entry; the checkout can stay. |
 | OpenCode V1 | In global `opencode.json(c)`, add the absolute path to the checkout's `packages/agent-kernel/AGENT-KERNEL.md` to `instructions`. There is no V1 kernel plugin. | Delete that entry from `instructions`; keep the file to re-enable later. | Delete the same entry; the checkout can stay. |
 | Other harnesses or manual file install | `python3 /path/to/agent-concepts/packages/agent-kernel/install.py /path/to/instructions.md`, naming the instructions file your harness loads. | There is no separate switch; remove the block and rerun install to re-enable it. | Run the same command with `--remove`; it removes only the marked block. |

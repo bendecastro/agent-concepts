@@ -15,6 +15,12 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
   release tag in the release workflow) and installs `agent-kernel`, then checks its SessionStart hooks
   deliver the canonical kernel text.
 
+### Changed
+
+- The README's Codex install also installs the `agent-kernel` plugin from the release tag, with no
+  checkout; trust its SessionStart hook in `/hooks` or the kernel does not load. Uninstall removes both
+  plugins.
+
 ## [0.5.0] - 2026-11-28
 
 ### Renamed
