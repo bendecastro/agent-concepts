@@ -26,4 +26,4 @@ Owner decisions (2026-11-28, in chat, rec): 1a planning never builds: a go-ahead
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Done 2026-11-28. `bc-plan-to-pipeline` step 2 is now the home of "a go-ahead approves the plan, not a build"; step 9 and the guard rail point to it. Pressure test on Haiku low (owner's choice): master 1/3 (one run built the code and filed the item as done), changed 3/3 after one tune round (the ready line is part of finishing); the scripted go-ahead reached 2 of the 3 passing runs ([results](../../concepts/bc-plan-to-pipeline/tests/pressure-go-ahead-is-not-build-results-2026-11-28.md)). Stranger rerun on Haiku low from the packed master passed every row: planning wrote only the planned item through two go-aheads, and the pipeline ran builder and reviewer roles and landed the change ([results](../../docs/research/2026-11-28-stranger-end-to-end-066-rerun.md)); its one stall (drain profiles not installed at preflight) is an ideas line. Not run on Terra.
