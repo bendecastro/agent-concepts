@@ -75,7 +75,7 @@ Write the report as Markdown, `find-bugs-report.md` at the root of the hunt work
 
 ## 5. File (after the owner answers)
 
-Load `bc-file-findings` and file as it says. Else: wait for the owner's pick (an answer in the invoking message is the pick); chosen → numbered work-planned items, rejected → work-dropped with the reason, the rest → ideas lines, numbered only from the main checkout; then plan each filed item with `bc-plan-to-pipeline` in the same reply; without a project work pipeline, file nothing and say so.
+Load `bc-file-findings` and file as it says. Else: wait for the owner's pick (an answer in the invoking message is the pick); chosen → numbered work-planned items, rejected → work-dropped with the reason, the rest → ideas lines, numbered only from the main checkout, each placed in `work/order.md`, then `work_index.py --check`; then plan each filed item with `bc-plan-to-pipeline` in the same reply; without a project work pipeline, file nothing and say so.
 
 What this hunt supplies to it:
 

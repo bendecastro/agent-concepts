@@ -8,6 +8,7 @@ Kind: architecture
 Source: modularity scan 2026-11-27 (run ~/.local/state/bc-swarm/2026-11-27-agents-modularity/memo.md), owner pick 1 (candidate C)
 Planned: bc-plan-to-pipeline 2026-11-27
 Ready for agent: yes
+Dependencies: none new
 
 ## Steps
 
@@ -15,4 +16,4 @@ Ready for agent: yes
 
 ## Outcome
 
-_To be filled when finished or dropped._
+New `bc-file-findings` skill (deployed) holds the filing rules; `bc-find-bugs`, `bc-improve-codebase-architecture` and `bc-council-audit-security` load it, and `bc-self-improve`, `bc-prototype` and `bc-council-challenge-plan` load it when their output becomes project work. The security audit narrows it: only picked findings are filed, the rest stay in the git-ignored run folder (owner decision from `020-council-later-chains`). Find-bugs filing scenario on Haiku low (Codex out of quota): with the skill 3/3 after one tune, without 3/3, so it shows parity, not improvement. Security audit filing section rerun 2/2 on Haiku. Open: architecture planning scenario C1 not rerun against the skill (noted in its CONCEPT). Review blocked once; fixes verified.

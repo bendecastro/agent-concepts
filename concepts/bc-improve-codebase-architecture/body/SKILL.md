@@ -57,7 +57,7 @@ If the owner rejects a candidate for a load-bearing reason, offer to record a de
 
 ## 4. Record every finding (projects with the table)
 
-Load `bc-file-findings` and file as it says. Else: wait for the owner's pick; chosen → numbered work-planned items, rejected → work-dropped with the owner's reason, the rest → ideas lines, numbered only from the main checkout; then plan each filed item with `bc-plan-to-pipeline` in the same reply.
+Load `bc-file-findings` and file as it says. Else: wait for the owner's pick; chosen → numbered work-planned items, rejected → work-dropped with the owner's reason, the rest → ideas lines, numbered only from the main checkout, each placed in `work/order.md`, then `work_index.py --check`; then plan each filed item with `bc-plan-to-pipeline` in the same reply.
 
 What this review supplies to it:
 
