@@ -8,6 +8,25 @@ import sys
 SCAFFOLD = Path(__file__).resolve().parents[1] / "body/scaffold.py"
 
 
+def test_fresh_scaffold_records_package_version(tmp_path):
+    subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(tmp_path), '--slug', 'demo'], check=True)
+    version = json.loads((SCAFFOLD.parents[3] / 'package.json').read_text())['version']
+    assert (tmp_path / '.bc-agent/.scaffold-version').read_text() == f'agent-concepts {version}\n'
+
+
+def test_existing_scaffold_never_adds_or_changes_stamp(tmp_path):
+    vault = tmp_path / '.bc-agent'
+    vault.mkdir()
+    stamp = vault / '.scaffold-version'
+    for extra in ([], ['--force'], ['--allow-earlier-layout']):
+        subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(tmp_path), '--slug', 'demo', *extra], check=True)
+        assert not stamp.exists()
+    stamp.write_text('agent-concepts old\n')
+    for extra in ([], ['--force'], ['--allow-earlier-layout']):
+        subprocess.run([sys.executable, str(SCAFFOLD), '--root', str(tmp_path), '--slug', 'demo', *extra], check=True)
+        assert stamp.read_text() == 'agent-concepts old\n'
+
+
 def test_code_and_ops_generated_text_has_no_retired_paths(tmp_path):
     retired = ('tasks/active.md', 'tasks/completed.md', 'parking-lot',
                'project/overview.md', '.bc-agent/decisions', '.bc-agent/research',
@@ -169,6 +188,7 @@ CODE_FILES = {
     '.bc-agent/AGENTS.md',
     '.bc-agent/map.md',
     '.bc-agent/log.md',
+    '.bc-agent/.scaffold-version',
     '.bc-agent/conventions/architecture-runway.md',
     '.bc-agent/conventions/file-layout.md',
     '.bc-agent/conventions/git-and-commit-policy.md',

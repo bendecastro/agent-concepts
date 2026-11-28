@@ -4,7 +4,16 @@ This file holds procedures for an existing initialized vault. It is a human-faci
 an injected agent instruction. The scaffold remains additive: it creates the new form for a new
 vault and reports a manual upgrade note for an existing one, but it does not rewrite live files.
 
+## Which migrations may apply?
+
+Read `.bc-agent/.scaffold-version` for the agent-concepts version used to create the project.
+Sections that arrived after that version may apply; projects without a stamp predate stamping.
+Each section's own check still decides whether its steps are needed. `unknown` means the
+version was unavailable, so check each section.
+
 ## Visible layout
+
+Arrived in: 0.1.0
 
 Running the current scaffold with `--archetype code`, `ops` or `hybrid` on a project that already
 has the earlier vault layout writes nothing: it names the earlier-layout paths it found under
@@ -69,6 +78,8 @@ files, none ambiguous, all resolving, and left 32 wikilinks from moved files to 
 
 ### Search, promotion and project agents after migration (owner decisions 2026-11-12)
 
+Arrived in: 0.1.0
+
 A project already migrated to the visible layout needs these follow-ups, done by hand on the machine
 that holds the synced qmd collections file:
 
@@ -96,6 +107,8 @@ that holds the synced qmd collections file:
   run per night. Keep the lint-list entry.
 
 ## Migrate existing `map.md` files to graph-visible links
+
+Arrived in: 0.1.0
 
 ### Why this is a separate migration
 
@@ -262,6 +275,8 @@ maps directly from `scaffold.py`; this procedure is only for existing additive i
 
 ## Work index
 
+Arrived in: 0.1.0
+
 Since 2026-11-16 the visible-layout scaffold also writes `.bc-agent/scripts/work_index.py`, a
 `work/README.md` with a generated empty index, a `Stages:` line and a `Stage:` rule in the Work
 items section of `.bc-agent/AGENTS.md`, "run the index" in three Keep-it-current rows, and a
@@ -286,6 +301,8 @@ items section of `.bc-agent/AGENTS.md`, "run the index" in three Keep-it-current
 The `bc-work-sync` skill proposes these steps in its plan when a project lacks them.
 
 ## Blocked by
+
+Arrived in: 0.1.0
 
 Since 2026-11-22 every open work item in a visible-layout project names what it waits for on a
 `Blocked by:` line under `Stage:`: full item names, comma-separated, or `nothing`. The script
@@ -316,6 +333,8 @@ or dropped items.
 
 ## Owner order
 
+Arrived in: 0.1.0
+
 Since 2026-11-22 `work_index.py` reads an optional `work/order.md`: the owner's ranking of open
 items, top first, one numbered line each (`1. 012-search-ranking`); other lines are ignored.
 The table has three tiers: active items, then planned items an active item is (transitively)
@@ -339,6 +358,8 @@ a project without one is unaffected.
 
 ## Design README
 
+Arrived in: 0.1.0
+
 Since 2026-11-21 the code, ops and hybrid scaffold also writes `docs/design/README.md`, the entry
 page of the project's design framework (how the product looks and behaves now; its method is the
 `bc-design` skill's `design-framework.md`), and a line in `.bc-agent/map.md` routing design, UI and
@@ -354,6 +375,8 @@ project, one project at a time on its next scaffold run:
 
 ## Guardrails README
 
+Arrived in: 0.1.0
+
 Since 2026-11-25 the code, ops and hybrid scaffold also writes `docs/guardrails/README.md`, the
 page listing the project's speed, size, memory and structure limits and their checks (its method is
 the `bc-performance-guardrails` skill), and a line in `.bc-agent/map.md` routing guardrail work to it. Learning and
@@ -364,6 +387,8 @@ while the map lacks the line; copy the line from a fresh scaffold's map into "Ou
 
 ## Source line
 
+Arrived in: 0.1.0
+
 Since 2026-11-22 the work-item template has an optional `Source:` line under `Issue:`, naming the
 skill or review that produced the item (for example `bc-plan-to-pipeline` or
 `bc-improve-codebase-architecture`). The scaffold does not rewrite an existing template; to adopt it,
@@ -371,6 +396,8 @@ copy the line from a fresh scaffold's `.bc-agent/templates/work-item.md`. Existi
 change: the line is optional.
 
 ## Work data
+
+Arrived in: 0.3.0
 
 Since 2026-11-25 `work_index.py --json` prints every work item's data for a dashboard (fields in
 the skill's [work-data.md](work-data.md)), the scaffold also writes
@@ -394,6 +421,8 @@ line left in a done item, gives a `--check` warning.
 
 ## Needs owner line
 
+Arrived in: 0.4.0
+
 Since 2026-11-26 the Work items rules in `.bc-agent/AGENTS.md` and the work-item template have an
 optional `Needs owner: <what the owner must decide or do, and when>` line, for an item that will
 need an owner decision or action before or during its build; it is removed once settled.
@@ -409,6 +438,8 @@ need an owner decision or action before or during its build; it is removed once 
 Without step 3 the line is still written and read from the item file; only the JSON lacks it.
 
 ## Changes UI line
+
+Arrived in: 0.4.0
 
 Since 2026-11-26 the Work items rules in `.bc-agent/AGENTS.md` and the work-item template have an
 optional `Changes UI: <what the user will see change>` line, for an item whose build changes what

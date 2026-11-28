@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import json
 import os
 import re
 import subprocess
@@ -2687,6 +2688,16 @@ def main() -> int:
     overwritten: list[Path] = []
     skipped: list[Path] = []  # existed, left untouched
     planned = targets(root, slug, args.date, args.archetype)
+    # The marker is created only with a new vault and is never a forced target.
+    if not vault.exists() and not (args.force or args.allow_earlier_layout):
+        try:
+            package = json.loads((Path(__file__).resolve().parents[3] / 'package.json').read_text())
+            version = package['version']
+            if not isinstance(version, str) or not version:
+                version = 'unknown'
+        except (OSError, ValueError, KeyError, TypeError):
+            version = 'unknown'
+        planned.append((vault / '.scaffold-version', f'agent-concepts {version}\n', False))
     if not _preflight_targets(root, planned):
         return 1
 

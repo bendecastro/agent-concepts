@@ -11,8 +11,8 @@ Ready for agent: yes
 
 ## Steps
 
-- [ ] Move MIGRATIONS.md into `body/`, update references (scaffold.py, CHANGELOG link for the next release, CONCEPT.md, relationships if any), and stamp a scaffold version in generated projects. Done when `npm pack --dry-run` lists the file, a test proves a new scaffold carries the version, and lint passes. Out of scope: rewriting existing migration steps.
+- [x] Move MIGRATIONS.md into `body/`, update references (scaffold.py, CHANGELOG link for the next release, CONCEPT.md, relationships if any), and stamp a scaffold version in generated projects. Done when `npm pack --dry-run` lists the file, a test proves a new scaffold carries the version, and lint passes. Out of scope: rewriting existing migration steps.
 
 ## Outcome
 
-Partial: file moved and references updated; scaffold version stamping waits on an owner decision.
+The earlier partial commit fec697b shipped the guide and updated references. This commit adds the first-scaffold version marker, release annotations and regression tests; review and integration remain with the parent.
