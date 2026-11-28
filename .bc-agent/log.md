@@ -2550,3 +2550,6 @@ Filed Matt Pocock's wayfinder skill (MIT) in docs/research/raw/pocock-wayfinder/
 
 ## [2026-11-28] test | 066 stranger rerun graded: pass
 Graded the completed Haiku-low pack-source stranger run from its evidence (the running worker hit a quota limit first): planning left a ready item and no code, the build ran builder and reviewer and landed on the bare main. Step 3 ticked; drain-profile preflight stall filed as an idea.
+
+## [2026-11-28] ingest | bc-plan-to-pipeline map mode (067, wayfinder)
+After the grill, any question this session cannot settle charts a map (body/map-mode.md: three homes, Destination/Decisions so far/Not yet specified/Out of scope, typed decision steps, work-the-map one per session, Slice last); the edge-of-the-map line sits beside the go-ahead rule. Terra low: map scenario master 0/3, changed 3/3; settled both 3/3. Wayfinder moved to raw/ingested.

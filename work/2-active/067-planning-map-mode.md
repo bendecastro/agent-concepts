@@ -28,8 +28,9 @@ Owner decisions (2026-11-28, in chat): 1a, 2a, 3a, 4b, 5a, 6a, as below.
 
 ## Steps
 
-- [ ] **Map mode in the skill (held until the pressure test passes).** Map test, three homes, sections, work-the-map mode, slice-last step, `bc-pipeline-to-done` skipping maps if it needs a line; `relationships.json` edges for any new loads; CONCEPT.md provenance. Done when the skill text covers every Requirement with one home per rule, the GitHub and change-folder homes read correctly to a reviewer, and lint passes. Out of scope: an issue-tracker setup command, wayfinder's one-ticket-claim-by-assignee mechanics beyond the project's existing active rule.
+- [x] **Map mode in the skill (held until the pressure test passes).** Map test, three homes, sections, work-the-map mode, slice-last step, `bc-pipeline-to-done` skipping maps if it needs a line; `relationships.json` edges for any new loads; CONCEPT.md provenance. Done when the skill text covers every Requirement with one home per rule, the GitHub and change-folder homes read correctly to a reviewer, and lint passes. Out of scope: an issue-tracker setup command, wayfinder's one-ticket-claim-by-assignee mechanics beyond the project's existing active rule.
 - [ ] **Pressure test, then land.** Blocked by: Map mode in the skill. Two scenarios: a vague idea with an unsettled question (expect a map item with Destination, a typed decision step, no PRD or build steps) and a small settled idea (expect today's PRD and ready item). Done when the results file shows master and changed arms, 3 runs each per scenario on Terra low, graded from artifacts, changed passes both 3/3, master fails the map scenario at least once, and the change is merged. Out of scope: tuning unrelated planning rules.
+  Note 2026-11-28: pressure test PASS on the worktree branch (map master 0/3, changed 3/3; settled both 3/3; [results](../../concepts/bc-plan-to-pipeline/tests/pressure-map-mode-results-2026-11-28.md)); only the merge to master remains, left to the parent.
 
 ## Outcome
 
