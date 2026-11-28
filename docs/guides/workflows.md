@@ -19,7 +19,7 @@ Words with a set meaning here, such as gate, worktree and seam, are defined in t
 | When | Workflows |
 |---|---|
 | Once per project | [bc-setup-project](#bc-setup-project) |
-| During a task, when the need comes up | [bc-diagnosing-bugs](#bc-diagnosing-bugs), [bc-code-review](#bc-code-review), [bc-delegate-investigation](#bc-delegate-investigation), [bc-optimize-code](#bc-optimize-code), [bc-prototype](#bc-prototype) |
+| During a task, when the need comes up | [bc-diagnosing-bugs](#bc-diagnosing-bugs), [bc-code-review](#bc-code-review), [bc-swarm](#bc-swarm), [bc-optimize-code](#bc-optimize-code), [bc-prototype](#bc-prototype) |
 | At a set point in your work | [bc-self-improve](#bc-self-improve) at the end of a session, and weekly over many sessions; [bc-council-challenge-plan](#bc-council-challenge-plan) before a plan is split into steps; [bc-to-spec and bc-to-tickets](#bc-to-spec-and-bc-to-tickets) after a planning conversation; [bc-triage](#bc-triage) when issues arrive; [bc-find-bugs](#bc-find-bugs-and-bc-council-find-bugs) and [bc-council-audit-security](#bc-council-audit-security) before a release |
 | Every few weeks | [bc-improve-codebase-architecture](#bc-improve-codebase-architecture-and-bc-council-improve-architecture), [bc-work-sync](#bc-work-sync), [bc-wiki-maintain](#bc-wiki-maintain) |
 | Across many sessions | [bc-teach](#bc-teach) |
@@ -81,10 +81,10 @@ Every field, where it comes from and how far you can rely on it are listed in th
 - **What you get:** two separate reports. **Spec** says whether the change does what the issue or plan asked, with nothing missing and nothing extra. **Standards** says whether it follows the project's conventions and avoids quality, test, security and documentation problems. Each finding is Critical, Important or Minor with the file and lines; Critical and Important block merging. The reviewers see the diff and the requirements, never the author's explanation.
 - **Example:** "Review this branch against main for issue 42." You get the Spec and Standards findings and a line saying whether a mistake would be easy to undo.
 
-### bc-delegate-investigation
+### bc-swarm
 
 - **When:** a task has several independent parts (reading many files, comparing options, reviewing several areas) and you want them done in parallel.
-- **Start:** say "swarm", "go wide" or "fan out", or `/bc-delegate-investigation`.
+- **Start:** say "swarm", "go wide" or "fan out", or `/bc-swarm` (old name `/bc-delegate-investigation` still works).
 - **What it asks:** nothing up front. It shows you each part it hands out, which kind of helper gets it and on which model.
 - **What you get:** parallel subagents, each writing its results to a file as it works, in a run folder whose path the agent states. If the session dies, the agent can recover from those files instead of starting again. It is meant for reading, comparing and reviewing. For code changes in parallel, the agent hands over to `/bc-pipeline-to-done`. The dispatch instructions are written for Pi with pi-subagents.
 - **Example:** "Swarm this: find every place we parse dates and how each one handles time zones." Three scouts each read part of the codebase and write findings; the agent merges them into one answer.

@@ -1,4 +1,4 @@
-# Pi mechanics for bc-delegate-investigation
+# Pi mechanics for bc-durable-subagents
 
 Concrete syntax for the `subagent` tool from the `pi-subagents` extension. The contract in `SKILL.md` is harness-neutral; this file is not. In Pi, if `subagent` is missing, stop Pi dispatch and tell the user to install `pi-subagents` and restart Pi. In other harnesses, keep the four rules and use their equivalent primitives for durable output and retained runs.
 

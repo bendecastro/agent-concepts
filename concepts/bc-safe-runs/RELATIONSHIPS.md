@@ -25,10 +25,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   The reproduction worker gets bc-safe-runs in its skill list and its packet line in the task, since children do not load skills on their own.
   Source: [bc-council-find-bugs/body/SKILL.md](../bc-council-find-bugs/body/SKILL.md#reproduction)
 
-- incoming from [bc-delegate-investigation](../bc-delegate-investigation/RELATIONSHIPS.md): loads this concept — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
-  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
-  Source: [bc-delegate-investigation/body/SKILL.md](../bc-delegate-investigation/body/SKILL.md)
-
 - incoming from [bc-diagnosing-bugs](../bc-diagnosing-bugs/RELATIONSHIPS.md): loads this concept — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
   Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [bc-diagnosing-bugs/body/SKILL.md](../bc-diagnosing-bugs/body/SKILL.md)
@@ -36,6 +32,10 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-dispatching-parallel-agents](../bc-dispatching-parallel-agents/RELATIONSHIPS.md): loads this concept — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
   Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
   Source: [bc-dispatching-parallel-agents/body/SKILL.md](../bc-dispatching-parallel-agents/body/SKILL.md)
+
+- incoming from [bc-durable-subagents](../bc-durable-subagents/RELATIONSHIPS.md): loads this concept — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
+  Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.
+  Source: [bc-durable-subagents/body/SKILL.md](../bc-durable-subagents/body/SKILL.md)
 
 - incoming from [bc-executing-plans](../bc-executing-plans/RELATIONSHIPS.md): loads this concept — required, when running tests, making scratch folders, full suites, worktrees, workers or worktree removal.
   Storage-safe run and worktree-removal rules have one home in bc-safe-runs (derived from the agent kernel's Storage safety); the body keeps a one-line fallback for when the skill is not installed, which a change to the module's rules must update.

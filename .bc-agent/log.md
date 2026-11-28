@@ -2436,3 +2436,6 @@ The pipeline passes the module to builders and the task packet preserves the uv/
 
 ## [2026-11-28] deploy | bc-safe-runs
 Owner chose to deploy the module (with it the two storage scenarios score 5/5, fallback alone 4/5); regenerated public skills, Pi package, plugin manifests, install packs and status. 054 done.
+
+## [2026-11-28] implement | split bc-delegate-investigation into bc-swarm and bc-durable-subagents
+Work item 053 step 1: durability contract, recovery rule, evidence anchors, durability/storage packet bullets, full gate and all of `pi.md` moved verbatim to the new `bc-durable-subagents`; the concept is renamed `bc-swarm` (posture plus fan-out width) and loads it; `bc-delegate-investigation` is a compatibility alias (stub skill + deploy alias). Post-split pressure rerun on Terra low: with PASS 4/4, without FAIL 4/4. Not deployed from the worktree; deploy from the main checkout after integration.

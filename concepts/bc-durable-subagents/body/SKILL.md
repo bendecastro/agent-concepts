@@ -1,39 +1,21 @@
 ---
-name: bc-delegate-investigation
-description: Aggressively delegate investigation, analysis, and review to parallel subagents under a durability contract, so a lost tool result or a dead terminal never destroys the work. Use when the user says bc-delegate-investigation, swarm, go wide, fan out, or asks for heavy/aggressive subagent use.
+name: bc-durable-subagents
+description: Durability contract for any run that launches subagents, so a lost tool result, a compaction or a dead terminal never destroys the work - run folder and manifest before dispatch, async fan-out, per-child artifacts with Commit/Branch records, evidence anchors, and recovery before relaunch. Use before launching subagents, and whenever a prior subagent run was interrupted, failed, came back empty or was reaped.
 ---
 
-# bc-delegate-investigation
+# bc-durable-subagents
 
-If `~/.config/agent-concepts/overlays/bc-delegate-investigation.md` exists, read it: it supplies tool names for the generic steps below that this machine's agent instructions do not already name. It never changes behaviour, and the project's own instructions take precedence.
+If `~/.config/agent-concepts/overlays/bc-durable-subagents.md` exists, read it: it supplies tool names for the generic steps below that this machine's agent instructions do not already name. It never changes behaviour, and the project's own instructions take precedence.
 
-Go wide. While this skill is active, delegating is the default and **keeping** work is what needs a reason.
-
-It composes `bc-dispatching-parallel-agents`, which owns how to split work, what goes in a packet, and the parent's integration duties. Read that for *how to split*. This skill covers *how hard to push* and *how not to lose the results*.
+Any skill that launches subagents loads this one. It covers how not to lose the results; how hard to delegate and how to split the work belong to the launching skill. The rules are harness-neutral; Pi mechanics (run directory, dispatch syntax, observed failure modes, recovery commands) are in [pi.md](pi.md).
 
 Load `bc-safe-runs`. Else: guarded test runner (fallback `pytest`; no custom `--basetemp`), `mktemp -d` outside `/tmp`, targeted tests; configured storage check before full suites, worktrees, fan-out: stop if critical or unknown, or if the check cannot run.
 
 Put the `bc-safe-runs` packet line in every worker or reviewer task. Before removing a worktree or deleting its branch, prove its commits are in `HEAD` (ancestor or patch-equivalent) and record that proof. Why: children do not inherit the kernel, and retained worktrees consume storage.
 
-## Recovery rule — before routing
+## Recovery rule — before anything else
 
-If a prompt names an interrupted, failed, empty, missing, or reaped prior run, treat it as recovery even when it says redo, relaunch, or start again. Stop before the routing decision or any replacement track, manifest, or dispatch decision and execute rule 4 for that prior run. Never stash, delete, move, or overwrite prior-run evidence merely to make a replacement launchable. Do not name or launch a replacement until recovery proves that track has no usable artifact, valid handoff patch, recorded Git object, or preserved worktree/ref.
-
-## The inversion
-
-Normally you delegate when a split is obvious. Here it flips: assume every unit of work goes to a child, and justify what you keep.
-
-The parent keeps exactly three things:
-
-- **Decisions** — judgment calls, tradeoffs, anything the user would want to weigh.
-- **Integration and verification** — reconciling children, spotting contradictions, running the combined check.
-- **Work genuinely cheaper to do than to describe** — one grep, a single file read, a command whose output you need before you can even write the packet.
-
-That third one is the honest escape hatch, and it is also the one that rots. Why: "it's faster if I just do it" is true for almost any single item and false for the whole task — it is how an aggressive posture decays into an ordinary one, one reasonable-sounding exception at a time. It is a **per-track** test, never a verdict on the whole job; applied to everything at once it is not a test, it is the rationalization.
-
-**The routing decision: name the tracks at the decision point, and decide where each one goes.** List the independent tracks you found; show the dispatched ones in chat. For every dispatched track, name the role and the effective model plus thinking route, in this session's routing names — not a vendor id. Shape: `notes → scout, Luna max`. Do not also label tracks as child or parent — the role already says it is dispatched. Why: the list is how the user sees the fleet; a track without an effective route is a guess they cannot correct, and parent/child is noise once the role is named. The list records the route that will actually run, not a fixed set of fields that every harness must copy into every child object. If the harness exposes per-child model or thinking controls, use them to preserve that route through its own mechanics; read [pi.md](pi.md) for Pi-specific dispatch rules. Keep the effective route in chat and the manifest. Announce, then launch in the same turn. If fewer than two tracks exist, or any track stays with you, settle why per track in your reasoning (`hotfix → cheaper than a packet`) and do not write it in the reply. Those kept tracks are not subagents. Why: the user does not want a keep/no-dispatch justification heading every reply (2026-10-26); the reason still has to exist and fit the three keep cases above.
-
-This binds **whichever way you decide, including when you decide to dispatch nothing.** Why: keeping the work is the decision that silently ends the swarm, so it is the one that most needs an explicit reason, even one kept out of the reply. A rule that only fires on the dispatch path cannot catch the case where you quietly chose not to dispatch — and "just read them yourself, it's faster than writing the packets" is precisely that case, arriving as a reasonable request.
+If a prompt names an interrupted, failed, empty, missing, or reaped prior run, treat it as recovery even when it says redo, relaunch, or start again. Stop before naming tracks or making any replacement track, manifest, or dispatch decision, and execute rule 4 of the durability contract for that prior run. Never stash, delete, move, or overwrite prior-run evidence merely to make a replacement launchable. Do not name or launch a replacement until recovery proves that track has no usable artifact, valid handoff patch, recorded Git object, or preserved worktree/ref.
 
 ## Durability contract
 
@@ -86,7 +68,7 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
 
 ## What every child packet adds
 
-`bc-dispatching-parallel-agents` defines the packet (scope, goal, constraints, evidence, output contract). Under `bc-delegate-investigation`, add these bullets:
+`bc-dispatching-parallel-agents` defines the packet (scope, goal, constraints, evidence, output contract). Every child packet adds these bullets:
 
 ```
 - Write your findings to <artifact path>. Append them as you establish them; do not hold
@@ -105,17 +87,3 @@ Why anchors rather than trusting or re-reading: re-reading everything defeats th
 ```
 
 Name the guarded runner from the project's or machine's instructions and docs, if configured. Fill the targeted checks with named test files or IDs; never paste the project's full gate into a packet, even when its validation page lists the gate. Why: a pasted gate is a full run per worker. The worktree requirement is scoped to worker packets; recon packets keep the first three bullets only.
-
-**Test levels travel with the code** (load the `bc-tdd` skill, section Test levels):
-
-- A worker packet never waives, narrows or forbids a tdd test level or its property library ("examples are enough", "no new dependency") unless it quotes the owner's approval. A parent that thinks a level is wrong for the task asks the owner. Why: a packet that overrides a level is a skip nobody approved, and the worker follows the packet.
-- A review packet includes the worker's Test levels block, or the commits' `Test-levels:` trailers, and asks the reviewer to audit it against the diff. Why: a reviewer given only diff and spec never sees the levels, so nobody audits them.
-- The parent's own commits of code changes carry the block too.
-
-## Boundary
-
-`bc-delegate-investigation` is for **investigation, analysis, and review** — reconnaissance, reading docs, cross-referencing, independent critique. Fan-out is cheap here because children only read.
-
-For implementation fan-out, stop and use `bc-subagent-driven-development` or `bc-pipeline-to-done`. They already own worker packets, spec and standards review, worktree isolation, and rework loops. Why: a thinner parallel-implementation path competing with those will lose in ways nobody notices until something is merged.
-
-Harness-specific mechanics, including the concrete dispatch syntax and observed failure modes, live in [pi.md](pi.md).

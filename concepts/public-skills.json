@@ -37,8 +37,7 @@
     ],
     "bc-council-mode": [],
     "bc-delegate-investigation": [
-      "bc-safe-runs",
-      "bc-tdd"
+      "bc-swarm"
     ],
     "bc-design": [],
     "bc-diagnosing-bugs": [
@@ -48,6 +47,9 @@
       "bc-safe-runs"
     ],
     "bc-domain-modeling": [],
+    "bc-durable-subagents": [
+      "bc-safe-runs"
+    ],
     "bc-executing-plans": [
       "bc-safe-runs"
     ],
@@ -101,6 +103,10 @@
     ],
     "bc-subagent-driven-development": [
       "bc-safe-runs"
+    ],
+    "bc-swarm": [
+      "bc-durable-subagents",
+      "bc-tdd"
     ],
     "bc-tdd": [
       "bc-safe-runs"

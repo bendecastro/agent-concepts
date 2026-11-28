@@ -64,7 +64,7 @@ The agent that wrote the code is the worst judge of it, just as writers struggle
 
 A chat vanishes when a session ends, while files stay put. Plans, work items and handoff notes live inside the project, surviving crashes so the next agent or a dashboard can read them. Over time they become the project's long-term memory: past facts any session can look up.
 
-**Skills:** [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) · [bc-handoff](concepts/bc-handoff/body/SKILL.md) · [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) · [bc-wiki-maintain](concepts/bc-wiki-maintain/body/SKILL.md) · the [work-data format](concepts/bc-setup-project/body/work-data.md) a dashboard reads
+**Skills:** [bc-setup-project](concepts/bc-setup-project/body/SKILL.md) · [bc-handoff](concepts/bc-handoff/body/SKILL.md) · [bc-swarm](concepts/bc-swarm/body/SKILL.md) · [bc-wiki-maintain](concepts/bc-wiki-maintain/body/SKILL.md) · the [work-data format](concepts/bc-setup-project/body/work-data.md) a dashboard reads
 
 <br>
 
@@ -273,7 +273,7 @@ Skills marked `/name` are ones you type yourself; the rest load automatically wh
 
 | Skill | What it does | How it starts |
 |---|---|---|
-| [bc-delegate-investigation](concepts/bc-delegate-investigation/body/SKILL.md) | Splits a big investigation across multiple helper agents working in parallel, and saves each result to a file so nothing is lost if a session dies. | [`/bc-delegate-investigation`](docs/guides/workflows.md#bc-delegate-investigation) |
+| [bc-swarm](concepts/bc-swarm/body/SKILL.md) | Splits a big investigation across multiple helper agents working in parallel, and saves each result to a file so nothing is lost if a session dies. | [`/bc-swarm`](docs/guides/workflows.md#bc-swarm) |
 | [bc-dispatching-parallel-agents](concepts/bc-dispatching-parallel-agents/body/SKILL.md) | How to hand separate tasks to several agents at once: what each one needs to know and how to put their results together. | automatically |
 
 **Council skills** (Pi only; need [`pi-subagents`](https://www.npmjs.com/package/pi-subagents)): put the same question to several models and have them cross-examine each other's answers. Each council skill wraps a parent skill through the advisor council.

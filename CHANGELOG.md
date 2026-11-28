@@ -11,6 +11,12 @@ Renames and removals use `### Renamed` and `### Removed` sections; see the
 
 ### Renamed
 
+<a id="bc-delegate-investigation-rename"></a>
+
+- `bc-delegate-investigation` is now `bc-swarm`; its durability rules (run folder, manifest, artifacts,
+  Commit/Branch records, recovery before relaunch) and Pi notes moved to the new `bc-durable-subagents`,
+  which `bc-swarm` loads. The old name remains a compatibility alias. Earliest removal: v0.6.0.
+
 <a id="bc-ui-design-rename"></a>
 
 - `bc-ui-design` is now `bc-design`. The old name remains a compatibility alias.

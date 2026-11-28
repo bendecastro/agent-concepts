@@ -20,7 +20,7 @@ Model-invoked protocol for a bounded, parent-supervised advisor council on a dec
 ## Provenance
 
 - `pi-subagents` 0.90.0 (npm; https://github.com/nicobailon/pi-subagents), MIT, © 2026 Nico Bailon — `skills/bc-council-mode/SKILL.md` (sha256 `12d4b7f8e8e1cc1770e85f8c511a690b9f18b23bae3250149602c04ca7575943`), `skills/bc-council-mode/references/pass-contracts.md` (sha256 `f2eb16d989d4396e0fc3147ba2108db08e4e89b9020ab68629a86cb2957836a3`) and `prompts/council.md`. License text kept in [LICENSE-upstream](LICENSE-upstream).
-- [bc-delegate-investigation Pi notes](../bc-delegate-investigation/body/pi.md) — `options.script` as the reliable fan-out form.
+- [bc-durable-subagents Pi notes](../bc-durable-subagents/body/pi.md) — `options.script` as the reliable fan-out form.
 
 ## Tests
 

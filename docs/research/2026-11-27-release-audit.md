@@ -53,7 +53,7 @@ agent-kernel, bc-brainstorming, bc-code-review (its rule change of 2026-11-27 wa
 
 # Release audit since v0.4.0 (for v0.4.1, 2026-11-27)
 
-`git diff v0.4.0..HEAD -- concepts/*/body` touches one file: `concepts/bc-delegate-investigation/body/pi.md` (c613156), two added lines in "Failure modes observed on this machine" saying commands over about 20 minutes run from the parent, detached, not inside a worktree worker. It is an observed-failure reference note, accuracy-checked against the session log when written (`.bc-agent/log.md`, 2026-11-27 "long scripts out of worktree workers"): no new stop, requirement or prohibition on the skill's contract. Wording change; no retest. No concept is under "Needs testing".
+`git diff v0.4.0..HEAD -- concepts/*/body` touches one file: the `bc-delegate-investigation` Pi notes `body/pi.md` (c613156; since 2026-11-28 `concepts/bc-durable-subagents/body/pi.md`), two added lines in "Failure modes observed on this machine" saying commands over about 20 minutes run from the parent, detached, not inside a worktree worker. It is an observed-failure reference note, accuracy-checked against the session log when written (`.bc-agent/log.md`, 2026-11-27 "long scripts out of worktree workers"): no new stop, requirement or prohibition on the skill's contract. Wording change; no retest. No concept is under "Needs testing".
 
 The rest of this release is release tooling and docs (npm `next` soak, `set-latest` and `github-release` jobs, SECURITY.md, issue form, README fixes), checked by the gate and the release workflow, not by pressure tests.
 

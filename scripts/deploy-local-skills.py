@@ -68,7 +68,7 @@ DEPLOY_ALIASES: dict[str, str] = {
     "bc-drain-issues": "bc-pipeline-to-done",
     # Names before release 0.2.0 (docs/decisions/0004-skill-names-say-what-they-do.md).
     "bc-reflect": "bc-self-improve",
-    "bc-swarm": "bc-delegate-investigation",
+    "bc-delegate-investigation": "bc-swarm",
     "bc-autoresearch-loop": "bc-optimize-code",
     "bc-show-me": "bc-explain-visually",
     "bc-init-agent": "bc-setup-project",

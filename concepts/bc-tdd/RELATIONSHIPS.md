@@ -45,14 +45,6 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
   Spec and Standards review apply tdd's Test levels, Tests that lie, Test layout and formal.md; the body names the skill instead of linking into its folder.
   Source: [bc-code-review/body/SKILL.md](../bc-code-review/body/SKILL.md#2-review-independently)
 
-- incoming from [bc-delegate-investigation](../bc-delegate-investigation/RELATIONSHIPS.md): depends on this concept's contract — required, when worker and review packets for code changes, and parent commits.
-  Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit.
-  Source: [bc-delegate-investigation/body/SKILL.md](../bc-delegate-investigation/body/SKILL.md#what-every-child-packet-adds)
-
-- incoming from [bc-delegate-investigation](../bc-delegate-investigation/RELATIONSHIPS.md): loads this concept — required, when worker and review packets for code changes.
-  Packets carry tdd's Test levels rules; the body names the skill instead of linking into its folder.
-  Source: [bc-delegate-investigation/body/SKILL.md](../bc-delegate-investigation/body/SKILL.md#what-every-child-packet-adds)
-
 - incoming from [bc-find-bugs](../bc-find-bugs/RELATIONSHIPS.md): adapts this concept — required, when every reproduction.
   A reproduction counts only when it fails for the stated reason, tdd's watched-fail rule.
   Source: [bc-find-bugs/body/SKILL.md](../bc-find-bugs/body/SKILL.md#3-reproduce)
@@ -68,3 +60,11 @@ Source of truth is [concepts/relationships.json](../relationships.json). Regener
 - incoming from [bc-setup-project](../bc-setup-project/RELATIONSHIPS.md): depends on this concept's contract — required, when generated visible-layout validation page.
   The generated test-levels section defers level definitions and the Level 2 trigger to tdd, and its commented Level 3 on/declined lines copy formal.md’s formats.
   Source: [bc-setup-project/body/scaffold.py](../bc-setup-project/body/scaffold.py)
+
+- incoming from [bc-swarm](../bc-swarm/RELATIONSHIPS.md): depends on this concept's contract — required, when worker and review packets for code changes, and parent commits.
+  Packets may not waive a tdd level or the property library without quoting the owner; review packets carry the Test levels block or Test-levels trailers for the reviewer to audit.
+  Source: [bc-swarm/body/SKILL.md](../bc-swarm/body/SKILL.md#what-bc-swarm-packets-add)
+
+- incoming from [bc-swarm](../bc-swarm/RELATIONSHIPS.md): loads this concept — required, when worker and review packets for code changes.
+  Packets carry tdd's Test levels rules; the body names the skill instead of linking into its folder.
+  Source: [bc-swarm/body/SKILL.md](../bc-swarm/body/SKILL.md#what-bc-swarm-packets-add)
