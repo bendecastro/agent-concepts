@@ -35,6 +35,7 @@ Write project-specific notes outside the markers; the script keeps them.
 | 11 | [058-kernel-unattended-default](1-planned/058-kernel-unattended-default.md) | planned, ready for agent | — | — | About six skills restate "when no one can answer (delegated child, headless job, owner away), take the recommended option and record the assumption" in differe… | 0/1 |
 | 12 | [059-qmd-query-contradiction](1-planned/059-qmd-query-contradiction.md) | planned, ready for agent | — | — | `bc-qmd/body/SKILL.md` says `qmd query` is "best quality; the default" while `bc-wiki-maintain/body/SKILL.md` says "Never use `qmd query`" for inline reads and… | 0/1 |
 | 13 | [060-wiki-timer-install-to-wiki-maintain](1-planned/060-wiki-timer-install-to-wiki-maintain.md) | planned, ready for agent | — | — | `bc-setup-project` step 10 (about 350 words) describes installing the wiki-maintain systemd timer, while the runner and its README live in `bc-wiki-maintain`;… | 0/1 |
+| 14 | [062-kernel-in-every-install](1-planned/062-kernel-in-every-install.md) | planned, ready for agent | — | — | The kernel is a core piece of the bundle, but only Pi users get it by default. | 0/5 |
 
 - [Ideas](0-ideas.md): 9
 - [Done](3-done/): 47
