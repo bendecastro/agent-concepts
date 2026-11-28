@@ -13,6 +13,7 @@ release rather than `master`: `master` changes many times a day and can hold unf
 
 ### Fixed
 
+- Setup's [migration guide](concepts/bc-setup-project/body/MIGRATIONS.md) ships with the skill, so installed copies can find upgrade steps.
 - The install test no longer fails on Claude Code 2.1.332 and later, which list their built-in
   plugins: it now looks for this plugin by ID. The new weekly check found this on its first run.
 
@@ -99,7 +100,7 @@ Projects set up with `bc-setup-project` can feed a dashboard of their work.
 
 - `bc-pipeline-to-done` and the project rules from `bc-setup-project` now write these lines,
   and `bc-work-sync` reports `Held by:` lines that look stale. Projects set up earlier can pick
-  this up with the steps in `concepts/bc-setup-project/MIGRATIONS.md`; existing items need no
+  this up with the steps in `concepts/bc-setup-project/body/MIGRATIONS.md`; existing items need no
   rewrite.
 
 ## [0.2.0] - 2026-11-25

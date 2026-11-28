@@ -26,7 +26,7 @@ visible-layout files, leaves every existing file byte-identical (including a cus
 ### Migrate mode
 
 `scaffold.py --migrate` moves one project to the visible layout (work package W4 of
-[the visible-layout plan](../../work/3-done/2026-11/018-bc-init-agent-visible-layout.md)). The agent
+the visible-layout plan (work item `018-bc-init-agent-visible-layout`)). The agent
 procedure, including the rule for each judgment class, is in the skill body under
 "Migrate an existing project"; this section records what the script does and does not do.
 
@@ -373,7 +373,7 @@ change: the line is optional.
 ## Work data
 
 Since 2026-11-25 `work_index.py --json` prints every work item's data for a dashboard (fields in
-the skill's [work-data.md](body/work-data.md)), the scaffold also writes
+the skill's [work-data.md](work-data.md)), the scaffold also writes
 `.bc-agent/scripts/work_spent.py`, which estimates an item's time, tokens and cost from the agent
 tools' session files, and the Work items rules in `.bc-agent/AGENTS.md` tell agents to write four
 lines: `Held by:` while an agent works on an item, `Review:` and `Gate:` in a step's Notes, and

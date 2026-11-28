@@ -1,6 +1,6 @@
 # Projects set up earlier can find the upgrade steps in the installed package
 
-Why: `concepts/bc-setup-project/MIGRATIONS.md` sits outside `body/`, so npm, plugin and `npx skills` installs do not ship it, yet the CHANGELOG and `scaffold.py` point strangers to it; and generated projects carry no scaffold version to say which steps apply.
+Why: The migration guide previously sat outside `body/`, so npm, plugin and `npx skills` installs did not ship it despite references to it; and generated projects carry no scaffold version to say which steps apply.
 Done when: The migration steps ship inside `body/`, every reference points to the shipped path, and setup stamps a scaffold version into generated projects that the migration page uses.
 Stage: now
 Blocked by: nothing
@@ -15,4 +15,4 @@ Ready for agent: yes
 
 ## Outcome
 
-_To be filled when finished or dropped._
+Partial: file moved and references updated; scaffold version stamping waits on an owner decision.

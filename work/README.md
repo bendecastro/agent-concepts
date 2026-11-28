@@ -22,7 +22,7 @@ Write project-specific notes outside the markers; the script keeps them.
 
 | # | Item | Folder | Waits on | Unblocks | Why | Steps |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [050-ship-setup-migrations](2-active/050-ship-setup-migrations.md) | active, ready for agent | — | 055-project-files-in-scaffold | `concepts/bc-setup-project/MIGRATIONS.md` sits outside `body/`, so npm, plugin and `npx skills` installs do not ship it, yet the CHANGELOG and `scaffold.py` po… | 0/1 |
+| 1 | [050-ship-setup-migrations](2-active/050-ship-setup-migrations.md) | active, ready for agent | — | 055-project-files-in-scaffold | The migration guide previously sat outside `body/`, so npm, plugin and `npx skills` installs did not ship it despite references to it; and generated projects c… | 0/1 |
 | 2 | [051-renamed-skill-aliases](1-planned/051-renamed-skill-aliases.md) | planned, ready for agent | — | 053-split-swarm-and-durable-subagents | Renaming `bc-ui-design` to `bc-design` removed the old name for npm, plugin and `npx skills` users (only local deploys keep an alias), and no policy says how r… | 0/1 |
 | 3 | [052-release-hygiene-pins](1-planned/052-release-hygiene-pins.md) | planned, ready for agent | — | — | The personal-terms lint returns silently when the private list is missing, so a release cut on a machine without it proves nothing about privacy; and the job h… | 0/1 |
 | 4 | [061-lint-repeated-text-and-copies](1-planned/061-lint-repeated-text-and-copies.md) | planned, ready for agent | — | — | The 2026-11-27 modularity scan found one storage paragraph in 11 skills and other rules in 3–12, each drifting, because nothing compares one skill's text with… | 0/3 |

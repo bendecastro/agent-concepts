@@ -61,7 +61,7 @@ The setup gives you what a dashboard needs, but no dashboard. Build your own on 
 - `python3 .bc-agent/scripts/work_index.py --json` prints every work item as JSON: its stage, steps, what it waits for, which agent holds it, its history from git, review and gate results, and its time and cost once finished. It changes no files, so a dashboard can run it as often as it likes.
 - `python3 .bc-agent/scripts/work_spent.py <item-name>` estimates the time, tokens and cost of one item from the agent tools' session files; add `--json` for the list of sessions it counted. It is a rough estimate: read its limits first.
 
-Every field, where it comes from and how far you can rely on it are listed in the [work data reference](../../concepts/bc-setup-project/body/work-data.md). An older project picks these up with the steps in [MIGRATIONS.md](../../concepts/bc-setup-project/MIGRATIONS.md#work-data).
+Every field, where it comes from and how far you can rely on it are listed in the [work data reference](../../concepts/bc-setup-project/body/work-data.md). An older project picks these up with the steps in [MIGRATIONS.md](../../concepts/bc-setup-project/body/MIGRATIONS.md#work-data).
 
 ## During a task
 

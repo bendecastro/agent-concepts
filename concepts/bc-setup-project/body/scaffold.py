@@ -2053,6 +2053,7 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
     """Manual merge hints for existing files that were intentionally left untouched."""
     vault = root / ".bc-agent"
     notes: list[str] = []
+    migrations = Path(__file__).resolve().with_name("MIGRATIONS.md")
     if archetype in VISIBLE_ARCHETYPES:
         map_path = vault / "map.md"
         if map_path.exists() and any(
@@ -2061,19 +2062,19 @@ def upgrade_notes(root: Path, archetype: str) -> list[str]:
             notes.append("`.bc-agent/map.md` should use real Markdown links for in-vault targets")
         if map_path.exists() and "`docs/design/README.md`" not in map_path.read_text(errors="ignore"):
             notes.append("`.bc-agent/map.md` has no line routing design, UI or CLI wording work to "
-                         "`docs/design/README.md` (see MIGRATIONS.md#design-readme)")
+                         f"`docs/design/README.md` (see {migrations}#design-readme)")
         if map_path.exists() and "`docs/guardrails/README.md`" not in map_path.read_text(errors="ignore"):
             notes.append("`.bc-agent/map.md` has no line routing speed, size, memory or structure limit "
-                         "work to `docs/guardrails/README.md` (see MIGRATIONS.md#guardrails-readme)")
+                         f"work to `docs/guardrails/README.md` (see {migrations}#guardrails-readme)")
         legacy = earlier_layout_paths(root, archetype)
         if legacy:
             notes.append(
                 "earlier-layout paths exist under .bc-agent (" + ", ".join(legacy) + "); "
                 "they were left in place and nothing was moved — migrating them to the visible "
-                "layout is a separate, explicit step (see MIGRATIONS.md)")
+                f"layout is a separate, explicit step (see {migrations})")
         agents_path = vault / "AGENTS.md"
         if agents_path.exists() and not re.search(r"^Stages:", agents_path.read_text(errors="ignore"), re.M):
-            notes.append("`.bc-agent/AGENTS.md` has no `Stages:` line; work_index.py falls back to now, next, later, unscheduled (see MIGRATIONS.md#work-index).")
+            notes.append(f"`.bc-agent/AGENTS.md` has no `Stages:` line; work_index.py falls back to now, next, later, unscheduled (see {migrations}#work-index).")
         try:
             has_table = agents_path.exists() and bool(parse_where_things_go(agents_path.read_text(errors="ignore")))
         except ValueError:
@@ -2676,7 +2677,7 @@ def main() -> int:
         if legacy:
             print("ERROR: earlier-layout paths exist under .bc-agent (" + ", ".join(legacy) + "); "
                   "nothing was written.")
-            print("Migrating them to the visible layout is a separate, explicit step (see MIGRATIONS.md). "
+            print(f"Migrating them to the visible layout is a separate, explicit step (see {Path(__file__).resolve().with_name('MIGRATIONS.md')}). "
                   "Re-run with --allow-earlier-layout to create the missing visible-layout files beside "
                   "them, leaving every existing file untouched.")
             return 1
